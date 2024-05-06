@@ -9,7 +9,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env()
 
-django_root = environ.Path(__file__) - 3
+django_root = environ.Path(__file__) - 2
 
 ENV_FILE = env.str("DJANGO_ENV_FILE", default=django_root(".env"))
 if Path(ENV_FILE).exists():  # pragma: no cover
