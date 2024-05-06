@@ -1,0 +1,89 @@
+---
+services:
+  backend:
+    user: "${UID:?Set UID env variable to your user id}"
+    build:
+      context: ./backend
+      target: dev
+    depends_on:
+      - mailhog
+      - db
+    environment:
+      - ENV=dev
+      - EMAIL_URL=smtp://mailhog:1025
+      - DJANGO_OIDC_USERNAME_CLAIM=preferred_username
+      - STATIC_ROOT=/var/www/static
+    volumes:
+      - ./backend:/app
+    ports:
+      - 8000:8080
+      - 8081:8081
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      - TIMED_SSO_CLIENT_HOST=https://timed.local/auth/realms/timed/protocol/openid-connect
+      - TIMED_SSO_CLIENT_ID=timed-public
+
+  keycloak:
+    image: keycloak/keycloak:24.0.3
+    depends_on:
+      - db
+    volumes:
+      - ./keycloak/config.json:/opt/keycloak/data/import/config.json
+    environment:
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://db/keycloak
+      - KC_DB_USERNAME=keycloak
+      - KEYCLOAK_ADMIN=admin
+      - KC_HOSTNAME_STRICT=false
+      - KC_HOSTNAME_STRICT_HTTPS=false
+      - KC_HTTP_RELATIVE_PATH=/auth
+      - KC_PROXY=edge
+      - KC_DB_PASSWORD=keycloak
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    # import: docker compose exec keycloak /opt/keycloak/bin/kc.sh import --override true --file /opt/keycloak/data/import/config.json
+    # export: docker compose exec keycloak /opt/keycloak/bin/kc.sh export --file /opt/keycloak/data/import/config.json
+    command: "start"
+
+  caddy:
+    image: caddy:2.6-alpine
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+    environment:
+      - DOMAIN_NAME=timed.local
+    networks:
+      default:
+        aliases:
+          - timed.local
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
+    environment:
+      - MH_UI_WEB_PATH=mailhog
+
+  db:
+    image: postgres:14.4
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./postgres/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+    environment:
+      - POSTGRES_USER=timed
+      - POSTGRES_PASSWORD=timed
+      - POSTGRES_DB=timed
+      - KEYCLOAK_DB_PASSWORD=keycloak
+
+volumes:
+  caddy_data:
+  caddy_config:
+  dbdata:
