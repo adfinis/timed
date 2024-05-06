@@ -22,6 +22,7 @@
     "test:ember": "ember test"
   },
   "devDependencies": {
+    "@adfinis/eslint-config": "^2.1.1",
     "@apollo/client": "3.8.6",
     "@babel/core": "7.22.9",
     "@babel/eslint-parser": "7.21.3",
