@@ -1,0 +1,54 @@
+---
+name: Schedule
+
+on:
+  schedule:
+    - cron: 15 11 * * *
+  workflow_dispatch:
+
+jobs:
+  scan-backend:
+    name: Scan backend image
+    runs-on: ubuntu-latest
+    permissions:
+      actions: none
+      checks: none
+      contents: none
+      deployments: none
+      issues: none
+      packages: write
+      pull-requests: none
+      repository-projects: none
+      security-events: write
+      statuses: none
+      # needed for `cosign attest`
+      id-token: write
+    steps:
+      - uses: adfinis/container-scanning-action@v0.2.3
+        with:
+          image-ref: ghcr.io/${{ github.repository }}/backend
+          attest: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  scan-frontend:
+    name: Scan frontend image
+    runs-on: ubuntu-latest
+    permissions:
+      actions: none
+      checks: none
+      contents: none
+      deployments: none
+      issues: none
+      packages: write
+      pull-requests: none
+      repository-projects: none
+      security-events: write
+      statuses: none
+      # needed for `cosign attest`
+      id-token: write
+    steps:
+      - uses: adfinis/container-scanning-action@v0.2.3
+        with:
+          image-ref: ghcr.io/${{ github.repository }}/frontend
+          attest: true
+          token: ${{ secrets.GITHUB_TOKEN }}
