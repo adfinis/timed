@@ -65,8 +65,6 @@ services:
 
   mailhog:
     image: mailhog/mailhog
-    ports:
-      - 8025:8025
     environment:
       - MH_UI_WEB_PATH=mailhog
 

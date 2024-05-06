@@ -7,6 +7,8 @@
 
     reverse_proxy /auth* http://keycloak:8080
 
+    reverse_proxy /mailhog* http://mailhog:8025
+
     reverse_proxy /* http://frontend:80
 
     log {
