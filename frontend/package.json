@@ -17,29 +17,11 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint --config .eslintrc.js .",
     "lint:js:fix": "eslint --config .eslintrc.js . --fix",
-    "prepare": "husky install",
-    "preinstall": "npx only-allow pnpm",
-    "start": "ember server --proxy http://localhost:8000",
+    "start": "ember server --proxy https://timed.local --secure-proxy=false",
     "test": "npm-run-all test:*",
-    "test:ember": "ember test",
-    "semantic-release": "semantic-release"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "lint-staged": {
-    "*.js": "eslint --config .eslintrc.js --cache --fix",
-    "*.hbs": "ember-template-lint --fix",
-    "*.{scss,graphql,json,md,yml}": "prettier --write"
-  },
-  "release": {
-    "extends": "@adfinis/semantic-release-config"
+    "test:ember": "ember test"
   },
   "devDependencies": {
-    "@adfinis/eslint-config": "2.0.0",
-    "@adfinis/semantic-release-config": "4.0.0",
     "@apollo/client": "3.8.6",
     "@babel/core": "7.22.9",
     "@babel/eslint-parser": "7.21.3",
@@ -59,8 +41,6 @@
     "@glimmer/component": "1.1.2",
     "@glimmer/tracking": "1.1.2",
     "@html-next/vertical-collection": "4.0.2",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
     "@sentry/ember": "^7.98.0",
     "broccoli-asset-rev": "3.0.0",
     "broccoli-funnel": "^3.0.8",
@@ -129,8 +109,6 @@
     "eslint-plugin-qunit": "7.3.4",
     "faker": "4.1.0",
     "graphql": "16.8.1",
-    "husky": "8.0.3",
-    "lint-staged": "13.1.2",
     "loader.js": "4.7.0",
     "miragejs": "^0.1.48",
     "npm-run-all": "4.1.5",
@@ -139,7 +117,6 @@
     "qunit-dom": "3.0.0",
     "resize-observer-polyfill": "^1.5.1",
     "sass": "1.58.3",
-    "semantic-release": "21.0.7",
     "shepherd.js": "^11.2.0",
     "simplebar": "^6.2.5",
     "tracked-built-ins": "3.1.1",

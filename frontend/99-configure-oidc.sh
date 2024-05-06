@@ -17,8 +17,8 @@ urlencode() {
 }
 
 sed -i \
-  -e "s/sso-client-id/$(urlencode ${TIMED_SSO_CLIENT_ID})/g" \
-  -e "s/sso-client-host/$(urlencode ${TIMED_SSO_CLIENT_HOST})/g" \
-  /var/www/html/index.html
+  -e "s/sso-client-id/$(urlencode "$TIMED_SSO_CLIENT_ID")/g" \
+  -e "s/sso-client-host/$(urlencode "$TIMED_SSO_CLIENT_HOST")/g" \
+  /usr/share/nginx/html/index.html
 
 exec "$@"
