@@ -70,6 +70,15 @@ frontend-lint-fix: ## Lint and fix the frontend
 frontend-test: ## Run frontend tests
 	@cd frontend && pnpm run test
 
+.PHONY: test
+test: backend-test frontend-test ## Run front- and backend tests
+
+.PHONY: lint
+lint: backend-lint frontend-lint ## Lint and front- and backend
+
+.PHONY: lint-fix
+lint-fix: backend-lint-fix frontend-lint-fix ## Lint and fix front- and backend
+
 .PHONY: keycloak-import
 keycloak-import: ## Import keycloak configuration
 	@$(ORCHESTRATOR) compose exec keycloak /opt/keycloak/bin/kc.sh import --override true --file /opt/keycloak/data/import/config.json
