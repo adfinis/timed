@@ -9,7 +9,7 @@ updates:
       timezone: "Europe/Zurich"
 
   - package-ecosystem: pip
-    directory: "/"
+    directory: "/backend"
     schedule:
       interval: daily
       time: "12:00"
@@ -26,11 +26,32 @@ updates:
           - "pytest-*"
 
   - package-ecosystem: docker
-    directory: "/"
+    directory: "/backend"
     schedule:
       interval: daily
       time: "12:00"
       timezone: "Europe/Zurich"
+    commit-message:
+      prefix: chore
+      include: scope
+
+  - package-ecosystem: docker
+    directory: "/frontend"
+    schedule:
+      interval: daily
+      time: "12:00"
+      timezone: "Europe/Zurich"
+    commit-message:
+      prefix: chore
+      include: scope
+
+  - package-ecosystem: npm
+    directory: "/frontend"
+    schedule:
+      interval: daily
+      time: "12:00"
+      timezone: "Europe/Zurich"
+    open-pull-requests-limit: 10
     commit-message:
       prefix: chore
       include: scope
