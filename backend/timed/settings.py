@@ -9,7 +9,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env()
 
-django_root = environ.Path(__file__) - 2
+django_root = environ.Path(__file__) - 3
 
 ENV_FILE = env.str("DJANGO_ENV_FILE", default=django_root(".env"))
 if Path(ENV_FILE).exists():  # pragma: no cover
@@ -35,8 +35,8 @@ DATABASES = {
         "NAME": env.str("DJANGO_DATABASE_NAME", default="timed"),
         "USER": env.str("DJANGO_DATABASE_USER", default="timed"),
         "PASSWORD": env.str("DJANGO_DATABASE_PASSWORD", default=default("timed")),
-        "HOST": env.str("DJANGO_DATABASE_HOST", default="localhost"),
-        "PORT": env.str("DJANGO_DATABASE_PORT", default=""),
+        "HOST": env.str("DJANGO_DATABASE_HOST", default="db"),
+        "PORT": env.str("DJANGO_DATABASE_PORT", default="5432"),
     }
 }
 
