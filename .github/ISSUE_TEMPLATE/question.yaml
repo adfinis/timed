@@ -1,0 +1,30 @@
+---
+name: Question
+description: Ask a question about this project.
+title: "[QUESTION]: "
+labels:
+  - question
+body:
+  - type: textarea
+    id: question
+    validations:
+      required: true
+    attributes:
+      label: Question
+      description: Briefly describe your question.
+      placeholder: Enter your question here...
+  - type: textarea
+    id: additional-context
+    validations:
+      required: false
+    attributes:
+      label: Additional Context
+      description: Add any extra context or details about your question here.
+      placeholder: Add any additional context or details here...
+  - type: checkboxes
+    attributes:
+      label: "Required"
+      description: "Please confirm:"
+      options:
+        - label: "I have checked past issues to see if this question has already answered."
+          required: true

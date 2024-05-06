@@ -1,0 +1,41 @@
+---
+name: Refactor
+description: Propose refactoring something.
+title: "[REFACTOR]: "
+labels:
+  - refactor
+body:
+  - type: textarea
+    id: what-to-refactor
+    validations:
+      required: true
+    attributes:
+      label: What to refactor
+      description: Describe briefly what to refactor.
+      placeholder: Describe what needs to be refactored...
+
+  - type: textarea
+    id: why-refactor
+    validations:
+      required: true
+    attributes:
+      label: Why refactor it
+      description: Explain the rationale behind this refactoring.
+      placeholder: Explain the reason for the refactoring...
+
+  - type: textarea
+    id: how-to-refactor
+    validations:
+      required: true
+    attributes:
+      label: How to refactor it
+      description: Outline the steps of the proposed approach for the refactor.
+      placeholder: Outline the steps for refactoring...
+
+  - type: checkboxes
+    attributes:
+      label: "Required"
+      description: "Please confirm:"
+      options:
+        - label: "I have checked past issues to ensure that this isn't a duplicate."
+          required: true

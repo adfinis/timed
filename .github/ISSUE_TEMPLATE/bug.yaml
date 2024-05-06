@@ -1,0 +1,68 @@
+---
+name: Bug
+description: Report a bug.
+title: "[BUG]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!WARNING]
+        > If the bug affects security, submit a [security advisory](https://github.com/adfinis/timed/security/advisories/new).
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: Description
+      description: Briefly describe the bug you encountered.
+      placeholder: Unable to do X when condition Y...
+  - type: textarea
+    id: reproduction
+    validations:
+      required: true
+    attributes:
+      label: Steps to Reproduce
+      description: Provide clear steps to reproduce the bug.
+      placeholder: |
+        1. Go to X
+        2. Click the Y button
+        3. Perform Z action
+        4. Receive error message
+  - type: textarea
+    id: expected-behavior
+    validations:
+      required: true
+    attributes:
+      label: Expected Behavior
+      description: Describe what you expected to happen.
+  - type: textarea
+    id: attachments
+    validations:
+      required: false
+    attributes:
+      label: Attachments
+      description: Attach any relevant screenshots or screen recordings.
+  - type: textarea
+    id: extra-context
+    validations:
+      required: false
+    attributes:
+      label: Additional Context
+      description: Include any extra details about the bug here.
+  - type: input
+    id: version
+    validations:
+      required: true
+    attributes:
+      label: Version
+      description: Version of the project where you encountered the bug.
+      placeholder: vX.Y.Z
+  - type: checkboxes
+    attributes:
+      label: "Required"
+      description: "Please confirm:"
+      options:
+        - label: "I have checked past issues to see if this bug has already been reported."
+          required: true

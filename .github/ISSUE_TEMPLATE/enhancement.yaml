@@ -1,0 +1,43 @@
+---
+name: Enhancement
+description: Propose an enhancement to the project.
+title: "[ENHANCEMENT]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!WARNING]
+        > Remember, an enhancement is not a new feature.
+  - type: textarea
+    id: proposed-enhancement
+    validations:
+      required: true
+    attributes:
+      label: Your proposed enhancement
+      description: Briefly outline your proposal to enhance this project.
+      placeholder: Describe your enhancement proposal here...
+  - type: textarea
+    id: enhancement-impact
+    validations:
+      required: true
+    attributes:
+      label: Enhancement Impact
+      description: How will this enhancement improve the project?
+      placeholder: Describe the impact of your enhancement here...
+  - type: textarea
+    id: additional-context
+    validations:
+      required: false
+    attributes:
+      label: Additional context
+      description: Provide any extra details or context about the enhancement here.
+      placeholder: Add any relevant context or details here...
+  - type: checkboxes
+    attributes:
+      label: "Required"
+      description: "Please confirm:"
+      options:
+        - label: "I have checked past issues to ensure that this isn't a duplicate."
+          required: true
