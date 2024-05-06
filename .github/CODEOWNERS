@@ -1,0 +1,3 @@
+backend/* @adfinis/dev-backend
+frontend/* @adfinis/dev-frontend
+charts/* @adfinis/dev-devops
