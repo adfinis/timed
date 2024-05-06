@@ -1,0 +1,18 @@
+{$DOMAIN_NAME} {
+    reverse_proxy /api* http://backend:8080
+    reverse_proxy /admin* http://backend:8080
+    reverse_proxy /oidc* http://backend:8080
+    reverse_proxy /static* http://backend:8080
+    reverse_proxy /db-flush* http://backend:8080
+
+    reverse_proxy /auth* http://keycloak:8080
+
+    reverse_proxy /* http://frontend:80
+
+    log {
+        output stdout
+    }
+    encode gzip
+
+    header / Strict-Transport-Security "max-age=63072000"
+}
