@@ -68,5 +68,12 @@ jobs:
       - name: Load dev images into k8s
         run: kind load docker-image ghcr.io/${{ github.repository }}/backend ghcr.io/${{ github.repository }}/frontend --name chart-testing
 
+      - name: Install kube-prometheus stack CRDs
+        run: |
+          export KUBE_PROMETHEUS_STACK_VERSION=58.4.0
+          kubectl apply -f https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-$KUBE_PROMETHEUS_STACK_VERSION/charts/kube-prometheus-stack/charts/crds/crds/crd-servicemonitors.yaml
+          kubectl apply -f https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-$KUBE_PROMETHEUS_STACK_VERSION/charts/kube-prometheus-stack/charts/crds/crds/crd-podmonitors.yaml
+          kubectl apply -f https://raw.githubusercontent.com/prometheus-community/helm-charts/kube-prometheus-stack-$KUBE_PROMETHEUS_STACK_VERSION/charts/kube-prometheus-stack/charts/crds/crds/crd-prometheusrules.yaml
+
       - name: Run chart-testing (install)
         run: ct --config=ct.yaml install
