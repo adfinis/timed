@@ -1,0 +1,36 @@
+---
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "12:00"
+      timezone: "Europe/Zurich"
+
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "12:00"
+      timezone: "Europe/Zurich"
+    commit-message:
+      prefix: chore
+      include: scope
+    open-pull-requests-limit: 15
+
+    groups:
+      pytest:
+        patterns:
+          - "pytest"
+          - "pytest-*"
+
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "12:00"
+      timezone: "Europe/Zurich"
+    commit-message:
+      prefix: chore
+      include: scope

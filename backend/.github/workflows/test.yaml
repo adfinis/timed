@@ -1,0 +1,36 @@
+---
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the prod image
+        run: |
+          docker build .
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint the code
+        run: |
+          echo -e "ENV=dev\nUID=$UID" > .env
+          docker-compose run --rm backend ruff format --check
+          docker-compose run --rm backend ruff check . --output-format=github
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set ENV vars
+        run: echo -e "ENV=dev\nUID=$UID" > .env
+      - name: Check for missing migrations
+        run: docker-compose run --rm backend python manage.py makemigrations --check --dry-run --no-input
+      - name: Run pytest
+        run: docker-compose run --rm backend pytest --no-cov-on-fail --cov --create-db -vv
