@@ -63,8 +63,8 @@
       "composites" : {
         "realm" : [ "create-realm" ],
         "client" : {
-          "timed-realm" : [ "query-clients", "impersonation", "manage-clients", "view-identity-providers", "manage-users", "view-clients", "query-users", "view-realm", "manage-realm", "view-events", "manage-events", "view-users", "query-groups", "view-authorization", "create-client", "manage-authorization", "query-realms", "manage-identity-providers" ],
-          "master-realm" : [ "manage-events", "query-clients", "query-users", "view-clients", "query-groups", "manage-users", "view-events", "view-realm", "manage-realm", "impersonation", "view-authorization", "manage-clients", "query-realms", "create-client", "manage-authorization", "view-users", "view-identity-providers", "manage-identity-providers" ]
+          "timed-realm" : [ "query-clients", "impersonation", "manage-clients", "view-identity-providers", "manage-users", "query-users", "view-clients", "manage-realm", "view-realm", "view-events", "manage-events", "view-users", "query-groups", "view-authorization", "create-client", "manage-authorization", "query-realms", "manage-identity-providers" ],
+          "master-realm" : [ "manage-events", "query-clients", "query-users", "view-clients", "query-groups", "manage-users", "view-events", "view-realm", "manage-realm", "impersonation", "view-authorization", "manage-clients", "query-realms", "create-client", "manage-authorization", "view-users", "manage-identity-providers", "view-identity-providers" ]
         }
       },
       "clientRole" : false,
@@ -664,7 +664,9 @@
     "publicClient" : true,
     "frontchannelLogout" : false,
     "protocol" : "openid-connect",
-    "attributes" : { },
+    "attributes" : {
+      "post.logout.redirect.uris" : "+"
+    },
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : false,
     "nodeReRegistrationTimeout" : 0,
@@ -690,7 +692,9 @@
     "publicClient" : false,
     "frontchannelLogout" : false,
     "protocol" : "openid-connect",
-    "attributes" : { },
+    "attributes" : {
+      "post.logout.redirect.uris" : "+"
+    },
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : false,
     "nodeReRegistrationTimeout" : 0,
@@ -715,7 +719,10 @@
     "serviceAccountsEnabled" : false,
     "publicClient" : false,
     "frontchannelLogout" : false,
-    "attributes" : { },
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "post.logout.redirect.uris" : "+"
+    },
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : false,
     "nodeReRegistrationTimeout" : 0,
@@ -787,7 +794,10 @@
     "serviceAccountsEnabled" : false,
     "publicClient" : false,
     "frontchannelLogout" : false,
-    "attributes" : { },
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "post.logout.redirect.uris" : "+"
+    },
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : false,
     "nodeReRegistrationTimeout" : 0,
@@ -850,7 +860,8 @@
       "config" : {
         "id.token.claim" : "true",
         "introspection.token.claim" : "true",
-        "access.token.claim" : "true"
+        "access.token.claim" : "true",
+        "userinfo.token.claim" : "true"
       }
     } ]
   }, {
@@ -1236,6 +1247,7 @@
       "config" : {
         "introspection.token.claim" : "true",
         "multivalued" : "true",
+        "userinfo.token.claim" : "true",
         "user.attribute" : "foo",
         "id.token.claim" : "true",
         "access.token.claim" : "true",
@@ -1293,8 +1305,8 @@
     "referrerPolicy" : "no-referrer",
     "xRobotsTag" : "none",
     "xFrameOptions" : "SAMEORIGIN",
-    "xXSSProtection" : "1; mode=block",
     "contentSecurityPolicy" : "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
+    "xXSSProtection" : "1; mode=block",
     "strictTransportSecurity" : "max-age=31536000; includeSubDomains"
   },
   "smtpServer" : { },
@@ -1320,7 +1332,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-usermodel-attribute-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "oidc-usermodel-property-mapper", "oidc-address-mapper", "saml-role-list-mapper", "oidc-full-name-mapper", "saml-user-attribute-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-sha256-pairwise-sub-mapper", "oidc-address-mapper", "saml-user-attribute-mapper", "oidc-usermodel-attribute-mapper", "oidc-usermodel-property-mapper", "saml-user-property-mapper", "saml-role-list-mapper", "oidc-full-name-mapper" ]
       }
     }, {
       "id" : "a95cc0db-8432-4f54-8692-7060275bc1bb",
@@ -1329,7 +1341,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "saml-user-attribute-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-role-list-mapper", "oidc-usermodel-property-mapper", "oidc-address-mapper", "saml-user-property-mapper", "oidc-usermodel-attribute-mapper", "oidc-full-name-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-usermodel-property-mapper", "saml-user-property-mapper", "oidc-full-name-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-address-mapper", "saml-role-list-mapper", "oidc-usermodel-attribute-mapper", "saml-user-attribute-mapper" ]
       }
     }, {
       "id" : "9f86543e-5ee6-4e74-93d4-27d83ba95a26",
@@ -1987,7 +1999,13 @@
     "cibaBackchannelTokenDeliveryMode" : "poll",
     "cibaExpiresIn" : "120",
     "cibaAuthRequestedUserHint" : "login_hint",
+    "oauth2DeviceCodeLifespan" : "600",
+    "clientOfflineSessionMaxLifespan" : "0",
+    "oauth2DevicePollingInterval" : "5",
+    "clientSessionIdleTimeout" : "0",
     "parRequestUriLifespan" : "60",
+    "clientSessionMaxLifespan" : "0",
+    "clientOfflineSessionIdleTimeout" : "0",
     "cibaInterval" : "5",
     "realmReusableOtpCode" : "false"
   },
@@ -2133,7 +2151,7 @@
         "composite" : true,
         "composites" : {
           "client" : {
-            "realm-management" : [ "view-identity-providers", "manage-identity-providers", "view-authorization", "manage-clients", "manage-events", "manage-authorization", "query-groups", "view-events", "view-clients", "view-realm", "impersonation", "view-users", "manage-realm", "query-users", "manage-users", "query-realms", "create-client", "query-clients" ]
+            "realm-management" : [ "manage-identity-providers", "view-identity-providers", "manage-authorization", "manage-clients", "manage-events", "view-authorization", "query-groups", "view-events", "view-clients", "view-realm", "impersonation", "view-users", "manage-realm", "query-users", "manage-users", "query-realms", "create-client", "query-clients" ]
           }
         },
         "clientRole" : true,
@@ -2546,7 +2564,9 @@
     "publicClient" : true,
     "frontchannelLogout" : false,
     "protocol" : "openid-connect",
-    "attributes" : { },
+    "attributes" : {
+      "post.logout.redirect.uris" : "+"
+    },
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : false,
     "nodeReRegistrationTimeout" : 0,
@@ -2572,7 +2592,9 @@
     "publicClient" : false,
     "frontchannelLogout" : false,
     "protocol" : "openid-connect",
-    "attributes" : { },
+    "attributes" : {
+      "post.logout.redirect.uris" : "+"
+    },
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : false,
     "nodeReRegistrationTimeout" : 0,
@@ -2598,7 +2620,9 @@
     "publicClient" : false,
     "frontchannelLogout" : false,
     "protocol" : "openid-connect",
-    "attributes" : { },
+    "attributes" : {
+      "post.logout.redirect.uris" : "+"
+    },
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : false,
     "nodeReRegistrationTimeout" : 0,
@@ -2663,7 +2687,7 @@
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "https://timed.local", "http://localhost:4200" ],
+    "redirectUris" : [ "http://localhost:4200/*", "https://timed.local/*" ],
     "webOrigins" : [ "https://timed.local", "http://localhost:4200" ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -2677,9 +2701,10 @@
     "protocol" : "openid-connect",
     "attributes" : {
       "oidc.ciba.grant.enabled" : "false",
-      "post.logout.redirect.uris" : "https://timed.local##http://localhost:4200",
-      "oauth2.device.authorization.grant.enabled" : "false",
       "backchannel.logout.session.required" : "true",
+      "post.logout.redirect.uris" : "https://timed.local/*##http://localhost:4200/*",
+      "display.on.consent.screen" : "false",
+      "oauth2.device.authorization.grant.enabled" : "false",
       "backchannel.logout.revoke.offline.tokens" : "false"
     },
     "authenticationFlowBindingOverrides" : { },
@@ -2862,6 +2887,7 @@
       "config" : {
         "introspection.token.claim" : "true",
         "multivalued" : "true",
+        "userinfo.token.claim" : "true",
         "user.attribute" : "foo",
         "id.token.claim" : "true",
         "access.token.claim" : "true",
@@ -2957,7 +2983,8 @@
       "config" : {
         "id.token.claim" : "true",
         "introspection.token.claim" : "true",
-        "access.token.claim" : "true"
+        "access.token.claim" : "true",
+        "userinfo.token.claim" : "true"
       }
     } ]
   }, {
@@ -3233,7 +3260,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "saml-role-list-mapper", "saml-user-property-mapper", "oidc-full-name-mapper", "saml-user-attribute-mapper", "oidc-address-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-attribute-mapper", "oidc-usermodel-property-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-address-mapper", "oidc-full-name-mapper", "saml-role-list-mapper", "oidc-usermodel-property-mapper", "saml-user-property-mapper", "saml-user-attribute-mapper", "oidc-usermodel-attribute-mapper", "oidc-sha256-pairwise-sub-mapper" ]
       }
     }, {
       "id" : "40b4741c-881c-4e25-a993-c63639d7ab69",
@@ -3260,7 +3287,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "saml-user-property-mapper", "oidc-usermodel-attribute-mapper", "oidc-full-name-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-attribute-mapper", "saml-role-list-mapper", "oidc-usermodel-property-mapper", "oidc-address-mapper" ]
+        "allowed-protocol-mapper-types" : [ "saml-user-attribute-mapper", "oidc-address-mapper", "oidc-usermodel-attribute-mapper", "saml-role-list-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "oidc-full-name-mapper", "oidc-usermodel-property-mapper" ]
       }
     }, {
       "id" : "8b8cf966-8bb5-4f30-a22a-cbc74c835df8",
@@ -3874,8 +3901,12 @@
     "cibaExpiresIn" : "120",
     "cibaAuthRequestedUserHint" : "login_hint",
     "oauth2DeviceCodeLifespan" : "600",
+    "clientOfflineSessionMaxLifespan" : "0",
     "oauth2DevicePollingInterval" : "5",
+    "clientSessionIdleTimeout" : "0",
     "parRequestUriLifespan" : "60",
+    "clientSessionMaxLifespan" : "0",
+    "clientOfflineSessionIdleTimeout" : "0",
     "cibaInterval" : "5",
     "realmReusableOtpCode" : "false"
   },
