@@ -10,7 +10,7 @@ backend:
   replicaCount: 1
   image:
     # -- Backend image name
-    repository: ghcr.io/adfinis/timed-backend
+    repository: ghcr.io/adfinis/timed/backend
     # -- Backend version.
     tag: ~
     # -- Backend image pull policy
@@ -199,7 +199,7 @@ frontend:
   replicaCount: 1
   image:
     # -- Frontend image name
-    repository: ghcr.io/adfinis/timed-frontend
+    repository: ghcr.io/adfinis/timed/frontend
     # -- Frontend image pull policy
     pullPolicy: IfNotPresent
     # -- Frontend version.
