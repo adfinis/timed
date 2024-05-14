@@ -51,7 +51,7 @@ updates:
       interval: daily
       time: "12:00"
       timezone: "Europe/Zurich"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 20
     commit-message:
       prefix: chore
       include: scope
