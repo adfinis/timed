@@ -100,7 +100,7 @@ jobs:
             ${{ steps.meta.outputs.labels }}
 
       - name: Sign backend image and attach SBOM attestation
-        uses: adfinis/container-scanning-action@v0.2.3
+        uses: adfinis/container-scanning-action@v0.2.6
         with:
           image-ref: ghcr.io/${{ github.repository }}/backend
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -173,7 +173,7 @@ jobs:
             ${{ steps.meta.outputs.labels }}
 
       - name: Sign image and attach SBOM attestation
-        uses: adfinis/container-scanning-action@v0.2.3
+        uses: adfinis/container-scanning-action@v0.2.6
         with:
           image-ref: ghcr.io/${{ github.repository }}/frontend
           token: ${{ secrets.GITHUB_TOKEN }}
