@@ -67,7 +67,7 @@
     "ember-cli-sass": "11.0.1",
     "ember-cli-sri": "2.1.1",
     "ember-cli-terser": "4.0.2",
-    "ember-cli-update": "1.0.1",
+    "ember-cli-update": "2.0.1",
     "ember-component-css": "0.8.1",
     "ember-composable-helpers": "5.0.0",
     "ember-concurrency": "^2.3.7",
