@@ -19,7 +19,7 @@ classifiers = [
 include = ["CHANGELOG.md"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.12"
 python-dateutil = "^2.9.0"
 django = "^4.2.11"
 # might remove this once we find out how the jsonapi extras_require work
@@ -65,6 +65,7 @@ pytest-mock = "3.14.0"
 pytest-randomly = "3.15.0"
 requests-mock = "1.12.1"
 snapshottest = "0.6.0"
+lxml = "5.1"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "timed.settings"
