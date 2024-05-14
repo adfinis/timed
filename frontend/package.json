@@ -30,7 +30,7 @@
     "@commitlint/config-conventional": "17.4.4",
     "@ember/jquery": "2.0.0",
     "@ember/optional-features": "2.0.0",
-    "@ember/render-modifiers": "2.0.5",
+    "@ember/render-modifiers": "2.1.0",
     "@ember/test-helpers": "2.9.3",
     "@embroider/macros": "^1.13.1",
     "@embroider/util": "^1.12.0",
