@@ -55,3 +55,54 @@ updates:
     commit-message:
       prefix: chore
       include: scope
+
+    groups:
+      lint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@adfinis/eslint-config"
+
+          - "ember-template-lint"
+          - "ember-template-lint-*"
+
+          - "stylelint"
+          - "stylelint-*"
+
+          - "prettier"
+          - "prettier-*"
+
+      ember-core:
+        patterns:
+          - "ember-cli"
+          - "ember-data"
+          - "ember-source"
+
+      ember:
+        patterns:
+          - "ember-*"
+          - "@ember/*"
+
+        exclude-patterns:
+          - "ember-cli"
+          - "ember-data"
+          - "ember-source"
+
+          - "ember-template-lint"
+          - "ember-template-lint-*"
+          - "ember-auto-import"
+      js:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "ember-*"
+          - "@ember/*"
+          - "eslint"
+          - "eslint-*"
+          - "@adfinis/eslint-config"
+          - "stylelint"
+          - "stylelint-*"
+          - "ember-auto-import"
+          - "webpack"
+          - "prettier"
+          - "prettier-*"
