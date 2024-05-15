@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import inspect
+from typing import TYPE_CHECKING
 
 import pytest
 from django.contrib.auth import get_user_model
@@ -11,6 +14,9 @@ from timed.employment import factories as employment_factories
 from timed.projects import factories as projects_factories
 from timed.subscription import factories as subscription_factories
 from timed.tracking import factories as tracking_factories
+
+if TYPE_CHECKING:
+    from timed.employment.models import CustomerAssignee, Employment, User
 
 
 def register_module(module):
@@ -145,22 +151,31 @@ def _autoclear_cache():
     cache.clear()
 
 
+@pytest.fixture
 def setup_customer_and_employment_status(
-    user, is_assignee, is_customer, is_employed, is_external
+    db,  # noqa: ARG001
+    customer_assignee_factory,
+    employment_factory,
 ):
-    """Set up customer and employment status.
+    def _setup_customer_and_employment_status(
+        user: User,
+        *,
+        is_assignee: bool,
+        is_customer: bool,
+        is_employed: bool,
+        is_external: bool,
+    ) -> tuple[CustomerAssignee | None, Employment | None]:
+        """Set up customer and employment status.
 
-    Return a 2-tuple of assignee and employment, if they
-    were created
-    """
-    assignee = None
-    employment = None
-    if is_assignee:
-        assignee = projects_factories.CustomerAssigneeFactory.create(
-            user=user, is_customer=is_customer
-        )
-    if is_employed:
-        employment = employment_factories.EmploymentFactory.create(
-            user=user, is_external=is_external
-        )
-    return assignee, employment
+        Return a 2-tuple of assignee and employment, if they
+        were created
+        """
+        assignee = None
+        employment = None
+        if is_assignee:
+            assignee = customer_assignee_factory(user=user, is_customer=is_customer)
+        if is_employed:
+            employment = employment_factory(user=user, is_external=is_external)
+        return assignee, employment
+
+    return _setup_customer_and_employment_status
