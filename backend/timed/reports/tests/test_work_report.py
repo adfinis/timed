@@ -7,7 +7,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from timed.conftest import setup_customer_and_employment_status
 from timed.employment.factories import EmploymentFactory
 from timed.projects.factories import CustomerFactory, ProjectFactory, TaskFactory
 from timed.reports.views import WorkReportViewSet
@@ -33,6 +32,7 @@ def test_work_report_single_project(
     expected,
     status_code,
     django_assert_num_queries,
+    setup_customer_and_employment_status,
 ):
     user = auth_client.user
     setup_customer_and_employment_status(
