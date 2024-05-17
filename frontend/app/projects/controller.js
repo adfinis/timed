@@ -35,7 +35,8 @@ export default class ProjectsController extends Controller {
   get customers() {
     return (
       this.projects
-        ?.map((project) => project?.get("customer"))
+        ?.filter((project) => project?.get("customer"))
+        .map((p) => p.get("customer"))
         .uniqBy("id")
         .sortBy("name") ?? []
     );
