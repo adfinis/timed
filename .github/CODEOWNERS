@@ -1,5 +1,3 @@
 backend/ @adfinis/dev-backend
-frontend/ @adfinis/dev-frontend
-frontend/pnpm-lock.yaml @adfinis/dev-timed
-frontend/package.json @adfinis/dev-timed
+frontend/ @adfinis/dev-timed
 charts/ @adfinis/dev-devops
