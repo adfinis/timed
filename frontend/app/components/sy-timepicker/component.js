@@ -5,7 +5,6 @@
  */
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
-import { padStart } from "ember-pad/utils/pad";
 import moment from "moment";
 
 /**
@@ -103,7 +102,7 @@ export default class SyTimepickerComponent extends Component {
     const minutes = Array.from({ length: count }, (v, i) => (60 / count) * i);
 
     return `([01]?[0-9]|2[0-3]):(${minutes
-      .map((m) => padStart(m, 2))
+      .map((m) => String(m).padStart(2, "0"))
       .join("|")})`;
   }
 
