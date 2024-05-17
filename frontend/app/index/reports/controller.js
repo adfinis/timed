@@ -5,13 +5,13 @@
  */
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { scheduleOnce } from "@ember/runloop";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import moment from "moment";
 import { all } from "rsvp";
 import ReportValidations from "timed/validations/report";
 import { cached } from "tracked-toolbox";
-
 /**
  * The index reports controller
  *
@@ -21,6 +21,7 @@ import { cached } from "tracked-toolbox";
  */
 export default class IndexReportController extends Controller {
   queryParams = ["task", "duration", "comment", "review", "notBillable"];
+
   @tracked task;
   @tracked duration;
   @tracked comment;
@@ -72,14 +73,11 @@ export default class IndexReportController extends Controller {
       );
     });
 
-    if (!reportsToday.filterBy("isNew", true).get("length")) {
-      this.store.createRecord("report", {
-        date: this.model,
-        user: this.currentUser.user,
-      });
+    if (!reportsToday.find((r) => r.isNew)) {
+      scheduleOnce("actions", this, "createEmptyReport");
     }
 
-    return reportsToday.sort((a) => (a.get("isNew") ? 1 : 0));
+    return reportsToday.sort((r) => r.isNew);
   }
 
   @cached
@@ -94,6 +92,14 @@ export default class IndexReportController extends Controller {
     });
 
     return absences.firstObject;
+  }
+
+  @action
+  async createEmptyReport() {
+    await this.store.createRecord("report", {
+      date: this.model,
+      user: this.currentUser.user,
+    });
   }
 
   /**
