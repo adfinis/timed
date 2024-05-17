@@ -35,7 +35,7 @@ export default class ProjectsController extends Controller {
   get customers() {
     return (
       this.projects
-        ?.map((project) => project.get("customer"))
+        ?.map((project) => project?.get("customer"))
         .uniqBy("id")
         .sortBy("name") ?? []
     );
@@ -45,14 +45,15 @@ export default class ProjectsController extends Controller {
   *fetchProjectsByUser() {
     try {
       let projects;
+      const include = "customer,billing-type";
       if (this.user.isSuperuser) {
         projects = yield this.store.findAll("project", {
-          include: "customer",
+          include,
         });
       } else {
         projects = yield this.store.query("project", {
           has_manager: this.user.get("id"),
-          include: "customer",
+          include,
         });
       }
 
