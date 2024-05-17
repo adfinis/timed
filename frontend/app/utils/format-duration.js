@@ -3,11 +3,10 @@
  * @submodule timed-utils
  * @public
  */
-import { padStartTpl } from "ember-pad/utils/pad";
 import moment from "moment";
+import { pad2joincolon } from "timed/utils/pad";
 
 const { floor, abs } = Math;
-const padTpl2 = padStartTpl(2);
 
 /**
  * Converts a moment duration into a string with zeropadded digits
@@ -33,10 +32,10 @@ export default function formatDuration(duration, seconds = true) {
   const minutes = abs(duration.minutes());
 
   if (seconds) {
-    const seconds = abs(duration.seconds());
+    const _seconds = abs(duration.seconds());
 
-    return prefix + padTpl2`${hours}:${minutes}:${seconds}`;
+    return prefix + pad2joincolon(hours, minutes, _seconds);
   }
 
-  return prefix + padTpl2`${hours}:${minutes}`;
+  return prefix + pad2joincolon(hours, minutes);
 }

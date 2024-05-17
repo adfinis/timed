@@ -8,11 +8,9 @@ import { htmlSafe } from "@ember/template";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { dropTask } from "ember-concurrency";
-import { padStartTpl } from "ember-pad/utils/pad";
 import moment from "moment";
 import formatDuration from "timed/utils/format-duration";
-
-const padTpl2 = padStartTpl(2);
+import { pad2joincolon } from "timed/utils/pad";
 
 /**
  * The formatter for the slider tooltips
@@ -110,7 +108,7 @@ export default class AttendanceSlider extends Component {
         const offsetM = (100 / 24 / 60) * m;
 
         labels.push({
-          value: padTpl2`${h}:${m}`,
+          value: pad2joincolon(h, m),
           size: m === 0 ? "lg" : "sm",
           style: htmlSafe(`left: ${offsetH + offsetM}%;`),
         });
