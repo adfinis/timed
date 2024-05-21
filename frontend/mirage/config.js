@@ -1,5 +1,5 @@
-import { Response, discoverEmberDataModels } from "ember-cli-mirage";
-import { createServer } from "miragejs";
+import { discoverEmberDataModels } from "ember-cli-mirage";
+import { createServer, Response } from "miragejs";
 import moment from "moment";
 import formatDuration from "timed/utils/format-duration";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
@@ -48,7 +48,8 @@ const byUserAndDate = (modelName) => {
 export default function (config) {
   const finalConfig = {
     ...config,
-    models: { ...discoverEmberDataModels(), ...config.models },
+    trackRequests: true,
+    models: { ...discoverEmberDataModels(config.store), ...config.models },
     routes,
   };
 

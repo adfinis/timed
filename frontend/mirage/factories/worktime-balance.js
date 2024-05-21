@@ -1,4 +1,4 @@
-import { Factory } from "ember-cli-mirage";
+import { Factory } from "miragejs";
 import moment from "moment";
 
 import { randomDuration } from "../helpers/duration";

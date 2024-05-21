@@ -1,5 +1,5 @@
-import { Factory, trait } from "ember-cli-mirage";
 import faker from "faker";
+import { Factory, trait } from "miragejs";
 import moment from "moment";
 
 export default Factory.extend({
