@@ -4,5 +4,7 @@
 - Billable Hours: {{billable_hours}}
 - Budget: {{estimated_time}}
 
-To PM: Please check the remaining effort estimate. If more budget is needed, reach out to relevant stakeholders.
+To PM:
+- Please check the remaining effort estimate. If more budget is needed, reach out to relevant stakeholders.
+- Make a Redmine entry with your budget review conclusions.
 ```
