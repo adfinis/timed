@@ -131,8 +131,8 @@ devDependencies:
     specifier: 2.1.0
     version: 2.1.0
   ember-cli-mirage:
-    specifier: 2.4.0
-    version: 2.4.0(@babel/core@7.22.9)(@ember/test-helpers@2.9.3)(ember-data@4.7.3)(ember-qunit@6.2.0)
+    specifier: ^3.0.0
+    version: 3.0.3(@ember/test-helpers@2.9.3)(ember-data@4.7.3)(ember-qunit@6.2.0)(ember-source@4.8.0)(miragejs@0.1.48)(webpack@5.76.2)
   ember-cli-moment-shim:
     specifier: 3.8.0
     version: 3.8.0
@@ -3952,20 +3952,6 @@ packages:
       - supports-color
     dev: true
 
-  /@embroider/macros@0.41.0:
-    resolution: {integrity: sha512-QISzwEEfLsskZeL0jyZDs1RoQSotwBWj+4upTogNHuxQP5j/9H3IMG/3QB1gh8GEpbudATb/cS4NDYK3UBxufw==}
-    engines: {node: 10.* || 12.* || >= 14}
-    dependencies:
-      '@embroider/shared-internals': 0.41.0
-      assert-never: 1.2.1
-      ember-cli-babel: 7.26.11
-      lodash: 4.17.21
-      resolve: 1.22.8
-      semver: 7.5.4
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@embroider/macros@1.13.1:
     resolution: {integrity: sha512-4htraP/rNIht8uCxXoc59Bw2EsBFfc4YUQD9XSpzJ4xUr1V0GQf9wL/noeSuYSxIhwRfZOErnJhsdyf1hH+I/A==}
     engines: {node: 12.* || 14.* || >= 16}
@@ -4006,19 +3992,6 @@ packages:
       semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /@embroider/shared-internals@0.41.0:
-    resolution: {integrity: sha512-fiqUVB6cfh2UBEFE4yhT5EzagkZ1Q26+OhBV0nJszFEJZx4DqVIb3pxSSZ8P+HhpxuJsQ2XpMA/j02ZPFZfbdQ==}
-    engines: {node: 10.* || 12.* || >= 14}
-    dependencies:
-      ember-rfc176-data: 0.3.18
-      fs-extra: 7.0.1
-      lodash: 4.17.21
-      pkg-up: 3.1.0
-      resolve-package-path: 1.2.7
-      semver: 7.5.4
-      typescript-memoize: 1.1.1
     dev: true
 
   /@embroider/shared-internals@1.8.3:
@@ -6745,13 +6718,6 @@ packages:
       - supports-color
     dev: true
 
-  /broccoli-file-creator@1.2.0:
-    resolution: {integrity: sha512-l9zthHg6bAtnOfRr/ieZ1srRQEsufMZID7xGYRW3aBDv3u/3Eux+Iawl10tAGYE5pL9YB4n5X4vxkp6iNOoZ9g==}
-    dependencies:
-      broccoli-plugin: 1.3.1
-      mkdirp: 0.5.6
-    dev: true
-
   /broccoli-file-creator@2.1.1:
     resolution: {integrity: sha512-YpjOExWr92C5vhnK0kmD81kM7U09kdIRZk9w4ZDCDHuHXW+VE/x6AGEOQQW3loBQQ6Jk+k+TSm8dESy4uZsnjw==}
     engines: {node: ^4.5 || 6.* || >= 7.*}
@@ -9341,14 +9307,19 @@ packages:
     engines: {node: ^4.5 || 6.* || >= 7.*}
     dev: true
 
-  /ember-cli-mirage@2.4.0(@babel/core@7.22.9)(@ember/test-helpers@2.9.3)(ember-data@4.7.3)(ember-qunit@6.2.0):
-    resolution: {integrity: sha512-cy8B+IZV07V6xgnFzktKUsntTQvIqPSS3u4+XaLdNW91yOowLsN2BsuQldN3eCnwswgE3a9eGNGS4I0BD4llNA==}
-    engines: {node: '>= 10.*'}
+  /ember-cli-mirage@3.0.3(@ember/test-helpers@2.9.3)(ember-data@4.7.3)(ember-qunit@6.2.0)(ember-source@4.8.0)(miragejs@0.1.48)(webpack@5.76.2):
+    resolution: {integrity: sha512-yrg8FpVwbMAH5KpqZn0br6Ka7M26qN3DCddsOJp2FNKk2cDoS5FKQvZUYrlD7oIfPeW4uQFigjfPuRSWRDC9Gw==}
+    engines: {node: 16.* || >= 18}
     peerDependencies:
+      '@ember-data/model': '*'
       '@ember/test-helpers': '*'
       ember-data: '*'
       ember-qunit: '*'
+      ember-source: '>= 3.28.0'
+      miragejs: ^0.1.43
     peerDependenciesMeta:
+      '@ember-data/model':
+        optional: true
       '@ember/test-helpers':
         optional: true
       ember-data:
@@ -9356,25 +9327,24 @@ packages:
       ember-qunit:
         optional: true
     dependencies:
+      '@babel/core': 7.24.5
       '@ember/test-helpers': 2.9.3(@babel/core@7.22.9)(ember-source@4.8.0)
-      '@embroider/macros': 0.41.0
+      '@embroider/macros': 1.16.1
       broccoli-file-creator: 2.1.1
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
-      ember-auto-import: 1.12.2
-      ember-cli-babel: 7.26.11
+      ember-auto-import: 2.7.2(webpack@5.76.2)
+      ember-cli-babel: 8.2.0(@babel/core@7.24.5)
       ember-data: 4.7.3(@babel/core@7.22.9)(webpack@5.76.2)
-      ember-destroyable-polyfill: 2.0.3(@babel/core@7.22.9)
-      ember-get-config: 0.5.0
+      ember-get-config: 2.1.1
       ember-inflector: 4.0.2
       ember-qunit: 6.2.0(@ember/test-helpers@2.9.3)(ember-source@4.8.0)(qunit@2.19.4)(webpack@5.76.2)
-      lodash-es: 4.17.21
+      ember-source: 4.8.0(@babel/core@7.22.9)(@glimmer/component@1.1.2)(webpack@5.76.2)
       miragejs: 0.1.48
     transitivePeerDependencies:
-      - '@babel/core'
+      - '@glint/template'
       - supports-color
-      - webpack-cli
-      - webpack-command
+      - webpack
     dev: true
 
   /ember-cli-moment-shim@3.8.0:
@@ -10044,17 +10014,6 @@ packages:
       whatwg-fetch: 3.6.2
     transitivePeerDependencies:
       - encoding
-      - supports-color
-    dev: true
-
-  /ember-get-config@0.5.0:
-    resolution: {integrity: sha512-y1osD6g8wV/BlDjuaN6OG5MT0iHY2X/yE38gUj/05uUIMIRfpcwOdWnFQHBiXIhDojvAJQTEF1VOYFIETQMkeQ==}
-    engines: {node: 12.* || 14.* || >= 16}
-    dependencies:
-      broccoli-file-creator: 1.2.0
-      ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 5.7.2
-    transitivePeerDependencies:
       - supports-color
     dev: true
 
