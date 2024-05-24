@@ -9,11 +9,11 @@
   &.weekend,
   &.holiday {
     .bar {
-      background-color: rgb(220, 220, 220);
+      background-color: rgb(220 220 220);
     }
 
     .day {
-      color: rgb(220, 220, 220);
+      color: rgb(220 220 220);
     }
   }
 
@@ -52,7 +52,7 @@
   }
 
   .bar {
-    background-color: rgb(150, 150, 150);
+    background-color: rgb(150 150 150);
     height: 100%;
     width: 100%;
     transition: background-color 300ms ease;
@@ -66,7 +66,7 @@
     bottom: -35px;
     text-align: center;
     transform: translateX(-50%);
-    color: rgb(150, 150, 150);
+    color: rgb(150 150 150);
     transition: color 300ms ease;
   }
 }

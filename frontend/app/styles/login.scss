@@ -9,7 +9,7 @@
     margin: 0 auto 0.5rem;
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (width <= 768px) {
     .btn-primary {
       margin-left: 0.5rem;
       margin-right: 0.5rem;

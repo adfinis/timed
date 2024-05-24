@@ -35,7 +35,7 @@
 @import "components/filter-sidebar--group";
 @import "components/filter-sidebar--label";
 @import "components/loading-icon";
-@import "components/magic-link-btn.scss";
+@import "components/magic-link-btn";
 @import "components/nav-top";
 @import "components/progress-tooltip";
 @import "components/record-button";
@@ -64,7 +64,7 @@ hr {
   border: none;
   width: 100%;
   height: 7px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0));
+  background: linear-gradient(to bottom, rgb(0 0 0 / 3%), rgb(0 0 0 / 0%));
 }
 
 strong {
@@ -74,33 +74,43 @@ strong {
 .flex {
   display: flex;
 }
+
 .margin-small-left {
   margin-left: 0.5rem;
 }
+
 .margin-small-right {
   margin-left: 0.5rem;
 }
+
 .margin-small-top {
   margin-top: 0.5rem;
 }
+
 .margin-small-bottom {
   margin-bottom: 0.5rem;
 }
+
 .margin-medium-left {
   margin-left: 1rem;
 }
+
 .margin-medium-right {
   margin-left: 1rem;
 }
+
 .margin-medium-top {
   margin-top: 1rem;
 }
+
 .margin-medium-bottom {
   margin-bottom: 1rem;
 }
+
 .flex-grow {
   flex: 1;
 }
+
 .flex-shrink {
   flex: 0;
 }
@@ -152,7 +162,7 @@ strong {
 }
 
 .worktime-balance {
-  border-bottom: 3px double rgb(0, 0, 0);
+  border-bottom: 3px double rgb(0 0 0);
   font-weight: bold;
 }
 
@@ -188,7 +198,7 @@ strong {
     &:focus,
     &:focus-within {
       border-color: lighten($color-danger, 20%);
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
+      box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset,
         0 0 8px opacify($color-danger, 0.6);
     }
   }
@@ -197,7 +207,7 @@ strong {
 .form-control {
   &:focus-within {
     border-color: lighten($color-primary, 20%);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
+    box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset,
       0 0 8px opacify($color-primary, 0.6);
   }
 
@@ -227,6 +237,7 @@ strong {
 .no-margin {
   margin: 0 !important;
 }
+
 .no-padding {
   padding: 0 !important;
 }
@@ -255,16 +266,16 @@ strong {
 
   .ember-power-calendar-day--selected {
     background-color: $color-primary;
-    color: rgb(255, 255, 255);
+    color: rgb(255 255 255);
 
     &:not(:disabled):hover {
       background-color: lighten($color-primary, 25%);
-      color: rgb(255, 255, 255);
+      color: rgb(255 255 255);
     }
   }
 
   .ember-power-calendar-day--focused {
-    box-shadow: inset 0px -2px 0px 0px $color-primary;
+    box-shadow: inset 0 -2px 0 0 $color-primary;
   }
 }
 
@@ -289,8 +300,10 @@ strong {
       &:nth-child(1) {
         flex-basis: 10%;
       }
+
       &:nth-child(2) {
         flex-basis: 25%;
+
         // inline-grid property because it doesnt work the right way
         display: inline-grid;
 
@@ -300,6 +313,7 @@ strong {
           text-overflow: ellipsis;
         }
       }
+
       &:nth-child(3) {
         flex-basis: 35%;
         display: inline-grid;
@@ -310,6 +324,7 @@ strong {
           text-overflow: ellipsis;
         }
       }
+
       &:nth-child(4) {
         flex-basis: 20%;
         justify-content: space-around;
@@ -318,9 +333,11 @@ strong {
           margin-right: 5px;
         }
       }
+
       &:nth-child(5) {
         flex-basis: 5%;
       }
+
       &:nth-child(6) {
         flex-basis: 5%;
         justify-content: flex-end;
@@ -333,7 +350,7 @@ strong {
   }
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (width <= 680px) {
   .table--activities tr td {
     display: flex;
 
@@ -410,9 +427,9 @@ strong {
   z-index: 1;
 }
 
-@media (max-width: 680px) {
+@media (width <= 680px) {
   .activity-customer-visible-icon {
-    margin-top: 0rem;
+    margin-top: 0;
     margin-right: 10px;
   }
 
