@@ -12,8 +12,8 @@
   "scripts": {
     "build": "ember build --environment=production",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
-    "lint:css": "stylelint \"**/*.css\"",
-    "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
+    "lint:scss": "stylelint \"**/*.scss\"",
+    "lint:scss:fix": "concurrently \"npm:lint:scss -- --fix\"",
     "lint:fix": "concurrently \"npm:lint:*:fix\" --names \"fix:\"",
     "lint:hbs": "ember-template-lint . --config-path .template-lintrc-ci.js",
     "lint:hbs:fix": "ember-template-lint . --fix",
@@ -125,8 +125,9 @@
     "sass": "1.58.3",
     "shepherd.js": "^11.2.0",
     "simplebar": "^6.2.5",
-    "stylelint": "^15.4.0",
+    "stylelint": "^16.4.0",
     "stylelint-config-standard": "^32.0.0",
+    "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-prettier": "^3.0.0",
     "tracked-built-ins": "3.1.1",
     "tracked-toolbox": "2.0.0",
@@ -152,5 +153,8 @@
         "marked"
       ]
     }
+  },
+  "dependencies": {
+    "stylelint-scss": "^6.3.0"
   }
 }
