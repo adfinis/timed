@@ -12,6 +12,7 @@ module.exports = function (environment) {
       includeTimezone: "all",
     },
     EmberENV: {
+      EXTEND_PROTOTYPES: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
