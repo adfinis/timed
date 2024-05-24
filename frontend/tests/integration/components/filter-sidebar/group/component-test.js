@@ -8,9 +8,9 @@ module("Integration | Component | filter sidebar/group", function (hooks) {
 
   test("renders", async function (assert) {
     await render(hbs`
-      {{#filter-sidebar/group label='Group'}}
+      <FilterSidebar::Group @label="Group">
         Group content
-      {{/filter-sidebar/group}}
+      </FilterSidebar::Group>
     `);
 
     assert.dom(".filter-sidebar-group-label").includesText("Group");
@@ -19,9 +19,9 @@ module("Integration | Component | filter sidebar/group", function (hooks) {
 
   test("can be toggled", async function (assert) {
     await render(hbs`
-      {{#filter-sidebar/group label='Group'}}
+      <FilterSidebar::Group @label="Group">
         Group content
-      {{/filter-sidebar/group}}
+      </FilterSidebar::Group>
     `);
 
     assert.dom(".filter-sidebar-group--expanded").doesNotExist();

@@ -210,7 +210,7 @@ module("Integration | Component | task selection", function (hooks) {
         {{t.customer}}
         {{t.project}}
         {{t.task}}
-        <button {{on "click" t.clear}}></button>
+        <button type="button" {{on "click" t.clear}}></button>
       </TaskSelection>
     `);
 
