@@ -14,8 +14,8 @@ module("Integration | Component | date buttons", function (hooks) {
 
     await render(
       hbs`<DateButtons
-        @onUpdateFromDate={{(action (mut this.fromDate))}}
-        @onUpdateToDate={{(action (mut this.toDate))}}
+        @onUpdateFromDate={{(fn (mut this.fromDate))}}
+        @onUpdateToDate={{(fn (mut this.toDate))}}
       />
       `
     );
