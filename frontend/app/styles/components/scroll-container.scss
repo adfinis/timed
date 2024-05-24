@@ -11,11 +11,7 @@
     left: 0;
     right: 0;
     height: 7px;
-    background: linear-gradient(
-      to bottom,
-      rgb(0 0 0 / 3%),
-      rgb(0 0 0 / 0%)
-    );
+    background: linear-gradient(to bottom, rgb(0 0 0 / 3%), rgb(0 0 0 / 0%));
   }
 
   &::before {

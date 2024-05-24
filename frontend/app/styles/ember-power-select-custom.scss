@@ -9,7 +9,10 @@
   position: relative;
 }
 
-.ember-power-select-option:not(.ember-power-select-option--no-matches-message, .ember-power-select-option--loading-message) {
+.ember-power-select-option:not(
+    .ember-power-select-option--no-matches-message,
+    .ember-power-select-option--loading-message
+  ) {
   padding: 0;
   line-height: 1;
 

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .weekly-overview-day {
   height: 0%;
   width: 15px;
@@ -5,6 +7,25 @@
   z-index: 1;
   cursor: pointer;
   transition: height 300ms ease;
+
+  .bar {
+    background-color: rgb(150 150 150);
+    height: 100%;
+    width: 100%;
+    transition: background-color 300ms ease;
+  }
+
+  .day {
+    position: absolute;
+    font-family: $font-family-mono;
+    font-size: 12px;
+    left: 50%;
+    bottom: -35px;
+    text-align: center;
+    transform: translateX(-50%);
+    color: rgb(150 150 150);
+    transition: color 300ms ease;
+  }
 
   &.weekend,
   &.holiday {
@@ -43,30 +64,11 @@
 
   &:hover {
     .bar {
-      background-color: desaturate($color-primary, 30%);
+      background-color: color.adjust($color-primary, $saturation: -30%);
     }
 
     .day {
-      color: desaturate($color-primary, 30%);
+      color: color.adjust($color-primary, $saturation: -30%);
     }
-  }
-
-  .bar {
-    background-color: rgb(150 150 150);
-    height: 100%;
-    width: 100%;
-    transition: background-color 300ms ease;
-  }
-
-  .day {
-    position: absolute;
-    font-family: $font-family-mono;
-    font-size: 12px;
-    left: 50%;
-    bottom: -35px;
-    text-align: center;
-    transform: translateX(-50%);
-    color: rgb(150 150 150);
-    transition: color 300ms ease;
   }
 }
