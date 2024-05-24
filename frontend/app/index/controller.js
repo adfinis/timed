@@ -421,7 +421,6 @@ export default class IndexController extends Controller {
     const params = {
       from_date: from.format("YYYY-MM-DD"),
       to_date: to.format("YYYY-MM-DD"),
-      user: this.currentUser.user?.id,
     };
 
     const absences = yield this.store.query("absence", params);
@@ -429,7 +428,7 @@ export default class IndexController extends Controller {
     const publicHolidays = yield this.store.query("public-holiday", {
       ...params,
       // eslint-disable-next-line ember/no-get
-      location: get(this, "user.activeEmployment.location.id"),
+      location: this.currentUser.user.activeEmployment.location.get("id"),
     });
 
     const disabled = [
