@@ -122,7 +122,7 @@
     "simplebar": "^6.2.5",
     "tracked-built-ins": "3.1.1",
     "tracked-toolbox": "2.0.0",
-    "webpack": "5.76.2"
+    "webpack": "5.91.0"
   },
   "engines": {
     "node": ">= 18"
