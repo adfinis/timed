@@ -80,7 +80,7 @@ class TaskInlineFormset(BaseInlineFormSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         project = kwargs["instance"]
-        if project.tasks.count() == 0:
+        if not project.pk or project.tasks.count() == 0:
             self.initial = [
                 {"name": tmpl.name}
                 for tmpl in models.TaskTemplate.objects.order_by("name")
