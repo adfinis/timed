@@ -91,7 +91,7 @@ export default class IndexReportController extends Controller {
       );
     });
 
-    return absences.firstObject;
+    return absences[0];
   }
 
   @action

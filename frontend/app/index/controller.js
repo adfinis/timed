@@ -267,7 +267,7 @@ export default class IndexController extends Controller {
    * @public
    */
   get absence() {
-    return this._absences?.firstObject ?? null;
+    return this._absences[0] ?? null;
   }
 
   /**
@@ -375,9 +375,9 @@ export default class IndexController extends Controller {
       let prefix = "";
 
       if (publicHolidays.length) {
-        prefix = publicHolidays.get("firstObject.name");
+        prefix = publicHolidays[0].get("name");
       } else if (absences.length) {
-        prefix = absences.get("firstObject.absenceType.name");
+        prefix = absences[0].get("absenceType.name");
       }
 
       return {

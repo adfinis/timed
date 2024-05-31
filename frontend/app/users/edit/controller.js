@@ -24,7 +24,7 @@ export default class UsersEditController extends Controller {
       last_reported_date: 1, // eslint-disable-line camelcase
     });
 
-    return worktimeBalance.get("firstObject");
+    return worktimeBalance[0];
   }
 
   @task
@@ -34,7 +34,7 @@ export default class UsersEditController extends Controller {
       date: moment().format("YYYY-MM-DD"),
     });
 
-    return worktimeBalance.get("firstObject");
+    return worktimeBalance[0];
   }
 
   @task
@@ -59,7 +59,7 @@ export default class UsersEditController extends Controller {
           date: date.format("YYYY-MM-DD"),
         });
 
-        return balance.get("firstObject");
+        return balance[0];
       })
     );
   }

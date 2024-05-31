@@ -36,7 +36,7 @@ export default class UsersEditResponsibilitiesController extends Controller {
     return yield all(
       balances
         .map((b) => b.user)
-        .filter((u) => u.isActive)
+        .filter((u) => u.get("isActive"))
         .map(async (user) => {
           const absenceBalances = await this.store.query("absence-balance", {
             date: moment().format("YYYY-MM-DD"),
