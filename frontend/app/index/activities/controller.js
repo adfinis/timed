@@ -145,7 +145,9 @@ export default class ActivitiesIndexController extends Controller {
    */
   @action
   generateReportsCheck() {
-    const hasUnknown = !!this.activities.findBy("task.id", undefined);
+    const hasUnknown = !!this.activities.find(
+      (a) => a.task.get("id") === undefined
+    );
     const hasOverlapping = !!this.sortedActivities.find((a) => {
       return a.get("active") && !a.get("from").isSame(moment(), "day");
     });

@@ -156,8 +156,8 @@ export default class IndexReportController extends Controller {
   async reschedule(date) {
     try {
       const reports = this.reports
-        .filterBy("isNew", false)
-        .rejectBy("verifiedBy.id");
+        .filter((r) => r.isNew === false)
+        .filter((r) => !r.verifiedBy.id);
 
       // The magic number "-1" is the placeholder report row which we filter out
       // via the filterBy("isNew") line above.

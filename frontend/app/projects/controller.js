@@ -33,13 +33,11 @@ export default class ProjectsController extends Controller {
   }
 
   get customers() {
-    return (
-      this.projects
-        ?.map((p) => p.get("customer"))
-        .filter(Boolean)
-        .uniqBy("id")
-        .sortBy("name") ?? []
-    );
+    return [
+      ...(new Set(
+        this.projects?.map((p) => p.get("customer")).filter(Boolean)
+      ) ?? []),
+    ].sort((c) => c.get("name"));
   }
 
   @task
