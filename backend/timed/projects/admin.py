@@ -17,7 +17,7 @@ class CustomerAssigneeInline(admin.TabularInline):
     extra = 0
 
 
-class ProjectAssigneeInline(NestedStackedInline):
+class ProjectAssigneeInline(admin.StackedInline):
     autocomplete_fields = ("user",)
     model = models.ProjectAssignee
     extra = 0
