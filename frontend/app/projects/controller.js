@@ -98,6 +98,7 @@ export default class ProjectsController extends Controller {
     }
 
     this.fetchTasksByProject.perform(this.selectedProject);
+    this.selectedTask = undefined;
   }
 
   @dropTask
