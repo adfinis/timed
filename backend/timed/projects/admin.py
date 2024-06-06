@@ -18,6 +18,7 @@ class CustomerAssigneeInline(admin.TabularInline):
 
 
 class ProjectAssigneeInline(admin.StackedInline):
+    inlines = ()
     autocomplete_fields = ("user",)
     model = models.ProjectAssignee
     extra = 0
