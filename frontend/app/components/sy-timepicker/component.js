@@ -179,7 +179,9 @@ export default class SyTimepickerComponent extends Component {
     let base = this.value;
 
     if (!this.args.value) {
-      base = [h, m].any((n) => n < 0) ? this.max.add(1, "minute") : this.min;
+      base = [h, m].filter((n) => n < 0).length
+        ? this.max.add(1, "minute")
+        : this.min;
     }
 
     return moment(base).add({ h, m });
