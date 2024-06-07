@@ -56,7 +56,7 @@ export default class ProjectsController extends Controller {
         });
       }
 
-      return projects.sortBy("name");
+      return projects.sort((p) => p.name);
     } catch (error) {
       /* istanbul ignore next */
       this.notify.error("Error while fetching projects");
