@@ -12,7 +12,7 @@ module("Unit | Ability | report", function (hooks) {
     const currentUser = this.owner.lookup("service:currentUser");
     currentUser.user = EmberObject.create({ isSuperuser: true });
 
-    assert.true(ability.get("canEdit"));
+    assert.true(ability.canEdit);
   });
 
   test("can edit when user is superuser and report is verified", function (assert) {
@@ -21,7 +21,7 @@ module("Unit | Ability | report", function (hooks) {
     currentUser.user = EmberObject.create({ isSuperuser: true });
     ability.set("model", { verifiedBy: EmberObject.create({ id: 1 }) });
 
-    assert.true(ability.get("canEdit"));
+    assert.true(ability.canEdit);
   });
 
   test("can edit when user owns report", function (assert) {
@@ -30,7 +30,7 @@ module("Unit | Ability | report", function (hooks) {
     currentUser.user = EmberObject.create({ id: 1 });
     ability.set("model", { user: EmberObject.create({ id: 1 }) });
 
-    assert.true(ability.get("canEdit"));
+    assert.true(ability.canEdit);
   });
 
   test("can edit when user is supervisor of owner", function (assert) {
@@ -41,7 +41,7 @@ module("Unit | Ability | report", function (hooks) {
       user: EmberObject.create({ supervisors: [{ id: 1 }] }),
     });
 
-    assert.true(ability.get("canEdit"));
+    assert.true(ability.canEdit);
   });
 
   test("can edit when user reviewer of project", function (assert) {
@@ -57,7 +57,7 @@ module("Unit | Ability | report", function (hooks) {
       })
     );
 
-    assert.true(ability.get("canEdit"));
+    assert.true(ability.canEdit);
   });
 
   test("can not edit when not allowed", function (assert) {
@@ -70,7 +70,7 @@ module("Unit | Ability | report", function (hooks) {
       projectAssignees: [{ id: 2 }],
     });
 
-    assert.false(ability.get("canEdit"));
+    assert.false(ability.canEdit);
   });
 
   test("can not edit when report is verified and billed", function (assert) {
@@ -84,6 +84,6 @@ module("Unit | Ability | report", function (hooks) {
       billed: true,
     });
 
-    assert.false(ability.get("canEdit"));
+    assert.false(ability.canEdit);
   });
 });
