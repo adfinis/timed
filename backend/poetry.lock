@@ -580,13 +580,13 @@ django = ">=3.0"
 
 [[package]]
 name = "djangorestframework-jsonapi"
-version = "7.0.0"
+version = "7.0.1"
 description = "A Django REST framework API adapter for the JSON:API spec."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "djangorestframework-jsonapi-7.0.0.tar.gz", hash = "sha256:0395cc51cb80732a2da5de72272e147c9b491764a23bca97d16d183ce4406562"},
-    {file = "djangorestframework_jsonapi-7.0.0-py2.py3-none-any.whl", hash = "sha256:99825170b5cea14380a70d2c7c45e8b65efb7f13f46b72dfcfa4101ddc7078df"},
+    {file = "djangorestframework-jsonapi-7.0.1.tar.gz", hash = "sha256:598a31b0c533f7c5b3c1aa437a15c4c32e7a8625113c56ea81cf9a30368dd10e"},
+    {file = "djangorestframework_jsonapi-7.0.1-py2.py3-none-any.whl", hash = "sha256:5285d273cfe0ac8e9a3bbeaa31c55eec813ebb1b6cc02eecb83e7e366b051f41"},
 ]
 
 [package.dependencies]
@@ -1972,4 +1972,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "ea13a06e7a2583dff610379bf76be441ef69a8f6ca17d27a358297dd82e0c18c"
+content-hash = "6591bf69a25f105a3ec7fb4454abd0067cb0c25926a446b2abe2bb3a56209c52"
