@@ -77,7 +77,7 @@ export default class IndexReportController extends Controller {
       scheduleOnce("actions", this, "createEmptyReport");
     }
 
-    return reportsToday.sort((r) => r.isNew);
+    return reportsToday.toSorted((r) => r.isNew);
   }
 
   @cached

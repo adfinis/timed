@@ -67,7 +67,7 @@ export default class ActivitiesIndexController extends Controller {
   }
 
   get sortedActivities() {
-    return this.activities.sort((a, b) => {
+    return this.activities.toSorted((a, b) => {
       return b.get("from").toDate() - a.get("from").toDate();
     });
   }

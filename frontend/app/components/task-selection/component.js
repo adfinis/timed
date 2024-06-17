@@ -244,7 +244,7 @@ export default class TaskSelectionComponent extends Component {
     const customers = this.store
       .peekAll("customer")
       ?.filter(this.filterByArchived)
-      .sort((c) => c.name);
+      .toSorted((c) => c.name);
 
     const tasks = this.store.peekAll("task").filter((task) => {
       return ids.includes(task.id) && this.filterByArchived(task);
@@ -266,13 +266,13 @@ export default class TaskSelectionComponent extends Component {
   get projects() {
     return this.customer?.projects
       ?.filter(this.filterByArchived)
-      .sort((p) => p.name);
+      .toSorted((p) => p.name);
   }
 
   get tasks() {
     return this.project?.tasks
       ?.filter(this.filterByArchived)
-      .sort((t) => t.name);
+      .toSorted((t) => t.name);
   }
 
   @action

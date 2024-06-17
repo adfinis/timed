@@ -37,7 +37,7 @@ export default class ProjectsController extends Controller {
       ...(new Set(
         this.projects?.map((p) => p.get("customer")).filter(Boolean)
       ) ?? []),
-    ].sort((c) => c.get("name"));
+    ].toSorted((c) => c.get("name"));
   }
 
   @task
@@ -56,7 +56,7 @@ export default class ProjectsController extends Controller {
         });
       }
 
-      return projects.sort((p) => p.name);
+      return projects.toSorted((p) => p.name);
     } catch (error) {
       /* istanbul ignore next */
       this.notify.error("Error while fetching projects");
