@@ -3,6 +3,23 @@
   flex-direction: row-reverse;
 }
 
+.table--activity-edit > tbody > tr > td {
+  vertical-align: middle;
+  text-align: center;
+
+  &:nth-child(1) {
+    width: 80px;
+  }
+
+  &:nth-child(2) {
+    width: 25px;
+  }
+
+  &:nth-child(3) {
+    width: 80px;
+  }
+}
+
 .activities-list {
   flex: 1 1 auto;
   overflow: hidden;
@@ -22,21 +39,6 @@
 
   &:not(:empty) + .activities-list {
     flex-basis: 0%;
-  }
-}
-
-.table--activity-edit > tbody > tr > td {
-  vertical-align: middle;
-  text-align: center;
-
-  &:nth-child(1) {
-    width: 80px;
-  }
-  &:nth-child(2) {
-    width: 25px;
-  }
-  &:nth-child(3) {
-    width: 80px;
   }
 }
 

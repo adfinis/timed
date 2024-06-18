@@ -3,7 +3,7 @@
     <div class="filter-sidebar-title">
       {{#if @appliedCount}}
         {{@appliedCount}}
-        Filter{{if (not (eq @appliedCount 1)) "s"}}
+        Filter{{if (not-eq @appliedCount 1) "s"}}
         applied
       {{else}}
         Filters

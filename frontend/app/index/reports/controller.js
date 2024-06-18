@@ -77,7 +77,7 @@ export default class IndexReportController extends Controller {
       scheduleOnce("actions", this, "createEmptyReport");
     }
 
-    return reportsToday.sort((r) => r.isNew);
+    return reportsToday.toSorted((r) => r.isNew);
   }
 
   @cached
@@ -91,7 +91,7 @@ export default class IndexReportController extends Controller {
       );
     });
 
-    return absences.firstObject;
+    return absences[0];
   }
 
   @action
@@ -156,8 +156,8 @@ export default class IndexReportController extends Controller {
   async reschedule(date) {
     try {
       const reports = this.reports
-        .filterBy("isNew", false)
-        .rejectBy("verifiedBy.id");
+        .filter((r) => r.isNew === false)
+        .filter((r) => !r.verifiedBy.id);
 
       // The magic number "-1" is the placeholder report row which we filter out
       // via the filterBy("isNew") line above.

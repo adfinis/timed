@@ -87,9 +87,11 @@ export default class IndexController extends Controller {
    * @public
    */
   get storedActivitiesDuration() {
-    return this._activities.rejectBy("active").reduce((total, current) => {
-      return total.add(current.get("duration"));
-    }, moment.duration());
+    return this._activities
+      .filter((a) => !a.active)
+      .reduce((total, current) => {
+        return total.add(current.get("duration"));
+      }, moment.duration());
   }
 
   /**
@@ -108,7 +110,7 @@ export default class IndexController extends Controller {
       return;
     }
     const duration = this._activities
-      .filterBy("active")
+      .filter((a) => a.active)
       .reduce((total, current) => {
         return total.add(moment().diff(current.get("from")));
       }, moment.duration());
@@ -246,8 +248,8 @@ export default class IndexController extends Controller {
    * @public
    */
   get reportSum() {
-    const reportDurations = this._reports.mapBy("duration");
-    const absenceDurations = this._absences.mapBy("duration");
+    const reportDurations = this._reports.map((r) => r.duration);
+    const absenceDurations = this._absences.map((a) => a.duration);
 
     return [...reportDurations, ...absenceDurations].reduce(
       (val, dur) => val.add(dur),
@@ -265,7 +267,7 @@ export default class IndexController extends Controller {
    * @public
    */
   get absence() {
-    return this._absences?.firstObject ?? null;
+    return this._absences[0] ?? null;
   }
 
   /**
@@ -348,19 +350,18 @@ export default class IndexController extends Controller {
     //  }
     //  ...
     // }
-    const container = [
-      ...allReports.toArray(),
-      ...allAbsences.toArray(),
-      ...allHolidays.toArray(),
-    ].reduce((obj, model) => {
-      const d = model.get("date").format("YYYY-MM-DD");
+    const container = [...allReports, ...allAbsences, ...allHolidays].reduce(
+      (obj, model) => {
+        const d = model.get("date").format("YYYY-MM-DD");
 
-      obj[d] = obj[d] || { reports: [], absences: [], publicHolidays: [] };
+        obj[d] = obj[d] || { reports: [], absences: [], publicHolidays: [] };
 
-      obj[d][`${camelize(model.constructor.modelName)}s`].push(model);
+        obj[d][`${camelize(model.constructor.modelName)}s`].push(model);
 
-      return obj;
-    }, {});
+        return obj;
+      },
+      {}
+    );
 
     return Array.from({ length: 31 }, (value, index) =>
       moment(this.date).add(index - 20, "days")
@@ -374,9 +375,9 @@ export default class IndexController extends Controller {
       let prefix = "";
 
       if (publicHolidays.length) {
-        prefix = publicHolidays.get("firstObject.name");
+        prefix = publicHolidays[0].get("name");
       } else if (absences.length) {
-        prefix = absences.get("firstObject.absenceType.name");
+        prefix = absences[0].get("absenceType.name");
       }
 
       return {
@@ -385,8 +386,8 @@ export default class IndexController extends Controller {
         absence: !!absences.length,
         workday: this.workdays.includes(d.isoWeekday()),
         worktime: [
-          ...reports.mapBy("duration"),
-          ...absences.mapBy("duration"),
+          ...reports.map((r) => r.duration),
+          ...absences.map((r) => r.duration),
         ].reduce((val, dur) => val.add(dur), moment.duration()),
         holiday: !!publicHolidays.length,
         prefix,
@@ -432,8 +433,8 @@ export default class IndexController extends Controller {
     });
 
     const disabled = [
-      ...absences.mapBy("date"),
-      ...publicHolidays.mapBy("date"),
+      ...absences.map((a) => a.date),
+      ...publicHolidays.map((h) => h.date),
     ];
     const date = moment(from);
     const workdays = this.workdays;

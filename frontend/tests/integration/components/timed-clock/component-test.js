@@ -7,7 +7,7 @@ module("Integration | Component | timed clock", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(hbs`{{timed-clock}}`);
+    await render(hbs`<TimedClock />`);
     assert.ok(this.element);
   });
 });

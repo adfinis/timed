@@ -7,7 +7,7 @@ module("Integration | Component | report review warning", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(hbs`{{report-review-warning}}`);
+    await render(hbs`<ReportReviewWarning />`);
     assert.ok(this.element);
   });
 });
