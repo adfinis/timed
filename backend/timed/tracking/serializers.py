@@ -453,8 +453,7 @@ class AbsenceSerializer(ModelSerializer):
         ).exists():
             raise ValidationError(_("You can't create an absence on a public holiday"))
 
-        workdays = [int(day) for day in location.workdays]
-        if data.get("date").isoweekday() not in workdays:
+        if data.get("date").isoweekday() not in location.workdays:
             raise ValidationError(_("You can't create an absence on a weekend"))
 
         return data
