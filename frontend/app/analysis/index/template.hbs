@@ -15,6 +15,7 @@
         customer=this.selectedCustomer
         project=this.selectedProject
         task=this.selectedTask
+        comment=this.comment
       }}
       as |t|
     >
@@ -41,6 +42,15 @@
               <fs.filter data-test-filter-task>
                 <t.task />
               </fs.filter>
+            </fs.label>
+            <fs.label>
+              Comment
+            <fs.filter data-test-filter-comment>
+              {{#let (unique-id) as |id|}}
+                <label for={{id}} hidden>comment</label>
+                <input id={{id}} value={{this.comment}} {{ on "change" (fn this.setModelFilterOnChange "comment")}} class="form-control comment-field" placeholder="Comment" name="comment" />
+              {{/let}}
+            </fs.filter>
             </fs.label>
           </fs.group>
           <fs.group @label="Responsibility">

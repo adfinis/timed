@@ -29,6 +29,7 @@ import config from "../../config/environment";
 export default class AnalysisController extends QPController {
   queryParams = [
     "customer",
+    "comment",
     "costCenter",
     "project",
     "task",
@@ -82,6 +83,7 @@ export default class AnalysisController extends QPController {
   @tracked billed;
   @tracked costCenter;
   @tracked ordering = "-date";
+  @tracked comment;
 
   get billingTypes() {
     return this.store.findAll("billing-type");
@@ -146,6 +148,12 @@ export default class AnalysisController extends QPController {
   @action
   setModelFilter(key, value) {
     this[key] = value && value.id;
+    this._reset();
+  }
+
+  @action
+  setModelFilterOnChange(key, event) {
+    this[key] = event.target.value ? event.target.value : undefined;
     this._reset();
   }
 

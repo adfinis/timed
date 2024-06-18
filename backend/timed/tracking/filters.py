@@ -10,6 +10,7 @@ from django_filters.constants import EMPTY_VALUES
 from django_filters.rest_framework import (
     BaseInFilter,
     BooleanFilter,
+    CharFilter,
     DateFilter,
     Filter,
     FilterSet,
@@ -112,6 +113,7 @@ class ReportFilterSet(FilterSet):
     user = NumberFilter(field_name="user_id")
     cost_center = NumberFilter(method="filter_cost_center")
     rejected = NumberFilter(field_name="rejected")
+    comment = CharFilter(field_name="comment", lookup_expr="search")
 
     def filter_has_reviewer(
         self, queryset: QuerySet[models.Report], _name: str, value: int
