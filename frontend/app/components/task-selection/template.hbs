@@ -48,6 +48,14 @@
         optionTemplate=this.taskOptionTemplate
       )
     )
+    comment=(component
+      (ensure-safe-component "filter-sidebar/filter")
+      type="text"
+      placeholder="Comment"
+      value=this.comment
+      onChange=this.onCommentChange
+      class="form-control comment-field"
+    )
     clear=this.clear
     reset=this.reset
   )

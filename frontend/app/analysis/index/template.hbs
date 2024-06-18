@@ -10,10 +10,12 @@
       @on-set-customer={{fn this.setModelFilter "customer"}}
       @on-set-project={{fn this.setModelFilter "project"}}
       @on-set-task={{fn this.setModelFilter "task"}}
+      @on-set-comment={{fn this.setModelFilter2 "comment"}}
       @initial={{hash
         customer=this.selectedCustomer
         project=this.selectedProject
         task=this.selectedTask
+        comment=this.comment
       }}
       as |t|
     >
@@ -43,6 +45,12 @@
               <fs.filter data-test-filter-task>
                 <t.task />
               </fs.filter>
+            </fs.label>
+            <fs.label>
+              Comment
+            <fs.filter data-test-filter-comment>
+              <t.comment />
+            </fs.filter>
             </fs.label>
           </fs.group>
           <fs.group @label="Responsibility">

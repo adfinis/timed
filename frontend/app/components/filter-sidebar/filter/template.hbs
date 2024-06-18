@@ -12,6 +12,11 @@
         {{yield}}
       {{/each}}
     </div>
+  {{else if (eq @type "text")}}
+    {{#let (unique-id) as |id|}}
+      <label for={{id}} hidden>{{@name}}</label>
+      <input id={{id}} value={{@value}} {{ on "change" (optional @onChange) }} class={{@class}} placeholder={{@placeholder}} name={{@name}} />
+    {{/let}}
   {{else if (eq @type "date")}}
     <SyDatepicker
       @value={{@selected}}
