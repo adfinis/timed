@@ -28,7 +28,7 @@ class Location(models.Model):
     """
 
     name = models.CharField(max_length=50, unique=True)
-    workdays = WeekdaysField(default=[str(day) for day in range(1, 6)])
+    workdays = WeekdaysField(default=list(range(1, 6)))
     """
     Workdays defined per location, default is Monday - Friday
     """

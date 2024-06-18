@@ -40,7 +40,7 @@ def test_location_list(
     data = response.json()["data"]
     assert len(data) == expected
     if expected:
-        assert data[0]["attributes"]["workdays"] == ([str(day) for day in range(1, 6)])
+        assert data[0]["attributes"]["workdays"] == ",".join(map(str, range(1, 6)))
 
 
 @pytest.mark.parametrize(

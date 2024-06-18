@@ -53,7 +53,6 @@ HOST_DOMAIN = env.str("DJANGO_HOST_DOMAIN", default=default("localhost:4200"))
 INSTALLED_APPS = [
     "timed.apps.TimedAdminConfig",
     "django.contrib.humanize",
-    "multiselectfield.apps.MultiSelectFieldConfig",
     "django.forms",
     "django.contrib.auth",
     "django.contrib.contenttypes",
