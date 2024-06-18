@@ -12,7 +12,7 @@ export default class UserAbility extends Ability {
     return (
       this.user?.isSuperuser ||
       this.user?.id === this.model.id ||
-      this.model.supervisors.mapBy("id").includes(this.user?.id)
+      this.model.supervisors.map((s) => s.id).includes(this.user?.id)
     );
   }
 }

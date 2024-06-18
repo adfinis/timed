@@ -7,7 +7,7 @@ module("Integration | Component | sy durationpicker day", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(hbs`{{sy-durationpicker-day}}`);
+    await render(hbs`<SyDurationpickerDay />`);
     assert.ok(this.element);
   });
 });

@@ -33,13 +33,11 @@ export default class ProjectsController extends Controller {
   }
 
   get customers() {
-    return (
-      this.projects
-        ?.map((p) => p.get("customer"))
-        .filter(Boolean)
-        .uniqBy("id")
-        .sortBy("name") ?? []
-    );
+    return [
+      ...(new Set(
+        this.projects?.map((p) => p.get("customer")).filter(Boolean)
+      ) ?? []),
+    ].toSorted((c) => c.get("name"));
   }
 
   @task
@@ -58,7 +56,7 @@ export default class ProjectsController extends Controller {
         });
       }
 
-      return projects.sortBy("name");
+      return projects.toSorted((p) => p.name);
     } catch (error) {
       /* istanbul ignore next */
       this.notify.error("Error while fetching projects");

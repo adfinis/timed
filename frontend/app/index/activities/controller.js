@@ -67,7 +67,7 @@ export default class ActivitiesIndexController extends Controller {
   }
 
   get sortedActivities() {
-    return this.activities.sort((a, b) => {
+    return this.activities.toSorted((a, b) => {
       return b.get("from").toDate() - a.get("from").toDate();
     });
   }
@@ -145,7 +145,9 @@ export default class ActivitiesIndexController extends Controller {
    */
   @action
   generateReportsCheck() {
-    const hasUnknown = !!this.activities.findBy("task.id", undefined);
+    const hasUnknown = !!this.activities.find(
+      (a) => a.task.get("id") === undefined
+    );
     const hasOverlapping = !!this.sortedActivities.find((a) => {
       return a.get("active") && !a.get("from").isSame(moment(), "day");
     });

@@ -105,7 +105,7 @@
                       {{#if (eq model.comment null)}}
                         <NotIdenticalWarning />
                       {{/if}}
-                      {{#if (not (eq f.model.comment model.comment))}}
+                      {{#if (not-eq f.model.comment model.comment)}}
                         <ChangedWarning />
                       {{/if}}
                       <input
@@ -132,7 +132,7 @@
                       {{#if (eq model.notBillable null)}}
                         <NotIdenticalWarning />
                       {{/if}}
-                      {{#if (not (eq f.model.notBillable model.notBillable))}}
+                      {{#if (not-eq f.model.notBillable model.notBillable)}}
                         <ChangedWarning />
                       {{/if}}
                     </SyCheckbox>
@@ -148,7 +148,7 @@
                       {{#if (eq model.review null)}}
                         <NotIdenticalWarning />
                       {{/if}}
-                      {{#if (not (eq f.model.review model.review))}}
+                      {{#if (not-eq f.model.review model.review)}}
                         <ChangedWarning />
                       {{/if}}
                     </SyCheckbox>
@@ -168,7 +168,7 @@
                       {{#if (eq model.rejected null)}}
                         <NotIdenticalWarning />
                       {{/if}}
-                      {{#if (not (eq f.model.rejected model.rejected))}}
+                      {{#if (not-eq f.model.rejected model.rejected)}}
                         <ChangedWarning />
                       {{/if}}
                     </SyCheckbox>
@@ -189,7 +189,7 @@
                       {{#if (eq model.billed null)}}
                         <NotIdenticalWarning />
                       {{/if}}
-                      {{#if (not (eq f.model.billed model.billed))}}
+                      {{#if (not-eq f.model.billed model.billed)}}
                         <ChangedWarning />
                       {{/if}}
                     </SyCheckbox>
@@ -207,7 +207,7 @@
                       {{#if (eq model.verified null)}}
                         <NotIdenticalWarning />
                       {{/if}}
-                      {{#if (not (eq f.model.verified model.verified))}}
+                      {{#if (not-eq f.model.verified model.verified)}}
                         <ChangedWarning />
                       {{/if}}
                     </SyCheckbox>

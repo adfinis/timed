@@ -240,7 +240,7 @@ export default class AnalysisController extends QPController {
         data.get("meta.pagination.pages") !== data.get("meta.pagination.page");
       this._lastPage = data.get("meta.pagination.page");
 
-      this._dataCache.pushObjects(mappedReports.toArray());
+      this._dataCache.pushObjects(mappedReports);
     }
 
     return this._dataCache;
@@ -248,18 +248,15 @@ export default class AnalysisController extends QPController {
 
   @task
   *fetchAssignees(data) {
-    const projectIds = data
-      .map((report) => report.get("task.project.id"))
-      .uniq()
-      .join(",");
-    const taskIds = data
-      .map((report) => report.get("task.id"))
-      .uniq()
-      .join(",");
-    const customerIds = data
-      .map((report) => report.get("task.project.customer.id"))
-      .uniq()
-      .join(",");
+    const projectIds = [
+      ...new Set(data.map((report) => report.get("task.project.id"))),
+    ].join(",");
+    const taskIds = [
+      ...new Set(data.map((report) => report.get("task.id"))),
+    ].join(",");
+    const customerIds = [
+      ...new Set(data.map((report) => report.get("task.project.customer.id"))),
+    ].join(",");
 
     const projectAssignees = projectIds.length
       ? yield this.store.query("project-assignee", {
