@@ -382,16 +382,17 @@ class WorkReportViewSet(GenericViewSet):
             )
 
         # calculate location of total hours as insert rows moved it
-        table[
-            13 + len(reports) + len(tasks), 2
-        ].formula = f"of:=SUM(C13:C{13 + len(reports) - 1!s})"
+        table[pos + len(tasks), 2].formula = f"of:=SUM(C13:C{pos - 1!s})"
 
         # calculate location of total not billable hours as insert rows moved it
         table[
-            13 + len(reports) + len(tasks) + 1, 2
-        ].formula = 'of:=SUMIF(F13:F{0};"no";C13:C{0})'.format(
-            str(13 + len(reports) - 1)
-        )
+            pos + len(tasks) + 1, 2
+        ].formula = f"of:=C{pos + len(tasks) + 1!s}-C{pos + len(tasks) + 3!s}"
+
+        # calculate location of total billable hours as insert rows moved it
+        table[
+            pos + len(tasks) + 2, 2
+        ].formula = f'of:=SUMIF(F13:F{pos -1!s};"yes";C13:C{pos - 1!s})'
 
         name = self._generate_workreport_name(from_date, project)
         return (name, doc)
