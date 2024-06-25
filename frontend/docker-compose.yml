@@ -23,21 +23,26 @@ services:
       - 8000:80
     depends_on:
       - db
-      - mailhog
+      - mailpit
     environment:
       - DJANGO_DATABASE_HOST=db
       - DJANGO_DATABASE_PORT=5432
       - ENV=docker
+      - DJANGO_EMAIL_USE_TLS=False
       - STATIC_ROOT=/var/www/static
-      - EMAIL_URL=smtp://mailhog:1025
+      - EMAIL_URL=smtp://mailpit:1025
     command: /bin/sh -c "wait-for-it.sh -t 60 db:5432 -- ./manage.py migrate && ./manage.py loaddata timed/fixtures/test_data.json && uwsgi"
 
-  mailhog:
-    image: mailhog/mailhog
+  mailpit:
+    image: axllent/mailpit
     ports:
       - 8025:8025
+      - 1025:1025
     environment:
-      - MH_UI_WEB_PATH=mailhog
+      MP_WEBROOT: mailpit
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
 
 volumes:
   dbdata:
