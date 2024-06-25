@@ -6,13 +6,14 @@ services:
       context: ./backend
       target: dev
     depends_on:
-      - mailhog
+      - mailpit
       - db
     environment:
       - ENV=dev
-      - EMAIL_URL=smtp://mailhog:1025
+      - EMAIL_URL=smtp://mailpit:1025
       - DJANGO_OIDC_USERNAME_CLAIM=preferred_username
       - STATIC_ROOT=/var/www/static
+      - DJANGO_EMAIL_USE_TLS=False
     volumes:
       - ./backend:/app
     ports:
@@ -63,10 +64,12 @@ services:
         aliases:
           - timed.local
 
-  mailhog:
-    image: mailhog/mailhog
+  mailpit:
+    image: axllent/mailpit
     environment:
-      - MH_UI_WEB_PATH=mailhog
+      MP_WEBROOT: mailpit
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
   db:
     image: postgres:14.4

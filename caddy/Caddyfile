@@ -7,7 +7,11 @@
 
     reverse_proxy /auth* http://keycloak:8080
 
-    reverse_proxy /mailhog* http://mailhog:8025
+    redir /mailpit /mailpit/
+    handle_path /mailpit/* {
+        rewrite * /mailpit{path}
+        reverse_proxy mailpit:8025
+    }
 
     reverse_proxy /* http://frontend:80
 
