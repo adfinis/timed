@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 from django.contrib.auth import get_user_model
 from django.db.models import BooleanField, Case, Q, When
 from django.utils.duration import duration_string
+from django.utils.timezone import datetime
 from django.utils.translation import gettext_lazy as _
 from rest_framework_json_api import relations, serializers
 from rest_framework_json_api.relations import ResourceRelatedField
@@ -67,6 +68,20 @@ class ActivitySerializer(ModelSerializer):
             raise ValidationError(_("An activity block may not end before it starts."))
 
         return data
+
+    def update(
+        self, instance: models.Activity, validated_data: dict
+    ) -> models.Activity:
+        """Update an activity.
+
+        Ensure that transferring an activity ends it.
+        """
+        to_time = validated_data.get("to_time", instance.to_time)
+
+        if validated_data.get("transferred", instance.transferred) and not to_time:
+            validated_data["to_time"] = datetime.now().time()
+
+        return super().update(instance, validated_data)
 
     class Meta:
         """Meta information for the activity serializer."""
