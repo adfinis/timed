@@ -488,13 +488,13 @@ Django = ">=4.2"
 
 [[package]]
 name = "django-hurricane"
-version = "1.5.0"
+version = "1.6.0"
 description = "A Kubernetes Native Stack Specifically Created For Django"
 optional = false
-python-versions = ">=3.9,<4.0"
+python-versions = "<4.0,>=3.9"
 files = [
-    {file = "django_hurricane-1.5.0-py3-none-any.whl", hash = "sha256:2012da4c8790d5469fd4c40874819f28a6dc15d0468b69705708f4a67ee2fa7c"},
-    {file = "django_hurricane-1.5.0.tar.gz", hash = "sha256:19094240a0a3f2760eadc52fb713007779cb719ad0d62e51edac8cdb8e603cc7"},
+    {file = "django_hurricane-1.6.0-py3-none-any.whl", hash = "sha256:4e634670714745b7c264740304af7ceac246f6faece34f2311df1836e0934370"},
+    {file = "django_hurricane-1.6.0.tar.gz", hash = "sha256:5439563cab3e7980057d0f2340a62def563de10a7f3b9287cd70b02b5ec8d7af"},
 ]
 
 [package.dependencies]
@@ -1958,4 +1958,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a4b330d6d039279db4493c1a5169c607257136e5ce460503b5d12a5007334d36"
+content-hash = "be71deede94fba7cf3858211518d9fda36341d437b7359dbedb9e15a2f2a4e54"
