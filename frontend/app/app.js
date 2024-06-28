@@ -3,7 +3,6 @@ import * as Sentry from "@sentry/ember";
 import loadInitializers from "ember-load-initializers";
 import Resolver from "ember-resolver";
 import fastRedact from "fast-redact";
-import ResizeObserver from "resize-observer-polyfill";
 import config from "timed/config/environment";
 // simplebar setup
 // see components/scroll-container for further usage
@@ -57,9 +56,6 @@ if (config["@sentry/ember"]) {
   });
 }
 
-if (!window.ResizeObserver) {
-  window.ResizeObserver = ResizeObserver;
-}
 // simplebar setup end
 
 export default class App extends Application {
