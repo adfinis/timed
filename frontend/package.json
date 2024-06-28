@@ -156,5 +156,5 @@
   "dependencies": {
     "stylelint-scss": "^6.3.0"
   },
-  "packageManager": "pnpm@8.15.8+sha512.d1a029e1a447ad90bc96cd58b0fad486d2993d531856396f7babf2d83eb1823bb83c5a3d0fc18f675b2d10321d49eb161fece36fe8134aa5823ecd215feed392"
+  "packageManager": "pnpm@9.5.0-beta.0+sha512.c2e60e7ed04e459591c982f2760cd8f7d1f48fe1ca4d46ccbbf8377df1eb2d077ace1e9d334b06250dddf23c03b4562858f77992b9a3bb4a93355aefd173df32"
 }
