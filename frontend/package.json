@@ -128,6 +128,7 @@
     "stylelint-config-standard": "^32.0.0",
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-prettier": "^3.0.0",
+    "stylelint-scss": "^6.3.0",
     "tracked-built-ins": "3.1.1",
     "tracked-toolbox": "2.0.0",
     "webpack": "5.92.1"
@@ -152,9 +153,6 @@
         "marked"
       ]
     }
-  },
-  "dependencies": {
-    "stylelint-scss": "^6.3.0"
   },
   "packageManager": "pnpm@9.5.0-beta.0+sha512.c2e60e7ed04e459591c982f2760cd8f7d1f48fe1ca4d46ccbbf8377df1eb2d077ace1e9d334b06250dddf23c03b4562858f77992b9a3bb4a93355aefd173df32"
 }
