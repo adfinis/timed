@@ -17,6 +17,7 @@
       >
         <div class="form-group">{{t.customer}}</div>
         <div class="form-group">{{t.project}}</div>
+        {{!-- template-lint-disable no-at-ember-render-modifiers --}}
         <div
           class="form-group"
           {{did-update t.reset @model.task.id}}
