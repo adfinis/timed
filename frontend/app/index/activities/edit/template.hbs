@@ -47,7 +47,7 @@
         <SyCheckbox
           data-test-activity-review
           @checked={{this.changeset.review}}
-          @label={{"Needs review"}}
+          @label="Needs review"
           @onChange={{toggle "review" this.changeset}}
         />
         <SyCheckbox
@@ -65,8 +65,8 @@
                 @value={{this.changeset.from}}
                 @max={{this.changeset.to}}
                 @precision={{1}}
-                @onFocusOut={{(fn this.validateChangeset this.changeset)}}
-                @onChange={{(fn (mut this.changeset.from))}}
+                @onFocusOut={{fn this.validateChangeset this.changeset}}
+                @onChange={{fn (mut this.changeset.from)}}
               />
             </td>
             <td>-</td>
@@ -75,9 +75,9 @@
                 @value={{this.changeset.to}}
                 @min={{this.changeset.from}}
                 @precision={{1}}
-                @disabled={{(if this.changeset.active true)}}
-                @onFocusOut={{(fn this.validateChangeset this.changeset)}}
-                @onChange={{(fn (mut this.changeset.to))}}
+                @disabled={{if this.changeset.active true}}
+                @onFocusOut={{fn this.validateChangeset this.changeset}}
+                @onChange={{fn (mut this.changeset.to)}}
               />
             </td>
           </tr>

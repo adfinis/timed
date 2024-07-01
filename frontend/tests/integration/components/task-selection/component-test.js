@@ -56,9 +56,7 @@ module("Integration | Component | task selection", function (hooks) {
 
     await render(hbs`
       <TaskSelection
-        @initial={{(hash
-          customer = this.customer
-        )}}
+        @initial={{hash customer = this.customer}}
       as |t|>
         {{t.customer}}
         {{t.project}}
@@ -84,9 +82,7 @@ module("Integration | Component | task selection", function (hooks) {
 
     await render(hbs`
       <TaskSelection
-        @initial={{(hash
-          project = this.project
-        )}}
+        @initial={{hash project = this.project}}
       as |t|>
         {{t.customer}}
         {{t.project}}
@@ -118,9 +114,7 @@ module("Integration | Component | task selection", function (hooks) {
 
     await render(hbs`
       <TaskSelection
-        @initial={{(hash
-          task  = this.task
-        )}}
+        @initial={{hash task  = this.task}}
       as |t|>
         {{t.customer}}
         {{t.project}}
@@ -157,9 +151,7 @@ module("Integration | Component | task selection", function (hooks) {
 
     await render(hbs`
       <TaskSelection
-        @initial={{(hash
-          task  = this.task
-        )}}
+        @initial={{hash task  = this.task}}
       as |t|>
         {{t.customer}}
         {{t.project}}
@@ -179,9 +171,7 @@ module("Integration | Component | task selection", function (hooks) {
 
     await render(hbs`
       <TaskSelection
-        @initial={{(hash
-          task  = this.task
-        )}}
+        @initial={{hash task  = this.task}}
       as |t|>
         {{t.customer}}
         {{t.project}}
@@ -203,9 +193,7 @@ module("Integration | Component | task selection", function (hooks) {
 
     await render(hbs`
       <TaskSelection
-        @initial={{(hash
-          task  = this.task
-        )}}
+        @initial={{hash task  = this.task}}
       as |t|>
         {{t.customer}}
         {{t.project}}
@@ -231,10 +219,8 @@ module("Integration | Component | task selection", function (hooks) {
 
     await render(hbs`
       <TaskSelection
-        @initial={{(hash
-          customer = this.customer
-          project = this.project
-        )}}
+        @initial={{hash customer = this.customer
+          project = this.project}}
         as |t|>
           {{t.customer}}
           {{t.project}}
@@ -254,10 +240,8 @@ module("Integration | Component | task selection", function (hooks) {
 
     await render(hbs`
       <TaskSelection
-        @initial={{(hash
-          customer = this.customer
-          project = this.project
-        )}}
+        @initial={{hash customer = this.customer
+          project = this.project}}
         @archived={{this.archived}}
         as |t|>
           {{t.customer}}

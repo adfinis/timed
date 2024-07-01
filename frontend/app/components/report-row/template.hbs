@@ -3,7 +3,7 @@
     <TaskSelection
       @disabled={{not this.editable}}
       @task={{cs.task}}
-      @on-set-task={{(fn this.updateTask cs)}}
+      @on-set-task={{fn this.updateTask cs}}
       as |t|
     >
       <div
@@ -38,7 +38,7 @@
     <div class="form-list-cell form-group cell-duration">
       <SyDurationpickerDay
         data-test-report-duration
-        @disabled={{(not this.editable)}}
+        @disabled={{not this.editable}}
         @value={{cs.duration}}
         @onChange={{fn (mut cs.duration)}}
         @title="Task duration"
@@ -48,7 +48,7 @@
       {{#if cs.task.project.remainingEffortTracking}}
         <SyDurationpicker
           data-test-report-remaining-effort
-          @disabled={{(not this.editable)}}
+          @disabled={{not this.editable}}
           @value={{cs.remainingEffort}}
           @onChange={{fn (mut cs.remainingEffort)}}
           @title="Remaining estimated effort"
@@ -69,7 +69,7 @@
       <SyToggle
         class="margin-small-right form-control"
         data-test-report-review
-        @disabled={{(not this.editable)}}
+        @disabled={{not this.editable}}
         @hint="Needs review"
         @onToggle={{toggle "review" cs}}
         @value={{cs.review}}
@@ -86,7 +86,7 @@
       <SyToggle
         class="form-control"
         data-test-report-not-billable
-        @disabled={{(not this.editable)}}
+        @disabled={{not this.editable}}
         @hint="Not billable"
         @onToggle={{toggle "notBillable" cs}}
         @value={{cs.notBillable}}
