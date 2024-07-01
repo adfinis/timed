@@ -33,7 +33,7 @@ module("Integration | Component | report row", function (hooks) {
     await render(hbs`
       <ReportRow
         @report={{this.report}}
-        @onDelete={{(fn (mut this.didDelete) true)}}
+        @onDelete={{fn (mut this.didDelete) true}}
       />
     `);
 

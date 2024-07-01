@@ -11,7 +11,7 @@ module("Integration | Component | SyModal::Header", function (hooks) {
 
     await render(hbs`
       <SyModal::Header
-        @close={{(fn (mut this.visible) false)}}
+        @close={{fn (mut this.visible) false}}
       >
         Test
       </SyModal::Header>
@@ -25,7 +25,7 @@ module("Integration | Component | SyModal::Header", function (hooks) {
 
     await render(hbs`
       <SyModal::Header
-        @close={{(fn (mut this.visible) false)}}
+        @close={{fn (mut this.visible) false}}
       >
         Test
       </SyModal::Header>
