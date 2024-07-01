@@ -6,6 +6,8 @@ from datetime import timedelta
 from typing import TYPE_CHECKING
 
 from django.conf import settings
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVector
 from django.db import models
 
 if TYPE_CHECKING:
@@ -99,7 +101,13 @@ class Report(models.Model):
     class Meta:
         """Meta information for the report model."""
 
-        indexes = (models.Index(fields=["date"]),)
+        indexes = (
+            models.Index(fields=["date"]),
+            GinIndex(
+                SearchVector("comment", config="english"),
+                name="search_vector_idx",
+            ),
+        )
 
     def __str__(self) -> str:
         """Represent the model as a string."""
