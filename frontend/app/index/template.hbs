@@ -18,7 +18,7 @@
             @absence={{d.absence}}
             @holiday={{d.holiday}}
             @prefix={{d.prefix}}
-            @onClick={{(fn (mut this.date))}}
+            @onClick={{fn (mut this.date)}}
             data-test-weekly-overview-day={{moment-format d.day "DD"}}
           />
         {{/each}}
@@ -150,7 +150,7 @@
               <PowerCalendar
                 class="calendar"
                 @selected={{cs.date}}
-                @center={{(or this.center this.date)}}
+                @center={{or this.center this.date}}
                 @onCenterChange={{perform this.setCenter}}
                 @onSelect={{pick "moment" (changeset-set cs "date")}}
                 as |calendar|
