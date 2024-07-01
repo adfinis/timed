@@ -1,5 +1,5 @@
 {{#let (changeset @report this.ReportValidations) as |cs|}}
-  <form ...attributes class="form-list-row" title={{this.title}}>
+  <form ...attributes class="form-list-row" title={{this.title}} {{on "submit" (prevent-default (perform this.save cs))}} >
     <TaskSelection
       @disabled={{not this.editable}}
       @task={{cs.task}}
@@ -111,7 +111,6 @@
           data-test-save-report
           class="btn btn-primary"
           disabled={{or this.save.isRunning (and (not cs.isNew) (or (not cs.isDirty) (not cs.isValid)))}}
-          {{on "click" (prevent-default (perform this.save cs))}}
         ><FaIcon @icon="floppy-disk" /></button>
       {{/if}}
     </div>

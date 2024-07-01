@@ -18,14 +18,14 @@
         <t.task />
       </div>
       <div class="form-group" data-test-tracking-comment>
-        <Input
-          @type="text"
+        <input
+          type="text"
           id="task-comment"
           class="form-control"
           placeholder="Comment"
           name="comment"
           spellcheck="true"
-          @value={{this.tracking.activity.comment}}
+          value={{this.tracking.activity.comment}}
           disabled={{this.tracking.activity.active}}
         />
         {{#if this.tracking.activity.task.project.customerVisible}}
