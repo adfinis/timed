@@ -59,7 +59,7 @@ class ActivityFactory(DjangoModelFactory):
     not_billable = False
 
     @lazy_attribute
-    def from_time(self):
+    def from_time(self):  # noqa: F811
         return datetime.time(hour=randint(0, 22), minute=randint(0, 59))
 
     @lazy_attribute
