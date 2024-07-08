@@ -15,6 +15,7 @@ import fetch from "fetch";
 import moment from "moment";
 import QPController from "timed/controllers/qpcontroller";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
+import parseFileName from "timed/utils/parse-filename";
 import {
   underscoreQueryParams,
   serializeQueryParams,
@@ -324,21 +325,7 @@ export default class AnalysisController extends QPController {
 
       const file = yield res.blob();
 
-      // filename      match filename, followed by
-      // [^;=\n]*      anything but a ;, a = or a newline
-      // =
-      // (             first capturing group
-      //     (['"])    either single or double quote, put it in capturing group 2
-      //     .*?       anything up until the first...
-      //     \2        matching quote (single if we found single, double if we find double)
-      // |
-      //     [^;\n]*   anything but a ; or a newline
-      // )
-      const filename =
-        res.headers
-          .get("content-disposition")
-          .match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/g)[0]
-          .replace("filename=", "") || "Unknown file";
+      const filename = parseFileName(res.headers.contentDisposition);
 
       // ignore since we can't really test this..
       if (macroCondition(isTesting())) {
