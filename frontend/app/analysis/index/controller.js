@@ -325,7 +325,7 @@ export default class AnalysisController extends QPController {
 
       const file = yield res.blob();
 
-      const filename = parseFileName(res.headers.contentDisposition);
+      const filename = parseFileName(res.headers.get("content-disposition"));
 
       // ignore since we can't really test this..
       if (macroCondition(isTesting())) {
