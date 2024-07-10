@@ -20,9 +20,15 @@ module("Unit | Helper | parse filename", function () {
 
   test("works without quotes", function (assert) {
     const result = parseFileName(
-      'attachment; filename=1805-20240710-Customer-Sample_Project.ods'
+      "attachment; filename=1805-20240710-Customer-Sample_Project.ods"
     );
 
     assert.strictEqual(result, "1805-20240710-Customer-Sample_Project.ods");
+  });
+
+  test("falls back to 'Unknown file'", function (assert) {
+    const result = parseFileName("attachment;");
+
+    assert.strictEqual(result, "Unknown file");
   });
 });
