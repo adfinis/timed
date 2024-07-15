@@ -68,6 +68,7 @@ pytest-freezer = "^0.4.8"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "timed.settings"
+cache_dir = "/home/timed/.cache/pytest"
 addopts = "--reuse-db --randomly-seed=1521188767 --randomly-dont-reorganize"
 env = [
     "DJANGO_OIDC_USERNAME_CLAIM=sub"
