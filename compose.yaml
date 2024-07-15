@@ -24,7 +24,7 @@ services:
     build:
       context: ./frontend
     environment:
-      - TIMED_SSO_CLIENT_HOST=https://timed.local/auth/realms/timed/protocol/openid-connect
+      - TIMED_SSO_CLIENT_HOST=https://timed.localhost/auth/realms/timed/protocol/openid-connect
       - TIMED_SSO_CLIENT_ID=timed-public
 
   keycloak:
@@ -58,11 +58,11 @@ services:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
     environment:
-      - DOMAIN_NAME=timed.local
+      - DOMAIN_NAME=timed.localhost
     networks:
       default:
         aliases:
-          - timed.local
+          - timed.localhost
 
   mailpit:
     image: axllent/mailpit
