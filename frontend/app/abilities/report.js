@@ -25,7 +25,7 @@ export default class ReportAbility extends Ability {
           this.model?.customerAssignees ?? []
         )
         .filter((a) => a?.user)
-        .map((a) => a.user.id)
+        .map((a) => a.user.get("id"))
         .includes(this.user?.get("id")) && !this.model?.verifiedBy?.get("id");
     return isEditable || isReviewer;
   }
