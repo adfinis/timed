@@ -302,7 +302,7 @@ class WorkReportViewSet(GenericViewSet):
         """
         return f"{from_date:%y%m}-{date.today():%Y%m%d}-{self._clean_filename(project.customer.name)}-{self._clean_filename(project.name)}.ods"
 
-    def _create_workreport(  # noqa: PLR0913
+    def _create_workreport(
         self,
         from_date: date,
         to_date: date,
