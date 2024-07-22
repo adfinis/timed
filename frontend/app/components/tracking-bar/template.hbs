@@ -26,6 +26,7 @@
           name="comment"
           spellcheck="true"
           value={{this.tracking.activity.comment}}
+          {{on "change" (pick "target.value" (fn (mut this.tracking.activity.comment)))}}
           disabled={{this.tracking.activity.active}}
         />
         {{#if this.tracking.activity.task.project.customerVisible}}
