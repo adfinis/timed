@@ -7,8 +7,16 @@ export default class Task extends Model {
   @attr("boolean", { defaultValue: false }) archived;
   @attr("string", { defaultValue: "" }) reference;
 
-  @belongsTo("project") project;
-  @hasMany("task-assignee") assignees;
+  @belongsTo("project", {
+    async: true,
+    inverse: null,
+  })
+  project;
+  @hasMany("task-assignee", {
+    async: true,
+    inverse: null,
+  })
+  assignees;
 
   /**
    * Flag saying that this is a task.
