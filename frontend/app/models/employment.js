@@ -59,7 +59,7 @@ export default class Employment extends Model {
    * @property {User} user
    * @public
    */
-  @belongsTo("user") user;
+  @belongsTo("user", { async: true, inverse: "employments" }) user;
 
   /**
    * The work location
@@ -67,5 +67,5 @@ export default class Employment extends Model {
    * @property {Location} location
    * @public
    */
-  @belongsTo("location") location;
+  @belongsTo("location", { async: true, inverse: null }) location;
 }

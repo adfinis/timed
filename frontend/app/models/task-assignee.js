@@ -20,7 +20,7 @@ export default class TaskAssignee extends Model {
    * @type {Task}
    * @public
    */
-  @belongsTo("task") task;
+  @belongsTo("task", { async: true, inverse: "assignees" }) task;
   /**
    * The user
    *
@@ -28,7 +28,7 @@ export default class TaskAssignee extends Model {
    * @type {User}
    * @public
    */
-  @belongsTo("user") user;
+  @belongsTo("user", { async: true, inverse: null }) user;
 
   /**
    * Whether the assignee is a reviewer
