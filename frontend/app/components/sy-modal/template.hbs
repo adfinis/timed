@@ -1,5 +1,5 @@
 {{#if @visible}}
-  <EmberWormhole @to="sy-modals">
+    {{#in-element this.syModals insertBefore=null}}
     <SyModal::Overlay @visible={{@visible}} @onClose={{optional @onClose}}>
       <div class="modal-dialog {{if @size (concat 'modal-dialog--' @size)}}">
         {{yield
@@ -12,5 +12,5 @@
         }}
       </div>
     </SyModal::Overlay>
-  </EmberWormhole>
+  {{/in-element}}
 {{/if}}
