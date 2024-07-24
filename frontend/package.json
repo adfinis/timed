@@ -74,7 +74,7 @@
     "ember-cli-update": "1.0.1",
     "ember-component-css": "0.8.1",
     "ember-composable-helpers": "5.0.0",
-    "ember-concurrency": "^2.3.7",
+    "ember-concurrency": "^4.0.2",
     "ember-data": "~4.11.3",
     "ember-decorators": "6.1.1",
     "ember-event-helpers": "^0.1.1",
@@ -86,8 +86,8 @@
     "ember-moment": "9.0.1",
     "ember-notify": "6.0.4",
     "ember-page-title": "7.0.0",
-    "ember-power-calendar": "0.18.0",
-    "ember-power-calendar-moment": "0.2.0",
+    "ember-power-calendar": "^1.0.2",
+    "ember-power-calendar-moment": "^1.0.2",
     "ember-power-select": "6.0.1",
     "ember-qunit": "6.2.0",
     "ember-resolver": "10.0.0",
@@ -139,9 +139,6 @@
     "edition": "octane"
   },
   "pnpm": {
-    "overrides": {
-      "ember-concurrency": "^2.1.1"
-    },
     "peerDependencyRules": {
       "ignoreMissing": [
         "@babel/core",
