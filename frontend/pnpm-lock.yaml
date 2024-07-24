@@ -32,9 +32,6 @@ importers:
       '@commitlint/config-conventional':
         specifier: 17.4.4
         version: 17.4.4
-      '@ember/jquery':
-        specifier: 2.0.0
-        version: 2.0.0
       '@ember/optional-features':
         specifier: 2.0.0
         version: 2.0.0
@@ -1266,10 +1263,6 @@ packages:
 
   '@ember/edition-utils@1.2.0':
     resolution: {integrity: sha512-VmVq/8saCaPdesQmftPqbFtxJWrzxNGSQ+e8x8LLe3Hjm36pJ04Q8LeORGZkAeOhldoUX9seLGmSaHeXkIqoog==}
-
-  '@ember/jquery@2.0.0':
-    resolution: {integrity: sha512-f8+WNqzXBNxl96jo0IwJBO5QCi0bnUlba9I7WbZcGhgnzszC76INJkw6l8UepZ1PMGG1H1wYpoIGoBBp5ZVmFA==}
-    engines: {node: 12.* || 14.* || >= 16}
 
   '@ember/optional-features@2.0.0':
     resolution: {integrity: sha512-4gkvuGRYfpAh1nwAz306cmMeC1mG7wxZnbsBZ09mMaMX/W7IyKOKc/38JwrDPUFUalmNEM7q7JEPcmew2M3Dog==}
@@ -5469,9 +5462,6 @@ packages:
   jest-worker@27.5.1:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
-
-  jquery@3.7.1:
-    resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
 
   js-sha256@0.10.1:
     resolution: {integrity: sha512-5obBtsz9301ULlsgggLg542s/jqtddfOpV5KJc4hajc9JV8GeY2gZHSVpYBn4nWqAUTJ9v+xwtbJ1mIBgIH5Vw==}
@@ -10491,16 +10481,6 @@ snapshots:
       - supports-color
 
   '@ember/edition-utils@1.2.0': {}
-
-  '@ember/jquery@2.0.0':
-    dependencies:
-      broccoli-funnel: 3.0.8
-      broccoli-merge-trees: 4.2.0
-      ember-cli-babel: 7.26.11
-      jquery: 3.7.1
-      resolve: 1.22.8
-    transitivePeerDependencies:
-      - supports-color
 
   '@ember/optional-features@2.0.0':
     dependencies:
@@ -16767,8 +16747,6 @@ snapshots:
       '@types/node': 20.14.9
       merge-stream: 2.0.0
       supports-color: 8.1.1
-
-  jquery@3.7.1: {}
 
   js-sha256@0.10.1: {}
 
