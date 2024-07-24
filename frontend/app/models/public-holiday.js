@@ -35,5 +35,5 @@ export default class PublicHoliday extends Model {
    * @property {Location} location
    * @public
    */
-  @belongsTo("location") location;
+  @belongsTo("location", { async: true, inverse: null }) location;
 }
