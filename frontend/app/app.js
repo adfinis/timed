@@ -1,11 +1,12 @@
 import Application from "@ember/application";
 import * as Sentry from "@sentry/ember";
 import loadInitializers from "ember-load-initializers";
+import { registerDateLibrary } from "ember-power-calendar";
+import DateUtils from "ember-power-calendar-moment";
 import Resolver from "ember-resolver";
 import fastRedact from "fast-redact";
 import config from "timed/config/environment";
-// simplebar setup
-// see components/scroll-container for further usage
+
 import "simplebar";
 import "simplebar/dist/simplebar.css";
 
@@ -57,6 +58,8 @@ if (config["@sentry/ember"]) {
 }
 
 // simplebar setup end
+
+registerDateLibrary(DateUtils);
 
 export default class App extends Application {
   modulePrefix = config.modulePrefix;

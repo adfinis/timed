@@ -1,12 +1,12 @@
 import { action } from "@ember/object";
-import PowerCalendarComponent from "ember-power-calendar/components/power-calendar";
+import Component from "@glimmer/component";
 import moment from "moment";
 
 const CURRENT_YEAR = moment().year();
 
 const YEARS_IN_FUTURE = 5;
 
-export default class SyCalendar extends PowerCalendarComponent {
+export default class SyCalendar extends Component {
   months = moment.months();
 
   years = [...new Array(40).keys()].map(
