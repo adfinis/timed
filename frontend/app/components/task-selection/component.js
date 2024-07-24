@@ -49,6 +49,15 @@ export default class TaskSelectionComponent extends Component {
   @localCopy("args.initial.task")
   _task;
 
+  /**
+   * The manually written comment search
+   *
+   * @property {String} _comment
+   * @private
+   */
+  @localCopy("args.initial.comment")
+  _comment;
+
   constructor(...args) {
     super(...args);
 
@@ -95,6 +104,7 @@ export default class TaskSelectionComponent extends Component {
       customer: null,
       project: null,
       task: null,
+      comment: null,
     };
 
     const options = { preventAction: true };
@@ -212,6 +222,16 @@ export default class TaskSelectionComponent extends Component {
     return this.args.liveTracking
       ? this.tracking.activeTask?.content ?? this._task
       : this._task;
+  }
+
+  /**
+   * The comment search query
+   *
+   * @property {String} comment
+   * @public
+   */
+  get comment() {
+    return this._comment;
   }
 
   /**
@@ -386,6 +406,20 @@ export default class TaskSelectionComponent extends Component {
         (this.args["on-set-task"] === undefined
           ? () => {}
           : this.args["on-set-task"])(value);
+      });
+    }
+  }
+
+  @action
+  onCommentChange(event, options = {}) {
+    const value = event.target.value;
+    this._comment = value;
+
+    if (!options.preventAction) {
+      later(this, async () => {
+        (this.args["on-set-comment"] === undefined
+          ? () => {}
+          : this.args["on-set-comment"])(value);
       });
     }
   }
