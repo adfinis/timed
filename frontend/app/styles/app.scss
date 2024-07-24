@@ -7,9 +7,6 @@
 @import "ember-basic-dropdown";
 @import "ember-power-select-custom";
 
-/* Component styles */
-@import "pod-styles";
-
 /* Custom styles */
 @import "activities";
 @import "analysis";
@@ -46,8 +43,7 @@
 @import "components/sy-checkbox";
 @import "components/sy-datepicker";
 @import "components/sy-durationpicker-day";
-@import "components/sy-modal--footer";
-@import "components/sy-modal--overlay";
+@import "components/sy-modal";
 @import "components/sy-toggle";
 @import "components/timed-clock";
 @import "components/tracking-bar";
@@ -350,7 +346,7 @@ strong {
   }
 }
 
-@media screen and (width <= 680px) {
+@media screen and (width <=680px) {
   .table--activities tr td {
     display: flex;
 
@@ -359,7 +355,7 @@ strong {
         margin-right: 10px;
       }
 
-      div > i {
+      div>i {
         margin-right: 5px;
       }
     }
@@ -370,8 +366,8 @@ strong {
   border-bottom: 3px double $body-color;
 }
 
-.table--absence-types > thead > tr > th,
-.table--absence-types > tbody > tr > td {
+.table--absence-types>thead>tr>th,
+.table--absence-types>tbody>tr>td {
   .grid {
     margin: 0;
   }
