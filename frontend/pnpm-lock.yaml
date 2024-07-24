@@ -236,9 +236,6 @@ importers:
       ember-validated-form:
         specifier: 6.2.0
         version: 6.2.0(@babel/core@7.22.9)(@glint/template@1.4.0)(ember-data@4.12.8(@babel/core@7.22.9)(@ember/string@3.1.1)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@4.12.4(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(webpack@5.92.1))(webpack@5.92.1))(ember-source@4.12.4(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(webpack@5.92.1))(webpack@5.92.1)
-      ember-wormhole:
-        specifier: 0.6.0
-        version: 0.6.0
       eslint:
         specifier: 8.46.0
         version: 8.46.0
@@ -3933,10 +3930,6 @@ packages:
   ember-validators@4.1.2:
     resolution: {integrity: sha512-aNyJW52eWvWhdcRfnb0pGYSDuQU4i4XjA682aDG1ocmz7eUEDw7bXXvKEYGtVsPTtPLtUPvTtaH9mXKpMG+1xA==}
     engines: {node: 12.* || 14.* || >= 16}
-
-  ember-wormhole@0.6.0:
-    resolution: {integrity: sha512-b7RrRxkwCBEJxM2zR34dEzIET81BOZWTcYNJtkidLycLQvdbxPys5QJEjJ/IfDikT/z5HuQBdZRKBhXI0vZNXQ==}
-    engines: {node: 10.* || >= 12}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -14554,13 +14547,6 @@ snapshots:
       ember-cli-babel: 7.26.11
     transitivePeerDependencies:
       - '@glint/template'
-      - supports-color
-
-  ember-wormhole@0.6.0:
-    dependencies:
-      ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 5.7.2
-    transitivePeerDependencies:
       - supports-color
 
   emoji-regex@8.0.0: {}
