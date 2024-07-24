@@ -11,8 +11,8 @@ export default class Activity extends Model {
   @attr("boolean", { defaultValue: false }) transferred;
   @attr("boolean", { defaultValue: false }) review;
   @attr("boolean", { defaultValue: false }) notBillable;
-  @belongsTo("task") task;
-  @belongsTo("user") user;
+  @belongsTo("task", { async: true, inverse: null }) task;
+  @belongsTo("user", { async: true, inverse: null }) user;
 
   @service notify;
   @service store;

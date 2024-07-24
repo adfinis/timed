@@ -37,5 +37,5 @@ export default class AbsenceType extends Model {
    * @property {AbsenceBalance[]} absenceBalances
    * @public
    */
-  @hasMany("absence-balance") absenceBalances;
+  @hasMany("absence-balance", { async: true, inverse: null }) absenceBalances;
 }

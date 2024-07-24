@@ -5,5 +5,5 @@ export default class TaskStatistics extends Model {
   @attr("django-duration") duration;
   @attr("django-duration") estimatedTime;
   @attr("django-duration") mostRecentRemainingEffort;
-  @belongsTo("project") project;
+  @belongsTo("project", { async: true, inverse: null }) project;
 }
