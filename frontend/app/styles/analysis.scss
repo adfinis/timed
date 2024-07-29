@@ -6,7 +6,7 @@
 }
 
 .table--analysis > tbody > tr.pointer {
-  color: rgb(0, 0, 0);
+  color: rgb(0 0 0);
 }
 
 .table--analysis > tbody > tr.pointer > td:last-child {
@@ -59,6 +59,7 @@
 .table--analysis tr.selected td {
   border-color: lighten($color-primary, 20%) !important;
 }
+
 .highlight {
   color: color.adjust($color-primary, $lightness: -10%);
 }

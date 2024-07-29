@@ -1,4 +1,4 @@
-.sy-checkbox > input[type="checkbox"]:indeterminate + label:after {
+.sy-checkbox > input[type="checkbox"]:indeterminate + label::after {
   content: "\2012";
   opacity: 1;
   transform: scale(1);

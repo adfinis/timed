@@ -2,7 +2,6 @@ import pytest
 from django.urls import reverse
 from rest_framework.status import HTTP_200_OK, HTTP_403_FORBIDDEN
 
-from timed.conftest import setup_customer_and_employment_status
 from timed.projects import factories, models
 
 
@@ -39,6 +38,7 @@ def test_billing_type_list(
     customer_visible,
     expected,
     status_code,
+    setup_customer_and_employment_status,
 ):
     user = auth_client.user
     setup_customer_and_employment_status(

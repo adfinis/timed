@@ -33,8 +33,9 @@
       </div>
 
       <div class="margin-medium-bottom">
-        <Input
-          @value={{this.comment}}
+        <input
+          value={{this.comment}}
+          {{on "change" (pick "target.value" (fn (mut this.comment)))}}
           class="ember-text-field form-control"
           placeholder="Comment"
           aria-label="Comment for the timed entry"
@@ -84,8 +85,8 @@
       </div>
 
       <div class="flex">
-        <Input
-          @value={{this.magicLinkString}}
+        <input
+          value={{this.magicLinkString}}
           disabled={{true}}
           class="flex-grow form-control"
           aria-label="magic link string"

@@ -12,6 +12,7 @@ module.exports = function (environment) {
       includeTimezone: "all",
     },
     EmberENV: {
+      EXTEND_PROTOTYPES: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -90,7 +91,7 @@ module.exports = function (environment) {
 
   if (environment === "development") {
     ENV["ember-simple-auth-oidc"].host =
-      "http://timed.local/auth/realms/timed/protocol/openid-connect";
+      "https://timed.localhost/auth/realms/timed/protocol/openid-connect";
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;

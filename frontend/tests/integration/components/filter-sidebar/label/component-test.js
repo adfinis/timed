@@ -8,9 +8,9 @@ module("Integration | Component | filter sidebar/label", function (hooks) {
 
   test("renders", async function (assert) {
     await render(hbs`
-      {{#filter-sidebar/label}}
+      <FilterSidebar::Label>
         Some label
-      {{/filter-sidebar/label}}
+      </FilterSidebar::Label>
     `);
 
     assert.dom("label").exists();

@@ -1,6 +1,6 @@
 import { capitalize } from "@ember/string";
-import { Factory } from "ember-cli-mirage";
 import faker from "faker";
+import { Factory } from "miragejs";
 
 import { randomDuration } from "../helpers/duration";
 

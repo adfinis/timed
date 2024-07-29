@@ -10,7 +10,7 @@ export default class ProjectsController extends Controller {
   taskValidations = TaskValidations;
   projectValidations = ProjectValidations;
 
-  @service session;
+  @service currentUser;
   @service store;
   @service notify;
 
@@ -29,34 +29,34 @@ export default class ProjectsController extends Controller {
   }
 
   get user() {
-    return this.session.data.user;
+    return this.currentUser.user;
   }
 
   get customers() {
-    return (
-      this.projects
-        ?.map((project) => project.get("customer"))
-        .uniqBy("id")
-        .sortBy("name") ?? []
-    );
+    return [
+      ...(new Set(
+        this.projects?.map((p) => p.get("customer")).filter(Boolean)
+      ) ?? []),
+    ].toSorted((c) => c.get("name"));
   }
 
   @task
   *fetchProjectsByUser() {
     try {
       let projects;
+      const include = "customer,billing-type";
       if (this.user.isSuperuser) {
         projects = yield this.store.findAll("project", {
-          include: "customer",
+          include,
         });
       } else {
         projects = yield this.store.query("project", {
           has_manager: this.user.get("id"),
-          include: "customer",
+          include,
         });
       }
 
-      return projects.sortBy("name");
+      return projects.toSorted((p) => p.name);
     } catch (error) {
       /* istanbul ignore next */
       this.notify.error("Error while fetching projects");

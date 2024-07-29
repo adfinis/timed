@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   position: relative;
-  background: rgb(80, 80, 80);
+  background: rgb(80 80 80);
   border-radius: 1.5rem;
   height: 3rem;
   width: 3rem;
@@ -27,8 +27,8 @@
     cursor: pointer;
     background: radial-gradient(
       circle at center,
-      rgb(240, 240, 240) 50%,
-      rgb(180, 180, 180) 80%
+      rgb(240 240 240) 50%,
+      rgb(180 180 180) 80%
     );
     z-index: 2;
 

@@ -1,9 +1,8 @@
 import Transform from "@ember-data/serializer/transform";
-import { padTpl, padStart } from "ember-pad/utils/pad";
 import moment from "moment";
+import { pad2joincolon } from "timed/utils/pad";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 
-const padTpl2 = padTpl(2);
 const { round } = Math;
 
 /**
@@ -78,14 +77,14 @@ export default class DjangoDurationTransform extends Transform {
     const { days, hours, minutes, seconds, microseconds } =
       this._getDurationComponentsTimedeltaLike(deserialized);
 
-    let string = padTpl2`${hours}:${minutes}:${seconds}`;
+    let string = pad2joincolon(hours, minutes, seconds);
 
     if (days) {
       string = `${days} ${string}`;
     }
 
     if (microseconds) {
-      string = `${string}.${padStart(microseconds, 6)}`;
+      string += `.${String(microseconds).padStart(6, "0")}`;
     }
 
     return string;

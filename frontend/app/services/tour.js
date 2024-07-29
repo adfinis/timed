@@ -159,8 +159,8 @@ export default class TourService extends Tour {
               await this.router.transitionTo(
                 this.autostartTour.undoneTours.shift() ?? "index"
               );
-            } catch (error) {
-              this.notify.error("unexpected error");
+            } catch {
+              /* eslint:disable:no-empty */
             }
           }
         };

@@ -19,7 +19,7 @@
     >
       <FilterSidebar
         @appliedCount={{this.appliedFilters.length}}
-        @onReset={{(queue t.clear this.reset)}}
+        @onReset={{queue t.clear this.reset}}
         as |fs|
       >
         {{#if this.prefetchData.isRunning}}
@@ -245,7 +245,7 @@
                   Edit
                   {{this.selectedReportIds.length}}
                   selected report{{if
-                    (not (eq this.selectedReportIds.length 1))
+                    (not-eq this.selectedReportIds.length 1)
                     "s"
                   }}
                 </button>
@@ -393,19 +393,16 @@
                     </tr>
                   {{/each}}
                   {{#if this._canLoadMore}}
-                    <tr>
-                      <td colspan="11" class="text-center">
-                        <InViewport
-                          @rootSelector="analysis-scrollable-container"
-                          @on-enter-viewport={{perform this.loadNext}}
-                          @on-exit-viewport={{fn
-                            (mut this._shouldLoadMore)
-                            false
-                          }}
-                        >
-                          Loading<span class="loading-dots"><i>.</i><i>.</i><i
-                            >.</i></span>
-                        </InViewport>
+                    <tr
+                      {{in-viewport
+                        onEnter=(perform this.loadNext)
+                        onExit=(fn (mut this._shouldLoadMore) false)
+                        viewportSpy=true
+                      }}
+                    >
+                      <td colspan="12" class="text-center">
+                        Loading<span class="loading-dots"><i>.</i><i>.</i><i
+                          >.</i></span>
                       </td>
                     </tr>
                   {{/if}}

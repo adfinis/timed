@@ -6,7 +6,6 @@
 import { action } from "@ember/object";
 import { guidFor } from "@ember/object/internals";
 import { tracked } from "@glimmer/tracking";
-import { padStart } from "ember-pad/utils/pad";
 import moment from "moment";
 import SyTimepickerComponent from "timed/components/sy-timepicker/component";
 import formatDuration from "timed/utils/format-duration";
@@ -63,7 +62,7 @@ export default class SyDurationpicker extends SyTimepickerComponent {
     const minutes = Array.from({ length: count }, (v, i) => (60 / count) * i);
 
     return `${this.min < 0 ? "-?" : ""}\\d+:(${minutes
-      .map((m) => padStart(m, 2))
+      .map((m) => String(m).padStart(2, "0"))
       .join("|")})`;
   }
 

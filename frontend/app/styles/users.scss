@@ -1,17 +1,16 @@
 $user-header-padding-v: 0.5rem;
 $user-header-padding-h: $page-padding-h;
-$user-header-margin-top-extra: 0px;
+$user-header-margin-top-extra: 0;
 
 .user-header {
   display: flex;
   flex-shrink: 0;
   flex-direction: column;
   position: relative;
-
-  margin: calc(#{$page-padding-v} * -1 + #{$user-header-margin-top-extra}) calc(#{$page-padding-h} * -1) 0;
+  margin: calc(#{$page-padding-v} * -1 + #{$user-header-margin-top-extra})
+    calc(#{$page-padding-h} * -1) 0;
   padding: $user-header-padding-v $user-header-padding-h;
-
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(240 240 240);
   border-bottom: 1px solid $color-border;
 
   .nav-top--fixed + & {
@@ -129,7 +128,7 @@ $user-header-margin-top-extra: 0px;
   order: 2;
 }
 
-.user-header-worktime-balance-last-valid-timesheet{
+.user-header-worktime-balance-last-valid-timesheet {
   order: 0;
 }
 
@@ -157,8 +156,7 @@ $user-header-margin-top-extra: 0px;
 .user-header-absence-balance-container {
   display: flex;
   flex-grow: 1;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   justify-content: space-around;
 }
 
@@ -218,8 +216,12 @@ $user-header-margin-top-extra: 0px;
 
 @media #{$lg-viewport} {
   .user-header {
-    margin: calc(#{$page-padding-v} * 1.25 * -1 + #{$user-header-margin-top-extra}) calc(#{$page-padding-h} * 1.25 * -1) 0;
-    padding: calc(#{$user-header-padding-v} * 1.25) calc(#{$user-header-padding-h} * 1.25);
+    margin: calc(
+        #{$page-padding-v} * 1.25 * -1 + #{$user-header-margin-top-extra}
+      )
+      calc(#{$page-padding-h} * 1.25 * -1) 0;
+    padding: calc(#{$user-header-padding-v} * 1.25)
+      calc(#{$user-header-padding-h} * 1.25);
   }
 
   .user-content {
@@ -237,8 +239,12 @@ $user-header-margin-top-extra: 0px;
 
 @media #{$xl-viewport} {
   .user-header {
-    margin: calc(#{$page-padding-v} * 1.5 * -1 + #{$user-header-margin-top-extra}) calc(#{$page-padding-h} * 1.5 * -1) 0;
-    padding: calc(#{$user-header-padding-v} * 1.5) calc(#{$user-header-padding-h} * 1.5);
+    margin: calc(
+        #{$page-padding-v} * 1.5 * -1 + #{$user-header-margin-top-extra}
+      )
+      calc(#{$page-padding-h} * 1.5 * -1) 0;
+    padding: calc(#{$user-header-padding-v} * 1.5)
+      calc(#{$user-header-padding-h} * 1.5);
   }
 
   .user-content {

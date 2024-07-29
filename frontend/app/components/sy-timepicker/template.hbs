@@ -7,7 +7,6 @@
   maxlength={{this.maxlength}}
   placeholder={{this.placeholder}}
   autocomplete="off"
-  {{!template-lint-disable no-down-event-binding}}
   {{on "keydown" this.keyDown}}
   {{on "change" this.change}}
   {{on "focusout" (optional @onFocusOut)}}

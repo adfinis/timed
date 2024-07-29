@@ -7,7 +7,7 @@ module("Integration | Component | changed warning", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(hbs`{{changed-warning}}`);
+    await render(hbs`<ChangedWarning />`);
 
     assert.dom(".fa-triangle-exclamation").exists();
   });

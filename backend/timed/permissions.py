@@ -109,13 +109,11 @@ class IsReviewer(IsAuthenticated):
         if not super().has_permission(request, view):  # pragma: no cover
             return False
 
-        if (
+        return (
             request.user.customer_assignees.filter(is_reviewer=True).exists()
             or request.user.project_assignees.filter(is_reviewer=True).exists()
             or request.user.task_assignees.filter(is_reviewer=True).exists()
-        ):
-            return True
-        return False
+        )
 
     def has_object_permission(self, request, view, obj):
         if not super().has_object_permission(request, view, obj):  # pragma: no cover
@@ -220,13 +218,11 @@ class IsManager(IsAuthenticated):
         if not super().has_permission(request, view):  # pragma: no cover
             return False
 
-        if (
+        return (
             request.user.customer_assignees.filter(is_manager=True).exists()
             or request.user.project_assignees.filter(is_manager=True).exists()
             or request.user.task_assignees.filter(is_manager=True).exists()
-        ):
-            return True
-        return False
+        )
 
     def has_object_permission(self, request, view, obj):
         if not super().has_object_permission(request, view, obj):  # pragma: no cover
@@ -280,13 +276,11 @@ class IsResource(IsAuthenticated):
         if not super().has_permission(request, view):  # pragma: no cover
             return False
 
-        if (
+        return (
             request.user.customer_assignees.filter(is_resource=True).exists()
             or request.user.project_assignees.filter(is_resource=True).exists()
             or request.user.task_assignees.filter(is_resource=True).exists()
-        ):
-            return True
-        return False
+        )
 
     def has_object_permission(self, request, view, obj):
         if not super().has_object_permission(request, view, obj):  # pragma: no cover
@@ -339,6 +333,4 @@ class IsCustomer(IsAuthenticated):
         if not super().has_permission(request, view):  # pragma: no cover
             return False
 
-        if request.user.customer_assignees.filter(is_customer=True).exists():
-            return True
-        return False
+        return request.user.customer_assignees.filter(is_customer=True).exists()

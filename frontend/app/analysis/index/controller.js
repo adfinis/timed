@@ -15,6 +15,7 @@ import fetch from "fetch";
 import moment from "moment";
 import QPController from "timed/controllers/qpcontroller";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
+import parseFileName from "timed/utils/parse-filename";
 import {
   underscoreQueryParams,
   serializeQueryParams,
@@ -50,6 +51,7 @@ export default class AnalysisController extends QPController {
   exportLimit = config.APP.EXPORT_LIMIT;
 
   @service session;
+  @service currentUser;
   @service store;
   @service router;
   @service notify;
@@ -119,7 +121,7 @@ export default class AnalysisController extends QPController {
 
   get canBill() {
     return (
-      this.session.data.user.isAccountant || this.session.data.user.isSuperuser
+      this.currentUser.user.isAccountant || this.currentUser.user.isSuperuser
     );
   }
 
@@ -239,7 +241,7 @@ export default class AnalysisController extends QPController {
         data.get("meta.pagination.pages") !== data.get("meta.pagination.page");
       this._lastPage = data.get("meta.pagination.page");
 
-      this._dataCache.pushObjects(mappedReports.toArray());
+      this._dataCache.pushObjects(mappedReports);
     }
 
     return this._dataCache;
@@ -247,18 +249,15 @@ export default class AnalysisController extends QPController {
 
   @task
   *fetchAssignees(data) {
-    const projectIds = data
-      .map((report) => report.get("task.project.id"))
-      .uniq()
-      .join(",");
-    const taskIds = data
-      .map((report) => report.get("task.id"))
-      .uniq()
-      .join(",");
-    const customerIds = data
-      .map((report) => report.get("task.project.customer.id"))
-      .uniq()
-      .join(",");
+    const projectIds = [
+      ...new Set(data.map((report) => report.get("task.project.id"))),
+    ].join(",");
+    const taskIds = [
+      ...new Set(data.map((report) => report.get("task.id"))),
+    ].join(",");
+    const customerIds = [
+      ...new Set(data.map((report) => report.get("task.project.customer.id"))),
+    ].join(",");
 
     const projectAssignees = projectIds.length
       ? yield this.store.query("project-assignee", {
@@ -326,21 +325,7 @@ export default class AnalysisController extends QPController {
 
       const file = yield res.blob();
 
-      // filename      match filename, followed by
-      // [^;=\n]*      anything but a ;, a = or a newline
-      // =
-      // (             first capturing group
-      //     (['"])    either single or double quote, put it in capturing group 2
-      //     .*?       anything up until the first...
-      //     \2        matching quote (single if we found single, double if we find double)
-      // |
-      //     [^;\n]*   anything but a ; or a newline
-      // )
-      const filename =
-        res.headers
-          .get("content-disposition")
-          .match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/g)[0]
-          .replace("filename=", "") || "Unknown file";
+      const filename = parseFileName(res.headers.get("content-disposition"));
 
       // ignore since we can't really test this..
       if (macroCondition(isTesting())) {

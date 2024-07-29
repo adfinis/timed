@@ -238,19 +238,19 @@ export default class TaskSelectionComponent extends Component {
     if (this.history) {
       const last = this.tracking.recentTasks;
 
-      ids = last ? last.mapBy("id") : [];
+      ids = last ? last.map((t) => t.id) : [];
     }
 
     const customers = this.store
       .peekAll("customer")
       ?.filter(this.filterByArchived)
-      .sortBy("name");
+      .toSorted((c) => c.name);
 
     const tasks = this.store.peekAll("task").filter((task) => {
       return ids.includes(task.id) && this.filterByArchived(task);
     });
 
-    return [...tasks.toArray(), ...customers.toArray()];
+    return [...tasks, ...customers];
   }
 
   _customersAndRecentTasks = trackedTask(
@@ -266,11 +266,13 @@ export default class TaskSelectionComponent extends Component {
   get projects() {
     return this.customer?.projects
       ?.filter(this.filterByArchived)
-      .sortBy("name");
+      .toSorted((p) => p.name);
   }
 
   get tasks() {
-    return this.project?.tasks?.filter(this.filterByArchived).sortBy("name");
+    return this.project?.tasks
+      ?.filter(this.filterByArchived)
+      .toSorted((t) => t.name);
   }
 
   @action

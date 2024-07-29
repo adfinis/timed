@@ -76,7 +76,7 @@ export default class TrackingService extends Service {
       active: true,
     });
 
-    this.activity = actives.firstObject ?? null;
+    this.activity = actives[0] ?? null;
 
     this._computeTitle.perform();
   }

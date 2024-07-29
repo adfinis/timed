@@ -355,3 +355,33 @@ def test_activity_set_to_time_none(internal_employee_client, activity_factory):
 
     res = internal_employee_client.patch(url, data)
     assert res.status_code == status.HTTP_400_BAD_REQUEST
+
+
+def test_activity_transfer_ends_it(internal_employee_client):
+    """Test that transferring activities ends them."""
+
+    activity = ActivityFactory.create(
+        user=internal_employee_client.user,
+        transferred=False,
+        to_time=None,
+    )
+
+    data = {
+        "data": {
+            "type": "activities",
+            "id": activity.id,
+            "attributes": {"transferred": True},
+        }
+    }
+
+    url = reverse("activity-detail", args=[activity.id])
+    response = internal_employee_client.patch(url, data)
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    assert json["data"]["attributes"]["to-time"]
+
+    activity.refresh_from_db()
+    assert activity.to_time
+    assert activity.transferred

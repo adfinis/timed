@@ -26,7 +26,7 @@ module("Integration | Component | async list", function (hooks) {
     this.set("data", { value: [] });
 
     await render(hbs`
-      <AsyncList @data={{this.data}} as |section data|>
+      <AsyncList @data={{this.data}} as |section|>
         {{#if (eq section 'empty')}}
           <div class="check-me"></div>
         {{/if}}
@@ -50,7 +50,7 @@ module("Integration | Component | async list", function (hooks) {
     this.set("data", { isError: true });
 
     await render(hbs`
-    <AsyncList @data={{this.data}} as |section data|></AsyncList>
+    <AsyncList @data={{this.data}}></AsyncList>
     `);
 
     assert.dom(".fa-bolt").exists();

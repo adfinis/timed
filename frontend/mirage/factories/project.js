@@ -1,5 +1,5 @@
-import { Factory, association, trait } from "ember-cli-mirage";
 import faker from "faker";
+import { Factory, association, trait } from "miragejs";
 
 import { randomDuration } from "../helpers/duration";
 

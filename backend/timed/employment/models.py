@@ -28,7 +28,7 @@ class Location(models.Model):
     """
 
     name = models.CharField(max_length=50, unique=True)
-    workdays = WeekdaysField(default=[str(day) for day in range(1, 6)])
+    workdays = WeekdaysField(default=list(range(1, 6)))
     """
     Workdays defined per location, default is Monday - Friday
     """
@@ -133,7 +133,7 @@ class AbsenceCredit(models.Model):
     """
 
     def __str__(self) -> str:
-        return f"{self.user.username} ({self.duration})"
+        return f"{self.user.username} ({self.days} days)"
 
 
 class OvertimeCredit(models.Model):

@@ -5,13 +5,13 @@
  */
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { scheduleOnce } from "@ember/runloop";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import moment from "moment";
 import { all } from "rsvp";
 import ReportValidations from "timed/validations/report";
 import { cached } from "tracked-toolbox";
-
 /**
  * The index reports controller
  *
@@ -21,6 +21,7 @@ import { cached } from "tracked-toolbox";
  */
 export default class IndexReportController extends Controller {
   queryParams = ["task", "duration", "comment", "review", "notBillable"];
+
   @tracked task;
   @tracked duration;
   @tracked comment;
@@ -33,6 +34,7 @@ export default class IndexReportController extends Controller {
   @service store;
   @service notify;
   @service router;
+  @service currentUser;
 
   ReportValidations = ReportValidations;
 
@@ -65,20 +67,17 @@ export default class IndexReportController extends Controller {
   get reports() {
     const reportsToday = this._allReports.filter((r) => {
       return (
-        (!r.get("user.id") || r.get("user.id") === this.user.id) &&
+        (!r.get("user.id") || r.get("user.id") === this.currentUser.user.id) &&
         r.get("date").isSame(this.model, "day") &&
         !r.get("isDeleted")
       );
     });
 
-    if (!reportsToday.filterBy("isNew", true).get("length")) {
-      this.store.createRecord("report", {
-        date: this.model,
-        user: this.user,
-      });
+    if (!reportsToday.find((r) => r.isNew)) {
+      scheduleOnce("actions", this, "createEmptyReport");
     }
 
-    return reportsToday.sort((a) => (a.get("isNew") ? 1 : 0));
+    return reportsToday.toSorted((r) => r.isNew);
   }
 
   @cached
@@ -86,13 +85,21 @@ export default class IndexReportController extends Controller {
     const absences = this.store.peekAll("absence").filter((absence) => {
       return (
         absence.date.isSame(this.model, "day") &&
-        absence.get("user.id") === this.user.id &&
+        absence.get("user.id") === this.currentUser.user.id &&
         !absence.isNew &&
         !absence.isDeleted
       );
     });
 
-    return absences.firstObject;
+    return absences[0];
+  }
+
+  @action
+  async createEmptyReport() {
+    await this.store.createRecord("report", {
+      date: this.model,
+      user: this.currentUser.user,
+    });
   }
 
   /**
@@ -149,8 +156,8 @@ export default class IndexReportController extends Controller {
   async reschedule(date) {
     try {
       const reports = this.reports
-        .filterBy("isNew", false)
-        .rejectBy("verifiedBy.id");
+        .filter((r) => r.isNew === false)
+        .filter((r) => !r.verifiedBy.id);
 
       // The magic number "-1" is the placeholder report row which we filter out
       // via the filterBy("isNew") line above.

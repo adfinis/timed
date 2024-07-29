@@ -4,7 +4,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from timed.conftest import setup_customer_and_employment_status
 from timed.employment.factories import EmploymentFactory, UserFactory
 from timed.projects.factories import CostCenterFactory, TaskAssigneeFactory, TaskFactory
 from timed.tracking.factories import ReportFactory
@@ -28,6 +27,7 @@ def test_customer_statistic_list(
     expected,
     status_code,
     django_assert_num_queries,
+    setup_customer_and_employment_status,
 ):
     user = auth_client.user
 
@@ -90,7 +90,12 @@ def test_customer_statistic_list(
     ("filter", "expected_result"),
     [("from_date", 5), ("customer", 3), ("cost_center", 3), ("reviewer", 3)],
 )
-def test_customer_statistic_filtered(auth_client, filter, expected_result):  # noqa: A002
+def test_customer_statistic_filtered(
+    auth_client,
+    filter,  # noqa: A002
+    expected_result,
+    setup_customer_and_employment_status,
+):
     user = auth_client.user
     setup_customer_and_employment_status(
         user=user,

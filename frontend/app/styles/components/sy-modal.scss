@@ -1,0 +1,17 @@
+#sy-modals > * {
+  overflow-x: hidden;
+
+  > .form-group:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.modal-footer {
+  .btn:not(:last-of-type) {
+    margin-right: 0.7rem;
+  }
+}
+
+.modal-overlay {
+  transition: none;
+}

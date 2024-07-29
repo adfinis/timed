@@ -2,10 +2,10 @@ import { inject as service } from "@ember/service";
 import { Ability } from "ember-can";
 
 export default class ReportAbility extends Ability {
-  @service session;
+  @service currentUser;
 
   get user() {
-    return this.session.data.user;
+    return this.currentUser.user;
   }
 
   get canEdit() {
@@ -16,7 +16,7 @@ export default class ReportAbility extends Ability {
         (this.model?.user?.get("id") === this.user?.get("id") ||
           // eslint-disable-next-line ember/no-get
           (this.model?.user?.get("supervisors") ?? [])
-            .mapBy("id")
+            .map((s) => s.id)
             .includes(this.user?.get("id"))));
     const isReviewer =
       (this.model?.taskAssignees ?? [])
@@ -24,7 +24,8 @@ export default class ReportAbility extends Ability {
           this.model?.projectAssignees ?? [],
           this.model?.customerAssignees ?? []
         )
-        .mapBy("user.id")
+        .filter((a) => a?.user)
+        .map((a) => a.user.get("id"))
         .includes(this.user?.get("id")) && !this.model?.verifiedBy?.get("id");
     return isEditable || isReviewer;
   }

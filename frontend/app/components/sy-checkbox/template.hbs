@@ -5,6 +5,7 @@
     checked={{@checked}}
     disabled={{@disabled}}
     {{on "change" (pick "target.checked" (optional @onChange))}}
+    {{!-- template-lint-disable no-at-ember-render-modifiers --}}
     {{did-insert this.handleCheckBox}}
   />
   <label for={{this.checkboxElementId}} title={{@title}}>

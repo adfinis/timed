@@ -1,4 +1,4 @@
-FROM python:3.11-alpine AS base
+FROM python:3.12-alpine AS base
 
 RUN apk update --no-cache && apk upgrade --no-cache && apk add shadow --no-cache && useradd -m -r -u 1001 timed && apk del shadow && rm -rf /var/cache/apk/*
 
@@ -41,9 +41,9 @@ FROM build as dev
 WORKDIR /app
 
 RUN apk update --no-cache && \
- apk add gcc python3-dev musl-dev linux-headers wait4ports && \
+ apk add gcc python3-dev musl-dev libffi-dev linux-headers wait4ports && \
  poetry config virtualenvs.create false && poetry install && \
- apk del gcc python3-dev musl-dev linux-headers --no-cache && \
+ apk del gcc python3-dev musl-dev libffi-dev linux-headers --no-cache && \
  chmod 777 /var/www/static
 
 USER 1001

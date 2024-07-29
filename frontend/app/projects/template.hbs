@@ -198,13 +198,9 @@
                       <SyDurationpicker
                         data-test-estimated-time={{true}}
                         @value={{fi.value}}
-                        @onChange={{(if
-                          remainingEffortTracking
-                          (queue
+                        @onChange={{if remainingEffortTracking (queue
                             fi.update (fn this.updateRemainingEffort f.model)
-                          )
-                          fi.update
-                        )}}
+                          ) fi.update}}
                       />
                     </div>
                   </f.input>

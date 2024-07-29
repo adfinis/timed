@@ -19,7 +19,7 @@ export default class DjangoWorkdaysTransform extends Transform {
    * @public
    */
   deserialize(serialized) {
-    return serialized.map(Number);
+    return serialized.split(",").map(Number);
   }
 
   /**
@@ -31,6 +31,6 @@ export default class DjangoWorkdaysTransform extends Transform {
    * @public
    */
   serialize(deserialized) {
-    return deserialized.map(String);
+    return deserialized.join();
   }
 }

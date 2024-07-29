@@ -1,26 +1,27 @@
-@import 'ember-power-select';
+@import "ember-power-select";
 
 .ember-power-select-dropdown {
   min-width: 250px;
 }
 
-.ember-power-select-options[role='listbox'] {
+.ember-power-select-options[role="listbox"] {
   max-height: 425px;
   position: relative;
 }
 
 .ember-power-select-option:not(
-  .ember-power-select-option--no-matches-message):not(
-  .ember-power-select-option--loading-message
-) {
+    .ember-power-select-option--no-matches-message,
+    .ember-power-select-option--loading-message
+  ) {
   padding: 0;
   line-height: 1;
+
   div {
     padding: 0 8px;
     line-height: 1.6;
 
     &.inactive {
-      background-color: rgb(230, 230, 230);
+      background-color: rgb(230 230 230);
     }
 
     .history {
@@ -37,23 +38,23 @@
 
         small {
           font-size: 0.6rem;
-          margin: 0.2rem 0 -0.2rem 0;
+          margin: 0.2rem 0 -0.2rem;
         }
       }
     }
   }
 
-  &[aria-current=true] .inactive,
-  &[aria-selected=true] .inactive {
+  &[aria-current="true"] .inactive,
+  &[aria-selected="true"] .inactive {
     background-color: transparent;
   }
 
-  &[aria-selected=true] {
+  &[aria-selected="true"] {
     background-color: $color-primary;
-    color: rgb(255, 255, 255);
+    color: rgb(255 255 255);
   }
 
-  &[aria-current=true] {
+  &[aria-current="true"] {
     background-color: opacify($color-primary, 0.6);
   }
 }
@@ -82,9 +83,9 @@
   padding: 0.3rem 0.5rem;
   font-size: 1.2rem;
   line-height: 1.5;
-  color: rgb(85, 85, 85);
-  background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(204, 204, 204);
+  color: rgb(85 85 85);
+  background-color: rgb(255 255 255);
+  border: 1px solid rgb(204 204 204);
   border-radius: $input-border-radius;
   box-shadow: $input-box-shadow;
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -93,18 +94,18 @@
   &:focus {
     border-color: lighten($color-primary, 20%);
     outline: 0;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
-                0 0   8px opacify($color-primary, 0.6);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset,
+      0 0 8px opacify($color-primary, 0.6);
   }
 
-  &[aria-disabled=true] {
+  &[aria-disabled="true"] {
     .ember-power-select-status-icon {
-      background-color: rgb(238, 238, 238);
+      background-color: rgb(238 238 238);
     }
   }
 
   .ember-power-select-clear-btn {
-    background-color: rgb(255,255,255);
+    background-color: rgb(255 255 255);
     padding: 0 2px;
     right: 2rem;
     top: 50%;
@@ -112,7 +113,7 @@
   }
 
   .ember-power-select-status-icon {
-    background-color: rgb(255,255,255);
+    background-color: rgb(255 255 255);
     transform: none !important;
     width: 2rem;
     border: none;

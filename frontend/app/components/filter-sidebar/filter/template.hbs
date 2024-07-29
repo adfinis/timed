@@ -17,7 +17,7 @@
       @value={{@selected}}
       @onChange={{optional @onChange}}
       @placeholder={{@placeholder}}
-      @name={{(or @name "date")}}
+      @name={{or @name "date"}}
     />
   {{else if (eq @type "search")}}
     {{#let (unique-id) as |searchId|}}

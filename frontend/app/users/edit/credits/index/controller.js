@@ -33,7 +33,7 @@ export default class UsersEditCredits extends Controller {
       ordering: "start_date",
     });
 
-    const from = (employments.get("firstObject.start") || moment()).year();
+    const from = (employments[0].get("start") || moment()).year();
     const to = moment().add(1, "year").year();
 
     return [...new Array(to + 1 - from).keys()].map((i) => `${from + i}`);

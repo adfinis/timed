@@ -17,7 +17,7 @@ export default [
   },
   {
     id: "editAttendance",
-    target: ".visible-md",
+    target: ".attendances",
     placement: "top",
     title: "Edit attendance",
     content: `

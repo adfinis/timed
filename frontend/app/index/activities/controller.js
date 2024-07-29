@@ -22,6 +22,7 @@ export default class ActivitiesIndexController extends Controller {
   @service store;
   @service notify;
   @service tracking;
+  @service currentUser;
 
   @tracked showUnknownWarning = false;
   @tracked showOverlappingWarning = false;
@@ -58,7 +59,7 @@ export default class ActivitiesIndexController extends Controller {
       return (
         activity.get("date") &&
         activity.get("date").isSame(this.model, "day") &&
-        activity.get("user.id") === this.user.id &&
+        activity.get("user.id") === this.currentUser.user.id &&
         !activity.get("isNew") &&
         !activity.get("isDeleted")
       );
@@ -66,7 +67,7 @@ export default class ActivitiesIndexController extends Controller {
   }
 
   get sortedActivities() {
-    return this.activities.sort((a, b) => {
+    return this.activities.toSorted((a, b) => {
       return b.get("from").toDate() - a.get("from").toDate();
     });
   }
@@ -144,7 +145,9 @@ export default class ActivitiesIndexController extends Controller {
    */
   @action
   generateReportsCheck() {
-    const hasUnknown = !!this.activities.findBy("task.id", undefined);
+    const hasUnknown = !!this.activities.find(
+      (a) => a.task.get("id") === undefined
+    );
     const hasOverlapping = !!this.sortedActivities.find((a) => {
       return a.get("active") && !a.get("from").isSame(moment(), "day");
     });

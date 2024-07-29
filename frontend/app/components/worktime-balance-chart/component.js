@@ -13,7 +13,7 @@ export default class WorktimeBalanceChart extends Component {
     }
 
     return {
-      labels: this.args.worktimeBalances.mapBy("date"),
+      labels: this.args.worktimeBalances.map((b) => b.date),
       datasets: [
         {
           data: this.args.worktimeBalances.map(({ balance }) =>

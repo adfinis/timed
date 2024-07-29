@@ -2,7 +2,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from timed.conftest import setup_customer_and_employment_status
 from timed.employment.factories import AbsenceTypeFactory, EmploymentFactory
 
 
@@ -17,7 +16,12 @@ from timed.employment.factories import AbsenceTypeFactory, EmploymentFactory
     ],
 )
 def test_absence_type_list(
-    auth_client, is_employed, is_customer_assignee, is_customer, expected
+    auth_client,
+    is_employed,
+    is_customer_assignee,
+    is_customer,
+    expected,
+    setup_customer_and_employment_status,
 ):
     setup_customer_and_employment_status(
         user=auth_client.user,

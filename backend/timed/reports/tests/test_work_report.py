@@ -7,7 +7,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from timed.conftest import setup_customer_and_employment_status
 from timed.employment.factories import EmploymentFactory
 from timed.projects.factories import CustomerFactory, ProjectFactory, TaskFactory
 from timed.reports.views import WorkReportViewSet
@@ -30,9 +29,11 @@ def test_work_report_single_project(
     is_employed,
     is_customer_assignee,
     is_customer,
+    snapshot,
     expected,
     status_code,
     django_assert_num_queries,
+    setup_customer_and_employment_status,
 ):
     user = auth_client.user
     setup_customer_and_employment_status(
@@ -80,6 +81,7 @@ def test_work_report_single_project(
     if status_code == status.HTTP_200_OK:
         assert "1708-20170901-Customer_Name-Project.ods" in (res["Content-Disposition"])
 
+        assert snapshot == res.content
         content = io.BytesIO(res.content)
         doc = ezodf.opendoc(content)
         table = doc.sheets[0]
