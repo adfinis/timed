@@ -49,6 +49,26 @@ export default class TaskSelectionComponent extends Component {
   @localCopy("args.initial.task")
   _task;
 
+  @dropTask
+  *fetchCustomerProjects() {
+    yield Promise.resolve();
+    return yield this.store.query("project", { customer: this.customer?.id });
+  }
+
+  customerProjectsData = trackedTask(
+    this,
+    this.fetchCustomerProjects,
+    () => {}
+  );
+
+  @dropTask
+  *fetchProjectTasks() {
+    yield Promise.resolve();
+    return yield this.store.query("task", { project: this.project?.id });
+  }
+
+  projectTasksData = trackedTask(this, this.fetchProjectTasks, () => {});
+
   constructor(...args) {
     super(...args);
 
@@ -115,6 +135,13 @@ export default class TaskSelectionComponent extends Component {
       this.onCustomerChange(customer, options);
     } else {
       this.tracking.fetchCustomers.perform();
+    }
+
+    if (this.customer?.id) {
+      this.customer.project = this.customerProjectsData.value ?? [];
+    }
+    if (this.project?.id) {
+      this.project.tasks = this.projectTasksData.value ?? [];
     }
   }
 
