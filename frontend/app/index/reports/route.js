@@ -27,7 +27,9 @@ export default class IndexReportsRoute extends Route {
 
     if (controller.task) {
       try {
-        const task = await this.store.findRecord("task", controller.task);
+        const task = await this.store.findRecord("task", controller.task, {
+          include: ["project", "project.customer"],
+        });
 
         await this.store.createRecord("report", {
           task,
