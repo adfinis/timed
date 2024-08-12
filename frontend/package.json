@@ -116,6 +116,7 @@
     "fast-redact": "3.3.0",
     "graphql": "16.8.1",
     "loader.js": "4.7.0",
+    "lodash.uniqby": "^4.7.0",
     "miragejs": "^0.1.48",
     "prettier": "2.8.8",
     "qunit": "2.19.4",
