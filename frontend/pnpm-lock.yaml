@@ -284,6 +284,9 @@ importers:
       loader.js:
         specifier: 4.7.0
         version: 4.7.0
+      lodash.uniqby:
+        specifier: ^4.7.0
+        version: 4.7.0
       miragejs:
         specifier: ^0.1.48
         version: 0.1.48
