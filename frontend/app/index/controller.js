@@ -424,7 +424,10 @@ export default class IndexController extends Controller {
       to_date: to.format("YYYY-MM-DD"),
     };
 
-    const absences = yield this.store.query("absence", params);
+    const absences = yield this.store.query("absence", {
+      ...params,
+      user: this.currentUser.user.id,
+    });
 
     const publicHolidays = yield this.store.query("public-holiday", {
       ...params,
