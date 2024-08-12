@@ -85,9 +85,9 @@
 
                       {{!
                       absenceBalances has to be an array but will always only
-                      contain one element. This is why we use firstObject here.
+                      contain one element. This is why we get the first object here.
                     }}
-                      <td>{{get supervisee.absenceBalances "0.balance"}}</td>
+                      <td>{{get (object-at 0 supervisee.absenceBalances) "balance"}}</td>
                     </tr>
                   {{/each}}
                 </tbody>
