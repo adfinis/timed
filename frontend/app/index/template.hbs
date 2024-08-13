@@ -27,11 +27,11 @@
     <div class="grid-cell hidden-sm">
       <div class="btn-group btn-group--vertical">
         <LinkTo @route="index.activities" class="btn">
-          Activities
+          Activity
           <span class="badge">{{humanize-duration this.activitySum true}}</span>
         </LinkTo>
         <LinkTo @route="index.attendances" class="btn">
-          Attendances
+          Attendance
           <span class="badge">{{humanize-duration this.attendanceSum}}</span>
         </LinkTo>
         <LinkTo @route="index.reports" class="btn">
@@ -64,7 +64,7 @@
       <ul class="nav-tabs">
         <li>
           <LinkTo @route="index.activities">
-            Activities
+            Activity
             <span class="badge">{{humanize-duration
                 this.activitySum
                 true
@@ -73,7 +73,7 @@
         </li>
         <li>
           <LinkTo @route="index.attendances">
-            Attendances
+            Attendance
             <span class="badge">{{humanize-duration this.attendanceSum}}</span>
           </LinkTo>
         </li>
