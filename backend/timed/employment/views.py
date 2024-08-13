@@ -219,7 +219,7 @@ class WorktimeBalanceViewSet(AggregateQuerysetMixin, ReadOnlyModelViewSet):
         if not user.is_superuser:
             queryset = queryset.filter(Q(id=user.id) | Q(supervisors=user))
 
-        return queryset
+        return queryset.distinct()
 
 
 class AbsenceBalanceViewSet(AggregateQuerysetMixin, ReadOnlyModelViewSet):
@@ -346,7 +346,7 @@ class EmploymentViewSet(ModelViewSet):
         if not user.is_superuser:
             queryset = queryset.filter(Q(user=user) | Q(user__supervisors=user))
 
-        return queryset
+        return queryset.distinct()
 
 
 class LocationViewSet(ReadOnlyModelViewSet):
