@@ -6,8 +6,7 @@
   {{on "click" (toggle "isModalVisible" this)}}
 >
   <FaIcon @icon="bolt" @prefix="fas" /> 
+  {{#if this.isModalVisible}}
+    <MagicLinkModal @isVisible={{this.isModalVisible}} @onClose={{toggle "isModalVisible" this}} />
+  {{/if}}
 </button>
-
-{{#if this.isModalVisible}}
-  <MagicLinkModal @isVisible={{this.isModalVisible}} @onClose={{toggle "isModalVisible" this}} />
-{{/if}}
