@@ -436,7 +436,7 @@ class AbsenceCreditViewSet(ModelViewSet):
         if not user.is_superuser:
             queryset = queryset.filter(Q(user=user) | Q(user__supervisors=user))
 
-        return queryset
+        return queryset.distinct()
 
 
 class OvertimeCreditViewSet(ModelViewSet):
@@ -468,4 +468,4 @@ class OvertimeCreditViewSet(ModelViewSet):
         if not user.is_superuser:
             queryset = queryset.filter(Q(user=user) | Q(user__supervisors=user))
 
-        return queryset
+        return queryset.distinct()
