@@ -99,6 +99,21 @@ class AttendanceSerializer(ModelSerializer):
         "user": "timed.employment.serializers.UserSerializer"
     }
 
+    def validate(self, data):
+        """Validate the attendance.
+
+        Ensure that attendances end after they start.
+        """
+        instance = self.instance
+        from_time = data.get("from_time", instance and instance.from_time)
+        to_time = data.get("to_time", instance and instance.to_time)
+
+        # validate that to is not before from
+        if to_time is not None and to_time < from_time:
+            raise ValidationError(_("An attendance may not end before it starts."))
+
+        return data
+
     class Meta:
         """Meta information for the attendance serializer."""
 
