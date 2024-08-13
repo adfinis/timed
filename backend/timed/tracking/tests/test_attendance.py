@@ -1,3 +1,5 @@
+from datetime import time
+
 import pytest
 from django.urls import reverse
 from rest_framework import status
@@ -100,3 +102,28 @@ def test_attendance_delete(internal_employee_client):
 
     response = internal_employee_client.delete(url)
     assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+def test_attendance_to_before_from(internal_employee_client, attendance_factory):
+    """Test that to is not before from."""
+    attendance = attendance_factory(
+        user=internal_employee_client.user, from_time=time(7, 30), to_time=time(8, 30)
+    )
+
+    data = {
+        "data": {
+            "type": "attendances",
+            "id": attendance.id,
+            "attributes": {"to-time": "07:00"},
+        }
+    }
+
+    url = reverse("attendance-detail", args=[attendance.id])
+
+    res = internal_employee_client.patch(url, data)
+
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+    json = res.json()
+    assert json["errors"][0]["detail"] == (
+        "An attendance may not end before it starts."
+    )
