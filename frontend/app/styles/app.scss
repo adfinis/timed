@@ -355,7 +355,7 @@ strong {
         margin-right: 10px;
       }
 
-      div>i {
+      div > i {
         margin-right: 5px;
       }
     }
@@ -366,8 +366,8 @@ strong {
   border-bottom: 3px double $body-color;
 }
 
-.table--absence-types>thead>tr>th,
-.table--absence-types>tbody>tr>td {
+.table--absence-types > thead > tr > th,
+.table--absence-types > tbody > tr > td {
   .grid {
     margin: 0;
   }

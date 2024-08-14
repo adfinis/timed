@@ -1,4 +1,4 @@
-<nav class="nav-top nav-top--fixed {{if this.expand 'nav-top--expand'}}">
+<nav class="nav-top nav-top--fixed {{if (and this.expand this.navMobile) 'nav-top--expand'}}">
   <header class="nav-top-header">
     <button
       class="nav-toggle nav-top-toggle"
@@ -21,8 +21,8 @@
     <ul class="nav-top-list">
       <li class="nav-top-list-item">
         <LinkTo @route="index">
-          <FaIcon @icon="clock" />
-          Tracking
+          <FaIcon @icon="clock" @size="lg" />
+          <span>Tracking</span>
         </LinkTo>
       </li>
       {{#unless this.navMobile}}

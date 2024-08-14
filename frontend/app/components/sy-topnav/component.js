@@ -10,6 +10,6 @@ export default class SyTopnav extends Component {
   @tracked expand = false;
 
   get navMobile() {
-    return this.media.isMo || this.media.isXs || this.media.isSm;
+    return this.media.isMo || this.media.isXs;
   }
 }

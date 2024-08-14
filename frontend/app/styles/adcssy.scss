@@ -2536,12 +2536,12 @@ code {
   display: block;
   max-height: 400px;
   overflow-y: auto;
+  transition: max-height 0.7s;
 }
 
 .nav-top-body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 1.2s;
 }
 
 .nav-top-list {
