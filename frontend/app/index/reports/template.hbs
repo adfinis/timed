@@ -13,6 +13,7 @@
     {{#each this.reports as |report|}}
       <ReportRow
         @report={{report}}
+        @initial={{this.initial}}
         @onSave={{this.saveReport}}
         @onDelete={{this.deleteReport}}
         data-test-report-row-id={{report.id}}

@@ -25,14 +25,41 @@ export default class IndexReportsRoute extends Route {
 
     controller.set("rescheduleDate", model);
 
-    if (controller.task) {
+    if (
+      controller.customer ||
+      controller.project ||
+      controller.task ||
+      controller.duration ||
+      controller.comment
+    ) {
       try {
-        const task = await this.store.findRecord("task", controller.task, {
-          include: "project,project.customer",
-        });
+        const task = controller.task
+          ? await this.store.findRecord("task", controller.task, {
+              include: "project,project.customer",
+            })
+          : null;
+
+        const project =
+          (await task?.project) ??
+          (controller.project
+            ? await this.store.findRecord("project", controller.project, {
+                include: "customer",
+              })
+            : null);
+
+        const customer =
+          (await project?.customer) ??
+          (controller.customer
+            ? await this.store.findRecord("customer", controller.customer)
+            : null);
+
+        controller.set("initial", { task, project, customer });
+
+        const stuff = task
+          ? { task, remainingEffort: task.mostRecentRemainingEffort }
+          : {};
 
         await this.store.createRecord("report", {
-          task,
           duration: controller.duration
             ? moment.duration(controller.duration)
             : "",
@@ -41,9 +68,11 @@ export default class IndexReportsRoute extends Route {
           user: this.currentUser.user,
           review: controller.review ?? false,
           notBillable: controller.notBillable ?? false,
-          remainingEffort: task.mostRecentRemainingEffort,
+          ...stuff,
         });
 
+        controller.customer = null;
+        controller.project = null;
         controller.task = null;
         controller.comment = null;
         controller.duration = null;

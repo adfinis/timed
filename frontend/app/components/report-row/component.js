@@ -21,6 +21,10 @@ export default class ReportRowComponent extends Component {
         )} and therefore not editable anymore`;
   }
 
+  get initial() {
+    return this.args.report?.get("task.id") ? {} : this.args.initial;
+  }
+
   /**
    * Save the row
    *

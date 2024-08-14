@@ -3,6 +3,7 @@
     <TaskSelection
       @disabled={{not this.editable}}
       @task={{cs.task}}
+      @initial={{this.initial}}
       @on-set-task={{fn this.updateTask cs}}
       as |t|
     >
