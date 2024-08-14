@@ -16,6 +16,11 @@ RUN pnpm build --environment=production
 
 FROM nginx:alpine
 
+RUN apk update --no-cache && \
+  apk upgrade --no-cache && \
+  apk add shadow --no-cache && \
+  rm -rf /var/cache/apk/*
+
 EXPOSE 80
 
 COPY 99-configure-oidc.sh /docker-entrypoint.d/
