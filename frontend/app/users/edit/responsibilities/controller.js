@@ -20,6 +20,7 @@ export default class UsersEditResponsibilitiesController extends Controller {
       has_reviewer: this.user?.id,
       include: "customer",
       ordering: "customer__name,name",
+      archived: 0,
     });
   }
 
