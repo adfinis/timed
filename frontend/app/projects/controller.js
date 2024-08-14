@@ -18,6 +18,7 @@ export default class ProjectsController extends Controller {
   @tracked selectedCustomer;
   @tracked selectedProject;
   @tracked selectedTask;
+  @tracked hideArchivedTasks = false;
 
   @lastValue("fetchProjectsByUser") projects;
 

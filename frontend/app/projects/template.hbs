@@ -101,6 +101,12 @@
             >Add Task</button>
           </span>
         </h3>
+        <SyCheckbox
+          data-test-show-archived
+          @checked={{this.hideArchivedTasks}}
+          @value={{this.hideArchivedTasks}}
+          @onChange={{fn (mut this.hideArchivedTasks)}}
+        >Hide Archived Tasks</SyCheckbox>
         <ScrollContainer>
           <table
             class="table table--striped table--projects"
@@ -128,6 +134,7 @@
             </thead>
             <tbody>
               {{#each this.tasks as |task|}}
+                {{#unless (and this.hideArchivedTasks task.archived)}}
                 <tr
                   class="pointer {{if (eq this.selectedTask task) 'selected'}}"
                   {{! template-lint-disable }}
@@ -158,6 +165,7 @@
                       @checked={{task.archived}}
                     /></td>
                 </tr>
+                {{/unless}}
               {{/each}}
             </tbody>
           </table>
