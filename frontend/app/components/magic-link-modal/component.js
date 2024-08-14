@@ -4,6 +4,8 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 
 export default class MagicLinkModal extends Component {
+  @tracked customer;
+  @tracked project;
   @tracked task;
   @tracked duration;
   @tracked comment;
@@ -14,15 +16,12 @@ export default class MagicLinkModal extends Component {
 
   @service router;
 
-  @action
-  onSetTask(task) {
-    this.task = task;
-  }
-
   get magicLinkString() {
     const url = this.router.urlFor("index.reports", {
       queryParams: {
         task: this.task?.id,
+        project: this.task ? null : this.project?.id,
+        customer: this.task ? null : this.project ? null : this.customer?.id,
         comment: this.comment,
         duration: this.duration,
         review: this.review,

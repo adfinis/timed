@@ -17,7 +17,9 @@
         <TaskSelection
           @disabled={{false}}
           @task={{this.task}}
-          @on-set-task={{this.onSetTask}}
+          @on-set-customer={{fn (mut this.customer)}}
+          @on-set-project={{fn (mut this.project)}}
+          @on-set-task={{fn (mut this.task)}}
           as |t|
         >
           <div
