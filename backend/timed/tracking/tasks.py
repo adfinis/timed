@@ -33,6 +33,7 @@ def _send_notification_emails(changes, reviewer, rejected=False):  # noqa: FBT00
             from_email=from_email,
             to=[user.email],
             connection=connection,
+            reply_to=[reviewer.email],
             headers=settings.EMAIL_EXTRA_HEADERS,
         )
 
