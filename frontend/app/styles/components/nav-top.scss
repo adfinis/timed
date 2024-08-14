@@ -13,6 +13,12 @@ nav {
     display: block;
   }
 
+  .nav-top-list-item a {
+    display: grid;
+    grid-template-columns: 2em 1fr;
+    align-items: center;
+  }
+
   @media #{$nav-top-mobile-width} {
     .nav-top-header-title {
       display: block;
@@ -37,6 +43,7 @@ nav {
     .nav-top-list-item a {
       padding: 0.6rem 0.8rem;
       border-radius: 0;
+      display: revert;
     }
 
     .nav-top-toggle {
