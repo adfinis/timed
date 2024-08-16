@@ -527,13 +527,13 @@ tornado = ">=6.3.3,<7.0.0"
 
 [[package]]
 name = "django-money"
-version = "3.4.1"
+version = "3.5.3"
 description = "Adds support for using money and currency fields in django models and forms. Uses py-moneyed as the money implementation."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "django-money-3.4.1.tar.gz", hash = "sha256:aef49da4ae3ff27791d03204062f4a294bdb5dd8554dcd398866c46c54461486"},
-    {file = "django_money-3.4.1-py3-none-any.whl", hash = "sha256:0c15c957c4c1571c7492675608c2ce54d1d446bce9957d042669acca14b732c9"},
+    {file = "django_money-3.5.3-py3-none-any.whl", hash = "sha256:3020c0f6b77eb4c30bdd711c7c660af67ed4b7a4750fdbdf5894788848dc6fc6"},
+    {file = "django_money-3.5.3.tar.gz", hash = "sha256:cb8ef1adea8c682b792cc565ace45ace9525de26e3b116290951cd78c7393eab"},
 ]
 
 [package.dependencies]
@@ -543,7 +543,7 @@ setuptools = "*"
 
 [package.extras]
 exchange = ["certifi"]
-test = ["django-stubs", "mixer", "mypy", "pytest (>=3.1.0,<7.0)", "pytest-cov", "pytest-django", "pytest-pythonpath"]
+test = ["django-stubs", "mixer", "mypy", "pytest (>=8.2,<8.3)", "pytest-cov", "pytest-django"]
 
 [[package]]
 name = "django-nested-inline"
@@ -1966,4 +1966,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "68ddc2e56a841ba7004dbcf71d9f4bf4eae42f8002fde17cd82372eb7016aa22"
+content-hash = "38afa31b76fbcecd9fbf995e35e0357c0ebecbf520261e5b2793e8640475a1c0"
