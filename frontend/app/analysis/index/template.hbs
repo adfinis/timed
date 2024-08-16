@@ -4,6 +4,7 @@
   <PagePermission>
     <h1>Analysis</h1>
 
+    {{#unless this.prefetchData.isRunning}}
     <TaskSelection
       @history={{false}}
       @archived={{true}}
@@ -22,9 +23,6 @@
         @onReset={{queue t.clear this.reset}}
         as |fs|
       >
-        {{#if this.prefetchData.isRunning}}
-          <LoadingIcon />
-        {{else}}
           <fs.group @label="Task" @expanded={{true}}>
             <fs.label>
               Customer
@@ -222,9 +220,9 @@
             </fs.label>
 
           </fs.group>
-        {{/if}}
       </FilterSidebar>
     </TaskSelection>
+    {{/unless}}
 
     {{#if this.appliedFilters.length}}
       {{#if (and (not this._dataCache.length) this.data.isRunning)}}

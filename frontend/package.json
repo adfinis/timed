@@ -71,7 +71,7 @@
     "ember-component-css": "0.8.1",
     "ember-composable-helpers": "5.0.0",
     "ember-concurrency": "^4.0.2",
-    "ember-data": "~4.11.3",
+    "ember-data": "~4.12.8",
     "ember-decorators": "6.1.1",
     "ember-event-helpers": "^0.1.1",
     "ember-fetch": "8.1.2",
