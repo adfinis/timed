@@ -29,6 +29,7 @@ export default class IndexReportController extends Controller {
   @tracked notBillable = false;
 
   @tracked showReschedule = false;
+  @tracked checkForEmptyRecord = false;
   @tracked _center;
 
   @service store;
@@ -96,6 +97,7 @@ export default class IndexReportController extends Controller {
 
   @action
   async createEmptyReport() {
+    if (!this.checkForEmptyRecord) return;
     await this.store.createRecord("report", {
       date: this.model,
       user: this.currentUser.user,

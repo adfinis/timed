@@ -58,5 +58,6 @@ export default class IndexReportsRoute extends Route {
         this.notify.error("Could not create report");
       }
     }
+    controller.checkForEmptyRecord = true;
   }
 }

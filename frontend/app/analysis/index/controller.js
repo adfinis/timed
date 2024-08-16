@@ -169,8 +169,7 @@ export default class AnalysisController extends QPController {
     this.data.perform();
   }
 
-  @task
-  *prefetchData() {
+  prefetchData = task(async () => {
     const {
       customer: customerId,
       project: projectId,
@@ -179,7 +178,7 @@ export default class AnalysisController extends QPController {
       reviewer: reviewerId,
     } = this.allQueryParams;
 
-    return yield hash({
+    return await hash({
       customer: customerId && this.store.findRecord("customer", customerId),
       project: projectId && this.store.findRecord("project", projectId),
       task: taskId && this.store.findRecord("task", taskId),
@@ -188,7 +187,7 @@ export default class AnalysisController extends QPController {
       billingTypes: this.store.findAll("billing-type"),
       costCenters: this.store.findAll("cost-center"),
     });
-  }
+  });
 
   @enqueueTask
   *data() {
