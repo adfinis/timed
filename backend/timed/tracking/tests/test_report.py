@@ -2094,3 +2094,29 @@ def test_report_remaining_effort_update(
     report.task.refresh_from_db()
     assert report.task.most_recent_remaining_effort == timedelta(hours=3)
     assert report.task.project.total_remaining_effort == timedelta(hours=3)
+
+
+def test_report_list_filter_comment(
+    internal_employee_client,
+    report_factory,
+):
+    report_1 = report_factory.create(comment="review thing with Test User")
+    report_2 = report_factory.create(comment="help Test User setup their laptop")
+    report_3 = report_factory.create(comment="created LDAP account for Test User")
+    report_factory(comment="nothing related to the other comments")
+
+    url = reverse("report-list")
+
+    response = internal_employee_client.get(
+        url,
+        data={
+            "comment": "Test User",
+            "ordering": "id",
+        },
+    )
+    assert response.status_code == status.HTTP_200_OK
+    json = response.json()
+    assert len(json["data"]) == 3
+    assert json["data"][0]["id"] == str(report_1.id)
+    assert json["data"][1]["id"] == str(report_2.id)
+    assert json["data"][2]["id"] == str(report_3.id)
