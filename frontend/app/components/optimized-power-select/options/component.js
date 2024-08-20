@@ -1,34 +1,16 @@
 import { action } from "@ember/object";
+import { scheduleOnce } from "@ember/runloop";
 import { macroCondition, isTesting } from "@embroider/macros";
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 
 const isTouchDevice = !!window && "ontouchstart" in window;
-if (typeof FastBoot === "undefined") {
-  (function (ElementProto) {
-    if (typeof ElementProto.matches !== "function") {
-      ElementProto.matches =
-        ElementProto.msMatchesSelector ||
-        ElementProto.mozMatchesSelector ||
-        ElementProto.webkitMatchesSelector;
-    }
-
-    if (typeof ElementProto.closest !== "function") {
-      ElementProto.closest = function closest(selector) {
-        let element = this;
-        while (element && element.nodeType === 1) {
-          if (element.matches(selector)) {
-            return element;
-          }
-          element = element.parentNode;
-        }
-        return null;
-      };
-    }
-  })(window.Element.prototype);
-}
 
 export default class OptimizedPowerSelectOptionsComponent extends Component {
   isTouchDevice = isTouchDevice;
+
+  @tracked trackTouchMove = false;
+  @tracked hasMoved = false;
 
   get isTesting() {
     if (macroCondition(isTesting())) {
@@ -37,43 +19,36 @@ export default class OptimizedPowerSelectOptionsComponent extends Component {
     return false;
   }
 
+  constructor(...args) {
+    super(...args);
+    scheduleOnce(
+      "actions",
+      this.args.select.actions,
+      "scrollTo",
+      this.args.select.highlighted
+    );
+  }
+
   @action
-  addHandlers(element) {
-    const role = element.getAttribute("role");
-    if (role === "group") {
+  onEvent(e) {
+    if (e.type.startsWith("touch") && !this.isTouchDevice) {
       return;
     }
-    const findOptionAndPerform = (action, e) => {
-      const optionItem = e.target.closest("[data-option-index]");
-      if (!optionItem) {
-        return;
-      }
-      if (optionItem.closest("[aria-disabled=true]")) {
-        return; // Abort if the item or an ancestor is disabled
-      }
-      const optionIndex = optionItem.getAttribute("data-option-index");
-      action(this._optionFromIndex(optionIndex), e);
-    };
-    element.addEventListener("mouseup", (e) =>
-      findOptionAndPerform(this.args.select.actions.choose, e)
-    );
-    if (this.args.highlightOnHover) {
-      element.addEventListener("mouseover", (e) =>
-        findOptionAndPerform(this.args.select.actions.highlight, e)
-      );
-    }
-    if (this.isTouchDevice) {
-      const touchMoveHandler = () => {
+    const EVENT_TYPE_MAP = {
+      mouseup: () =>
+        this.findOptionAndPerform(this.args.select.actions.choose, e),
+      mouseover: () =>
+        this.args.highlightOnHover &&
+        this.findOptionAndPerform(this.args.select.actions.highlight, e),
+      touchstart: () => {
+        this.trackTouchMove = true;
+      },
+      touchmove: () => {
+        if (!this.trackTouchMove) return;
         this.hasMoved = true;
-        if (element) {
-          element.removeEventListener("touchmove", touchMoveHandler);
-        }
-      };
-      // Add touch event handlers to detect taps
-      element.addEventListener("touchstart", () => {
-        element.addEventListener("touchmove", touchMoveHandler);
-      });
-      element.addEventListener("touchend", (e) => {
+      },
+      touchend: () => {
+        this.trackTouchMove = false;
         const optionItem = e.target.closest("[data-option-index]");
 
         if (!optionItem) {
@@ -92,20 +67,21 @@ export default class OptimizedPowerSelectOptionsComponent extends Component {
 
         const optionIndex = optionItem.getAttribute("data-option-index");
         this.args.select.actions.choose(this._optionFromIndex(optionIndex), e);
-      });
-    }
-    if (role !== "group") {
-      this.args.select.actions.scrollTo(this.args.select.highlighted);
-    }
+      },
+    };
+    EVENT_TYPE_MAP[e.type]();
   }
 
-  @action
-  removeHandlers(element) {
-    element.removeEventListener("mouseup", this.mouseUpHandler);
-    element.removeEventListener("mouseover", this.mouseOverHandler);
-    element.removeEventListener("touchstart", this.touchStartHandler);
-    element.removeEventListener("touchmove", this.touchMoveHandler);
-    element.removeEventListener("touchend", this.touchEndHandler);
+  findOptionAndPerform(action, e) {
+    const optionItem = e.target.closest("[data-option-index]");
+    if (!optionItem) {
+      return;
+    }
+    if (optionItem.closest("[aria-disabled=true]")) {
+      return; // Abort if the item or an ancestor is disabled
+    }
+    const optionIndex = optionItem.getAttribute("data-option-index");
+    action(this._optionFromIndex(optionIndex), e);
   }
 
   _optionFromIndex(index) {

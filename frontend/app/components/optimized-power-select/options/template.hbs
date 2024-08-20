@@ -1,9 +1,12 @@
 <ul
   role="listbox"
   class="ember-power-select-options"
-  {{!-- template-lint-disable no-at-ember-render-modifiers --}}
-  {{did-insert this.addHandlers}}
-  {{will-destroy this.removeHandlers}}
+  {{on "touchmove" this.onEvent}}
+  {{on "touchstart" this.onEvent}}
+  {{on "touchend" this.onEvent}}
+  {{!-- template-lint-disable no-invalid-interactive --}}
+  {{on "mouseup" this.onEvent}}
+  {{on "mouseover" this.onEvent}}
   ...attributes
 >
   {{#if @select.loading}}
