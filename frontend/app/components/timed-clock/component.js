@@ -1,4 +1,5 @@
 import { setProperties } from "@ember/object";
+import { scheduleOnce } from "@ember/runloop";
 import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
@@ -20,17 +21,21 @@ export default class TimedClock extends Component {
     setProperties(this, { second, minute, hour });
   }
 
+  constructor(...args) {
+    super(...args);
+
+    scheduleOnce("actions", this.timer, "perform");
+  }
+
   @task
   *timer() {
     for (;;) {
       this._update();
 
-      /* istanbul ignore else */
       if (macroCondition(isTesting())) {
         return;
       }
 
-      /* istanbul ignore next */
       yield timeout(1000);
     }
   }

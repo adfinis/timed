@@ -1,22 +1,17 @@
-import { registerDestructor } from "@ember/destroyable";
 import { action } from "@ember/object";
+import { guidFor } from "@ember/object/internals";
 import Component from "@glimmer/component";
 
 export default class SyModalOverlay extends Component {
-  @action
-  setupClickHandler(element) {
-    this.element = element;
+  constructor(...args) {
+    super(...args);
 
-    element.addEventListener("click", this.handleClick);
-
-    registerDestructor(this, () => {
-      element.removeEventListener("click", this.handleClick);
-    });
+    this.id = guidFor(this);
   }
 
   @action
   handleClick(e) {
-    if (e.target === this.element) {
+    if (e.target.id === this.id) {
       this.args.onClose();
     }
   }

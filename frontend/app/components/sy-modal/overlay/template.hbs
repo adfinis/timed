@@ -1,7 +1,8 @@
 <div
   class="modal modal-overlay {{if @visible 'modal--visible'}}"
-  {{!-- template-lint-disable no-at-ember-render-modifiers --}}
-  {{did-insert this.setupClickHandler}}
+  id={{this.id}}
+  {{!-- template-lint-disable no-invalid-interactive --}}
+  {{on "click" this.handleClick}}
 >
   {{yield}}
 </div>
