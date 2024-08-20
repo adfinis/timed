@@ -4,9 +4,8 @@
     id={{this.checkboxElementId}}
     checked={{@checked}}
     disabled={{@disabled}}
+    indeterminate={{eq @checked null}}
     {{on "change" (pick "target.checked" (optional @onChange))}}
-    {{!-- template-lint-disable no-at-ember-render-modifiers --}}
-    {{did-insert this.handleCheckBox}}
   />
   <label for={{this.checkboxElementId}} title={{@title}}>
     {{#if (has-block)}}
