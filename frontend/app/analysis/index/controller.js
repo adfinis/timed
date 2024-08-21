@@ -255,34 +255,33 @@ export default class AnalysisController extends QPController {
     return this._dataCache;
   });
 
-  @task
-  *fetchAssignees(data) {
-    const projectIds = [
-      ...new Set(data.map((report) => report.get("task.project.id"))),
-    ].join(",");
+  fetchAssignees = task(async (data) => {
     const taskIds = [
       ...new Set(data.map((report) => report.get("task.id"))),
+    ].join(",");
+    const projectIds = [
+      ...new Set(data.map((report) => report.get("task.project.id"))),
     ].join(",");
     const customerIds = [
       ...new Set(data.map((report) => report.get("task.project.customer.id"))),
     ].join(",");
 
     const projectAssignees = projectIds.length
-      ? yield this.store.query("project-assignee", {
+      ? await this.store.query("project-assignee", {
           is_reviewer: 1,
           projects: projectIds,
           include: "project,user",
         })
       : [];
     const taskAssignees = taskIds.length
-      ? yield this.store.query("task-assignee", {
+      ? await this.store.query("task-assignee", {
           is_reviewer: 1,
           tasks: taskIds,
           include: "task,user",
         })
       : [];
     const customerAssignees = customerIds.length
-      ? yield this.store.query("customer-assignee", {
+      ? await this.store.query("customer-assignee", {
           is_reviewer: 1,
           customers: customerIds,
           include: "customer,user",
@@ -290,7 +289,7 @@ export default class AnalysisController extends QPController {
       : [];
 
     return { projectAssignees, taskAssignees, customerAssignees };
-  }
+  });
 
   @dropTask
   *loadNext() {

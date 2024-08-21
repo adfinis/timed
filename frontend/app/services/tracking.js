@@ -5,6 +5,7 @@ import { camelize, capitalize } from "@ember/string";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, task, timeout } from "ember-concurrency";
+import { query } from "ember-data-resources";
 import { trackedTask } from "ember-resources/util/ember-concurrency";
 import moment from "moment";
 import formatDuration from "timed/utils/format-duration";
@@ -269,22 +270,10 @@ export default class TrackingService extends Service {
     return yield this.store.query("user", {});
   }
 
-  /**
-   * All customers
-   *
-   * @property {EmberConcurrency.Task} customers
-   * @public
-   */
-  @dropTask
-  *fetchCustomers() {
-    yield Promise.resolve();
-    return yield this.store.query("customer", {});
-  }
-
-  customersData = trackedTask(this, this.fetchCustomers, () => {});
+  #customers = query(this, "customer", () => ({}));
 
   get customers() {
-    return this.customersData.value ?? [];
+    return this.#customers.records ?? [];
   }
 
   /**
