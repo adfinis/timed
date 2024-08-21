@@ -70,6 +70,7 @@
     "ember-composable-helpers": "5.0.0",
     "ember-concurrency": "^4.0.2",
     "ember-data": "~4.12.8",
+    "ember-data-resources": "^5.2.1",
     "ember-decorators": "6.1.1",
     "ember-event-helpers": "^0.1.1",
     "ember-fetch": "8.1.2",
