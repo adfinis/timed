@@ -51,5 +51,5 @@ export default class AbsenceCredit extends Model {
    * @property {User} user
    * @public
    */
-  @belongsTo("user", { async: true, inverse: null }) user;
+  @belongsTo("user", { async: false, inverse: null }) user;
 }
