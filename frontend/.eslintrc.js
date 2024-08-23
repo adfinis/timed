@@ -13,5 +13,6 @@ module.exports = {
     "ember/no-observers": "warn",
     "qunit/no-assert-equal": "warn",
     "ember/require-tagless-components": "warn",
+    "qunit/require-expect": "warn",
   },
 };
