@@ -52,7 +52,7 @@
         </tr>
       </thead>
       <VerticalCollection
-        @items={{@data.last.value}}
+        @items={{slice @data.last.value}}
         @tagName="tbody"
         @estimateHeight={{40}}
         @bufferSize={{10}}
