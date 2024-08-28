@@ -87,7 +87,8 @@
                       absenceBalances has to be an array but will always only
                       contain one element. This is why we get the first object here.
                     }}
-                      <td>{{get (object-at 0 supervisee.absenceBalances) "balance"}}</td>
+                      <td>{{await (this.getBalance supervisee)}}</td>
+                      <td>{{get (object-at supervisee.absenceBalances) "balance"}}</td>
                     </tr>
                   {{/each}}
                 </tbody>

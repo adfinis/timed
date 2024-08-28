@@ -24,6 +24,10 @@ export default class UsersEditResponsibilitiesController extends Controller {
     });
   }
 
+  async getBalance(supervisee) {
+    return (await supervisee.absenceBalances)[0].balance;
+  }
+
   @task
   *supervisees() {
     const supervisor = this.user?.id;

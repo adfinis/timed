@@ -99,8 +99,8 @@ export default class IndexReportController extends Controller {
   async createEmptyReport() {
     if (!this.checkForEmptyRecord) return;
     await this.store.createRecord("report", {
-      date: this.model,
-      user: this.currentUser.user,
+      date: await this.model,
+      user: await this.currentUser.user,
     });
   }
 
