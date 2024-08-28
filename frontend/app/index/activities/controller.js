@@ -106,7 +106,8 @@ export default class ActivitiesIndexController extends Controller {
 
     if (!activity.get("date").isSame(moment(), "day")) {
       activity = this.store.createRecord("activity", {
-        ...activity.getProperties("task", "comment"),
+        task: await activity.task,
+        comment: await activity.comment,
       });
     }
 

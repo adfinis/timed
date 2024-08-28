@@ -55,7 +55,7 @@ export default class UnverifiedReportsService extends Service {
         page: { number: 1, size: 1 },
       });
 
-      this.amountReports = reports.meta.pagination.count;
+      this.amountReports = await reports.meta.pagination.count;
     } catch (e) {
       this.notify.error("Error while polling reports");
     }
