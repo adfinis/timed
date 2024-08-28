@@ -188,7 +188,7 @@ export default class ActivitiesIndexController extends Controller {
           const data = {
             duration: activity.get("duration"),
             date: activity.get("date"),
-            task: activity.get("task"),
+            task: await activity.get("task"),
             review: activity.get("review"),
             notBillable: activity.get("notBillable"),
             comment: activity.get("comment").trim(),
@@ -212,7 +212,7 @@ export default class ActivitiesIndexController extends Controller {
             data.duration.add(report.get("duration"));
             report.set("duration", data.duration);
           } else {
-            report = this.store.createRecord("report", data);
+            report = await this.store.createRecord("report", data);
           }
 
           activity.set("transferred", true);

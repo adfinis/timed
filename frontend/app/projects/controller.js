@@ -52,7 +52,7 @@ export default class ProjectsController extends Controller {
         });
       } else {
         projects = yield this.store.query("project", {
-          has_manager: this.user.get("id"),
+          has_manager: yield this.user.get("id"),
           include,
         });
       }
@@ -75,7 +75,7 @@ export default class ProjectsController extends Controller {
   @dropTask
   *fetchTasksByProject() {
     try {
-      const id = this.selectedProject.get("id");
+      const id = yield this.selectedProject.get("id");
       return yield this.store.query("task", {
         project: id,
       });
@@ -114,16 +114,16 @@ export default class ProjectsController extends Controller {
   @dropTask
   *createTask() {
     this.selectedTask = yield this.store.createRecord("task", {
-      project: this.selectedProject,
+      project: yield this.selectedProject,
     });
   }
 
   @action
-  handleCustomerChange(customer) {
+  async handleCustomerChange(customer) {
     // If customer is null, we return a Promise. EPS has a bug, where promise
     // based selections can not get reset with a non-promise value.
     // See: https://github.com/cibernox/ember-power-select/issues/1467
-    this.selectedCustomer = customer ?? Promise.resolve();
+    this.selectedCustomer = (await customer) ?? Promise.resolve();
     this.selectedProject = null;
     this.selectedTask = null;
 
@@ -133,12 +133,12 @@ export default class ProjectsController extends Controller {
   }
 
   @action
-  handleProjectChange(project) {
-    this.selectedProject = project;
+  async handleProjectChange(project) {
+    this.selectedProject = await project;
     this.selectedTask = null;
 
     if (this.selectedProject !== null) {
-      this.fetchTasksByProject.perform();
+      await this.fetchTasksByProject.perform();
     }
   }
 
