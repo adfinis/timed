@@ -5,16 +5,13 @@ import { dropTask } from "ember-concurrency";
 import ReportValidations from "timed/validations/report";
 
 export default class ReportRowComponent extends Component {
-  @service abilities;
-
   ReportValidations = ReportValidations;
 
-  get editable() {
-    return this.abilities.can("edit report", this.args.report);
-  }
+  @service abilities;
 
-  get title() {
-    return this.editable
+  @action
+  title(editable) {
+    return editable
       ? ""
       : `This entry was already verified by ${this.args.report.get(
           "verifiedBy.fullName"
@@ -48,5 +45,12 @@ export default class ReportRowComponent extends Component {
   updateTask(cs, task) {
     cs.task = task;
     cs.remainingEffort = task?.mostRecentRemainingEffort;
+  }
+
+  @action
+  async canEdit(syncEdit) {
+    return syncEdit
+      ? true
+      : await this.abilities.can("aedit report", this.args.report);
   }
 }

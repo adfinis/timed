@@ -357,6 +357,9 @@
                 </colgroup>
                 <tbody>
                   {{#each reports as |report|}}
+                    {{#let (or this.canBill (can 'edit report' report)) as |syncEditable|}}
+                    {{#let (this.canEdit syncEditable report) as |promise|}}
+                    <PromiseThing @await={{not syncEditable}} @value={{syncEditable}} @promise={{promise}} as |t|>
                     {{! template-lint-disable}}
                     <tr
                       class="{{if
@@ -364,10 +367,10 @@
                           'selected'
                         }}
                         {{if
-                          (or this.canBill (await (can 'edit report' report)))
+                          t.value
                           'pointer'
                         }}"
-                      {{on "click" (fn this.selectRow report)}}
+                      {{on "click" (fn this.selectRow report t.value)}}
                     >
                       <td>{{report.user.username}}</td>
                       <td>{{moment-format report.date "DD.MM.YYYY"}}</td>
@@ -399,6 +402,9 @@
                           @highlight={{true}}
                         /></td>
                     </tr>
+                    </PromiseThing>
+                    {{/let}}
+                    {{/let}}
                   {{/each}}
                   {{#if this._canLoadMore}}
                     <tr

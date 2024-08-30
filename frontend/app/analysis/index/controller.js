@@ -56,7 +56,7 @@ export default class AnalysisController extends QPController {
   @service store;
   @service router;
   @service notify;
-  @service can;
+  @service abilities;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -361,17 +361,24 @@ export default class AnalysisController extends QPController {
   }
 
   @action
-  selectRow(report) {
-    if (this.can.can("edit report", report) || this.canBill) {
-      const selected = this.selectedReportIds;
-
-      if (selected.includes(report.id)) {
-        this.selectedReportIds = A([
-          ...selected.filter((id) => id !== report.id),
-        ]);
-      } else {
-        this.selectedReportIds = A([...selected, report.id]);
-      }
+  async selectRow(report, editable) {
+    if (!editable) {
+      return;
     }
+
+    const selected = this.selectedReportIds;
+
+    if (selected.includes(report.id)) {
+      this.selectedReportIds = A([
+        ...selected.filter((id) => id !== report.id),
+      ]);
+    } else {
+      this.selectedReportIds = A([...selected, report.id]);
+    }
+  }
+
+  @action
+  async canEdit(syncEdit, report) {
+    return syncEdit ? true : await this.abilities.can("aedit report", report);
   }
 }

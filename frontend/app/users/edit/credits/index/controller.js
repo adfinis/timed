@@ -12,7 +12,7 @@ export default class UsersEditCredits extends Controller {
 
   @service notify;
   @service fetch;
-  @service can;
+  @service abilities;
   @service router;
   @service store;
 
@@ -42,8 +42,8 @@ export default class UsersEditCredits extends Controller {
   get allowTransfer() {
     return (
       parseInt(this.year) === moment().year() - 1 &&
-      this.can.can("create overtime-credit") &&
-      this.can.can("create absence-credit")
+      this.abilities.can("create overtime-credit") &&
+      this.abilities.can("create absence-credit")
     );
   }
 
@@ -95,7 +95,7 @@ export default class UsersEditCredits extends Controller {
 
   @dropTask
   *editAbsenceCredit(id) {
-    if (this.can.can("edit absence-credit")) {
+    if (this.abilities.can("edit absence-credit")) {
       yield this.router.transitionTo(
         "users.edit.credits.absence-credits.edit",
         id
@@ -105,7 +105,7 @@ export default class UsersEditCredits extends Controller {
 
   @dropTask
   *editOvertimeCredit(id) {
-    if (this.can.can("edit overtime-credit")) {
+    if (this.abilities.can("edit overtime-credit")) {
       yield this.router.transitionTo(
         "users.edit.credits.overtime-credits.edit",
         id
