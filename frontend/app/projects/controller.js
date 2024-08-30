@@ -37,7 +37,7 @@ export default class ProjectsController extends Controller {
   get customers() {
     return uniqBy(
       this.projects?.map((p) => p?.get("customer")).filter(Boolean) ?? [],
-      (c) => c.get("id")
+      (c) => c.get("id"),
     ).toSorted((c) => c.get("name"));
   }
 
@@ -68,7 +68,7 @@ export default class ProjectsController extends Controller {
   *filterProjects() {
     return yield this.projects.filter(
       (project) =>
-        project.get("customer.id") === this.selectedCustomer.get("id")
+        project.get("customer.id") === this.selectedCustomer.get("id"),
     );
   }
 
@@ -150,7 +150,7 @@ export default class ProjectsController extends Controller {
     ) {
       changeset.set(
         "mostRecentRemainingEffort",
-        changeset.get("estimatedTime")
+        changeset.get("estimatedTime"),
       );
     }
   }

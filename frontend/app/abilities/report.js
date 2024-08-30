@@ -28,7 +28,7 @@ export default class ReportAbility extends Ability {
     return ((await this.model?.taskAssignees) ?? [])
       .concat(
         (await this.model?.projectAssignees) ?? [],
-        (await this.model?.customerAssignees) ?? []
+        (await this.model?.customerAssignees) ?? [],
       )
       .filter((a) => a?.user)
       .map((a) => a.user.get("id"))

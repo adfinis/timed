@@ -47,7 +47,7 @@ module("Integration | Component | attendance slider", function (hooks) {
       EmberObject.create({
         from: moment({ h: 0, m: 0, s: 0 }),
         to: moment({ h: 0, m: 0, s: 0 }),
-      })
+      }),
     );
 
     await render(hbs`

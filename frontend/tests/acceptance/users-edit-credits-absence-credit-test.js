@@ -40,7 +40,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      `/users/${this.user.id}/credits/absence-credits/${id}`
+      `/users/${this.user.id}/credits/absence-credits/${id}`,
     );
 
     await fillIn("input[name=date]", moment().format("DD.MM.YYYY"));
@@ -55,19 +55,19 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
 
     assert
       .dom(
-        "[data-test-absence-credits] tbody > tr:first-child > td:nth-child(1)"
+        "[data-test-absence-credits] tbody > tr:first-child > td:nth-child(1)",
       )
       .hasText(moment().format("DD.MM.YYYY"));
 
     assert
       .dom(
-        "[data-test-absence-credits] tbody > tr:first-child > td:nth-child(2)"
+        "[data-test-absence-credits] tbody > tr:first-child > td:nth-child(2)",
       )
       .hasText("5");
 
     assert
       .dom(
-        "[data-test-absence-credits] tbody > tr:first-child > td:nth-child(4)"
+        "[data-test-absence-credits] tbody > tr:first-child > td:nth-child(4)",
       )
       .hasText("Ding dong");
   });
@@ -90,7 +90,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
     await click(".btn-group .btn:first-child");
     await fillIn(
       "input[name=date]",
-      moment().add(1, "years").format("DD.MM.YYYY")
+      moment().add(1, "years").format("DD.MM.YYYY"),
     );
     await fillIn("input[name=days]", "5");
     await fillIn("input[name=comment]", "Comment");
@@ -99,7 +99,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      `/users/${this.user.id}/credits?year=${moment().year() + 1}`
+      `/users/${this.user.id}/credits?year=${moment().year() + 1}`,
     );
   });
 });

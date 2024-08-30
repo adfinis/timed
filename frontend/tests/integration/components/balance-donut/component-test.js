@@ -20,7 +20,7 @@ module("Integration | Component | balance donut", function (hooks) {
 
     assert.strictEqual(
       find(".donut-segment").getAttribute("stroke-dasharray"),
-      "50 50"
+      "50 50",
     );
   });
 
@@ -37,7 +37,7 @@ module("Integration | Component | balance donut", function (hooks) {
 
     assert.strictEqual(
       find(".donut-segment").getAttribute("stroke-dasharray"),
-      "100 0"
+      "100 0",
     );
   });
 
@@ -54,7 +54,7 @@ module("Integration | Component | balance donut", function (hooks) {
 
     assert.strictEqual(
       find(".donut-segment").getAttribute("stroke-dasharray"),
-      "100 0"
+      "100 0",
     );
   });
 
@@ -69,7 +69,7 @@ module("Integration | Component | balance donut", function (hooks) {
 
     assert.strictEqual(
       find(".donut-segment").getAttribute("stroke-dasharray"),
-      "100 0"
+      "100 0",
     );
   });
 });

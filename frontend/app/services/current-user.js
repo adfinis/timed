@@ -17,7 +17,7 @@ export default class CurrentUserService extends Service {
       })}`,
       {
         method: "GET",
-      }
+      },
     );
 
     await this.store.pushPayload("user", user);

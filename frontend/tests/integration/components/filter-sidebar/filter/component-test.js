@@ -32,7 +32,7 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
 
     assert.deepEqual(
       findAll("button").map((b) => b.innerHTML.trim()),
-      ["test 1", "test 2", "test 3"]
+      ["test 1", "test 2", "test 3"],
     );
 
     assert.strictEqual(find("button.active").innerHTML.trim(), "test 2");
@@ -67,11 +67,11 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
 
     assert.deepEqual(
       findAll("option").map((b) => b.innerHTML.trim()),
-      ["test 1", "test 2", "test 3"]
+      ["test 1", "test 2", "test 3"],
     );
     assert.strictEqual(
       findAll("option")[find("select").options.selectedIndex].innerHTML.trim(),
-      "test 2"
+      "test 2",
     );
 
     await fillIn("select", "1");
@@ -96,7 +96,7 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
 
     assert.strictEqual(
       this.selected.format(),
-      moment({ year: 2010, month: 9, day: 10 }).format()
+      moment({ year: 2010, month: 9, day: 10 }).format(),
     );
   });
 

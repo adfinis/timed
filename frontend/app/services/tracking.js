@@ -113,7 +113,7 @@ export default class TrackingService extends Service {
     scheduleOnce(
       "afterRender",
       this,
-      this.scheduleDocumentTitle.bind(this, title)
+      this.scheduleDocumentTitle.bind(this, title),
     );
   }
 

@@ -52,7 +52,7 @@ export default class UsersEditResponsibilitiesController extends Controller {
           user.set("absenceBalances", absenceBalances);
 
           return user;
-        })
+        }),
     );
   }
 }

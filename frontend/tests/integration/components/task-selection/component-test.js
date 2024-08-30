@@ -72,7 +72,7 @@ module("Integration | Component | task selection", function (hooks) {
       this.element
         .querySelector(".customer-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      CUSTOMER.name
+      CUSTOMER.name,
     );
   });
 
@@ -98,13 +98,13 @@ module("Integration | Component | task selection", function (hooks) {
       this.element
         .querySelector(".customer-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      CUSTOMER.name
+      CUSTOMER.name,
     );
     assert.strictEqual(
       this.element
         .querySelector(".project-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      PROJECT.name
+      PROJECT.name,
     );
   });
 
@@ -130,19 +130,19 @@ module("Integration | Component | task selection", function (hooks) {
       this.element
         .querySelector(".customer-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      CUSTOMER.name
+      CUSTOMER.name,
     );
     assert.strictEqual(
       this.element
         .querySelector(".project-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      PROJECT.name
+      PROJECT.name,
     );
     assert.strictEqual(
       this.element
         .querySelector(".task-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      TASK.name
+      TASK.name,
     );
   });
 

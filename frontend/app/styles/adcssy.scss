@@ -79,7 +79,8 @@
   font-family: TheSansLT;
   font-weight: 300;
   font-style: normal;
-  src: url("../fonts/TheSans_LT_300_.eot") format("embedded-opentype"),
+  src:
+    url("../fonts/TheSans_LT_300_.eot") format("embedded-opentype"),
     url("../fonts/TheSans_LT_300_.svg") format("svg"),
     url("../fonts/TheSans_LT_300_.woff") format("woff");
 }
@@ -88,7 +89,8 @@
   font-family: TheSansLT;
   font-weight: 300;
   font-style: italic;
-  src: url("../fonts/TheSans_LT_300i.eot") format("embedded-opentype"),
+  src:
+    url("../fonts/TheSans_LT_300i.eot") format("embedded-opentype"),
     url("../fonts/TheSans_LT_300i.svg") format("svg"),
     url("../fonts/TheSans_LT_300i.woff") format("woff");
 }
@@ -97,7 +99,8 @@
   font-family: TheSansLT;
   font-weight: 500;
   font-style: normal;
-  src: url("../fonts/TheSans_LT_500_.eot") format("embedded-opentype"),
+  src:
+    url("../fonts/TheSans_LT_500_.eot") format("embedded-opentype"),
     url("../fonts/TheSans_LT_500_.svg") format("svg"),
     url("../fonts/TheSans_LT_500_.woff") format("woff");
 }
@@ -106,7 +109,8 @@
   font-family: TheSansLT;
   font-weight: 500;
   font-style: italic;
-  src: url("../fonts/TheSans_LT_500i.eot") format("embedded-opentype"),
+  src:
+    url("../fonts/TheSans_LT_500i.eot") format("embedded-opentype"),
     url("../fonts/TheSans_LT_500i.svg") format("svg"),
     url("../fonts/TheSans_LT_500i.woff") format("woff");
 }
@@ -270,7 +274,9 @@ a {
 }
 
 a:hover {
-  transition: background 0.1s ease 0, color 0.1s ease 0;
+  transition:
+    background 0.1s ease 0,
+    color 0.1s ease 0;
 }
 
 a:active,
@@ -1988,7 +1994,11 @@ code {
   background-position: 0 85%;
   background-repeat: repeat-x;
   background-size: 100% 1px;
-  text-shadow: 0.1rem 0 #fff, 0.15rem 0 #fff, -0.1rem 0 #fff, -0.15rem 0 #fff;
+  text-shadow:
+    0.1rem 0 #fff,
+    0.15rem 0 #fff,
+    -0.1rem 0 #fff,
+    -0.15rem 0 #fff;
 }
 
 .nav-toggle {
@@ -2089,10 +2099,18 @@ code {
   flex-basis: 55px;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  transition: -webkit-flex-basis 0.2s, -webkit-transform 0.2s;
-  transition: flex-basis 0.2s, transform 0.2s;
-  transition: flex-basis 0.2s, transform 0.2s, -webkit-flex-basis 0.2s,
-    -ms-flex-preferred-size 0.2s, -webkit-transform 0.2s;
+  transition:
+    -webkit-flex-basis 0.2s,
+    -webkit-transform 0.2s;
+  transition:
+    flex-basis 0.2s,
+    transform 0.2s;
+  transition:
+    flex-basis 0.2s,
+    transform 0.2s,
+    -webkit-flex-basis 0.2s,
+    -ms-flex-preferred-size 0.2s,
+    -webkit-transform 0.2s;
   height: 100vh;
 }
 
@@ -2115,7 +2133,8 @@ code {
   -ms-flex-positive: 1;
   flex-grow: 1;
   overflow-y: auto;
-  background: linear-gradient(#f6f6f6 15px, hsl(0deg 0% 96% / 0%)) 0 0/100% 50px,
+  background:
+    linear-gradient(#f6f6f6 15px, hsl(0deg 0% 96% / 0%)) 0 0/100% 50px,
     radial-gradient(at top, rgb(0 0 0 / 25%), transparent 70%) 0 0/100% 15px,
     linear-gradient(0deg, #f6f6f6 15px, hsl(0deg 0% 96% / 0%)) bottom/100% 50px,
     radial-gradient(at bottom, rgb(0 0 0 / 25%), transparent 70%) bottom/100%
@@ -2148,7 +2167,10 @@ code {
 
 .page-main-overlay {
   background-color: #000;
-  transition: left 0.2s, opacity 0.2s, position 0.2s;
+  transition:
+    left 0.2s,
+    opacity 0.2s,
+    position 0.2s;
   opacity: 0;
   left: 0;
 }
@@ -2196,7 +2218,9 @@ code {
   height: 0;
   overflow: hidden;
   padding: 0;
-  transition: height 0.2s, padding 0.2s;
+  transition:
+    height 0.2s,
+    padding 0.2s;
 }
 
 .nav-side-header-title {
@@ -2244,7 +2268,9 @@ code {
 
 .nav-side-list a {
   color: #265bab;
-  transition: color 0.2s, background-color 0.2s;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
 }
 
 .nav-side-list a.active,
@@ -2452,8 +2478,8 @@ code {
   }
 
   .nav-side--sub .nav-side-body {
-    background: linear-gradient(#fbfbfb 15px, hsl(0deg 0% 98% / 0%)) 0 0/100%
-        50px,
+    background:
+      linear-gradient(#fbfbfb 15px, hsl(0deg 0% 98% / 0%)) 0 0/100% 50px,
       radial-gradient(at top, rgb(0 0 0 / 25%), transparent 70%) 0 0/100% 15px,
       linear-gradient(0deg, #fbfbfb 15px, hsl(0deg 0% 98% / 0%)) bottom/100%
         50px,
@@ -2589,7 +2615,9 @@ code {
 
 .nav-top-list a {
   color: #265bab;
-  transition: color 0.2s, background-color 0.2s;
+  transition:
+    color 0.2s,
+    background-color 0.2s;
 }
 
 .nav-top-list--right {
@@ -2811,7 +2839,9 @@ code {
   user-select: none;
   box-shadow: 0 1px 0 hsl(0deg 0% 100% / 15%) inset;
   box-shadow: inset 0 1px 0 hsl(0deg 0% 100% / 15%);
-  transition: color 0.2s ease 0s, background 0.2s ease 0s,
+  transition:
+    color 0.2s ease 0s,
+    background 0.2s ease 0s,
     border-color 0.2s ease 0s;
 }
 
@@ -2858,9 +2888,11 @@ code {
 
 .btn.active:not(.no-active-class),
 .btn:active {
-  box-shadow: 0 1px 10px rgb(0 0 0 / 20%) inset,
+  box-shadow:
+    0 1px 10px rgb(0 0 0 / 20%) inset,
     0 -1px 0 hsl(0deg 0% 100% / 20%) inset;
-  box-shadow: inset 0 1px 10px rgb(0 0 0 / 20%),
+  box-shadow:
+    inset 0 1px 10px rgb(0 0 0 / 20%),
     inset 0 -1px 0 hsl(0deg 0% 100% / 20%);
   padding: 0.75rem 1.25rem calc(0.75rem + 1px);
   border-top-width: 2px;
@@ -3047,9 +3079,11 @@ fieldset[disabled] .btn {
 .btn-group--vertical > .btn:active,
 .btn-group--vertical > .btn:last-child.active:not(.no-active-class),
 .btn-group--vertical > .btn:last-child:active {
-  box-shadow: 0 1px 10px rgb(0 0 0 / 20%) inset,
+  box-shadow:
+    0 1px 10px rgb(0 0 0 / 20%) inset,
     0 -1px 0 hsl(0deg 0% 100% / 20%) inset;
-  box-shadow: inset 0 1px 10px rgb(0 0 0 / 20%),
+  box-shadow:
+    inset 0 1px 10px rgb(0 0 0 / 20%),
     inset 0 -1px 0 hsl(0deg 0% 100% / 20%);
 }
 
@@ -3131,9 +3165,16 @@ fieldset[disabled] .btn {
   border-radius: 4px;
   box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset;
   box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%);
-  transition: border-color 0.15s, -webkit-box-shadow 0.15s;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  transition: border-color 0.15s, box-shadow 0.15s, -webkit-box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    -webkit-box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    -webkit-box-shadow 0.15s;
 }
 
 @media only screen and (width >=768px) {
@@ -3177,33 +3218,53 @@ select.form-control:not([multiple]) {
 .form-control:focus {
   border-color: #7ca5e2;
   outline: 0;
-  box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset, 0 0 8px rgb(91 142 219 / 60%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%), 0 0 8px rgb(91 142 219 / 60%);
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 7.5%) inset,
+    0 0 8px rgb(91 142 219 / 60%);
+  box-shadow:
+    inset 0 1px 1px rgb(0 0 0 / 7.5%),
+    0 0 8px rgb(91 142 219 / 60%);
 }
 
 .form-control.success {
   border-color: #7dc67d;
-  box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset, 0 0 8px rgb(92 184 92 / 60%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%), 0 0 8px rgb(92 184 92 / 60%);
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 7.5%) inset,
+    0 0 8px rgb(92 184 92 / 60%);
+  box-shadow:
+    inset 0 1px 1px rgb(0 0 0 / 7.5%),
+    0 0 8px rgb(92 184 92 / 60%);
 }
 
 .form-control.info {
   border-color: #7ccde5;
-  box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset, 0 0 8px rgb(91 192 222 / 60%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%), 0 0 8px rgb(91 192 222 / 60%);
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 7.5%) inset,
+    0 0 8px rgb(91 192 222 / 60%);
+  box-shadow:
+    inset 0 1px 1px rgb(0 0 0 / 7.5%),
+    0 0 8px rgb(91 192 222 / 60%);
 }
 
 .form-control.warning {
   border-color: #f3bd71;
-  box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset, 0 0 8px rgb(240 173 78 / 60%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%), 0 0 8px rgb(240 173 78 / 60%);
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 7.5%) inset,
+    0 0 8px rgb(240 173 78 / 60%);
+  box-shadow:
+    inset 0 1px 1px rgb(0 0 0 / 7.5%),
+    0 0 8px rgb(240 173 78 / 60%);
 }
 
 .form-control.invalid,
 .form-control:invalid {
   border-color: #e17572;
-  box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset, 0 0 8px rgb(217 83 79 / 60%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%), 0 0 8px rgb(217 83 79 / 60%);
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 7.5%) inset,
+    0 0 8px rgb(217 83 79 / 60%);
+  box-shadow:
+    inset 0 1px 1px rgb(0 0 0 / 7.5%),
+    0 0 8px rgb(217 83 79 / 60%);
 }
 
 .form-control[disabled],
@@ -3299,9 +3360,16 @@ fieldset[disabled] .form-control {
   border-radius: 4px;
   box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset;
   box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%);
-  transition: border-color 0.15s, -webkit-box-shadow 0.15s;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  transition: border-color 0.15s, box-shadow 0.15s, -webkit-box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    -webkit-box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    -webkit-box-shadow 0.15s;
 }
 
 .checkbox > input[type="radio"]:checked + label::before,
@@ -3393,8 +3461,12 @@ fieldset[disabled] .form-control {
 .radio > input[type="radio"]:not(:checked):focus + label::before {
   border-color: #7ca5e2;
   outline: 0;
-  box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset, 0 0 8px rgb(91 142 219 / 60%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%), 0 0 8px rgb(91 142 219 / 60%);
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 7.5%) inset,
+    0 0 8px rgb(91 142 219 / 60%);
+  box-shadow:
+    inset 0 1px 1px rgb(0 0 0 / 7.5%),
+    0 0 8px rgb(91 142 219 / 60%);
 }
 
 .checkbox > input[type="checkbox"]:checked + label:hover::before,

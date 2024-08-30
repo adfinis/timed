@@ -40,7 +40,7 @@ export default class UnverifiedReportsService extends Service {
     if (macroCondition(!isTesting())) {
       this.intervalId = setInterval(
         this.pollReports.bind(this),
-        INTERVAL_DELAY
+        INTERVAL_DELAY,
       );
     }
   }

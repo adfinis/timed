@@ -21,7 +21,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
         constructor: EmberObject.create({
           modelName: "project",
         }),
-      })
+      }),
     );
 
     this.set(
@@ -34,7 +34,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
         }),
         totalRemainingEffort: moment.duration({ h: 2 }),
         remainingEffortTracking: true,
-      })
+      }),
     );
   });
 
@@ -79,7 +79,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
         constructor: EmberObject.create({
           modelName: "task",
         }),
-      })
+      }),
     );
 
     await render(hbs`
@@ -113,7 +113,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
           modelName: "task",
         }),
         project: this.project_with_remaining_effort,
-      })
+      }),
     );
 
     await render(hbs`
@@ -135,7 +135,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
         constructor: EmberObject.create({
           modelName: "task",
         }),
-      })
+      }),
     );
 
     this.set("visible", false);

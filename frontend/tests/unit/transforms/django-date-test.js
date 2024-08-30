@@ -13,7 +13,7 @@ module("Unit | Transform | django date", function (hooks) {
         y: 2017,
         M: 2, // moments months are zerobased
         d: 11,
-      })
+      }),
     );
 
     assert.strictEqual(result, "2017-03-11");

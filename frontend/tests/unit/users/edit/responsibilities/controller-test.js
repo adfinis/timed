@@ -6,7 +6,7 @@ module("Unit | Controller | users/edit/responsibilities", function (hooks) {
 
   test("exists", function (assert) {
     const controller = this.owner.lookup(
-      "controller:users/edit/responsibilities"
+      "controller:users/edit/responsibilities",
     );
     assert.ok(controller);
   });

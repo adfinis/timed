@@ -17,7 +17,7 @@ module("Unit | Service | fetch", function (hooks) {
 
     assert.strictEqual(
       service.get("headers.authorization"),
-      session.headers.authorization
+      session.headers.authorization,
     );
   });
 

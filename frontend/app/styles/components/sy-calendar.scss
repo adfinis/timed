@@ -19,7 +19,9 @@
 
   .ember-power-calendar-day {
     cursor: pointer;
-    transition: background-color 300ms ease, color 300ms ease;
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
 
     &--focused {
       box-shadow: inset 0 -2px 0 0 $color-primary;
