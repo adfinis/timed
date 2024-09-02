@@ -1480,20 +1480,20 @@ files = [
 
 [[package]]
 name = "pytest"
-version = "8.2.0"
+version = "8.3.2"
 description = "pytest: simple powerful testing with Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytest-8.2.0-py3-none-any.whl", hash = "sha256:1733f0620f6cda4095bbf0d9ff8022486e91892245bb9e7d5542c018f612f233"},
-    {file = "pytest-8.2.0.tar.gz", hash = "sha256:d507d4482197eac0ba2bae2e9babf0672eb333017bcedaa5fb1a3d42c1174b3f"},
+    {file = "pytest-8.3.2-py3-none-any.whl", hash = "sha256:4ba08f9ae7dcf84ded419494d229b48d0903ea6407b030eaec46df5e6a73bba5"},
+    {file = "pytest-8.3.2.tar.gz", hash = "sha256:c132345d12ce551242c87269de812483f5bcc87cdbb4722e48487ba194f9fdce"},
 ]
 
 [package.dependencies]
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 iniconfig = "*"
 packaging = "*"
-pluggy = ">=1.5,<2.0"
+pluggy = ">=1.5,<2"
 
 [package.extras]
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
@@ -1553,19 +1553,21 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.3.2)", "pytest-mock (>=3.12)"]
 
 [[package]]
 name = "pytest-factoryboy"
-version = "2.1.0"
+version = "2.7.0"
 description = "Factory Boy support for pytest."
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.8"
 files = [
-    {file = "pytest-factoryboy-2.1.0.tar.gz", hash = "sha256:23bc562ab32cc39eddfbbbf70e618a1b30e834a4cfa451c4bedc36216f0a7b19"},
-    {file = "pytest_factoryboy-2.1.0-py3-none-any.whl", hash = "sha256:10c02d2736cb52c7af28065db9617e7f50634e95eaa07eeb9a007026aa3dc0a8"},
+    {file = "pytest_factoryboy-2.7.0-py3-none-any.whl", hash = "sha256:bf3222db22d954fbf46f4bff902a0a8d82f3fc3594a47c04bbdc0546ff4c59a6"},
+    {file = "pytest_factoryboy-2.7.0.tar.gz", hash = "sha256:67fc54ec8669a3feb8ac60094dd57cd71eb0b20b2c319d2957873674c776a77b"},
 ]
 
 [package.dependencies]
-factory-boy = ">=2.10.0"
+factory_boy = ">=2.10.0"
 inflection = "*"
-pytest = ">=4.6"
+packaging = "*"
+pytest = ">=6.2"
+typing_extensions = "*"
 
 [[package]]
 name = "pytest-freezer"
@@ -1966,4 +1968,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "07066abcfc9e215151a933e03d4523a047661c6cd5f049b3351a6b1b9e8b389b"
+content-hash = "68163e03ec6c2a591fdcc39767d27f960fedb84b73b7fc00a52c01d1132d4bb0"
