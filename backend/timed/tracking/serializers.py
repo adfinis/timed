@@ -24,6 +24,7 @@ from timed.employment.relations import CurrentUserResourceRelatedField
 from timed.projects.models import Customer, Project, Task
 from timed.serializers import TotalTimeRootMetaMixin
 from timed.tracking import models
+from timed.utils import round_time
 
 if TYPE_CHECKING:
     from typing import ClassVar
@@ -48,7 +49,7 @@ class ActivitySerializer(ModelSerializer):
         instance = self.instance
         from_time = data.get("from_time", instance and instance.from_time)
         to_time = data.get("to_time", instance and instance.to_time)
-        user = instance and instance.user or data["user"]
+        user = (instance and instance.user) or data["user"]
 
         def validate_running_activity():
             if activity.filter(to_time__isnull=True).exists():
@@ -105,8 +106,8 @@ class AttendanceSerializer(ModelSerializer):
         Ensure that attendances end after they start.
         """
         instance = self.instance
-        from_time = data.get("from_time", instance and instance.from_time)
-        to_time = data.get("to_time", instance and instance.to_time)
+        from_time = round_time(data.get("from_time", instance and instance.from_time))
+        to_time = round_time(data.get("to_time", instance and instance.to_time))
 
         if to_time == from_time:
             raise ValidationError(
