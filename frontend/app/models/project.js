@@ -78,7 +78,7 @@ export default class Project extends Model {
    * @property {BillingType} billingType
    * @public
    */
-  @belongsTo("billing-type", { async: true, inverse: null }) billingType;
+  @belongsTo("billing-type", { async: false, inverse: null }) billingType;
 
   /**
    * The tasks

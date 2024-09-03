@@ -43,7 +43,7 @@ export default class AbsenceCredit extends Model {
    * @property {AbsenceType} absenceType
    * @public
    */
-  @belongsTo("absence-type", { async: true, inverse: null }) absenceType;
+  @belongsTo("absence-type", { async: false, inverse: null }) absenceType;
 
   /**
    * The user to which this credit belongs to
