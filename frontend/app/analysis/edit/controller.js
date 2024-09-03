@@ -108,8 +108,18 @@ export default class AnalysisEditController extends Controller {
 
     yield this.store.pushPayload("report-intersection", res);
 
+    const model = this.store.peekRecord("report-intersection", res.data.id);
+
+    if (model.customer) {
+      this.store.query("project", { customer: model.customer.id });
+    }
+
+    if (model.project) {
+      this.store.query("task", { project: model.project.id });
+    }
+
     return {
-      model: this.store.peekRecord("report-intersection", res.data.id),
+      model,
       meta: res.meta,
     };
   }
