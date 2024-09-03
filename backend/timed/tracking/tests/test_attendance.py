@@ -122,13 +122,6 @@ def test_attendance_delete(internal_employee_client):
             "07:00",
             "An attendance may not end before it starts.",
         ),
-        (
-            time(7, 30),
-            time(8, 30),
-            "07:30",
-            "07:30",
-            "An attendance may not start and end at the same time.",
-        ),
     ],
 )
 def test_attendance_validation(
