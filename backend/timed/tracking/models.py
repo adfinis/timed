@@ -10,6 +10,8 @@ from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVector
 from django.db import models
 
+from timed.utils import round_timedelta
+
 if TYPE_CHECKING:
     from timed.employment.models import Employment
 
@@ -119,9 +121,7 @@ class Report(models.Model):
         This rounds the duration of the report to the nearest 15 minutes.
         However, the duration must at least be 15 minutes long.
         """
-        self.duration = timedelta(
-            seconds=max(15 * 60, round(self.duration.seconds / (15 * 60)) * (15 * 60))
-        )
+        self.duration = round_timedelta(self.duration)
 
         super().save(*args, **kwargs)
 
