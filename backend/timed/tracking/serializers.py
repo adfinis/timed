@@ -109,11 +109,6 @@ class AttendanceSerializer(ModelSerializer):
         from_time = round_time(data.get("from_time", instance and instance.from_time))
         to_time = round_time(data.get("to_time", instance and instance.to_time))
 
-        if to_time == from_time:
-            raise ValidationError(
-                _("An attendance may not start and end at the same time.")
-            )
-
         # allow attendances to end at midnight (00:00)
         if to_time < from_time and to_time != time(0, 0):
             raise ValidationError(_("An attendance may not end before it starts."))
