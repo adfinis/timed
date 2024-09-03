@@ -44,7 +44,7 @@ export default class Absence extends Model {
    * @property {AbsenceType} absenceType
    * @public
    */
-  @belongsTo("absence-type", { async: true, inverse: null }) absenceType;
+  @belongsTo("absence-type", { async: false, inverse: null }) absenceType;
 
   /**
    * The user

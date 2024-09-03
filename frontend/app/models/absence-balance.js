@@ -5,8 +5,8 @@ export default class AbsenceBalance extends Model {
   @attr("number") usedDays;
   @attr("django-duration") usedDuration;
   @attr("number") balance;
-  @belongsTo("user", { async: true, inverse: "absenceBalances" }) user;
-  @belongsTo("absence-type", { async: true, inverse: "absenceBalances" })
+  @belongsTo("user", { async: false, inverse: "absenceBalances" }) user;
+  @belongsTo("absence-type", { async: false, inverse: "absenceBalances" })
   absenceType;
   @hasMany("absence-credit", { async: true, inverse: null }) absenceCredits;
 }

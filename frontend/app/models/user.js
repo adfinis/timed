@@ -90,7 +90,7 @@ export default class User extends Model {
    * @property {User[]} supervisors
    * @public
    */
-  @hasMany("user", { inverse: "supervisees", async: true }) supervisors;
+  @hasMany("user", { inverse: "supervisees", async: false }) supervisors;
 
   /**
    * The users supervisees
@@ -98,7 +98,7 @@ export default class User extends Model {
    * @property {User[]} supervisees
    * @public
    */
-  @hasMany("user", { inverse: "supervisors", async: true }) supervisees;
+  @hasMany("user", { inverse: "supervisors", async: false }) supervisees;
 
   /**
    * The users employments

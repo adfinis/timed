@@ -60,12 +60,12 @@ export default class Activity extends Model {
   }
 
   async start() {
-    const activity = this.store.createRecord("activity", {
+    const activity = await this.store.createRecord("activity", {
       date: moment(),
       fromTime: moment(),
-      task: this.task,
+      task: await this.task,
       comment: this.comment,
-      review: this.review,
+      review: await this.review,
       notBillable: this.notBillable,
     });
 
@@ -97,9 +97,9 @@ export default class Activity extends Model {
     if (moment().diff(this.date, "days") === 1) {
       activities.push(
         this.store.createRecord("activity", {
-          task: this.task,
+          task: await this.task,
           comment: this.comment,
-          user: this.user,
+          user: await this.user,
           date: moment(this.date).add(1, "days"),
           review: this.review,
           notBillable: this.notBillable,
