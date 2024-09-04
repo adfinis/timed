@@ -197,14 +197,13 @@ export default class AnalysisController extends QPController {
     });
   });
 
-  @enqueueTask
-  *data() {
+  data = enqueueTask(async () => {
     const params = underscoreQueryParams(
       serializeQueryParams(this.allQueryParams, queryParamsState(this))
     );
 
     if (this._canLoadMore) {
-      const data = yield this.store.query("report", {
+      const data = await this.store.query("report", {
         page: {
           number: this._lastPage + 1,
           size: 20,
@@ -213,7 +212,7 @@ export default class AnalysisController extends QPController {
         include: "task,task.project,task.project.customer,user",
       });
 
-      const assignees = yield this.fetchAssignees.perform(data);
+      const assignees = await this.fetchAssignees.perform(data);
 
       const mappedReports = data.map((report) => {
         report.set(
@@ -242,17 +241,19 @@ export default class AnalysisController extends QPController {
         return report;
       });
 
-      this.totalTime = parseDjangoDuration(data.get("meta.total-time"));
-      this.totalItems = parseInt(data.get("meta.pagination.count"));
-      this._canLoadMore =
-        data.get("meta.pagination.pages") !== data.get("meta.pagination.page");
-      this._lastPage = data.get("meta.pagination.page");
+      const meta = await data.meta;
+      const pagination = meta.pagination;
+
+      this.totalTime = parseDjangoDuration(meta["total-time"]);
+      this.totalItems = parseInt(pagination.count);
+      this._canLoadMore = pagination.pages !== pagination.page;
+      this._lastPage = pagination.page;
 
       this._dataCache.pushObjects(mappedReports);
     }
 
     return this._dataCache;
-  }
+  });
 
   @task
   *fetchAssignees(data) {
