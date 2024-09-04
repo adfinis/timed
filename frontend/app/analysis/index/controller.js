@@ -86,11 +86,11 @@ export default class AnalysisController extends QPController {
   @tracked comment;
 
   get billingTypes() {
-    return this.store.findAll("billing-type");
+    return this.store.peekAll("billing-type");
   }
 
   get costCenters() {
-    return this.store.findAll("cost-center");
+    return this.store.peekAll("cost-center");
   }
 
   get selectedCustomer() {
