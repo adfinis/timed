@@ -3,7 +3,7 @@
  * @submodule timed-models
  * @public
  */
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import Model, { attr, hasMany } from "@ember-data/model";
 import moment from "moment";
 /**

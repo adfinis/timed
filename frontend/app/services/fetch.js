@@ -1,4 +1,4 @@
-import Service, { inject as service } from "@ember/service";
+import Service, { service } from "@ember/service";
 import { isEmpty } from "@ember/utils";
 import { isUnauthorizedResponse } from "ember-fetch/errors";
 import { handleUnauthorized } from "ember-simple-auth-oidc";

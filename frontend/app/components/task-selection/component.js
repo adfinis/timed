@@ -1,6 +1,6 @@
 import { action } from "@ember/object";
 import { later } from "@ember/runloop";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
 import { trackedTask } from "ember-resources/util/ember-concurrency";
