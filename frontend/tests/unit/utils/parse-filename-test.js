@@ -26,6 +26,14 @@ module("Unit | Helper | parse filename", function () {
     assert.strictEqual(result, "1805-20240710-Customer-Sample_Project.ods");
   });
 
+  test("works with umlauts", function (assert) {
+    const result = parseFileName(
+      "attachment; filename*=utf-8''1805-20240710-C%C3%BCstomer-Sample_Project.ods"
+    );
+
+    assert.strictEqual(result, "1805-20240710-Cüstomer-Sample_Project.ods");
+  });
+
   test("falls back to 'Unknown file'", function (assert) {
     const result = parseFileName("attachment;");
 
