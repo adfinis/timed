@@ -14,7 +14,10 @@ const REGEX =
 const parseFileName = (contentDisposition) => {
   const { quote, filename } = REGEX.exec(contentDisposition)?.groups ?? {};
   if (!filename) return "Unknown file";
-  return quote ? filename.slice(1, -1) : filename;
+  const _filename = filename.startsWith("utf-8''")
+    ? decodeURI(filename.replace("utf-8''", ""))
+    : filename;
+  return quote ? _filename.slice(1, -1) : _filename;
 };
 
 export default parseFileName;
