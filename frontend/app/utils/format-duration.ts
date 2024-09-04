@@ -3,21 +3,18 @@
  * @submodule timed-utils
  * @public
  */
-import moment from "moment";
+import moment, { type Duration } from "moment";
 import { pad2joincolon } from "timed/utils/pad";
 
 const { floor, abs } = Math;
 
 /**
  * Converts a moment duration into a string with zeropadded digits
- *
- * @function formatDuration
- * @param {moment.duration} duration The duration to format
- * @param {Boolean} seconds Whether to show seconds
- * @return {String} The formatted duration
- * @public
  */
-export default function formatDuration(duration, seconds = true) {
+export default function formatDuration(
+  duration: Duration | number,
+  seconds: boolean = true
+): string {
   if (typeof duration === "number") {
     duration = moment.duration(duration);
   }
@@ -26,7 +23,7 @@ export default function formatDuration(duration, seconds = true) {
     return seconds ? "--:--:--" : "--:--";
   }
 
-  const prefix = duration < 0 ? "-" : "";
+  const prefix = +duration < 0 ? "-" : "";
 
   const hours = floor(abs(duration.asHours()));
   const minutes = abs(duration.minutes());

@@ -1,3 +1,4 @@
+import type Controller from "@ember/controller";
 import { get } from "@ember/object";
 import { underscore } from "@ember/string";
 import {
@@ -8,25 +9,33 @@ import {
 /**
  * Filter params by key
  */
-export const filterQueryParams = (params, ...keys) => {
-  return Object.keys(params).reduce((obj, key) => {
-    return keys.includes(key) ? obj : { ...obj, [key]: get(params, key) };
-  }, {});
+export const filterQueryParams = <
+  T extends Record<string, unknown>,
+  K extends string[]
+>(
+  params: T,
+  ...keys: K
+) => {
+  return Object.fromEntries(
+    Object.entries(params).filter(([k]) => !keys.includes(k))
+  ) as Omit<T, K[number]>;
 };
 
 /**
  * Underscore all object keys
  */
-export const underscoreQueryParams = (params) => {
-  return Object.keys(params).reduce((obj, key) => {
-    return { ...obj, [underscore(key)]: get(params, key) };
-  }, {});
-};
+export const underscoreQueryParams = (params: Record<string, unknown>) =>
+  Object.fromEntries(
+    Object.entries(params).map(([k, v]) => [underscore(k), v])
+  );
 
-export const serializeQueryParams = (params, queryParamsObject) => {
+export const serializeQueryParams = <T extends Record<string, unknown>>(
+  params: T,
+  queryParamsObject: { [K in keyof T]?: (deserialized: T[K]) => string }
+) => {
   return Object.keys(params).reduce((parsed, key) => {
-    const serializeFn = get(queryParamsObject, key)?.serialize;
-    const value = get(params, key);
+    const serializeFn = queryParamsObject[key as keyof T];
+    const value = params[key as keyof T];
 
     return key === "type"
       ? parsed
@@ -34,22 +43,19 @@ export const serializeQueryParams = (params, queryParamsObject) => {
           ...parsed,
           [key]: serializeFn ? serializeFn(value) : value,
         };
-  }, {});
+  }, {} as Record<keyof T, string>);
 };
 
 /**
- *
- * @param {string} param
- * @returns {string} | {undefined}
  * ? in all controllers, the only parameter that have the default value is `ordering`, and the value is "-date"
  */
-export function getDefaultQueryParamValue(param) {
+export function getDefaultQueryParamValue(param: string) {
   if (param === "ordering") return "-date";
   else if (param === "type") return "year";
   return undefined;
 }
 
-export function allQueryParams(controller) {
+export function allQueryParams<C extends Controller>(controller: C) {
   const params = {};
   for (const qpKey of controller.queryParams) {
     params[qpKey] = controller[qpKey];
@@ -57,7 +63,7 @@ export function allQueryParams(controller) {
   return params;
 }
 
-export function queryParamsState(controller) {
+export function queryParamsState<C extends Controller>(controller: C) {
   const states = {};
   for (const param of controller.queryParams) {
     const defaultValue = getDefaultQueryParamValue(param);
@@ -94,7 +100,10 @@ export function queryParamsState(controller) {
   return states;
 }
 
-export function resetQueryParams(controller, ...args) {
+export function resetQueryParams<C extends Controller>(
+  controller: C,
+  ...args: string[]
+) {
   if (!args[0]) {
     return;
   }

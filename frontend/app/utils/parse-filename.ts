@@ -11,7 +11,7 @@
 const REGEX =
   /filename[^;=\n]*=(?<filename>(?<quote>['"]).*?\k<quote>|[^;\n]*)/;
 
-const parseFileName = (contentDisposition) => {
+const parseFileName = (contentDisposition: string) => {
   const { quote, filename } = REGEX.exec(contentDisposition)?.groups ?? {};
   if (!filename) return "Unknown file";
   const _filename = filename.startsWith("utf-8''")
