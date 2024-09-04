@@ -1,4 +1,4 @@
-import Service, { inject as service } from "@ember/service";
+import Service, { service } from "@ember/service";
 import moment from "moment";
 
 export default class CurrentUserService extends Service {

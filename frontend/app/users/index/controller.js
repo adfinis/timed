@@ -1,5 +1,5 @@
 import { action, set } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout, hash } from "ember-concurrency";
 import { task as trackedTask } from "ember-resources/util/ember-concurrency";

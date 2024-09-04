@@ -1,7 +1,7 @@
 import Controller from "@ember/controller";
 import { action, get } from "@ember/object";
 import { scheduleOnce } from "@ember/runloop";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { camelize } from "@ember/string";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";

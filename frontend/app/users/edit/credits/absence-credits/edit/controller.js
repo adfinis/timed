@@ -1,5 +1,5 @@
 import Controller, { inject as controller } from "@ember/controller";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { task, dropTask } from "ember-concurrency";
 import AbsenceCreditValidations from "timed/validations/absence-credit";
 
