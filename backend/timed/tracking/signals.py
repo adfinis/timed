@@ -1,4 +1,5 @@
-from django.db.models import Sum
+from django.contrib.postgres.search import SearchVector
+from django.db.models import Sum, Value
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
@@ -13,6 +14,12 @@ def update_rejected_on_reports(sender, instance, **kwargs):  # noqa: ARG001
         report = Report.objects.get(id=instance.id)
         if report.task_id != instance.task_id:
             instance.rejected = False
+
+
+@receiver(pre_save, sender=Report)
+def update_search_vector(sender, instance, **kwargs):  # noqa: ARG001
+    """Update comment search vector."""
+    instance.search_vector = SearchVector(Value(instance.comment), config="english")
 
 
 @receiver(pre_save, sender=Report)
