@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 
 from django.conf import settings
 from django.contrib.postgres.indexes import GinIndex
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import SearchVectorField
 from django.db import models
 
 from timed.utils import round_timedelta
@@ -100,15 +100,14 @@ class Report(models.Model):
     rejected = models.BooleanField(default=False)
     remaining_effort = models.DurationField(default=timedelta(0), null=True)
 
+    search_vector = SearchVectorField(null=True)
+
     class Meta:
         """Meta information for the report model."""
 
         indexes = (
             models.Index(fields=["date"]),
-            GinIndex(
-                SearchVector("comment", config="english"),
-                name="search_vector_idx",
-            ),
+            GinIndex(fields=["search_vector"]),
         )
 
     def __str__(self) -> str:
