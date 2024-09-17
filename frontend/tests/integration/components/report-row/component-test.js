@@ -12,7 +12,7 @@ module("Integration | Component | report row", function (hooks) {
   test("renders", async function (assert) {
     this.set(
       "report",
-      EmberObject.create({ verifiedBy: EmberObject.create() })
+      EmberObject.create({ verifiedBy: EmberObject.create() }),
     );
 
     await render(hbs`<ReportRow @report={{this.report}} />`);
@@ -26,7 +26,7 @@ module("Integration | Component | report row", function (hooks) {
   test("can delete row", async function (assert) {
     this.set(
       "report",
-      EmberObject.create({ verifiedBy: EmberObject.create() })
+      EmberObject.create({ verifiedBy: EmberObject.create() }),
     );
     this.set("didDelete", false);
 
@@ -51,7 +51,7 @@ module("Integration | Component | report row", function (hooks) {
           fullName: "John Doe",
         }),
         billed: true,
-      })
+      }),
     );
 
     await render(hbs`<ReportRow @report={{this.report}} />`);
@@ -62,7 +62,7 @@ module("Integration | Component | report row", function (hooks) {
 
     this.set(
       "report",
-      EmberObject.create({ verifiedBy: EmberObject.create() })
+      EmberObject.create({ verifiedBy: EmberObject.create() }),
     );
 
     assert.dom("input").isNotDisabled();

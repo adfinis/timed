@@ -4,6 +4,7 @@ import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
 import { trackedTask } from "ember-resources/util/ember-concurrency";
+import { trackedFunction } from "ember-resources/util/function";
 import { resolve } from "rsvp";
 import customerOptionTemplate from "timed/components/optimized-power-select/custom-options/customer-option";
 import projectOptionTemplate from "timed/components/optimized-power-select/custom-options/project-option";
@@ -63,7 +64,7 @@ export default class TaskSelectionComponent extends Component {
       // we track "_activity" here since we can not track the public getters directly
       this.tracking.addObserver(
         "_activity",
-        this.handleTrackingActiveActivityChanged.perform
+        this.handleTrackingActiveActivityChanged.perform,
       );
     }
   }
@@ -72,7 +73,7 @@ export default class TaskSelectionComponent extends Component {
     if (this.args.liveTracking) {
       this.tracking.removeObserver(
         "_activity",
-        this.handleTrackingActiveActivityChanged.perform
+        this.handleTrackingActiveActivityChanged.perform,
       );
     }
     super.willDestroy(...args);
@@ -113,8 +114,6 @@ export default class TaskSelectionComponent extends Component {
       this.onProjectChange(project, options);
     } else if (customer) {
       this.onCustomerChange(customer, options);
-    } else {
-      this.tracking.fetchCustomers.perform();
     }
   }
 
@@ -220,18 +219,8 @@ export default class TaskSelectionComponent extends Component {
    * @property {Array} customersAndRecentTasks
    * @public
    */
-  @dropTask
-  *customersAndRecentTasksTask() {
-    yield Promise.resolve();
-
-    /* istanbul ignore if*/
-    if (
-      !this.tracking.customers?.length ||
-      !this.tracking.recentTasks?.length
-    ) {
-      yield this.tracking.fetchRecentTasks.last;
-      yield this.tracking.fetchCustomers.last;
-    }
+  customersAndRecentTasksTask = dropTask(async () => {
+    await Promise.resolve();
 
     let ids = [];
 
@@ -251,28 +240,35 @@ export default class TaskSelectionComponent extends Component {
     });
 
     return [...tasks, ...customers];
-  }
+  });
 
   _customersAndRecentTasks = trackedTask(
     this,
     this.customersAndRecentTasksTask,
-    () => [this.history, this.tracking.recentTasks, this.archived]
+    () => [this.history, this.tracking.recentTasks, this.archived],
   );
 
   get customersAndRecentTasks() {
     return this._customersAndRecentTasks.value ?? [];
   }
 
-  get projects() {
-    return this.customer?.projects
+  #projects = trackedFunction(this, async () => {
+    return (await this.customer?.projects)
       ?.filter(this.filterByArchived)
       .toSorted((p) => p.name);
+  });
+
+  get projects() {
+    return this.#projects.value ?? [];
   }
 
-  get tasks() {
-    return this.project?.tasks
+  #tasks = trackedFunction(this, async () => {
+    return (await this.project?.tasks)
       ?.filter(this.filterByArchived)
       .toSorted((t) => t.name);
+  });
+  get tasks() {
+    return this.#tasks.value ?? [];
   }
 
   @action

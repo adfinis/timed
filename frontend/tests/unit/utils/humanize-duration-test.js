@@ -63,7 +63,7 @@ module("Unit | Utility | humanize duration", function () {
 
   test("works with negative durations", function (assert) {
     const result = humanizeDuration(
-      moment.duration({ hours: -4, minutes: -30 })
+      moment.duration({ hours: -4, minutes: -30 }),
     );
 
     assert.strictEqual(result, "-4h 30m");

@@ -17,7 +17,7 @@ export default class WorktimeBalanceChart extends Component {
       datasets: [
         {
           data: this.args.worktimeBalances.map(({ balance }) =>
-            Number.parseFloat(balance.asHours().toFixed(2))
+            Number.parseFloat(balance.asHours().toFixed(2)),
           ),
         },
       ],

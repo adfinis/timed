@@ -12,7 +12,7 @@ module("Integration | Component | sy datepicker btn", function (hooks) {
     this.set("value", moment());
 
     await render(
-      hbs`<SyDatepickerBtn @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<SyDatepickerBtn @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     assert.dom(".sy-datepicker").doesNotExist();
@@ -26,13 +26,13 @@ module("Integration | Component | sy datepicker btn", function (hooks) {
     this.set("value", moment());
 
     await render(
-      hbs`<SyDatepickerBtn @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<SyDatepickerBtn @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await clickTrigger();
 
     const target = find(
-      ".ember-power-calendar-day-grid .ember-power-calendar-row:last-child .ember-power-calendar-day:last-child"
+      ".ember-power-calendar-day-grid .ember-power-calendar-row:last-child .ember-power-calendar-day:last-child",
     );
 
     target.click();

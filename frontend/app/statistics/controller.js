@@ -122,7 +122,7 @@ export default class StatisticsController extends QPController {
 
   get missingParams() {
     return this.requiredParams.filter(
-      (param) => !queryParamsState(this)[param].changed
+      (param) => !queryParamsState(this)[param].changed,
     );
   }
 
@@ -169,7 +169,7 @@ export default class StatisticsController extends QPController {
     const type = this.type;
 
     let params = underscoreQueryParams(
-      serializeQueryParams(this.allQueryParams, queryParamsState(this))
+      serializeQueryParams(this.allQueryParams, queryParamsState(this)),
     );
 
     params = Object.keys(params).reduce((obj, key) => {

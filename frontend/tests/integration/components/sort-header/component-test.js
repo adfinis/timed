@@ -18,7 +18,7 @@ module("Integration | Component | sort header", function (hooks) {
     });
 
     await render(
-      hbs`<SortHeader @current={{this.current}} @by='test' @update={{this.update}} />`
+      hbs`<SortHeader @current={{this.current}} @by='test' @update={{this.update}} />`,
     );
     assert.dom(".fa-sort-down").exists({ count: 1 });
 

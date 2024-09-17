@@ -51,7 +51,7 @@ export default class IndexReportsRoute extends Route {
         controller.notBillable = null;
 
         this.notify.success(
-          "Temporary report was created. Please amend it and save it or delete it."
+          "Temporary report was created. Please amend it and save it or delete it.",
         );
       } catch {
         /* istanbul ignore next */

@@ -24,7 +24,7 @@ export default class WeeklyOverviewDay extends Component {
   get style() {
     const height = Math.min(
       (this.args.worktime.asHours() / this.max) * 100,
-      100
+      100,
     );
     return { height: `${height}%` };
   }

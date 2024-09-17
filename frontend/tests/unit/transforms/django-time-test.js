@@ -13,7 +13,7 @@ module("Unit | Transform | django time", function (hooks) {
         hour: 12,
         minute: 12,
         second: 12,
-      })
+      }),
     );
 
     assert.strictEqual(result, "12:12:12");
@@ -23,7 +23,7 @@ module("Unit | Transform | django time", function (hooks) {
         hour: 8,
         minute: 8,
         second: 8,
-      })
+      }),
     );
 
     assert.strictEqual(result2, "08:08:08");

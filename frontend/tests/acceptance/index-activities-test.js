@@ -55,7 +55,7 @@ module("Acceptance | index activities", function (hooks) {
     await visit(`/?day=${lastDay.format("YYYY-MM-DD")}`);
 
     await click(
-      `[data-test-activity-row-id="${activity.id}"] [data-test-start-activity]`
+      `[data-test-activity-row-id="${activity.id}"] [data-test-start-activity]`,
     );
 
     assert.strictEqual(currentURL(), "/");
@@ -95,17 +95,17 @@ module("Acceptance | index activities", function (hooks) {
 
     assert
       .dom(
-        `[data-test-report-row-id="${id}"] .form-group:first-child .ember-power-select-selected-item`
+        `[data-test-report-row-id="${id}"] .form-group:first-child .ember-power-select-selected-item`,
       )
       .hasText(activity.task.project.customer.name);
     assert
       .dom(
-        `[data-test-report-row-id="${id}"] .form-group:nth-child(2) .ember-power-select-selected-item`
+        `[data-test-report-row-id="${id}"] .form-group:nth-child(2) .ember-power-select-selected-item`,
       )
       .hasText(activity.task.project.name);
     assert
       .dom(
-        `[data-test-report-row-id="${id}"] .form-group:nth-child(3) .ember-power-select-selected-item`
+        `[data-test-report-row-id="${id}"] .form-group:nth-child(3) .ember-power-select-selected-item`,
       )
       .hasText(activity.task.name);
 

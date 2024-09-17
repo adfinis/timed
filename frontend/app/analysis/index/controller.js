@@ -56,7 +56,7 @@ export default class AnalysisController extends QPController {
   @service store;
   @service router;
   @service notify;
-  @service can;
+  @service abilities;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -199,7 +199,7 @@ export default class AnalysisController extends QPController {
 
   data = enqueueTask(async () => {
     const params = underscoreQueryParams(
-      serializeQueryParams(this.allQueryParams, queryParamsState(this))
+      serializeQueryParams(this.allQueryParams, queryParamsState(this)),
     );
 
     if (this._canLoadMore) {
@@ -219,24 +219,24 @@ export default class AnalysisController extends QPController {
           "taskAssignees",
           assignees.taskAssignees.filter(
             (taskAssignee) =>
-              report.get("task.id") === taskAssignee.get("task.id")
-          )
+              report.get("task.id") === taskAssignee.get("task.id"),
+          ),
         );
         report.set(
           "projectAssignees",
           assignees.projectAssignees.filter(
             (projectAssignee) =>
               report.get("task.project.id") ===
-              projectAssignee.get("project.id")
-          )
+              projectAssignee.get("project.id"),
+          ),
         );
         report.set(
           "customerAssignees",
           assignees.customerAssignees.filter(
             (customerAssignee) =>
               report.get("task.project.customer.id") ===
-              customerAssignee.get("customer.id")
-          )
+              customerAssignee.get("customer.id"),
+          ),
         );
         return report;
       });
@@ -255,34 +255,33 @@ export default class AnalysisController extends QPController {
     return this._dataCache;
   });
 
-  @task
-  *fetchAssignees(data) {
-    const projectIds = [
-      ...new Set(data.map((report) => report.get("task.project.id"))),
-    ].join(",");
+  fetchAssignees = task(async (data) => {
     const taskIds = [
       ...new Set(data.map((report) => report.get("task.id"))),
+    ].join(",");
+    const projectIds = [
+      ...new Set(data.map((report) => report.get("task.project.id"))),
     ].join(",");
     const customerIds = [
       ...new Set(data.map((report) => report.get("task.project.customer.id"))),
     ].join(",");
 
     const projectAssignees = projectIds.length
-      ? yield this.store.query("project-assignee", {
+      ? await this.store.query("project-assignee", {
           is_reviewer: 1,
           projects: projectIds,
           include: "project,user",
         })
       : [];
     const taskAssignees = taskIds.length
-      ? yield this.store.query("task-assignee", {
+      ? await this.store.query("task-assignee", {
           is_reviewer: 1,
           tasks: taskIds,
           include: "task,user",
         })
       : [];
     const customerAssignees = customerIds.length
-      ? yield this.store.query("customer-assignee", {
+      ? await this.store.query("customer-assignee", {
           is_reviewer: 1,
           customers: customerIds,
           include: "customer,user",
@@ -290,7 +289,7 @@ export default class AnalysisController extends QPController {
       : [];
 
     return { projectAssignees, taskAssignees, customerAssignees };
-  }
+  });
 
   @dropTask
   *loadNext() {
@@ -315,10 +314,10 @@ export default class AnalysisController extends QPController {
             ...params,
             ...serializeQueryParams(
               this.allQueryParams,
-              queryParamsState(this)
+              queryParamsState(this),
             ),
-          })
-        )
+          }),
+        ),
       );
 
       const res = yield fetch(`${url}?${queryString}`, {
@@ -345,7 +344,7 @@ export default class AnalysisController extends QPController {
     } catch (e) {
       /* istanbul ignore next */
       this.notify.error(
-        "Error while downloading, try again or try reducing results"
+        "Error while downloading, try again or try reducing results",
       );
     }
   }
@@ -362,17 +361,24 @@ export default class AnalysisController extends QPController {
   }
 
   @action
-  selectRow(report) {
-    if (this.can.can("edit report", report) || this.canBill) {
-      const selected = this.selectedReportIds;
-
-      if (selected.includes(report.id)) {
-        this.selectedReportIds = A([
-          ...selected.filter((id) => id !== report.id),
-        ]);
-      } else {
-        this.selectedReportIds = A([...selected, report.id]);
-      }
+  async selectRow(report, editable) {
+    if (!editable) {
+      return;
     }
+
+    const selected = this.selectedReportIds;
+
+    if (selected.includes(report.id)) {
+      this.selectedReportIds = A([
+        ...selected.filter((id) => id !== report.id),
+      ]);
+    } else {
+      this.selectedReportIds = A([...selected, report.id]);
+    }
+  }
+
+  @action
+  async canEdit(syncEdit, report) {
+    return syncEdit ? true : await this.abilities.can("aedit report", report);
   }
 }
