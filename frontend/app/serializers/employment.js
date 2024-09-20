@@ -12,7 +12,7 @@ import ApplicationSerializer from "timed/serializers/application";
  * @extends ApplicationSerializer
  * @public
  */
-export default ApplicationSerializer.extend({
+export default class EmploymentSerializer extends ApplicationSerializer {
   /**
    * The attribute mapping
    *
@@ -24,8 +24,8 @@ export default ApplicationSerializer.extend({
    * @property {String} end
    * @public
    */
-  attrs: {
+  attrs = {
     start: "start-date",
     end: "end-date",
-  },
-});
+  };
+}
