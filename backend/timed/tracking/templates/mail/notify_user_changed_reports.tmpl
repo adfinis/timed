@@ -4,7 +4,7 @@ Some of your reports have been changed.
 Reviewer: {{reviewer.first_name }} {{ reviewer.last_name }}
 {% for changeset in user_changes %}
 
-Date: {{ changeset.report.date|date:"SHORT_DATE_FORMAT" }}
+Date: {{ changeset.report.date|date:"d F Y" }}
 Duration: {{ changeset.report.duration|duration }}
 {% if "task" not in changeset.changes %}Task: {{ changeset.report.task }}{% endif %}
 {% if "comment" not in changeset.changes %}Comment: {{ changeset.report.comment }}{% endif %}
