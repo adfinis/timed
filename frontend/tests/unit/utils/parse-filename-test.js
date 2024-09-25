@@ -1,7 +1,7 @@
 import { module, test } from "qunit";
 import parseFileName from "timed/utils/parse-filename";
 
-module("Unit | Helper | parse filename", function () {
+module("Unit | Utility | parse filename", function () {
   test("works with double quotes", function (assert) {
     const result = parseFileName(
       'attachment; filename="1805-20240710-Customer-Sample_Project.ods"'
