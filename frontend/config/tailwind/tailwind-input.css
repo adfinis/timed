@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .nav-top-list-item a.active {
+    @apply text-white visited:text-white bg-adfinis-blue hover:bg-opacity-60;
+  }
+  .nav-top-list-item a:not(.active) {
+    @apply hover:text-white hover:bg-adfinis-blue/50 over:text-adfinis-green;
+  }
+  .nav-top-list-item a {
+    @apply md:self-center p-2.5 w-full h-full grid items-center md:place-items-center grid-cols-[auto,minmax(0,1fr)] gap-1;
+  }
+
+  .nav-top-list-item {
+    @apply max-md:w-full text-base;
+  }
+}

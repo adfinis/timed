@@ -1,5 +1,6 @@
 /* AdCSSy variables */
-@import "adcssy"; /* TODO: Pick only relevant styles and delete duplicate color variables */
+@import "adcssy";
+/* TODO: Pick only relevant styles and delete duplicate color variables */
 @import "variables";
 
 /* Plugin customizations */
@@ -67,10 +68,6 @@ strong {
   font-weight: bold;
 }
 
-.flex {
-  display: flex;
-}
-
 .margin-small-left {
   margin-left: 0.5rem;
 }
@@ -103,14 +100,6 @@ strong {
   margin-bottom: 1rem;
 }
 
-.flex-grow {
-  flex: 1;
-}
-
-.flex-shrink {
-  flex: 0;
-}
-
 .height-100 {
   height: 100%;
 }
@@ -119,15 +108,15 @@ strong {
   cursor: pointer;
 }
 
-.table > tfoot > tr > td > .pagination {
+.table>tfoot>tr>td>.pagination {
   margin-left: -10px;
 }
 
-.pagination > li {
+.pagination>li {
   margin-right: 5px;
 }
 
-.pagination > li > a {
+.pagination>li>a {
   border: none !important;
   border-radius: 4px;
   padding: 0.3rem 0.8rem;
@@ -148,7 +137,7 @@ strong {
 .nav-tabs {
   position: relative;
 
-  > li > a {
+  >li>a {
     white-space: nowrap;
   }
 }
@@ -355,7 +344,7 @@ strong {
         margin-right: 10px;
       }
 
-      div > i {
+      div>i {
         margin-right: 5px;
       }
     }
@@ -366,8 +355,8 @@ strong {
   border-bottom: 3px double $body-color;
 }
 
-.table--absence-types > thead > tr > th,
-.table--absence-types > tbody > tr > td {
+.table--absence-types>thead>tr>th,
+.table--absence-types>tbody>tr>td {
   .grid {
     margin: 0;
   }
@@ -423,7 +412,7 @@ strong {
   z-index: 1;
 }
 
-@media (width <= 680px) {
+@media (width <=680px) {
   .activity-customer-visible-icon {
     margin-top: 0;
     margin-right: 10px;

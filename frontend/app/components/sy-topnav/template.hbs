@@ -1,25 +1,37 @@
-<nav class="nav-top nav-top--fixed {{if (and this.expand this.navMobile) 'nav-top--expand'}}">
-  <header class="nav-top-header">
+<nav
+  class="z-50 md:px-2 fixed w-full flex top-0 left-0 bg-adfinis-grey flex-col md:flex-row md:px-6
+    {{if (and this.expand this.navMobile) 'nav-top--expand'}}"
+>
+  <header class="flex justify-between">
     <button
-      class="nav-toggle nav-top-toggle"
+      class="md:hidden px-2 w-14"
       type="button"
       {{on "click" (toggle "expand" this)}}
     >
       <span class="nav-toggle-icon"></span>
     </button>
-    <LinkTo @route="index">
+    <LinkTo @route="index" class="grid place-items-center md:grid-cols-2">
       <TimedClock />
-      <div class="nav-top-header-title">
+      <div
+        class="max-md:hidden font-medium mr-1 self-center text-lg text-black/80"
+      >
         Timed
-        <div class="nav-top-header-title-version">
+        <div class="text-xs text-adfinis-darkgrey/80">
           v{{app-version versionOnly=true showExtended=true}}
         </div>
       </div>
     </LinkTo>
   </header>
-  <section class="nav-top-body">
-    <ul class="nav-top-list">
-      <li class="nav-top-list-item">
+  <section
+    class="w-full md:w-auto md:flex md:flex-row md:flex-grow md:max-h-full transition-[max-height]
+      {{if
+        (and this.expand this.navMobile)
+        'block max-h-96 h-full overflow-y-auto'
+        'max-h-0 duration-0 overflow-hidden'
+      }}"
+  >
+    <ul class="flex flex-col md:flex-row h-full">
+      <li class="nav-top-list-item max-md:w-full text-red-500">
         <LinkTo @route="index">
           <FaIcon @icon="clock" @size="lg" />
           <span>Tracking</span>
@@ -56,7 +68,7 @@
         </li>
       {{/if}}
     </ul>
-    <ul class="nav-top-list nav-top-list--right">
+    <ul class="md:border-t-0 md:ml-auto flex md:flex-row flex-col h-full">
       <ReportReviewWarning />
       <li class="nav-top-list-item">
         <LinkTo @route="users.edit" @model={{this.currentUser.user.id}}>
