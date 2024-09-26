@@ -1,6 +1,6 @@
 <ul
   role="listbox"
-  class="ember-power-select-options"
+  class="ember-power-select-options max-h-96"
   {{on "touchmove" this.onEvent}}
   {{on "touchstart" this.onEvent}}
   {{on "touchend" this.onEvent}}
@@ -26,10 +26,11 @@
     @renderAll={{this.isTesting}}
     as |option index|
   >
+    {{#let (ember-power-select-is-equal option @select.selected) as |selected|}}
     {{!template-lint-disable  require-context-role}}
     <li
-      class="ember-power-select-option"
-      aria-selected="{{ember-power-select-is-equal option @select.selected}}"
+      class="ember-power-select-option text-black px-2 py-1 hover:bg-adfinis-blue/60 hover:text-white truncate {{if selected 'bg-adfinis-blue text-white'}}"
+      aria-selected="{{selected}}"
       aria-disabled="{{option.disabled}}"
       aria-current="{{eq option @select.highlighted}}"
       data-option-index="{{@groupIndex}}{{index}}"
@@ -45,5 +46,6 @@
         {{yield option @select}}
       {{/if}}
     </li>
+    {{/let}}
   </VerticalCollection>
 </ul>

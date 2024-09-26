@@ -3,17 +3,42 @@
 @tailwind utilities;
 
 @layer components {
+  .ember-basic-dropdown-content {
+    @apply p-2 border border-adfinis-darkgrey rounded rounded-t-none;
+  }
+
+  .ember-power-select-search-input {
+    @apply rounded-sm text-sm border-black focus:border-black focus:ring-black;
+  }
+
   .nav-top-list-item a.active {
     @apply text-white visited:text-white bg-adfinis-blue hover:bg-opacity-60;
   }
+
   .nav-top-list-item a:not(.active) {
-    @apply hover:text-white hover:bg-adfinis-blue/50 over:text-adfinis-green;
+    @apply hover:text-white hover:bg-adfinis-blue/50 text-adfinis-blue/80;
   }
+
   .nav-top-list-item a {
     @apply md:self-center p-2.5 w-full h-full grid items-center md:place-items-center grid-cols-[auto,minmax(0,1fr)] gap-1;
   }
 
   .nav-top-list-item {
     @apply max-md:w-full text-base;
+  }
+
+  .form-group {
+    @apply mb-4;
+  }
+
+  .tracking-bar .form-group {
+    @apply lg:mb-0;
+  }
+
+  .form-input,
+  .form-textarea,
+  input,
+  textarea {
+    @apply rounded w-full text-black placeholder:text-adfinis-darkgrey focus:border-adfinis-green;
   }
 }

@@ -1,4 +1,5 @@
-<div class="bg-white border-b border-b-adfinis-grey mt-14" ...attributes>
+
+<div class="bg-white border-b border-b-adfinis-grey mb-6 pb-6" ...attributes>
   <TaskSelection
     @disabled={{this.tracking.activity.active}}
     @liveTracking={{true}}
@@ -7,7 +8,7 @@
     as |t|
   >
     <label hidden form="task-form">Select task</label>
-    <form id="task-form" {{on "submit" (optional this.start)}}>
+    <form class="lg:gap-2 lg:grid lg:grid-cols-[repeat(3,minmax(0,1fr)),minmax(0,1.5fr),minmax(0,auto)]" id="task-form" {{on "submit" (optional this.start)}}>
       <div class="form-group" data-test-tracking-customer>
         <t.customer />
       </div>
@@ -21,7 +22,7 @@
         <input
           type="text"
           id="task-comment"
-          class="form-control"
+          class="form-control rounded"
           placeholder="Comment"
           name="comment"
           spellcheck="true"
@@ -33,7 +34,7 @@
           <CustomerVisibleIcon class="customer-visible-icon" />
         {{/if}}
       </div>
-      <div class="form-group">
+      <div class="form-group grid place-self-center">
         <RecordButton
           @activity={{this.tracking.activity}}
           @recording={{this.tracking.activity.active}}

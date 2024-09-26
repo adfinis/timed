@@ -1,4 +1,4 @@
-<div class={{@triggerClass}}>
+<div class="{{@triggerClass}} grid grid-cols-[1fr,auto] w-full whitespace-nowrap overflow-x-hidden text-ellipsis">
   {{#if @select.selected}}
     {{#if @selectedItemComponent}}
       {{component
@@ -27,10 +27,7 @@
       >&times;</span>
     {{/if}}
   {{else}}
-    {{component
-      (ensure-safe-component @placeholderComponent)
-      placeholder=@placeholder
-    }}
+    <span class="ember-power-select-placeholder text-adfinis-darkgrey">{{ @placeholder }}</span>
   {{/if}}
   <span class="ember-power-select-status-icon"></span>
 </div>

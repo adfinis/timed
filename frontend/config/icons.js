@@ -26,6 +26,7 @@ module.exports = function () {
       "briefcase",
       "chart-line",
       "chevron-left",
+      "chevron-up",
       "dollar-sign",
       "download",
       "exclamation-triangle",
@@ -45,6 +46,7 @@ module.exports = function () {
       "users",
       "question",
       "magic",
+      "bars",
     ],
   };
 };

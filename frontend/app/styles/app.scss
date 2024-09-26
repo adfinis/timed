@@ -1,5 +1,7 @@
 /* AdCSSy variables */
-@import "adcssy";
+
+/* @import "adcssy"; */
+
 /* TODO: Pick only relevant styles and delete duplicate color variables */
 @import "variables";
 
@@ -9,237 +11,386 @@
 @import "ember-power-select-custom";
 
 /* Custom styles */
-@import "activities";
-@import "analysis";
-@import "attendances";
-@import "badge";
-@import "filter-sidebar";
-@import "form-list";
-@import "loader";
-@import "projects";
-@import "reports";
-@import "statistics";
-@import "toolbar";
-@import "tour";
-@import "users-navigation";
-@import "users";
-@import "login";
+
+/* @import "activities"; */
+
+/* @import "analysis"; */
+
+/* @import "attendances"; */
+
+/* @import "badge"; */
+
+/* @import "filter-sidebar"; */
+
+/* @import "form-list"; */
+
+/* @import "loader"; */
+
+/* @import "projects"; */
+
+/* @import "reports"; */
+
+/* @import "statistics"; */
+
+/* @import "toolbar"; */
+
+/* @import "tour"; */
+
+/* @import "users-navigation"; */
+
+/* @import "users"; */
+
+/* @import "login"; */
 
 /* Component styles */
-@import "components/attendance-slider";
-@import "components/balance-donut";
-@import "components/date-buttons";
-@import "components/date-navigation";
-@import "components/filter-sidebar--group";
-@import "components/filter-sidebar--label";
-@import "components/loading-icon";
-@import "components/magic-link-btn";
-@import "components/nav-top";
-@import "components/progress-tooltip";
-@import "components/record-button";
-@import "components/scroll-container";
-@import "components/sort-header";
-@import "components/statistic-list-bar";
-@import "components/sy-calendar";
-@import "components/sy-checkbox";
-@import "components/sy-datepicker";
-@import "components/sy-durationpicker-day";
-@import "components/sy-modal";
-@import "components/sy-toggle";
-@import "components/timed-clock";
-@import "components/tracking-bar";
-@import "components/weekly-overview";
-@import "components/weekly-overview-benchmark";
-@import "components/weekly-overview-day";
-@import "components/welcome-modal";
 
-html {
-  hyphens: auto;
-}
+/* @import "components/attendance-slider"; */
 
-hr {
-  border: none;
-  width: 100%;
-  height: 7px;
-  background: linear-gradient(to bottom, rgb(0 0 0 / 3%), rgb(0 0 0 / 0%));
-}
+/* @import "components/balance-donut"; */
 
-strong {
-  font-weight: bold;
-}
+/* @import "components/date-buttons"; */
 
-.margin-small-left {
-  margin-left: 0.5rem;
-}
+/* @import "components/date-navigation"; */
 
-.margin-small-right {
-  margin-left: 0.5rem;
-}
+/* @import "components/filter-sidebar--group"; */
 
-.margin-small-top {
-  margin-top: 0.5rem;
-}
+/* @import "components/filter-sidebar--label"; */
 
-.margin-small-bottom {
-  margin-bottom: 0.5rem;
-}
+/* @import "components/loading-icon"; */
 
-.margin-medium-left {
-  margin-left: 1rem;
-}
+/* @import "components/magic-link-btn"; */
 
-.margin-medium-right {
-  margin-left: 1rem;
-}
+/* @import "components/nav-top"; */
 
-.margin-medium-top {
-  margin-top: 1rem;
-}
+/* @import "components/progress-tooltip"; */
 
-.margin-medium-bottom {
-  margin-bottom: 1rem;
-}
+/* @import "components/record-button"; */
 
-.height-100 {
-  height: 100%;
-}
+/* @import "components/scroll-container"; */
 
-.pointer {
-  cursor: pointer;
-}
+/* @import "components/sort-header"; */
 
-.table>tfoot>tr>td>.pagination {
-  margin-left: -10px;
-}
+/* @import "components/statistic-list-bar"; */
 
-.pagination>li {
-  margin-right: 5px;
-}
+/* @import "components/sy-calendar"; */
 
-.pagination>li>a {
-  border: none !important;
-  border-radius: 4px;
-  padding: 0.3rem 0.8rem;
-}
+/* @import "components/sy-checkbox"; */
 
-.btn-noclick {
-  pointer-events: none;
-}
+/* @import "components/sy-datepicker"; */
 
-.btn-toolbar--right {
-  justify-content: flex-end;
-}
+/* @import "components/sy-durationpicker-day"; */
 
-.page-main {
-  position: relative;
-}
+/* @import "components/sy-modal"; */
 
-.nav-tabs {
-  position: relative;
+/* @import "components/sy-toggle"; */
 
-  >li>a {
-    white-space: nowrap;
-  }
-}
+/* @import "components/timed-clock"; */
 
-.card-block .table {
-  margin: 0;
-}
+/* @import "components/tracking-bar"; */
 
-.worktime-balance {
-  border-bottom: 3px double rgb(0 0 0);
-  font-weight: bold;
-}
+/* @import "components/weekly-overview"; */
 
-.worktime-balance.color-danger {
-  border-bottom-color: $color-danger;
-}
+/* @import "components/weekly-overview-benchmark"; */
 
-.worktime-balance.color-success {
-  border-bottom-color: $color-success;
+/* @import "components/weekly-overview-day"; */
 
-  &::before {
-    display: inline-block;
-    margin-right: -0.2em;
-    content: "+";
-  }
-}
+/* @import "components/welcome-modal"; */
 
-.error-text,
-.invalid-feedback {
-  font-size: 80%;
-  margin: 0;
-  color: $color-danger;
-}
+/* html { */
 
-.form-group.has-error {
-  label {
-    color: $color-danger;
-  }
+/* hyphens: auto; */
 
-  .form-control {
-    border-color: lighten($color-danger, 20%);
+/* } */
 
-    &:focus,
-    &:focus-within {
-      border-color: lighten($color-danger, 20%);
-      box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset,
-        0 0 8px opacify($color-danger, 0.6);
-    }
-  }
-}
+/* hr { */
 
-.form-control {
-  &:focus-within {
-    border-color: lighten($color-primary, 20%);
-    box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset,
-      0 0 8px opacify($color-primary, 0.6);
-  }
+/* border: none; */
 
-  &.duration-day {
-    text-align: center;
-  }
+/* width: 100%; */
 
-  &.extendend-durationpicker-day {
-    padding-bottom: unset;
-    padding-top: unset;
-  }
+/* height: 7px; */
 
-  input {
-    border: none;
-    outline: none;
-  }
-}
+/* background: linear-gradient(to bottom, rgb(0 0 0 / 3%), rgb(0 0 0 / 0%)); */
 
-.comment-field {
-  padding-right: 35px;
-}
+/* } */
 
-.btn-group--auto .btn {
-  flex-grow: 1;
-}
+/* strong { */
 
-.no-margin {
-  margin: 0 !important;
-}
+/* font-weight: bold; */
 
-.no-padding {
-  padding: 0 !important;
-}
+/* } */
 
-.nav-tab--buttons {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+/* .margin-small-left { */
 
-  .btn {
-    margin-left: 0.5rem;
-    z-index: 0;
-    border-bottom-width: 1px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-}
+/* margin-left: 0.5rem; */
+
+/* } */
+
+/* .margin-small-right { */
+
+/* margin-left: 0.5rem; */
+
+/* } */
+
+/* .margin-small-top { */
+
+/* margin-top: 0.5rem; */
+
+/* } */
+
+/* .margin-small-bottom { */
+
+/* margin-bottom: 0.5rem; */
+
+/* } */
+
+/* .margin-medium-left { */
+
+/* margin-left: 1rem; */
+
+/* } */
+
+/* .margin-medium-right { */
+
+/* margin-left: 1rem; */
+
+/* } */
+
+/* .margin-medium-top { */
+
+/* margin-top: 1rem; */
+
+/* } */
+
+/* .margin-medium-bottom { */
+
+/* margin-bottom: 1rem; */
+
+/* } */
+
+/* .height-100 { */
+
+/* height: 100%; */
+
+/* } */
+
+/* .pointer { */
+
+/* cursor: pointer; */
+
+/* } */
+
+/* .table>tfoot>tr>td>.pagination { */
+
+/* margin-left: -10px; */
+
+/* } */
+
+/* .pagination>li { */
+
+/* margin-right: 5px; */
+
+/* } */
+
+/* .pagination>li>a { */
+
+/* border: none !important; */
+
+/* border-radius: 4px; */
+
+/* padding: 0.3rem 0.8rem; */
+
+/* } */
+
+/* .btn-noclick { */
+
+/* pointer-events: none; */
+
+/* } */
+
+/* .btn-toolbar--right { */
+
+/* justify-content: flex-end; */
+
+/* } */
+
+/* .page-main { */
+
+/* position: relative; */
+
+/* } */
+
+/* .nav-tabs { */
+
+/* position: relative; */
+
+/* >li>a { */
+
+/* white-space: nowrap; */
+
+/* } */
+
+/* } */
+
+/* .card-block .table { */
+
+/* margin: 0; */
+
+/* } */
+
+/* .worktime-balance { */
+
+/* border-bottom: 3px double rgb(0 0 0); */
+
+/* font-weight: bold; */
+
+/* } */
+
+/* .worktime-balance.color-danger { */
+
+/* border-bottom-color: $color-danger; */
+
+/* } */
+
+/* .worktime-balance.color-success { */
+
+/* border-bottom-color: $color-success; */
+
+/* &::before { */
+
+/* display: inline-block; */
+
+/* margin-right: -0.2em; */
+
+/* content: "+"; */
+
+/* } */
+
+/* } */
+
+/* .error-text, */
+
+/* .invalid-feedback { */
+
+/* font-size: 80%; */
+
+/* margin: 0; */
+
+/* color: $color-danger; */
+
+/* } */
+
+/* .form-group.has-error { */
+
+/* label { */
+
+/* color: $color-danger; */
+
+/* } */
+
+/* .form-control { */
+
+/* border-color: lighten($color-danger, 20%); */
+
+/* &:focus, */
+
+/* &:focus-within { */
+
+/* border-color: lighten($color-danger, 20%); */
+
+/* box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset, */
+
+/* 0 0 8px opacify($color-danger, 0.6); */
+
+/* } */
+
+/* } */
+
+/* } */
+
+/* .form-control { */
+
+/* &:focus-within { */
+
+/* border-color: lighten($color-primary, 20%); */
+
+/* box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset, */
+
+/* 0 0 8px opacify($color-primary, 0.6); */
+
+/* } */
+
+/* &.duration-day { */
+
+/* text-align: center; */
+
+/* } */
+
+/* &.extendend-durationpicker-day { */
+
+/* padding-bottom: unset; */
+
+/* padding-top: unset; */
+
+/* } */
+
+/* input { */
+
+/* border: none; */
+
+/* outline: none; */
+
+/* } */
+
+/* } */
+
+/* .comment-field { */
+
+/* padding-right: 35px; */
+
+/* } */
+
+/* .btn-group--auto .btn { */
+
+/* flex-grow: 1; */
+
+/* } */
+
+/* .no-margin { */
+
+/* margin: 0 !important; */
+
+/* } */
+
+/* .no-padding { */
+
+/* padding: 0 !important; */
+
+/* } */
+
+/* .nav-tab--buttons { */
+
+/* position: absolute; */
+
+/* right: 0; */
+
+/* bottom: 0; */
+
+/* .btn { */
+
+/* margin-left: 0.5rem; */
+
+/* z-index: 0; */
+
+/* border-bottom-width: 1px; */
+
+/* border-bottom-left-radius: 0; */
+
+/* border-bottom-right-radius: 0; */
+
+/* } */
+
+/* } */
 
 .calendar {
   @include ember-power-calendar($cell-size: 50px);
@@ -264,183 +415,292 @@ strong {
   }
 }
 
-@media #{$sm-viewport} {
-  .login-form .btn {
-    width: 125px;
-  }
+/* @media #{$sm-viewport} { */
 
-  .table--activities tr td:last-child {
-    display: flex;
-  }
+/* .login-form .btn { */
 
-  .table--activities tr {
-    height: 45px;
-    display: flex;
-    min-width: 0;
+/* width: 125px; */
 
-    td {
-      display: flex;
-      align-items: center;
+/* } */
 
-      &:nth-child(1) {
-        flex-basis: 10%;
-      }
+/* .table--activities tr td:last-child { */
 
-      &:nth-child(2) {
-        flex-basis: 25%;
+/* display: flex; */
 
-        // inline-grid property because it doesnt work the right way
-        display: inline-grid;
+/* } */
 
-        div {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-      }
+/* .table--activities tr { */
 
-      &:nth-child(3) {
-        flex-basis: 35%;
-        display: inline-grid;
+/* height: 45px; */
 
-        div {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-      }
+/* display: flex; */
 
-      &:nth-child(4) {
-        flex-basis: 20%;
-        justify-content: space-around;
+/* min-width: 0; */
 
-        div.i {
-          margin-right: 5px;
-        }
-      }
+/* td { */
 
-      &:nth-child(5) {
-        flex-basis: 5%;
-      }
+/* display: flex; */
 
-      &:nth-child(6) {
-        flex-basis: 5%;
-        justify-content: flex-end;
+/* align-items: center; */
 
-        .btn {
-          margin-left: 10px;
-        }
-      }
-    }
-  }
-}
+/* &:nth-child(1) { */
 
-@media screen and (width <=680px) {
-  .table--activities tr td {
-    display: flex;
+/* flex-basis: 10%; */
 
-    &:nth-child(4) {
-      div {
-        margin-right: 10px;
-      }
+/* } */
 
-      div>i {
-        margin-right: 5px;
-      }
-    }
-  }
-}
+/* &:nth-child(2) { */
 
-.total {
-  border-bottom: 3px double $body-color;
-}
+/* flex-basis: 25%; */
 
-.table--absence-types>thead>tr>th,
-.table--absence-types>tbody>tr>td {
-  .grid {
-    margin: 0;
-  }
+/* // inline-grid property because it doesnt work the right way */
 
-  .credit-row {
-    font-size: 70%;
+/* display: inline-grid; */
 
-    &:nth-child(1) {
-      padding-top: 0.5rem;
-    }
+/* div { */
 
-    .grid-cell:first-child {
-      padding-left: 1rem;
-    }
-  }
-}
+/* overflow: hidden; */
+
+/* white-space: nowrap; */
+
+/* text-overflow: ellipsis; */
+
+/* } */
+
+/* } */
+
+/* &:nth-child(3) { */
+
+/* flex-basis: 35%; */
+
+/* display: inline-grid; */
+
+/* div { */
+
+/* overflow: hidden; */
+
+/* white-space: nowrap; */
+
+/* text-overflow: ellipsis; */
+
+/* } */
+
+/* } */
+
+/* &:nth-child(4) { */
+
+/* flex-basis: 20%; */
+
+/* justify-content: space-around; */
+
+/* div.i { */
+
+/* margin-right: 5px; */
+
+/* } */
+
+/* } */
+
+/* &:nth-child(5) { */
+
+/* flex-basis: 5%; */
+
+/* } */
+
+/* &:nth-child(6) { */
+
+/* flex-basis: 5%; */
+
+/* justify-content: flex-end; */
+
+/* .btn { */
+
+/* margin-left: 10px; */
+
+/* } */
+
+/* } */
+
+/* } */
+
+/* } */
+
+/* } */
+
+/* @media screen and (width <=680px) { */
+
+/* .table--activities tr td { */
+
+/* display: flex; */
+
+/* &:nth-child(4) { */
+
+/* div { */
+
+/* margin-right: 10px; */
+
+/* } */
+
+/* div>i { */
+
+/* margin-right: 5px; */
+
+/* } */
+
+/* } */
+
+/* } */
+
+/* } */
+
+/* .total { */
+
+/* border-bottom: 3px double $body-color; */
+
+/* } */
+
+/* .table--absence-types>thead>tr>th, */
+
+/* .table--absence-types>tbody>tr>td { */
+
+/* .grid { */
+
+/* margin: 0; */
+
+/* } */
+
+/* .credit-row { */
+
+/* font-size: 70%; */
+
+/* &:nth-child(1) { */
+
+/* padding-top: 0.5rem; */
+
+/* } */
+
+/* .grid-cell:first-child { */
+
+/* padding-left: 1rem; */
+
+/* } */
+
+/* } */
+
+/* } */
 
 .empty {
-  color: darken($color-border, 25%);
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  /* color: darken($color-border, 25%); */
 
-  .svg-inline--fa {
-    margin-bottom: 1rem;
-    font-size: 10rem;
-    color: $color-border;
-  }
+  /* height: 100%; */
 
-  .loading-spinner {
-    --color: darken($color-border, 25%);
-  }
+  /* display: flex; */
 
-  h3 {
-    color: inherit;
-  }
+  /* flex-direction: column; */
+
+  /* align-items: center; */
+
+  /* justify-content: center; */
+
+  /* text-align: center; */
+
+  /* .svg-inline--fa { */
+
+  /* margin-bottom: 1rem; */
+
+  /* font-size: 10rem; */
+
+  /* color: $color-border; */
+
+  /* } */
+
+  /* .loading-spinner { */
+
+  /* --color: darken($color-border, 25%); */
+
+  /* } */
+
+  /* h3 { */
+
+  /* color: inherit; */
+
+  /* } */
 }
 
-.activity-customer-visible-icon {
-  position: relative;
-  float: right;
-  z-index: 1;
-}
+/* .activity-customer-visible-icon { */
 
-.customer-visible-icon {
-  position: relative;
-  float: right;
-  margin-top: -1.7rem;
-  margin-right: 0.8rem;
-  z-index: 1;
-}
+/* position: relative; */
 
-@media (width <=680px) {
-  .activity-customer-visible-icon {
-    margin-top: 0;
-    margin-right: 10px;
-  }
+/* float: right; */
 
-  .customer-visible-icon {
-    margin-top: -2.5rem;
-  }
-}
+/* z-index: 1; */
 
-.customer-visible-icon {
-  margin-top: -1.7rem;
-}
+/* } */
 
-@media #{$sm-viewport} {
-  .activity-customer-visible-icon {
-    margin-top: -2rem;
-    margin-left: 85%;
-  }
-}
+/* .customer-visible-icon { */
 
-@media #{$md-viewport} {
-  .activity-customer-visible-icon {
-    margin-top: -30px;
-    margin-left: 95%;
-  }
+/* position: relative; */
 
-  .customer-visible-icon {
-    margin-top: -1.7rem;
-  }
-}
+/* float: right; */
+
+/* margin-top: -1.7rem; */
+
+/* margin-right: 0.8rem; */
+
+/* z-index: 1; */
+
+/* } */
+
+/* @media (width <=680px) { */
+
+/* .activity-customer-visible-icon { */
+
+/* margin-top: 0; */
+
+/* margin-right: 10px; */
+
+/* } */
+
+/* .customer-visible-icon { */
+
+/* margin-top: -2.5rem; */
+
+/* } */
+
+/* } */
+
+/* .customer-visible-icon { */
+
+/* margin-top: -1.7rem; */
+
+/* } */
+
+/* @media #{$sm-viewport} { */
+
+/* .activity-customer-visible-icon { */
+
+/* margin-top: -2rem; */
+
+/* margin-left: 85%; */
+
+/* } */
+
+/* } */
+
+/* @media #{$md-viewport} { */
+
+/* .activity-customer-visible-icon { */
+
+/* margin-top: -30px; */
+
+/* margin-left: 95%; */
+
+/* } */
+
+/* .customer-visible-icon { */
+
+/* margin-top: -1.7rem; */
+
+/* } */
+
+/* } */
