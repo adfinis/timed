@@ -1,4 +1,3 @@
-
 <div class="bg-white border-b border-b-adfinis-grey mb-6 pb-6" ...attributes>
   <TaskSelection
     @disabled={{this.tracking.activity.active}}
@@ -8,7 +7,11 @@
     as |t|
   >
     <label hidden form="task-form">Select task</label>
-    <form class="grid gap-2 lg:grid-cols-[repeat(3,minmax(0,1fr)),minmax(0,1.5fr),minmax(0,auto)]" id="task-form" {{on "submit" (optional this.start)}}>
+    <form
+      class="grid gap-2 lg:grid-cols-[repeat(3,minmax(0,1fr)),minmax(0,1.5fr),minmax(0,auto)]"
+      id="task-form"
+      {{on "submit" (optional this.start)}}
+    >
       <div class="form-group" data-test-tracking-customer>
         <t.customer />
       </div>
@@ -27,7 +30,10 @@
           name="comment"
           spellcheck="true"
           value={{this.tracking.activity.comment}}
-          {{on "change" (pick "target.value" (fn (mut this.tracking.activity.comment)))}}
+          {{on
+            "change"
+            (pick "target.value" (fn (mut this.tracking.activity.comment)))
+          }}
           disabled={{this.tracking.activity.active}}
         />
         {{#if this.tracking.activity.task.project.customerVisible}}

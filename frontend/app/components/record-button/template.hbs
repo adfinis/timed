@@ -1,12 +1,16 @@
 <div
-  class="record-button-container bg-adfinis-black/70 p-1.5 grid gap-2 lg:gap-2.5 xl:gap-3 rounded-full place-self-center text-adfinis-green transition-all
-    {{if this.active 'record-button-container--recording grid-cols-[auto,minmax(0,1fr)]' 'grid-cols-1'}}"
+  class="h-max min-h-full self-center record-button-container bg-black/75 grid gap-2 lg:gap-2.5 xl:gap-3 rounded p-1.5 px-2.5 lg:py-2 lg:px-3 transition-all
+    {{if
+      this.active
+      'record-button-container--recording grid-cols-[auto,minmax(0,1fr)]'
+      'grid-cols-1'
+    }}"
 >
   {{#if this.active}}
     <button
       data-test-record-stop
       type="submit"
-      class="record-button record-button--stop bg-white w-6 rounded-full"
+      class="record-button record-button--stop text-danger"
       {{on "click" (prevent-default (optional @onStop))}}
     >
       <FaIcon @icon="square" @prefix="fas" />
@@ -18,7 +22,7 @@
     <button
       data-test-record-start
       type="submit"
-      class="record-button record-button--start bg-white w-6 rounded-full"
+      class="record-button record-button--start text-adfinis-green"
       {{on "click" (prevent-default (optional @onStart))}}
     >
       <FaIcon @icon="play" @prefix="fas" @transform="right-1" />
