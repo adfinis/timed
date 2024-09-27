@@ -8,10 +8,7 @@
             "dddd, DD.MM.YYYY"
           }}</h1>
       </div>
-      <DateNavigation
-        @current={{this.date}}
-        @onChange={{fn (mut this.date)}}
-      />
+      <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
     </div>
     <div class="max-sm:hidden flex">
       <WeeklyOverview @expected={{this.expectedWorktime}}>
@@ -34,11 +31,11 @@
       <div class="btn-group btn-group--vertical">
         <LinkTo @route="index.activities" class="btn group">
           Activity
-          <span class="badge ">{{humanize-duration this.activitySum true}}</span>
+          <span class="badge">{{humanize-duration this.activitySum true}}</span>
         </LinkTo>
         <LinkTo @route="index.attendances" class="btn group">
           Attendance
-          <span class="badge ">{{humanize-duration this.attendanceSum}}</span>
+          <span class="badge">{{humanize-duration this.attendanceSum}}</span>
         </LinkTo>
         <LinkTo @route="index.reports" class="btn group">
           Timesheet
@@ -71,10 +68,7 @@
         <li>
           <LinkTo @route="index.activities" class="group">
             Activity
-            <span class="">{{humanize-duration
-                this.activitySum
-                true
-              }}</span>
+            <span class="">{{humanize-duration this.activitySum true}}</span>
           </LinkTo>
         </li>
         <li>
@@ -89,7 +83,7 @@
             <span class="">{{humanize-duration this.reportSum}}</span>
           </LinkTo>
         </li>
-          <li class="nav-tab--buttons w-full border-b grid md:place-items-end">
+        <li class="nav-tab--buttons w-full border-b grid md:place-items-end">
           {{#if this.absence}}
             <button
               type="button"

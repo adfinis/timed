@@ -64,8 +64,11 @@
                 <tbody>
                   {{#each supervisees as |supervisee|}}
                     <tr
-                    role="link"
-                      {{on "click" (fn this.openSupervisorProfile supervisee.id)}}
+                      role="link"
+                      {{on
+                        "click"
+                        (fn this.openSupervisorProfile supervisee.id)
+                      }}
                       class="pointer"
                     >
                       <td>{{supervisee.fullName}}</td>
@@ -87,7 +90,10 @@
                       absenceBalances has to be an array but will always only
                       contain one element. This is why we get the first object here.
                     }}
-                      <td>{{get (object-at 0 supervisee.absenceBalances) "balance"}}</td>
+                      <td>{{get
+                          (object-at 0 supervisee.absenceBalances)
+                          "balance"
+                        }}</td>
                     </tr>
                   {{/each}}
                 </tbody>

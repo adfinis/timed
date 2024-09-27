@@ -4,6 +4,7 @@
 const path = require("path");
 
 const forms = require("@tailwindcss/forms");
+const colors = require("tailwindcss/colors");
 
 const appRoot = path.join(__dirname, "../../");
 const appEntry = path.join(appRoot, "app");
@@ -45,6 +46,7 @@ module.exports = {
           black: "#0f0f0f",
         },
         black: "#0f0f0f",
+        danger: colors.red[500],
       },
     },
     fontFamily: {

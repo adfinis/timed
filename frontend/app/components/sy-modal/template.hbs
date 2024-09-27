@@ -1,5 +1,5 @@
 {{#if @visible}}
-    {{#in-element this.syModals insertBefore=null}}
+  {{#in-element this.syModals insertBefore=null}}
     <SyModal::Overlay @visible={{@visible}} @onClose={{optional @onClose}}>
       <div class="modal-dialog {{if @size (concat 'modal-dialog--' @size)}}">
         {{yield

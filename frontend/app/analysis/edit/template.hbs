@@ -25,9 +25,18 @@
                 as |f|
               >
                 <TaskSelection
-                  @on-set-customer={{queue (fn (mut f.model.customer)) (fn this.validate f.model)}}
-                  @on-set-project={{queue (fn (mut f.model.project)) (fn this.validate f.model)}}
-                  @on-set-task={{queue (fn (mut f.model.task)) (fn this.validate f.model)}}
+                  @on-set-customer={{queue
+                    (fn (mut f.model.customer))
+                    (fn this.validate f.model)
+                  }}
+                  @on-set-project={{queue
+                    (fn (mut f.model.project))
+                    (fn this.validate f.model)
+                  }}
+                  @on-set-task={{queue
+                    (fn (mut f.model.task))
+                    (fn this.validate f.model)
+                  }}
                   @initial={{hash
                     customer=this._customer
                     project=this._project

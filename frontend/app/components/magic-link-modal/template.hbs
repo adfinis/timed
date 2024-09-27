@@ -5,10 +5,7 @@
   data-test-magic-link-modal
   as |modal|
 >
-  <div
-    class="magic-link-modal"
-    data-test-magic-link-form
-  >
+  <div class="magic-link-modal" data-test-magic-link-form>
     <modal.header>
       Create a magic link
     </modal.header>
@@ -20,15 +17,9 @@
           @on-set-task={{this.onSetTask}}
           as |t|
         >
-          <div
-            class="form-list-cell form-group"
-          >{{t.customer}}</div>
-          <div
-            class="form-list-cell form-group"
-          >{{t.project}}</div>
-          <div
-            class="form-list-cell form-group"
-          >{{t.task}}</div>
+          <div class="form-list-cell form-group">{{t.customer}}</div>
+          <div class="form-list-cell form-group">{{t.project}}</div>
+          <div class="form-list-cell form-group">{{t.task}}</div>
         </TaskSelection>
       </div>
 

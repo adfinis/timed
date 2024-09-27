@@ -4,7 +4,7 @@
   {{on "touchmove" this.onEvent}}
   {{on "touchstart" this.onEvent}}
   {{on "touchend" this.onEvent}}
-  {{!-- template-lint-disable no-invalid-interactive --}}
+  {{! template-lint-disable no-invalid-interactive }}
   {{on "mouseup" this.onEvent}}
   {{on "mouseover" this.onEvent}}
   ...attributes
@@ -27,25 +27,26 @@
     as |option index|
   >
     {{#let (ember-power-select-is-equal option @select.selected) as |selected|}}
-    {{!template-lint-disable  require-context-role}}
-    <li
-      class="ember-power-select-option text-black px-2 py-1 hover:bg-adfinis-blue/60 hover:text-white truncate {{if selected 'bg-adfinis-blue text-white'}}"
-      aria-selected="{{selected}}"
-      aria-disabled="{{option.disabled}}"
-      aria-current="{{eq option @select.highlighted}}"
-      data-option-index="{{@groupIndex}}{{index}}"
-      role="option"
-    >
-      {{#if @extra.optionTemplate}}
-        {{component
-          (ensure-safe-component @extra.optionTemplate)
-          option=option
-          current=(eq option @select.highlighted)
-        }}
-      {{else}}
-        {{yield option @select}}
-      {{/if}}
-    </li>
+      {{!template-lint-disable  require-context-role}}
+      <li
+        class="ember-power-select-option text-black px-2 py-1 hover:bg-adfinis-blue/60 hover:text-white truncate
+          {{if selected 'bg-adfinis-blue text-white'}}"
+        aria-selected="{{selected}}"
+        aria-disabled="{{option.disabled}}"
+        aria-current="{{eq option @select.highlighted}}"
+        data-option-index="{{@groupIndex}}{{index}}"
+        role="option"
+      >
+        {{#if @extra.optionTemplate}}
+          {{component
+            (ensure-safe-component @extra.optionTemplate)
+            option=option
+            current=(eq option @select.highlighted)
+          }}
+        {{else}}
+          {{yield option @select}}
+        {{/if}}
+      </li>
     {{/let}}
   </VerticalCollection>
 </ul>

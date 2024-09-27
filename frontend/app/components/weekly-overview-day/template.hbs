@@ -1,18 +1,23 @@
-<div title={{this.title}}
+<div
+  title={{this.title}}
   role="button"
   {{on "click" this.click}}
   {{style this.style}}
   class="weekly-overview-day h-0 w-4 relative cursor-pointer transition-all group z-10
-    {{if @active "active"}}
-    {{if @absence "absence"}}
-    {{if @holiday "holiday"}}
-    {{unless @workday "weekend"}}
-  "
+    {{if @active 'active'}}
+    {{if @absence 'absence'}}
+    {{if @holiday 'holiday'}}
+    {{unless @workday 'weekend'}}
+    "
   ...attributes
+>
+  <div
+    class="bar w-full h-full transition-all group-[.active]:bg-adfinis-blue group-[.absence]:bg-adfinis-blue group-[:where(.holiday,.weekend)]:bg-adfinis-grey bg-adfinis-darkgrey"
+  ></div>
+  <div
+    class="day absolute text-xs -translate-x-1/2 left-1/2 -bottom-8 transition-all group-[.active]:text-adfinis-blue group-[.absence]:text-adfinis-blue group-[:where(.holiday,.weekend)]:text-adfinis-grey text-center"
   >
-  <div class="bar w-full h-full transition-all group-[.active]:bg-adfinis-blue group-[.absence]:bg-adfinis-blue group-[:where(.holiday,.weekend)]:bg-adfinis-grey bg-adfinis-darkgrey"></div>
-  <div class="day absolute text-xs -translate-x-1/2 left-1/2 -bottom-8 transition-all group-[.active]:text-adfinis-blue group-[.absence]:text-adfinis-blue group-[:where(.holiday,.weekend)]:text-adfinis-grey text-center">
-    {{moment-format @day 'DD'}}
-  {{moment-format @day 'dd'}}
+    {{moment-format @day "DD"}}
+    {{moment-format @day "dd"}}
   </div>
 </div>

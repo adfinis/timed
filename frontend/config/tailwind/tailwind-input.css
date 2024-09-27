@@ -59,7 +59,7 @@
   }
 
   .btn-danger {
-    @apply border-red-500 text-white bg-red-500/80 hover:enabled:border-red-500/85 hover:enabled:shadow-red-500/75;
+    @apply border-danger text-white bg-danger/80 hover:enabled:border-danger/85 hover:enabled:shadow-danger/75;
   }
 
   .btn-group {

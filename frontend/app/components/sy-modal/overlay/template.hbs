@@ -1,7 +1,7 @@
 <div
   class="modal modal-overlay {{if @visible 'modal--visible'}}"
   id={{this.id}}
-  {{!-- template-lint-disable no-invalid-interactive --}}
+  {{! template-lint-disable no-invalid-interactive }}
   {{on "click" this.handleClick}}
 >
   {{yield}}

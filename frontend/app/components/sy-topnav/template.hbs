@@ -3,15 +3,31 @@
     class="px-2 py-2 lg:px-3.5 lg:py-1.5 xl:px-4 xl:py-2 w-full flex bg-adfinis-grey flex-col md:flex-row shadow-md
       {{if (and this.expand this.navMobile) 'nav-top--expand'}}"
   >
-    <header class="flex justify-between {{if (and this.expand this.navMobile) 'max-md:mb-1'}}">
+    <header
+      class="flex justify-between
+        {{if (and this.expand this.navMobile) 'max-md:mb-1'}}"
+    >
       <button
         class="md:hidden px-2 w-14"
         type="button"
         {{on "click" (toggle "expand" this)}}
       >
-        <FaIcon @icon={{if (and this.expand this.navMobile) "chevron-up" "bars"}} @rotation={{if (and this.expand this.navMobile) 180 0}} @prefix="fas" class="text-black {{if (and this.expand this.navMobile) 'duration-300 transition-all'}}" @size="2x" />
+        <FaIcon
+          @icon={{if (and this.expand this.navMobile) "chevron-up" "bars"}}
+          @rotation={{if (and this.expand this.navMobile) 180 0}}
+          @prefix="fas"
+          class="text-black
+            {{if
+              (and this.expand this.navMobile)
+              'duration-300 transition-all'
+            }}"
+          @size="2x"
+        />
       </button>
-      <LinkTo @route="index" class="grid place-items-center md:grid-cols-2 md:gap-2 mr-1">
+      <LinkTo
+        @route="index"
+        class="grid place-items-center md:grid-cols-2 md:gap-2 mr-1"
+      >
         <TimedClock />
         <div
           class="max-md:hidden font-medium mr-1 self-center text-xl text-black/80"
