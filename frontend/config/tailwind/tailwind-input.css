@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+  .ember-power-select-dropdown {
+    @apply min-w-64;
+  }
+
   .ember-basic-dropdown-content {
     @apply p-2 border border-adfinis-darkgrey rounded rounded-t-none;
   }
@@ -27,10 +31,6 @@
     @apply max-md:w-full text-base;
   }
 
-  .form-group {
-    @apply mb-4;
-  }
-
   .tracking-bar .form-group {
     @apply lg:mb-0;
   }
@@ -40,5 +40,106 @@
   input,
   textarea {
     @apply rounded w-full text-black placeholder:text-adfinis-darkgrey focus:border-adfinis-green;
+  }
+
+  .btn {
+    @apply py-1.5 px-2.5 rounded border enabled:shadow-sm hover:enabled:shadow transition-colors disabled:cursor-not-allowed disabled:bg-opacity-40 disabled:border-opacity-35;
+  }
+
+  .btn-default {
+    @apply border-adfinis-grey bg-white disabled:bg-adfinis-grey/60 hover:enabled:border-adfinis-blue/85 hover:enabled:text-adfinis-blue/85 hover:enabled:shadow-adfinis-blue/75;
+  }
+
+  .btn-primary {
+    @apply border-adfinis-blue text-white hover:enabled:bg-adfinis-darkblue/85 bg-adfinis-blue hover:enabled:border-adfinis-darkblue/85 hover:enabled:shadow-adfinis-darkblue/40;
+  }
+
+  .btn-success {
+    @apply border-adfinis-green text-white bg-adfinis-green/80 hover:enabled:border-adfinis-green/85 hover:enabled:shadow-adfinis-green/75;
+  }
+
+  .btn-danger {
+    @apply border-red-500 text-white bg-red-500/80 hover:enabled:border-red-500/85 hover:enabled:shadow-red-500/75;
+  }
+
+  .btn-group {
+    @apply flex;
+  }
+
+  .btn-group .btn:first-child:not(:only-child) {
+    @apply rounded-e-none;
+  }
+
+  .btn-group .btn:last-child:not(:only-child) {
+    @apply rounded-s-none;
+  }
+
+  .btn-group .btn:not(:first-child, :last-child) {
+    @apply rounded-none;
+  }
+
+  .badge {
+    @apply rounded-xl inline-block min-w-2.5 px-1.5 py-0.5;
+  }
+
+  .nav-tabs {
+    @apply flex flex-col;
+  }
+
+  .nav-tabs a {
+    @apply text-adfinis-blue/80 hover:text-adfinis-blue/60 text-sm py-2 px-4;
+  }
+
+  .nav-tabs a {
+    @apply max-md:border border-b h-full block;
+  }
+
+  .nav-tabs a.active {
+    @apply md:border md:border-b-0;
+  }
+
+  .nav-tabs a.active span {
+    @apply bg-adfinis-blue/90 text-white;
+  }
+
+  .nav-tabs a span {
+    @apply badge bg-adfinis-darkgrey group-[.active]:bg-adfinis-blue text-white rounded-xl text-xs;
+  }
+
+  .stripes {
+    @apply [&>*:nth-child(odd)]:bg-adfinis-darkgrey/5 [&>*:nth-child(even)]:bg-adfinis-darkgrey/15;
+  }
+
+  .noUi-tooltip {
+    @apply -top-[18px] left-1/2 translate-x-1/2 text-xs border-none bg-transparent;
+  }
+
+  .noUi-handle {
+    @apply w-2 h-6 rounded-sm -top-1 right-0 !important;
+  }
+
+  .noUi-connect {
+    @apply bg-adfinis-blue/70;
+  }
+
+  .noUi-connects {
+    @apply overflow-hidden relative;
+  }
+
+  .noUi-handle::after,
+  .noUi-handle::before {
+    @apply hidden;
+  }
+
+  .noUi-handle-lower {
+    @apply cursor-e-resize;
+  }
+
+  .noUi-handle-lower {
+    @apply cursor-w-resize;
+  }
+
+  .noUi-draggable {
+    @apply cursor-move;
   }
 }

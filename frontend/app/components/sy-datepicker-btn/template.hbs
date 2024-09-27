@@ -1,8 +1,6 @@
-<BasicDropdown @horizontalPosition="auto-right" as |dd|>
-  <dd.Trigger>
-    <button class="btn btn-default" type="button">
-      <FaIcon @icon="calendar" />
-    </button>
+<BasicDropdown @horizontalPosition="auto-right" @renderInPlace="false" as |dd|>
+  <dd.Trigger class="btn btn-default">
+    <FaIcon @icon="calendar" />
   </dd.Trigger>
   <dd.Content>
     <SyCalendar

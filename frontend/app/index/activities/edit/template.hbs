@@ -1,14 +1,15 @@
 <label hidden for="activity-edit-form">Edit activity</label>
 <form
   id="activity-edit-form"
+  class="pl-2"
   data-test-activity-edit-form
   {{on "submit" this.save}}
 >
-  <div class="card">
+  <div class="card grid border rounded">
     <div class="card-header hidden-lg">
       <LinkTo @route="index.activities"><FaIcon @icon="chevron-left" /></LinkTo>
     </div>
-    <div class="card-block">
+    <div class="card-block gap-2 grid p-2 bg-adfinis-darkgrey/5">
       <TaskSelection
         @initial={{hash task=this.changeset.task}}
         @task={{this.changeset.task}}
@@ -17,19 +18,19 @@
       >
         <div class="form-group">{{t.customer}}</div>
         <div class="form-group">{{t.project}}</div>
-        {{!-- template-lint-disable no-at-ember-render-modifiers --}}
+        {{! template-lint-disable no-at-ember-render-modifiers }}
         <div
           class="form-group"
           {{did-update t.reset @model.task.id}}
         >{{t.task}}</div>
       </TaskSelection>
     </div>
-    <div class="card-footer text-right">
+    <div class="card-footer text-right bg-adfinis-darkgrey/15 p-2 border">
       <div class="form-group">
         <label hidden for="comment">Comment</label>
         <input
           type="text"
-          class="form-control comment-field"
+          class="form-control comment-field rounded"
           placeholder="Comment"
           name="comment"
           id="comment"
@@ -44,7 +45,7 @@
           <CustomerVisibleIcon class="customer-visible-icon" />
         {{/if}}
       </div>
-      <div class="form-group checkboxes">
+      <div class="form-group checkboxes p-2 grid grid-cols-2 place-items-center">
         <SyCheckbox
           data-test-activity-review
           @checked={{this.changeset.review}}
@@ -85,7 +86,7 @@
         </tbody>
       </table>
     </div>
-    <div class="card-footer text-right">
+    <div class="card-footer text-right bg-adfinis-darkgrey/15 border p-2">
       <button
         class="btn btn-danger"
         type="button"

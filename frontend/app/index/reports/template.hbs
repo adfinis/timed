@@ -1,4 +1,4 @@
-<div class="btn-toolbar btn-toolbar--right form-group">
+<div class="btn-toolbar btn-toolbar--right form-group w-full grid place-items-end mt-2">
   <button
     type="button"
     class="btn btn-success"
@@ -8,8 +8,8 @@
   >Reschedule</button>
 </div>
 
-<div class="form-list form-list--reports">
-  <div class="form-list-body">
+<div class="form-list form-list--reports py-2">
+  <div class="form-list-body stripes">
     {{#each this.reports as |report|}}
       <ReportRow
         @report={{report}}

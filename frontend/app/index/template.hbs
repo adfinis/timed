@@ -1,13 +1,19 @@
 <TrackingBar data-test-tracking-bar />
 <div>
-  <div class="grid grid--12of12">
-    <div class="grid-cell grid-cell-sm--6of12">
-      <h1 class="no-margin">{{moment-format @model "dddd, DD.MM.YYYY"}}</h1>
+  <div class="grid grid-cols-1">
+    <div class="grid grid-cols-[minmax(0,1fr),auto]">
+      <div>
+        <h1 class="text-3xl text-adfinis-blue">{{moment-format
+            @model
+            "dddd, DD.MM.YYYY"
+          }}</h1>
+      </div>
+      <DateNavigation
+        @current={{this.date}}
+        @onChange={{fn (mut this.date)}}
+      />
     </div>
-    <div class="grid-cell grid-cell-sm--6of12 grid-cell--align-center">
-      <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
-    </div>
-    <div class="grid-cell visible-md">
+    <div class="max-sm:hidden flex">
       <WeeklyOverview @expected={{this.expectedWorktime}}>
         {{#each this.weeklyOverviewData.value as |d|}}
           <WeeklyOverviewDay
@@ -24,19 +30,19 @@
         {{/each}}
       </WeeklyOverview>
     </div>
-    <div class="grid-cell hidden-sm">
+    <div class="grid-cell md:hidden">
       <div class="btn-group btn-group--vertical">
-        <LinkTo @route="index.activities" class="btn">
+        <LinkTo @route="index.activities" class="btn group">
           Activity
-          <span class="badge">{{humanize-duration this.activitySum true}}</span>
+          <span class="badge ">{{humanize-duration this.activitySum true}}</span>
         </LinkTo>
-        <LinkTo @route="index.attendances" class="btn">
+        <LinkTo @route="index.attendances" class="btn group">
           Attendance
-          <span class="badge">{{humanize-duration this.attendanceSum}}</span>
+          <span class="badge ">{{humanize-duration this.attendanceSum}}</span>
         </LinkTo>
-        <LinkTo @route="index.reports" class="btn">
+        <LinkTo @route="index.reports" class="btn group">
           Timesheet
-          <span class="badge">{{humanize-duration this.reportSum}}</span>
+          <span>{{humanize-duration this.reportSum}}</span>
         </LinkTo>
         {{#if this.absence}}
           <button
@@ -61,34 +67,34 @@
       </div>
     </div>
     <div class="grid-cell visible-sm">
-      <ul class="nav-tabs">
+      <ul class="nav-tabs md:grid-cols-[repeat(3,minmax(0,auto)),50fr] grid">
         <li>
-          <LinkTo @route="index.activities">
+          <LinkTo @route="index.activities" class="group">
             Activity
-            <span class="badge">{{humanize-duration
+            <span class="">{{humanize-duration
                 this.activitySum
                 true
               }}</span>
           </LinkTo>
         </li>
         <li>
-          <LinkTo @route="index.attendances">
+          <LinkTo @route="index.attendances" class="group">
             Attendance
-            <span class="badge">{{humanize-duration this.attendanceSum}}</span>
+            <span class="">{{humanize-duration this.attendanceSum}}</span>
           </LinkTo>
         </li>
         <li>
-          <LinkTo @route="index.reports">
+          <LinkTo @route="index.reports" class="group">
             Timesheet
-            <span class="badge">{{humanize-duration this.reportSum}}</span>
+            <span class="">{{humanize-duration this.reportSum}}</span>
           </LinkTo>
         </li>
-        <li class="nav-tab--buttons">
+          <li class="nav-tab--buttons w-full border-b grid md:place-items-end">
           {{#if this.absence}}
             <button
               type="button"
               data-test-edit-absence
-              class="btn btn-warning"
+              class="btn btn-warning md:border-b-0 md:border-b-0 md:rounded-b-none"
               {{on "click" (toggle "showEditModal" this)}}
             >
               {{this.absence.absenceType.name}}
@@ -97,7 +103,7 @@
           <button
             type="button"
             data-test-add-absence
-            class="btn btn-default"
+            class="btn btn-default border-b-0 hover:border-b-0 rounded-b-none"
             disabled={{cannot "access page"}}
             {{on "click" (toggle "showAddModal" this)}}
           >

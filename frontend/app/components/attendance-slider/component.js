@@ -109,7 +109,7 @@ export default class AttendanceSlider extends Component {
 
         labels.push({
           value: pad2joincolon(h, m),
-          size: m === 0 ? "lg" : "sm",
+          size: m === 0 ? "text-black/80" : "text-black/65",
           style: htmlSafe(`left: ${offsetH + offsetM}%;`),
         });
       }

@@ -11,10 +11,30 @@ const relevantFilesGlob = "**/*.{html,js,ts,hbs,gjs,gts}";
 
 module.exports = {
   content: [path.join(appEntry, relevantFilesGlob)],
-  safelist: [{ pattern: /ember-/ }],
+  safelist: [{ pattern: /ember-/ }, { pattern: /noUi-/ }],
   plugins: [forms()],
   theme: {
     extend: {
+      fontSize: {
+        "2xs": [
+          "0.65rem",
+          {
+            lineHeight: "0.9rem",
+          },
+        ],
+        "3xs": [
+          "0.6rem",
+          {
+            lineHeight: "0.8rem",
+          },
+        ],
+        "4xs": [
+          "0.55rem",
+          {
+            lineHeight: "0.7rem",
+          },
+        ],
+      },
       colors: {
         adfinis: {
           blue: "#2e4b98",
@@ -23,10 +43,8 @@ module.exports = {
           grey: "#f5f6f5",
           darkgrey: "#8b8b8c",
           black: "#0f0f0f",
-          white: "#f8f7f7",
         },
         black: "#0f0f0f",
-        white: "#f8f7f7",
       },
     },
     fontFamily: {
