@@ -1,7 +1,7 @@
 {{#if (can "read user" this.model)}}
   <header class="user-header">
     <div class="user-header-info">
-      <h1>{{this.model.fullName}}</h1>
+      <h1 class="text-black text-3xl text-center">{{this.model.fullName}}</h1>
     </div>
 
     {{#if this.data.isRunning}}
@@ -10,8 +10,8 @@
       </div>
     {{else}}
       {{#unless this.model.activeEmployment.isExternal}}
-        <div class="user-header-worktime-balance-container">
-          <h2 class="user-header-worktime-balance-title">Worktime balance</h2>
+        <div class="user-header-worktime-balance-container flex justify-center flex-wrap">
+          <h2 class="user-header-worktime-balance-title uppercase text-center basis-full">Worktime balance</h2>
 
           <div class="user-header-worktime-balance-last-valid-timesheet">
             {{#let
@@ -33,12 +33,12 @@
             />
           </div>
 
-          <div class="user-header-worktime-balance-today">
+          <div class="user-header-worktime-balance-today md:basis-32 pt-10 text-center text-xl flex">
             {{#let
               this.data.lastSuccessful.value.worktimeBalanceToday
               as |balance|
             }}
-              <h2>Today</h2>
+              <h2 class="text-base">Today</h2>
               <div class="{{balance-highlight-class balance.balance}}">
                 {{format-duration balance.balance false}}
               </div>
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div class="user-header-absence-balance-container">
+        <div class="user-header-absence-balance-container flex-row flex-wrap flex justify-around">
           {{#let this.data.lastSuccessful.value.absenceBalances as |balances|}}
             {{#each balances as |balance index|}}
               <BalanceDonut

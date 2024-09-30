@@ -47,6 +47,7 @@ module.exports = {
         },
         black: "#0f0f0f",
         danger: colors.red[500],
+        warning: colors.orange[500],
       },
     },
     fontFamily: {

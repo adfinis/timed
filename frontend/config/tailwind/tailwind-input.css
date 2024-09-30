@@ -142,4 +142,13 @@
   .noUi-draggable {
     @apply cursor-move;
   }
+
+  .balance-donut {
+    --max-offset: 0;
+  }
+  @screen lg {
+    .balance-donut {
+      --max-offset: -90px;
+    }
+  }
 }
