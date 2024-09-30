@@ -1,8 +1,8 @@
-<main class="page-main">
+<main class="page-main relative">
   {{#if this.loading}}<span class="loader"></span>{{/if}}
   <SyTopnav @onLogout={{this.invalidateSession}} />
   <div
-    class="flex flex-grow px-2 py-1 lg:px-3.5 lg:py-1.5 xl:px-4 xl:py-2 scroll-smooth h-screen overflow-auto bg-white min-h-screen flex-col"
+    class="page-content page-content--scroll flex flex-grow px-2 py-1 lg:px-3.5 lg:py-1.5 xl:px-4 xl:py-2 scroll-smooth h-screen overflow-auto bg-white min-h-screen flex-col"
   >
 
     {{outlet}}

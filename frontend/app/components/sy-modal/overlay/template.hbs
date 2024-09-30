@@ -1,5 +1,5 @@
 <div
-  class="modal modal-overlay {{if @visible 'modal--visible'}}"
+  class="modal modal-overlay flex items-start justify-center p-6 fixed inset-0 z-[60] bg-black/25 opacity-0 {{if @visible 'modal--visible opacity-100 pointer-events-all'}}"
   id={{this.id}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" this.handleClick}}

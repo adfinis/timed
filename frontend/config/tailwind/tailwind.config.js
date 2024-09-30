@@ -47,7 +47,10 @@ module.exports = {
         },
         black: "#0f0f0f",
         danger: colors.red[500],
-        warning: colors.orange[500],
+        warning: "#ed9140",
+        primary: "#2e4b98",
+        "primary-muted": "#6b73ad",
+        success: "#2e987b",
       },
     },
     fontFamily: {

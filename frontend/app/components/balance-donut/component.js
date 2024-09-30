@@ -15,7 +15,7 @@ class BalanceDonutComponent extends Component {
 
   get strokeClass() {
     if (this.args.balance.usedDuration) {
-      return "stroke-adfinis-blue";
+      return "stroke-primary";
     }
 
     if (this.value > 1 || this.value < 0) {
