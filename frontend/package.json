@@ -10,7 +10,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
+    "build": "npm run tailwind:build && ember build --environment=production",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:scss": "stylelint \"**/*.scss\"",
     "lint:scss:fix": "concurrently \"npm:lint:scss -- --fix\"",
@@ -19,9 +19,12 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint --config .eslintrc.js .",
     "lint:js:fix": "eslint --config .eslintrc.js . --fix",
-    "start": "ember server --proxy https://timed.localhost --secure-proxy=false",
+    "start": "concurrently 'npm:start:ember' 'npm:tailwind:watch' --names 'serve,styles'",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
-    "test:ember": "ember test"
+    "test:ember": "ember test",
+    "tailwind:build": "npx tailwindcss -c ./config/tailwind/tailwind.config.js -i ./config/tailwind/tailwind-input.css -o ./public/assets/tailwind.css",
+    "tailwind:watch": "npx tailwindcss -c ./config/tailwind/tailwind.config.js -i ./config/tailwind/tailwind-input.css -o ./public/assets/tailwind.css --watch",
+    "start:ember": "ember server --proxy https://timed.localhost --secure-proxy=false"
   },
   "devDependencies": {
     "@adfinis/eslint-config": "^2.1.1",
@@ -123,6 +126,7 @@
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-prettier": "^3.0.0",
     "stylelint-scss": "^6.3.0",
+    "tailwindcss": "^3.0.0",
     "tracked-built-ins": "3.1.1",
     "tracked-toolbox": "2.0.0",
     "webpack": "5.92.1"
