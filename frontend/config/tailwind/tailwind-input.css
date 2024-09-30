@@ -62,6 +62,10 @@
     @apply border-danger text-white bg-danger/80 hover:enabled:border-danger/85 hover:enabled:shadow-danger/75;
   }
 
+  .btn-warning {
+    @apply border-warning text-white bg-warning/80 hover:enabled:border-warning/85 hover:enabled:shadow-warning/75;
+  }
+
   .btn-group {
     @apply flex;
   }

@@ -13,7 +13,7 @@
         <div class="user-header-worktime-balance-container flex justify-center flex-wrap">
           <h2 class="user-header-worktime-balance-title uppercase text-center basis-full">Worktime balance</h2>
 
-          <div class="user-header-worktime-balance-last-valid-timesheet">
+          <div class="user-header-worktime-balance-last-valid-timesheet md:basis-32 pt-10 text-center flex flex-col">
             {{#let
               this.data.lastSuccessful.value.worktimeBalanceLastValidTimesheet
               as |balance|
@@ -21,7 +21,7 @@
               <h2 title="Last day with timesheet entries or absences">
                 {{moment-format balance.date "DD.MM.YYYY"}}
               </h2>
-              <div class="{{balance-highlight-class balance.balance}}">
+              <div class="{{balance-highlight-class balance.balance}} text-2xl">
                 {{format-duration balance.balance false}}
               </div>
             {{/let}}
@@ -33,13 +33,13 @@
             />
           </div>
 
-          <div class="user-header-worktime-balance-today md:basis-32 pt-10 text-center text-xl flex">
+          <div class="user-header-worktime-balance-today md:basis-32 pt-10 text-center flex flex-col">
             {{#let
               this.data.lastSuccessful.value.worktimeBalanceToday
               as |balance|
             }}
-              <h2 class="text-base">Today</h2>
-              <div class="{{balance-highlight-class balance.balance}}">
+              <h2 class="">Today</h2>
+              <div class="{{balance-highlight-class balance.balance}} text-2xl">
                 {{format-duration balance.balance false}}
               </div>
             {{/let}}

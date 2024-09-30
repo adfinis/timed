@@ -26,7 +26,7 @@ class BalanceDonutComponent extends Component {
       return "stroke-warning";
     }
 
-    return "success";
+    return "stroke-adfinis-green/75";
   }
 
   radius = 100 / (2 * PI);
