@@ -1,31 +1,20 @@
-<div
-  class="h-max min-h-full self-center record-button-container bg-black/75 grid gap-2 lg:gap-2.5 xl:gap-3 rounded p-1.5 px-2.5 lg:py-2 lg:px-3 transition-all
+<button
+  type="submit"
+  data-class-record-button-active={{not (not this.active)}}
+  data-class-record-button-start={{not this.active}}
+  class="record-button-container h-full border-black btn py-2
     {{if
       this.active
-      'record-button-container--recording grid-cols-[auto,minmax(0,1fr)]'
-      'grid-cols-1'
+      'record-button-container--recording grid grid-cols-[auto,minmax(0,1fr)] gap-x-2 place-items-center'
     }}"
+    {{on "click" (prevent-default (optional (if this.active @onStop @onStart)))}}
 >
   {{#if this.active}}
-    <button
-      data-test-record-stop
-      type="submit"
-      class="record-button record-button--stop text-danger"
-      {{on "click" (prevent-default (optional @onStop))}}
-    >
-      <FaIcon @icon="square" @prefix="fas" />
-    </button>
+      <FaIcon @icon="square" @prefix="fas" class="text-danger" />
     <div class="record-button-timer">
-      <DurationSince @from={{@activity.from}} />
+      <DurationSince class="text-black" @from={{@activity.from}} />
     </div>
   {{else}}
-    <button
-      data-test-record-start
-      type="submit"
-      class="record-button record-button--start text-adfinis-green"
-      {{on "click" (prevent-default (optional @onStart))}}
-    >
-      <FaIcon @icon="play" @prefix="fas" @transform="right-1" />
-    </button>
+      <FaIcon @icon="play" @prefix="fas" @transform="right-1" class="text-adfinis-green" />
   {{/if}}
-</div>
+</button>

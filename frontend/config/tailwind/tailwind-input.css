@@ -28,7 +28,7 @@
   }
 
   .nav-top-list-item {
-    @apply max-md:w-full text-base;
+    @apply max-md:w-full text-sm;
   }
 
   .tracking-bar .form-group {

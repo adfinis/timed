@@ -1,6 +1,6 @@
 <div class="z-50 mb-2 sticky top-0">
   <nav
-    class="px-2 py-2 lg:px-3.5 lg:py-1.5 xl:px-4 xl:py-2 w-full flex bg-adfinis-grey flex-col md:flex-row shadow-md
+    class="px-2 py-1 lg:py-0.5 xl:py-0 lg:px-3.5 xl:px-4 w-full flex bg-adfinis-grey flex-col md:flex-row shadow-md
       {{if (and this.expand this.navMobile) 'nav-top--expand'}}"
   >
     <header
@@ -28,12 +28,12 @@
         @route="index"
         class="grid place-items-center md:grid-cols-2 md:gap-2 mr-1"
       >
-        <TimedClock />
+        <TimedClock class="lg:p-1" />
         <div
-          class="max-md:hidden font-medium mr-1 self-center text-xl text-black/80"
+          class="max-md:hidden font-medium mr-1 self-center text-lg text-black/80 leading-4"
         >
           Timed
-          <div class="text-xs text-adfinis-darkgrey/80">
+          <div class="text-2xs text-adfinis-darkgrey/80">
             v{{app-version versionOnly=true showExtended=true}}
           </div>
         </div>
