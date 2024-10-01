@@ -6,14 +6,28 @@ const EmberApp = require("ember-cli/lib/broccoli/ember-app");
 
 module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
+    postcssOptions: {
+      compile: {
+        plugins: [
+          { module: require("postcss-import") },
+          {
+            module: require("tailwindcss"),
+            options: {
+              config: "./config/tailwind.config.js",
+            },
+          },
+          { module: require("autoprefixer"), options: {} },
+        ],
+      },
+    },
     babel: {
       plugins: [
         require.resolve("ember-concurrency/async-arrow-task-transform"),
       ],
     },
-    sassOptions: {
-      onlyIncluded: true,
-    },
+    // sassOptions: {
+    //   onlyIncluded: true,
+    // },
     "ember-fetch": {
       preferNative: true,
     },
