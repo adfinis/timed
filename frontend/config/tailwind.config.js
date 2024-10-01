@@ -72,5 +72,5 @@ module.exports = {
     },
   },
   plugins: [forms()],
-  safelist: [{ pattern: /noUi-/ }],
+  safelist: [{ pattern: /noUi-/ }, { pattern: /ember-/ }],
 };
