@@ -1,0 +1,22 @@
+{{#if @route}}
+  {{#if @model}}
+    <LinkTo
+      @route={{@route}}
+      @model={{@model}}
+      class={{this.class}}
+      @activeClass={{this.activeClass}}
+    >
+      {{yield}}
+    </LinkTo>
+  {{else}}
+    <LinkTo
+      @route={{@route}}
+      class={{this.class}}
+      @activeClass={{this.activeClass}}
+    >
+      {{yield}}
+    </LinkTo>
+  {{/if}}
+{{else}}
+  <a href="#" ...attributes class={{this.class}} >{{yield}}</a>
+{{/if}}
