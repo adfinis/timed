@@ -35,8 +35,9 @@
       <div class="margin-medium-bottom">
         <input
           value={{this.comment}}
+          type="text"
           {{on "change" (pick "target.value" (fn (mut this.comment)))}}
-          class="ember-text-field form-control"
+          class="ember-text-field form-control rounded"
           placeholder="Comment"
           aria-label="Comment for the timed entry"
           data-test-magic-link-comment
@@ -45,7 +46,7 @@
 
       <div class="margin-medium-bottom">
         <div class="flex">
-          <SyDurationpickerDay
+          <DurationpickerDay
             @disabled={{false}}
             @value={{this.duration}}
             @onChange={{fn (mut this.duration)}}
@@ -53,7 +54,7 @@
             data-test-magic-link-duration
             class="flex-grow"
           />
-          <SyToggle
+          <Toggle
             class="margin-small-right form-control flex-shrink"
             data-test-magic-link-review
             @hint="Needs review"
@@ -68,8 +69,8 @@
                 @transform="shrink-6 up-7 right-8"
               />
             </span>
-          </SyToggle>
-          <SyToggle
+          </Toggle>
+          <Toggle
             class="form-control flex-shrink"
             data-test-magic-link-not-billable
             @hint="Not billable"
@@ -80,7 +81,7 @@
               <FaIcon @icon="dollar-sign" @prefix="fas" />
               <FaIcon @icon="slash" @prefix="fas" />
             </span>
-          </SyToggle>
+          </Toggle>
         </div>
       </div>
 
