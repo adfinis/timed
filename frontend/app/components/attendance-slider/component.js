@@ -96,7 +96,7 @@ export default class AttendanceSlider extends Component {
   /**
    * The labels for the slider
    *
-   * @property {String[]} labels
+   * @property {string[]} labels
    * @public
    */
   get labels() {
@@ -109,7 +109,7 @@ export default class AttendanceSlider extends Component {
 
         labels.push({
           value: pad2joincolon(h, m),
-          size: m === 0 ? "lg" : "sm",
+          size: m === 0 ? "text-4xs" : "text-3xs",
           style: htmlSafe(`left: ${offsetH + offsetM}%;`),
         });
       }
