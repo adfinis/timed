@@ -1,5 +1,16 @@
 {{#let (changeset @report this.ReportValidations) as |cs|}}
-  <form ...attributes class="form-list-row" title={{this.title}} {{on "submit" (prevent-default (perform this.save cs))}} >
+  <form
+    ...attributes
+    class="grid
+      {{if
+        cs.task.project.remainingEffortTracking
+        'md:grid-cols-[repeat(3,minmax(0,1fr)),minmax(0,1.7fr),repeat(4,minmax(0,0.7fr))]'
+        'md:grid-cols-[repeat(3,minmax(0,1fr)),minmax(0,1.7fr),repeat(3,minmax(0,0.7fr))]'
+      }}
+      gap-2 p-1 md:p-1.5 lg:p-2 xl:p-2.5 grid-cols-3"
+    title={{this.title}}
+    {{on "submit" (prevent-default (perform this.save cs))}}
+  >
     <TaskSelection
       @disabled={{not this.editable}}
       @task={{cs.task}}
@@ -17,11 +28,11 @@
       >{{t.task}}</div>
     </TaskSelection>
 
-    <div class="form-list-cell form-group">
+    <div class="form-list-cell form-group max-md:col-span-3">
       <label for="row-comment" hidden>Comment</label>
       <input
         type="text"
-        class="form-control comment-field"
+        class="form-control comment-field rounded"
         placeholder="Comment"
         name="comment"
         id="row-comment"
@@ -36,7 +47,7 @@
       {{/if}}
     </div>
     <div class="form-list-cell form-group cell-duration">
-      <SyDurationpickerDay
+      <DurationpickerDay
         data-test-report-duration
         @disabled={{not this.editable}}
         @value={{cs.duration}}
@@ -44,7 +55,10 @@
         @title="Task duration"
       />
     </div>
-    <div class="form-list-cell form-group cell-remaining-effort">
+    <div
+      class="form-list-cell form-group cell-remaining-effort
+        {{unless cs.task.project.remainingEffortTracking 'hidden'}}"
+    >
       {{#if cs.task.project.remainingEffortTracking}}
         <SyDurationpicker
           data-test-report-remaining-effort
@@ -65,8 +79,10 @@
       {{/if}}
     </div>
 
-    <div class="form-list-cell form-group cell-review-billable-icons">
-      <SyToggle
+    <div
+      class="form-list-cell form-group cell-review-billable-icons grid content-between grid-cols-2 self-center gap-1"
+    >
+      <Toggle
         class="margin-small-right form-control"
         data-test-report-review
         @disabled={{not this.editable}}
@@ -82,8 +98,8 @@
             @transform="shrink-6 up-7 right-8"
           />
         </span>
-      </SyToggle>
-      <SyToggle
+      </Toggle>
+      <Toggle
         class="form-control"
         data-test-report-not-billable
         @disabled={{not this.editable}}
@@ -95,9 +111,12 @@
           <FaIcon @icon="dollar-sign" @prefix="fas" />
           <FaIcon @icon="slash" @prefix="fas" />
         </span>
-      </SyToggle>
+      </Toggle>
     </div>
-    <div class="form-list-cell form-group cell-buttons">
+    <div
+      class="form-list-cell form-group cell-buttons grid content-between self-center gap-1 grid-cols-2
+        {{if cs.task.project.remainingEffortTracking 'col-span-3'}}"
+    >
       {{#if this.editable}}
         <button
           type="button"
@@ -110,7 +129,10 @@
           type="submit"
           data-test-save-report
           class="btn btn-primary"
-          disabled={{or this.save.isRunning (and (not cs.isNew) (or (not cs.isDirty) (not cs.isValid)))}}
+          disabled={{or
+            this.save.isRunning
+            (and (not cs.isNew) (or (not cs.isDirty) (not cs.isValid)))
+          }}
         ><FaIcon @icon="floppy-disk" /></button>
       {{/if}}
     </div>
