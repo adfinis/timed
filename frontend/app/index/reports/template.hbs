@@ -1,17 +1,15 @@
-<div class="btn-toolbar btn-toolbar--right form-group">
-  <button
-    type="button"
-    class="btn btn-success"
+<NavTabs::LowerButton
     title="Move all entries to another date"
     data-test-report-reschedule
-    {{on "click" (fn (mut this.showReschedule) true)}}
-  >Reschedule</button>
-</div>
+    @onClick={{fn (mut this.showReschedule) true}}
+  >Reschedule
+</NavTabs::LowerButton>
 
 <div class="form-list form-list--reports">
   <div class="form-list-body">
     {{#each this.reports as |report|}}
       <ReportRow
+        class="striped"
         @report={{report}}
         @onSave={{this.saveReport}}
         @onDelete={{this.deleteReport}}
