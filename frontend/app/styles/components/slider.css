@@ -1,0 +1,32 @@
+.noUi-tooltip {
+  @apply -top-[18px] left-1/2 translate-x-1/2 text-xs border-none bg-transparent text-foreground;
+}
+
+.noUi-handle {
+  @apply w-2 h-6 rounded-sm -top-1 right-0 !important;
+}
+
+.noUi-connect {
+  @apply bg-primary;
+}
+
+.noUi-connects {
+  @apply overflow-hidden relative;
+}
+
+.noUi-handle::after,
+.noUi-handle::before {
+  @apply hidden;
+}
+
+.noUi-handle-lower {
+  @apply cursor-w-resize;
+}
+
+.noUi-handle-upper {
+  @apply cursor-e-resize;
+}
+
+.noUi-draggable {
+  @apply cursor-move;
+}
