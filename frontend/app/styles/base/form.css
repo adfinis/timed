@@ -1,0 +1,50 @@
+[type="text"],
+[type="email"],
+[type="url"],
+[type="password"],
+[type="number"],
+[type="date"],
+[type="datetime-local"],
+[type="month"],
+[type="search"],
+[type="tel"],
+[type="time"],
+[type="week"],
+[multiple],
+textarea,
+select,
+.form-input,
+.form-textarea,
+.form-select,
+.form-multiselect {
+  @apply w-full placeholder-foreground-muted text-sm bg-background !important;
+}
+
+:is(
+    [type="text"],
+    [type="email"],
+    [type="url"],
+    [type="password"],
+    [type="number"],
+    [type="date"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="search"],
+    [type="tel"],
+    [type="time"],
+    [type="week"],
+    [multiple],
+    textarea,
+    select,
+    .form-input,
+    .form-textarea,
+    .form-select,
+    .form-multiselect
+  ):is(:disabled, [aria-disabled="true"]) {
+  @apply text-foreground-muted cursor-not-allowed;
+  @apply bg-background-muted !important;
+}
+
+[type="checkbox"] {
+  @apply text-primary;
+}
