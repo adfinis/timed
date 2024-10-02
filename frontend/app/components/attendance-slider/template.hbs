@@ -1,4 +1,4 @@
-<div class="attendance-slider" ...attributes>
+<div class="attendance-slider relative pt-4" ...attributes>
   <RangeSlider
     @start={{this.start}}
     @step={{15}}
@@ -12,20 +12,20 @@
     @on-change={{perform this.save}}
   />
 
-  <div class="slider-labels">
+  <div class="slider-labels relative h-12 text-foreground-mid font-mono">
     {{#each this.labels as |label|}}
       <div
         style={{label.style}}
-        class="slider-label slider-label--{{label.size}}"
+        class="slider-label flex absolute top-4 -translate-x-3/4"
       >
-        <div class="slider-label-text">
+        <div class="slider-label-text text-3xs -rotate-45">
           {{label.value}}
         </div>
       </div>
     {{/each}}
   </div>
 
-  <div class="slider-title">
+  <div class="slider-title absolute top-0 left-0 text-xs">
     <span>{{this.duration}}</span>
     <FaIcon
       @icon="trash-can"
