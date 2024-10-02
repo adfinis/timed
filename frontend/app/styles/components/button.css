@@ -1,0 +1,56 @@
+.btn {
+  @apply py-1.5 px-2.5 border border-border transition-all rounded;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  @apply cursor-not-allowed bg-opacity-40 text-opacity-85 border-opacity-40;
+
+  &.btn-default {
+    @apply bg-background-muted/70 text-foreground-muted/85;
+  }
+}
+
+.btn:not(:disabled, [aria-disabled="true"]) {
+  @apply shadow-sm hover:shadow;
+
+  &.btn-default {
+    @apply hover:text-primary/85 hover:border-primary shadow-border/20 hover:shadow-primary/30;
+  }
+
+  &.btn-primary {
+    @apply shadow-primary/20 hover:border-secondary/85 hover:shadow-secondary/50;
+  }
+
+  &.btn-danger {
+    @apply shadow-danger/20 hover:border-danger/85 hover:shadow-danger/50;
+  }
+
+  &.btn-success {
+    @apply shadow-success/20 hover:border-success/85 hover:shadow-success/50;
+  }
+
+  &.btn-warning {
+    @apply shadow-warning/20 hover:border-warning/85 hover:shadow-warning/50;
+  }
+}
+
+.btn-default {
+  @apply bg-background border-border;
+}
+
+.btn-primary {
+  @apply bg-primary text-foreground-primary border-primary;
+}
+
+.btn-danger {
+  @apply bg-danger text-foreground-primary border-danger/40;
+}
+
+.btn-success {
+  @apply bg-success text-foreground-primary border-success/40;
+}
+
+.btn-warning {
+  @apply bg-warning text-foreground-primary border-warning/40;
+}
