@@ -1,7 +1,7 @@
 <main class="page-main">
   {{#if this.loading}}<span class="loader"></span>{{/if}}
   <div class="page-content page-content--scroll">
-    <SyTopnav @onLogout={{this.invalidateSession}} />
+    <Topnav @onLogout={{this.invalidateSession}} />
 
     {{outlet}}
   </div>
