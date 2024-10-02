@@ -1,14 +1,12 @@
 <label hidden for="activity-edit-form">Edit activity</label>
 <form
   id="activity-edit-form"
+  class="pl-2"
   data-test-activity-edit-form
   {{on "submit" this.save}}
 >
-  <div class="card">
-    <div class="card-header hidden-lg">
-      <LinkTo @route="index.activities"><FaIcon @icon="chevron-left" /></LinkTo>
-    </div>
-    <div class="card-block">
+  <div class="card grid border">
+    <div class="card-block gap-2 grid p-2 border-b striped">
       <TaskSelection
         @initial={{hash task=this.changeset.task}}
         @task={{this.changeset.task}}
@@ -24,7 +22,7 @@
         >{{t.task}}</div>
       </TaskSelection>
     </div>
-    <div class="card-footer text-right">
+    <div class="card-footer text-right p-2 striped">
       <div class="form-group">
         <label hidden for="comment">Comment</label>
         <input
@@ -44,14 +42,14 @@
           <CustomerVisibleIcon class="customer-visible-icon" />
         {{/if}}
       </div>
-      <div class="form-group checkboxes">
-        <SyCheckbox
+      <div class="form-group checkboxes p-2 flex justify-between [&>*]:w-full [&>*]:grid [&>*]:grid-cols-[auto,minmax(0,1fr)] [&>*]:items-center [&>*]:justify-items-start [&>*]:gap-x-2">
+        <Checkbox
           data-test-activity-review
           @checked={{this.changeset.review}}
           @label="Needs review"
           @onChange={{toggle "review" this.changeset}}
         />
-        <SyCheckbox
+        <Checkbox
           data-test-activity-not-billable
           @checked={{this.changeset.notBillable}}
           @label="Not billable"
@@ -85,7 +83,7 @@
         </tbody>
       </table>
     </div>
-    <div class="card-footer text-right">
+    <div class="card-footer text-right p-2 border-t flex justify-between striped">
       <button
         class="btn btn-danger"
         type="button"
