@@ -1,6 +1,6 @@
-<div class="weekly-overview-benchmark {{if @expected "expected"}}">
+<div class="flex items-center absolute inset-0">
   {{#if @showLabel}}
-    <span {{style this.style}}>{{@hours}}h</span>
+    <span class="text-center w-6 right-0 -left-8 text-xs absolute translate-y-1/2 {{unless @expected 'text-foreground-muted'}}" {{style this.style}}>{{@hours}}h</span>
   {{/if}}
-  <hr {{style this.style}}>
+  <hr {{style this.style}} class="m-0 p-0 border-none w-full absolute left-0 right-0 {{if @expected 'bg-primary h-[1.5px]' 'bg-primary/30 h-px'}}">
 </div>
