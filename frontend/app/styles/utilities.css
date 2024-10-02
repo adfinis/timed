@@ -1,0 +1,3 @@
+.striped {
+  @apply [&:nth-child(odd)]:bg-background-secondary/5 [&:nth-child(even)]:bg-background-secondary/15;
+}
