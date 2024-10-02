@@ -1,0 +1,38 @@
+@import "./base/typography.css";
+@import "./base/form.css";
+
+:root {
+  /* taken from https://adfinis.com/en/about-us/branding/ */
+  --dark-blue: 28 46 93;
+  --dark-moderate-blue: 46 75 152;
+  --green: 46 152 123;
+  --black: 15 15 15;
+  --dark-grey: 139 139 140;
+  --light-grey: 245 246 245;
+
+  /* not taken from https://adfinis.com/en/about-us/branding/ */
+  --white: 255 255 255;
+  --red: 239 68 68;
+  --amber: 245 158 11;
+
+  --background: var(--white);
+  --background-muted: var(--light-grey);
+  --background-secondary: var(--dark-grey);
+  --danger: var(--red);
+  --foreground-muted: var(--dark-grey);
+  --foreground-primary: var(--white);
+  --foreground: var(--black);
+  --primary: var(--dark-moderate-blue);
+  --secondary: var(--dark-blue);
+  --success: var(--green);
+  --warning: var(--amber);
+}
+
+/* experimental dark theme */
+.dark {
+  --background: var(--black);
+  --background-muted: var(--dark-blue);
+  --background-secondary: var(--light-grey);
+  --foreground-muted: var(--dark-grey);
+  --foreground: var(--white);
+}
