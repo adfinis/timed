@@ -1,13 +1,11 @@
 <TrackingBar data-test-tracking-bar />
 <div>
   <div class="grid grid--12of12">
-    <div class="grid-cell grid-cell-sm--6of12">
-      <h1 class="no-margin">{{moment-format @model "dddd, DD.MM.YYYY"}}</h1>
-    </div>
-    <div class="grid-cell grid-cell-sm--6of12 grid-cell--align-center">
+    <div class="grid md:grid-cols-[minmax(0,1fr),auto]">
+      <h1 class="block">{{moment-format @model "dddd, DD.MM.YYYY"}}</h1>
       <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
     </div>
-    <div class="grid-cell visible-md">
+    <div class="max-sm:hidden flex">
       <WeeklyOverview @expected={{this.expectedWorktime}}>
         {{#each this.weeklyOverviewData.value as |d|}}
           <WeeklyOverviewDay
@@ -24,87 +22,80 @@
         {{/each}}
       </WeeklyOverview>
     </div>
-    <div class="grid-cell hidden-sm">
-      <div class="btn-group btn-group--vertical">
-        <LinkTo @route="index.activities" class="btn">
-          Activity
-          <span class="badge">{{humanize-duration this.activitySum true}}</span>
-        </LinkTo>
-        <LinkTo @route="index.attendances" class="btn">
-          Attendance
-          <span class="badge">{{humanize-duration this.attendanceSum}}</span>
-        </LinkTo>
-        <LinkTo @route="index.reports" class="btn">
-          Timesheet
-          <span class="badge">{{humanize-duration this.reportSum}}</span>
-        </LinkTo>
-        {{#if this.absence}}
-          <button
-            type="button"
-            data-test-edit-absence
-            class="btn btn-warning"
-            disabled={{cannot "access page"}}
-            {{on "click" (toggle "showEditModal" this)}}
-          >
-            {{this.absence.absenceType.name}}
-          </button>
-        {{/if}}
-        <button
-          type="button"
-          data-test-add-absence
-          class="btn btn-default"
-          disabled={{cannot "access page"}}
-          {{on "click" (toggle "showAddModal" this)}}
-        >
-          Add absence
-        </button>
-      </div>
-    </div>
     <div class="grid-cell visible-sm">
-      <ul class="nav-tabs">
-        <li>
-          <LinkTo @route="index.activities">
+      <NavTabs
+        class="max-md:my-2 md:grid-cols-[repeat(3,minmax(0,auto)),50fr] grid"
+      >
+        <NavTabs::Item>
+          <NavTabs::A @route="index.activities">
             Activity
-            <span class="badge">{{humanize-duration
-                this.activitySum
-                true
-              }}</span>
-          </LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="index.attendances">
+            <NavTabs::Badge>
+              {{humanize-duration this.activitySum true}}
+            </NavTabs::Badge>
+          </NavTabs::A>
+        </NavTabs::Item>
+        <NavTabs::Item>
+          <NavTabs::A @route="index.attendances">
             Attendance
-            <span class="badge">{{humanize-duration this.attendanceSum}}</span>
-          </LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="index.reports">
+            <NavTabs::Badge>
+              {{humanize-duration this.attendanceSum true}}
+            </NavTabs::Badge>
+          </NavTabs::A>
+        </NavTabs::Item>
+        <NavTabs::Item>
+          <NavTabs::A @route="index.reports">
             Timesheet
-            <span class="badge">{{humanize-duration this.reportSum}}</span>
-          </LinkTo>
-        </li>
-        <li class="nav-tab--buttons">
-          {{#if this.absence}}
+            <NavTabs::Badge>
+              {{humanize-duration this.reportSum}}
+            </NavTabs::Badge>
+          </NavTabs::A>
+        </NavTabs::Item>
+        {{#if this.absence}}
+          <li
+            class="md:hidden border first:rounded-t-sm last:rounded-b-sm grid"
+          >
             <button
               type="button"
               data-test-edit-absence
-              class="btn btn-warning"
+              class="btn md:btn-warning bg-warning text-foreground-primary border-none rounded-none"
               {{on "click" (toggle "showEditModal" this)}}
             >
               {{this.absence.absenceType.name}}
             </button>
-          {{/if}}
+          </li>
+        {{/if}}
+        <li class="md:hidden border first:rounded-t-sm rounded-b-sm grid">
           <button
             type="button"
             data-test-add-absence
-            class="btn btn-default"
+            class="btn md:btn-default border-none rounded-none"
             disabled={{cannot "access page"}}
             {{on "click" (toggle "showAddModal" this)}}
           >
             Add absence
           </button>
         </li>
-      </ul>
+        <li class="max-md:hidden w-full flex md:justify-end gap-x-2">
+          {{#if this.absence}}
+            <NavTabs::Button
+              type="button"
+              data-test-edit-absence
+              class="bg-warning/70 border-warning hover:bg-warning text-foreground-primary"
+              {{on "click" (toggle "showEditModal" this)}}
+            >
+              {{this.absence.absenceType.name}}
+            </NavTabs::Button>
+          {{/if}}
+          <NavTabs::Button
+            class="hover:text-primary hover:border-primary"
+            data-test-add-absence
+            disabled={{cannot "access page"}}
+            {{on "click" (toggle "showAddModal" this)}}
+          >
+            Add absence
+          </NavTabs::Button>
+        </li>
+      </NavTabs>
     </div>
     <div class="grid-cell">
       <div class="tab-content">
