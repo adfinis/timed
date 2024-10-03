@@ -1,5 +1,5 @@
 {{! template-lint-disable}}
-<th class="sort-header" {{on "click" this.click}}>
+<th class="sort-header align-bottom text-left whitespace-nowrap cursor-pointer py-1 px-2 font-thin text-foreground-mid" {{on "click" this.click}}>
   {{yield}}
   {{#if this.active}}
     <FaIcon @prefix="fas" @icon="sort-{{this.direction}}" />
