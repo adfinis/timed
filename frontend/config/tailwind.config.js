@@ -21,6 +21,12 @@ module.exports = {
         sans: ["Source Sans Pro", "sans-serif"],
         mono: ["Menlo", "Monaco", "Consolas", "Courier New", "monospace"],
       },
+      keyframes: {
+        loading: {
+          "0%, 100%": { transform: "scale(0.1)", opacity: "1" },
+          "50%": { transform: "scale(0.9)", opacity: "0" },
+        },
+      },
       fontSize: {
         "2xs": [
           "0.65rem",
