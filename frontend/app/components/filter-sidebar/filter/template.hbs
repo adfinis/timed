@@ -24,7 +24,7 @@
       <label for={{searchId}} hidden>{{or @name "search"}}</label>
       <input
         type="search"
-        class="form-control"
+        class="form-control rounded"
         placeholder={{or @placeholder "Search"}}
         name={{or @name "search"}}
         id={{searchId}}
@@ -38,7 +38,7 @@
       <label for={{selectId}} hidden>{{or @name "select"}}</label>
       <select
         id={{selectId}}
-        class="form-control"
+        class="form-control rounded"
         {{on "change" (pick "target.value" (optional @onChange))}}
       >
         {{#if @prompt}}
