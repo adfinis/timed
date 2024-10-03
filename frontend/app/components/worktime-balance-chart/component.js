@@ -31,12 +31,12 @@ export default class WorktimeBalanceChart extends Component {
       layout: { padding: 10 },
       elements: {
         line: {
-          borderColor: "rgb(91, 142, 219)",
+          borderColor: "#2e4b98",
           backgroundColor: "transparent",
           borderWidth: 2,
         },
         point: {
-          borderColor: "rgb(91, 142, 219)",
+          borderColor: "#2e4b98",
           backgroundColor: "rgb(255, 255, 255)",
           hoverBackgroundColor: "rgb(0,0,0)",
           borderWidth: 2,

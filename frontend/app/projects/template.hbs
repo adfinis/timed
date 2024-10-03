@@ -135,36 +135,37 @@
             <tbody>
               {{#each this.tasks as |task|}}
                 {{#unless (and this.hideArchivedTasks task.archived)}}
-                <tr
-                  class="pointer {{if (eq this.selectedTask task) 'selected'}}"
-                  {{! template-lint-disable }}
-                  {{on "click" (fn (mut this.selectedTask) task)}}
-                  data-test-task-table-row
-                >
-                  <td data-test-table-name>{{task.name}}</td>
-                  <td data-test-table-reference>{{if
-                      task.reference
-                      task.reference
-                      "-"
-                    }}</td>
-                  <td data-test-table-estimated-time>{{if
-                      task.estimatedTime
-                      (humanize-duration task.estimatedTime)
-                      "-"
-                    }}</td>
-
-                  {{#if remainingEffortTracking}}
-                    <td data-test-table-most-recent-remaining-effort>{{if
-                        task.mostRecentRemainingEffort
-                        (humanize-duration task.mostRecentRemainingEffort)
+                  <tr
+                    class="pointer
+                      {{if (eq this.selectedTask task) 'selected'}}"
+                    {{! template-lint-disable }}
+                    {{on "click" (fn (mut this.selectedTask) task)}}
+                    data-test-task-table-row
+                  >
+                    <td data-test-table-name>{{task.name}}</td>
+                    <td data-test-table-reference>{{if
+                        task.reference
+                        task.reference
                         "-"
                       }}</td>
-                  {{/if}}
-                  <td><SyCheckmark
-                      data-test-table-archived
-                      @checked={{task.archived}}
-                    /></td>
-                </tr>
+                    <td data-test-table-estimated-time>{{if
+                        task.estimatedTime
+                        (humanize-duration task.estimatedTime)
+                        "-"
+                      }}</td>
+
+                    {{#if remainingEffortTracking}}
+                      <td data-test-table-most-recent-remaining-effort>{{if
+                          task.mostRecentRemainingEffort
+                          (humanize-duration task.mostRecentRemainingEffort)
+                          "-"
+                        }}</td>
+                    {{/if}}
+                    <td><SyCheckmark
+                        data-test-table-archived
+                        @checked={{task.archived}}
+                      /></td>
+                  </tr>
                 {{/unless}}
               {{/each}}
             </tbody>
@@ -206,9 +207,13 @@
                       <SyDurationpicker
                         data-test-estimated-time={{true}}
                         @value={{fi.value}}
-                        @onChange={{if remainingEffortTracking (queue
+                        @onChange={{if
+                          remainingEffortTracking
+                          (queue
                             fi.update (fn this.updateRemainingEffort f.model)
-                          ) fi.update}}
+                          )
+                          fi.update
+                        }}
                       />
                     </div>
                   </f.input>
