@@ -1,13 +1,7 @@
 {{#let (changeset @report this.ReportValidations) as |cs|}}
   <form
     ...attributes
-    class="grid
-      {{if
-        cs.task.project.remainingEffortTracking
-        'md:grid-cols-[repeat(3,minmax(0,1fr)),minmax(0,1.7fr),repeat(4,minmax(0,0.7fr))]'
-        'md:grid-cols-[repeat(3,minmax(0,1fr)),minmax(0,1.7fr),repeat(3,minmax(0,0.7fr))]'
-      }}
-      gap-2 p-1 md:p-1.5 lg:p-2 xl:p-2.5 grid-cols-3"
+    class="grid {{cs.task.project.remainingEffortTracking 'grid-cols-4' 'grid-cols-3'}} max-lg:[&>*]:w-full lg:grid-cols-[repeat(3,minmax(0,0.9fr)),minmax(0,1.6fr),minmax(2rem,0.6fr),minmax(2rem,0.7fr),repeat(2,minmax(2rem,0.8fr))] gap-2 p-1 lg:p-1.5 lg:p-2 xl:p-2.5"
     title={{this.title}}
     {{on "submit" (prevent-default (perform this.save cs))}}
   >
@@ -18,17 +12,17 @@
       as |t|
     >
       <div
-        class="form-list-cell form-group {{if cs.error.task 'has-error'}}"
+        class="form-list-cell form-group max-lg:col-span-3 {{if cs.error.task 'has-error'}}"
       >{{t.customer}}</div>
       <div
-        class="form-list-cell form-group {{if cs.error.task 'has-error'}}"
+        class="form-list-cell form-group max-lg:col-span-3 {{if cs.error.task 'has-error'}}"
       >{{t.project}}</div>
       <div
-        class="form-list-cell form-group {{if cs.error.task 'has-error'}}"
+        class="form-list-cell form-group max-lg:col-span-3 {{if cs.error.task 'has-error'}}"
       >{{t.task}}</div>
     </TaskSelection>
 
-    <div class="form-list-cell form-group max-md:col-span-3">
+    <div class="form-list-cell form-group max-lg:col-span-3">
       <label for="row-comment" hidden>Comment</label>
       <input
         type="text"
@@ -55,27 +49,16 @@
         @title="Task duration"
       />
     </div>
-    <div
-      class="form-list-cell form-group cell-remaining-effort
-        {{unless cs.task.project.remainingEffortTracking 'hidden'}}"
-    >
+    <div class="form-list-cell form-group cell-remaining-effort {{unless cs.task.project.remainingEffortTracking 'max-lg:hidden [&>*]:hidden'}}">
       {{#if cs.task.project.remainingEffortTracking}}
-        <SyDurationpicker
+        <Durationpicker
           data-test-report-remaining-effort
+          class="remaining-effort"
           @disabled={{not this.editable}}
           @value={{cs.remainingEffort}}
           @onChange={{fn (mut cs.remainingEffort)}}
           @title="Remaining estimated effort"
-        >
-          <span class="fa-layers fa-fw color-secondary">
-            <FaIcon @icon="clock" />
-            <FaIcon
-              @icon="plus"
-              @prefix="fas"
-              @transform="shrink-6 right-10 up-6"
-            />
-          </span>
-        </SyDurationpicker>
+        />
       {{/if}}
     </div>
 
@@ -114,8 +97,7 @@
       </Toggle>
     </div>
     <div
-      class="form-list-cell form-group cell-buttons grid content-between self-center gap-1 grid-cols-2
-        {{if cs.task.project.remainingEffortTracking 'col-span-3'}}"
+      class="form-list-cell form-group cell-buttons grid content-between self-center gap-1 grid-cols-2"
     >
       {{#if this.editable}}
         <button
