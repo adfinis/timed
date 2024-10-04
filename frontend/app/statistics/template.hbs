@@ -2,7 +2,7 @@
   <NoMobileMessage />
 {{else}}
   <PagePermission>
-    <h1>Statistics</h1>
+    <h1 class="mb-6">Statistics</h1>
 
     <TaskSelection
       @history={{false}}
@@ -191,23 +191,22 @@
     </TaskSelection>
 
     <div>
-      <ul class="nav-tabs">
+      <NavTabs class="flex">
         {{#each this.types as |t|}}
-          <li>
-            <a
-              href="#"
+          <NavTabs::Item>
+            <NavTabs::A
               class={{if (eq t this.type) "active"}}
               {{on "click" (fn this.updateParam "type" t)}}
             >
               By
               {{t}}
-            </a>
-          </li>
+            </NavTabs::A>
+          </NavTabs::Item>
         {{/each}}
-      </ul>
+      </NavTabs>
     </div>
 
-    <div class="tab-content grid">
+    <div class="tab-content grid h-full pt-3">
       <StatisticList
         class="grid-cell"
         @data={{this.data}}
