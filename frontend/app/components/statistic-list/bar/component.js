@@ -15,11 +15,11 @@ export default class StatisticListBar extends Component {
 
   get spentEffortsBarColor() {
     if (this.didFinishEffortsInBudget) {
-      return "strong-success";
+      return "before:bg-success";
     }
     if (this.didFinishEffortsOverBudget) {
-      return "strong-danger";
+      return "before:bg-danger";
     }
-    return "";
+    return "before:bg-primary";
   }
 }
