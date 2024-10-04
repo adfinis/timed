@@ -2,28 +2,28 @@
   <NoMobileMessage />
 {{else}}
   <PagePermission>
-    <h1>Analysis</h1>
+    <h1 class="mb-6">Analysis</h1>
 
     {{#unless this.prefetchData.isRunning}}
-    <TaskSelection
-      @history={{false}}
-      @archived={{true}}
-      @on-set-customer={{fn this.setModelFilter "customer"}}
-      @on-set-project={{fn this.setModelFilter "project"}}
-      @on-set-task={{fn this.setModelFilter "task"}}
-      @initial={{hash
-        customer=this.selectedCustomer
-        project=this.selectedProject
-        task=this.selectedTask
-        comment=this.comment
-      }}
-      as |t|
-    >
-      <FilterSidebar
-        @appliedCount={{this.appliedFilters.length}}
-        @onReset={{queue t.clear this.reset}}
-        as |fs|
+      <TaskSelection
+        @history={{false}}
+        @archived={{true}}
+        @on-set-customer={{fn this.setModelFilter "customer"}}
+        @on-set-project={{fn this.setModelFilter "project"}}
+        @on-set-task={{fn this.setModelFilter "task"}}
+        @initial={{hash
+          customer=this.selectedCustomer
+          project=this.selectedProject
+          task=this.selectedTask
+          comment=this.comment
+        }}
+        as |t|
       >
+        <FilterSidebar
+          @appliedCount={{this.appliedFilters.length}}
+          @onReset={{queue t.clear this.reset}}
+          as |fs|
+        >
           <fs.group @label="Task" @expanded={{true}}>
             <fs.label>
               Customer
@@ -45,12 +45,20 @@
             </fs.label>
             <fs.label>
               Comment
-            <fs.filter data-test-filter-comment>
-              {{#let (unique-id) as |id|}}
-                <label for={{id}} hidden>comment</label>
-                <input id={{id}} value={{this.comment}} {{ on "change" (fn this.setModelFilterOnChange "comment")}} class="form-control comment-field" placeholder="Comment" name="comment" />
-              {{/let}}
-            </fs.filter>
+              <fs.filter data-test-filter-comment>
+                {{#let (unique-id) as |id|}}
+                  <label for={{id}} hidden>comment</label>
+                  <input
+                    id={{id}}
+                    value={{this.comment}}
+                    {{on "change" (fn this.setModelFilterOnChange "comment")}}
+                    class="form-control comment-field rounded"
+                    placeholder="Comment"
+                    name="comment"
+                    type="text"
+                  />
+                {{/let}}
+              </fs.filter>
             </fs.label>
           </fs.group>
           <fs.group @label="Responsibility">
@@ -230,19 +238,19 @@
             </fs.label>
 
           </fs.group>
-      </FilterSidebar>
-    </TaskSelection>
+        </FilterSidebar>
+      </TaskSelection>
     {{/unless}}
 
     {{#if this.appliedFilters.length}}
       {{#if (and (not this._dataCache.length) this.data.isRunning)}}
-        <div class="empty">
+        <Empty>
           <LoadingIcon />
-        </div>
+        </Empty>
       {{else}}
         {{#if this.data.lastSuccessful.value.length}}
           {{#let this.data.lastSuccessful.value as |reports|}}
-            <div class="btn-toolbar btn-toolbar--right form-group">
+            <div class="flex gap-x-2 justify-end">
               {{#if this.selectedReportIds.length}}
                 <button
                   data-test-edit-selected
@@ -261,7 +269,7 @@
               <button
                 data-test-edit-all
                 type="button"
-                class="btn"
+                class="btn btn-default"
                 title={{unless
                   this.editable
                   'Please enable the "editable" filter to modify all entries at once.'
@@ -275,21 +283,21 @@
 
             <table class="table table--striped table--analysis">
               <colgroup>
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
+                <col class="w-[7%]" />
+                <col class="w-[7%]" />
+                <col class="w-[7%]" />
+                <col class="w-[10%]" />
+                <col class="w-[10%]" />
+                <col class="w-[10%]" />
+                <col class="w-[21%]" />
+                <col class="w-[8%]" />
+                <col class="w-[5%]" />
+                <col class="w-[5%]" />
+                <col class="w-[5%]" />
+                <col class="w-[5%]" />
+                <col class="w-[5%]" />
               </colgroup>
-              <thead>
+              <thead class="shadow shadow-foreground/5">
                 <tr>
                   <SortHeader
                     @update={{fn this.updateParam "ordering"}}
@@ -331,29 +339,30 @@
                     @current={{this.ordering}}
                     @by="verified_by__username"
                   >Verified by</SortHeader>
-                  <th>Rejected</th>
-                  <th>Review</th>
-                  <th>Not billable</th>
-                  <th>Billed</th>
+                  {{! TODO: clean this up (same styles as sort-header minus [cursor-pointer, whitespace-nowrap]) }}
+                  <th class="align-bottom text-left py-1 px-2 font-thin text-foreground-mid">Rejected</th>
+                  <th class="align-bottom text-left py-1 px-2 font-thin text-foreground-mid">Review</th>
+                  <th class="align-bottom text-left py-1 px-2 font-thin text-foreground-mid">Not billable</th>
+                  <th class="align-bottom text-left py-1 px-2 font-thin text-foreground-mid">Billed</th>
                 </tr>
               </thead>
             </table>
             <ScrollContainer class="analysis-scrollable-container">
-              <table class="table table--striped table--analysis">
+              <table class="table table--striped table--analysis table-fixed">
                 <colgroup>
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                  <col />
+                  <col class="w-[7%]" />
+                  <col class="w-[7%]" />
+                  <col class="w-[7%]" />
+                  <col class="w-[10%]" />
+                  <col class="w-[10%]" />
+                  <col class="w-[10%]" />
+                  <col class="w-[21%]" />
+                  <col class="w-[8%]" />
+                  <col class="w-[5%]" />
+                  <col class="w-[5%]" />
+                  <col class="w-[5%]" />
+                  <col class="w-[5%]" />
+                  <col class="w-[5%]" />
                 </colgroup>
                 <tbody>
                   {{#each reports as |report|}}
@@ -361,12 +370,14 @@
                     <tr
                       class="{{if
                           (includes report.id this.selectedReportIds)
-                          'selected'
+                          'selected bg-primary text-foreground-primary'
+                          'striped'
                         }}
                         {{if
                           (or this.canBill (can 'edit report' report))
-                          'pointer'
-                        }}"
+                          'cursor-pointer'
+                        }}
+                        [&>*]:py-1 [&>*]:px-2 align-top shadow shadow-foreground/5"
                       {{on "click" (fn this.selectRow report)}}
                     >
                       <td>{{report.user.username}}</td>
@@ -423,24 +434,23 @@
                 <col />
                 <col />
               </colgroup>
-              <tfoot>
-                <tr>
-                  <td colspan="2"><strong>Total:</strong></td>
-                  {{#unless this.data.isRunning}}
-                    <td colspan="2"><strong class="total">{{format-duration
-                          this.totalTime
-                          false
-                        }}</strong></td>
-                    <td colspan="6" class="text-right"><em>Displaying
-                        {{reports.length}}
-                        of
-                        {{this.totalItems}}
-                        reports</em></td>
-                  {{/unless}}
-                </tr>
-              </tfoot>
             </table>
-            <div class="export-buttons">
+            <div class="grid grid-cols-[auto,minmax(0,1fr)]">
+              <strong class="mr-2">Total:</strong>
+              <div class="grid grid-cols-2 justify-between">
+                {{#unless this.data.isRunning}}
+                  <span><strong
+                      class="total border-double border-b-4"
+                    >{{format-duration this.totalTime false}}</strong></span>
+
+                  <span class="text-right"><em>Displaying
+                      {{reports.length}}
+                      of
+                      {{this.totalItems}}
+                      reports</em></span>
+                {{/unless}}</div>
+            </div>
+            <div class="export-buttons mt-4 flex justify-end gap-x-2">
               {{#each this.exportLinks as |link|}}
                 <button
                   {{on "click" (fn (perform this.download) link)}}
@@ -464,22 +474,18 @@
             </div>
           {{/let}}
         {{else}}
-          <div class="empty" data-test-widen-filters>
-            <div>
-              <FaIcon @icon="magnifying-glass" @prefix="fas" />
-              <h3>0 Results</h3>
-              <p>Maybe widen your filters</p>
-            </div>
-          </div>
+          <Empty data-test-widen-filters>
+            <FaIcon @icon="magnifying-glass" @prefix="fas" />
+            <h3>0 Results</h3>
+            <p>Maybe widen your filters</p>
+          </Empty>
         {{/if}}
       {{/if}}
     {{else}}
-      <div class="empty" data-test-apply-filters>
-        <div>
-          <FaIcon @icon="magnifying-glass" @prefix="fas" />
-          <h3>Apply filters to display reports</h3>
-        </div>
-      </div>
+      <Empty data-test-apply-filters>
+        <FaIcon @icon="magnifying-glass" @prefix="fas" />
+        <h3>Apply filters to display reports</h3>
+      </Empty>
     {{/if}}
   </PagePermission>
 {{/if}}
