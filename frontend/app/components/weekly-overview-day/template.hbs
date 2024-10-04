@@ -2,7 +2,7 @@
   role="button"
   {{on "click" this.click}}
   {{style this.style}}
-  class="weekly-overview-day
+  class="h-0 w-4 relative cursor-pointer z-10
     {{if @active "active"}}
     {{if @absence "absence"}}
     {{if @holiday "holiday"}}
@@ -10,8 +10,8 @@
   "
   ...attributes
   >
-  <div class="bar"></div>
-  <div class="day">
+  <div class="w-full h-full transition-all {{if @active 'bg-primary' (or (if @absence 'bg-warning') (or (if @workday 'bg-foreground-mid') 'bg-foreground-muted'))}}"></div>
+  <div class="font-mono absolute text-xs -translate-x-1/2 left-1/2 -bottom-8 transition-all {{if @active 'text-primary' (or (if @absence 'text-warning') (or (if @workday 'text-foreground-mid') 'text-foreground-muted'))}}">
     {{moment-format @day 'DD'}}
   {{moment-format @day 'dd'}}
   </div>
