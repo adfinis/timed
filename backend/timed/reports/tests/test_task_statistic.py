@@ -138,3 +138,37 @@ def test_task_statistic_filtered(
     json = result.json()
 
     assert json["meta"]["total-time"] == f"{expected_result:02}:00:00"
+
+
+def test_task_statistics_broken(
+    auth_client,
+    setup_customer_and_employment_status,
+    report_factory,
+    task,
+):
+    user = auth_client.user
+    setup_customer_and_employment_status(
+        user=user,
+        is_assignee=True,
+        is_customer=True,
+        is_employed=True,
+        is_external=False,
+    )
+
+    report_factory.create(duration=timedelta(hours=2), date="2022-08-05", task=task)
+    report_factory.create(duration=timedelta(hours=2), date="2022-08-06", task=task)
+    report_factory.create(duration=timedelta(hours=2), date="2022-08-07", task=task)
+
+    the_filter = {
+        "from_date": "2022-08-02",
+        "to_date": "2022-08-06",
+    }
+    url = reverse("task-statistic-list")
+    result = auth_client.get(
+        url,
+        data={"ordering": "name", "include": "project,project.customer", **the_filter},
+    )
+    assert result.status_code == status.HTTP_200_OK
+
+    json = result.json()
+    assert json["meta"]["total-time"] == "04:00:00"
