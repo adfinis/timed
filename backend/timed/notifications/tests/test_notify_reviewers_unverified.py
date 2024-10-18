@@ -14,7 +14,7 @@ from timed.projects.factories import (
 from timed.tracking.factories import ReportFactory
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.freeze_time("2017-8-4")
 @pytest.mark.parametrize(
     ("cc", "message"),
@@ -66,7 +66,7 @@ def test_notify_reviewers_with_cc_and_message(mailoutbox, cc, message):
     assert mail.cc[0] == cc
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.freeze_time("2017-8-4")
 def test_notify_reviewers(mailoutbox):
     """Test time range 2017-7-1 till 2017-7-31."""
@@ -93,7 +93,7 @@ def test_notify_reviewers(mailoutbox):
     assert Notification.objects.count() == 1
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.freeze_time("2017-8-4")
 def test_notify_reviewers_reviewer_hierarchy(mailoutbox):
     """Test notification with reviewer hierarchy.

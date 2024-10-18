@@ -136,7 +136,7 @@ def test_employment_list_supervisor(auth_client):
     assert len(json["data"]) == 2
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_employment_unique_active():
     """Should only be able to have one active employment per user."""
     user = UserFactory.create()
@@ -148,7 +148,7 @@ def test_employment_unique_active():
         form.save()
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_employment_start_before_end():
     employment = EmploymentFactory.create()
     form = EmploymentForm(
@@ -160,7 +160,7 @@ def test_employment_start_before_end():
         form.save()
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_employment_get_at():
     """Should return the right employment on a date."""
     user = UserFactory.create()
@@ -176,7 +176,7 @@ def test_employment_get_at():
         Employment.objects.get_at(user, employment.start_date + timedelta(days=21))
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_worktime_balance_partial():
     """
     Test partial calculation of worktime balance.
@@ -223,7 +223,7 @@ def test_worktime_balance_partial():
     assert balance == expected_balance
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_worktime_balance_longer():
     """Test calculation of worktime when frame is longer than employment."""
     employment = factories.EmploymentFactory.create(
@@ -277,7 +277,7 @@ def test_worktime_balance_longer():
     assert balance == expected_balance
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_employment_for_user():
     user = factories.UserFactory.create()
     # employment overlapping time frame (early start)

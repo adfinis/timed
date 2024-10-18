@@ -5,7 +5,7 @@ from redminelib.exceptions import ResourceNotFoundError
 from timed.redmine.models import RedmineProject
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.parametrize("not_billable", [False, True])
 @pytest.mark.parametrize("review", [False, True])
 def test_redmine_report(freezer, mocker, report_factory, not_billable, review):
@@ -48,7 +48,7 @@ def test_redmine_report(freezer, mocker, report_factory, not_billable, review):
     issue.save.assert_called_once_with()
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_redmine_report_no_estimated_time(freezer, mocker, task, report_factory):
     redmine_instance = mocker.MagicMock()
     issue = mocker.MagicMock()
@@ -69,7 +69,7 @@ def test_redmine_report_no_estimated_time(freezer, mocker, task, report_factory)
     issue.save.assert_called_once_with()
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_redmine_report_invalid_issue(freezer, mocker, capsys, report_factory):
     """Test case when issue is not available."""
     redmine_instance = mocker.MagicMock()
@@ -88,7 +88,7 @@ def test_redmine_report_invalid_issue(freezer, mocker, capsys, report_factory):
     assert "issue 1000 assigned" in err
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_redmine_report_calculate_total_hours(freezer, mocker, task, report_factory):
     redmine_instance = mocker.MagicMock()
     issue = mocker.MagicMock()

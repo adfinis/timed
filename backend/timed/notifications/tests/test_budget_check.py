@@ -10,7 +10,7 @@ from timed.notifications.models import Notification
 from timed.redmine.models import RedmineProject
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     ("duration", "percentage_exceeded", "notification_count"),
     [(1, 0, 0), (3, 0, 0), (4, 30, 1), (8, 70, 2), (0, 0, 0)],
@@ -56,7 +56,7 @@ def test_budget_check_1(
     assert Notification.objects.all().count() == notification_count
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_budget_check_skip_notification(capsys, mocker, report_factory):
     redmine_instance = mocker.MagicMock()
     issue = mocker.MagicMock()
@@ -86,7 +86,7 @@ def test_budget_check_skip_notification(capsys, mocker, report_factory):
     )
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_budget_check_no_estimated_timed(mocker, report_factory):
     redmine_instance = mocker.MagicMock()
     issue = mocker.MagicMock()
@@ -107,7 +107,7 @@ def test_budget_check_no_estimated_timed(mocker, report_factory):
     assert Notification.objects.count() == 0
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_budget_check_invalid_issue(mocker, capsys, report_factory):
     redmine_instance = mocker.MagicMock()
     redmine_class = mocker.patch("redminelib.Redmine")

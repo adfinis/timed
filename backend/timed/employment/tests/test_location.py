@@ -5,7 +5,7 @@ from rest_framework import status
 from timed.employment.factories import EmploymentFactory, LocationFactory
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.usefixtures("location")
 @pytest.mark.parametrize(
     ("is_employed", "is_customer_assignee", "is_customer", "expected"),
