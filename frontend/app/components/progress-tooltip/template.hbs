@@ -1,24 +1,23 @@
 {{#if this.tooltipVisible}}
   <EmberTether
-    @class="progress-tooltip"
+    @class="progress-tooltip z-30 py-1.5 px-2 bg-foreground-mid text-foreground-primary"
     @target={{@target}}
     @targetAttachment="middle left"
     @attachment="middle right"
     @offset="0 20px"
   >
-    <div class="time-info">
+    <div class="time-info grid grid-cols-[minmax(0,1fr),auto]">
 
       <span data-test-spent-total>Spent (Total):
         {{humanize-duration this.spent}}</span>
       <div class="progress-badge">
         {{#if this.progressTotal}}
-          <span class="badge badge--{{this.colorTotal}}">
+          <span class="badge {{this.colorTotal}} {{this.badgeClass}}">
             {{#if (gt this.progressTotal 1)}}<FaIcon
                 @icon="exclamation-triangle"
                 @prefix="fas"
               />
-            {{/if}}
-            {{round (mult 100 this.progressTotal)}}%
+            {{/if}}{{round (mult 100 this.progressTotal)}}%
           </span>
         {{/if}}
       </div>
@@ -27,7 +26,7 @@
         {{humanize-duration this.billable}}</span>
       <div class="progress-badge">
         {{#if this.progressBillable}}
-          <span class="badge badge--{{this.colorBillable}}">
+          <span class="badge {{this.colorBillable}} {{this.badgeClass}}">
             {{#if (gt this.progressBillable 1)}}<FaIcon
                 @icon="exclamation-triangle"
                 @prefix="fas"
@@ -38,7 +37,7 @@
         {{/if}}
       </div>
 
-      <span data-test-budget>Budget:
+      <span data-test-budget class="col-span-2">Budget:
         {{if this.estimated (humanize-duration this.estimated) "None"}}</span>
 
       {{#if this.remainingEffort}}
@@ -48,7 +47,9 @@
           }}</span>
         <div class="progress-badge">
           {{#if this.progressRemainingEffort}}
-            <span class="badge badge--{{this.colorRemainingEffort}}">
+            <span
+              class="badge {{this.colorRemainingEffort}} {{this.badgeClass}}"
+            >
               {{#if (gt this.progressRemainingEffort 1)}}<FaIcon
                   @icon="exclamation-triangle"
                   @prefix="fas"
