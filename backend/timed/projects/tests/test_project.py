@@ -51,7 +51,7 @@ def test_project_list_include(
     assert json["data"][0]["id"] == str(project.id)
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_project_detail_no_auth(client, project):
     url = reverse("project-detail", args=[project.id])
 

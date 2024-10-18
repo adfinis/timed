@@ -23,7 +23,7 @@ def test_user_list_unauthenticated(client):
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_user_update_unauthenticated(client):
     user = UserFactory.create()
     url = reverse("user-detail", args=[user.id])
@@ -31,7 +31,7 @@ def test_user_update_unauthenticated(client):
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_user_list(internal_employee_client, django_assert_num_queries):
     UserFactory.create_batch(2)
 
@@ -146,7 +146,7 @@ def test_user_delete_superuser(superadmin_client):
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_user_delete_with_reports_superuser(superadmin_client):
     """Test that user with reports may not be deleted."""
     user = UserFactory.create()

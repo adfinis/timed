@@ -1102,7 +1102,7 @@ def test_report_delete_not_report_owner(
     ]
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_report_round_duration(report_factory):
     """Should round the duration of a report to 15 minutes."""
     report = report_factory.create()
@@ -1439,7 +1439,7 @@ def test_report_notify_rendering(
     snapshot.assert_match(mailoutbox[0].body)
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.usefixtures("project", "task")
 @pytest.mark.parametrize(
     ("report__review", "needs_review"), [(True, False), (False, True), (True, True)]
