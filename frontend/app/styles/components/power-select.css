@@ -1,0 +1,39 @@
+.ember-power-select-dropdown {
+  @apply min-w-64;
+}
+
+.ember-power-select-trigger {
+  @apply form-select flex overflow-hidden relative;
+}
+
+.ember-power-select-selected-item {
+  @apply w-full;
+}
+
+.ember-power-select-option {
+  @apply px-2 cursor-pointer;
+}
+
+.ember-power-select-option[aria-current="true"] {
+  @apply text-foreground-primary bg-primary/70;
+}
+
+.ember-power-select-option[aria-selected="true"] {
+  @apply bg-primary hover:bg-primary/70 text-foreground-primary;
+}
+
+.ember-power-select-visually-hidden {
+  @apply hidden;
+}
+
+.ember-power-select-placeholder {
+  @apply truncate;
+}
+
+.ember-basic-dropdown-trigger--above {
+  @apply rounded-t-none;
+}
+
+.ember-basic-dropdown-trigger--below {
+  @apply rounded-b-none;
+}

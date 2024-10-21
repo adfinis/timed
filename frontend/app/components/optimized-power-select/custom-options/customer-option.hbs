@@ -1,5 +1,5 @@
 <div
-  class="{{if @option.archived 'inactive'}}"
+  class="{{if @option.archived 'inactive'}} px-1"
   title="{{if @option.isTask @option.longName @option.name}}{{if
     @option.archived
     ' (archived)'
@@ -8,8 +8,8 @@
   {{#if @option.isTask}}
     <span class="history">
       <i class="fa fa-history"></i>
-      <span class="history-text">
-        <small>{{@option.project.customer.name}}
+      <span class="history-text inline-flex flex-col">
+        <small class="text-xs">{{@option.project.customer.name}}
           >
           {{@option.project.name}}</small>
         {{@option.name}}
