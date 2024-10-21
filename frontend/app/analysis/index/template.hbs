@@ -5,25 +5,25 @@
     <h1>Analysis</h1>
 
     {{#unless this.prefetchData.isRunning}}
-    <TaskSelection
-      @history={{false}}
-      @archived={{true}}
-      @on-set-customer={{fn this.setModelFilter "customer"}}
-      @on-set-project={{fn this.setModelFilter "project"}}
-      @on-set-task={{fn this.setModelFilter "task"}}
-      @initial={{hash
-        customer=this.selectedCustomer
-        project=this.selectedProject
-        task=this.selectedTask
-        comment=this.comment
-      }}
-      as |t|
-    >
-      <FilterSidebar
-        @appliedCount={{this.appliedFilters.length}}
-        @onReset={{queue t.clear this.reset}}
-        as |fs|
+      <TaskSelection
+        @history={{false}}
+        @archived={{true}}
+        @on-set-customer={{fn this.setModelFilter "customer"}}
+        @on-set-project={{fn this.setModelFilter "project"}}
+        @on-set-task={{fn this.setModelFilter "task"}}
+        @initial={{hash
+          customer=this.selectedCustomer
+          project=this.selectedProject
+          task=this.selectedTask
+          comment=this.comment
+        }}
+        as |t|
       >
+        <FilterSidebar
+          @appliedCount={{this.appliedFilters.length}}
+          @onReset={{queue t.clear this.reset}}
+          as |fs|
+        >
           <fs.group @label="Task" @expanded={{true}}>
             <fs.label>
               Customer
@@ -45,12 +45,19 @@
             </fs.label>
             <fs.label>
               Comment
-            <fs.filter data-test-filter-comment>
-              {{#let (unique-id) as |id|}}
-                <label for={{id}} hidden>comment</label>
-                <input id={{id}} value={{this.comment}} {{ on "change" (fn this.setModelFilterOnChange "comment")}} class="form-control comment-field" placeholder="Comment" name="comment" />
-              {{/let}}
-            </fs.filter>
+              <fs.filter data-test-filter-comment>
+                {{#let (unique-id) as |id|}}
+                  <label for={{id}} hidden>comment</label>
+                  <input
+                    id={{id}}
+                    value={{this.comment}}
+                    {{on "change" (fn this.setModelFilterOnChange "comment")}}
+                    class="form-control comment-field"
+                    placeholder="Comment"
+                    name="comment"
+                  />
+                {{/let}}
+              </fs.filter>
             </fs.label>
           </fs.group>
           <fs.group @label="Responsibility">
@@ -230,8 +237,8 @@
             </fs.label>
 
           </fs.group>
-      </FilterSidebar>
-    </TaskSelection>
+        </FilterSidebar>
+      </TaskSelection>
     {{/unless}}
 
     {{#if this.appliedFilters.length}}
