@@ -5,8 +5,8 @@
   data-test-activity-edit-form
   {{on "submit" this.save}}
 >
-  <div class="card grid border">
-    <div class="card-block gap-2 grid p-2 border-b striped">
+  <Card class="grid">
+    <Card::Block class="gap-2 grid p-2">
       <TaskSelection
         @initial={{hash task=this.changeset.task}}
         @task={{this.changeset.task}}
@@ -21,8 +21,8 @@
           {{did-update t.reset @model.task.id}}
         >{{t.task}}</div>
       </TaskSelection>
-    </div>
-    <div class="card-footer text-right p-2 striped">
+    </Card::Block>
+    <Card::Footer class="text-right">
       <div class="form-group">
         <label hidden for="comment">Comment</label>
         <input
@@ -82,8 +82,8 @@
           </tr>
         </tbody>
       </table>
-    </div>
-    <div class="card-footer text-right p-2 border-t flex justify-between striped">
+    </Card::Footer >
+    <Card::Footer class="text-right flex justify-between">
       <button
         class="btn btn-danger"
         type="button"
@@ -97,6 +97,6 @@
         disabled={{not this.saveEnabled}}
         data-test-activity-edit-form-save
       >Save</button>
-    </div>
-  </div>
+    </Card::Footer>
+  </Card>
 </form>
