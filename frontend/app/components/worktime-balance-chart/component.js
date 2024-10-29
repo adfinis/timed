@@ -2,7 +2,12 @@ import Component from "@glimmer/component";
 import moment from "moment";
 import humanizeDuration from "timed/utils/humanize-duration";
 
-const FONT_FAMILY = "Source Sans Pro";
+// TODO: take this from tailwind.config.js
+const FONT_SANS = ["Source Sans Pro", "sans-serif"];
+const FONT_MONO = ["Menlo", "Monaco", "Consolas", "Courier New", "monospace"];
+
+const cssvar = (name) =>
+  getComputedStyle(document.documentElement).getPropertyValue(name);
 
 export default class WorktimeBalanceChart extends Component {
   type = "line";
@@ -26,20 +31,24 @@ export default class WorktimeBalanceChart extends Component {
 
   get options() {
     return {
-      lineTension: 0,
+      tension: 0,
+      // lineTension: 0,
       legend: { display: false },
       layout: { padding: 10 },
       elements: {
         line: {
-          borderColor: "rgb(91, 142, 219)",
+          tension: 0,
+          borderColor: `rgb(${cssvar("--primary")})`,
           backgroundColor: "transparent",
           borderWidth: 2,
         },
         point: {
-          borderColor: "rgb(91, 142, 219)",
-          backgroundColor: "rgb(255, 255, 255)",
-          hoverBackgroundColor: "rgb(0,0,0)",
+          borderColor: `rgb(${cssvar("--secondary")})`,
+          backgroundColor: `rgb(${cssvar("--background")})`,
+          hoverBackgroundColor: `rgb(${cssvar("--background-muted")})`,
+          hoverBorderColor: `rgb(${cssvar("--primary")})`,
           borderWidth: 2,
+          hoverBorderWidth: 2,
           radius: 3.5,
           hoverRadius: 3.5,
           hitRadius: 10,
@@ -52,8 +61,9 @@ export default class WorktimeBalanceChart extends Component {
               callback(value) {
                 return [value.format("DD"), value.format("dd").toUpperCase()];
               },
-              fontFamily: FONT_FAMILY,
-              fontColor: "rgb(180, 180, 180)",
+              fontFamily: FONT_MONO,
+              fontColor: `rgb(${cssvar("--foreground-muted")})`,
+              fontSize: 18,
             },
             gridLines: {
               drawBorder: false,
@@ -67,6 +77,8 @@ export default class WorktimeBalanceChart extends Component {
               display: false,
             },
             gridLines: {
+              zeroLineColor: `rgb(${cssvar("--foreground-muted")})`,
+              color: `rgb(${cssvar("--foreground-muted")})`,
               drawBorder: false,
               drawTicks: false,
               borderDash: [5, 5],
@@ -75,13 +87,18 @@ export default class WorktimeBalanceChart extends Component {
         ],
       },
       tooltips: {
+        // TODO: dry this so foreground-mid doesn't need to be hardcoded
+        backgroundColor: `color-mix(in oklab, rgb(${cssvar(
+          "--foreground"
+        )}), rgb(${cssvar("--foreground-muted")}))`, // foreground-mid
+        titleFontColor: `rgb(${cssvar("--background")})`,
+        bodyFontColor: `rgb(${cssvar("--background-muted")})`,
         displayColors: false,
-        cornerRadius: 4,
-        bodyFontFamily: FONT_FAMILY,
-        bodyFontSize: 12,
-        titleFontFamily: FONT_FAMILY,
-        titleFontSize: 14,
-        titleFontStyle: "normal",
+        cornerRadius: 2,
+        bodyFontFamily: FONT_MONO,
+        bodyFontSize: 16,
+        titleFontFamily: FONT_SANS,
+        titleFontSize: 18,
         titleMarginBottom: 10,
         xPadding: 10,
         yPadding: 10,
