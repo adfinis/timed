@@ -363,8 +363,8 @@ export default class IndexController extends Controller {
       {}
     );
 
-    return Array.from({ length: 31 }, (value, index) =>
-      moment(this.date).add(index - 20, "days")
+    return Array.from({ length: 46 }, (value, index) =>
+      moment(this.date).add(index - 23, "days")
     ).map((d) => {
       const {
         reports = [],

@@ -1,5 +1,5 @@
 .btn {
-  @apply py-1.5 px-2.5 border border-border transition-all rounded;
+  @apply py-1.5 px-2.5 border border-border transition-all rounded block;
 }
 
 .btn:disabled,
@@ -15,7 +15,7 @@
   @apply shadow-sm hover:shadow;
 
   &.btn-default {
-    @apply hover:text-primary/85 hover:border-primary shadow-border/20 hover:shadow-primary/30;
+    @apply hover:text-primary/85 hover:border-primary shadow-border/10 hover:shadow-primary/30;
   }
 
   &.btn-primary {

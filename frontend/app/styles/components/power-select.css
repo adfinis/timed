@@ -11,7 +11,7 @@
 }
 
 .ember-power-select-option {
-  @apply px-2 cursor-pointer;
+  @apply px-2 cursor-pointer transition-all;
 }
 
 .ember-power-select-option[aria-current="true"] {
@@ -36,4 +36,8 @@
 
 .ember-basic-dropdown-trigger--below {
   @apply rounded-b-none;
+}
+
+.ember-power-select-options[role="listbox"] {
+  @apply max-h-96 overflow-y-auto;
 }

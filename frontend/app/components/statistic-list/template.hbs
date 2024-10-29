@@ -28,9 +28,7 @@
       <p>Maybe try loosening your filters</p>
     </Empty>
   {{else}}
-    <Table
-      class="table table-striped table--statistics"
-    >
+    <Table class="table table-striped table--statistics">
       <Table::Thead>
         <Table::Tr>
           {{#each this.columns as |column|}}
@@ -46,13 +44,14 @@
               <Table::Th @light={{true}}>{{column.title}}</Table::Th>
             {{/if}}
           {{/each}}
-          <th></th>
+          <th class="max-sm:hidden"></th>
         </Table::Tr>
       </Table::Thead>
       <VerticalCollection
         @items={{slice @data.last.value}}
         @tagName="tbody"
         @estimateHeight={{40}}
+        @staticHeight={{true}}
         @bufferSize={{10}}
         @containerSelector=".page-content--scroll"
         as |row|
@@ -69,7 +68,7 @@
               @value={{get row column.path}}
             />
           {{/each}}
-          <Table::Td class="w-1/2">
+          <Table::Td class="w-1/2 max-sm:hidden">
             {{#let
               (or row.totalRemainingEffort row.mostRecentRemainingEffort)
               as |remainingEffort|
@@ -104,7 +103,7 @@
               </strong>
             </Table::Td>
           {{/each}}
-          <Table::Td />
+          <Table::Td class="max-sm:hidden" />
         </Table::Tr>
       </Table::Tfoot>
     </Table>

@@ -1,5 +1,5 @@
 .striped {
-  @apply [&:nth-child(odd)]:bg-background-secondary/5 [&:nth-child(even)]:bg-background-secondary/15;
+  @apply [&:nth-child(even)]:bg-background-secondary/5 [&:nth-child(odd)]:bg-background-secondary/15;
 }
 
 .total {

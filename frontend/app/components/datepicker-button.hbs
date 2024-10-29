@@ -1,0 +1,16 @@
+<BasicDropdown @horizontalPosition="auto-right" as |dd|>
+  <dd.Trigger>
+    <button class="btn btn-default" type="button">
+      <FaIcon @icon="calendar" />
+    </button>
+  </dd.Trigger>
+  <dd.Content>
+    <Calendar
+      class="datepicker"
+      @center={{this.center}}
+      @selected={{@value}}
+      @onCenterChange={{this.updateCenter}}
+      @onSelect={{this.updateSelection}}
+    />
+  </dd.Content>
+</BasicDropdown>

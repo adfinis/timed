@@ -53,15 +53,15 @@
         <p>Maybe try loosening your filters</p>
     </Empty>
   {{else if (eq section "body")}}
-    <table class="table table--striped table--hover">
-      <thead>
+    <Table class="table table--striped table--hover">
+      <Table::Thead>
         <Table::Tr>
           <Table::Th>Name</Table::Th>
           <Table::Th>Percentage</Table::Th>
           <Table::Th>Worktime per day</Table::Th>
           <Table::Th>Current worktime balance</Table::Th>
         </Table::Tr>
-      </thead>
+      </Table::Thead>
       <VerticalCollection
         @items={{slice data}}
         @tagName="tbody"
@@ -74,7 +74,7 @@
           @striped={{true}}
           role="link"
           {{on "click" (fn this.viewUserProfile user.id)}}
-          class="cursor-pointer hover:bg-background-secondary/20"
+          class="cursor-pointer hover:bg-background-secondary/25 last-of-type:border-b-2 transition-colors"
         >
           <Table::Td
             class={{unless user.isActive "text-danger"}}
@@ -99,6 +99,6 @@
           </Table::Td>
         </Table::Tr>
       </VerticalCollection>
-    </table>
+    </Table>
   {{/if}}
 </AsyncList>

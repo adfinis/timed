@@ -5,7 +5,7 @@
       (and (not credit.isNew) (can "edit absence-credit"))
     )
   }}
-    <div class="grid grid--12of12 grid-md--4of12">
+    <div class="grid md:grid-cols-3">
       <div class="grid-cell"></div>
       <div class="grid-cell">
         <ValidatedForm
@@ -15,8 +15,8 @@
         >
           <h4 class="text-center">{{if credit.isNew "New" "Edit"}}
             absence credit</h4>
-          <div class="card">
-            <div class="card-block">
+          <Card>
+            <Card::Block class="grid gap-2">
               <f.input @label="Type" @name="absenceType" as |fi|>
                 <div class="btn-group btn-group--auto">
                   {{#each this.absenceTypes.lastSuccessful.value as |type|}}
@@ -33,11 +33,11 @@
               </f.input>
               <f.input @type="number" @label="Days" @name="days" />
               <f.input @type="text" @label="Comment" @name="comment" />
-              <div class="text-right">
+              <div class="flex justify-between">
                 <LinkTo
                   @route="users.edit.credits.index"
                   @model={{this.user.id}}
-                  class="btn"
+                  class="btn btn-default"
                 >Cancel</LinkTo>
                 {{#unless credit.isNew}}
                   <button
@@ -52,8 +52,8 @@
                   @disabled={{f.model.isInvalid}}
                 />
               </div>
-            </div>
-          </div>
+            </Card::Block>
+          </Card>
         </ValidatedForm>
       </div>
       <div class="grid-cell"></div>

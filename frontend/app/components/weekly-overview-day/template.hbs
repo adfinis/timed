@@ -11,7 +11,7 @@
   ...attributes
   >
   <div class="w-full h-full transition-all {{if @active 'bg-primary' (or (if @absence 'bg-warning') (or (if @workday 'bg-foreground-mid') 'bg-foreground-muted'))}}"></div>
-  <div class="font-mono absolute text-xs -translate-x-1/2 left-1/2 -bottom-8 transition-all {{if @active 'text-primary' (or (if @absence 'text-warning') (or (if @workday 'text-foreground-mid') 'text-foreground-muted'))}}">
+  <div class="absolute text-xs text-center -translate-x-1/2 left-1/2 -bottom-8 font-semibold transition-all {{if @active 'text-primary' (or (if @absence 'text-warning') (or (if @workday 'text-foreground-mid') 'text-foreground-muted'))}}">
     {{moment-format @day 'DD'}}
   {{moment-format @day 'dd'}}
   </div>

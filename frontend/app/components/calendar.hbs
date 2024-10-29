@@ -1,0 +1,47 @@
+<PowerCalendar
+  ...attributes
+  class="calendar [--size:2rem] md:[--size:2.1rem]"
+  @onSelect={{@onSelect}}
+  @selected={{@selected}}
+  @center={{@center}}
+  @onCenterChange={{@onCenterChange}}
+  as |calendar|
+>
+  <calendar.Nav>
+    <span class="nav-select-month relative">
+      {{#let (moment-format calendar.center "MMMM") as |currentMonth|}}
+        {{currentMonth}}
+        <select
+          aria-label="Month"
+          class="absolute inset-0 opacity-0"
+          {{on "change" (fn this.changeCenter "month" calendar)}}
+        >
+          {{#each this.months as |month|}}
+            <option
+              value={{month}}
+              selected={{eq month currentMonth}}
+            >{{month}}</option>
+          {{/each}}
+        </select>
+      {{/let}}
+    </span>
+    <span class="nav-select-year relative">
+      {{#let (moment-format calendar.center "YYYY") as |currentYear|}}
+        {{currentYear}}
+        <select
+          aria-label="Year"
+          class="absolute inset-0 opacity-0"
+          {{on "change" (fn this.changeCenter "year" calendar)}}
+        >
+          {{#each this.years as |year|}}
+            <option
+              value={{year}}
+              selected={{eq year currentYear}}
+            >{{year}}</option>
+          {{/each}}
+        </select>
+      {{/let}}
+    </span>
+  </calendar.Nav>
+  <calendar.Days />
+</PowerCalendar>

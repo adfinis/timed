@@ -13,7 +13,7 @@
       {{/each}}
     </div>
   {{else if (eq @type "date")}}
-    <SyDatepicker
+    <Datepicker
       @value={{@selected}}
       @onChange={{optional @onChange}}
       @placeholder={{@placeholder}}

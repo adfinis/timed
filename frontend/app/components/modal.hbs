@@ -1,0 +1,16 @@
+{{#if @visible}}
+    {{#in-element this.syModals insertBefore=null}}
+    <Modal::Overlay @visible={{@visible}} @onClose={{optional @onClose}}>
+      <div class="modal-dialog w-full border rounded bg-background" ...attributes>
+        {{yield
+          (hash
+            header=(component "modal/header" close=(optional @onClose))
+            body=(component "modal/body" close=(optional @onClose))
+            footer=(component "modal/footer" close=(optional @onClose))
+            close=(optional @onClose)
+          )
+        }}
+      </div>
+    </Modal::Overlay>
+  {{/in-element}}
+{{/if}}

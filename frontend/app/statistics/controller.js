@@ -17,16 +17,21 @@ const TYPES = {
   project: {
     include: "customer",
     requiredParams: ["customer"],
+    mobile: false,
   },
   task: {
     include: "project,project.customer",
     requiredParams: ["customer", "project"],
+    mobile: false,
   },
   user: { include: "user", requiredParams: [] },
 };
 
 export default class StatisticsController extends QPController {
   types = Object.keys(TYPES);
+  noMobileTypes = Object.entries(TYPES)
+    .filter(([, v]) => v.mobile !== undefined && v.mobile === false)
+    .map(([k]) => k);
 
   queryParams = [
     "customer",

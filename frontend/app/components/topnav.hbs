@@ -1,6 +1,6 @@
 <div class="z-30 fixed top-0 left-0 w-full">
   <nav
-    class="px-2 py-1 lg:py-0.5 xl:py-0 lg:px-3.5 xl:px-4 w-full flex bg-background-muted flex-col md:flex-row shadow-md bg-background-muted"
+    class="px-2 py-1 lg:py-0.5 xl:py-0 lg:px-3.5 xl:px-4 w-full flex bg-background flex-col md:flex-row shadow-md"
   >
     <header class="flex justify-between {{if this.expand 'max-md:mb-1'}}">
       <button
@@ -15,7 +15,10 @@
           @size="2x"
         />
       </button>
-      <LinkTo @route="index" class="grid place-items-center md:grid-cols-2 mr-1">
+      <LinkTo
+        @route="index"
+        class="grid place-items-center md:grid-cols-2 mr-1"
+      >
         <TimedClock class="p-1" />
         <div class="max-md:hidden font-medium">
           Timed
@@ -25,7 +28,14 @@
         </div>
       </LinkTo>
     </header>
-    <section class="w-full md:w-auto md:flex md:flex-row md:flex-grow md:max-h-full {{if this.expand 'max-md:block max-md:max-h-96 max-md:h-full max-md:overflow-y-auto' 'overflow-hidden max-h-0'}}">
+    <section
+      class="w-full md:w-auto md:flex md:flex-row md:flex-grow md:max-h-full
+        {{if
+          this.expand
+          'max-md:block max-md:max-h-96 max-md:h-full max-md:overflow-y-auto'
+          'overflow-hidden max-h-0'
+        }}"
+    >
       <Topnav::List>
         <Topnav::ListItem class="max-md:w-full">
           <Topnav::LinkTo @route="index">
@@ -33,28 +43,26 @@
             <span>Tracking</span>
           </Topnav::LinkTo>
         </Topnav::ListItem>
-        {{#unless this.navMobile}}
-          {{#if (can "access page")}}
-            <Topnav::ListItem>
-              <Topnav::LinkTo @route="analysis">
-                <FaIcon @icon="chart-line" @prefix="fas" />
-                Analysis
-              </Topnav::LinkTo>
-            </Topnav::ListItem>
-            <Topnav::ListItem>
-              <Topnav::LinkTo @route="statistics">
-                <FaIcon @icon="chart-bar" />
-                Statistics
-              </Topnav::LinkTo>
-            </Topnav::ListItem>
-            <Topnav::ListItem>
-              <Topnav::LinkTo @route="projects">
-                <FaIcon @icon="briefcase" @prefix="fas" />
-                Projects
-              </Topnav::LinkTo>
-            </Topnav::ListItem>
-          {{/if}}
-        {{/unless}}
+        {{#if (can "access page")}}
+          <Topnav::ListItem class="max-sm:hidden">
+            <Topnav::LinkTo @route="analysis">
+              <FaIcon @icon="chart-line" @prefix="fas" />
+              Analysis
+            </Topnav::LinkTo>
+          </Topnav::ListItem>
+          <Topnav::ListItem>
+            <Topnav::LinkTo @route="statistics">
+              <FaIcon @icon="chart-bar" />
+              Statistics
+            </Topnav::LinkTo>
+          </Topnav::ListItem>
+          <Topnav::ListItem>
+            <Topnav::LinkTo @route="projects">
+              <FaIcon @icon="briefcase" @prefix="fas" />
+              Projects
+            </Topnav::LinkTo>
+          </Topnav::ListItem>
+        {{/if}}
         {{#if this.currentUser.user.isSuperuser}}
           <Topnav::ListItem>
             <Topnav::LinkTo @route="users.index">

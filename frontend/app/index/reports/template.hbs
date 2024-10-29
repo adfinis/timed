@@ -1,15 +1,15 @@
 <NavTabs::LowerButton
-    title="Move all entries to another date"
-    data-test-report-reschedule
-    @onClick={{fn (mut this.showReschedule) true}}
-  >Reschedule
+  title="Move all entries to another date"
+  data-test-report-reschedule
+  @onClick={{fn (mut this.showReschedule) true}}
+>Reschedule
 </NavTabs::LowerButton>
 
-<div class="form-list form-list--reports">
-  <div class="form-list-body">
+<ScrollContainer::Lg>
+    <div>
     {{#each this.reports as |report|}}
       <ReportRow
-        class="striped"
+        class="striped border-t last:border-b"
         @report={{report}}
         @onSave={{this.saveReport}}
         @onDelete={{this.deleteReport}}
@@ -17,13 +17,13 @@
         data-test-report-row
       />
     {{/each}}
-  </div>
-</div>
+    </div>
+</ScrollContainer::Lg>
 
-<SyModal
+<Modal
   @visible={{this.showReschedule}}
   @onClose={{toggle "showReschedule" this}}
-  @size="small"
+  class="md:w-96"
   as |modal|
 >
   <modal.header>
@@ -55,4 +55,4 @@
       {{on "click" (prevent-default (fn this.reschedule this.rescheduleDate))}}
     >Save</button>
   </modal.footer>
-</SyModal>
+</Modal>

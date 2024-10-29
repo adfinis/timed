@@ -22,6 +22,7 @@
         <FilterSidebar
           @appliedCount={{this.appliedFilters.length}}
           @onReset={{queue t.clear this.reset}}
+          class="max-sm:hidden"
           as |fs|
         >
           <fs.group @label="Task" @expanded={{true}}>
@@ -281,7 +282,7 @@
               </button>
             </div>
 
-            {{!-- template-lint-disable table-groups --}}
+            {{! template-lint-disable table-groups }}
             <table class="table table--striped table--analysis">
               <colgroup>
                 <col class="w-[7%]" />
@@ -377,7 +378,7 @@
                           (or this.canBill (can 'edit report' report))
                           'cursor-pointer'
                         }}
-                        align-top shadow shadow-foreground/5"
+                        align-top shadow shadow-foreground/5 transition-colors"
                       {{on "click" (fn this.selectRow report)}}
                     >
                       <Table::Td>{{report.user.username}}</Table::Td>

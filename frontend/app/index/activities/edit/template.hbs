@@ -84,6 +84,13 @@
       </table>
     </Card::Footer >
     <Card::Footer class="text-right flex justify-between">
+      <div class="grid grid-cols-2 gap-2">
+      <LinkTo
+        @route="index.activities"
+        class="btn btn-default lg:hidden"
+        role="button"
+        data-test-activity-edit-form-cancel
+      >Cancel</LinkTo>
       <button
         class="btn btn-danger"
         type="button"
@@ -91,6 +98,7 @@
         {{on "click" this.delete}}
         data-test-activity-edit-form-delete
       >Delete</button>
+      </div>
       <button
         class="btn btn-primary"
         type="submit"

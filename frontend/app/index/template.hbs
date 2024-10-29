@@ -1,109 +1,153 @@
 <TrackingBar data-test-tracking-bar />
-<div>
-  <div class="grid grid--12of12">
-    <div class="grid md:grid-cols-[minmax(0,1fr),auto]">
-      <h1 class="block">{{moment-format @model "dddd, DD.MM.YYYY"}}</h1>
-      <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
-    </div>
-    <div class="max-sm:hidden flex">
-      <WeeklyOverview @expected={{this.expectedWorktime}}>
-        {{#each this.weeklyOverviewData.value as |d|}}
-          <WeeklyOverviewDay
-            @day={{d.day}}
-            @active={{d.active}}
-            @worktime={{d.worktime}}
-            @workday={{d.workday}}
-            @absence={{d.absence}}
-            @holiday={{d.holiday}}
-            @prefix={{d.prefix}}
-            @onClick={{fn (mut this.date)}}
-            data-test-weekly-overview-day={{moment-format d.day "DD"}}
-          />
-        {{/each}}
-      </WeeklyOverview>
-    </div>
-    <div class="grid-cell visible-sm">
-      <NavTabs
-        class="max-md:my-2 md:grid-cols-[repeat(3,minmax(0,auto)),50fr] grid"
-      >
-        <NavTabs::Item>
-          <NavTabs::A @route="index.activities">
-            Activity
-            <NavTabs::Badge>
-              {{humanize-duration this.activitySum true}}
-            </NavTabs::Badge>
-          </NavTabs::A>
-        </NavTabs::Item>
-        <NavTabs::Item>
-          <NavTabs::A @route="index.attendances">
-            Attendance
-            <NavTabs::Badge>
-              {{humanize-duration this.attendanceSum true}}
-            </NavTabs::Badge>
-          </NavTabs::A>
-        </NavTabs::Item>
-        <NavTabs::Item>
-          <NavTabs::A @route="index.reports">
-            Timesheet
-            <NavTabs::Badge>
-              {{humanize-duration this.reportSum}}
-            </NavTabs::Badge>
-          </NavTabs::A>
-        </NavTabs::Item>
-        {{#if this.absence}}
-          <li
-            class="md:hidden border first:rounded-t-sm last:rounded-b-sm grid"
-          >
-            <button
-              type="button"
-              data-test-edit-absence
-              class="btn md:btn-warning bg-warning text-foreground-primary border-none rounded-none"
-              {{on "click" (toggle "showEditModal" this)}}
-            >
-              {{this.absence.absenceType.name}}
-            </button>
-          </li>
-        {{/if}}
-        <li class="md:hidden border first:rounded-t-sm rounded-b-sm grid">
+<div class="grid grid--12of12">
+  <div class="grid md:grid-cols-[minmax(0,1fr),auto]">
+    <h1 class="block">{{moment-format @model "dddd, DD.MM.YYYY"}}</h1>
+    <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
+  </div>
+  <div class="hidden lg:flex">
+    <WeeklyOverview @expected={{this.expectedWorktime}}>
+      {{#each this.weeklyOverviewData.value as |d|}}
+        <WeeklyOverviewDay
+          @day={{d.day}}
+          @active={{d.active}}
+          @worktime={{d.worktime}}
+          @workday={{d.workday}}
+          @absence={{d.absence}}
+          @holiday={{d.holiday}}
+          @prefix={{d.prefix}}
+          @onClick={{fn (mut this.date)}}
+          data-test-weekly-overview-day={{moment-format d.day "DD"}}
+        />
+      {{/each}}
+    </WeeklyOverview>
+  </div>
+  <div class="hidden md:flex lg:hidden">
+    <WeeklyOverview @expected={{this.expectedWorktime}}>
+      {{#each (slice 5 -5 this.weeklyOverviewData.value) as |d|}}
+        <WeeklyOverviewDay
+          @day={{d.day}}
+          @active={{d.active}}
+          @worktime={{d.worktime}}
+          @workday={{d.workday}}
+          @absence={{d.absence}}
+          @holiday={{d.holiday}}
+          @prefix={{d.prefix}}
+          @onClick={{fn (mut this.date)}}
+          data-test-weekly-overview-day={{moment-format d.day "DD"}}
+        />
+      {{/each}}
+    </WeeklyOverview>
+  </div>
+  <div class="hidden sm:flex md:hidden">
+    <WeeklyOverview @expected={{this.expectedWorktime}}>
+      {{#each (slice 10 -10 this.weeklyOverviewData.value) as |d|}}
+        <WeeklyOverviewDay
+          @day={{d.day}}
+          @active={{d.active}}
+          @worktime={{d.worktime}}
+          @workday={{d.workday}}
+          @absence={{d.absence}}
+          @holiday={{d.holiday}}
+          @prefix={{d.prefix}}
+          @onClick={{fn (mut this.date)}}
+          data-test-weekly-overview-day={{moment-format d.day "DD"}}
+        />
+      {{/each}}
+    </WeeklyOverview>
+  </div>
+  <div class="flex sm:hidden">
+    <WeeklyOverview @expected={{this.expectedWorktime}}>
+      {{#each (slice 16 -16 this.weeklyOverviewData.value) as |d|}}
+        <WeeklyOverviewDay
+          @day={{d.day}}
+          @active={{d.active}}
+          @worktime={{d.worktime}}
+          @workday={{d.workday}}
+          @absence={{d.absence}}
+          @holiday={{d.holiday}}
+          @prefix={{d.prefix}}
+          @onClick={{fn (mut this.date)}}
+          data-test-weekly-overview-day={{moment-format d.day "DD"}}
+        />
+      {{/each}}
+    </WeeklyOverview>
+  </div>
+  <div class="grid-cell visible-sm">
+    <NavTabs
+      class="max-md:my-2 md:grid-cols-[repeat(3,minmax(0,auto)),50fr] grid"
+    >
+      <NavTabs::Item>
+        <NavTabs::A @route="index.activities">
+          Activity
+          <NavTabs::Badge>
+            {{humanize-duration this.activitySum true}}
+          </NavTabs::Badge>
+        </NavTabs::A>
+      </NavTabs::Item>
+      <NavTabs::Item>
+        <NavTabs::A @route="index.attendances">
+          Attendance
+          <NavTabs::Badge>
+            {{humanize-duration this.attendanceSum true}}
+          </NavTabs::Badge>
+        </NavTabs::A>
+      </NavTabs::Item>
+      <NavTabs::Item>
+        <NavTabs::A @route="index.reports">
+          Timesheet
+          <NavTabs::Badge>
+            {{humanize-duration this.reportSum}}
+          </NavTabs::Badge>
+        </NavTabs::A>
+      </NavTabs::Item>
+      {{#if this.absence}}
+        <li class="md:hidden border first:rounded-t-sm last:rounded-b-sm grid">
           <button
             type="button"
-            data-test-add-absence
-            class="btn md:btn-default border-none rounded-none"
-            disabled={{cannot "access page"}}
-            {{on "click" (toggle "showAddModal" this)}}
+            data-test-edit-absence
+            class="btn md:btn-warning bg-warning text-foreground-primary border-none rounded-none"
+            {{on "click" (toggle "showEditModal" this)}}
           >
-            Add absence
+            {{this.absence.absenceType.name}}
           </button>
         </li>
-        <li class="max-md:hidden w-full flex md:justify-end gap-x-2">
-          {{#if this.absence}}
-            <NavTabs::Button
-              type="button"
-              data-test-edit-absence
-              class="bg-warning/70 border-warning hover:bg-warning text-foreground-primary"
-              {{on "click" (toggle "showEditModal" this)}}
-            >
-              {{this.absence.absenceType.name}}
-            </NavTabs::Button>
-          {{/if}}
+      {{/if}}
+      <li class="md:hidden border first:rounded-t-sm rounded-b-sm grid">
+        <button
+          type="button"
+          data-test-add-absence
+          class="btn md:btn-default border-none rounded-none"
+          disabled={{cannot "access page"}}
+          {{on "click" (toggle "showAddModal" this)}}
+        >
+          Add absence
+        </button>
+      </li>
+      <li class="max-md:hidden w-full flex md:justify-end gap-x-2">
+        {{#if this.absence}}
           <NavTabs::Button
-            class="hover:text-primary hover:border-primary"
-            data-test-add-absence
-            disabled={{cannot "access page"}}
-            {{on "click" (toggle "showAddModal" this)}}
+            type="button"
+            data-test-edit-absence
+            class="bg-warning/70 border-warning hover:bg-warning text-foreground-primary"
+            {{on "click" (toggle "showEditModal" this)}}
           >
-            Add absence
+            {{this.absence.absenceType.name}}
           </NavTabs::Button>
-        </li>
-      </NavTabs>
-    </div>
-    <div class="grid-cell">
-      <div class="tab-content">
-        {{outlet}}
-      </div>
-    </div>
+        {{/if}}
+        <NavTabs::Button
+          class="hover:text-primary hover:border-primary"
+          data-test-add-absence
+          disabled={{cannot "access page"}}
+          {{on "click" (toggle "showAddModal" this)}}
+        >
+          Add absence
+        </NavTabs::Button>
+      </li>
+    </NavTabs>
   </div>
 </div>
+  {{outlet}}
+
 
 {{#if this.absence}}
   {{#let (changeset this.absence this.AbsenceValidations) as |cs|}}
@@ -177,8 +221,8 @@
 {{/if}}
 
 {{#let (changeset this.newAbsence this.MultipleAbsenceValidations) as |cs|}}
-  <SyModal
-    @size="auto"
+  <Modal
+    class="md:w-auto"
     @visible={{this.showAddModal}}
     @onClose={{queue (toggle "showAddModal" this) (fn this.rollback cs)}}
     as |modal|
@@ -232,5 +276,5 @@
         </modal.footer>
       </ValidatedForm>
     </div>
-  </SyModal>
+  </Modal>
 {{/let}}

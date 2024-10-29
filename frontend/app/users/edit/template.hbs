@@ -1,49 +1,65 @@
-{{#if (can 'read user' this.model)}}
-  <header class="user-header">
+{{#if (can "read user" this.model)}}
+  <header class="user-header border-b">
     <div class="user-header-info">
-      <h1>{{this.model.fullName}}</h1>
+      <h1
+        class="text-6xl text-foreground text-center"
+      >{{this.model.fullName}}</h1>
     </div>
 
     {{#if this.data.isRunning}}
-      <div class="user-header-loading">
+      <div class="user-header-loading grid place-self-center place-items-center w-full">
         <LoadingIcon />
       </div>
     {{else}}
       {{#unless this.model.activeEmployment.isExternal}}
-        <div class="user-header-worktime-balance-container">
-          <h2 class="user-header-worktime-balance-title">Worktime balance</h2>
+        <h2
+          class="user-header-worktime-balance-title text-3xl uppercase text-center text-foreground-muted"
+        >Worktime balance</h2>
 
-          <div class="user-header-worktime-balance-last-valid-timesheet">
-            {{#let this.data.lastSuccessful.value.worktimeBalanceLastValidTimesheet as |balance|}}
-              <h2 title="Last day with timesheet entries or absences">
-                {{moment-format balance.date 'DD.MM.YYYY'}}
+        <div class="user-header-worktime-balance-container grid grid-cols-[minmax(0,1fr),minmax(0,3fr),minmax(0,1fr)] sm:grid-cols-[minmax(0,1fr),minmax(0,2.5fr),minmax(0,1fr)] md:grid-cols-[minmax(0,1fr),minmax(0,2.2fr),minmax(0,1fr)]">
+          <div
+            class="user-header-worktime-balance-last-valid-timesheet text-center justify-self-end w-full self-center"
+          >
+            {{#let
+              this.data.lastSuccessful.value.worktimeBalanceLastValidTimesheet
+              as |balance|
+            }}
+              <h2 title="Last day with timesheet entries or absences" class="text-foreground-muted text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+                {{moment-format balance.date "DD.MM.YYYY"}}
               </h2>
-              <div class="{{balance-highlight-class balance.balance}}">
+              <div class="{{balance-highlight-class balance.balance}} text-xl sm:text-3xl md:text-4xl lg:text-5xl">
                 {{format-duration balance.balance false}}
               </div>
             {{/let}}
           </div>
 
           <div class="user-header-worktime-balance">
-            <WorktimeBalanceChart @worktimeBalances={{this.data.lastSuccessful.value.worktimeBalances}} />
+            <WorktimeBalanceChart
+              @worktimeBalances={{this.data.lastSuccessful.value.worktimeBalances}}
+            />
           </div>
 
-          <div class="user-header-worktime-balance-today">
-            {{#let this.data.lastSuccessful.value.worktimeBalanceToday as |balance|}}
-              <h2>Today</h2>
-              <div class="{{balance-highlight-class balance.balance}}">
+          <div class="user-header-worktime-balance-today text-center justify-self-start w-full self-center">
+            {{#let
+              this.data.lastSuccessful.value.worktimeBalanceToday
+              as |balance|
+            }}
+              <h2 class="text-foreground-muted uppercase text-xl sm:text-2xl md:text-3xl lg:text-4xl">Today</h2>
+              <div class="{{balance-highlight-class balance.balance}} text-xl sm:text-3xl md:text-4xl lg:text-5xl">
                 {{format-duration balance.balance false}}
               </div>
             {{/let}}
           </div>
         </div>
 
-        <div class="user-header-absence-balance-container">
+        <div
+          class="user-header-absence-balance-container flex-row flex-wrap flex justify-around"
+        >
           {{#let this.data.lastSuccessful.value.absenceBalances as |balances|}}
             {{#each balances as |balance index|}}
               <BalanceDonut
                 @balance={{balance}}
-                @class='user-header-absence-balance'
+                @class="user-header-absence-balance"
                 @title={{balance.absenceType.name}}
                 @index={{index}}
                 @count={{balances.length}}
@@ -53,17 +69,29 @@
         </div>
       {{/unless}}
     {{/if}}
+
   </header>
 
-  <nav class="user-navigation">
-    <ul>
-      <li><LinkTo @route="users.edit.index" @model={{this.model.id}}>General</LinkTo></li>
-      <li><LinkTo @route="users.edit.credits" @model={{this.model.id}}>Credits</LinkTo></li>
-      <li><LinkTo @route="users.edit.responsibilities" @model={{this.model.id}}>Responsibilities</LinkTo></li>
+  <nav class="user-navigation border-b shadow-sm">
+    <ul
+      class="grid-cols-[repeat(3,auto)] grid justify-center [&>li>a]:text-foreground-muted [&>li>a]:block [&>li>a]:py-2 [&>li>a]:px-6 [&>li>a.active]:text-primary [&>li>a.active]:shadow-[inset_0_-2px_0] [&>li>a.active]:shadow-primary text-xl"
+    >
+      <li><LinkTo
+          @route="users.edit.index"
+          @model={{this.model.id}}
+        >General</LinkTo></li>
+      <li><LinkTo
+          @route="users.edit.credits"
+          @model={{this.model.id}}
+        >Credits</LinkTo></li>
+      <li><LinkTo
+          @route="users.edit.responsibilities"
+          @model={{this.model.id}}
+        >Responsibilities</LinkTo></li>
     </ul>
   </nav>
 
-  <section class="user-content">
+  <section class="user-content pt-1 md:pt-2 lg:pt-3">
     {{outlet}}
   </section>
 {{else}}
