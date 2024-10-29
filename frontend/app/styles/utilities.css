@@ -2,6 +2,9 @@
   @apply [&:nth-child(odd)]:bg-background-secondary/5 [&:nth-child(even)]:bg-background-secondary/15;
 }
 
+.total {
+  @apply border-double border-b-4 border-current;
+}
 .pointer-events-all {
   pointer-events: all;
 }
