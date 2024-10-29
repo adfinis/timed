@@ -47,22 +47,20 @@
 
 <AsyncList @data={{this.fetchData}} as |section data|>
   {{#if (eq section "empty")}}
-    <div class="empty">
-      <div>
+    <Empty>
         <FaIcon @icon="users" @prefix="fas" />
         <h3>No users to display</h3>
         <p>Maybe try loosening your filters</p>
-      </div>
-    </div>
+    </Empty>
   {{else if (eq section "body")}}
     <table class="table table--striped table--hover">
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Percentage</th>
-          <th>Worktime per day</th>
-          <th>Current worktime balance</th>
-        </tr>
+        <Table::Tr>
+          <Table::Th>Name</Table::Th>
+          <Table::Th>Percentage</Table::Th>
+          <Table::Th>Worktime per day</Table::Th>
+          <Table::Th>Current worktime balance</Table::Th>
+        </Table::Tr>
       </thead>
       <VerticalCollection
         @items={{slice data}}
@@ -72,33 +70,34 @@
         @containerSelector=".page-content--scroll"
         as |user|
       >
-        <tr
+        <Table::Tr
+          @striped={{true}}
           role="link"
           {{on "click" (fn this.viewUserProfile user.id)}}
-          class="pointer"
+          class="cursor-pointer hover:bg-background-secondary/20"
         >
-          <td
-            class={{unless user.isActive "color-danger"}}
-          >{{user.fullName}}</td>
+          <Table::Td
+            class={{unless user.isActive "text-danger"}}
+          >{{user.fullName}}</Table::Td>
           {{#if user.activeEmployment}}
-            <td>{{user.activeEmployment.percentage}}%</td>
-            <td>{{format-duration
+            <Table::Td>{{user.activeEmployment.percentage}}%</Table::Td>
+            <Table::Td>{{format-duration
                 user.activeEmployment.worktimePerDay
                 false
-              }}</td>
+              }}</Table::Td>
           {{else}}
-            <td class={{unless user.isActive "color-danger"}} colspan="2"><em
-              >User has no active employment</em></td>
+            <Table::Td class={{unless user.isActive "text-danger"}} colspan="2"><em
+              >User has no active employment</em></Table::Td>
           {{/if}}
-          <td>
+          <Table::Td>
             <span
               class="worktime-balance
                 {{balance-highlight-class user.currentWorktimeBalance.balance}}"
             >
               {{format-duration user.currentWorktimeBalance.balance false}}
             </span>
-          </td>
-        </tr>
+          </Table::Td>
+        </Table::Tr>
       </VerticalCollection>
     </table>
   {{/if}}
