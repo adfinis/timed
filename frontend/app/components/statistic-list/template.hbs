@@ -28,11 +28,11 @@
       <p>Maybe try loosening your filters</p>
     </Empty>
   {{else}}
-    <table
-      class="table table-striped table--statistics w-full table-collapse"
+    <Table
+      class="table table-striped table--statistics"
     >
-      <thead>
-        <tr>
+      <Table::Thead>
+        <Table::Tr>
           {{#each this.columns as |column|}}
             {{#if column.ordering}}
               <SortHeader
@@ -43,12 +43,12 @@
                 {{column.title}}
               </SortHeader>
             {{else}}
-              <th>{{column.title}}</th>
+              <Table::Th @light={{true}}>{{column.title}}</Table::Th>
             {{/if}}
           {{/each}}
           <th></th>
-        </tr>
-      </thead>
+        </Table::Tr>
+      </Table::Thead>
       <VerticalCollection
         @items={{slice @data.last.value}}
         @tagName="tbody"
@@ -57,9 +57,10 @@
         @containerSelector=".page-content--scroll"
         as |row|
       >
-        <tr
+        <Table::Tr
+          @striped={{true}}
           data-test-statistic-list-row
-          class="striped [&>*]:p-2 [&>*]:align-top [&>*]:leading-5"
+          class="[&>*]:leading-5"
         >
           {{#each this.columns as |column|}}
             <StatisticList::Column
@@ -68,7 +69,7 @@
               @value={{get row column.path}}
             />
           {{/each}}
-          <td class="w-1/2">
+          <Table::Td class="w-1/2">
             {{#let
               (or row.totalRemainingEffort row.mostRecentRemainingEffort)
               as |remainingEffort|
@@ -85,13 +86,13 @@
                 />
               {{/let}}
             {{/let}}
-          </td>
-        </tr>
+          </Table::Td>
+        </Table::Tr>
       </VerticalCollection>
-      <tfoot>
-        <tr>
+      <Table::Tfoot>
+        <Table::Tr>
           {{#each this.columns as |column index|}}
-            <td class="p-2">
+            <Table::Td>
               <strong>
                 {{#if (not index)}}
                   Total:
@@ -101,11 +102,11 @@
                   >{{humanize-duration this.total false}}</span>
                 {{/if}}
               </strong>
-            </td>
+            </Table::Td>
           {{/each}}
-          <td></td>
-        </tr>
-      </tfoot>
-    </table>
+          <Table::Td />
+        </Table::Tr>
+      </Table::Tfoot>
+    </Table>
   {{/if}}
 </div>
