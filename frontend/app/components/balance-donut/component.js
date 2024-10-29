@@ -13,20 +13,20 @@ class BalanceDonutComponent extends Component {
     return abs(this.args.balance.usedDays / this.args.balance.credit);
   }
 
-  get color() {
+  get strokeClass() {
     if (this.args.balance.usedDuration) {
-      return "primary";
+      return "stroke-primary";
     }
 
     if (this.value > 1 || this.value < 0) {
-      return "danger";
+      return "stroke-danger";
     }
 
     if (this.value === 1) {
-      return "warning";
+      return "stroke-warning";
     }
 
-    return "success";
+    return "stroke-success";
   }
 
   radius = 100 / (2 * PI);
