@@ -11,7 +11,7 @@
 }
 
 .ember-power-select-option {
-  @apply px-2 cursor-pointer transition-all;
+  @apply px-2 cursor-pointer;
 }
 
 .ember-power-select-option[aria-current="true"] {

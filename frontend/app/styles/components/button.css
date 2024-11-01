@@ -54,3 +54,11 @@
 .btn-warning {
   @apply bg-warning text-foreground-primary border-warning/40;
 }
+
+.btn-group {
+  @apply flex;
+}
+
+.btn-group .btn {
+  @apply rounded-none first:rounded-l last:rounded-r;
+}

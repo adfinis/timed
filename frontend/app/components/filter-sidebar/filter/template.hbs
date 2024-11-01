@@ -1,9 +1,9 @@
 <div ...attributes>
   {{#if (eq @type "button")}}
-    <div class="btn-group btn-group--auto">
+    <div class="btn-group [&>*]:w-full flex flex-nowrap">
       {{#each @options as |opt|}}
         <button
-          class="btn {{if (eq (get opt @valuePath) @selected) 'active'}}"
+          class="btn {{if (eq (get opt @valuePath) @selected) 'btn-primary' 'btn-default'}} "
           type="button"
           {{on "click" (fn (optional @onChange) (get opt @valuePath))}}
         >

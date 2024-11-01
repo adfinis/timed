@@ -13,23 +13,37 @@
           @on-submit={{perform this.save}}
           as |f|
         >
-          <h4 class="text-center">{{if credit.isNew "New" "Edit"}}
-            overtime credit</h4>
           <Card>
+            <Card::Header>
+              <h3 class="text-center">{{if credit.isNew "New" "Edit"}}
+                overtime credit</h3>
+            </Card::Header>
             <Card::Block class="grid gap-2">
-              <f.input @label="Date" @name="date" as |fi|>
-                <SyDatepicker @value={{fi.value}} @onChange={{fi.update}} />
-              </f.input>
-              <f.input @label="Duration" @name="duration" as |fi|>
-                <SyDurationpicker @value={{fi.value}} @onChange={{fi.update}} />
-              </f.input>
-              <f.input @type="text" @label="Comment" @name="comment" />
-              <div class="flex justify-between">
-                <LinkTo
-                  @route="users.edit.credits.index"
-                  @model={{this.user.id}}
-                  class="btn btn-default"
-                >Cancel</LinkTo>
+              <div>
+                <f.input @label="Date" @name="date" as |fi|>
+                  <Datepicker @value={{fi.value}} @onChange={{fi.update}} />
+                </f.input>
+              </div>
+              <div>
+                <f.input @label="Duration" @name="duration" as |fi|>
+                  <Durationpicker @value={{fi.value}} @onChange={{fi.update}} />
+                </f.input>
+              </div>
+              <f.input
+                class="rounded"
+                @type="text"
+                @label="Comment"
+                @name="comment"
+                @placeholder="Comment"
+              />
+            </Card::Block>
+            <Card::Footer class="flex justify-between">
+              <LinkTo
+                @route="users.edit.credits.index"
+                @model={{this.user.id}}
+                class="btn btn-default"
+              >Cancel</LinkTo>
+              <div class="flex gap-2">
                 {{#unless credit.isNew}}
                   <button
                     type="button"
@@ -44,7 +58,7 @@
                   @disabled={{f.model.isInvalid}}
                 />
               </div>
-            </Card::Block>
+            </Card::Footer>
           </Card>
         </ValidatedForm>
       </div>

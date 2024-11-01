@@ -7,55 +7,68 @@
   }}
     <div class="grid md:grid-cols-3">
       <div class="grid-cell"></div>
-      <div class="grid-cell">
-        <ValidatedForm
-          @model={{changeset credit this.AbsenceCreditValidations}}
-          @on-submit={{perform this.save}}
-          as |f|
-        >
-          <h4 class="text-center">{{if credit.isNew "New" "Edit"}}
-            absence credit</h4>
-          <Card>
-            <Card::Block class="grid gap-2">
-              <f.input @label="Type" @name="absenceType" as |fi|>
-                <div class="btn-group btn-group--auto">
-                  {{#each this.absenceTypes.lastSuccessful.value as |type|}}
-                    <button
-                      class="btn {{if (eq fi.value.id type.id) 'active'}}"
-                      type="button"
-                      {{on "click" (fn fi.update type)}}
-                    >{{type.name}}</button>
-                  {{/each}}
-                </div>
-              </f.input>
-              <f.input @label="Date" @name="date" as |fi|>
-                <SyDatepicker @value={{fi.value}} @onChange={{fi.update}} />
-              </f.input>
-              <f.input @type="number" @label="Days" @name="days" />
-              <f.input @type="text" @label="Comment" @name="comment" />
-              <div class="flex justify-between">
-                <LinkTo
-                  @route="users.edit.credits.index"
-                  @model={{this.user.id}}
-                  class="btn btn-default"
-                >Cancel</LinkTo>
-                {{#unless credit.isNew}}
+      <ValidatedForm
+        @model={{changeset credit this.AbsenceCreditValidations}}
+        @on-submit={{perform this.save}}
+        as |f|
+      >
+
+        <Card>
+          <Card::Header><h4 class="text-center">{{if credit.isNew "New" "Edit"}}
+              absence credit</h4></Card::Header>
+          <Card::Block class="grid gap-2">
+            <f.input @label="Type" @name="absenceType" as |fi|>
+              <div class="btn-group btn-group--auto">
+                {{#each this.absenceTypes.lastSuccessful.value as |type|}}
                   <button
+                    class="btn {{if (eq fi.value.id type.id) 'active'}}"
                     type="button"
-                    class="btn btn-danger
-                      {{if this.delete.isRunning 'loading'}}"
-                    {{on "click" (perform this.delete credit)}}
-                  >Delete</button>
-                {{/unless}}
-                <f.submit
-                  data-test-absence-credit-save
-                  @disabled={{f.model.isInvalid}}
-                />
+                    {{on "click" (fn fi.update type)}}
+                  >{{type.name}}</button>
+                {{/each}}
               </div>
-            </Card::Block>
-          </Card>
-        </ValidatedForm>
-      </div>
+            </f.input>
+            <div>
+              <f.input @label="Date" @name="date" as |fi|>
+                <Datepicker @value={{fi.value}} @onChange={{fi.update}} />
+              </f.input>
+            </div>
+            <f.input
+              class="rounded"
+              @type="number"
+              @label="Days"
+              @name="days"
+            />
+            <f.input
+              class="rounded"
+              @type="text"
+              @label="Comment"
+              @name="comment"
+            />
+
+          </Card::Block>
+          <Card::Footer class="flex justify-between">
+            <LinkTo
+              @route="users.edit.credits.index"
+              @model={{this.user.id}}
+              class="btn btn-default"
+            >Cancel</LinkTo>
+            <div class="flex gap-2">
+              {{#unless credit.isNew}}
+                <button
+                  type="button"
+                  class="btn btn-danger {{if this.delete.isRunning 'loading'}}"
+                  {{on "click" (perform this.delete credit)}}
+                >Delete</button>
+              {{/unless}}
+              <f.submit
+                data-test-absence-credit-save
+                @disabled={{f.model.isInvalid}}
+              />
+            </div>
+          </Card::Footer>
+        </Card>
+      </ValidatedForm>
       <div class="grid-cell"></div>
     </div>
   {{else}}

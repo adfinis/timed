@@ -1,7 +1,10 @@
 <TrackingBar data-test-tracking-bar />
 <div class="grid grid--12of12">
   <div class="grid md:grid-cols-[minmax(0,1fr),auto]">
-    <h1 class="block">{{moment-format @model "dddd, DD.MM.YYYY"}}</h1>
+    <h1 class="block max-md:mb-2">{{moment-format
+        @model
+        "dddd, DD.MM.YYYY"
+      }}</h1>
     <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
   </div>
   <div class="hidden lg:flex">
@@ -146,13 +149,12 @@
     </NavTabs>
   </div>
 </div>
-  {{outlet}}
-
+{{outlet}}
 
 {{#if this.absence}}
   {{#let (changeset this.absence this.AbsenceValidations) as |cs|}}
-    <SyModal
-      @size="auto"
+    <Modal
+      class="md:w-auto !w-fit"
       @visible={{this.showEditModal}}
       @onClose={{queue (toggle "showEditModal" this) (fn this.rollback cs)}}
       as |modal|
@@ -164,18 +166,20 @@
           as |f|
         >
           <modal.header>
-            Edit absence
+            <h3>Edit absence</h3>
           </modal.header>
-          <modal.body>
+          <modal.body class="grid gap-2">
             <f.input @name="absenceType" as |fi|>
-              <div class="btn-group btn-group--auto">
+              <div class="btn-group grid grid-cols-3">
                 {{#each this.absenceTypes as |at|}}
                   <button
                     type="button"
-                    class={{concat
-                      "btn btn-default"
-                      (if (eq at.id cs.absenceType.id) " active")
-                    }}
+                    class="btn
+                      {{if
+                        (eq at.id cs.absenceType.id)
+                        'btn-primary'
+                        'btn-default'
+                      }}"
                     {{on "click" (fn fi.update at)}}
                   >{{at.name}}</button>
                 {{/each}}
@@ -183,7 +187,7 @@
             </f.input>
             <f.input @name="date">
               <PowerCalendar
-                class="calendar"
+                class="calendar [--size:2.5rem] sm:[--size:2.75rem] md:[--size:3rem] lg:[--size:3.25rem]"
                 @selected={{cs.date}}
                 @center={{or this.center this.date}}
                 @onCenterChange={{perform this.setCenter}}
@@ -205,7 +209,7 @@
               @name="comment"
             />
           </modal.body>
-          <modal.footer>
+          <modal.footer class="flex justify-between">
             <button
               type="button"
               class="btn btn-danger"
@@ -216,65 +220,84 @@
           </modal.footer>
         </ValidatedForm>
       </div>
-    </SyModal>
+    </Modal>
   {{/let}}
 {{/if}}
 
 {{#let (changeset this.newAbsence this.MultipleAbsenceValidations) as |cs|}}
-  <Modal
-    class="md:w-auto"
-    @visible={{this.showAddModal}}
-    @onClose={{queue (toggle "showAddModal" this) (fn this.rollback cs)}}
-    as |modal|
-  >
-    <div data-test-add-absence-form>
-      <ValidatedForm @model={{cs}} @on-submit={{fn this.addAbsence cs}} as |f|>
-        <modal.header>
-          New absence
-        </modal.header>
-        <modal.body>
-          <f.input @name="absenceType" as |fi|>
-            <div class="btn-group btn-group--auto">
-              {{#each this.absenceTypes as |at|}}
-                <button
-                  type="button"
-                  class={{concat
-                    "btn btn-default"
-                    (if (eq at.id cs.absenceType.id) " active")
-                  }}
-                  {{on "click" (fn fi.update at)}}
-                >{{at.name}}</button>
-              {{/each}}
-            </div>
-          </f.input>
-          <f.input @name="dates">
-            <PowerCalendarMultiple
-              class="calendar"
-              @selected={{cs.dates}}
-              @center={{this.center}}
-              @onCenterChange={{perform this.setCenter}}
-              @onSelect={{fn this.updateSelection cs "dates"}}
-              as |calendar|
-            >
-              <div class={{if calendar.loading "loading-mask"}}>
-                <calendar.Nav />
-                <calendar.Days
-                  @disabledDates={{this.disabledDates}}
-                  @startOfWeek={{1}}
-                />
+  {{#let
+    (queue (toggle "showAddModal" this) (fn this.rollback cs))
+    as |onClose|
+  }}
+    <Modal
+      class="md:w-auto !w-fit"
+      @visible={{this.showAddModal}}
+      @onClose={{onClose}}
+      as |modal|
+    >
+      <div data-test-add-absence-form>
+        <ValidatedForm
+          @model={{cs}}
+          @on-submit={{fn this.addAbsence cs}}
+          as |f|
+        >
+          <modal.header>
+            <h3>New absence</h3>
+          </modal.header>
+          <modal.body class="grid gap-2">
+            <f.input @name="absenceType" as |fi|>
+              <div class="btn-group grid grid-cols-3">
+                {{#each this.absenceTypes as |at|}}
+                  <button
+                    type="button"
+                    class="btn
+                      {{if
+                        (eq at.id cs.absenceType.id)
+                        'btn-primary'
+                        'btn-default'
+                      }}"
+                    {{on "click" (fn fi.update at)}}
+                  >{{at.name}}</button>
+                {{/each}}
               </div>
-            </PowerCalendarMultiple>
-          </f.input>
-          <f.input
-            @type="textarea"
-            @placeholder="Enter comment..."
-            @name="comment"
-          />
-        </modal.body>
-        <modal.footer>
-          <f.submit @label="Save" data-test-add-absence-save />
-        </modal.footer>
-      </ValidatedForm>
-    </div>
-  </Modal>
+            </f.input>
+
+            <f.input @name="dates">
+              <PowerCalendarMultiple
+                class="calendar [--size:2.5rem] sm:[--size:2.75rem] md:[--size:3rem] lg:[--size:3.25rem]"
+                @selected={{cs.dates}}
+                @center={{this.center}}
+                @onCenterChange={{perform this.setCenter}}
+                @onSelect={{fn this.updateSelection cs "dates"}}
+                as |calendar|
+              >
+                <div class={{if calendar.loading "loading-mask"}}>
+                  <calendar.Nav />
+                  <calendar.Days
+                    @disabledDates={{this.disabledDates}}
+                    @startOfWeek={{1}}
+                  />
+                </div>
+              </PowerCalendarMultiple>
+            </f.input>
+            <f.input
+              class="rounded"
+              @type="textarea"
+              @placeholder="Enter comment..."
+              @name="comment"
+            />
+          </modal.body>
+          <modal.footer class="flex justify-between">
+            <button
+              type="button"
+              class="btn btn-default"
+              {{on "click" onClose}}
+              data-test-edit-absence-cancel
+            >Cancel</button>
+            <f.submit @label="Save" data-test-add-absence-save />
+          </modal.footer>
+        </ValidatedForm>
+      </div>
+    </Modal>
+  {{/let}}
 {{/let}}

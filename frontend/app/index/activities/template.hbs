@@ -31,12 +31,12 @@
                     'transferred text-foreground-muted cursor-not-allowed'
                     'cursor-pointer'
                   }}
-                  {{if
-                    (and activity.active (not selected))
-                    'bg-primary/20'
-                  }}
+                  {{if (and activity.active (not selected)) 'bg-primary/20'}}
                   {{if selected 'selected bg-primary text-foreground-primary'}}
-                  {{unless (or activity.transferred activity.active selected) 'hover:bg-background-secondary/25'}}
+                  {{unless
+                    (or activity.transferred activity.active selected)
+                    'hover:bg-background-secondary/25'
+                  }}
                   max-sm:[&>*]:flex last:border-b transition-colors"
                 {{on "click" (fn this.editActivity activity)}}
               >
@@ -125,12 +125,23 @@
 
 <Modal class="md:w-[36rem]" @visible={{this.showOverlappingWarning}} as |modal|>
   <modal.header>
-    Activities overlap
+    <h3>Activities overlap</h3>
   </modal.header>
   <modal.body>
     Overlapping activities will not be taken into account for the timesheet.
   </modal.body>
   <modal.footer class="flex justify-between" data-test-overlapping-warning>
+    <button
+      class="btn btn-default"
+      type="button"
+      {{on
+        "click"
+        (queue
+          (fn (mut this.showOverlappingWarning) false)
+          (fn (mut this.showUnknownWarning) false)
+        )
+      }}
+    >Cancel</button>
     <button
       class="btn btn-primary"
       type="button"
@@ -143,28 +154,28 @@
         )
       }}
     >That's fine</button>
+  </modal.footer>
+</Modal>
+
+<Modal class="md:w-[36rem]" @visible={{this.showUnknownWarning}} as |modal|>
+  <modal.header>
+    <h3>Activities contain unknown tasks</h3>
+  </modal.header>
+  <modal.body>
+    Unknown tasks will not be taken into account for the timesheet.
+  </modal.body>
+  <modal.footer class="flex justify-between" data-test-unknown-warning>
     <button
       class="btn btn-default"
       type="button"
       {{on
         "click"
         (queue
-          (fn (mut this.showOverlappingWarning) false)
           (fn (mut this.showUnknownWarning) false)
+          (fn (mut this.showOverlappingWarning) false)
         )
       }}
     >Cancel</button>
-  </modal.footer>
-</Modal>
-
-<Modal class="md:w-[36rem]" @visible={{this.showUnknownWarning}} as |modal|>
-  <modal.header>
-    Activities contain unknown tasks
-  </modal.header>
-  <modal.body>
-    Unknown tasks will not be taken into account for the timesheet.
-  </modal.body>
-  <modal.footer class="flex justify-between" data-test-unknown-warning>
     <button
       class="btn btn-primary"
       type="button"
@@ -177,16 +188,5 @@
         )
       }}
     >That's fine</button>
-    <button
-      class="btn btn-default"
-      type="button"
-      {{on
-        "click"
-        (queue
-          (fn (mut this.showUnknownWarning) false)
-          (fn (mut this.showOverlappingWarning) false)
-        )
-      }}
-    >Cancel</button>
   </modal.footer>
 </Modal>

@@ -1,139 +1,142 @@
-<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 grid-rows-min [&>*]:h-min">
 
-  <div class="grid-cell">
-    <h4>General information</h4>
-    <Card>
-      <Card::Block>
-        <Table class="user-general-info">
-          <tbody class="[&>tr>td]:py-1 [&>tr>td:last-child]:text-right">
+  <Card>
+    <Card::Header><h4>General information</h4></Card::Header>
+    <Card::Block>
+      <Table class="user-general-info">
+        <tbody class="[&>tr>td]:py-1 [&>tr>td:last-child]:text-right">
+          <tr>
+            <td>Email:</td>
+            <td>{{this.model.email}}</td>
+          </tr>
+          <tr>
+            <td>Username:</td>
+            <td>{{this.model.username}}</td>
+          </tr>
+          {{#if this.model.activeEmployment}}
             <tr>
-              <td>Email:</td>
-              <td>{{this.model.email}}</td>
+              <td>Location:</td>
+              <td>{{this.model.activeEmployment.location.name}}</td>
             </tr>
             <tr>
-              <td>Username:</td>
-              <td>{{this.model.username}}</td>
+              <td>Contract type:</td>
+              <td>{{if
+                  this.model.activeEmployment.isExternal
+                  "External"
+                  "Internal"
+                }}</td>
             </tr>
-            {{#if this.model.activeEmployment}}
-              <tr>
-                <td>Location:</td>
-                <td>{{this.model.activeEmployment.location.name}}</td>
-              </tr>
-              <tr>
-                <td>Contract type:</td>
-                <td>{{if
-                    this.model.activeEmployment.isExternal
-                    "External"
-                    "Internal"
-                  }}</td>
-              </tr>
-              <tr>
-                <td>Percentage:</td>
-                <td>{{this.model.activeEmployment.percentage}}%</td>
-              </tr>
-              <tr>
-                <td>Worktime:</td>
-                <td>{{humanize-duration
-                    this.model.activeEmployment.worktimePerDay
-                    false
-                  }}</td>
-              </tr>
-            {{/if}}
-          </tbody>
-        </Table>
-      </Card::Block>
-    </Card>
-  </div>
+            <tr>
+              <td>Percentage:</td>
+              <td>{{this.model.activeEmployment.percentage}}%</td>
+            </tr>
+            <tr>
+              <td>Worktime:</td>
+              <td>{{humanize-duration
+                  this.model.activeEmployment.worktimePerDay
+                  false
+                }}</td>
+            </tr>
+          {{/if}}
+        </tbody>
+      </Table>
+    </Card::Block>
+    <Card::Footer />
+  </Card>
 
-  <div class="grid-cell">
-    <h4>Employments</h4>
-    <Card>
-      <Card::Block>
-        {{#if this.employments.isRunning}}
-          <Empty>
-            <LoadingIcon />
-          </Empty>
-        {{else}}
-          {{#let this.employments.lastSuccessful.value as |employments|}}
-            {{#if employments}}
-              <Table class="table table--striped">
-                <Table::Thead>
-                  <Table::Tr>
-                    <Table::Th>Location</Table::Th>
-                    <Table::Th>Percentage</Table::Th>
-                    <Table::Th>Start</Table::Th>
-                    <Table::Th>End</Table::Th>
+  <Card>
+    <Card::Header><h4>Employments</h4></Card::Header>
+    <Card::Block>
+      {{#if this.employments.isRunning}}
+        <Empty>
+          <LoadingIcon />
+        </Empty>
+      {{else}}
+        {{#let this.employments.lastSuccessful.value as |employments|}}
+          {{#if employments}}
+            <Table class="table table--striped">
+              <Table::Thead>
+                <Table::Tr>
+                  <Table::Th>Location</Table::Th>
+                  <Table::Th>Percentage</Table::Th>
+                  <Table::Th>Start</Table::Th>
+                  <Table::Th>End</Table::Th>
+                </Table::Tr>
+              </Table::Thead>
+              <tbody>
+                {{#each employments as |employment|}}
+                  <Table::Tr @striped={{true}} @last={{true}}>
+                    <Table::Td>{{employment.location.name}}</Table::Td>
+                    <Table::Td>{{employment.percentage}}%</Table::Td>
+                    <Table::Td>{{moment-format
+                        employment.start
+                        "DD.MM.YYYY"
+                      }}</Table::Td>
+                    <Table::Td>{{if
+                        employment.end
+                        (moment-format employment.end "DD.MM.YYYY")
+                        "-"
+                      }}</Table::Td>
                   </Table::Tr>
-                </Table::Thead>
-                <tbody>
-                  {{#each employments as |employment|}}
-                    <Table::Tr @striped={{true}}>
-                      <Table::Td>{{employment.location.name}}</Table::Td>
-                      <Table::Td>{{employment.percentage}}%</Table::Td>
-                      <Table::Td>{{moment-format employment.start "DD.MM.YYYY"}}</Table::Td>
-                      <Table::Td>{{if
-                          employment.end
-                          (moment-format employment.end "DD.MM.YYYY")
-                          "-"
-                        }}</Table::Td>
-                    </Table::Tr>
-                  {{/each}}
-                </tbody>
-              </Table>
-            {{else}}
-              <Empty class="card-block">
-                  <FaIcon @icon="briefcase" @prefix="fas" />
-                  <p>
-                    No employments found...
-                  </p>
-              </Empty>
-            {{/if}}
-          {{/let}}
-        {{/if}}
-      </Card::Block>
-    </Card>
-  </div>
+                {{/each}}
+              </tbody>
+            </Table>
+          {{else}}
+            <Empty class="card-block">
+              <FaIcon @icon="briefcase" @prefix="fas" />
+              <p>
+                No employments found...
+              </p>
+            </Empty>
+          {{/if}}
+        {{/let}}
+      {{/if}}
+    </Card::Block>
+    <Card::Footer />
+  </Card>
 
-  <div class="grid-cell">
-    <h4>Absences</h4>
-    <Card>
-      <Card::Block>
-        {{#if this.absences.isRunning}}
-          <Empty>
-            <LoadingIcon />
-          </Empty>
-        {{else}}
-          {{#let this.absences.lastSuccessful.value as |absences|}}
-            {{#if absences}}
-              <Table class="table table--striped">
-                <Table::Thead>
-                  <Table::Tr class="[&>*]:p-2 text-left">
-                    <Table::Th>Type</Table::Th>
-                    <Table::Th>Date</Table::Th>
-                    <Table::Th>Comment</Table::Th>
+  <Card>
+    <Card::Header><h4>Absences</h4></Card::Header>
+    <Card::Block>
+      {{#if this.absences.isRunning}}
+        <Empty>
+          <LoadingIcon />
+        </Empty>
+      {{else}}
+        {{#let this.absences.lastSuccessful.value as |absences|}}
+          {{#if absences}}
+            <Table class="table table--striped">
+              <Table::Thead>
+                <Table::Tr class="[&>*]:p-2 text-left">
+                  <Table::Th>Type</Table::Th>
+                  <Table::Th>Date</Table::Th>
+                  <Table::Th>Comment</Table::Th>
+                </Table::Tr>
+              </Table::Thead>
+              <tbody>
+                {{#each absences as |absence|}}
+                  <Table::Tr @striped={{true}} @last={{true}}>
+                    <Table::Td>{{absence.absenceType.name}}</Table::Td>
+                    <Table::Td>{{moment-format
+                        absence.date
+                        "DD.MM.YYYY"
+                      }}</Table::Td>
+                    <Table::Td>{{absence.comment}}</Table::Td>
                   </Table::Tr>
-                </Table::Thead>
-                <tbody>
-                  {{#each absences as |absence|}}
-                    <Table::Tr @striped={{true}}>
-                      <Table::Td>{{absence.absenceType.name}}</Table::Td>
-                      <Table::Td>{{moment-format absence.date "DD.MM.YYYY"}}</Table::Td>
-                      <Table::Td>{{absence.comment}}</Table::Td>
-                    </Table::Tr>
-                  {{/each}}
-                </tbody>
-              </Table>
-            {{else}}
-              <Empty class="card-block">
-                  <FaIcon @icon="calendar-xmark" />
-                  <p>
-                    No absences found...
-                  </p>
-              </Empty>
-            {{/if}}
-          {{/let}}
-        {{/if}}
-      </Card::Block>
-    </Card>
-  </div>
+                {{/each}}
+              </tbody>
+            </Table>
+          {{else}}
+            <Empty class="card-block">
+              <FaIcon @icon="calendar-xmark" />
+              <p>
+                No absences found...
+              </p>
+            </Empty>
+          {{/if}}
+        {{/let}}
+      {{/if}}
+    </Card::Block>
+    <Card::Footer />
+  </Card>
 </div>

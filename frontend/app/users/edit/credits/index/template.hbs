@@ -1,9 +1,9 @@
-<div class="grid grid-cols-2 gap-2 gap-2">
-  <div class="year-select flex justify-end col-span-2 gap-2">
+<div class="grid sm:grid-cols-2 gap-2">
+  <div class="year-select flex justify-end col-span-full gap-2">
     {{#if this.allowTransfer}}
       <button
         type="button"
-        class="btn btn-default"
+        class="btn btn-success"
         {{on "click" (perform this.transfer)}}
       >Transfer</button>
     {{/if}}
@@ -14,7 +14,7 @@
       </label>
       <select
         id="credit-year-select"
-        class="form-control rounded !w-auto"
+        class="form-control rounded sm:!w-auto"
         {{on "change" (pick "target.value" this.fetchData)}}
       >
         {{#each years as |y|}}
@@ -25,167 +25,145 @@
     {{/let}}
   </div>
 
-  <div>
-    <h4>Absence credits</h4>
-    <Card data-test-absence-credits>
-      {{#if this.absenceCredits.isRunning}}
-        <Card::Block>
+  <Card
+    class="grid grid-rows-[min-content,1fr,min-content]"
+    data-test-absence-credits
+  >
+    <Card::Header><h4>Absence credits</h4></Card::Header>
+    {{#let (can "create absence-credit") as |canCreate|}}
+      <Card::Block>
+        {{#if this.absenceCredits.isRunning}}
           <Empty>
             <LoadingIcon />
           </Empty>
-        </Card::Block>
-      {{else}}
-        {{#let this.absenceCredits.lastSuccessful.value as |absenceCredits|}}
-          {{#if absenceCredits}}
-            <Card::Block>
-              <div class="grid">
-                <div class="grid-cell">
-                  <Table class="table table--striped">
-                    <Table::Thead>
-                      <Table::Tr>
-                        <Table::Th>Valid as of</Table::Th>
-                        <Table::Th>Days</Table::Th>
-                        <Table::Th>Type</Table::Th>
-                        <Table::Th>Comment</Table::Th>
-                      </Table::Tr>
-                    </Table::Thead>
-                    <tbody>
-                      {{#each absenceCredits as |absenceCredit|}}
-                        <Table::Tr
-                          @striped={{true}}
-                          role="link"
-                          class={{if (can "edit absence-credit") "cursor-pointer"}}
-                          {{on
-                            "click"
-                            (perform this.editAbsenceCredit absenceCredit.id)
-                          }}
-                        >
-                          <Table::Td>{{moment-format
-                              absenceCredit.date
-                              "DD.MM.YYYY"
-                            }}</Table::Td>
-                          <Table::Td>{{absenceCredit.days}}</Table::Td>
-                          <Table::Td
-                          >{{absenceCredit.absenceType.name}}</Table::Td>
-                          <Table::Td>{{absenceCredit.comment}}</Table::Td>
-                        </Table::Tr>
-                      {{/each}}
-                    </tbody>
-                  </Table>
-                </div>
-              </div>
-              {{#if (can "create absence-credit")}}
-                <div class="text-right">
-                  <LinkTo
-                    @route="users.edit.credits.absence-credits.new"
-                    class="text-primary"
-                  >Add new credit</LinkTo>
-                </div>
-              {{/if}}
-            </Card::Block>
-          {{else}}
-            <Card::Block>
+        {{else}}
+          {{#let this.absenceCredits.lastSuccessful.value as |absenceCredits|}}
+            {{#if absenceCredits}}
+              <Table class="table table--striped">
+                <Table::Thead>
+                  <Table::Tr>
+                    <Table::Th>Valid as of</Table::Th>
+                    <Table::Th>Days</Table::Th>
+                    <Table::Th>Type</Table::Th>
+                    <Table::Th>Comment</Table::Th>
+                  </Table::Tr>
+                </Table::Thead>
+                <tbody>
+                  {{#each absenceCredits as |absenceCredit|}}
+                    <Table::Tr
+                      @striped={{true}}
+                      @hover={{can "edit absence-credit"}}
+                      @last={{true}}
+                      role="link"
+                      {{on
+                        "click"
+                        (perform this.editAbsenceCredit absenceCredit.id)
+                      }}
+                    >
+                      <Table::Td>{{moment-format
+                          absenceCredit.date
+                          "DD.MM.YYYY"
+                        }}</Table::Td>
+                      <Table::Td>{{absenceCredit.days}}</Table::Td>
+                      <Table::Td>{{absenceCredit.absenceType.name}}</Table::Td>
+                      <Table::Td>{{absenceCredit.comment}}</Table::Td>
+                    </Table::Tr>
+                  {{/each}}
+                </tbody>
+              </Table>
+            {{else}}
               <Empty>
                 <FaIcon @icon="calendar-plus" />
                 <p>
-                  No absence credits found...<br />
-                  {{#if (can "create absence-credit")}}
-                    Add a new credit by clicking the button below!<br />
-                    <br />
-                    <LinkTo
-                      @route="users.edit.credits.absence-credits.new"
-                      class="btn btn-success"
-                    >Add new credit</LinkTo>
-                  {{/if}}
-                </p>
+                  No absence credits found...</p>
+                {{#if canCreate}}
+                  <p>Add a new credit by clicking the button below!</p>
+                {{/if}}
               </Empty>
-            </Card::Block>
-          {{/if}}
-        {{/let}}
-      {{/if}}
-    </Card>
-  </div>
+            {{/if}}
 
-  <div class="grid-cell">
-    <h4 class="form-inline">
-      Overtime credits
-    </h4>
-    <Card data-test-overtime-credits>
+          {{/let}}
+        {{/if}}
+      </Card::Block>
+      <Card::Footer>
+        {{#if canCreate}}
+          <LinkTo
+            @route="users.edit.credits.absence-credits.new"
+            class="btn btn-primary block w-min whitespace-nowrap"
+          >Add new credit</LinkTo>
+        {{/if}}
+      </Card::Footer>
+    {{/let}}
+  </Card>
+
+  <Card data-test-overtime-credits>
+    {{#let (can "create overtime-credit") as |canCreate|}}
+      <Card::Header><h4>Overtime credits</h4></Card::Header>
       {{#if this.overtimeCredits.isRunning}}
-        <Card::Block>
-          <Empty>
-            <LoadingIcon />
-          </Empty>
-        </Card::Block>
+        <Empty>
+          <LoadingIcon />
+        </Empty>
       {{else}}
         {{#let this.overtimeCredits.lastSuccessful.value as |overtimeCredits|}}
-          {{#if overtimeCredits}}
-            <Card::Block>
-              <div class="grid">
-                <div class="grid-cell">
-                  <Table class="table table--striped">
-                    <Table::Thead>
-                      <Table::Tr>
-                        <Table::Th>Valid as of</Table::Th>
-                        <Table::Th>Duration</Table::Th>
-                        <Table::Th>Comment</Table::Th>
-                      </Table::Tr>
-                    </Table::Thead>
-                    <tbody>
-                      {{#each overtimeCredits as |overtimeCredit|}}
-                        <Table::Tr
-                          @striped={{true}}
-                          role="link"
-                          class="{{if (can 'edit overtime-credit') 'cursor-pointer'}}"
-                          {{on
-                            "click"
-                            (perform this.editOvertimeCredit overtimeCredit.id)
-                          }}
-                        >
-                          <Table::Td>{{moment-format
-                              overtimeCredit.date
-                              "DD.MM.YYYY"
-                            }}</Table::Td>
-                          <Table::Td>{{humanize-duration
-                              overtimeCredit.duration
-                              false
-                            }}</Table::Td>
-                          <Table::Td>{{overtimeCredit.comment}}</Table::Td>
-                        </Table::Tr>
-                      {{/each}}
-                    </tbody>
-                  </Table>
-                </div>
-              </div>
-              {{#if (can "create overtime-credit")}}
-                <div class="text-right">
-                  <LinkTo
-                    @route="users.edit.credits.overtime-credits.new"
-                    class="text-primary"
-                  >Add new credit</LinkTo>
-                </div>
-              {{/if}}
-            </Card::Block>
-          {{else}}
-            <Card::Block>
+          <Card::Block>
+            {{#if overtimeCredits}}
+              <Table class="table table--striped">
+                <Table::Thead>
+                  <Table::Tr>
+                    <Table::Th>Valid as of</Table::Th>
+                    <Table::Th>Duration</Table::Th>
+                    <Table::Th>Comment</Table::Th>
+                  </Table::Tr>
+                </Table::Thead>
+                <tbody>
+                  {{#each overtimeCredits as |overtimeCredit|}}
+                    <Table::Tr
+                      @striped={{true}}
+                      @hover={{can "edit overtime-credit"}}
+                      @last={{true}}
+                      role="link"
+                      {{on
+                        "click"
+                        (perform this.editOvertimeCredit overtimeCredit.id)
+                      }}
+                    >
+                      <Table::Td>{{moment-format
+                          overtimeCredit.date
+                          "DD.MM.YYYY"
+                        }}</Table::Td>
+                      <Table::Td>{{humanize-duration
+                          overtimeCredit.duration
+                          false
+                        }}</Table::Td>
+                      <Table::Td>{{overtimeCredit.comment}}</Table::Td>
+                    </Table::Tr>
+                  {{/each}}
+                </tbody>
+              </Table>
+              {{#if (can "create overtime-credit")}}{{/if}}
+            {{else}}
               <Empty>
                 <FaIcon @icon="clock" />
                 <p>
-                  No overtime credits found...<br />
-                  {{#if (can "create overtime-credit")}}
-                    Add a new credit by clicking the button below!<br />
-                    <br />
-                    <LinkTo
-                      @route="users.edit.credits.overtime-credits.new"
-                      class="btn btn-success"
-                    >Add new credit</LinkTo>
-                  {{/if}}
-                </p>
+                  No overtime credits found...</p>
+
+                {{#if canCreate}}
+                  <p>Add a new credit by clicking the button below!</p>
+                {{/if}}
               </Empty>
-            </Card::Block>
-          {{/if}}
+            {{/if}}
+          </Card::Block>
         {{/let}}
       {{/if}}
-    </Card>
-  </div>
+      <Card::Footer>
+        {{#if canCreate}}
+          <LinkTo
+            @route="users.edit.credits.overtime-credits.new"
+            class="btn btn-primary w-min whitespace-nowrap"
+          >Add new credit</LinkTo>
+        {{/if}}
+
+      </Card::Footer>
+    {{/let}}
+  </Card>
 </div>

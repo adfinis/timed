@@ -72,9 +72,10 @@
       >
         <Table::Tr
           @striped={{true}}
+          @hover={{true}}
+          @last={{true}}
           role="link"
           {{on "click" (fn this.viewUserProfile user.id)}}
-          class="cursor-pointer hover:bg-background-secondary/25 last-of-type:border-b-2 transition-colors"
         >
           <Table::Td
             class={{unless user.isActive "text-danger"}}

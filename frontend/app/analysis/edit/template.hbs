@@ -3,48 +3,52 @@
     <div class="grid-cell"></div>
     <div class="grid-cell col-span-2">
       {{#if this.intersection.isRunning}}
-        <div class="empty">
+        <Empty>
           <LoadingIcon />
-        </div>
+        </Empty>
       {{else}}
-        <h1 class="text-center">
-          {{#if (eq this.intersection.lastSuccessful.value.meta.count 1)}}
-            Edit report
-          {{else}}
-            Bulk edit
-            {{this.intersection.lastSuccessful.value.meta.count}}
-            reports
-          {{/if}}
-        </h1>
-        <Card>
-          <Card::Block>
-            {{#let this.intersection.lastSuccessful.value.model as |model|}}
-              <ValidatedForm
-                class="grid gap-2"
-                @model={{changeset model this.IntersectionValidations}}
-                @on-submit={{perform this.save}}
-                as |f|
+        {{#let this.intersection.lastSuccessful.value.model as |model|}}
+          <ValidatedForm
+            @model={{changeset model this.IntersectionValidations}}
+            @on-submit={{perform this.save}}
+            as |f|
+          >
+            <Card>
+              <Card::Header>
+                <h1 class="text-center text-foreground">
+                  {{#if
+                    (eq this.intersection.lastSuccessful.value.meta.count 1)
+                  }}
+                    Edit report
+                  {{else}}
+                    Bulk edit
+                    {{this.intersection.lastSuccessful.value.meta.count}}
+                    reports
+                  {{/if}}
+                </h1>
+              </Card::Header>
+
+              <TaskSelection
+                @on-set-customer={{queue
+                  (fn (mut f.model.customer))
+                  (fn this.validate f.model)
+                }}
+                @on-set-project={{queue
+                  (fn (mut f.model.project))
+                  (fn this.validate f.model)
+                }}
+                @on-set-task={{queue
+                  (fn (mut f.model.task))
+                  (fn this.validate f.model)
+                }}
+                @initial={{hash
+                  customer=this._customer
+                  project=this._project
+                  task=this._task
+                }}
+                as |t|
               >
-                <TaskSelection
-                  @on-set-customer={{queue
-                    (fn (mut f.model.customer))
-                    (fn this.validate f.model)
-                  }}
-                  @on-set-project={{queue
-                    (fn (mut f.model.project))
-                    (fn this.validate f.model)
-                  }}
-                  @on-set-task={{queue
-                    (fn (mut f.model.task))
-                    (fn this.validate f.model)
-                  }}
-                  @initial={{hash
-                    customer=this._customer
-                    project=this._project
-                    task=this._task
-                  }}
-                  as |t|
-                >
+                <Card::Block class="grid gap-2">
                   <f.input @labelComponent="void" @name="task">
                     <div class="form-group" data-test-customer>
                       <label>
@@ -219,31 +223,31 @@
                     </f.input>
                   </div>
 
-                  <div class="flex justify-between">
-                    <div class="flex gap-2">
-                      <button
-                        data-test-cancel
-                        type="button"
-                        class="btn btn-default"
-                        {{on "click" this.cancel}}
-                      >Cancel</button>
-                      <button
-                        data-test-reset
-                        type="button"
-                        class="btn btn-default"
-                        {{on
-                          "click"
-                          (queue t.reset (fn this.resetChangeset f.model))
-                        }}
-                      >Reset</button>
-                    </div>
-                    <f.submit />
+                </Card::Block>
+                <Card::Footer class="flex justify-between">
+                  <div class="flex gap-2">
+                    <button
+                      data-test-cancel
+                      type="button"
+                      class="btn btn-default"
+                      {{on "click" this.cancel}}
+                    >Cancel</button>
+                    <button
+                      data-test-reset
+                      type="button"
+                      class="btn btn-default"
+                      {{on
+                        "click"
+                        (queue t.reset (fn this.resetChangeset f.model))
+                      }}
+                    >Reset</button>
                   </div>
-                </TaskSelection>
-              </ValidatedForm>
-            {{/let}}
-          </Card::Block>
-        </Card>
+                  <f.submit />
+                </Card::Footer>
+              </TaskSelection>
+            </Card>
+          </ValidatedForm>
+        {{/let}}
       {{/if}}
     </div>
     <div class="grid-cell"></div>

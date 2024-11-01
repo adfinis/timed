@@ -1,6 +1,6 @@
-<div ...attributes class="modal-header p-3 border-b border-border/50 grid grid-cols-[minmax(0,1fr),auto]">
+<Card::Header ...attributes class="modal-header grid grid-cols-[minmax(0,1fr),auto]">
   <div>{{yield}}</div>
   <button type="button" class="close" aria-label="Close" {{on "click" @close}}>
     <span aria-hidden="true">&times;</span>
   </button>
-</div>
+</Card::Header>

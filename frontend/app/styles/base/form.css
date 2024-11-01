@@ -17,6 +17,7 @@ select,
 .form-textarea,
 .form-select,
 .form-multiselect {
+  @apply transition-[border-color];
   @apply w-full placeholder-foreground-muted text-sm bg-background !important;
 }
 
