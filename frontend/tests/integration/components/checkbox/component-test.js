@@ -22,7 +22,7 @@ module("Integration | Component | checkbox", function (hooks) {
     this.set("checked", false);
 
     await render(
-      hbs`<Checkbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} />`,
+      hbs`<Checkbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} />`
     );
 
     assert.dom("input").isNotChecked();
@@ -43,7 +43,7 @@ module("Integration | Component | checkbox", function (hooks) {
     this.set("checked", null);
 
     await render(
-      hbs`<Checkbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} />`,
+      hbs`<Checkbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} />`
     );
 
     assert.ok(find("input").indeterminate);

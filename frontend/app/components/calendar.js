@@ -6,7 +6,7 @@ const CURRENT_YEAR = moment().year();
 
 const YEARS_IN_FUTURE = 5;
 
-export default class SyCalendar extends Component {
+export default class Calendar extends Component {
   months = moment.months();
 
   years = [...new Array(40).keys()].map(

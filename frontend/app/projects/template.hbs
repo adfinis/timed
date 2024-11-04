@@ -107,17 +107,17 @@
           @onChange={{fn (mut this.hideArchivedTasks)}}
         >Hide Archived Tasks</Checkbox>
         <Table class="table-fixed">
-            <Table::Thead>
-              <Table::Tr>
-                <Table::Th>Name</Table::Th>
-                <Table::Th>Reference</Table::Th>
-                <Table::Th>Estimated time</Table::Th>
-                {{#if remainingEffortTracking}}
-                  <Table::Th>Remaining effort</Table::Th>
-                {{/if}}
-                <Table::Th>Archived</Table::Th>
-              </Table::Tr>
-            </Table::Thead>
+          <Table::Thead>
+            <Table::Tr>
+              <Table::Th>Name</Table::Th>
+              <Table::Th>Reference</Table::Th>
+              <Table::Th>Estimated time</Table::Th>
+              {{#if remainingEffortTracking}}
+                <Table::Th>Remaining effort</Table::Th>
+              {{/if}}
+              <Table::Th>Archived</Table::Th>
+            </Table::Tr>
+          </Table::Thead>
         </Table>
         <ScrollContainer class="mb-2 border-b-2">
           <Table
@@ -144,7 +144,7 @@
                         'bg-primary text-foreground-primary'
                         'hover:bg-background-secondary/25'
                       }}
-"
+                      "
                     {{! template-lint-disable }}
                     {{on "click" (fn (mut this.selectedTask) task)}}
                     data-test-task-table-row
@@ -162,13 +162,15 @@
                       }}</Table::Td>
 
                     {{#if remainingEffortTracking}}
-                      <Table::Td data-test-table-most-recent-remaining-effort>{{if
+                      <Table::Td
+                        data-test-table-most-recent-remaining-effort
+                      >{{if
                           task.mostRecentRemainingEffort
                           (humanize-duration task.mostRecentRemainingEffort)
                           "-"
                         }}</Table::Td>
                     {{/if}}
-                    <Table::Td><SyCheckmark
+                    <Table::Td><Checkmark
                         data-test-table-archived
                         @checked={{task.archived}}
                       /></Table::Td>
@@ -225,7 +227,11 @@
               />
 
               {{#if remainingEffortTracking}}
-                <f.input @name="mostRecentRemainingEffort" @labelComponent="void" as |fi|>
+                <f.input
+                  @name="mostRecentRemainingEffort"
+                  @labelComponent="void"
+                  as |fi|
+                >
                   <div class="form-group">
                     <label>
                       Remaining effort

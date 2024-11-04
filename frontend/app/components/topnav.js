@@ -2,7 +2,7 @@ import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 
-export default class SyTopnav extends Component {
+export default class Topnav extends Component {
   @service currentUser;
 
   @service media;
