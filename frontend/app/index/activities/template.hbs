@@ -31,7 +31,10 @@
                     'transferred text-foreground-muted cursor-not-allowed'
                     'cursor-pointer'
                   }}
-                  {{if (and activity.active (not selected)) 'bg-primary/20'}}
+                  {{if
+                    (and activity.active (not selected))
+                    'active bg-primary/20'
+                  }}
                   {{if selected 'selected bg-primary text-foreground-primary'}}
                   {{unless
                     (or activity.transferred activity.active selected)

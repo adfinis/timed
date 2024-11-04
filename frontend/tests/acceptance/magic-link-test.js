@@ -4,6 +4,7 @@ import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 import sinon from "sinon";
+import { uniqueReports } from "timed/tests/helpers/report-row";
 
 import taskSelect from "../helpers/task-select";
 
@@ -61,7 +62,8 @@ module("Acceptance | magic links", function (hooks) {
     const project = this.server.db.projects.find(task.projectId);
     const customer = this.server.db.customers.find(project.customerId);
 
-    assert.dom("[data-test-report-row]").exists({ count: 6 });
+    assert.dom("[data-test-report-row]").exists({ count: 12 });
+    assert.strictEqual(uniqueReports().length, 6);
 
     assert
       .dom(
@@ -92,7 +94,8 @@ module("Acceptance | magic links", function (hooks) {
       .hasClass("active");
 
     await click("[data-test-report-row]:last-child [data-test-save-report]");
-    assert.dom("[data-test-report-row]").exists({ count: 7 });
+    assert.dom("[data-test-report-row]").exists({ count: 14 });
+    assert.strictEqual(uniqueReports().length, 7);
   });
 
   test("it resets the magic link form after creating a link", async function (assert) {

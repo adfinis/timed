@@ -29,17 +29,23 @@ module("Acceptance | index attendances", function (hooks) {
 
   test("can list attendances", async function (assert) {
     await visit("/attendances");
-    assert.dom("[data-test-attendance-slider]").exists({ count: 2 });
+    assert.dom("[data-test-attendance-slider-desktop]").exists({ count: 2 });
+    assert.dom("[data-test-attendance-slider-mobile]").exists({ count: 2 });
+    assert.dom("[data-test-attendance-slider]").exists({ count: 4 });
   });
 
   test("can save an attendances", async function (assert) {
     await visit("/attendances");
 
-    assert.dom("[data-test-attendance-slider]").exists({ count: 2 });
+    assert.dom("[data-test-attendance-slider-desktop]").exists({ count: 2 });
+    assert.dom("[data-test-attendance-slider-mobile]").exists({ count: 2 });
+    assert.dom("[data-test-attendance-slider]").exists({ count: 4 });
 
     await click('[data-test-attendance-slider-id="1"] .noUi-draggable');
 
-    assert.dom("[data-test-attendance-slider]").exists({ count: 2 });
+    assert.dom("[data-test-attendance-slider-desktop]").exists({ count: 2 });
+    assert.dom("[data-test-attendance-slider-mobile]").exists({ count: 2 });
+    assert.dom("[data-test-attendance-slider]").exists({ count: 4 });
   });
 
   test("can add an attendance", async function (assert) {
@@ -47,7 +53,9 @@ module("Acceptance | index attendances", function (hooks) {
 
     await click("[data-test-add-attendance]");
 
-    assert.dom("[data-test-attendance-slider]").exists({ count: 3 });
+    assert.dom("[data-test-attendance-slider-desktop]").exists({ count: 3 });
+    assert.dom("[data-test-attendance-slider-mobile]").exists({ count: 3 });
+    assert.dom("[data-test-attendance-slider]").exists({ count: 6 });
   });
 
   test("can delete an attendance", async function (assert) {
@@ -59,6 +67,8 @@ module("Acceptance | index attendances", function (hooks) {
 
     assert.dom('[data-test-attendance-slider-id="1"]').doesNotExist();
 
-    assert.dom("[data-test-attendance-slider]").exists({ count: 1 });
+    assert.dom("[data-test-attendance-slider-desktop]").exists({ count: 1 });
+    assert.dom("[data-test-attendance-slider-mobile]").exists({ count: 1 });
+    assert.dom("[data-test-attendance-slider]").exists({ count: 2 });
   });
 });

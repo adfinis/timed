@@ -10,6 +10,7 @@
       {{#each this.attendances as |attendance|}}
         <AttendanceSlider
           data-test-attendance-slider
+          data-test-attendance-slider-desktop
           data-test-attendance-slider-id={{attendance.id}}
           @attendance={{changeset attendance this.AttendanceValidator}}
           @onSave={{queue this.validateChangeset this.saveAttendance}}
@@ -24,6 +25,7 @@
           <div
             class="striped grid grid-cols-[repeat(2,minmax(0,1fr)),auto] gap-1 p-1 border-t border-border/50 last:border-b"
             data-test-attendance-slider
+            data-test-attendance-slider-mobile
             data-test-attendance-slider-id={{attendance.id}}
           >
             <Timepicker

@@ -4,6 +4,7 @@ import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import moment from "moment";
 import { module, skip, test } from "qunit";
+import { uniqueReports } from "timed/tests/helpers/report-row";
 import formatDuration from "timed/utils/format-duration";
 
 module("Acceptance | index activities", function (hooks) {
@@ -40,7 +41,7 @@ module("Acceptance | index activities", function (hooks) {
 
     await click('[data-test-activity-row-id="1"] [data-test-start-activity]');
 
-    assert.dom('[data-test-activity-row-id="6"]').hasClass("primary");
+    assert.dom('[data-test-activity-row-id="6"]').hasClass("active");
   });
 
   test("can start an activity of a past day", async function (assert) {
@@ -70,11 +71,11 @@ module("Acceptance | index activities", function (hooks) {
 
     await click('[data-test-activity-row-id="1"] [data-test-start-activity]');
 
-    assert.dom('[data-test-activity-row-id="6"]').hasClass("primary");
+    assert.dom('[data-test-activity-row-id="6"]').hasClass("active");
 
     await click('[data-test-activity-row-id="6"] [data-test-stop-activity]');
 
-    assert.dom('[data-test-activity-row-id="6"]').doesNotHaveClass("primary");
+    assert.dom('[data-test-activity-row-id="6"]').doesNotHaveClass("active");
   });
 
   test("can generate reports", async function (assert) {
@@ -91,21 +92,22 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.strictEqual(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 7 });
+    assert.dom("[data-test-report-row]").exists({ count: 14 });
+    assert.strictEqual(uniqueReports().length, 7);
 
     assert
       .dom(
-        `[data-test-report-row-id="${id}"] .form-group:first-child .ember-power-select-selected-item`
+        `[data-test-report-row-id="${id}"] .customer-select .ember-power-select-selected-item`
       )
       .hasText(activity.task.project.customer.name);
     assert
       .dom(
-        `[data-test-report-row-id="${id}"] .form-group:nth-child(2) .ember-power-select-selected-item`
+        `[data-test-report-row-id="${id}"] .project-select .ember-power-select-selected-item`
       )
       .hasText(activity.task.project.name);
     assert
       .dom(
-        `[data-test-report-row-id="${id}"] .form-group:nth-child(3) .ember-power-select-selected-item`
+        `[data-test-report-row-id="${id}"] .task-select .ember-power-select-selected-item`
       )
       .hasText(activity.task.name);
 
@@ -121,7 +123,8 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.strictEqual(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 6 });
+    assert.dom("[data-test-report-row]").exists({ count: 12 });
+    assert.strictEqual(uniqueReports().length, 6);
 
     await visit("/");
 
@@ -129,7 +132,8 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.strictEqual(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 6 });
+    assert.dom("[data-test-report-row]").exists({ count: 12 });
+    assert.strictEqual(uniqueReports().length, 6);
   });
 
   test("shows a warning when generating reports from unknown tasks", async function (assert) {
@@ -295,7 +299,8 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.equal(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 7 });
+    assert.dom("[data-test-report-row]").exists({ count: 14 });
+    assert.strictEqual(uniqueReports().length, 7);
 
     assert
       .dom(`${`[data-test-report-row-id="${id}"]`} [name=duration-day]`)
@@ -326,7 +331,8 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.strictEqual(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 7 });
+    assert.dom("[data-test-report-row]").exists({ count: 14 });
+    assert.strictEqual(uniqueReports().length, 7);
 
     assert
       .dom(`[data-test-report-row-id="6"] [name=duration-day]`)
