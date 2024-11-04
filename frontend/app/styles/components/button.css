@@ -60,5 +60,5 @@
 }
 
 .btn-group .btn {
-  @apply rounded-none first:rounded-l last:rounded-r;
+  @apply whitespace-nowrap rounded-none first:rounded-l last:rounded-r;
 }

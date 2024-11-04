@@ -20,7 +20,7 @@ export default class Datepicker extends Component {
   constructor(...args) {
     super(...args);
 
-    this.uniqueId = guidFor(this);
+    this.uniqueId = this.args.id ?? guidFor(this);
     this.center = this.args.value ?? moment();
   }
 

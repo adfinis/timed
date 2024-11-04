@@ -1,43 +1,47 @@
 <div ...attributes>
-  {{#if (eq @type "button")}}
-    <div class="btn-group [&>*]:w-full flex flex-nowrap">
-      {{#each @options as |opt|}}
-        <button
-          class="btn {{if (eq (get opt @valuePath) @selected) 'btn-primary' 'btn-default'}} "
-          type="button"
-          {{on "click" (fn (optional @onChange) (get opt @valuePath))}}
-        >
-          {{get opt @labelPath}}
-        </button>
-        {{yield}}
-      {{/each}}
-    </div>
-  {{else if (eq @type "date")}}
-    <Datepicker
-      @value={{@selected}}
-      @onChange={{optional @onChange}}
-      @placeholder={{@placeholder}}
-      @name={{or @name "date"}}
-    />
-  {{else if (eq @type "search")}}
-    {{#let (unique-id) as |searchId|}}
-      <label for={{searchId}} hidden>{{or @name "search"}}</label>
+  {{#let (unique-id) as |id|}}
+    <label for={{id}} hidden={{not @label}}>{{or @label @name "search"}}</label>
+    {{#if (eq @type "button")}}
+      <div id={{id}} class="btn-group [&>*]:w-full flex flex-nowrap">
+        {{#each @options as |opt|}}
+          <button
+            class="btn
+              {{if
+                (eq (get opt @valuePath) @selected)
+                'btn-primary'
+                'btn-default'
+              }}
+              "
+            type="button"
+            {{on "click" (fn (optional @onChange) (get opt @valuePath))}}
+          >
+            {{get opt @labelPath}}
+          </button>
+          {{yield}}
+        {{/each}}
+      </div>
+    {{else if (eq @type "date")}}
+      <Datepicker
+        @id={{id}}
+        @value={{@selected}}
+        @onChange={{optional @onChange}}
+        @placeholder={{@placeholder}}
+        @name={{or @name "date"}}
+      />
+    {{else if (eq @type "search")}}
       <input
         type="search"
         class="form-control rounded"
         placeholder={{or @placeholder "Search"}}
         name={{or @name "search"}}
-        id={{searchId}}
+        id={{id}}
         value={{@selected}}
         {{on "input" (pick "target.value" (optional @onChange))}}
         {{on "change" (pick "target.value" (optional @onChange))}}
       />
-    {{/let}}
-  {{else if (eq @type "select")}}
-    {{#let (unique-id) as |selectId|}}
-      <label for={{selectId}} hidden>{{or @name "select"}}</label>
+    {{else if (eq @type "select")}}
       <select
-        id={{selectId}}
+        id={{id}}
         class="form-control rounded"
         {{on "change" (pick "target.value" (optional @onChange))}}
       >
@@ -54,8 +58,8 @@
         {{/each}}
         {{yield}}
       </select>
-    {{/let}}
-  {{else}}
-    {{yield}}
-  {{/if}}
+    {{else}}
+      {{yield}}
+    {{/if}}
+  {{/let}}
 </div>

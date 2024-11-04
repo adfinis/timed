@@ -1,4 +1,10 @@
-<div {{style this.style}} class="{{@class}} balance-donut {{this.strokeClass}} relative translate-y-[calc(var(--max-offset)*var(--offset-multiplicator))] md:basis-32 text-foreground/85 lg:[--max-offset:-4rem]">
+<div
+  {{style this.style}}
+  class="{{@class}}
+    balance-donut
+    {{this.strokeClass}}
+    relative translate-y-[calc(var(--max-offset)*var(--offset-multiplicator))] md:basis-32 text-foreground/85 lg:[--max-offset:-2rem]"
+>
   <div class="donut-title text-center text-2xl">{{@title}}</div>
 
   <div class="donut relative">
@@ -27,12 +33,16 @@
       ></circle>
     </svg>
 
-    <div class="donut-content absolute flex justify-center items-center text-center p-4 inset-0 w-full h-full flex-col text-xl">
+    <div
+      class="donut-content absolute flex justify-center items-center text-center p-4 inset-0 w-full h-full flex-col text-xl"
+    >
       {{#if @balance.usedDuration}}
         {{format-duration @balance.usedDuration false}}
       {{else}}
         {{#if @balance.credit}}
-          <div class="text-sm text-foreground-muted">{{@balance.usedDays}} of {{@balance.credit}}</div>
+          <div class="text-sm text-foreground-muted">{{@balance.usedDays}}
+            of
+            {{@balance.credit}}</div>
           {{#if (gte @balance.credit 1)}}
             <div>{{round (mult this.value 100)}}%</div>
           {{/if}}

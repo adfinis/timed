@@ -18,10 +18,15 @@
               absence credit</h4></Card::Header>
           <Card::Block class="grid gap-2">
             <f.input @label="Type" @name="absenceType" as |fi|>
-              <div class="btn-group btn-group--auto">
+              <div class="btn-group [&>*]:w-full">
                 {{#each this.absenceTypes.lastSuccessful.value as |type|}}
                   <button
-                    class="btn {{if (eq fi.value.id type.id) 'active'}}"
+                    class="btn
+                      {{if
+                        (eq fi.value.id type.id)
+                        'btn-primary'
+                        'btn-default'
+                      }}"
                     type="button"
                     {{on "click" (fn fi.update type)}}
                   >{{type.name}}</button>

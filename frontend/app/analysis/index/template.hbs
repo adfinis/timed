@@ -26,217 +26,181 @@
           as |fs|
         >
           <fs.group @label="Task" @expanded={{true}}>
-            <fs.label>
-              Customer
-              <fs.filter data-test-filter-customer>
-                <t.customer />
-              </fs.filter>
-            </fs.label>
-            <fs.label>
-              Project
-              <fs.filter data-test-filter-project>
-                <t.project />
-              </fs.filter>
-            </fs.label>
-            <fs.label>
-              Task
-              <fs.filter data-test-filter-task>
-                <t.task />
-              </fs.filter>
-            </fs.label>
-            <fs.label>
-              Comment
-              <fs.filter data-test-filter-comment>
-                {{#let (unique-id) as |id|}}
-                  <label for={{id}} hidden>comment</label>
-                  <input
-                    id={{id}}
-                    value={{this.comment}}
-                    {{on "change" (fn this.setModelFilterOnChange "comment")}}
-                    class="form-control comment-field rounded"
-                    placeholder="Comment"
-                    name="comment"
-                    type="text"
-                  />
-                {{/let}}
-              </fs.filter>
-            </fs.label>
+            <fs.filter @label="Customer" data-test-filter-customer>
+              <t.customer />
+            </fs.filter>
+            <fs.filter @label="Project" data-test-filter-project>
+              <t.project />
+            </fs.filter>
+            <fs.filter @label="Task" data-test-filter-task>
+              <t.task />
+            </fs.filter>
+            <fs.filter @label="Comment" data-test-filter-comment>
+              {{#let (unique-id) as |id|}}
+                <label for={{id}} hidden>comment</label>
+                <input
+                  id={{id}}
+                  value={{this.comment}}
+                  {{on "change" (fn this.setModelFilterOnChange "comment")}}
+                  class="form-control comment-field rounded"
+                  placeholder="Comment"
+                  name="comment"
+                  type="text"
+                />
+              {{/let}}
+            </fs.filter>
           </fs.group>
           <fs.group @label="Responsibility">
-            <fs.label>
-              User
-              <fs.filter data-test-filter-user>
-                <UserSelection
-                  @user={{this.selectedUser}}
-                  @onChange={{fn this.setModelFilter "user"}}
-                  as |u|
-                >
-                  <u.user />
-                </UserSelection>
-              </fs.filter>
-            </fs.label>
-            <fs.label>
-              Reviewer
-              <fs.filter data-test-filter-reviewer>
-                <UserSelection
-                  @user={{this.selectedReviewer}}
-                  @onChange={{fn this.setModelFilter "reviewer"}}
-                  @queryOptions={{hash is_reviewer=1}}
-                  as |u|
-                >
-                  <u.user @placeholder="Select reviewer..." />
-                </UserSelection>
-              </fs.filter>
-            </fs.label>
+            <fs.filter @label="User" data-test-filter-user>
+              <UserSelection
+                @user={{this.selectedUser}}
+                @onChange={{fn this.setModelFilter "user"}}
+                as |u|
+              >
+                <u.user />
+              </UserSelection>
+            </fs.filter>
+
+            <fs.filter @label="Reviewer" data-test-filter-reviewer>
+              <UserSelection
+                @user={{this.selectedReviewer}}
+                @onChange={{fn this.setModelFilter "reviewer"}}
+                @queryOptions={{hash is_reviewer=1}}
+                as |u|
+              >
+                <u.user @placeholder="Select reviewer..." />
+              </UserSelection>
+            </fs.filter>
           </fs.group>
           <fs.group @label="Finances">
-            <fs.label>
-              Billing type
-              <fs.filter
-                data-test-filter-billing-type
-                @type="select"
-                @selected={{this.billingType}}
-                @valuePath="id"
-                @labelPath="name"
-                @prompt="All billing types"
-                @options={{this.billingTypes}}
-                @onChange={{fn (mut this.billingType)}}
-              />
-            </fs.label>
-            <fs.label>
-              Cost center
-              <fs.filter
-                data-test-filter-cost-center
-                @type="select"
-                @selected={{this.costCenter}}
-                @valuePath="id"
-                @labelPath="name"
-                @prompt="All cost centers"
-                @options={{this.costCenters}}
-                @onChange={{fn (mut this.costCenter)}}
-              />
-            </fs.label>
+            <fs.filter
+              data-test-filter-billing-type
+              @label="Billing type"
+              @type="select"
+              @selected={{this.billingType}}
+              @valuePath="id"
+              @labelPath="name"
+              @prompt="All billing types"
+              @options={{this.billingTypes}}
+              @onChange={{fn (mut this.billingType)}}
+            />
+            <fs.filter
+              data-test-filter-cost-center
+              @label="Cost center"
+              @type="select"
+              @selected={{this.costCenter}}
+              @valuePath="id"
+              @labelPath="name"
+              @prompt="All cost centers"
+              @options={{this.costCenters}}
+              @onChange={{fn (mut this.costCenter)}}
+            />
           </fs.group>
           <fs.group @label="Time range">
-            <fs.label>
-              From
-              <fs.filter
-                data-test-filter-from-date
-                @type="date"
-                @selected={{if this.fromDate (moment this.fromDate)}}
-                @onChange={{fn this.updateParam "fromDate"}}
-              />
-            </fs.label>
-            <fs.label>
-              To
-              <fs.filter
-                data-test-filter-to-date
-                @type="date"
-                @selected={{if this.toDate (moment this.toDate)}}
-                @onChange={{fn this.updateParam "toDate"}}
-              />
-            </fs.label>
+            <fs.filter
+              data-test-filter-from-date
+              @label="From"
+              @type="date"
+              @selected={{if this.fromDate (moment this.fromDate)}}
+              @onChange={{fn this.updateParam "fromDate"}}
+            />
+            <fs.filter
+              data-test-filter-to-date
+              @label="To"
+              @type="date"
+              @selected={{if this.toDate (moment this.toDate)}}
+              @onChange={{fn this.updateParam "toDate"}}
+            />
             <DateButtons
+              class="mt-2"
               @onUpdateFromDate={{fn this.updateParam "fromDate"}}
               @onUpdateToDate={{fn this.updateParam "toDate"}}
             />
           </fs.group>
           <fs.group @label="State">
-            <fs.label>
-              Review
-              <fs.filter
-                data-test-filter-review
-                @type="button"
-                @selected={{this.review}}
-                @valuePath="value"
-                @labelPath="label"
-                @options={{array
-                  (hash label="All" value="")
-                  (hash label="Needed" value="1")
-                  (hash label="Not needed" value="0")
-                }}
-                @onChange={{fn this.updateParam "review"}}
-              />
-            </fs.label>
-            <fs.label>
-              Billability
-              <fs.filter
-                data-test-filter-not-billable
-                @type="button"
-                @selected={{this.notBillable}}
-                @valuePath="value"
-                @labelPath="label"
-                @options={{array
-                  (hash label="All" value="")
-                  (hash label="Billable" value="0")
-                  (hash label="Not billable" value="1")
-                }}
-                @onChange={{fn this.updateParam "notBillable"}}
-              />
-            </fs.label>
-            <fs.label>
-              Verified
-              <fs.filter
-                data-test-filter-verified
-                @type="button"
-                @selected={{this.verified}}
-                @valuePath="value"
-                @labelPath="label"
-                @options={{array
-                  (hash label="All" value="")
-                  (hash label="Verified" value="1")
-                  (hash label="Not verified" value="0")
-                }}
-                @onChange={{fn this.updateParam "verified"}}
-              />
-            </fs.label>
-            <fs.label>
-              Billed
-              <fs.filter
-                data-test-filter-billed
-                @type="button"
-                @selected={{this.billed}}
-                @valuePath="value"
-                @labelPath="label"
-                @options={{array
-                  (hash label="All" value="")
-                  (hash label="Billed" value="1")
-                  (hash label="Not Billed" value="0")
-                }}
-                @onChange={{fn this.updateParam "billed"}}
-              />
-            </fs.label>
-            <fs.label>
-              Editable
-              <fs.filter
-                data-test-filter-editable
-                @type="button"
-                @selected={{this.editable}}
-                @valuePath="value"
-                @labelPath="label"
-                @options={{array
-                  (hash label="All" value="")
-                  (hash label="Editable" value="1")
-                }}
-                @onChange={{fn this.updateParam "editable"}}
-              />
-            </fs.label>
-            <fs.label>
-              Rejected
-              <fs.filter
-                data-test-filter-rejected
-                @type="button"
-                @selected={{this.rejected}}
-                @valuePath="value"
-                @labelPath="label"
-                @options={{array
-                  (hash label="All" value="")
-                  (hash label="Rejected" value="1")
-                  (hash label="Not rejected" value="0")
-                }}
-                @onChange={{fn this.updateParam "rejected"}}
-              />
-            </fs.label>
+            <fs.filter
+              data-test-filter-review
+              @label="Review"
+              @type="button"
+              @selected={{this.review}}
+              @valuePath="value"
+              @labelPath="label"
+              @options={{array
+                (hash label="All" value="")
+                (hash label="Needed" value="1")
+                (hash label="Not needed" value="0")
+              }}
+              @onChange={{fn this.updateParam "review"}}
+            />
+            <fs.filter
+              data-test-filter-not-billable
+              @type="button"
+              @label="Billability"
+              @selected={{this.notBillable}}
+              @valuePath="value"
+              @labelPath="label"
+              @options={{array
+                (hash label="All" value="")
+                (hash label="Billable" value="0")
+                (hash label="Not billable" value="1")
+              }}
+              @onChange={{fn this.updateParam "notBillable"}}
+            />
+            <fs.filter
+              data-test-filter-verified
+              @type="button"
+              @label="Verified"
+              @selected={{this.verified}}
+              @valuePath="value"
+              @labelPath="label"
+              @options={{array
+                (hash label="All" value="")
+                (hash label="Verified" value="1")
+                (hash label="Not verified" value="0")
+              }}
+              @onChange={{fn this.updateParam "verified"}}
+            />
+            <fs.filter
+              data-test-filter-billed
+              @label="Billed"
+              @type="button"
+              @selected={{this.billed}}
+              @valuePath="value"
+              @labelPath="label"
+              @options={{array
+                (hash label="All" value="")
+                (hash label="Billed" value="1")
+                (hash label="Not Billed" value="0")
+              }}
+              @onChange={{fn this.updateParam "billed"}}
+            />
+            <fs.filter
+              data-test-filter-editable
+              @label="Editable"
+              @type="button"
+              @selected={{this.editable}}
+              @valuePath="value"
+              @labelPath="label"
+              @options={{array
+                (hash label="All" value="")
+                (hash label="Editable" value="1")
+              }}
+              @onChange={{fn this.updateParam "editable"}}
+            />
+            <fs.filter
+              data-test-filter-rejected
+              @type="button"
+              @label="Rejected"
+              @selected={{this.rejected}}
+              @valuePath="value"
+              @labelPath="label"
+              @options={{array
+                (hash label="All" value="")
+                (hash label="Rejected" value="1")
+                (hash label="Not rejected" value="0")
+              }}
+              @onChange={{fn this.updateParam "rejected"}}
+            />
 
           </fs.group>
         </FilterSidebar>

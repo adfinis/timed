@@ -1,3 +1,4 @@
-<label class="filter-sidebar-label" ...attributes>
-  <div>{{yield}}</div>
-</label>
+<div class="filter-sidebar-label">
+  <label ...attributes>{{@label}}</label>
+  <div class={{@class}}>{{yield}}</div>
+</div>

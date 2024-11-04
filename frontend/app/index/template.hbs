@@ -77,7 +77,7 @@
   </div>
   <div class="grid-cell visible-sm">
     <NavTabs
-      class="max-md:my-2 md:grid-cols-[repeat(3,minmax(0,auto)),50fr] grid"
+      class="max-sm:my-2 sm:grid-cols-[repeat(3,minmax(0,auto)),50fr] grid"
     >
       <NavTabs::Item>
         <NavTabs::A @route="index.activities">
@@ -115,18 +115,18 @@
           </button>
         </li>
       {{/if}}
-      <li class="md:hidden border first:rounded-t-sm rounded-b-sm grid">
+      <li class="sm:hidden border first:rounded-t-sm rounded-b-sm grid">
         <button
           type="button"
           data-test-add-absence
-          class="btn md:btn-default border-none rounded-none"
+          class="btn sm:btn-default border-none rounded-none"
           disabled={{cannot "access page"}}
           {{on "click" (toggle "showAddModal" this)}}
         >
           Add absence
         </button>
       </li>
-      <li class="max-md:hidden w-full flex md:justify-end gap-x-2">
+      <li class="max-sm:hidden w-full flex sm:justify-end gap-x-2">
         {{#if this.absence}}
           <NavTabs::Button
             type="button"
