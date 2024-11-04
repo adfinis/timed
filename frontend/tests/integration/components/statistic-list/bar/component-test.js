@@ -119,12 +119,12 @@ module("Integration | Component | statistic list/bar", function (hooks) {
     );
 
     const element = this.element.querySelector(".statistic-list-bar");
-    const remainingEelement = this.element.querySelector(".remaining");
+    const remainingElement = this.element.querySelector(".remaining");
 
     assert.ok(element);
-    assert.ok(remainingEelement);
+    assert.ok(remainingElement);
 
-    assert.true(remainingEelement.classList.contains("success"));
+    assert.true(remainingElement.classList.contains("success"));
     assert.false(element.classList.contains("strong-danger"));
     assert.false(element.classList.contains("strong-success"));
   });
@@ -135,14 +135,14 @@ module("Integration | Component | statistic list/bar", function (hooks) {
     );
 
     const element = this.element.querySelector(".statistic-list-bar");
-    const remainingEelement = this.element.querySelector(".remaining");
+    const remainingElement = this.element.querySelector(".remaining");
 
     assert.ok(element);
-    assert.ok(remainingEelement);
+    assert.ok(remainingElement);
 
     assert.false(element.classList.contains("strong-danger"));
     assert.false(element.classList.contains("strong-success"));
-    assert.true(remainingEelement.classList.contains("success"));
+    assert.true(remainingElement.classList.contains("success"));
   });
 
   test("The Chart color is red & the remaining is red when spent effort is over the budget, and the remaining is over the budget", async function (assert) {

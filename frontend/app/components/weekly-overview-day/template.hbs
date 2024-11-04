@@ -1,18 +1,39 @@
-<div title={{this.title}}
+<div
+  title={{this.title}}
   role="button"
   {{on "click" this.click}}
   {{style this.style}}
-  class="h-0 w-4 relative cursor-pointer z-10
-    {{if @active "active"}}
-    {{if @absence "absence"}}
-    {{if @holiday "holiday"}}
-    {{unless @workday "weekend"}}
-  "
+  class="weekly-overview-day h-0 w-4 relative cursor-pointer z-10
+    {{if @active 'active'}}
+    {{if @absence 'absence'}}
+    {{if @holiday 'holiday'}}
+    {{unless @workday 'weekend'}}
+    "
   ...attributes
+>
+  <div
+    class="bar w-full h-full transition-all
+      {{if
+        @active
+        'bg-primary'
+        (or
+          (if @absence 'bg-warning')
+          (or (if @workday 'bg-foreground-mid') 'bg-foreground-muted')
+        )
+      }}"
+  ></div>
+  <div
+    class="day absolute text-xs text-center -translate-x-1/2 left-1/2 -bottom-8 font-semibold transition-all
+      {{if
+        @active
+        'text-primary'
+        (or
+          (if @absence 'text-warning')
+          (or (if @workday 'text-foreground-mid') 'text-foreground-muted')
+        )
+      }}"
   >
-  <div class="w-full h-full transition-all {{if @active 'bg-primary' (or (if @absence 'bg-warning') (or (if @workday 'bg-foreground-mid') 'bg-foreground-muted'))}}"></div>
-  <div class="absolute text-xs text-center -translate-x-1/2 left-1/2 -bottom-8 font-semibold transition-all {{if @active 'text-primary' (or (if @absence 'text-warning') (or (if @workday 'text-foreground-mid') 'text-foreground-muted'))}}">
-    {{moment-format @day 'DD'}}
-  {{moment-format @day 'dd'}}
+    {{moment-format @day "DD"}}
+    {{moment-format @day "dd"}}
   </div>
 </div>

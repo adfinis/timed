@@ -18,7 +18,7 @@ module("Integration | Component | weekly overview day", function (hooks) {
 
     assert.ok(this.element);
 
-    assert.strictEqual(find(".day").textContent.trim(), "05\n  Th");
+    assert.strictEqual(find(".day").textContent.trim(), "05\n    Th");
   });
 
   test("computes a title", async function (assert) {
