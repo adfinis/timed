@@ -3,17 +3,17 @@ import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
 
-module("Integration | Component | sy checkbox", function (hooks) {
+module("Integration | Component | checkbox", function (hooks) {
   setupRenderingTest(hooks);
 
   test("works", async function (assert) {
-    await render(hbs`<SyCheckbox @label='Test Label' />`);
+    await render(hbs`<Checkbox @label='Test Label' />`);
 
     assert.dom("label").hasText("Test Label");
   });
 
   test("works in block style", async function (assert) {
-    await render(hbs`<SyCheckbox>Test Label</SyCheckbox>`);
+    await render(hbs`<Checkbox>Test Label</Checkbox>`);
 
     assert.dom("label").hasText("Test Label");
   });
@@ -22,7 +22,7 @@ module("Integration | Component | sy checkbox", function (hooks) {
     this.set("checked", false);
 
     await render(
-      hbs`<SyCheckbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} />`
+      hbs`<Checkbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} />`,
     );
 
     assert.dom("input").isNotChecked();
@@ -43,7 +43,7 @@ module("Integration | Component | sy checkbox", function (hooks) {
     this.set("checked", null);
 
     await render(
-      hbs`<SyCheckbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} />`
+      hbs`<Checkbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} />`,
     );
 
     assert.ok(find("input").indeterminate);
