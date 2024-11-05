@@ -3,9 +3,9 @@
     {{if this.expanded 'expanded filter-sidebar-group--expanded'}}
     flex flex-col group border-t p-2.5"
 >
-  <a
-    href="#"
-    class="filter-sidebar-group-label text-lg hover:text-foreground group-[.expanded]:text-foreground text-foreground-muted flex justify-between items-center transition-colors"
+  <button
+    type="button"
+    class="filter-sidebar-group-label text-xl hover:text-foreground group-[.expanded]:text-foreground text-foreground-muted flex justify-between items-center transition-colors"
     {{on "click" (toggle "expanded" this)}}
   >
     {{@label}}
@@ -14,11 +14,11 @@
       @prefix="fas"
       @transform="{{if this.expanded 'rotate-90'}}"
     />
-  </a>
+  </button>
   <div
     class="filter-sidebar-group-body overflow-hidden group-[.expanded]:max-h-96 max-h-0 transition transition-[max-height]"
   >
-    <div class="filter-sidebar-group-content py-2">
+    <div class="filter-sidebar-group-content py-2 [&>*]:mt-1">
       {{yield}}
     </div>
   </div>
