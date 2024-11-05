@@ -14,13 +14,16 @@
       as |t|
     >
       <t.customer
-        class="max-lg:col-span-full {{if cs.error.task 'has-error'}}"
+        class="form-group max-lg:col-span-full {{if cs.error.task 'has-error'}}"
       />
       <t.project
-        class="max-lg:col-span-full {{if cs.error.task 'has-error'}}"
+        class="form-group max-lg:col-span-full {{if cs.error.task 'has-error'}}"
       />
       <f.input @labelComponent="void" @errorComponent="void" @name="task">
-        <t.task class="max-lg:col-span-full {{if cs.error.task 'has-error'}}" />
+        <t.task
+          class="form-group max-lg:col-span-full
+            {{if cs.error.task 'has-error'}}"
+        />
       </f.input>
     </TaskSelection>
 

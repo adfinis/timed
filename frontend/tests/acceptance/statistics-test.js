@@ -96,7 +96,7 @@ module("Acceptance | statistics", function (hooks) {
     await visit("/statistics?type=task");
 
     assert
-      .dom(".empty")
+      .dom(".empty[data-test-missing-filter-params]")
       .includesText("Customer and project are required parameters");
   });
 

@@ -31,7 +31,7 @@ module("Integration | Component | statistic list/bar", function (hooks) {
     assert.ok(remainingEelement);
 
     assert.true(remainingEelement.classList.contains("remaining"));
-    assert.true(remainingEelement.classList.contains("success"));
+    assert.true(remainingEelement.classList.contains("before:bg-success"));
     assert.strictEqual(
       window
         .getComputedStyle(remainingEelement)
@@ -68,8 +68,8 @@ module("Integration | Component | statistic list/bar", function (hooks) {
     assert.ok(element);
     assert.notOk(remainingElement);
 
-    assert.false(element.classList.contains("strong-danger"));
-    assert.false(element.classList.contains("strong-success"));
+    assert.false(element.classList.contains("before:bg-danger"));
+    assert.false(element.classList.contains("before:bg-success"));
   });
 
   test("The Chart color is green when spent effort is in the budget and the task is archived", async function (assert) {
@@ -83,8 +83,8 @@ module("Integration | Component | statistic list/bar", function (hooks) {
     assert.ok(element);
     assert.notOk(remainingElement);
 
-    assert.false(element.classList.contains("strong-danger"));
-    assert.true(element.classList.contains("strong-success"));
+    assert.false(element.classList.contains("before:bg-danger"));
+    assert.true(element.classList.contains("before:bg-success"));
   });
 
   test("The Chart color is RED when spent effort is over the budget", async function (assert) {
@@ -96,8 +96,8 @@ module("Integration | Component | statistic list/bar", function (hooks) {
 
     assert.ok(element);
 
-    assert.true(element.classList.contains("strong-danger"));
-    assert.false(element.classList.contains("strong-success"));
+    assert.true(element.classList.contains("before:bg-danger"));
+    assert.false(element.classList.contains("before:bg-success"));
   });
 
   test("The Chart color is red when spent effort is over the budget", async function (assert) {
@@ -109,8 +109,8 @@ module("Integration | Component | statistic list/bar", function (hooks) {
 
     assert.ok(element);
 
-    assert.true(element.classList.contains("strong-danger"));
-    assert.false(element.classList.contains("strong-success"));
+    assert.true(element.classList.contains("before:bg-danger"));
+    assert.false(element.classList.contains("before:bg-success"));
   });
 
   test("The Chart color is blue & there is remaining when spent effort is in the budget", async function (assert) {
@@ -125,8 +125,8 @@ module("Integration | Component | statistic list/bar", function (hooks) {
     assert.ok(remainingElement);
 
     assert.true(remainingElement.classList.contains("success"));
-    assert.false(element.classList.contains("strong-danger"));
-    assert.false(element.classList.contains("strong-success"));
+    assert.false(element.classList.contains("before:bg-danger"));
+    assert.false(element.classList.contains("before:bg-success"));
   });
 
   test("The Chart color is blue & the remaining is red when spent effort is in the budget, and the remaining is over the budget", async function (assert) {
@@ -140,8 +140,8 @@ module("Integration | Component | statistic list/bar", function (hooks) {
     assert.ok(element);
     assert.ok(remainingElement);
 
-    assert.false(element.classList.contains("strong-danger"));
-    assert.false(element.classList.contains("strong-success"));
+    assert.false(element.classList.contains("before:bg-danger"));
+    assert.false(element.classList.contains("before:bg-success"));
     assert.true(remainingElement.classList.contains("success"));
   });
 
@@ -157,7 +157,7 @@ module("Integration | Component | statistic list/bar", function (hooks) {
     assert.ok(remainingEelement);
 
     assert.true(remainingEelement.classList.contains("danger"));
-    assert.true(element.classList.contains("strong-danger"));
-    assert.false(element.classList.contains("strong-success"));
+    assert.true(element.classList.contains("before:bg-danger"));
+    assert.false(element.classList.contains("before:bg-success"));
   });
 });

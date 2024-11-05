@@ -1,10 +1,10 @@
 <div ...attributes>
   {{#if @data.isRunning}}
-    <Empty>
+    <Empty data-test-loading>
       <LoadingIcon />
     </Empty>
   {{else if @data.last.isError}}
-    <Empty>
+    <Empty data-test-something-went-wrong>
       <div>
         <FaIcon @icon="bolt" @prefix="fas" />
         <h3>Oops... Something went wrong</h3>
@@ -16,7 +16,7 @@
       </div>
     </Empty>
   {{else if @missingParams}}
-    <Empty>
+    <Empty data-test-missing-filter-params>
       <FaIcon @icon="magnifying-glass" @prefix="fas" />
       <h3>Missing filter parameters</h3>
       <p>{{this.missingParamsMessage}}</p>

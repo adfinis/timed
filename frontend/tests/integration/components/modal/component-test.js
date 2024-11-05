@@ -22,11 +22,11 @@ module("Integration | Component | Modal", function (hooks) {
       </Modal>
     `);
 
-    assert.dom("#sy-modals > *").exists({ count: 1 });
+    assert.dom("#modals > *").exists({ count: 1 });
 
-    assert.dom("#sy-modals .modal-header").hasText("Header ×");
-    assert.dom("#sy-modals .modal-body").includesText("Body");
-    assert.dom("#sy-modals .modal-footer").includesText("Footer");
+    assert.dom("#modals .modal-header").hasText("Header ×");
+    assert.dom("#modals .modal-body").includesText("Body");
+    assert.dom("#modals .modal-footer").includesText("Footer");
   });
 
   test("closes on click of the close icon", async function (assert) {
@@ -41,7 +41,7 @@ module("Integration | Component | Modal", function (hooks) {
 
     assert.ok(this.visible);
 
-    await click("#sy-modals .modal-header button");
+    await click("#modals .modal-header button");
 
     assert.notOk(this.visible);
   });

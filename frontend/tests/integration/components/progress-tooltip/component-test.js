@@ -171,7 +171,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
       <ProgressTooltip @target='#target' @model={{this.project}} @visible={{true}} />
     `);
 
-    assert.dom(".progress-tooltip .badge--danger").exists();
+    assert.dom(".progress-tooltip .badge .bg-danger").exists();
   });
 
   test("uses warning color when the factor is 0.9 or more", async function (assert) {
@@ -191,6 +191,6 @@ module("Integration | Component | progress tooltip", function (hooks) {
       <ProgressTooltip @target='#target' @model={{this.project}} @visible={{true}} />
     `);
 
-    assert.dom(".progress-tooltip .badge--warning").exists();
+    assert.dom(".progress-tooltip .badge .bg-warning").exists();
   });
 });
