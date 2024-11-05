@@ -113,7 +113,7 @@
           data-test-save-report
           disabled={{or
             this.save.isRunning
-            (or (not cs.isValid) (not cs.isDirty))
+            (or (not cs.isValid) (not (or cs.isDirty cs.isNew)))
           }}
         ><FaIcon @icon="floppy-disk" /></f.submit>
       {{/if}}
