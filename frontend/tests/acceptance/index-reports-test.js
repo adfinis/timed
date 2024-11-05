@@ -52,27 +52,23 @@ module("Acceptance | index reports", function (hooks) {
     await visit("/reports");
 
     await waitFor(".customer-select");
-    await taskSelect(".form-list--reports .form-list-row:last-child");
+    await taskSelect(".reports .report-row:last-child");
 
     await fillIn(
-      ".form-list--reports .form-list-row:last-child [data-test-report-duration]",
+      ".reports .report-row:last-child [data-test-report-duration]",
       "03:30"
     );
     await fillIn(
-      ".form-list--reports .form-list-row:last-child [data-test-report-comment]",
+      ".reports .report-row:last-child  [data-test-report-comment]",
       "Test comment report"
     );
 
+    await click(".reports .report-row:last-child  [data-test-report-review]");
     await click(
-      ".form-list--reports .form-list-row:last-child [data-test-report-review]"
-    );
-    await click(
-      ".form-list--reports .form-list-row:last-child [data-test-report-not-billable]"
+      ".reports .report-row:last-child  [data-test-report-not-billable]"
     );
 
-    await click(
-      ".form-list--reports .form-list-row:last-child [data-test-save-report]"
-    );
+    await click(".reports .report-row:last-child  [data-test-save-report]");
 
     assert
       .dom(
