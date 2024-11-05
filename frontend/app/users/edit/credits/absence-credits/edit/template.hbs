@@ -62,6 +62,7 @@
               {{#unless credit.isNew}}
                 <button
                   type="button"
+                  data-test-absence-credit-delete
                   class="btn btn-danger {{if this.delete.isRunning 'loading'}}"
                   {{on "click" (perform this.delete credit)}}
                 >Delete</button>

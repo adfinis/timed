@@ -47,7 +47,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
     await fillIn("input[name=days]", "5");
     await fillIn("input[name=comment]", "Ding dong");
 
-    await click(".btn-primary");
+    await click("[data-test-absence-credit-save]");
 
     assert.strictEqual(currentURL(), `/users/${this.user.id}/credits`);
 
@@ -77,7 +77,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
 
     await visit(`/users/${this.user.id}/credits/absence-credits/${id}`);
 
-    await click(".btn-danger");
+    await click("[data-test-absence-credit-delete]");
 
     assert.strictEqual(currentURL(), `/users/${this.user.id}/credits`);
 
