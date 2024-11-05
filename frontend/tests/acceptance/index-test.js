@@ -71,7 +71,7 @@ module("Acceptance | index", function (hooks) {
     assert.dom("[data-test-record-start]").doesNotExist();
     assert.dom("[data-test-record-stop]").exists({ count: 1 });
     assert
-      .dom(".record-button-container--recording [data-test-record-stop]")
+      .dom(".record-button-container--recording[data-test-record-stop]")
       .exists();
     assert
       .dom("[data-test-activity-row]:first-child td:nth-child(2) div")
@@ -86,7 +86,7 @@ module("Acceptance | index", function (hooks) {
     await visit("/");
 
     assert
-      .dom(".record-button-container--recording [data-test-record-stop]")
+      .dom(".record-button-container--recording[data-test-record-stop]")
       .exists();
     assert.dom("[data-test-record-stop]").exists({ count: 1 });
     assert.dom("[data-test-tracking-comment] input").hasValue(activity.comment);
@@ -96,7 +96,7 @@ module("Acceptance | index", function (hooks) {
     assert.dom("[data-test-record-start]").exists({ count: 1 });
     assert.dom("[data-test-record-stop]").doesNotExist();
     assert
-      .dom(".record-button-container--recording [data-test-record-start]")
+      .dom(".record-button-container--recording[data-test-record-start]")
       .doesNotExist();
     assert.dom("[data-test-tracking-comment] input").hasNoValue();
   });
@@ -199,9 +199,15 @@ module("Acceptance | index", function (hooks) {
     await visit("/?day=2017-06-29");
 
     assert
-      .dom('[data-test-weekly-overview-day="29"].holiday')
+      .dom(
+        '[data-test-weekly-overview-lg] [data-test-weekly-overview-day="29"].holiday'
+      )
       .exists({ count: 1 });
-    assert.dom('[data-test-weekly-overview-day="28"].holiday').doesNotExist();
+    assert
+      .dom(
+        '[data-test-weekly-overview-lg] [data-test-weekly-overview-day="28"].holiday'
+      )
+      .doesNotExist();
   });
 
   test("rollbacks the absence modal", async function (assert) {

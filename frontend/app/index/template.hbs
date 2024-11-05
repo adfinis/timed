@@ -8,7 +8,10 @@
     <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
   </div>
   <div class="hidden lg:flex">
-    <WeeklyOverview @expected={{this.expectedWorktime}}>
+    <WeeklyOverview
+      @expected={{this.expectedWorktime}}
+      data-test-weekly-overview-lg
+    >
       {{#each this.weeklyOverviewData.value as |d|}}
         <WeeklyOverviewDay
           @day={{d.day}}
@@ -25,7 +28,10 @@
     </WeeklyOverview>
   </div>
   <div class="hidden md:flex lg:hidden">
-    <WeeklyOverview @expected={{this.expectedWorktime}}>
+    <WeeklyOverview
+      @expected={{this.expectedWorktime}}
+      data-test-weekly-overview-md
+    >
       {{#each (slice 5 -5 this.weeklyOverviewData.value) as |d|}}
         <WeeklyOverviewDay
           @day={{d.day}}
@@ -42,7 +48,10 @@
     </WeeklyOverview>
   </div>
   <div class="hidden sm:flex md:hidden">
-    <WeeklyOverview @expected={{this.expectedWorktime}}>
+    <WeeklyOverview
+      @expected={{this.expectedWorktime}}
+      data-test-weekly-overview-sm
+    >
       {{#each (slice 10 -10 this.weeklyOverviewData.value) as |d|}}
         <WeeklyOverviewDay
           @day={{d.day}}
@@ -58,7 +67,7 @@
       {{/each}}
     </WeeklyOverview>
   </div>
-  <div class="flex sm:hidden">
+  <div class="flex sm:hidden" data-test-weekly-overview-xs>
     <WeeklyOverview @expected={{this.expectedWorktime}}>
       {{#each (slice 16 -16 this.weeklyOverviewData.value) as |d|}}
         <WeeklyOverviewDay

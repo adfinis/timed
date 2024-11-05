@@ -5,7 +5,7 @@
   class="record-button-container h-full btn px-3
     {{if
       this.active
-      'grid grid-cols-[auto,minmax(0,1fr)] gap-x-2 place-items-center'
+      'record-button-container--recording active grid grid-cols-[auto,minmax(0,1fr)] gap-x-2 place-items-center'
     }}"
   {{on "click" (prevent-default (optional (if this.active @onStop @onStart)))}}
 >

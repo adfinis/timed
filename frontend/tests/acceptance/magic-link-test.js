@@ -29,7 +29,7 @@ module("Acceptance | magic links", function (hooks) {
     assert.dom("[data-test-magic-link-form]").isVisible();
 
     await waitFor(".customer-select");
-    await taskSelect("[data-test-task-selector] div");
+    await taskSelect("[data-test-task-selector]");
     await fillIn("[data-test-magic-link-comment]", "some great comment");
 
     await fillIn("[data-test-magic-link-duration]", "02:00");
@@ -106,7 +106,7 @@ module("Acceptance | magic links", function (hooks) {
     assert.dom("[data-test-magic-link-form]").isVisible();
 
     await waitFor(".customer-select");
-    await taskSelect("[data-test-task-selector] div");
+    await taskSelect("[data-test-task-selector]");
     await fillIn("[data-test-magic-link-comment]", "some great comment");
     await fillIn("[data-test-magic-link-duration]", "02:00");
 
