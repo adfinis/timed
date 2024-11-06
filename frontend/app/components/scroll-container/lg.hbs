@@ -1,6 +1,9 @@
-<ScrollContainer class="max-lg:hidden" ...attributes>
-  {{yield}}
-</ScrollContainer>
-<div class="lg:hidden" ...attributes>
-  {{yield}}
-</div>
+{{#if (media "isLg")}}
+  <ScrollContainer ...attributes>
+    {{yield}}
+  </ScrollContainer>
+{{else}}
+  <div ...attributes>
+    {{yield}}
+  </div>
+{{/if}}

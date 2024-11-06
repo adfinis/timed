@@ -12,10 +12,6 @@ import { authenticateSession } from "ember-simple-auth/test-support";
 import faker from "faker";
 import moment from "moment";
 import { module, test } from "qunit";
-import {
-  uniqueReports,
-  uniqueReportsById,
-} from "timed/tests/helpers/report-row";
 
 import taskSelect from "../helpers/task-select";
 
@@ -44,8 +40,7 @@ module("Acceptance | index reports", function (hooks) {
     await visit("/reports");
 
     // one row is for adding a new report
-    assert.dom("[data-test-report-row]").exists({ count: 12 });
-    assert.strictEqual(uniqueReports().length, 6);
+    assert.dom("[data-test-report-row]").exists({ count: 6 });
   });
 
   test("can add report", async function (assert) {
@@ -123,8 +118,7 @@ module("Acceptance | index reports", function (hooks) {
 
     await visit("/reports");
 
-    assert.dom(`[data-test-report-row-id="${id}"]`).exists({ count: 2 });
-    assert.strictEqual(uniqueReportsById(id).length, 1);
+    assert.dom(`[data-test-report-row-id="${id}"]`).exists({ count: 1 });
 
     await click(`[data-test-report-row-id="${id}"] [data-test-delete-report]`);
 
@@ -178,15 +172,13 @@ module("Acceptance | index reports", function (hooks) {
     const tomorrow = moment().add(1, "days").format("YYYY-MM-DD");
 
     await visit("/reports");
-    assert.dom("[data-test-report-row]").exists({ count: 12 });
-    assert.strictEqual(uniqueReports().length, 6);
+    assert.dom("[data-test-report-row]").exists({ count: 6 });
 
     await click("[data-test-report-reschedule]");
     await click(`button[data-date="${tomorrow}"]`);
     await click("[data-test-report-save]");
 
     assert.ok(currentURL().includes(`/reports?day=${tomorrow}`));
-    assert.dom("[data-test-report-row]").exists({ count: 12 });
-    assert.strictEqual(uniqueReports().length, 6);
+    assert.dom("[data-test-report-row]").exists({ count: 6 });
   });
 });

@@ -4,7 +4,6 @@ import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import moment from "moment";
 import { module, skip, test } from "qunit";
-import { uniqueReports } from "timed/tests/helpers/report-row";
 import formatDuration from "timed/utils/format-duration";
 
 module("Acceptance | index activities", function (hooks) {
@@ -92,8 +91,7 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.strictEqual(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 14 });
-    assert.strictEqual(uniqueReports().length, 7);
+    assert.dom("[data-test-report-row]").exists({ count: 7 });
 
     assert
       .dom(
@@ -123,8 +121,7 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.strictEqual(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 12 });
-    assert.strictEqual(uniqueReports().length, 6);
+    assert.dom("[data-test-report-row]").exists({ count: 6 });
 
     await visit("/");
 
@@ -132,8 +129,7 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.strictEqual(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 12 });
-    assert.strictEqual(uniqueReports().length, 6);
+    assert.dom("[data-test-report-row]").exists({ count: 6 });
   });
 
   test("shows a warning when generating reports from unknown tasks", async function (assert) {
@@ -299,8 +295,7 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.equal(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 14 });
-    assert.strictEqual(uniqueReports().length, 7);
+    assert.dom("[data-test-report-row]").exists({ count: 7 });
 
     assert
       .dom(`${`[data-test-report-row-id="${id}"]`} [name=duration-day]`)
@@ -331,8 +326,7 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.strictEqual(currentURL(), "/reports");
 
-    assert.dom("[data-test-report-row]").exists({ count: 14 });
-    assert.strictEqual(uniqueReports().length, 7);
+    assert.dom("[data-test-report-row]").exists({ count: 7 });
 
     assert
       .dom(`[data-test-report-row-id="6"] [name=duration-day]`)
