@@ -38,7 +38,10 @@
     >
       <Topnav::List>
         <Topnav::ListItem class="max-md:w-full">
-          <Topnav::LinkTo @route="index">
+          <Topnav::LinkTo
+            @route="index"
+            @onClick={{fn (mut this.expand) false}}
+          >
             <FaIcon @icon="clock" @size="lg" />
             <span>Tracking</span>
           </Topnav::LinkTo>
@@ -51,13 +54,19 @@
             </Topnav::LinkTo>
           </Topnav::ListItem>
           <Topnav::ListItem>
-            <Topnav::LinkTo @route="statistics">
+            <Topnav::LinkTo
+              @route="statistics"
+              @onClick={{fn (mut this.expand) false}}
+            >
               <FaIcon @icon="chart-bar" />
               Statistics
             </Topnav::LinkTo>
           </Topnav::ListItem>
           <Topnav::ListItem>
-            <Topnav::LinkTo @route="projects">
+            <Topnav::LinkTo
+              @route="projects"
+              @onClick={{fn (mut this.expand) false}}
+            >
               <FaIcon @icon="briefcase" @prefix="fas" />
               Projects
             </Topnav::LinkTo>
@@ -65,7 +74,10 @@
         {{/if}}
         {{#if this.currentUser.user.isSuperuser}}
           <Topnav::ListItem>
-            <Topnav::LinkTo @route="users.index">
+            <Topnav::LinkTo
+              @onClick={{fn (mut this.expand) false}}
+              @route="users.index"
+            >
               <FaIcon @icon="users" @prefix="fas" />
               Users
             </Topnav::LinkTo>
@@ -76,6 +88,7 @@
         <ReportReviewWarning @class="max-md:hidden" />
         <Topnav::ListItem>
           <Topnav::LinkTo
+            @onClick={{fn (mut this.expand) false}}
             @route="users.edit"
             @model={{this.currentUser.user.id}}
           >

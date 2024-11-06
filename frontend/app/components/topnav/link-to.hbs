@@ -5,6 +5,8 @@
       @model={{@model}}
       class={{this.class}}
       @activeClass={{this.activeClass}}
+      {{on "click" (optional @onClick)}}
+      ...attributes
     >
       {{yield}}
     </LinkTo>
@@ -13,10 +15,17 @@
       @route={{@route}}
       class={{this.class}}
       @activeClass={{this.activeClass}}
+      {{on "click" (optional @onClick)}}
+      ...attributes
     >
       {{yield}}
     </LinkTo>
   {{/if}}
 {{else}}
-  <a href="#" ...attributes class={{this.class}} >{{yield}}</a>
+  <a
+    {{on "click" (optional @onClick)}}
+    href="#"
+    ...attributes
+    class={{this.class}}
+  >{{yield}}</a>
 {{/if}}
