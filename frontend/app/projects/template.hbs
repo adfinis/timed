@@ -36,7 +36,10 @@
         as |project|
       >
         <div
-          class={{if project.archived "bg-background-muted"}}
+          class={{if
+            project.archived
+            "!bg-background-secondary hover:!bg-background-secondary/70 !text-foreground-primary"
+          }}
         >{{project.name}}</div>
       </PowerSelect>
     </div>
