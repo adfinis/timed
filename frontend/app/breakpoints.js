@@ -1,8 +1,8 @@
+// same breakpoints tailwind uses
 export default {
-  mo: "(max-width: 479px)",
-  xs: "(min-width: 480px) and (max-width: 767px)",
-  sm: "(min-width: 768px) and (max-width: 991px)",
-  md: "(min-width: 992px) and (max-width: 1199px)",
-  lg: "(min-width: 1200px) and (max-width: 1439px)",
-  xl: "(min-width: 1440px)",
+  sm: "(min-width: 640px)",
+  md: "(min-width: 768px)",
+  lg: "(min-width: 1024px)",
+  xl: "(min-width: 1280px)",
+  xl2: "(min-width: 1536px)",
 };

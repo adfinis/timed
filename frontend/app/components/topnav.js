@@ -10,6 +10,6 @@ export default class Topnav extends Component {
   @tracked expand = false;
 
   get navMobile() {
-    return this.media.isMo || this.media.isXs;
+    return !this.media.isSm;
   }
 }

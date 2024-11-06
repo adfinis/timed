@@ -121,7 +121,7 @@ export default class TourService extends Tour {
     return (
       !this.model.tourDone &&
       !this.autostartTour.done.includes(this.routeName) &&
-      (this.media.isMd || this.media.isLg || this.media.isXl)
+      this.media.isMd
     );
   }
 

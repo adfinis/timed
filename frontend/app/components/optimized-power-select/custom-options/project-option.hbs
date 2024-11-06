@@ -3,7 +3,7 @@
   class="{{if @option.archived 'inactive'}}"
   id="project-option-{{@option.id}}"
 >
-  {{#if (and @current (or (media "isMd") (media "isLg") (media "isXl")))}}
+  {{#if (and @current (media "isMd"))}}
     <ProgressTooltip
       @target={{concat "#project-option-" @option.id}}
       @visible={{@current}}
