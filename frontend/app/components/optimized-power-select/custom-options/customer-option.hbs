@@ -1,24 +1,25 @@
 <div
-  class="{{if @option.archived 'inactive'}} px-1"
+  class="{{if @option.archived 'inactive'}} flex justify-between items-center"
   title="{{if @option.isTask @option.longName @option.name}}{{if
     @option.archived
     ' (archived)'
   }}"
 >
   {{#if @option.isTask}}
-    <span class="history">
-      <i class="fa fa-history"></i>
-      <span class="history-text inline-flex flex-col">
-        <small class="text-xs">{{@option.project.customer.name}}
-          >
-          {{@option.project.name}}</small>
-        {{@option.name}}
-      </span>
+    <span
+      class="history history-text inline-flex flex-col lg:text-sm xl:text-xl transform-[font-size]"
+    >
+      <small
+        class="text-xs xl:text-sm transform-[font-size]"
+      >{{@option.project.customer.name}}
+        >
+        {{@option.project.name}}</small>
+      {{@option.name}}
     </span>
   {{else}}
     {{@option.name}}
   {{/if}}
   {{#if @option.archived}}
-    <i class="fa fa-archive"></i>
+    <FaIcon @icon="archive" @prefix="fas" />
   {{/if}}
 </div>

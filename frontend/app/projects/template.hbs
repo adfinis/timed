@@ -8,7 +8,7 @@
     <div class="grid sm:grid-cols-2 gap-2 mb-2 pb-2">
       <PowerSelect
         data-test-customer-selection
-        class="rounded"
+        class="rounded [&_.ember-power-select-selected-item_svg]:!hidden"
         @tagName="div"
         @options={{this.customers}}
         @placeholder="Select customer..."
@@ -19,11 +19,13 @@
         @allowClear={{true}}
         as |customer|
       >
-        <div>{{customer.name}}</div>
+        <OptimizedPowerSelect::CustomOptions::CustomerOption
+          @option={{customer}}
+        />
       </PowerSelect>
       <PowerSelect
         data-test-project-selection
-        class="rounded"
+        class="rounded [&_.ember-power-select-selected-item_svg]:!hidden"
         @tagName="div"
         @options={{this.filteredProjects}}
         @placeholder="Select project..."
@@ -35,12 +37,9 @@
         @disabled={{not this.selectedCustomer}}
         as |project|
       >
-        <div
-          class={{if
-            project.archived
-            "!bg-background-secondary hover:!bg-background-secondary/70 !text-foreground-primary"
-          }}
-        >{{project.name}}</div>
+        <OptimizedPowerSelect::CustomOptions::ProjectOption
+          @option={{project}}
+        />
       </PowerSelect>
     </div>
     {{#if this.selectedProject}}

@@ -1,5 +1,5 @@
 .ember-power-select-dropdown {
-  @apply min-w-64;
+  @apply min-w-64 lg:min-w-72;
 }
 
 .ember-power-select-trigger {
@@ -19,7 +19,19 @@
 }
 
 .ember-power-select-option[aria-selected="true"] div {
-  @apply bg-primary hover:bg-primary/70 text-foreground-primary;
+  @apply bg-primary text-foreground-primary;
+}
+
+.ember-power-select-option div.inactive {
+  @apply bg-background-secondary/70 text-foreground-primary;
+}
+
+.ember-power-select-option[aria-current="true"] div.inactive {
+  @apply bg-background-secondary/90;
+}
+
+.ember-power-select-option[aria-selected="true"] div.inactive {
+  @apply bg-background-secondary;
 }
 
 .ember-power-select-visually-hidden {
@@ -39,5 +51,5 @@
 }
 
 .ember-power-select-options[role="listbox"] {
-  @apply max-h-96 overflow-y-auto;
+  @apply max-h-96 lg:max-h-[28rem] overflow-y-auto;
 }

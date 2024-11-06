@@ -1,5 +1,8 @@
 {{#if this.unverifiedReports.hasReports}}
-  <li class="nav-top-list-item h-full" title="You have reports to verify">
+  <Topnav::ListItem
+    class="nav-top-list-item h-full"
+    title="You have reports to verify"
+  >
     <LinkTo
       @route="analysis.index"
       class="{{this.class}}"
@@ -23,10 +26,13 @@
       <FaIcon @icon="exclamation-triangle" @prefix="fas" />
       {{this.unverifiedReports.amountReports}}
     </LinkTo>
-  </li>
+  </Topnav::ListItem>
 {{/if}}
 {{#if this.rejectedReports.hasReports}}
-  <li class="nav-top-list-item h-full" title="You have rejected reports">
+  <Topnav::ListItem
+    class="nav-top-list-item h-full"
+    title="You have rejected reports"
+  >
     <LinkTo
       class="{{this.class}}"
       @route="analysis.index"
@@ -50,5 +56,5 @@
       <FaIcon @icon="circle-xmark" />
       {{this.rejectedReports.amountReports}}
     </LinkTo>
-  </li>
+  </Topnav::ListItem>
 {{/if}}

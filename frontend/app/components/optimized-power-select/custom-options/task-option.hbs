@@ -1,6 +1,6 @@
 <div
   title="{{@option.name}}{{if @option.archived ' (archived)'}}"
-  class="{{if @option.archived 'inactive'}}"
+  class="{{if @option.archived 'inactive'}} flex justify-between items-center"
   id="task-option-{{@option.id}}"
 >
   {{#if (and @current (media "isMd"))}}
@@ -12,6 +12,6 @@
   {{/if}}
   {{@option.name}}
   {{#if @option.archived}}
-    <i class="fa fa-archive"></i>
+    <FaIcon @icon="archive" @prefix="fas" />
   {{/if}}
 </div>
