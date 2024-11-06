@@ -31,19 +31,21 @@
       <label for="row-comment" hidden>Comment</label>
       <input
         type="text"
-        class="form-control comment-field rounded"
+        class="form-control comment-field rounded
+          {{if cs.task.project.customerVisible 'customer-comment'}}"
         placeholder="Comment"
         name="comment"
         id="row-comment"
         value={{cs.comment}}
         disabled={{not this.editable}}
+        title={{if
+          cs.task.project.customerVisible
+          "This project's comments are visible to the customer"
+        }}
         spellcheck="true"
         {{on "change" (pick "target.value" (fn (mut cs.comment)))}}
         data-test-report-comment
       />
-      {{#if cs.task.project.customerVisible}}
-        <CustomerVisibleIcon class="customer-visible-icon" />
-      {{/if}}
     </div>
     <div class="form-list-cell form-group cell-duration">
       <DurationpickerDay

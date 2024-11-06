@@ -15,7 +15,7 @@
       >
         <div class="form-group">{{t.customer}}</div>
         <div class="form-group">{{t.project}}</div>
-        {{!-- template-lint-disable no-at-ember-render-modifiers --}}
+        {{! template-lint-disable no-at-ember-render-modifiers }}
         <div
           class="form-group"
           {{did-update t.reset @model.task.id}}
@@ -27,7 +27,15 @@
         <label hidden for="comment">Comment</label>
         <input
           type="text"
-          class="form-control comment-field rounded"
+          class="form-control comment-field rounded
+            {{if
+              this.changeset.task.project.customerVisible
+              'customer-comment'
+            }}"
+          title={{if
+            this.changeset.task.project.customerVisible
+            "This project's comments are visible to the customer"
+          }}
           placeholder="Comment"
           name="comment"
           id="comment"
@@ -38,11 +46,10 @@
             (pick "target.value" (fn (mut this.changeset.comment)))
           }}
         />
-        {{#if this.changeset.task.project.customerVisible}}
-          <CustomerVisibleIcon class="customer-visible-icon" />
-        {{/if}}
       </div>
-      <div class="form-group checkboxes p-2 flex justify-between [&>*]:w-full [&>*]:grid [&>*]:grid-cols-[auto,minmax(0,1fr)] [&>*]:items-center [&>*]:justify-items-start [&>*]:gap-x-2">
+      <div
+        class="form-group checkboxes p-2 flex justify-between [&>*]:w-full [&>*]:grid [&>*]:grid-cols-[auto,minmax(0,1fr)] [&>*]:items-center [&>*]:justify-items-start [&>*]:gap-x-2"
+      >
         <Checkbox
           data-test-activity-review
           @checked={{this.changeset.review}}
@@ -82,7 +89,7 @@
           </tr>
         </tbody>
       </table>
-    </Card::Footer >
+    </Card::Footer>
     <Card::Footer class="text-right flex justify-between">
       <LinkTo
         @route="index.activities"
@@ -91,19 +98,19 @@
         data-test-activity-edit-form-cancel
       >Cancel</LinkTo>
       <div class="grid grid-cols-2 gap-2">
-      <button
-        class="btn btn-danger"
-        type="button"
-        disabled={{@model.active}}
-        {{on "click" this.delete}}
-        data-test-activity-edit-form-delete
-      >Delete</button>
-      <button
-        class="btn btn-primary"
-        type="submit"
-        disabled={{not this.saveEnabled}}
-        data-test-activity-edit-form-save
-      >Save</button>
+        <button
+          class="btn btn-danger"
+          type="button"
+          disabled={{@model.active}}
+          {{on "click" this.delete}}
+          data-test-activity-edit-form-delete
+        >Delete</button>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          disabled={{not this.saveEnabled}}
+          data-test-activity-edit-form-save
+        >Save</button>
       </div>
     </Card::Footer>
   </Card>

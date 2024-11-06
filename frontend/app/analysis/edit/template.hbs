@@ -120,14 +120,19 @@
                         data-test-comment
                         type="text"
                         placeholder="Enter comment..."
-                        class="form-control comment-field rounded"
+                        class="form-control comment-field rounded
+                          {{if
+                            model.task.project.customerVisible
+                            'customer-comment'
+                          }}"
+                        title={{if
+                          model.task.project.customerVisible
+                          "This project's comments are visible to the customer"
+                        }}
                         {{on "change" (pick "target.value" fi.update)}}
                         value={{fi.value}}
                       />
                     </label>
-                    {{#if model.task.project.customerVisible}}
-                      <CustomerVisibleIcon class="customer-visible-icon" />
-                    {{/if}}
                   </f.input>
 
                   <div class="grid gap-1">
