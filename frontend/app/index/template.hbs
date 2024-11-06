@@ -7,89 +7,23 @@
       }}</h1>
     <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
   </div>
-  <div class="hidden xl:flex">
+  <div>
     <WeeklyOverview
       @expected={{this.expectedWorktime}}
-      data-test-weekly-overview-xl
+      data-test-weekly-overview
     >
-      {{#each this.weeklyOverviewData.value as |d|}}
-        <WeeklyOverviewDay
-          @day={{d.day}}
-          @active={{d.active}}
-          @worktime={{d.worktime}}
-          @workday={{d.workday}}
-          @absence={{d.absence}}
-          @holiday={{d.holiday}}
-          @prefix={{d.prefix}}
-          @onClick={{fn (mut this.date)}}
-          data-test-weekly-overview-day={{moment-format d.day "DD"}}
-        />
-      {{/each}}
-    </WeeklyOverview>
-  </div>
-  <div class="hidden lg:flex xl:hidden">
-    <WeeklyOverview
-      @expected={{this.expectedWorktime}}
-      data-test-weekly-overview-lg
-    >
-      {{#each (slice 5 -5 this.weeklyOverviewData.value) as |d|}}
-        <WeeklyOverviewDay
-          @day={{d.day}}
-          @active={{d.active}}
-          @worktime={{d.worktime}}
-          @workday={{d.workday}}
-          @absence={{d.absence}}
-          @holiday={{d.holiday}}
-          @prefix={{d.prefix}}
-          @onClick={{fn (mut this.date)}}
-          data-test-weekly-overview-day={{moment-format d.day "DD"}}
-        />
-      {{/each}}
-    </WeeklyOverview>
-  </div>
-  <div class="hidden md:flex lg:hidden">
-    <WeeklyOverview
-      @expected={{this.expectedWorktime}}
-      data-test-weekly-overview-md
-    >
-      {{#each (slice 10 -10 this.weeklyOverviewData.value) as |d|}}
-        <WeeklyOverviewDay
-          @day={{d.day}}
-          @active={{d.active}}
-          @worktime={{d.worktime}}
-          @workday={{d.workday}}
-          @absence={{d.absence}}
-          @holiday={{d.holiday}}
-          @prefix={{d.prefix}}
-          @onClick={{fn (mut this.date)}}
-          data-test-weekly-overview-day={{moment-format d.day "DD"}}
-        />
-      {{/each}}
-    </WeeklyOverview>
-  </div>
-  <div class="hidden sm:flex md:hidden">
-    <WeeklyOverview
-      @expected={{this.expectedWorktime}}
-      data-test-weekly-overview-sm
-    >
-      {{#each (slice 15 -15 this.weeklyOverviewData.value) as |d|}}
-        <WeeklyOverviewDay
-          @day={{d.day}}
-          @active={{d.active}}
-          @worktime={{d.worktime}}
-          @workday={{d.workday}}
-          @absence={{d.absence}}
-          @holiday={{d.holiday}}
-          @prefix={{d.prefix}}
-          @onClick={{fn (mut this.date)}}
-          data-test-weekly-overview-day={{moment-format d.day "DD"}}
-        />
-      {{/each}}
-    </WeeklyOverview>
-  </div>
-  <div class="flex sm:hidden" data-test-weekly-overview-xs>
-    <WeeklyOverview @expected={{this.expectedWorktime}}>
-      {{#each (slice 21 -21 this.weeklyOverviewData.value) as |d|}}
+      {{#each
+        (if
+          (media "isXl")
+          this.weeklyOverviewData.value
+          (slice
+            this.weeklyOverviewSliceValue
+            (this.negate this.weeklyOverviewSliceValue)
+            this.weeklyOverviewData.value
+          )
+        )
+        as |d|
+      }}
         <WeeklyOverviewDay
           @day={{d.day}}
           @active={{d.active}}

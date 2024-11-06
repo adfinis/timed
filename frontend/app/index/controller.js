@@ -23,6 +23,8 @@ import { cached } from "tracked-toolbox";
 export default class IndexController extends Controller {
   queryParams = ["day"];
 
+  negate = (n) => n * -1;
+
   @tracked showAddModal = false;
   @tracked showEditModal = false;
   @tracked day = moment().format("YYYY-MM-DD");
@@ -33,10 +35,11 @@ export default class IndexController extends Controller {
   /* istanbul ignore next */
   @trackedWrapper disabledDates = [];
 
-  @service store;
-  @service notify;
-  @service tracking;
   @service currentUser;
+  @service media;
+  @service notify;
+  @service store;
+  @service tracking;
 
   AbsenceValidations = AbsenceValidations;
   MultipleAbsenceValidations = MultipleAbsenceValidations;
@@ -318,6 +321,22 @@ export default class IndexController extends Controller {
     return get(this, "currentUser.user.activeEmployment.location.workdays");
   }
 
+  get weeklyOverviewSliceValue() {
+    if (this.media.isLg) {
+      return 5;
+    }
+
+    if (this.media.isMd) {
+      return 10;
+    }
+
+    if (this.media.isSm) {
+      return 15;
+    }
+
+    return 21;
+  }
+
   /**
    * The task to compute the data for the weekly overview
    *
@@ -363,8 +382,8 @@ export default class IndexController extends Controller {
       {}
     );
 
-    return Array.from({ length: 46 }, (value, index) =>
-      moment(this.date).add(index - 23, "days")
+    return Array.from({ length: 56 }, (value, index) =>
+      moment(this.date).add(index - 28, "days")
     ).map((d) => {
       const {
         reports = [],
