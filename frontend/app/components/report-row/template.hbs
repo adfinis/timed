@@ -1,7 +1,7 @@
 {{#let (changeset @report this.ReportValidations) as |cs|}}
   <ValidatedForm
     @model={{cs}}
-    class="report-row grid grid-cols-4 max-lg:[&>*]:w-full lg:grid-cols-[repeat(3,minmax(0,0.9fr)),minmax(0,1.6fr),minmax(0,0.45fr),minmax(2rem,0.6fr),repeat(2,minmax(2rem,0.8fr))] xl:grid-cols-[repeat(3,minmax(0,1.2fr)),minmax(0,1.8fr),minmax(0,0.4fr),minmax(2rem,0.5fr),repeat(2,minmax(2rem,0.7fr))] gap-2 p-1 lg:p-1.5 lg:p-2 xl:p-2.5"
+    class="report-row grid grid-cols-4 max-lg:[&>*]:w-full lg:grid-cols-[repeat(3,minmax(0,0.9fr)),minmax(0,1.6fr),minmax(0,0.45fr),minmax(2rem,0.6fr),repeat(2,minmax(2rem,0.6fr))] xl:grid-cols-[repeat(3,minmax(0,1.2fr)),minmax(0,1.8fr),minmax(0,0.4fr),minmax(2rem,0.5fr),repeat(2,minmax(2rem,0.5fr))] gap-2 p-1 lg:p-1.5 lg:p-2 xl:p-2.5"
     title={{this.title}}
     @on-submit={{perform this.save}}
     ...attributes
