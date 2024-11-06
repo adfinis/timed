@@ -26,6 +26,8 @@
   --secondary: var(--dark-blue);
   --success: var(--green);
   --warning: var(--amber);
+
+  --border-radius: 4px;
 }
 
 /* experimental dark theme */

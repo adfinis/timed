@@ -17,6 +17,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      borderRadius: {
+        DEFAULT: "var(--border-radius)",
+      },
       fontFamily: {
         sans: ["Source Sans Pro", "sans-serif"],
         mono: ["Menlo", "Monaco", "Consolas", "Courier New", "monospace"],
