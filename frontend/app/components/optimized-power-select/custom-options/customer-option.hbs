@@ -6,13 +6,11 @@
   }}"
 >
   {{#if @option.isTask}}
-    <span
-      class="history history-text inline-flex flex-col text-lg xl:text-xl transform-[font-size]"
-    >
+    <span class="history history-text inline-flex flex-col xl:text-lg">
       <small
-        class="text-xs xl:text-sm transform-[font-size]"
+        class="text-2xs xl:text-xs text-[color-mix(in_srgb,currentColor,transparent_10%)] mt-0.5 -mb-0.5"
       >{{@option.project.customer.name}}
-        >
+        &gt;
         {{@option.project.name}}</small>
       {{@option.name}}
     </span>
