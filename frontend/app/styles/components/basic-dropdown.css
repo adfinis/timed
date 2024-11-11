@@ -1,5 +1,5 @@
 .ember-basic-dropdown-content {
-  @apply p-2 border border-border absolute bg-background z-50 w-auto rounded;
+  @apply p-2 border border-border absolute bg-background z-30 w-auto rounded;
 }
 
 .ember-basic-dropdown-content-wormhole-origin {
