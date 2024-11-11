@@ -19,7 +19,7 @@
         >Worktime balance</h2>
 
         <div
-          class="user-header-worktime-balance-container grid grid-cols-2 md:grid-cols-[minmax(0,0.9fr),minmax(0,2.2fr),minmax(0,0.9fr)] lg:grid-cols-[auto,minmax(0,0.8fr),auto] lg:gap-2 w-full lg:w-3/4 max-w-[54rem] xl:max-w-[64rem] place-self-center px-8 sm:px-16 md:px-0"
+          class="user-header-worktime-balance-container grid grid-cols-2 md:grid-cols-[minmax(0,0.9fr),minmax(0,2.2fr),minmax(0,0.9fr)] lg:grid-cols-[auto,minmax(0,0.8fr),auto] lg:gap-2 w-full lg:w-3/4 max-w-[48rem] xl:max-w-[52rem] place-self-center px-8 sm:px-16 md:px-0 mb-5"
         >
           <div
             class="user-header-worktime-balance-last-valid-timesheet text-center justify-self-end w-full self-center max-md:text-left md:-translate-y-4 max-md:px-2"
@@ -30,13 +30,13 @@
             }}
               <h2
                 title="Last day with timesheet entries or absences"
-                class="text-foreground-muted uppercase text-lg sm:text-xl md:text-2xl lg:text-3xl"
+                class="text-foreground-muted uppercase text-base sm:text-lg md:text-xl lg:text-2xl"
               >
                 {{moment-format balance.date "DD.MM.YYYY"}}
               </h2>
               <div
                 class="{{balance-highlight-class balance.balance}}
-                  text-xl sm:text-2xl md:text-4xl lg:text-5xl"
+                  text-xl sm:text-2xl md:text-3xl lg:text-4xl"
               >
                 {{format-duration balance.balance false}}
               </div>
@@ -59,11 +59,11 @@
               as |balance|
             }}
               <h2
-                class="text-foreground-muted uppercase text-lg sm:text-xl md:text-2xl lg:text-3xl"
+                class="text-foreground-muted uppercase text-base sm:text-lg md:text-xl lg:text-2xl"
               >Today</h2>
               <div
                 class="{{balance-highlight-class balance.balance}}
-                  text-xl sm:text-2xl md:text-4xl lg:text-5xl"
+                  text-xl sm:text-2xl md:text-3xl lg:text-4xl"
               >
                 {{format-duration balance.balance false}}
               </div>
@@ -80,7 +80,7 @@
         </div>
 
         <div
-          class="user-header-absence-balance-container flex-row flex-wrap flex justify-around md:justify-between max-w-[54rem] xl:max-w-[64rem] place-self-center w-full md:px-8 lg:px-9 xl:px-11 transition-[padding,max-width]"
+          class="user-header-absence-balance-container flex-row flex-wrap flex justify-around md:justify-between max-w-[48rem] xl:max-w-[52rem] place-self-center w-full md:px-8 lg:px-9 xl:px-10 transition-[padding,max-width] mb-2 transition-all"
         >
           {{#let this.data.lastSuccessful.value.absenceBalances as |balances|}}
             {{#each balances as |balance index|}}
