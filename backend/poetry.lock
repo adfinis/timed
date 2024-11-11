@@ -1365,19 +1365,20 @@ lxml = "*"
 
 [[package]]
 name = "pyexcel-io"
-version = "0.6.6"
+version = "0.6.7"
 description = "A python library to read and write structured data in csv, zipped csvformat and to/from databases"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "pyexcel-io-0.6.6.tar.gz", hash = "sha256:f6084bf1afa5fbf4c61cf7df44370fa513821af188b02e3e19b5efb66d8a969f"},
-    {file = "pyexcel_io-0.6.6-py2.py3-none-any.whl", hash = "sha256:19ff1d599a8a6c0982e4181ef86aa50e1f8d231410fa7e0e204d62e37551c1d6"},
+    {file = "pyexcel_io-0.6.7-py2.py3-none-any.whl", hash = "sha256:add9f3c1489070ab0a3226bab7d23d4b84a364f5b44f3a14e2ce785ede88fcb3"},
+    {file = "pyexcel_io-0.6.7.tar.gz", hash = "sha256:2c33d8df505e21a13bed585ac6ab7d30ec826a9f156b758394af5d22359bddb9"},
 ]
 
 [package.dependencies]
 lml = ">=0.0.4"
 
 [package.extras]
+extra = ["chardet"]
 ods = ["pyexcel-ods3 (>=0.6.0)"]
 xls = ["pyexcel-xls (>=0.6.0)"]
 xlsx = ["pyexcel-xlsx (>=0.6.0)"]
@@ -1969,4 +1970,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "24251233487800491ebd56a3826b3b6b665cbf8b408bd4d27dc26e76574d317e"
+content-hash = "d34a440cdd344d64c0834d7c5dde7090dda404489ee058cd0c32eae9f2959600"
