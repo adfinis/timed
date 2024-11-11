@@ -5,7 +5,7 @@
     {{this.strokeClass}}
     relative translate-y-[calc(var(--max-offset)*var(--offset-multiplicator))] md:basis-32 text-foreground/85 lg:[--max-offset:-2rem]"
 >
-  <div class="donut-title text-center text-2xl">{{@title}}</div>
+  <div class="donut-title text-center text-3xl md:text-2xl">{{@title}}</div>
 
   <div class="donut relative">
     <svg width="100%" height="100%" viewBox="0 0 40 40">
@@ -34,13 +34,15 @@
     </svg>
 
     <div
-      class="donut-content absolute flex justify-center items-center text-center p-4 inset-0 w-full h-full flex-col text-xl"
+      class="donut-content absolute flex justify-center items-center text-center p-4 inset-0 w-full h-full flex-col text-2xl md:text-xl"
     >
       {{#if @balance.usedDuration}}
         {{format-duration @balance.usedDuration false}}
       {{else}}
         {{#if @balance.credit}}
-          <div class="text-sm text-foreground-muted">{{@balance.usedDays}}
+          <div
+            class="text-base md:text-sm text-foreground-muted"
+          >{{@balance.usedDays}}
             of
             {{@balance.credit}}</div>
           {{#if (gte @balance.credit 1)}}

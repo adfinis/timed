@@ -96,7 +96,10 @@
     {{/let}}
   </Card>
 
-  <Card  class="grid grid-rows-[min-content,1fr,min-content]" data-test-overtime-credits>
+  <Card
+    class="grid grid-rows-[min-content,1fr,min-content]"
+    data-test-overtime-credits
+  >
     {{#let (can "create overtime-credit") as |canCreate|}}
       <Card::Header><h4>Overtime credits</h4></Card::Header>
       {{#if this.overtimeCredits.isRunning}}
