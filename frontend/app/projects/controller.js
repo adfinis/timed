@@ -4,17 +4,12 @@ import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, lastValue, task } from "ember-concurrency";
 import uniqBy from "lodash.uniqby";
-import customerOptionTemplate from "timed/components/optimized-power-select/custom-options/customer-option";
-import projectOptionTemplate from "timed/components/optimized-power-select/custom-options/project-option";
 import ProjectValidations from "timed/validations/project";
 import TaskValidations from "timed/validations/task";
 
 export default class ProjectsController extends Controller {
   taskValidations = TaskValidations;
   projectValidations = ProjectValidations;
-
-  customerOptionTemplate = customerOptionTemplate;
-  projectOptionTemplate = projectOptionTemplate;
 
   @service currentUser;
   @service store;
