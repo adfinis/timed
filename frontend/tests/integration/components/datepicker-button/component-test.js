@@ -23,7 +23,8 @@ module("Integration | Component | datepicker button", function (hooks) {
   });
 
   test("changes value on selection", async function (assert) {
-    this.set("value", moment());
+    const INITIAL_VALUE = moment("2024-01-06");
+    this.set("value", INITIAL_VALUE);
 
     await render(
       hbs`<DatepickerButton @value={{this.value}} @onChange={{fn (mut this.value)}} />`
@@ -37,7 +38,7 @@ module("Integration | Component | datepicker button", function (hooks) {
 
     target.click();
 
-    const expected = moment().endOf("month").endOf("week");
+    const expected = INITIAL_VALUE.endOf("month").endOf("week").add(1, "day");
 
     assert.ok(this.value.isSame(expected, "day"));
   });

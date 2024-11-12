@@ -9,6 +9,7 @@ import {
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { selectChoose } from "ember-power-select/test-support";
 import { setupApplicationTest } from "ember-qunit";
+import { setBreakpoint } from "ember-responsive/test-support";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
@@ -20,6 +21,7 @@ module("Acceptance | analysis", function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
+    setBreakpoint("sm");
     this.user = this.server.create("user");
 
     // eslint-disable-next-line camelcase

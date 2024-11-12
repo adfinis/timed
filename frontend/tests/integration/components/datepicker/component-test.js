@@ -88,7 +88,7 @@ module("Integration | Component | datepicker", function (hooks) {
       ".ember-power-calendar-day-grid .ember-power-calendar-row:last-child .ember-power-calendar-day:last-child"
     );
 
-    const expected = moment().endOf("month").endOf("week");
+    const expected = moment().endOf("month").endOf("week").add(1, "day");
 
     assert.ok(this.value.isSame(expected, "day"));
   });

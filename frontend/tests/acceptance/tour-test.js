@@ -24,7 +24,7 @@ module("Acceptance | tour", function (hooks) {
 
     localStorage.removeItem("timed-tour");
 
-    setBreakpoint("xl");
+    setBreakpoint("md");
   });
 
   test("shows a welcome dialog", async function (assert) {
