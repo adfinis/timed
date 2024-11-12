@@ -38,9 +38,9 @@
       {{/each}}
     </WeeklyOverview>
   </div>
-  <div class="grid-cell visible-sm">
+  <div class="grid-cell visible-sm grid-rows-1">
     <NavTabs
-      class="max-sm:my-2 sm:grid-cols-[repeat(3,minmax(0,auto)),50fr] grid"
+      class="max-sm:my-2 sm:grid-cols-[repeat(3,minmax(0,auto)),50fr] grid grid-rows-1"
     >
       <NavTabs::Item>
         <NavTabs::A @route="index.activities">
@@ -67,11 +67,13 @@
         </NavTabs::A>
       </NavTabs::Item>
       {{#if this.absence}}
-        <li class="md:hidden border first:rounded-t-sm last:rounded-b-sm grid">
+        <li
+          class="sm:hidden border border-warning first:rounded-t-sm last:rounded-b-sm grid"
+        >
           <button
             type="button"
             data-test-edit-absence
-            class="btn md:btn-warning bg-warning text-foreground-primary border-none rounded-none"
+            class="btn bg-warning/70 hover:bg-warning border-warning text-foreground-primary border-none rounded-none"
             {{on "click" (toggle "showEditModal" this)}}
           >
             {{this.absence.absenceType.name}}
@@ -89,7 +91,9 @@
           Add absence
         </button>
       </li>
-      <li class="max-sm:hidden w-full flex sm:justify-end gap-x-2">
+      <li
+        class="max-sm:hidden w-full flex sm:justify-end gap-x-1 md:gap-x-2 mt-px sm:pt-px"
+      >
         {{#if this.absence}}
           <NavTabs::Button
             type="button"
@@ -101,7 +105,7 @@
           </NavTabs::Button>
         {{/if}}
         <NavTabs::Button
-          class="hover:text-primary hover:border-primary"
+          class="hover:text-primary hover:border-primary whitespace-nowrap"
           data-test-add-absence
           disabled={{cannot "access page"}}
           {{on "click" (toggle "showAddModal" this)}}
