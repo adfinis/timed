@@ -17,3 +17,7 @@ h4 {
 h5 {
   @apply text-lg;
 }
+
+strong {
+  @apply font-medium;
+}

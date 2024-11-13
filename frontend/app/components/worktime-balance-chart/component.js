@@ -3,8 +3,8 @@ import moment from "moment";
 import humanizeDuration from "timed/utils/humanize-duration";
 
 // TODO: take this from tailwind.config.js
-const FONT_SANS = ["Source Sans Pro", "sans-serif"];
-const FONT_MONO = ["Menlo", "Monaco", "Consolas", "Courier New", "monospace"];
+const FONT_SANS = ['"Source Sans 3"', "sans-serif"];
+const FONT_MONO = ['"Source Code Pro"', "monospace"];
 
 const cssvar = (name) =>
   getComputedStyle(document.documentElement).getPropertyValue(name);

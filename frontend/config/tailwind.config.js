@@ -21,8 +21,8 @@ module.exports = {
         DEFAULT: "var(--border-radius)",
       },
       fontFamily: {
-        sans: ["Source Sans Pro", "sans-serif"],
-        mono: ["Menlo", "Monaco", "Consolas", "Courier New", "monospace"],
+        sans: ['"Source Sans 3"', "sans-serif"],
+        mono: ["'Source Code Pro'", "monospace"],
       },
       keyframes: {
         loading: {

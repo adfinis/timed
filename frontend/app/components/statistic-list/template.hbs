@@ -96,9 +96,10 @@
                 {{#if (not index)}}
                   Total:
                 {{else if (eq column.title "Duration")}}
-                  <span
-                    class="total border-double border-b-4"
-                  >{{humanize-duration this.total false}}</span>
+                  <span class="total">{{humanize-duration
+                      this.total
+                      false
+                    }}</span>
                 {{/if}}
               </strong>
             </Table::Td>
