@@ -71,7 +71,7 @@ module.exports = {
         black: "rgb(var(--black) / <alpha-value>)",
         // hacky, rethink
         "foreground-mid":
-          "color-mix(in oklab, rgb(var(--foreground)), rgb(var(--foreground-muted)))",
+          "color-mix(in srgb, rgb(var(--background)) 20%, color-mix(in oklab, rgb(var(--foreground)), rgb(var(--foreground-muted))))",
 
         // override border colour used by @tailwindcss/forms
         gray: {

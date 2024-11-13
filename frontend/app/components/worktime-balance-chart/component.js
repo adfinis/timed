@@ -87,18 +87,20 @@ export default class WorktimeBalanceChart extends Component {
         ],
       },
       tooltips: {
-        // TODO: dry this so foreground-mid doesn't need to be hardcoded
-        backgroundColor: `color-mix(in oklab, rgb(${cssvar(
+        backgroundColor: `color-mix(in srgb, rgb(${cssvar(
+          "--background"
+        )}) 20%, color-mix(in srgb, rgb(${cssvar(
           "--foreground"
-        )}), rgb(${cssvar("--foreground-muted")}))`, // foreground-mid
+        )}), rgb(${cssvar("--foreground-muted")})))`, // foreground-mid
         titleFontColor: `rgb(${cssvar("--background")})`,
         bodyFontColor: `rgb(${cssvar("--background-muted")})`,
         displayColors: false,
         cornerRadius: 2,
-        bodyFontFamily: FONT_MONO,
+        bodyFontFamily: FONT_SANS,
         bodyFontSize: 16,
         titleFontFamily: FONT_SANS,
         titleFontSize: 18,
+        titleFontStyle: "normal",
         titleMarginBottom: 10,
         xPadding: 10,
         yPadding: 10,
