@@ -145,7 +145,7 @@
   --primary-dark: rgb(91 142 219);
 
   --secondary: 150 150 150;
-  --tertiary-dark: 162 155 150;
+  --tertiary-dark: rgb(162 155 150);
   --background: var(--white);
   --background-muted: rgb(238 238 238);
   --background-secondary: 230 230 230;
