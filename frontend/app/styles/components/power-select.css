@@ -15,7 +15,7 @@
 }
 
 .ember-power-select-option[aria-current="true"] div {
-  @apply text-foreground-primary bg-primary/70;
+  @apply text-foreground-primary bg-primary-light;
 }
 
 .ember-power-select-option[aria-selected="true"] div {
@@ -23,7 +23,7 @@
 }
 
 .ember-power-select-option div.inactive {
-  @apply bg-background-secondary/70 text-foreground-primary;
+  @apply bg-background-secondary/70 text-foreground-secondary;
 }
 
 .ember-power-select-option[aria-current="true"] div.inactive {

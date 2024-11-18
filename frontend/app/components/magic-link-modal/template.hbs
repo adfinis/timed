@@ -16,9 +16,9 @@
         @on-set-task={{this.onSetTask}}
         as |t|
       >
-        <t.customer />
-        <t.project />
-        <t.task />
+        <t.customer @dropdownClass="z-[60]" />
+        <t.project @dropdownClass="z-[60]" />
+        <t.task @dropdownClass="z-[60]" />
       </TaskSelection>
 
       <input

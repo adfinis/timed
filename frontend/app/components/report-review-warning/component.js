@@ -9,7 +9,7 @@ export default class ReportReviewWarning extends Component {
   @service rejectedReports;
 
   get class() {
-    return `text-primary hover:text-foreground-primary hover:bg-primary/70 p-2 gap-1 grid-cols-[auto,minmax(0,1fr)] grid items-center h-full ${
+    return `text-primary hover:text-foreground-primary hover:bg-primary-light p-2 gap-1 grid-cols-[auto,minmax(0,1fr)] grid items-center h-full ${
       this.args.class ?? ""
     }`;
   }

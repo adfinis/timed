@@ -3,20 +3,20 @@
   type="button"
   {{on "click" this.click}}
   {{style this.style}}
-  class="weekly-overview-day h-0 w-4 relative cursor-pointer z-10 [&>*]:transition-colors hover:[--percent:--hf-percent] [&.active]:[--percent:--active-percent] focus:[--percent:--hf-percent]
+  class="weekly-overview-day h-0 w-4 relative cursor-pointer z-10 [&>*]:transition-colors
     {{if @active 'active'}}
     {{if @absence 'absence'}}
     {{if @holiday 'holiday'}}
     {{unless @workday 'weekend'}}
     {{if
       @absence
-      'text-[color-mix(in_srgb,rgb(var(--warning))_var(--percent),rgb(var(--white)))] [--hf-percent:90%] [--percent:65%] [--active-percent:100%]'
+      'text-overview-absence hover:text-overview-absence-hf focus:text-overview-absence-hf [&.active]:text-overview-absence-active'
       (or
         (if
           @workday
-          'text-[color-mix(in_srgb,rgb(var(--primary))_var(--percent),rgb(var(--background)))] [--hf-percent:80%] [--percent:50%] [--active-percent:100%]'
+          'text-overview-workday hover:text-overview-workday-hf focus:text-overview-workday-hf [&.active]:text-overview-workday-active'
         )
-        'text-[color-mix(in_srgb,rgb(var(--background))_var(--percent),color-mix(in_srgb,rgb(var(--foreground)),rgb(var(--foreground-muted))))] [--percent:65%] [--hf-percent:50%] [--active-percent:30%]'
+        'text-overview-weekend hover:text-overview-weekend-hf focus:text-overview-weekend-hf [&.active]:text-overview-weekend-active'
       )
     }}
     "

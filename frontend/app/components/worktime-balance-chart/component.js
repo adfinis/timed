@@ -38,15 +38,15 @@ export default class WorktimeBalanceChart extends Component {
       elements: {
         line: {
           tension: 0,
-          borderColor: `rgb(${cssvar("--primary")})`,
+          borderColor: cssvar("--primary"),
           backgroundColor: "transparent",
           borderWidth: 2,
         },
         point: {
-          borderColor: `rgb(${cssvar("--secondary")})`,
+          borderColor: cssvar("--tertiary"),
           backgroundColor: `rgb(${cssvar("--background")})`,
-          hoverBackgroundColor: `rgb(${cssvar("--background-muted")})`,
-          hoverBorderColor: `rgb(${cssvar("--primary")})`,
+          hoverBackgroundColor: cssvar("--background-muted"),
+          hoverBorderColor: cssvar("--primary"),
           borderWidth: 2,
           hoverBorderWidth: 2,
           radius: 3.5,
@@ -87,13 +87,9 @@ export default class WorktimeBalanceChart extends Component {
         ],
       },
       tooltips: {
-        backgroundColor: `color-mix(in srgb, rgb(${cssvar(
-          "--background"
-        )}) 20%, color-mix(in srgb, rgb(${cssvar(
-          "--foreground"
-        )}), rgb(${cssvar("--foreground-muted")})))`, // foreground-mid
-        titleFontColor: `rgb(${cssvar("--background")})`,
-        bodyFontColor: `rgb(${cssvar("--background-muted")})`,
+        backgroundColor: cssvar("--background-muted"),
+        titleFontColor: `rgb(${cssvar("--foreground")})`,
+        bodyFontColor: `rgb(${cssvar("--foreground")})`,
         displayColors: false,
         cornerRadius: 2,
         bodyFontFamily: FONT_SANS,

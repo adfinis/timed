@@ -100,7 +100,7 @@ export default class TourService extends Tour {
       text: data.content,
       buttons: [
         {
-          classes: "shepherd-button-secondary",
+          classes: "shepherd-button-tertiary-dark",
           text: "Exit",
           type: "cancel",
         },

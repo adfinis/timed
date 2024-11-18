@@ -73,7 +73,7 @@
           <button
             type="button"
             data-test-edit-absence
-            class="btn bg-warning/70 hover:bg-warning border-warning text-foreground-primary border-none rounded-none"
+            class="btn bg-warning hover:bg-warning-accent border-warning text-foreground-primary border-none rounded-none"
             {{on "click" (toggle "showEditModal" this)}}
           >
             {{this.absence.absenceType.name}}
@@ -98,7 +98,7 @@
           <NavTabs::Button
             type="button"
             data-test-edit-absence
-            class="bg-warning/70 border-warning hover:bg-warning text-foreground-primary"
+            class="bg-warning-light border-warning hover:bg-warning hover:border-warning-accent text-foreground-primary"
             {{on "click" (toggle "showEditModal" this)}}
           >
             {{this.absence.absenceType.name}}

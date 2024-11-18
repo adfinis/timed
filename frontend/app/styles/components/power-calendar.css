@@ -44,7 +44,7 @@
 }
 
 .ember-power-calendar-day--selected:not([disabled]):hover {
-  @apply bg-primary/70 text-foreground-primary;
+  @apply bg-primary-light text-foreground-primary;
 }
 
 .ember-power-calendar-nav {

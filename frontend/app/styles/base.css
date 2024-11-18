@@ -16,25 +16,151 @@
   --amber: 245 158 11;
 
   --background: var(--white);
-  --background-muted: var(--light-grey);
+  --background-muted: rgb(var(--light-grey));
   --background-secondary: var(--dark-grey);
   --danger: var(--red);
+  --danger-accent: color-mix(
+    in srgb,
+    rgb(var(--danger)) 95%,
+    rgb(var(--foreground))
+  );
+  --danger-light: color-mix(in srgb, rgb(var(--danger)) 90%, rgb(var(--white)));
   --foreground-muted: var(--dark-grey);
   --foreground-primary: var(--white);
+  --foreground-secondary: var(--foreground-primary);
   --foreground: var(--black);
-  --primary: var(--dark-moderate-blue);
-  --secondary: var(--dark-blue);
+  --foreground-light: color-mix(
+    in srgb,
+    var(--background-muted) 80%,
+    rgb(var(--white))
+  );
+
+  --tertiary-dark: rgb(var(--dark-blue));
+  --tertiary: color-mix(in srgb, var(--tertiary-dark) 80%, rgb(var(--black)));
+  --tertiary-light: color-mix(in srgb, var(--tertiary) 80%, rgb(var(--white)));
+
+  --primary-dark: rgb(var(--dark-moderate-blue));
+  --primary: color-mix(in srgb, var(--primary-dark) 80%, rgb(var(--white)));
+  --primary-light: color-mix(in srgb, var(--primary) 80%, rgb(var(--white)));
+
+  --secondary: var(--dark-grey);
+  --secondary-light: color-mix(
+    in srgb,
+    rgb(var(--secondary)) 70%,
+    rgb(var(--white))
+  );
+  --secondary-dark: color-mix(
+    in srgb,
+    rgb(var(--secondary)) 80%,
+    rgb(var(--black))
+  );
+
   --success: var(--green);
+  --success-accent: color-mix(
+    in srgb,
+    rgb(var(--success)) 95%,
+    rgb(var(--black))
+  );
+  --success-light: color-mix(
+    in srgb,
+    rgb(var(--success)) 90%,
+    rgb(var(--white))
+  );
+
   --warning: var(--amber);
 
+  --warning-light: color-mix(
+    in srgb,
+    rgb(var(--warning)) 90%,
+    rgb(var(--white))
+  );
+  --warning-accent: color-mix(
+    in srgb,
+    rgb(var(--warning)) 95%,
+    rgb(var(--danger))
+  );
+
   --border-radius: 4px;
+
+  /* give simple ways to override */
+  --overview-workday-active: var(--overview-active);
+  --overview-workday-hf: var(--overview-hf);
+  --overview-absence-active: var(--overview-active);
+  --overview-absence-hf: var(--overview-hf);
+  --overview-weekend-active: var(--overview-active);
+  --overview-weekend-hf: var(--overview-hf);
+}
+
+.regular {
+  --overview-workday: color-mix(
+    in srgb,
+    var(--primary-light) 80%,
+    rgb(var(--white))
+  );
+
+  --overview-workday-hf: var(--primary);
+
+  --overview-workday-active: var(--primary-dark);
+
+  --overview-absence: color-mix(
+    in srgb,
+    var(--warning-light) 80%,
+    rgb(var(--white))
+  );
+
+  --overview-absence-hf: var(--warning-light);
+
+  --overview-absence-active: rgb(var(--warning));
+
+  --overview-weekend: color-mix(
+    in srgb,
+    rgb(var(--secondary)),
+    rgb(var(--white))
+  );
+  --overview-weekend-hf: color-mix(
+    in srgb,
+    var(--overview-weekend) 90%,
+    rgb(var(--black))
+  );
+  --overview-weekend-active: rgb(var(--secondary));
 }
 
 /* experimental dark theme */
 .dark {
   --background: var(--black);
-  --background-muted: var(--dark-blue);
+  --background-muted: color-mix(
+    in srgb,
+    rgb(var(--background)) 90%,
+    rgb(var(--foreground))
+  );
   --background-secondary: var(--light-grey);
   --foreground-muted: var(--dark-grey);
   --foreground: var(--white);
+  --primary: color-mix(in srgb, var(--primary-dark) 75%, rgb(var(--white)));
+  --primary-light: color-mix(in srgb, var(--primary) 90%, rgb(var(--white)));
+}
+
+/* experimental old theme */
+.old {
+  --primary-dark: rgb(91 142 219);
+
+  --secondary: 150 150 150;
+  --tertiary-dark: 162 155 150;
+  --background: var(--white);
+  --background-muted: rgb(238 238 238);
+  --background-secondary: 230 230 230;
+  --foreground-secondary: var(--foreground);
+  --foreground-muted: var(--dark-grey);
+  --foreground: 61 61 61;
+  --success: 92 184 92;
+  --danger: 217 83 79;
+  --warning: 240 173 78;
+
+  --overview-workday: rgb(var(--secondary));
+
+  --overview-absence: rgb(var(--warning));
+  --overview-weekend: rgb(220 220 220);
+
+  --overview-active: var(--primary);
+  --overview-hf: #7994bd;
 }
