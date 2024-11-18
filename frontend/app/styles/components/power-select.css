@@ -3,7 +3,7 @@
 }
 
 .ember-power-select-trigger {
-  @apply form-select flex overflow-hidden relative;
+  @apply form-select flex overflow-hidden relative focus:border-primary-light focus:ring-primary-light;
 }
 
 .ember-power-select-selected-item {
