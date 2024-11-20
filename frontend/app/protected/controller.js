@@ -77,8 +77,8 @@ export default class ProtectedController extends Controller {
     this.tour.startTour();
   }
 
-  @onKey("ctrl+k")
-  toggleTheme(e) {
+  @onKey("ctrl+,")
+  toggleDark(e) {
     e.preventDefault();
     const html = document.querySelector("html");
     if (!html) {
@@ -89,5 +89,19 @@ export default class ProtectedController extends Controller {
       return;
     }
     html.classList.add("dark");
+  }
+
+  @onKey("ctrl+.")
+  toggleTheme(e) {
+    e.preventDefault();
+    const html = document.querySelector("html");
+    if (!html) {
+      return;
+    }
+    if (html.classList.contains("regular")) {
+      html.classList.replace("regular", "old");
+      return;
+    }
+    html.classList.replace("old", "regular");
   }
 }
