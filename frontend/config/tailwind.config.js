@@ -70,10 +70,11 @@ module.exports = {
           light: colorMixOpacity("var(--danger-light)"),
         },
         foreground: {
-          DEFAULT: "rgb(var(--foreground) / <alpha-value>)",
+          DEFAULT: colorMixOpacity("var(--foreground)"),
           primary: "rgb(var(--foreground-primary) / <alpha-value>)",
           muted: "rgb(var(--foreground-muted) / <alpha-value>)",
           secondary: "rgb(var(--foreground-secondary) / <alpha-value>)",
+          accent: colorMixOpacity("var(--foreground-accent)"),
         },
         primary: {
           DEFAULT: colorMixOpacity("var(--primary)"),

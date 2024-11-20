@@ -338,7 +338,7 @@
                         }}
                         {{if
                           (or this.canBill (can 'edit report' report))
-                          'cursor-pointer'
+                          'cursor-pointer text-foreground-accent'
                         }}
                         align-top shadow shadow-foreground/5 transition-colors"
                       {{on "click" (fn this.selectRow report)}}
