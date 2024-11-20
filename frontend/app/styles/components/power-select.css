@@ -19,7 +19,7 @@
 }
 
 .ember-power-select-option[aria-selected="true"] div {
-  @apply bg-primary text-foreground-primary;
+  @apply bg-primary-dark text-foreground-primary;
 }
 
 .ember-power-select-option div.inactive {

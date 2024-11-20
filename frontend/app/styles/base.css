@@ -18,13 +18,13 @@
   --background: var(--white);
   --background-muted: rgb(var(--light-grey));
   --background-secondary: var(--dark-grey);
-  --danger: var(--red);
+  --danger: rgb(var(--red));
   --danger-accent: color-mix(
     in srgb,
-    rgb(var(--danger)) 95%,
-    rgb(var(--foreground))
+    var(--danger) 95%,
+    rgb(var(--foreground-muted))
   );
-  --danger-light: color-mix(in srgb, rgb(var(--danger)) 90%, rgb(var(--white)));
+  --danger-light: color-mix(in srgb, var(--danger) 90%, rgb(var(--white)));
   --foreground-muted: var(--dark-grey);
   --foreground-primary: var(--white);
   --foreground-secondary: var(--foreground-primary);
@@ -43,42 +43,23 @@
   --primary: color-mix(in srgb, var(--primary-dark) 80%, rgb(var(--white)));
   --primary-light: color-mix(in srgb, var(--primary) 80%, rgb(var(--white)));
 
-  --secondary: var(--dark-grey);
+  --secondary: rgb(var(--dark-grey));
   --secondary-light: color-mix(
     in srgb,
-    rgb(var(--secondary)) 70%,
+    var(--secondary) 70%,
     rgb(var(--white))
   );
-  --secondary-dark: color-mix(
-    in srgb,
-    rgb(var(--secondary)) 80%,
-    rgb(var(--black))
-  );
+  --secondary-dark: color-mix(in srgb, var(--secondary) 80%, rgb(var(--black)));
 
-  --success: var(--green);
-  --success-accent: color-mix(
-    in srgb,
-    rgb(var(--success)) 95%,
-    rgb(var(--black))
-  );
-  --success-light: color-mix(
-    in srgb,
-    rgb(var(--success)) 90%,
-    rgb(var(--white))
-  );
+  --success: rgb(var(--green));
 
-  --warning: var(--amber);
+  --success-accent: color-mix(in srgb, var(--success) 95%, rgb(var(--black)));
+  --success-light: color-mix(in srgb, var(--success) 90%, rgb(var(--white)));
 
-  --warning-light: color-mix(
-    in srgb,
-    rgb(var(--warning)) 90%,
-    rgb(var(--white))
-  );
-  --warning-accent: color-mix(
-    in srgb,
-    rgb(var(--warning)) 95%,
-    rgb(var(--danger))
-  );
+  --warning: rgb(var(--amber));
+
+  --warning-light: color-mix(in srgb, var(--warning) 90%, rgb(var(--white)));
+  --warning-accent: color-mix(in srgb, var(--warning) 95%, var(--danger));
 
   --border-radius: 4px;
 
@@ -90,7 +71,8 @@
   --overview-weekend-active: var(--overview-active);
   --overview-weekend-hf: var(--overview-hf);
 
-  --clock-accent: rgb(var(--success));
+  --clock: rgb(var(--foreground));
+  --clock-accent: var(--success);
 }
 
 .regular {
@@ -112,23 +94,19 @@
 
   --overview-absence-hf: var(--warning-light);
 
-  --overview-absence-active: rgb(var(--warning));
+  --overview-absence-active: var(--warning);
 
-  --overview-weekend: color-mix(
-    in srgb,
-    rgb(var(--secondary)),
-    rgb(var(--white))
-  );
+  --overview-weekend: color-mix(in srgb, var(--secondary), rgb(var(--white)));
   --overview-weekend-hf: color-mix(
     in srgb,
     var(--overview-weekend) 90%,
     rgb(var(--black))
   );
-  --overview-weekend-active: rgb(var(--secondary));
+  --overview-weekend-active: var(--secondary);
 }
 
 /* experimental dark theme */
-.dark {
+.dark.regular {
   --background: var(--black);
   --background-muted: color-mix(
     in srgb,
@@ -144,32 +122,76 @@
 
 /* experimental old theme */
 .old {
-  --primary: rgb(91 142 219);
+  --old-primary: 91 142 219;
+  --old-tertiary-dark: 38 91 171;
+  --old-foreground: 61 61 61;
+  --old-success: 92 184 92;
+  --old-danger: 217 83 79;
+  --old-warning: 240 173 78;
+  --old-secondary: 150 150 150;
+  --old-background-muted: 238 238 238;
+  --old-background-secondary: 230 230 230;
+  --old-weekend: 220 220 220;
+  --old-overview-hoverorfocus: 121 148 189;
+
+  --primary: rgb(var(--old-primary));
   --primary-dark: color-mix(
     in srgb,
     var(--primary) 90%,
     rgb(var(--dark-moderate-blue))
   );
 
-  --secondary: 150 150 150;
-  --tertiary-dark: #265bab;
+  --secondary: rgb(var(--old-secondary));
+  --tertiary-dark: rgb(var(--old-tertiary-dark));
+
   --background: var(--white);
-  --background-muted: rgb(238 238 238);
-  --background-secondary: 230 230 230;
+  --background-muted: rgb(var(--old-background-muted));
+  --background-secondary: var(--old-background-secondary);
   --foreground-secondary: var(--foreground);
   --foreground-muted: var(--dark-grey);
-  --foreground: 61 61 61;
-  --success: 92 184 92;
-  --danger: 217 83 79;
-  --warning: 240 173 78;
+  --foreground: var(--old-foreground);
 
-  --overview-workday: rgb(var(--secondary));
+  --success: rgb(var(--old-success));
+  --danger: rgb(var(--old-danger));
+  --warning: rgb(var(--old-warning));
 
-  --overview-absence: rgb(var(--warning));
-  --overview-weekend: rgb(220 220 220);
-
+  --overview-workday: var(--secondary);
+  --overview-absence: var(--warning);
+  --overview-weekend: rgb(var(--old-weekend));
   --overview-active: var(--primary);
-  --overview-hf: #7994bd;
+  --overview-hf: rgb(var(--old-overview-hoverorfocus));
 
-  --clock-accent: rgb(var(--danger));
+  --clock-accent: var(--danger);
+}
+
+.dark.old {
+  --background: var(--black);
+  --background-muted: color-mix(
+    in srgb,
+    rgb(var(--background)) 90%,
+    rgb(var(--foreground))
+  );
+
+  --primary-dark: rgb(var(--old-tertiary-dark));
+  --primary: color-mix(in srgb, var(--primary-dark) 80%, rgb(var(--white)));
+  --primary-light: color-mix(
+    in srgb,
+    var(--primary) 90%,
+    rgb(var(--old-primary))
+  );
+
+  --tertiary-dark: rgb(var(--old-primary));
+  --foreground: var(--white);
+
+  --secondary: color-mix(
+    in srgb,
+    rgb(var(--old-secondary)) 80%,
+    rgb(var(--background))
+  );
+
+  --warning: rgb(var(--amber));
+  --success: color-mix(in srgb, rgb(var(--old-success)), rgb(var(--green)));
+  --danger: color-mix(in srgb, rgb(var(--red)), rgb(var(--old-danger)));
+
+  --clock: rgb(var(--foreground-muted));
 }

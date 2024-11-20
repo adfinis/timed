@@ -65,7 +65,7 @@ module.exports = {
         },
         border: borderColor,
         danger: {
-          DEFAULT: "rgb(var(--danger) / <alpha-value>)",
+          DEFAULT: colorMixOpacity("var(--danger)"),
           accent: colorMixOpacity("var(--danger-accent)"),
           light: colorMixOpacity("var(--danger-light)"),
         },
@@ -81,7 +81,7 @@ module.exports = {
           light: colorMixOpacity("var(--primary-light)"),
         },
         secondary: {
-          DEFAULT: "rgb(var(--secondary) / <alpha-value>)",
+          DEFAULT: colorMixOpacity("var(--secondary)"),
           dark: colorMixOpacity("var(--secondary-dark)"),
           light: colorMixOpacity("var(--secondary-light)"),
         },
@@ -91,12 +91,12 @@ module.exports = {
           light: colorMixOpacity("var(--tertiary-light)"),
         },
         success: {
-          DEFAULT: "rgb(var(--success) / <alpha-value>)",
+          DEFAULT: colorMixOpacity("var(--success)"),
           accent: colorMixOpacity("var(--success-accent)"),
           light: colorMixOpacity("var(--success-light)"),
         },
         warning: {
-          DEFAULT: "rgb(var(--warning) / <alpha-value>)",
+          DEFAULT: colorMixOpacity("var(--warning)"),
           accent: colorMixOpacity("var(--warning-accent)"),
           light: colorMixOpacity("var(--warning-light)"),
         },
