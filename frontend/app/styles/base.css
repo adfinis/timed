@@ -3,6 +3,7 @@
 
 :root {
   /* taken from https://adfinis.com/en/about-us/branding/ */
+
   --dark-blue: 28 46 93;
   --dark-moderate-blue: 46 75 152;
   --green: 46 152 123;
@@ -63,6 +64,11 @@
   --warning-accent: color-mix(in srgb, var(--warning) 95%, var(--danger));
 
   --border-radius: 4px;
+  --border: color-mix(
+    in srgb,
+    rgb(var(--background)),
+    rgb(var(--foreground-muted))
+  );
 
   /* give simple ways to override */
   --overview-workday-active: var(--overview-active);
@@ -115,10 +121,16 @@
     var(--foreground)
   );
   --background-secondary: var(--light-grey);
-  --foreground-muted: var(--dark-grey);
-  --foreground: var(--white);
+  --foreground-muted: rgb(var(--dark-grey));
+  --foreground-accent: rgb(var(--white));
+  --foreground: color-mix(
+    in srgb,
+    var(--foreground-accent) 80%,
+    rgb(var(--background))
+  );
   --primary: color-mix(in srgb, var(--primary-dark) 75%, rgb(var(--white)));
   --primary-light: color-mix(in srgb, var(--primary) 90%, rgb(var(--white)));
+  --tertiary-dark: rgb(var(--dark-moderate-blue));
 }
 
 /* experimental old theme */
@@ -151,7 +163,6 @@
   --foreground-secondary: var(--foreground);
   --foreground-muted: var(--dark-grey);
   --foreground: rgb(var(--old-foreground));
-
   --success: rgb(var(--old-success));
   --danger: rgb(var(--old-danger));
   --warning: rgb(var(--old-warning));

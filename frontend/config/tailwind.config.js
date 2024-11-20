@@ -9,12 +9,11 @@ const appRoot = path.join(__dirname, "../");
 const appEntry = path.join(appRoot, "app");
 const relevantFilesGlob = "**/*.{html,js,ts,hbs,gjs,gts}";
 
-const borderColor =
-  "color-mix(in srgb, rgb(var(--background) / <alpha-value>), rgb(var(--foreground-muted)))";
-
 // add opacity to any color by using color-mix
 const colorMixOpacity = (color) =>
   `color-mix(in srgb, ${color} calc(100% * <alpha-value>), transparent)`;
+
+const borderColor = colorMixOpacity("var(--border)");
 
 module.exports = {
   content: [path.join(appEntry, relevantFilesGlob)],
