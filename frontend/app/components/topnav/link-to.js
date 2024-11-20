@@ -2,7 +2,7 @@ import Component from "@glimmer/component";
 
 export default class TopnavLinkToComponent extends Component {
   get class() {
-    return "md:self-center p-2.5 w-full h-full grid items-center md:place-items-center grid-cols-[auto,minmax(0,1fr)] gap-1 lg:gap-2 hover:text-foreground-primary hover:[&:not(.active)]:bg-primary-light [&:not(.active,:hover)]:text-primary transition-[font-size]";
+    return "gap-1 grid grid-cols-[auto,minmax(0,1fr)] h-full hover:[&:not(.active)]:bg-primary-light hover:text-foreground-primary items-center lg:gap-2 md:place-items-center md:self-center [&:not(.active,:hover)]:text-tertiary py-2 px-2.5  transition-[font-size] w-full";
   }
 
   get activeClass() {

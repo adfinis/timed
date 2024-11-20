@@ -36,7 +36,7 @@
   );
 
   --tertiary-dark: rgb(var(--dark-blue));
-  --tertiary: color-mix(in srgb, var(--tertiary-dark) 80%, rgb(var(--black)));
+  --tertiary: color-mix(in srgb, var(--tertiary-dark) 80%, rgb(var(--white)));
   --tertiary-light: color-mix(in srgb, var(--tertiary) 80%, rgb(var(--white)));
 
   --primary-dark: rgb(var(--dark-moderate-blue));
@@ -89,6 +89,8 @@
   --overview-absence-hf: var(--overview-hf);
   --overview-weekend-active: var(--overview-active);
   --overview-weekend-hf: var(--overview-hf);
+
+  --clock-accent: rgb(var(--success));
 }
 
 .regular {
@@ -142,10 +144,15 @@
 
 /* experimental old theme */
 .old {
-  --primary-dark: rgb(91 142 219);
+  --primary: rgb(91 142 219);
+  --primary-dark: color-mix(
+    in srgb,
+    var(--primary) 90%,
+    rgb(var(--dark-moderate-blue))
+  );
 
   --secondary: 150 150 150;
-  --tertiary-dark: rgb(162 155 150);
+  --tertiary-dark: #265bab;
   --background: var(--white);
   --background-muted: rgb(238 238 238);
   --background-secondary: 230 230 230;
@@ -163,4 +170,6 @@
 
   --overview-active: var(--primary);
   --overview-hf: #7994bd;
+
+  --clock-accent: rgb(var(--danger));
 }

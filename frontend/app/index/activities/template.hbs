@@ -24,6 +24,9 @@
                     (eq activity.id this.editId)
                   )
                 }}
+                @hover={{not
+                  (or activity.transferred activity.active selected)
+                }}
                 data-test-activity-row
                 data-test-activity-row-id={{activity.id}}
                 class="{{if
@@ -36,11 +39,7 @@
                     'active bg-primary/20'
                   }}
                   {{if selected 'selected bg-primary text-foreground-primary'}}
-                  {{unless
-                    (or activity.transferred activity.active selected)
-                    'hover:bg-background-secondary/25'
-                  }}
-                  max-sm:[&>*]:flex last:border-b transition-colors"
+                  max-sm:[&>*]:flex last:border-b"
                 {{on "click" (fn this.editActivity activity)}}
               >
                 <Table::Td>
