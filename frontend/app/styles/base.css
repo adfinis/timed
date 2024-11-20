@@ -169,8 +169,8 @@
   --background: var(--black);
   --background-muted: color-mix(
     in srgb,
-    rgb(var(--background)) 90%,
-    rgb(var(--foreground))
+    rgb(var(--background)) 85%,
+    var(--foreground)
   );
 
   --primary-dark: rgb(var(--old-tertiary-dark));

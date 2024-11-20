@@ -23,15 +23,15 @@
 }
 
 .ember-power-select-option div.inactive {
-  @apply bg-background-secondary/70 text-foreground-secondary;
+  @apply bg-secondary-light/70 text-foreground-secondary;
 }
 
 .ember-power-select-option[aria-current="true"] div.inactive {
-  @apply bg-background-secondary/90;
+  @apply bg-secondary-light/90;
 }
 
 .ember-power-select-option[aria-selected="true"] div.inactive {
-  @apply bg-background-secondary;
+  @apply bg-secondary-dark text-foreground-primary;
 }
 
 .ember-power-select-visually-hidden {
@@ -40,6 +40,11 @@
 
 .ember-power-select-placeholder {
   @apply truncate;
+}
+
+.ember-power-select-trigger[aria-disabled="false"]
+  .ember-power-select-placeholder {
+  @apply text-foreground-accent/70;
 }
 
 .ember-basic-dropdown-trigger--above {
