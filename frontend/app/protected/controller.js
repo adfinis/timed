@@ -2,7 +2,9 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import { keyResponder, onKey } from "ember-keyboard";
 
+@keyResponder
 export default class ProtectedController extends Controller {
   @service notify;
   @service router;
@@ -73,5 +75,19 @@ export default class ProtectedController extends Controller {
 
     this.tour.prepare(this.currentUser.user);
     this.tour.startTour();
+  }
+
+  @onKey("ctrl+k")
+  toggleTheme(e) {
+    e.preventDefault();
+    const html = document.querySelector("html");
+    if (!html) {
+      return;
+    }
+    if (html.classList.contains("dark")) {
+      html.classList.remove("dark");
+      return;
+    }
+    html.classList.add("dark");
   }
 }
