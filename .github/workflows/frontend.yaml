@@ -78,6 +78,6 @@ jobs:
           COVERAGE: true
 
       - name: upload coverage report to codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           file: ./coverage/lcov.info
