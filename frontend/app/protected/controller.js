@@ -4,6 +4,68 @@ import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { keyResponder, onKey } from "ember-keyboard";
 
+const getHtml = () => document.querySelector("html");
+
+const COLOR_SCHEME_KEY = "color-scheme";
+const THEME_KEY = "theme";
+
+/**
+ * Sets dark or light mode
+ * @param {"light" | "dark"} colorScheme
+ * @param {ReturnType<getHtml>} html
+ **/
+const setColorScheme = (colorScheme, html = null) => {
+  const _html = html ?? getHtml();
+  localStorage.setItem(COLOR_SCHEME_KEY, colorScheme);
+
+  if (colorScheme === "light") {
+    _html.classList.remove("dark");
+    return;
+  }
+  _html.classList.add("dark");
+};
+
+const THEMES = /** @type {const} */ (["old", "regular"]);
+
+/**
+ * Sets regular or old color scheme
+ * @param {typeof THEMES[number]} theme
+ * @param {ReturnType<getHtml>} html
+ **/
+const setTheme = (theme, html = null) => {
+  const _html = html ?? getHtml();
+  localStorage.setItem(THEME_KEY, theme);
+
+  if (_html.classList.contains(theme)) {
+    return;
+  }
+  _html.classList.remove(...THEMES.filter((t) => t !== theme));
+  _html.classList.add(theme);
+};
+
+const loadConfiguration = () => {
+  const colorScheme =
+    localStorage.getItem(COLOR_SCHEME_KEY) ??
+    (window.matchMedia("(prefers-color-scheme:dark)").matches
+      ? "dark"
+      : "light");
+  const theme = localStorage.getItem(THEME_KEY) ?? THEMES[0];
+  const html = getHtml();
+  setTheme(theme, html);
+  setColorScheme(colorScheme, html);
+};
+
+const toggleColorScheme = () =>
+  setColorScheme(
+    localStorage.getItem(COLOR_SCHEME_KEY) === "dark" ? "light" : "dark"
+  );
+
+const cycleTheme = () => {
+  const currentTheme = localStorage.getItem(THEME_KEY);
+  const newTheme = THEMES[THEMES.indexOf(currentTheme) + 1] ?? THEMES[0];
+  setTheme(newTheme);
+};
+
 @keyResponder
 export default class ProtectedController extends Controller {
   @service notify;
@@ -77,31 +139,20 @@ export default class ProtectedController extends Controller {
     this.tour.startTour();
   }
 
+  constructor(...args) {
+    super(...args);
+    loadConfiguration();
+  }
+
   @onKey("ctrl+,")
-  toggleDark(e) {
+  _toggleColorScheme(e) {
     e.preventDefault();
-    const html = document.querySelector("html");
-    if (!html) {
-      return;
-    }
-    if (html.classList.contains("dark")) {
-      html.classList.remove("dark");
-      return;
-    }
-    html.classList.add("dark");
+    toggleColorScheme();
   }
 
   @onKey("ctrl+.")
-  toggleTheme(e) {
+  _cycleTheme(e) {
     e.preventDefault();
-    const html = document.querySelector("html");
-    if (!html) {
-      return;
-    }
-    if (html.classList.contains("regular")) {
-      html.classList.replace("regular", "old");
-      return;
-    }
-    html.classList.replace("old", "regular");
+    cycleTheme();
   }
 }
