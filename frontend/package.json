@@ -118,7 +118,7 @@
     "postcss": "^8.4.47",
     "postcss-import": "^16.1.0",
     "prettier": "~3.0.0",
-    "prettier-plugin-tailwindcss": "~0.4.1",
+    "prettier-plugin-tailwindcss": "^0.6.9",
     "qunit": "2.19.4",
     "qunit-dom": "3.0.0",
     "shepherd.js": "^11.2.0",
