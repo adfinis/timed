@@ -28,7 +28,7 @@ services:
       - TIMED_SSO_CLIENT_ID=timed-public
 
   keycloak:
-    image: keycloak/keycloak:24.0.3
+    image: keycloak/keycloak:25.0
     depends_on:
       - db
     volumes:
