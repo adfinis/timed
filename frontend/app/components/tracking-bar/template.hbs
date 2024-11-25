@@ -1,4 +1,4 @@
-<div class="tracking-bar border-b mb-6 pb-6" ...attributes>
+<div class="tracking-bar mb-6 border-b pb-6" ...attributes>
   <TaskSelection
     @disabled={{this.tracking.activity.active}}
     @liveTracking={{true}}
@@ -45,7 +45,7 @@
           disabled={{this.tracking.activity.active}}
         />
       </div>
-      <div class="grid place-self-center h-full">
+      <div class="grid h-full place-self-center">
         <RecordButton
           @activity={{this.tracking.activity}}
           @recording={{this.tracking.activity.active}}

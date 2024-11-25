@@ -37,13 +37,11 @@ module("Integration | Component | task selection", function (hooks) {
   setupMirage(hooks);
 
   test("renders", async function (assert) {
-    await render(hbs`
-      <TaskSelection as |t|>
-        {{t.customer}}
-        {{t.project}}
-        {{t.task}}
-      </TaskSelection>
-    `);
+    await render(hbs`<TaskSelection as |t|>
+  {{t.customer}}
+  {{t.project}}
+  {{t.task}}
+</TaskSelection>`);
 
     assert.dom(".customer-select[aria-disabled=true]").doesNotExist();
     assert.dom(".project-select[aria-disabled=true]").exists();
@@ -54,15 +52,11 @@ module("Integration | Component | task selection", function (hooks) {
     assert.expect(4);
     this.set("customer", CUSTOMER);
 
-    await render(hbs`
-      <TaskSelection
-        @initial={{hash customer = this.customer}}
-      as |t|>
-        {{t.customer}}
-        {{t.project}}
-        {{t.task}}
-      </TaskSelection>
-    `);
+    await render(hbs`<TaskSelection @initial={{hash customer=this.customer}} as |t|>
+  {{t.customer}}
+  {{t.project}}
+  {{t.task}}
+</TaskSelection>`);
 
     assert.dom(".customer-select[aria-disabled=true]").doesNotExist();
     assert.dom(".project-select[aria-disabled=true]").doesNotExist();
@@ -72,7 +66,7 @@ module("Integration | Component | task selection", function (hooks) {
       this.element
         .querySelector(".customer-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      CUSTOMER.name
+      CUSTOMER.name,
     );
   });
 
@@ -80,15 +74,11 @@ module("Integration | Component | task selection", function (hooks) {
     assert.expect(5);
     this.set("project", PROJECT);
 
-    await render(hbs`
-      <TaskSelection
-        @initial={{hash project = this.project}}
-      as |t|>
-        {{t.customer}}
-        {{t.project}}
-        {{t.task}}
-      </TaskSelection>
-    `);
+    await render(hbs`<TaskSelection @initial={{hash project=this.project}} as |t|>
+  {{t.customer}}
+  {{t.project}}
+  {{t.task}}
+</TaskSelection>`);
 
     assert.dom(".customer-select[aria-disabled=true]").doesNotExist();
     assert.dom(".project-select[aria-disabled=true]").doesNotExist();
@@ -98,13 +88,13 @@ module("Integration | Component | task selection", function (hooks) {
       this.element
         .querySelector(".customer-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      CUSTOMER.name
+      CUSTOMER.name,
     );
     assert.strictEqual(
       this.element
         .querySelector(".project-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      PROJECT.name
+      PROJECT.name,
     );
   });
 
@@ -112,15 +102,11 @@ module("Integration | Component | task selection", function (hooks) {
     assert.expect(6);
     this.set("task", TASK);
 
-    await render(hbs`
-      <TaskSelection
-        @initial={{hash task  = this.task}}
-      as |t|>
-        {{t.customer}}
-        {{t.project}}
-        {{t.task}}
-      </TaskSelection>
-    `);
+    await render(hbs`<TaskSelection @initial={{hash task=this.task}} as |t|>
+  {{t.customer}}
+  {{t.project}}
+  {{t.task}}
+</TaskSelection>`);
 
     assert.dom(".customer-select[aria-disabled=true]").doesNotExist();
     assert.dom(".project-select[aria-disabled=true]").doesNotExist();
@@ -130,34 +116,30 @@ module("Integration | Component | task selection", function (hooks) {
       this.element
         .querySelector(".customer-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      CUSTOMER.name
+      CUSTOMER.name,
     );
     assert.strictEqual(
       this.element
         .querySelector(".project-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      PROJECT.name
+      PROJECT.name,
     );
     assert.strictEqual(
       this.element
         .querySelector(".task-select .ember-power-select-selected-item")
         .innerHTML.trim(),
-      TASK.name
+      TASK.name,
     );
   });
 
   test("can clear only task", async function (assert) {
     this.set("task", TASK);
 
-    await render(hbs`
-      <TaskSelection
-        @initial={{hash task  = this.task}}
-      as |t|>
-        {{t.customer}}
-        {{t.project}}
-        {{t.task}}
-      </TaskSelection>
-    `);
+    await render(hbs`<TaskSelection @initial={{hash task=this.task}} as |t|>
+  {{t.customer}}
+  {{t.project}}
+  {{t.task}}
+</TaskSelection>`);
 
     await click(".task-select .ember-power-select-clear-btn");
 
@@ -169,15 +151,11 @@ module("Integration | Component | task selection", function (hooks) {
   test("can clear project and task", async function (assert) {
     this.set("task", TASK);
 
-    await render(hbs`
-      <TaskSelection
-        @initial={{hash task  = this.task}}
-      as |t|>
-        {{t.customer}}
-        {{t.project}}
-        {{t.task}}
-      </TaskSelection>
-    `);
+    await render(hbs`<TaskSelection @initial={{hash task=this.task}} as |t|>
+  {{t.customer}}
+  {{t.project}}
+  {{t.task}}
+</TaskSelection>`);
 
     await click(".project-select .ember-power-select-clear-btn");
 
@@ -191,16 +169,12 @@ module("Integration | Component | task selection", function (hooks) {
   test("can clear all filters", async function (assert) {
     this.set("task", TASK);
 
-    await render(hbs`
-      <TaskSelection
-        @initial={{hash task  = this.task}}
-      as |t|>
-        {{t.customer}}
-        {{t.project}}
-        {{t.task}}
-        <button type="button" {{on "click" t.clear}}></button>
-      </TaskSelection>
-    `);
+    await render(hbs`<TaskSelection @initial={{hash task=this.task}} as |t|>
+  {{t.customer}}
+  {{t.project}}
+  {{t.task}}
+  <button type="button" {{on "click" t.clear}}></button>
+</TaskSelection>`);
 
     await click("button");
 
@@ -217,15 +191,13 @@ module("Integration | Component | task selection", function (hooks) {
     this.set("customer", CUSTOMER);
     this.set("project", PROJECT);
 
-    await render(hbs`
-      <TaskSelection
-        @initial={{hash customer = this.customer
-          project = this.project}}
-        as |t|>
-          {{t.customer}}
-          {{t.project}}
-      </TaskSelection>
-    `);
+    await render(hbs`<TaskSelection
+  @initial={{hash customer=this.customer project=this.project}}
+  as |t|
+>
+  {{t.customer}}
+  {{t.project}}
+</TaskSelection>`);
 
     await triggerEvent(".customer-select", "focus");
     await tab();
@@ -238,17 +210,15 @@ module("Integration | Component | task selection", function (hooks) {
     this.set("project", PROJECT);
     this.set("archived", false);
 
-    await render(hbs`
-      <TaskSelection
-        @initial={{hash customer = this.customer
-          project = this.project}}
-        @archived={{this.archived}}
-        as |t|>
-          {{t.customer}}
-          {{t.project}}
-          {{t.task}}
-      </TaskSelection>
-    `);
+    await render(hbs`<TaskSelection
+  @initial={{hash customer=this.customer project=this.project}}
+  @archived={{this.archived}}
+  as |t|
+>
+  {{t.customer}}
+  {{t.project}}
+  {{t.task}}
+</TaskSelection>`);
 
     await triggerEvent(".task-select", "focus");
     assert.dom(".ember-power-select-option").exists({ count: 1 });

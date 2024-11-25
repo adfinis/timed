@@ -98,7 +98,7 @@ export default class UsersEditCredits extends Controller {
     if (this.can.can("edit absence-credit")) {
       yield this.router.transitionTo(
         "users.edit.credits.absence-credits.edit",
-        id
+        id,
       );
     }
   }
@@ -108,7 +108,7 @@ export default class UsersEditCredits extends Controller {
     if (this.can.can("edit overtime-credit")) {
       yield this.router.transitionTo(
         "users.edit.credits.overtime-credits.edit",
-        id
+        id,
       );
     }
   }

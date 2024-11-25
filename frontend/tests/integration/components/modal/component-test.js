@@ -7,20 +7,18 @@ module("Integration | Component | Modal", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(hbs`
-      <ModalTarget />
-      <Modal @visible={{true}} as |m| >
-        <m.header >
-          Header
-        </m.header>
-        <m.body>
-          Body
-        </m.body>
-        <m.footer>
-          Footer
-        </m.footer>
-      </Modal>
-    `);
+    await render(hbs`<ModalTarget />
+<Modal @visible={{true}} as |m|>
+  <m.header>
+    Header
+  </m.header>
+  <m.body>
+    Body
+  </m.body>
+  <m.footer>
+    Footer
+  </m.footer>
+</Modal>`);
 
     assert.dom("#modals > *").exists({ count: 1 });
 
@@ -32,12 +30,14 @@ module("Integration | Component | Modal", function (hooks) {
   test("closes on click of the close icon", async function (assert) {
     this.set("visible", true);
 
-    await render(hbs`
-      <ModalTarget />
-      <Modal @visible={{this.visible}} @onClose={{fn (mut this.visible) false}} as |m|>
-        <m.header />
-      </Modal>
-    `);
+    await render(hbs`<ModalTarget />
+<Modal
+  @visible={{this.visible}}
+  @onClose={{fn (mut this.visible) false}}
+  as |m|
+>
+  <m.header />
+</Modal>`);
 
     assert.ok(this.visible);
 

@@ -15,7 +15,7 @@ module("Unit | Utility | parse django duration", function () {
           minutes: 2,
           seconds: 3,
         })
-        .asMilliseconds()
+        .asMilliseconds(),
     );
 
     assert.strictEqual(
@@ -27,7 +27,7 @@ module("Unit | Utility | parse django duration", function () {
           minutes: 3,
           seconds: 4,
         })
-        .asMilliseconds()
+        .asMilliseconds(),
     );
 
     assert.strictEqual(
@@ -39,7 +39,7 @@ module("Unit | Utility | parse django duration", function () {
           seconds: 3,
           milliseconds: 4,
         })
-        .asMilliseconds()
+        .asMilliseconds(),
     );
 
     assert.strictEqual(
@@ -52,7 +52,7 @@ module("Unit | Utility | parse django duration", function () {
           seconds: 4,
           milliseconds: 5,
         })
-        .asMilliseconds()
+        .asMilliseconds(),
     );
 
     assert.strictEqual(
@@ -63,7 +63,7 @@ module("Unit | Utility | parse django duration", function () {
           minutes: -2,
           seconds: -3,
         })
-        .asMilliseconds()
+        .asMilliseconds(),
     );
 
     assert.strictEqual(
@@ -75,7 +75,7 @@ module("Unit | Utility | parse django duration", function () {
           minutes: -2,
           seconds: -3,
         })
-        .asMilliseconds()
+        .asMilliseconds(),
     );
   });
 });

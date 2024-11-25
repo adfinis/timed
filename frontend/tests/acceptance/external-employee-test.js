@@ -18,7 +18,7 @@ module("Acceptance | external employee", function (hooks) {
 
     // get active employment and set it to isExternal
     const activeEmployment = this.user.employments.filter(
-      (e) => e.end === null
+      (e) => e.end === null,
     );
     activeEmployment.update({ isExternal: true });
   });

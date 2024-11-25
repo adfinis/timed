@@ -6,11 +6,11 @@
         'filter-sidebar--visible translate-x-0'
         'translate-x-full'
       }}
-      fixed top-[54px] xl:top-[50px] right-0 bottom-0 z-20 flex bg-background transition-transform duration-300 flex flex-col"
+      bg-background fixed bottom-0 right-0 top-[54px] z-20 flex flex flex-col transition-transform duration-300 xl:top-[50px]"
     ...attributes
   >
     <div
-      class="filter-sidebar-title flex justify-between font-semibold text-lg px-2.5 py-3"
+      class="filter-sidebar-title flex justify-between px-2.5 py-3 text-lg font-semibold"
     >
       {{#if @appliedCount}}
         {{@appliedCount}}
@@ -42,31 +42,31 @@
 
     <button
       title="{{if this.visible 'Hide' 'Show'}} filters"
-      class="filter-sidebar-toggle [&>*]:h-12 [&>*]:absolute [&>*]:grid [&>*]:place-items-center [&>*]:top-2 [&>*]:right-0 absolute group left-0 top-4 -translate-x-full w-[6.5rem] h-16 py-2 text-foreground-primary overflow-hidden"
+      class="filter-sidebar-toggle text-foreground-primary group absolute left-0 top-4 h-16 w-[6.5rem] -translate-x-full overflow-hidden py-2 [&>*]:absolute [&>*]:right-0 [&>*]:top-2 [&>*]:grid [&>*]:h-12 [&>*]:place-items-center"
       type="button"
       {{on "click" (toggle "visible" this)}}
     >
       <span
-        class="filter-sidebar-toggle-background w-full bg-primary shadow-sm translate-x-14 transition-transform group-hover:translate-x-0 duration-300 rounded-l"
+        class="filter-sidebar-toggle-background bg-primary w-full translate-x-14 rounded-l shadow-sm transition-transform duration-300 group-hover:translate-x-0"
       ></span>
       <span class="filter-sidebar-toggle-icon w-12">
         <FaIcon @icon="sliders" @prefix="fas" />
         {{#if @appliedCount}}
           <span
-            class="filter-sidebar-toggle-icon-badge bg-success text-foreground-primary absolute top-2 right-2 text-xs font-mono py-0.5 px-1 rounded-[50%] shadow-sm duration-300"
+            class="filter-sidebar-toggle-icon-badge bg-success text-foreground-primary absolute right-2 top-2 rounded-[50%] px-1 py-0.5 font-mono text-xs shadow-sm duration-300"
           >{{@appliedCount}}</span>
         {{/if}}
       </span>
       <span
-        class="filter-sidebar-toggle-text right-auto opacity-0 w-12 left-3 transition-[transform,opacity] duration-300 translate-x-14 group-hover:translate-x-0 group-hover:opacity-100"
+        class="filter-sidebar-toggle-text left-3 right-auto w-12 translate-x-14 opacity-0 transition-[transform,opacity] duration-300 group-hover:translate-x-0 group-hover:opacity-100"
       >Filters</span>
     </button>
   </aside>
   <div
-    class="filter-sidebar-overlay opacity-0 z-10 fixed transition-all duration-300
+    class="filter-sidebar-overlay fixed z-10 opacity-0 transition-all duration-300
       {{if
         this.visible
-        'filter-sidebar-overlay--visible pointer-events-all opacity-100 inset-0 top-12 bg-foreground-muted/30'
+        'filter-sidebar-overlay--visible pointer-events-all bg-foreground-muted/30 inset-0 top-12 opacity-100'
       }}"
     {{! template-lint-disable}}
     {{on "click" (fn (mut this.visible) false)}}

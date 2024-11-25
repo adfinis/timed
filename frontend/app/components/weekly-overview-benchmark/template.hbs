@@ -1,14 +1,14 @@
-<div class="flex items-center absolute inset-0">
+<div class="absolute inset-0 flex items-center">
   {{#if @showLabel}}
     <span
-      class="text-center w-6 right-0 -left-8 text-xs absolute translate-y-1/2
+      class="absolute -left-8 right-0 w-6 translate-y-1/2 text-center text-xs
         {{unless @expected 'text-foreground-muted'}}"
       {{style this.style}}
     >{{@hours}}h</span>
   {{/if}}
   <hr
     {{style this.style}}
-    class="m-0 p-0 border-none w-full absolute left-0 right-0
+    class="absolute left-0 right-0 m-0 w-full border-none p-0
       {{if @expected 'bg-tertiary/60 h-[1.5px]' 'bg-primary/30 h-px'}}"
   />
 </div>

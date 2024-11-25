@@ -1,10 +1,10 @@
-<div class="z-40 fixed top-0 left-0 w-full">
+<div class="fixed left-0 top-0 z-40 w-full">
   <nav
-    class="px-2 py-1 lg:py-0.5 xl:py-0 lg:px-3.5 xl:px-4 w-full flex bg-background dark:bg-background-muted flex-col md:flex-row shadow-md transition-all"
+    class="bg-background dark:bg-background-muted flex w-full flex-col px-2 py-1 shadow-md transition-all md:flex-row lg:px-3.5 lg:py-0.5 xl:px-4 xl:py-0"
   >
     <header class="flex justify-between {{if this.expand 'max-md:mb-1'}}">
       <button
-        class="md:hidden w-12"
+        class="w-12 md:hidden"
         type="button"
         {{on "click" (toggle "expand" this)}}
       >
@@ -17,11 +17,11 @@
       </button>
       <LinkTo
         @route="index"
-        class="grid place-items-center md:grid-cols-2 mr-1 lg:mr-2 transition-[margin]"
+        class="mr-1 grid place-items-center transition-[margin] md:grid-cols-2 lg:mr-2"
       >
         <TimedClock class="p-1" />
         <div
-          class="max-md:hidden lg:ml-1 lg:text-[1.075rem] leading-4 transition-all"
+          class="leading-4 transition-all max-md:hidden lg:ml-1 lg:text-[1.075rem]"
         >
           Timed
           <div class="text-2xs text-foreground-muted font-mono font-normal">
@@ -31,11 +31,11 @@
       </LinkTo>
     </header>
     <section
-      class="w-full md:w-auto md:flex md:flex-row md:flex-grow md:max-h-full
+      class="w-full md:flex md:max-h-full md:w-auto md:flex-grow md:flex-row
         {{if
           this.expand
-          'max-md:block max-md:max-h-96 max-md:h-full max-md:overflow-y-auto'
-          'overflow-hidden max-h-0'
+          'max-md:block max-md:h-full max-md:max-h-96 max-md:overflow-y-auto'
+          'max-h-0 overflow-hidden'
         }}"
     >
       <Topnav::List>
@@ -86,7 +86,7 @@
           </Topnav::ListItem>
         {{/if}}
       </Topnav::List>
-      <Topnav::List class="md:border-t-0 md:ml-auto">
+      <Topnav::List class="md:ml-auto md:border-t-0">
         <ReportReviewWarning @class="max-md:hidden" />
         <Topnav::ListItem>
           <Topnav::LinkTo

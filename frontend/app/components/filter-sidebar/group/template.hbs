@@ -1,11 +1,11 @@
 <div
   class="filter-sidebar-group
     {{if this.expanded 'expanded filter-sidebar-group--expanded'}}
-    flex flex-col group border-t p-2.5"
+    group flex flex-col border-t p-2.5"
 >
   <button
     type="button"
-    class="filter-sidebar-group-label text-xl hover:text-foreground group-[.expanded]:text-foreground text-foreground-muted flex justify-between items-center transition-colors"
+    class="filter-sidebar-group-label hover:text-foreground group-[.expanded]:text-foreground text-foreground-muted flex items-center justify-between text-xl transition-colors"
     {{on "click" (toggle "expanded" this)}}
   >
     {{@label}}
@@ -16,7 +16,7 @@
     />
   </button>
   <div
-    class="filter-sidebar-group-body overflow-hidden group-[.expanded]:max-h-[32rem] max-h-0 transition-[max-height]"
+    class="filter-sidebar-group-body max-h-0 overflow-hidden transition-[max-height] group-[.expanded]:max-h-[32rem]"
   >
     <div class="filter-sidebar-group-content py-2 [&>*]:mt-1">
       {{yield}}

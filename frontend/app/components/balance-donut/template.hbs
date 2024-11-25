@@ -3,7 +3,7 @@
   class="{{@class}}
     balance-donut
     {{this.strokeClass}}
-    relative transition-all translate-y-[calc(var(--max-offset)*var(--offset-multiplicator))] md:basis-32 text-foreground/85 lg:[--max-offset:-0.25rem]"
+    text-foreground/85 relative translate-y-[calc(var(--max-offset)*var(--offset-multiplicator))] transition-all md:basis-32 lg:[--max-offset:-0.25rem]"
 >
   <div class="donut-title text-center text-3xl md:text-2xl">{{@title}}</div>
 
@@ -34,14 +34,14 @@
     </svg>
 
     <div
-      class="donut-content absolute flex justify-center items-center text-center p-4 inset-0 w-full h-full flex-col text-2xl md:text-xl"
+      class="donut-content absolute inset-0 flex h-full w-full flex-col items-center justify-center p-4 text-center text-2xl md:text-xl"
     >
       {{#if @balance.usedDuration}}
         {{format-duration @balance.usedDuration false}}
       {{else}}
         {{#if @balance.credit}}
           <div
-            class="text-base md:text-sm text-foreground-muted"
+            class="text-foreground-muted text-base md:text-sm"
           >{{@balance.usedDays}}
             of
             {{@balance.credit}}</div>

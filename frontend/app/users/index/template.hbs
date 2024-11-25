@@ -48,12 +48,12 @@
 <AsyncList @data={{this.fetchData}} as |section data|>
   {{#if (eq section "empty")}}
     <Empty>
-        <FaIcon @icon="users" @prefix="fas" />
-        <h3>No users to display</h3>
-        <p>Maybe try loosening your filters</p>
+      <FaIcon @icon="users" @prefix="fas" />
+      <h3>No users to display</h3>
+      <p>Maybe try loosening your filters</p>
     </Empty>
   {{else if (eq section "body")}}
-    <Table class="table table--striped table--hover">
+    <Table class="table--striped table--hover table">
       <Table::Thead>
         <Table::Tr>
           <Table::Th>Name</Table::Th>
@@ -87,8 +87,10 @@
                 false
               }}</Table::Td>
           {{else}}
-            <Table::Td class={{unless user.isActive "text-danger"}} colspan="2"><em
-              >User has no active employment</em></Table::Td>
+            <Table::Td
+              class={{unless user.isActive "text-danger"}}
+              colspan="2"
+            ><em>User has no active employment</em></Table::Td>
           {{/if}}
           <Table::Td>
             <span

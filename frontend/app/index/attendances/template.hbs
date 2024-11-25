@@ -24,7 +24,7 @@
       {{#each this.attendances as |attendance|}}
         {{#let (changeset attendance this.AttendanceValidator) as |model|}}
           <div
-            class="striped grid grid-cols-[repeat(2,minmax(0,1fr)),auto] gap-1 p-1 border-t border-border/50 last:border-b"
+            class="striped border-border/50 grid grid-cols-[repeat(2,minmax(0,1fr)),auto] gap-1 border-t p-1 last:border-b"
             data-test-attendance-slider
             data-test-attendance-slider-mobile
             data-test-attendance-slider-id={{attendance.id}}

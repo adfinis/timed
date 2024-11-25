@@ -40,7 +40,7 @@ export default class Datepicker extends Component {
   @action
   handleBlur(dd, e) {
     const container = document.getElementById(
-      `ember-basic-dropdown-content-${dd.uniqueId}`
+      `ember-basic-dropdown-content-${dd.uniqueId}`,
     );
 
     if (!container || !container.contains(e.relatedTarget)) {

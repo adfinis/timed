@@ -12,7 +12,7 @@ module("Integration | Component | datepicker button", function (hooks) {
     this.set("value", moment());
 
     await render(
-      hbs`<DatepickerButton @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<DatepickerButton @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     assert.dom(".datepicker").doesNotExist();
@@ -27,13 +27,13 @@ module("Integration | Component | datepicker button", function (hooks) {
     this.set("value", INITIAL_VALUE);
 
     await render(
-      hbs`<DatepickerButton @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<DatepickerButton @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await clickTrigger();
 
     const target = find(
-      ".ember-power-calendar-day-grid .ember-power-calendar-row:last-child .ember-power-calendar-day:last-child"
+      ".ember-power-calendar-day-grid .ember-power-calendar-row:last-child .ember-power-calendar-day:last-child",
     );
 
     target.click();

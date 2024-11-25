@@ -25,7 +25,7 @@ export default class OptimizedPowerSelectOptionsComponent extends Component {
       "actions",
       this.args.select.actions,
       "scrollTo",
-      this.args.select.highlighted
+      this.args.select.highlighted,
     );
   }
 

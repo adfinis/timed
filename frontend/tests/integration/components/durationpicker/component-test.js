@@ -44,11 +44,11 @@ module("Integration | Component | durationpicker", function (hooks) {
       moment.duration({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     await render(
-      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await fillIn("input", "13:15");
@@ -64,11 +64,11 @@ module("Integration | Component | durationpicker", function (hooks) {
       moment.duration({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     await render(
-      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await fillIn("input", "-13:00");
@@ -83,11 +83,11 @@ module("Integration | Component | durationpicker", function (hooks) {
       moment.duration({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     await render(
-      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await fillIn("input", "abcdef");
@@ -103,11 +103,11 @@ module("Integration | Component | durationpicker", function (hooks) {
       moment.duration({
         h: 12,
         m: 15,
-      })
+      }),
     );
 
     await render(
-      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
@@ -126,11 +126,11 @@ module("Integration | Component | durationpicker", function (hooks) {
       moment.duration({
         h: 12,
         m: 15,
-      })
+      }),
     );
 
     await render(
-      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
@@ -149,7 +149,7 @@ module("Integration | Component | durationpicker", function (hooks) {
       moment.duration({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     this.set(
@@ -157,7 +157,7 @@ module("Integration | Component | durationpicker", function (hooks) {
       moment.duration({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     this.set(
@@ -165,11 +165,16 @@ module("Integration | Component | durationpicker", function (hooks) {
       moment.duration({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     await render(
-      hbs`<Durationpicker @min={{this.min}} @max={{this.max}} @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Durationpicker
+  @min={{this.min}}
+  @max={{this.max}}
+  @value={{this.value}}
+  @onChange={{fn (mut this.value)}}
+/>`,
     );
 
     this.element
@@ -195,7 +200,7 @@ module("Integration | Component | durationpicker", function (hooks) {
     this.set("value", null);
 
     await render(
-      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await fillIn("input", "-04:30");

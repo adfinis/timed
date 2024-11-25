@@ -1,6 +1,6 @@
 <div
   title="{{@option.name}}{{if @option.archived ' (archived)'}}"
-  class="{{if @option.archived 'inactive'}} flex justify-between items-center"
+  class="{{if @option.archived 'inactive'}} flex items-center justify-between"
   id="task-option-{{@option.id}}"
 >
   {{#if (and @current (media "isMd"))}}

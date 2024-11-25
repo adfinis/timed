@@ -57,7 +57,7 @@ const loadConfiguration = () => {
 
 const toggleColorScheme = () =>
   setColorScheme(
-    localStorage.getItem(COLOR_SCHEME_KEY) === "dark" ? "light" : "dark"
+    localStorage.getItem(COLOR_SCHEME_KEY) === "dark" ? "light" : "dark",
   );
 
 const cycleTheme = () => {

@@ -7,7 +7,7 @@
   @onCenterChange={{@onCenterChange}}
   as |calendar|
 >
-  <Card::Header class="!py-0.5 !px-2">
+  <Card::Header class="!px-2 !py-0.5">
     <calendar.Nav>
       <span class="nav-select-month relative">
         {{#let (moment-format calendar.center "MMMM") as |currentMonth|}}

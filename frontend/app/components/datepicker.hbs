@@ -23,7 +23,7 @@
     />
     {{#if @value}}
       <span
-        class="clear ember-power-select-clear-btn absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer"
+        class="clear ember-power-select-clear-btn absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
         role="button"
         {{on "click" (prevent-default (stop-propagation (fn this.clear dd)))}}
       >&times;</span>

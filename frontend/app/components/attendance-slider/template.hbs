@@ -12,11 +12,11 @@
     @on-change={{perform this.save}}
   />
 
-  <div class="slider-labels relative h-12 text-foreground-muted font-mono">
+  <div class="slider-labels text-foreground-muted relative h-12 font-mono">
     {{#each this.labels as |label|}}
       <div
         style={{label.style}}
-        class="slider-label flex absolute top-4 -translate-x-3/4"
+        class="slider-label absolute top-4 flex -translate-x-3/4"
       >
         <div class="slider-label-text text-3xs -rotate-45">
           {{label.value}}
@@ -25,7 +25,7 @@
     {{/each}}
   </div>
 
-  <div class="slider-title absolute top-0 left-0 text-xs">
+  <div class="slider-title absolute left-0 top-0 text-xs">
     <span>{{this.duration}}</span>
     <FaIcon
       @icon="trash-can"

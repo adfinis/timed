@@ -1,5 +1,5 @@
 <TrackingBar data-test-tracking-bar />
-<div class="grid grid--12of12">
+<div class="grid--12of12 grid">
   <div class="grid md:grid-cols-[minmax(0,1fr),auto]">
     <h1 class="block max-md:mb-2">{{moment-format
         @model
@@ -40,7 +40,7 @@
   </div>
   <div class="grid-cell visible-sm grid-rows-1">
     <NavTabs
-      class="max-sm:my-2 sm:grid-cols-[repeat(3,minmax(0,auto)),50fr] grid grid-rows-1"
+      class="grid grid-rows-1 max-sm:my-2 sm:grid-cols-[repeat(3,minmax(0,auto)),50fr]"
     >
       <NavTabs::Item>
         <NavTabs::A @route="index.activities">
@@ -68,23 +68,23 @@
       </NavTabs::Item>
       {{#if this.absence}}
         <li
-          class="sm:hidden border border-warning first:rounded-t-sm last:rounded-b-sm grid"
+          class="border-warning grid border first:rounded-t-sm last:rounded-b-sm sm:hidden"
         >
           <button
             type="button"
             data-test-edit-absence
-            class="btn bg-warning hover:bg-warning-accent border-warning text-foreground-primary border-none rounded-none"
+            class="btn bg-warning hover:bg-warning-accent border-warning text-foreground-primary rounded-none border-none"
             {{on "click" (toggle "showEditModal" this)}}
           >
             {{this.absence.absenceType.name}}
           </button>
         </li>
       {{/if}}
-      <li class="sm:hidden border first:rounded-t-sm rounded-b-sm grid">
+      <li class="grid rounded-b-sm border first:rounded-t-sm sm:hidden">
         <button
           type="button"
           data-test-add-absence
-          class="btn sm:btn-default border-none rounded-none"
+          class="btn sm:btn-default rounded-none border-none"
           disabled={{cannot "access page"}}
           {{on "click" (toggle "showAddModal" this)}}
         >
@@ -92,7 +92,7 @@
         </button>
       </li>
       <li
-        class="max-sm:hidden w-full flex sm:justify-end gap-x-1 md:gap-x-2 mt-px sm:pt-px"
+        class="mt-px flex w-full gap-x-1 max-sm:hidden sm:justify-end sm:pt-px md:gap-x-2"
       >
         {{#if this.absence}}
           <NavTabs::Button
@@ -121,7 +121,7 @@
 {{#if this.absence}}
   {{#let (changeset this.absence this.AbsenceValidations) as |cs|}}
     <Modal
-      class="md:w-auto !w-fit"
+      class="!w-fit md:w-auto"
       @visible={{this.showEditModal}}
       @onClose={{queue (toggle "showEditModal" this) (fn this.rollback cs)}}
       as |modal|
@@ -197,7 +197,7 @@
     as |onClose|
   }}
     <Modal
-      class="md:w-auto !w-fit"
+      class="!w-fit md:w-auto"
       @visible={{this.showAddModal}}
       @onClose={{onClose}}
       as |modal|

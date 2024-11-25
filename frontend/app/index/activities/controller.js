@@ -176,7 +176,7 @@ export default class ActivitiesIndexController extends Controller {
           (a) =>
             a.get("task.id") &&
             !(a.get("active") && !a.get("from").isSame(moment(), "day")) &&
-            !a.get("transferred")
+            !a.get("transferred"),
         )
         .reduce(async (reducer, activity) => {
           if (activity.get("active")) {

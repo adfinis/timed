@@ -1,4 +1,4 @@
-<div class="grid md:grid-cols-2 gap-2">
+<div class="grid gap-2 md:grid-cols-2">
 
   <Card class="grid grid-rows-[min-content,1fr,min-content]">
     <Card::Header><h4>Projects</h4></Card::Header>
@@ -10,7 +10,7 @@
       {{else}}
         {{#let this.projects.lastSuccessful.value as |projects|}}
           {{#if projects}}
-            <Table class="table table--striped">
+            <Table class="table--striped table">
               <Table::Thead>
                 <Table::Tr>
                   <Table::Th>Customer</Table::Th>
@@ -50,7 +50,7 @@
       {{else}}
         {{#let this.supervisees.lastSuccessful.value as |supervisees|}}
           {{#if supervisees}}
-            <Table class="table table--striped">
+            <Table class="table--striped table">
               <Table::Thead>
                 <Table::Tr>
                   <Table::Th>Name</Table::Th>

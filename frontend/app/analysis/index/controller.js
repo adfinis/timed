@@ -199,7 +199,7 @@ export default class AnalysisController extends QPController {
 
   data = enqueueTask(async () => {
     const params = underscoreQueryParams(
-      serializeQueryParams(this.allQueryParams, queryParamsState(this))
+      serializeQueryParams(this.allQueryParams, queryParamsState(this)),
     );
 
     if (this._canLoadMore) {
@@ -219,24 +219,24 @@ export default class AnalysisController extends QPController {
           "taskAssignees",
           assignees.taskAssignees.filter(
             (taskAssignee) =>
-              report.get("task.id") === taskAssignee.get("task.id")
-          )
+              report.get("task.id") === taskAssignee.get("task.id"),
+          ),
         );
         report.set(
           "projectAssignees",
           assignees.projectAssignees.filter(
             (projectAssignee) =>
               report.get("task.project.id") ===
-              projectAssignee.get("project.id")
-          )
+              projectAssignee.get("project.id"),
+          ),
         );
         report.set(
           "customerAssignees",
           assignees.customerAssignees.filter(
             (customerAssignee) =>
               report.get("task.project.customer.id") ===
-              customerAssignee.get("customer.id")
-          )
+              customerAssignee.get("customer.id"),
+          ),
         );
         return report;
       });
@@ -315,10 +315,10 @@ export default class AnalysisController extends QPController {
             ...params,
             ...serializeQueryParams(
               this.allQueryParams,
-              queryParamsState(this)
+              queryParamsState(this),
             ),
-          })
-        )
+          }),
+        ),
       );
 
       const res = yield fetch(`${url}?${queryString}`, {
@@ -345,7 +345,7 @@ export default class AnalysisController extends QPController {
     } catch (e) {
       /* istanbul ignore next */
       this.notify.error(
-        "Error while downloading, try again or try reducing results"
+        "Error while downloading, try again or try reducing results",
       );
     }
   }

@@ -27,11 +27,11 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await fillIn("input", "13:15");
@@ -47,11 +47,11 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await fillIn("input", "24:15");
@@ -65,7 +65,7 @@ module("Integration | Component | timepicker", function (hooks) {
     this.set("value", null);
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await fillIn("input", "xx:xx");
@@ -85,17 +85,17 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 15,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
-        async (element) => await triggerKeyEvent(element, "keydown", 38)
+        async (element) => await triggerKeyEvent(element, "keydown", 38),
       );
 
     await settled();
@@ -110,17 +110,17 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 15,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
-        async (element) => await triggerKeyEvent(element, "keydown", 40)
+        async (element) => await triggerKeyEvent(element, "keydown", 40),
       );
 
     await settled();
@@ -135,18 +135,18 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 15,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
         async (element) =>
-          await triggerKeyEvent(element, "keydown", 38, { shiftKey: true })
+          await triggerKeyEvent(element, "keydown", 38, { shiftKey: true }),
       );
 
     await settled();
@@ -161,18 +161,18 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 15,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
         async (element) =>
-          await triggerKeyEvent(element, "keydown", 40, { shiftKey: true })
+          await triggerKeyEvent(element, "keydown", 40, { shiftKey: true }),
       );
 
     await settled();
@@ -187,18 +187,18 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 15,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
         async (element) =>
-          await triggerKeyEvent(element, "keydown", 38, { ctrlKey: true })
+          await triggerKeyEvent(element, "keydown", 38, { ctrlKey: true }),
       );
 
     await settled();
@@ -213,18 +213,18 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 15,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
         async (element) =>
-          await triggerKeyEvent(element, "keydown", 40, { ctrlKey: true })
+          await triggerKeyEvent(element, "keydown", 40, { ctrlKey: true }),
       );
 
     await settled();
@@ -239,17 +239,17 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 23,
         m: 45,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
-        async (element) => await triggerKeyEvent(element, "keydown", 38)
+        async (element) => await triggerKeyEvent(element, "keydown", 38),
       );
 
     await settled();
@@ -264,7 +264,7 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     this.set(
@@ -272,7 +272,7 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     this.set(
@@ -280,17 +280,22 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 12,
         m: 30,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @min={{this.min}} @max={{this.max}} @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker
+  @min={{this.min}}
+  @max={{this.max}}
+  @value={{this.value}}
+  @onChange={{fn (mut this.value)}}
+/>`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
-        async (element) => await triggerKeyEvent(element, "keydown", 38)
+        async (element) => await triggerKeyEvent(element, "keydown", 38),
       );
 
     await settled();
@@ -301,7 +306,7 @@ module("Integration | Component | timepicker", function (hooks) {
     this.element
       .querySelectorAll("input")
       .forEach(
-        async (element) => await triggerKeyEvent(element, "keydown", 40)
+        async (element) => await triggerKeyEvent(element, "keydown", 40),
       );
 
     await settled();
@@ -316,17 +321,21 @@ module("Integration | Component | timepicker", function (hooks) {
       moment({
         h: 10,
         m: 0,
-      })
+      }),
     );
 
     await render(
-      hbs`<Timepicker @precision={{5}} @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker
+  @precision={{5}}
+  @value={{this.value}}
+  @onChange={{fn (mut this.value)}}
+/>`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
-        async (element) => await triggerKeyEvent(element, "keydown", 38)
+        async (element) => await triggerKeyEvent(element, "keydown", 38),
       );
 
     await settled();
@@ -339,7 +348,7 @@ module("Integration | Component | timepicker", function (hooks) {
     this.set("value", moment({ h: 12, m: 30 }));
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     await fillIn("input", "");
@@ -352,13 +361,13 @@ module("Integration | Component | timepicker", function (hooks) {
     this.set("value", null);
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
-        async (element) => await triggerKeyEvent(element, "keydown", 38)
+        async (element) => await triggerKeyEvent(element, "keydown", 38),
       );
 
     await settled();
@@ -371,13 +380,13 @@ module("Integration | Component | timepicker", function (hooks) {
     this.set("value", null);
 
     await render(
-      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`
+      hbs`<Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
     this.element
       .querySelectorAll("input")
       .forEach(
-        async (element) => await triggerKeyEvent(element, "keydown", 40)
+        async (element) => await triggerKeyEvent(element, "keydown", 40),
       );
 
     await settled();

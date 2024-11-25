@@ -54,7 +54,7 @@ module("Unit | Ability | report", function (hooks) {
       "model",
       EmberObject.create({
         projectAssignees: projectAssignee,
-      })
+      }),
     );
 
     assert.true(ability.canEdit);

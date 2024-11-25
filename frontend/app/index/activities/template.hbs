@@ -12,7 +12,7 @@
 
   <div class="activities-list flex-grow max-lg:peer-[:not(:empty)]:hidden">
     {{#if this.activities}}
-      <Table class="table table--striped table--activities">
+      <Table class="table--striped table--activities table">
         <tbody>
           {{#each this.sortedActivities as |activity|}}
             {{#let (eq activity.id this.editId) as |selected|}}
@@ -40,7 +40,7 @@
                     'active bg-primary/20'
                   }}
                   {{if selected 'selected bg-primary text-foreground-primary'}}
-                  max-sm:[&>*]:flex last:border-b"
+                  last:border-b max-sm:[&>*]:flex"
                 {{on "click" (fn this.editActivity activity)}}
               >
                 <Table::Td>
@@ -93,7 +93,7 @@
                   {{/if}}
                 </Table::Td>
                 <Table::Td class="px-4">
-                  <div class="w-full h-full grid place-items-end">
+                  <div class="grid h-full w-full place-items-end">
                     {{#if activity.active}}
                       <button
                         type="button"

@@ -5,7 +5,7 @@
       <LoadingIcon />
     </Empty>
   {{else}}
-    <div class="grid sm:grid-cols-2 gap-2 mb-2 pb-2">
+    <div class="mb-2 grid gap-2 pb-2 sm:grid-cols-2">
       <PowerSelect
         data-test-customer-selection
         class="rounded [&_.ember-power-select-selected-item_svg]:!hidden"
@@ -47,7 +47,7 @@
         this.selectedProject.remainingEffortTracking
         as |remainingEffortTracking|
       }}
-        <h2 class="mb-2 text-primary">
+        <h2 class="text-primary mb-2">
           {{this.selectedProject.name}}
         </h2>
         <ValidatedForm
@@ -123,7 +123,7 @@
         </Table>
         <ScrollContainer class="mb-2 border-b-2">
           <Table
-            class="table table--striped table--projects table-fixed"
+            class="table--striped table--projects table table-fixed"
             data-test-tasks-table
           >
             <colgroup>
@@ -251,7 +251,7 @@
 
               <f.input @name="archived" @labelComponent="void" as |fi|>
                 <Checkbox
-                  class="flex flex-col-reverse justify-content-start [&>input]:my-auto"
+                  class="justify-content-start flex flex-col-reverse [&>input]:my-auto"
                   @label="Archived"
                   data-test-archived
                   @checked={{this.selectedTask.archived}}
@@ -260,7 +260,7 @@
                 />
               </f.input>
 
-              <div class="flex justify-between col-span-2">
+              <div class="col-span-2 flex justify-between">
                 <button
                   class="btn btn-default"
                   data-test-cancel

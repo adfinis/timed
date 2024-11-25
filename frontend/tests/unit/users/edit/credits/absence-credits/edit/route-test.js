@@ -8,9 +8,9 @@ module(
 
     test("exists", function (assert) {
       const route = this.owner.lookup(
-        "route:users/edit/credits/absence-credits/edit"
+        "route:users/edit/credits/absence-credits/edit",
       );
       assert.ok(route);
     });
-  }
+  },
 );

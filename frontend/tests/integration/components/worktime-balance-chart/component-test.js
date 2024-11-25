@@ -17,20 +17,20 @@ module("Integration | Component | worktime balance chart", function (hooks) {
           super(owner, args);
           testContext.component = this;
         }
-      }
+      },
     );
   });
 
   test("computes the data correctly", async function (assert) {
     const dates = [...new Array(3).keys()].map((i) =>
-      moment().subtract(i, "days")
+      moment().subtract(i, "days"),
     );
     this.set(
       "data",
       dates.map((date) => ({
         balance: moment.duration({ h: 10 }),
         date,
-      }))
+      })),
     );
 
     await render(hbs`<WorktimeBalanceChart @worktimeBalances={{this.data}} />`);
@@ -38,7 +38,7 @@ module("Integration | Component | worktime balance chart", function (hooks) {
 
     assert.deepEqual(
       this.component.data.labels.map((l) => l.format("YYYY-MM-DD")),
-      dates.map((d) => d.format("YYYY-MM-DD"))
+      dates.map((d) => d.format("YYYY-MM-DD")),
     );
 
     assert.deepEqual(this.component.data.datasets, [{ data: [10, 10, 10] }]);
@@ -52,7 +52,7 @@ module("Integration | Component | worktime balance chart", function (hooks) {
 
     assert.strictEqual(
       titleFn([{ index: 0 }], { labels: [moment()] }),
-      moment().format("DD.MM.YYYY")
+      moment().format("DD.MM.YYYY"),
     );
     assert.strictEqual(labelFn({ yLabel: 10.5 }), "10h 30m");
   });

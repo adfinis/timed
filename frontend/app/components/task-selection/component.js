@@ -63,7 +63,7 @@ export default class TaskSelectionComponent extends Component {
       // we track "_activity" here since we can not track the public getters directly
       this.tracking.addObserver(
         "_activity",
-        this.handleTrackingActiveActivityChanged.perform
+        this.handleTrackingActiveActivityChanged.perform,
       );
     }
   }
@@ -72,7 +72,7 @@ export default class TaskSelectionComponent extends Component {
     if (this.args.liveTracking) {
       this.tracking.removeObserver(
         "_activity",
-        this.handleTrackingActiveActivityChanged.perform
+        this.handleTrackingActiveActivityChanged.perform,
       );
     }
     super.willDestroy(...args);
@@ -256,7 +256,7 @@ export default class TaskSelectionComponent extends Component {
   _customersAndRecentTasks = trackedTask(
     this,
     this.customersAndRecentTasksTask,
-    () => [this.history, this.tracking.recentTasks, this.archived]
+    () => [this.history, this.tracking.recentTasks, this.archived],
   );
 
   get customersAndRecentTasks() {

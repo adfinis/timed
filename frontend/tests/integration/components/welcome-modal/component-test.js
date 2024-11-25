@@ -7,10 +7,8 @@ module("Integration | Component | welcome modal", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(hbs`
-      <ModalTarget/>
-      <WelcomeModal @visible={{true}}/>
-    `);
+    await render(hbs`<ModalTarget />
+<WelcomeModal @visible={{true}} />`);
     assert.ok(this.element);
   });
 });

@@ -2,10 +2,10 @@
   type="submit"
   data-test-record-stop={{not (not this.active)}}
   data-test-record-start={{not this.active}}
-  class="record-button-container h-full btn px-3 text-sm text-foreground-accent
+  class="record-button-container btn text-foreground-accent h-full px-3 text-sm
     {{if
       this.active
-      'record-button-container--recording active grid grid-cols-[auto,minmax(0,1fr)] gap-x-2 place-items-center'
+      'record-button-container--recording active grid grid-cols-[auto,minmax(0,1fr)] place-items-center gap-x-2'
     }}"
   {{on "click" (prevent-default (optional (if this.active @onStop @onStart)))}}
 >

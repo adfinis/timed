@@ -1,10 +1,10 @@
-<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 grid-rows-min [&>*]:h-min">
+<div class="grid-rows-min grid gap-2 md:grid-cols-2 lg:grid-cols-3 [&>*]:h-min">
 
   <Card>
     <Card::Header><h4>General information</h4></Card::Header>
     <Card::Block>
       <Table class="user-general-info">
-        <tbody class="[&>tr>td]:py-1 [&>tr>td:last-child]:text-right">
+        <tbody class="[&>tr>td:last-child]:text-right [&>tr>td]:py-1">
           <tr>
             <td>Email:</td>
             <td>{{this.model.email}}</td>
@@ -54,7 +54,7 @@
       {{else}}
         {{#let this.employments.lastSuccessful.value as |employments|}}
           {{#if employments}}
-            <Table class="table table--striped">
+            <Table class="table--striped table">
               <Table::Thead>
                 <Table::Tr>
                   <Table::Th>Location</Table::Th>
@@ -105,9 +105,9 @@
       {{else}}
         {{#let this.absences.lastSuccessful.value as |absences|}}
           {{#if absences}}
-            <Table class="table table--striped">
+            <Table class="table--striped table">
               <Table::Thead>
-                <Table::Tr class="[&>*]:p-2 text-left">
+                <Table::Tr class="text-left [&>*]:p-2">
                   <Table::Th>Type</Table::Th>
                   <Table::Th>Date</Table::Th>
                   <Table::Th>Comment</Table::Th>

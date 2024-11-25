@@ -200,12 +200,12 @@ module("Acceptance | index", function (hooks) {
 
     assert
       .dom(
-        '[data-test-weekly-overview] [data-test-weekly-overview-day="29"].holiday'
+        '[data-test-weekly-overview] [data-test-weekly-overview-day="29"].holiday',
       )
       .exists({ count: 1 });
     assert
       .dom(
-        '[data-test-weekly-overview] [data-test-weekly-overview-day="28"].holiday'
+        '[data-test-weekly-overview] [data-test-weekly-overview-day="28"].holiday',
       )
       .doesNotExist();
   });

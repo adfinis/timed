@@ -29,7 +29,7 @@ export default class RejectedReportsService extends Service {
     } else {
       this.intervalId = setInterval(
         this.pollReports.bind(this),
-        INTERVAL_DELAY
+        INTERVAL_DELAY,
       );
     }
   }

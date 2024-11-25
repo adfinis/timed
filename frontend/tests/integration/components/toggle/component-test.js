@@ -17,11 +17,9 @@ module("Integration | Component | Toggle", function (hooks) {
     assert.dom(".toggle .fa-eye").exists();
 
     // Template block usage:
-    await render(hbs`
-      <Toggle @onToggle={{this.noop}}>
-        template block text
-      </Toggle>
-    `);
+    await render(hbs`<Toggle @onToggle={{this.noop}}>
+  template block text
+</Toggle>`);
 
     assert.dom(this.element).hasText("template block text");
     assert.dom(".toggle .fa-eye").doesNotExist();
@@ -31,7 +29,7 @@ module("Integration | Component | Toggle", function (hooks) {
     this.set("value", true);
 
     await render(
-      hbs`<Toggle @icon="eye" @value={{this.value}} @onToggle={{toggle "value" this}}/>`
+      hbs`<Toggle @icon="eye" @value={{this.value}} @onToggle={{toggle "value" this}} />`,
     );
 
     assert.dom(".toggle").hasClass("active");
@@ -48,7 +46,12 @@ module("Integration | Component | Toggle", function (hooks) {
   test("it includes the hint", async function (assert) {
     this.set("disabled", false);
     await render(
-      hbs`<Toggle @icon="eye" @hint="test" @disabled={{this.disabled}} @onToggle={{this.noop}} />`
+      hbs`<Toggle
+  @icon="eye"
+  @hint="test"
+  @disabled={{this.disabled}}
+  @onToggle={{this.noop}}
+/>`,
     );
 
     assert.dom(".toggle").hasAttribute("title", "test");

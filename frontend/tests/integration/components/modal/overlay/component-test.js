@@ -15,12 +15,9 @@ module("Integration | Component | Modal::Overlay", function (hooks) {
     this.set("visible", true);
     this.set("closeAction", () => this.set("visible", false));
 
-    await render(hbs`
-      <Modal::Overlay
-        @visible={{this.visible}}
-        @onClose={{this.closeAction}}
-      />
-    `);
+    await render(
+      hbs`<Modal::Overlay @visible={{this.visible}} @onClose={{this.closeAction}} />`,
+    );
 
     assert.ok(this.visible);
 
@@ -33,11 +30,9 @@ module("Integration | Component | Modal::Overlay", function (hooks) {
     this.set("visible", true);
     this.set("closeAction", () => this.set("visible", false));
 
-    await render(hbs`
-      <Modal::Overlay @visible={{this.visible}} @onClose={{this.closeAction}}>
-        <div id="some-child">Test</div>
-      </Modal::Overlay>
-    `);
+    await render(hbs`<Modal::Overlay @visible={{this.visible}} @onClose={{this.closeAction}}>
+  <div id="some-child">Test</div>
+</Modal::Overlay>`);
 
     assert.ok(this.visible);
 

@@ -3,7 +3,7 @@
   type="button"
   {{on "click" this.click}}
   {{style this.style}}
-  class="weekly-overview-day h-0 w-4 relative cursor-pointer z-10 [&>*]:transition-colors
+  class="weekly-overview-day relative z-10 h-0 w-4 cursor-pointer [&>*]:transition-colors
     {{if @active 'active'}}
     {{if @absence 'absence'}}
     {{if @holiday 'holiday'}}
@@ -22,9 +22,9 @@
     "
   ...attributes
 >
-  <div class="bar w-full h-full bg-current"></div>
+  <div class="bar h-full w-full bg-current"></div>
   <div
-    class="day absolute text-sm leading-4 text-center -translate-x-1/2 left-1/2 -bottom-[2.5em] font-medium"
+    class="day absolute -bottom-[2.5em] left-1/2 -translate-x-1/2 text-center text-sm font-medium leading-4"
   >
     {{moment-format @day "DD"}}
     {{moment-format @day "dd"}}

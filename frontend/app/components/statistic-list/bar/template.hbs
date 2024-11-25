@@ -1,7 +1,11 @@
-<div class="statistic-list-bar-wrapper h-5 [&>*]:w-full [&>*]:h-5 [&>*]:overflow-hidden [&>*]:before:block [&>*]:before:h-full [&>*]:before:w-full [&>*]:before:-translate-x-[calc((1-var(--value))*100%)] relative [&>*]:absolute">
+<div
+  class="statistic-list-bar-wrapper relative h-5 [&>*]:absolute [&>*]:h-5 [&>*]:w-full [&>*]:overflow-hidden [&>*]:before:block [&>*]:before:h-full [&>*]:before:w-full [&>*]:before:-translate-x-[calc((1-var(--value))*100%)]"
+>
   <div
     ...attributes
-    class="statistic-list-bar {{ this.spentEffortsBarColor }} before:rounded-r z-10"
+    class="statistic-list-bar
+      {{this.spentEffortsBarColor}}
+      z-10 before:rounded-r"
     {{style --value=(concat @value)}}
   ></div>
   {{#if (and @remaining (lte @remaining 1))}}
@@ -15,7 +19,7 @@
   {{#if @goal}}
     <div
       ...attributes
-      class="statistic-list-bar-goal before:border-dotted before:border-danger before:border-r-2"
+      class="statistic-list-bar-goal before:border-danger before:border-r-2 before:border-dotted"
       {{style --value=(concat (min "0.99" @goal))}}
     ></div>
   {{/if}}

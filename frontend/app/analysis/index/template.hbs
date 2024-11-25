@@ -215,7 +215,7 @@
       {{else}}
         {{#if this.data.lastSuccessful.value.length}}
           {{#let this.data.lastSuccessful.value as |reports|}}
-            <div class="flex gap-x-2 justify-end">
+            <div class="flex justify-end gap-x-2">
               {{#if this.selectedReportIds.length}}
                 <button
                   data-test-edit-selected
@@ -247,7 +247,7 @@
             </div>
 
             {{! template-lint-disable table-groups }}
-            <Table class="table table--striped table--analysis">
+            <Table class="table--striped table--analysis table">
               <colgroup>
                 <col class="w-[7%]" />
                 <col class="w-[7%]" />
@@ -312,7 +312,7 @@
               </Table::Thead>
             </Table>
             <ScrollContainer class="analysis-scrollable-container">
-              <Table class="table table--striped table--analysis table-fixed">
+              <Table class="table--striped table--analysis table table-fixed">
                 <colgroup>
                   <col class="w-[7%]" />
                   <col class="w-[7%]" />
@@ -338,9 +338,9 @@
                         }}
                         {{if
                           (or this.canBill (can 'edit report' report))
-                          'cursor-pointer text-foreground-accent'
+                          'text-foreground-accent cursor-pointer'
                         }}
-                        align-top shadow shadow-foreground/5 transition-colors"
+                        shadow-foreground/5 align-top shadow transition-colors"
                       {{on "click" (fn this.selectRow report)}}
                     >
                       <Table::Td>{{report.user.username}}</Table::Td>
@@ -398,7 +398,7 @@
                 </tbody>
               </Table>
             </ScrollContainer>
-            <Table class="table table--striped table--analysis table-fixed">
+            <Table class="table--striped table--analysis table table-fixed">
               <colgroup>
                 <col class="w-[7%]" />
                 <col class="w-[7%]" />

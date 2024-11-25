@@ -10,7 +10,7 @@ export default class Calendar extends Component {
   months = moment.months();
 
   years = [...new Array(40).keys()].map(
-    (i) => `${CURRENT_YEAR + YEARS_IN_FUTURE - i}`
+    (i) => `${CURRENT_YEAR + YEARS_IN_FUTURE - i}`,
   );
 
   @action

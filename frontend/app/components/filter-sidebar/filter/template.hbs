@@ -2,7 +2,7 @@
   {{#let (unique-id) as |id|}}
     <label for={{id}} hidden={{not @label}}>{{or @label @name "search"}}</label>
     {{#if (eq @type "button")}}
-      <div id={{id}} class="btn-group [&>*]:w-full flex flex-nowrap">
+      <div id={{id}} class="btn-group flex flex-nowrap [&>*]:w-full">
         {{#each @options as |opt|}}
           <button
             class="btn

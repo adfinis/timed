@@ -16,9 +16,9 @@ module("Unit | Transform | django duration", function (hooks) {
           hours: 1,
           minutes: 2,
           seconds: 3,
-        })
+        }),
       ),
-      "01:02:03"
+      "01:02:03",
     );
 
     assert.strictEqual(
@@ -28,9 +28,9 @@ module("Unit | Transform | django duration", function (hooks) {
           hours: 2,
           minutes: 3,
           seconds: 4,
-        })
+        }),
       ),
-      "1 02:03:04"
+      "1 02:03:04",
     );
 
     assert.strictEqual(
@@ -40,9 +40,9 @@ module("Unit | Transform | django duration", function (hooks) {
           minutes: 2,
           seconds: 3,
           milliseconds: 4,
-        })
+        }),
       ),
-      "01:02:03.004000"
+      "01:02:03.004000",
     );
 
     assert.strictEqual(
@@ -53,9 +53,9 @@ module("Unit | Transform | django duration", function (hooks) {
           minutes: 3,
           seconds: 4,
           milliseconds: 5,
-        })
+        }),
       ),
-      "1 02:03:04.005000"
+      "1 02:03:04.005000",
     );
 
     assert.strictEqual(
@@ -64,9 +64,9 @@ module("Unit | Transform | django duration", function (hooks) {
           hours: -1,
           minutes: -2,
           seconds: -3,
-        })
+        }),
       ),
-      "-1 22:57:57"
+      "-1 22:57:57",
     );
 
     assert.strictEqual(
@@ -76,9 +76,9 @@ module("Unit | Transform | django duration", function (hooks) {
           hours: -1,
           minutes: -2,
           seconds: -3,
-        })
+        }),
       ),
-      "-10 22:57:57"
+      "-10 22:57:57",
     );
   });
 

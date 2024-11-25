@@ -1,6 +1,6 @@
 <div
-  class="modal modal-overlay flex items-start justify-center p-5 fixed z-50 bg-foreground-muted/30
-    {{if @visible 'modal--visible opacity-100 pointer-events-all'}}
+  class="modal modal-overlay bg-foreground-muted/30 fixed z-50 flex items-start justify-center p-5
+    {{if @visible 'modal--visible pointer-events-all opacity-100'}}
     bg-background inset-0 p-6"
   id={{this.id}}
   {{! template-lint-disable no-invalid-interactive }}

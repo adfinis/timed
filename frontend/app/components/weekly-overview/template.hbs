@@ -1,9 +1,9 @@
 <div
   {{style this.style}}
-  class="w-full pt-5 pb-12 pl-8 sm:pl-10 md:pl-12 overflow-hidden flex"
+  class="flex w-full overflow-hidden pb-12 pl-8 pt-5 sm:pl-10 md:pl-12"
   ...attributes
 >
-  <div class="flex-grow flex relative justify-around items-end">
+  <div class="relative flex flex-grow items-end justify-around">
     <WeeklyOverviewBenchmark @showLabel={{true}} @hours={{20}} />
     <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{18}} />
     <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{16}} />

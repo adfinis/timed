@@ -14,12 +14,10 @@ module("Integration | Component | calendar", function (hooks) {
       this.center = value.moment;
     });
 
-    await render(hbs`
-      <Calendar
-        @center={{this.center}}
-        @onCenterChange={{this.onCenterChangeHandler}}
-      />
-    `);
+    await render(hbs`<Calendar
+  @center={{this.center}}
+  @onCenterChange={{this.onCenterChangeHandler}}
+/>`);
 
     await fillIn(".nav-select-year select", "2010");
 
@@ -33,12 +31,10 @@ module("Integration | Component | calendar", function (hooks) {
       this.center = value.moment;
     });
 
-    await render(hbs`
-      <Calendar
-        @center={{this.center}}
-        @onCenterChange={{this.onCenterChangeHandler}}
-      />
-    `);
+    await render(hbs`<Calendar
+  @center={{this.center}}
+  @onCenterChange={{this.onCenterChangeHandler}}
+/>`);
 
     await fillIn(".nav-select-month select", "May");
 

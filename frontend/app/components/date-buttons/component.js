@@ -33,13 +33,13 @@ export default class DateButtonsComponent extends Component {
         break;
       case "Last Month":
         this.args.onUpdateFromDate(
-          moment().subtract(1, "month").startOf("month")
+          moment().subtract(1, "month").startOf("month"),
         );
         this.args.onUpdateToDate(moment().subtract(1, "month").endOf("month"));
         break;
       case "Last Year":
         this.args.onUpdateFromDate(
-          moment().subtract(1, "year").startOf("year")
+          moment().subtract(1, "year").startOf("year"),
         );
         this.args.onUpdateToDate(moment().subtract(1, "year").endOf("year"));
         break;

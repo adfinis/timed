@@ -62,7 +62,7 @@ module("Acceptance | index attendances", function (hooks) {
     await visit("/attendances");
 
     await click(
-      '[data-test-attendance-slider-id="1"] [data-test-delete-attendance]'
+      '[data-test-attendance-slider-id="1"] [data-test-delete-attendance]',
     );
 
     assert.dom('[data-test-attendance-slider-id="1"]').doesNotExist();

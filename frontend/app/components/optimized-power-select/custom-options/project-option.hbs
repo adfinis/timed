@@ -1,7 +1,7 @@
 <div
   title="{{@option.name}}{{if @option.archived ' (archived)'}}"
   class="{{if @option.archived 'inactive'}}
-    flex gap-2 items-center justify-between"
+    flex items-center justify-between gap-2"
   id="project-option-{{@option.id}}"
 >
   {{#if (and @current (media "isMd"))}}

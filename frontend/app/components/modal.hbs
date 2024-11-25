@@ -2,7 +2,7 @@
   {{#in-element this.target insertBefore=null}}
     <Modal::Overlay @visible={{@visible}} @onClose={{optional @onClose}}>
       <div
-        class="modal-dialog z-50 w-full border rounded bg-background max-h-[100%]"
+        class="modal-dialog bg-background z-50 max-h-[100%] w-full rounded border"
         ...attributes
       >
         {{yield

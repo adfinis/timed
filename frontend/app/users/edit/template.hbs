@@ -1,28 +1,28 @@
 {{#if (can "read user" this.model)}}
-  <header class="user-header border-b grid">
+  <header class="user-header grid border-b">
     <div class="user-header-info">
       <h1
-        class="text-5xl md:text-6xl text-foreground text-center"
+        class="text-foreground text-center text-5xl md:text-6xl"
       >{{this.model.fullName}}</h1>
     </div>
 
     {{#if this.data.isRunning}}
       <div
-        class="user-header-loading grid place-self-center place-items-center w-full"
+        class="user-header-loading grid w-full place-items-center place-self-center"
       >
         <LoadingIcon />
       </div>
     {{else}}
       {{#unless this.model.activeEmployment.isExternal}}
         <h2
-          class="user-header-worktime-balance-title text-2xl md:text-3xl uppercase text-center text-foreground-muted"
+          class="user-header-worktime-balance-title text-foreground-muted text-center text-2xl uppercase md:text-3xl"
         >Worktime balance</h2>
 
         <div
-          class="user-header-worktime-balance-container grid grid-cols-2 md:grid-cols-[minmax(0,0.9fr),minmax(0,2.2fr),minmax(0,0.9fr)] lg:grid-cols-[auto,minmax(0,0.8fr),auto] lg:gap-2 w-full lg:w-3/4 max-w-[48rem] xl:max-w-[52rem] place-self-center px-8 sm:px-16 md:px-0 mb-5"
+          class="user-header-worktime-balance-container mb-5 grid w-full max-w-[48rem] grid-cols-2 place-self-center px-8 sm:px-16 md:grid-cols-[minmax(0,0.9fr),minmax(0,2.2fr),minmax(0,0.9fr)] md:px-0 lg:w-3/4 lg:grid-cols-[auto,minmax(0,0.8fr),auto] lg:gap-2 xl:max-w-[52rem]"
         >
           <div
-            class="user-header-worktime-balance-last-valid-timesheet text-center justify-self-end w-full self-center max-md:text-left md:-translate-y-4 max-md:px-2"
+            class="user-header-worktime-balance-last-valid-timesheet w-full self-center justify-self-end text-center max-md:px-2 max-md:text-left md:-translate-y-4"
           >
             {{#let
               this.data.lastSuccessful.value.worktimeBalanceLastValidTimesheet
@@ -30,7 +30,7 @@
             }}
               <h2
                 title="Last day with timesheet entries or absences"
-                class="text-foreground-muted uppercase text-base sm:text-lg md:text-xl lg:text-2xl"
+                class="text-foreground-muted text-base uppercase sm:text-lg md:text-xl lg:text-2xl"
               >
                 {{moment-format balance.date "DD.MM.YYYY"}}
               </h2>
@@ -52,14 +52,14 @@
           {{/if}}
 
           <div
-            class="user-header-worktime-balance-today text-center justify-self-start w-full self-center max-md:text-right md:-translate-y-4 max-md:px-2"
+            class="user-header-worktime-balance-today w-full self-center justify-self-start text-center max-md:px-2 max-md:text-right md:-translate-y-4"
           >
             {{#let
               this.data.lastSuccessful.value.worktimeBalanceToday
               as |balance|
             }}
               <h2
-                class="text-foreground-muted uppercase text-base sm:text-lg md:text-xl lg:text-2xl"
+                class="text-foreground-muted text-base uppercase sm:text-lg md:text-xl lg:text-2xl"
               >Today</h2>
               <div
                 class="{{balance-highlight-class balance.balance}}
@@ -80,7 +80,7 @@
         </div>
 
         <div
-          class="user-header-absence-balance-container flex-row flex-wrap flex justify-around md:justify-between max-w-[48rem] xl:max-w-[52rem] place-self-center w-full md:px-8 lg:px-9 xl:px-10 transition-[padding,max-width] mb-2 transition-all"
+          class="user-header-absence-balance-container mb-2 flex w-full max-w-[48rem] flex-row flex-wrap justify-around place-self-center transition-[padding,max-width] transition-all md:justify-between md:px-8 lg:px-9 xl:max-w-[52rem] xl:px-10"
         >
           {{#let this.data.lastSuccessful.value.absenceBalances as |balances|}}
             {{#each balances as |balance index|}}
@@ -101,7 +101,7 @@
 
   <nav class="user-navigation border-b shadow-sm">
     <ul
-      class="grid-cols-[repeat(3,auto)] grid justify-center [&>li>a]:text-foreground-muted [&>li>a]:block [&>li>a]:py-2 [&>li>a]:px-6 [&>li>a.active]:text-primary [&>li>a.active]:shadow-[inset_0_-2px_0] [&>li>a.active]:shadow-primary text-xl"
+      class="[&>li>a]:text-foreground-muted [&>li>a.active]:text-primary [&>li>a.active]:shadow-primary grid grid-cols-[repeat(3,auto)] justify-center text-xl [&>li>a.active]:shadow-[inset_0_-2px_0] [&>li>a]:block [&>li>a]:px-6 [&>li>a]:py-2"
     >
       <li><LinkTo
           @route="users.edit.index"
