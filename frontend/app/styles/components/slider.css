@@ -1,9 +1,9 @@
 .noUi-tooltip {
-  @apply -top-[18px] left-1/2 translate-x-1/2 text-xs border-none bg-transparent text-foreground;
+  @apply text-foreground -top-[18px] left-1/2 translate-x-1/2 border-none bg-transparent text-xs;
 }
 
 .noUi-handle {
-  @apply w-2 h-6 rounded-sm -top-1 right-0 !important;
+  @apply -top-1 right-0 h-6 w-2 rounded-sm !important;
 }
 
 .noUi-connect {
@@ -11,7 +11,7 @@
 }
 
 .noUi-connects {
-  @apply overflow-hidden relative;
+  @apply relative overflow-hidden;
 }
 
 .noUi-handle::after,

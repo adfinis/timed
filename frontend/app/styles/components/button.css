@@ -1,10 +1,10 @@
 .btn {
-  @apply py-1.5 px-4 border border-border transition-all rounded block;
+  @apply border-border block rounded border px-4 py-1.5 transition-all;
 }
 
 .btn:disabled,
 .btn[aria-disabled="true"] {
-  @apply cursor-not-allowed bg-opacity-40 text-opacity-85 border-opacity-40;
+  @apply cursor-not-allowed border-opacity-40 bg-opacity-40 text-opacity-85;
 
   &.btn-default {
     @apply bg-background-muted/70 text-foreground-muted/85;

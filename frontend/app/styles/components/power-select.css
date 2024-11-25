@@ -3,7 +3,7 @@
 }
 
 .ember-power-select-trigger {
-  @apply form-select flex overflow-hidden relative focus:border-primary-light focus:ring-primary-light;
+  @apply form-select focus:border-primary-light focus:ring-primary-light relative flex overflow-hidden;
 }
 
 .ember-power-select-selected-item {
@@ -56,5 +56,5 @@
 }
 
 .ember-power-select-options[role="listbox"] {
-  @apply max-h-96 lg:max-h-[28rem] overflow-y-auto;
+  @apply max-h-96 overflow-y-auto lg:max-h-[28rem];
 }

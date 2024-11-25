@@ -1,5 +1,5 @@
 h1 {
-  @apply text-4xl text-primary;
+  @apply text-primary text-4xl;
 }
 
 h2 {

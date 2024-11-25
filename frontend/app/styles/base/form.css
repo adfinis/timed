@@ -17,8 +17,8 @@ select,
 .form-textarea,
 .form-select,
 .form-multiselect {
-  @apply transition-[border-color] border focus:border-primary-light focus:ring-primary-light;
-  @apply w-full placeholder-foreground-muted text-sm xl:text-base bg-background py-1.5 !important;
+  @apply focus:border-primary-light focus:ring-primary-light border transition-[border-color];
+  @apply placeholder-foreground-muted bg-background w-full py-1.5 text-sm xl:text-base !important;
 }
 
 :is(

@@ -12,7 +12,7 @@
 
 .ember-power-calendar-day,
 .ember-power-calendar-weekday {
-  @apply max-w-[--size] max-h-[--size] w-[--size] h-[--size] grid place-items-center;
+  @apply grid h-[--size] max-h-[--size] w-[--size] max-w-[--size] place-items-center;
 }
 
 .ember-power-calendar-day--interactive[disabled] {
@@ -48,7 +48,7 @@
 }
 
 .ember-power-calendar-nav {
-  @apply flex justify-between items-center;
+  @apply flex items-center justify-between;
 }
 
 .ember-power-calendar-nav-title {

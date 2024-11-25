@@ -3,8 +3,9 @@
 }
 
 .total {
-  @apply border-double border-b-4 border-current font-medium;
+  @apply border-b-4 border-double border-current font-medium;
 }
+
 .pointer-events-all {
   pointer-events: all;
 }
