@@ -2,9 +2,23 @@
 
 module.exports = {
   plugins: ["stylelint-prettier"],
-  extends: ["stylelint-prettier/recommended", "stylelint-config-standard-scss"],
+  extends: ["stylelint-prettier/recommended", "stylelint-config-standard"],
   rules: {
-    "scss/at-extend-no-missing-placeholder": null,
-    "selector-class-pattern": null,
+    "custom-property-empty-line-before": null, // we use empty lines to group/order properties
+    "at-rule-empty-line-before": ["never", { ignoreAtRules: ["import"] }], // we use empty lines to group/order imports (su)
+    "selector-class-pattern": null, // we can ignore this because most css is styling 3rd party components where we don't control the class names
+    "import-notation": null, // doesn't really work with postcss-import
+    "at-rule-no-unknown": [
+      true,
+      {
+        ignoreAtRules: ["apply"], // ignore tailwind decorators
+      },
+    ],
+    "function-no-unknown": [
+      true,
+      {
+        ignoreFunctions: ["theme"], // ignore tailwind functions
+      },
+    ],
   },
 };
