@@ -62,7 +62,6 @@ select = [
 	"W605",    # invalid escape sequence
 ]
 ignore = [
-	"ANN101",  # this is deprecated and annotating self is unnecessary
 	"D203",    # we prefer blank-line-before-class (D211) for black compat
 	"D213",    # we prefer multi-line-summary-first-line (D212)
 	"COM812",  # ignore due to conflict with formatter
