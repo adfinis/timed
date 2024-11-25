@@ -88,8 +88,8 @@ export default class WorktimeBalanceChart extends Component {
       },
       tooltips: {
         backgroundColor: cssvar("--background-muted"),
-        titleFontColor: `rgb(${cssvar("--foreground")})`,
-        bodyFontColor: `rgb(${cssvar("--foreground")})`,
+        titleFontColor: cssvar("--foreground"),
+        bodyFontColor: cssvar("--foreground"),
         displayColors: false,
         cornerRadius: 2,
         bodyFontFamily: FONT_SANS,
