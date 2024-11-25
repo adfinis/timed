@@ -131,8 +131,9 @@ module.exports = {
   },
   plugins: [forms()],
   safelist: [
-    { pattern: /noUi-/ },
+    { pattern: /alert-/ },
     { pattern: /ember-/ },
+    { pattern: /noUi-/ },
     { pattern: /shepherd-/ },
     "invalid-feedback",
   ],
