@@ -1,0 +1,82 @@
+.shepherd-header {
+  @apply py-2 px-4 bg-background-muted border-b first:rounded-t; /* same as card-header */
+}
+
+.shepherd-text {
+  @apply p-4; /* same as card-block */
+}
+
+.sheperd-text p {
+  @apply py-1;
+}
+
+.shepherd-content {
+  @apply bg-background text-foreground rounded;
+}
+
+.shepherd-footer {
+  @apply py-2 px-4 bg-background-muted border-t last:rounded-b; /* same as card-footer */
+  @apply flex justify-between;
+}
+
+.shepherd-element {
+  @apply bg-background rounded shadow-sm m-0 max-w-96 opacity-0 outline-none z-[80] w-full invisible transition-[visibility,opacity] duration-300;
+}
+
+.shepherd-enabled.shepherd-element {
+  @apply opacity-100 visible;
+}
+
+.shepherd-element[data-popper-reference-hidden]:not(.shepherd-centered) {
+  @apply opacity-0 pointer-events-none invisible;
+}
+
+.shepherd-arrow,
+.shepherd-arrow:before {
+  @apply h-4 w-4 absolute -z-[1];
+}
+.shepherd-arrow:before {
+  @apply bg-background content-[""] rotate-45;
+}
+
+.shepherd-element[data-popper-placement^="top"] > .shepherd-arrow {
+  @apply -bottom-2;
+}
+.shepherd-element[data-popper-placement^="bottom"] > .shepherd-arrow {
+  @apply -top-2;
+}
+.shepherd-element[data-popper-placement^="left"] > .shepherd-arrow {
+  @apply -right-2;
+}
+.shepherd-element[data-popper-placement^="right"] > .shepherd-arrow {
+  @apply -left-2;
+}
+.shepherd-element.shepherd-centered > .shepherd-arrow {
+  @apply opacity-0;
+}
+.shepherd-element.shepherd-has-title[data-popper-placement^="bottom"]
+  > .shepherd-arrow:before {
+  @apply bg-background-muted;
+}
+.shepherd-target-click-disabled.shepherd-enabled.shepherd-target,
+.shepherd-target-click-disabled.shepherd-enabled.shepherd-target * {
+  @apply pointer-events-none;
+}
+.shepherd-modal-overlay-container {
+  @apply h-0 left-0 top-0 opacity-0 overflow-hidden w-screen z-[70] fixed pointer-events-none;
+  transition:
+    all 0.3s ease-out,
+    height 0s 0.3s,
+    opacity 0.3s 0s;
+}
+.shepherd-modal-overlay-container.shepherd-modal-is-visible {
+  @apply h-screen opacity-50 fill-foreground-muted;
+  transform: translateZ(0);
+  transition:
+    all 0.3s ease-out,
+    height 0s 0s,
+    opacity 0.3s 0s;
+}
+.shepherd-modal-overlay-container.shepherd-modal-is-visible path {
+  @apply pointer-events-all;
+}
