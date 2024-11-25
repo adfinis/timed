@@ -28,7 +28,7 @@ from timed.tracking.views import ReportViewSet
 from . import filters
 
 if TYPE_CHECKING:
-    from typing import Iterable
+    from collections.abc import Iterable
 
     from ezodf.document import FlatXMLDocument, PackagedDocument
 
