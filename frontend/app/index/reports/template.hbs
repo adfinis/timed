@@ -6,20 +6,18 @@
 >Reschedule
 </NavTabs::LowerButton>
 
-<ScrollContainer::Lg>
-  <div class="reports">
-    {{#each this.reports as |report|}}
-      <ReportRow
-        class="striped border-t last:border-b"
-        @report={{report}}
-        @onSave={{this.saveReport}}
-        @onDelete={{this.deleteReport}}
-        data-test-report-row-id={{report.id}}
-        data-test-report-row
-      />
-    {{/each}}
-  </div>
-</ScrollContainer::Lg>
+<div class="reports">
+  {{#each this.reports as |report|}}
+    <ReportRow
+      class="striped border-t last:border-b"
+      @report={{report}}
+      @onSave={{this.saveReport}}
+      @onDelete={{this.deleteReport}}
+      data-test-report-row-id={{report.id}}
+      data-test-report-row
+    />
+  {{/each}}
+</div>
 
 <Modal
   @visible={{this.showReschedule}}
