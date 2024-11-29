@@ -33,7 +33,7 @@ module("Acceptance | external employee", function (hooks) {
   });
 
   test("cant view analysis", async function (assert) {
-    setBreakpoint("sm");
+    setBreakpoint("md");
     await visit("/analysis");
 
     assert.dom("h1").includesText("Access forbidden");

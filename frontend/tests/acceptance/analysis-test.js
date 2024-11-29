@@ -21,7 +21,7 @@ module("Acceptance | analysis", function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    setBreakpoint("sm");
+    setBreakpoint("md");
     this.user = this.server.create("user");
 
     // eslint-disable-next-line camelcase
