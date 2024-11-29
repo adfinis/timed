@@ -1,0 +1,5 @@
+{{#if @await}}
+    {{yield (hash value=@value)}}
+{{else}}
+    {{yield (hash value=(await @promise))}}
+{{/if}}

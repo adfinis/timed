@@ -157,7 +157,7 @@ export default class TourService extends Tour {
           } else {
             try {
               await this.router.transitionTo(
-                this.autostartTour.undoneTours.shift() ?? "index"
+                this.autostartTour.undoneTours.shift() ?? "index",
               );
             } catch {
               /* eslint:disable:no-empty */

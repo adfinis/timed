@@ -32,7 +32,7 @@ export default class ControllersQPControllerController extends Controller {
           value: this[key],
           enumerable: true,
         }),
-      {}
+      {},
     );
   }
 }

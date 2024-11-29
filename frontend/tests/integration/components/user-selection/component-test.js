@@ -21,7 +21,7 @@ module("Integration | Component | user selection", function (hooks) {
 
     assert.strictEqual(
       find(".user-select .ember-power-select-selected-item").textContent.trim(),
-      user.longName
+      user.longName,
     );
   });
 });

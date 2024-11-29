@@ -131,7 +131,7 @@ export default class AttendanceSlider extends Component {
 
     attendance.set(
       "from",
-      moment(attendance.get("from")).hour(0).minute(fromMin)
+      moment(attendance.get("from")).hour(0).minute(fromMin),
     );
     attendance.set("to", moment(attendance.get("to")).hour(0).minute(toMin));
 

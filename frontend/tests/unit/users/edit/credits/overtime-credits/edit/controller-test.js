@@ -8,9 +8,9 @@ module(
 
     test("exists", function (assert) {
       const controller = this.owner.lookup(
-        "controller:users/edit/credits/overtime-credits/edit"
+        "controller:users/edit/credits/overtime-credits/edit",
       );
       assert.ok(controller);
     });
-  }
+  },
 );

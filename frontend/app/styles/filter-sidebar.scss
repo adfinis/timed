@@ -104,7 +104,9 @@
   right: auto;
   opacity: 0;
   transform: translateX(3.5rem);
-  transition: transform 300ms ease, opacity 300ms ease;
+  transition:
+    transform 300ms ease,
+    opacity 300ms ease;
 }
 
 .filter-sidebar-toggle:hover > .filter-sidebar-toggle-background {

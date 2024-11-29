@@ -75,7 +75,7 @@ module("Acceptance | analysis edit", function (hooks) {
     await visit("/analysis/edit");
 
     const initialValue = this.element.querySelector(
-      "[data-test-comment]"
+      "[data-test-comment]",
     ).value;
 
     await fillIn("[data-test-comment] ", "test");
@@ -101,7 +101,7 @@ module("Acceptance | analysis edit", function (hooks) {
       .dom("[data-test-verified] label")
       .hasAttribute(
         "title",
-        "Please review selected reports before verifying."
+        "Please review selected reports before verifying.",
       );
   });
 
@@ -128,7 +128,7 @@ module("Acceptance | analysis edit", function (hooks) {
       .dom("[data-test-verified] label")
       .hasAttribute(
         "title",
-        "Please select yourself as 'reviewer' to verify reports."
+        "Please select yourself as 'reviewer' to verify reports.",
       );
   });
 
@@ -147,7 +147,7 @@ module("Acceptance | analysis edit", function (hooks) {
       .dom("[data-test-verified] label")
       .hasAttribute(
         "title",
-        "Please select yourself as 'reviewer' to verify reports. Please review selected reports before verifying."
+        "Please select yourself as 'reviewer' to verify reports. Please review selected reports before verifying.",
       );
   });
 });

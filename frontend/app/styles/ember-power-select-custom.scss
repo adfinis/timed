@@ -88,13 +88,16 @@
   border: 1px solid rgb(204 204 204);
   border-radius: $input-border-radius;
   box-shadow: $input-box-shadow;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
   padding-right: 2rem;
 
   &:focus {
     border-color: lighten($color-primary, 20%);
     outline: 0;
-    box-shadow: 0 1px 1px rgb(0 0 0 / 7.5%) inset,
+    box-shadow:
+      0 1px 1px rgb(0 0 0 / 7.5%) inset,
       0 0 8px opacify($color-primary, 0.6);
   }
 

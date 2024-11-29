@@ -18,7 +18,7 @@ const statisticEndpoint = (type) => {
         "total-time": formatDuration(
           stats.models.reduce((total, { duration }) => {
             return total.add(parseDjangoDuration(duration));
-          }, moment.duration())
+          }, moment.duration()),
         ),
       },
     };
@@ -90,7 +90,7 @@ function routes() {
           access: `${btoa("access")}.${btoa(payload)}.${btoa("pony")}`,
           refresh: `${btoa("refresh")}.${btoa(payload)}.${btoa("pony")}`,
         },
-      }
+      },
     );
   });
 
@@ -106,7 +106,7 @@ function routes() {
       return attendances.where((a) => {
         return a.date === date;
       });
-    }
+    },
   );
   this.post("/attendances", function ({ attendances, users }) {
     return attendances.create({
@@ -126,7 +126,7 @@ function routes() {
       }
 
       return activities.all();
-    }
+    },
   );
   this.post("/activities", function ({ activities, users }) {
     return activities.create({
@@ -142,7 +142,7 @@ function routes() {
     "/reports",
     function (
       { reports },
-      { queryParams: { "page[number]": page, "page[size]": limit } }
+      { queryParams: { "page[number]": page, "page[size]": limit } },
     ) {
       let data = reports.all();
       let meta = {
@@ -163,7 +163,7 @@ function routes() {
       }
 
       return { ...this.serialize(data), meta };
-    }
+    },
   );
   this.post("/reports", function ({ reports, users }) {
     return reports.create({
@@ -227,7 +227,7 @@ function routes() {
       }
 
       return publicHolidays.all();
-    }
+    },
   );
   this.get("/public-holidays/:id");
 
@@ -244,7 +244,7 @@ function routes() {
       }
 
       return all;
-    }
+    },
   );
   this.get("/employments/:id");
 
@@ -315,9 +315,9 @@ function routes() {
         {
           "Content-Disposition": `attachment; filename=testytesyexport.${type}`,
         },
-        new Blob()
+        new Blob(),
       );
-    }
+    },
   );
 
   this.get("/reports/intersection", function ({ reportIntersections }) {

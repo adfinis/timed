@@ -31,7 +31,7 @@ module("Integration | Component | sy-toggle", function (hooks) {
     this.set("value", true);
 
     await render(
-      hbs`<SyToggle @icon="eye" @value={{this.value}} @onToggle={{toggle "value" this}}/>`
+      hbs`<SyToggle @icon="eye" @value={{this.value}} @onToggle={{toggle "value" this}}/>`,
     );
 
     assert.dom(".sy-toggle").hasClass("active");
@@ -48,7 +48,7 @@ module("Integration | Component | sy-toggle", function (hooks) {
   test("it includes the hint", async function (assert) {
     this.set("disabled", false);
     await render(
-      hbs`<SyToggle @icon="eye" @hint="test" @disabled={{this.disabled}} @onToggle={{this.noop}} />`
+      hbs`<SyToggle @icon="eye" @hint="test" @disabled={{this.disabled}} @onToggle={{this.noop}} />`,
     );
 
     assert.dom(".sy-toggle").hasAttribute("title", "test");

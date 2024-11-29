@@ -77,11 +77,11 @@ export default class MetadataFetcherService extends Service {
           [key]: value ? transform.deserialize(value) : defaultValue,
         };
       },
-      {}
+      {},
     );
 
     const attributesValues = Object.keys(
-      ATTRIBUTE_MODELS[camelize(type)]
+      ATTRIBUTE_MODELS[camelize(type)],
     ).reduce((parsedAttribute, key) => {
       const { defaultValue, transform } = ATTRIBUTE_MODELS[camelize(type)][key];
       const value = attributes[dasherize(key)];

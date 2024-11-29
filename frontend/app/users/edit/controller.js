@@ -60,7 +60,7 @@ export default class UsersEditController extends Controller {
         });
 
         return balance[0];
-      })
+      }),
     );
   }
 }

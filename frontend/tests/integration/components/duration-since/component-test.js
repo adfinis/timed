@@ -13,7 +13,7 @@ module("Integration | Component | duration since", function (hooks) {
       moment().milliseconds(0).subtract({
         minutes: 5,
         seconds: 5,
-      })
+      }),
     );
 
     await render(hbs`<DurationSince @from={{this.start}} />`);
@@ -28,7 +28,7 @@ module("Integration | Component | duration since", function (hooks) {
       moment().subtract({
         minutes: 5,
         seconds: 5,
-      })
+      }),
     );
 
     this.set(
@@ -37,11 +37,11 @@ module("Integration | Component | duration since", function (hooks) {
         hours: 1,
         minutes: 1,
         seconds: 1,
-      })
+      }),
     );
 
     await render(
-      hbs`<DurationSince @from={{this.start}} @elapsed={{this.elapsed}} />`
+      hbs`<DurationSince @from={{this.start}} @elapsed={{this.elapsed}} />`,
     );
 
     assert.ok(this.element);
