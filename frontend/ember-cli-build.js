@@ -6,20 +6,28 @@ const EmberApp = require("ember-cli/lib/broccoli/ember-app");
 
 module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
+    "ember-cli-babel": {
+      enableTypeScriptTransform: true,
+    },
+
     babel: {
       plugins: [
         require.resolve("ember-concurrency/async-arrow-task-transform"),
       ],
     },
+
     sassOptions: {
       onlyIncluded: true,
     },
+
     "ember-fetch": {
       preferNative: true,
     },
+
     "ember-simple-auth": {
       useSessionSetupMethod: true,
     },
+
     "ember-validated-form": {
       theme: "bootstrap",
     },
