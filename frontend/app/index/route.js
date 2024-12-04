@@ -69,8 +69,8 @@ export default class IndexRoute extends Route {
 
     const userId = this.currentUser.user.id;
     const day = model.format(DATE_FORMAT);
-    const from = moment(model).subtract(28, "days").format(DATE_FORMAT);
-    const to = moment(model).add(28, "days").format(DATE_FORMAT);
+    const from = moment(model).subtract(32, "days").format(DATE_FORMAT);
+    const to = moment(model).add(16, "days").format(DATE_FORMAT);
     const location = this.store
       .peekRecord("user", userId)
       .get("activeEmployment.location.id");
