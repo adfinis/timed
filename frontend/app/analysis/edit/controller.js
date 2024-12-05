@@ -103,7 +103,7 @@ export default class AnalysisEditController extends Controller {
       })}`,
       {
         method: "GET",
-      }
+      },
     );
 
     yield this.store.pushPayload("report-intersection", res);
@@ -252,9 +252,9 @@ export default class AnalysisEditController extends Controller {
       underscoreQueryParams(
         serializeQueryParams(
           filterQueryParams(params, "editable"),
-          queryParamsState(this)
-        )
-      )
+          queryParamsState(this),
+        ),
+      ),
     );
   }
 }

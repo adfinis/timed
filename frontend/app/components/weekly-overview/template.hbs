@@ -1,17 +1,25 @@
-<div {{style this.style}} class="weekly-overview">
-  <div class="weekly-overview-children">
-    <WeeklyOverviewBenchmark @showLabel={{ true }} @hours={{ 20 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ false }} @hours={{ 18 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ false }} @hours={{ 16 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ false }} @hours={{ 14 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ false }} @hours={{ 12 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ false }} @hours={{ 10 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ false }} @hours={{ 8 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ false }} @hours={{ 6 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ false }} @hours={{ 4 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ false }} @hours={{ 2 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ true }} @hours={{ 0 }} />
-    <WeeklyOverviewBenchmark @showLabel={{ true }} @hours={{ this.hours }} @expected={{ true }} />
+<div
+  {{style this.style}}
+  class="flex w-full overflow-hidden pb-12 pl-8 pt-5 sm:pl-10 md:pl-12"
+  ...attributes
+>
+  <div class="relative flex flex-grow items-end justify-around">
+    <WeeklyOverviewBenchmark @showLabel={{true}} @hours={{20}} />
+    <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{18}} />
+    <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{16}} />
+    <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{14}} />
+    <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{12}} />
+    <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{10}} />
+    <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{8}} />
+    <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{6}} />
+    <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{4}} />
+    <WeeklyOverviewBenchmark @showLabel={{false}} @hours={{2}} />
+    <WeeklyOverviewBenchmark @showLabel={{true}} @hours={{0}} />
+    <WeeklyOverviewBenchmark
+      @showLabel={{true}}
+      @hours={{this.hours}}
+      @expected={{true}}
+    />
     {{yield}}
   </div>
 </div>

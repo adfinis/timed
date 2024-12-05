@@ -40,11 +40,11 @@ module("Acceptance | index activities edit", function (hooks) {
 
     await fillIn(
       "[data-test-activity-edit-form] [data-test-activity-block-row] td:nth-child(1) input",
-      "03:30"
+      "03:30",
     );
     await fillIn(
       "[data-test-activity-edit-form] [data-test-activity-block-row] td:nth-child(3) input",
-      "04:30"
+      "04:30",
     );
 
     await fillIn("[data-test-activity-edit-form] input[name=comment]", "Test");
@@ -107,11 +107,11 @@ module("Acceptance | index activities edit", function (hooks) {
 
     await fillIn(
       "[data-test-activity-block-row] td:nth-child(1) input",
-      "02:30"
+      "02:30",
     );
     await fillIn(
       "[data-test-activity-block-row] td:nth-child(3) input",
-      "01:30"
+      "01:30",
     );
     await blur("[data-test-activity-block-row] td:nth-child(3) input");
 
@@ -121,7 +121,7 @@ module("Acceptance | index activities edit", function (hooks) {
 
     await fillIn(
       "[data-test-activity-block-row] td:nth-child(1) input",
-      "00:30"
+      "00:30",
     );
     await blur("[data-test-activity-block-row] td:nth-child(1) input");
 

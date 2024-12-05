@@ -166,7 +166,7 @@ export default class IndexReportController extends Controller {
       if (reports.length < this.reports.length - 1) {
         /* istanbul ignore next */
         this.notify.warning(
-          "Reports that got verified already can not get transferred."
+          "Reports that got verified already can not get transferred.",
         );
       }
 
@@ -174,7 +174,7 @@ export default class IndexReportController extends Controller {
         reports.map(async (report) => {
           report.set("date", date);
           return await report.save();
-        })
+        }),
       );
       this.showReschedule = false;
       this.router.transitionTo({

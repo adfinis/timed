@@ -21,9 +21,9 @@ export function balanceHighlightClass([balance]) {
   const minutes = moment.isDuration(balance) ? balance.asMinutes() : 0;
 
   if (minutes > 0) {
-    return "color-success";
+    return "text-success";
   } else if (minutes < 0) {
-    return "color-danger";
+    return "text-danger";
   }
 
   return "";

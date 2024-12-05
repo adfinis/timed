@@ -1,0 +1,19 @@
+{{#if @visible}}
+  {{#in-element this.target insertBefore=null}}
+    <Modal::Overlay @visible={{@visible}} @onClose={{optional @onClose}}>
+      <div
+        class="modal-dialog bg-background z-50 max-h-[100%] w-full rounded border"
+        ...attributes
+      >
+        {{yield
+          (hash
+            header=(component "modal/header" close=(optional @onClose))
+            body=(component "modal/body" close=(optional @onClose))
+            footer=(component "modal/footer" close=(optional @onClose))
+            close=(optional @onClose)
+          )
+        }}
+      </div>
+    </Modal::Overlay>
+  {{/in-element}}
+{{/if}}

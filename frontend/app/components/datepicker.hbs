@@ -1,0 +1,43 @@
+<BasicDropdown @horizontalPosition="auto-right" as |dd|>
+  <dd.Trigger
+    @tabIndex="-1"
+    @stopPropagation={{true}}
+    class="datepicker-trigger relative"
+  >
+    <input
+      autocomplete="off"
+      id={{this.uniqueId}}
+      name="date"
+      type="text"
+      class="form-control rounded"
+      pattern="\d{1,2}\.\d{1,2}\.\d{2,4}"
+      value={{this.displayValue}}
+      placeholder={{this.placeholder}}
+      {{on
+        "focus"
+        (prevent-default (stop-propagation (fn this.handleFocus dd)))
+      }}
+      {{on "blur" (fn this.handleBlur dd)}}
+      {{on "change" this.handleChange}}
+      {{on "input" this.checkValidity}}
+    />
+    {{#if @value}}
+      <span
+        class="clear ember-power-select-clear-btn absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+        role="button"
+        {{on "click" (prevent-default (stop-propagation (fn this.clear dd)))}}
+      >&times;</span>
+    {{/if}}
+  </dd.Trigger>
+
+  <dd.Content class="datepicker !p-0">
+    <Calendar
+      @center={{moment this.center}}
+      @selected={{@value}}
+      @onCenterChange={{this.updateCenter}}
+      @onSelect={{fn this.updateSelect dd}}
+    />
+  </dd.Content>
+</BasicDropdown>
+
+{{yield (hash id=this.uniqueId)}}

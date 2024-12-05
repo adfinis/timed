@@ -1,27 +1,25 @@
-<div
-  class="record-button-container
-    {{if this.active 'record-button-container--recording'}}"
+<button
+  type="submit"
+  data-test-record-stop={{not (not this.active)}}
+  data-test-record-start={{not this.active}}
+  class="record-button-container btn text-foreground-accent h-full px-3 text-sm
+    {{if
+      this.active
+      'record-button-container--recording active grid grid-cols-[auto,minmax(0,1fr)] place-items-center gap-x-2'
+    }}"
+  {{on "click" (prevent-default (optional (if this.active @onStop @onStart)))}}
 >
   {{#if this.active}}
-    <button
-      data-test-record-stop
-      type="submit"
-      class="record-button record-button--stop"
-      {{on "click" (prevent-default (optional @onStop))}}
-    >
-      <FaIcon @icon="square" @prefix="fas" />
-    </button>
+    <FaIcon @icon="square" @prefix="fas" class="text-danger" />
     <div class="record-button-timer">
       <DurationSince @from={{@activity.from}} />
     </div>
   {{else}}
-    <button
-      data-test-record-start
-      type="submit"
-      class="record-button record-button--start"
-      {{on "click" (prevent-default (optional @onStart))}}
-    >
-      <FaIcon @icon="play" @prefix="fas" @transform="right-1" />
-    </button>
+    <FaIcon
+      @icon="play"
+      @prefix="fas"
+      @transform="right-1"
+      class="text-success"
+    />
   {{/if}}
-</div>
+</button>

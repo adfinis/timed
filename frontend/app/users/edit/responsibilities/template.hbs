@@ -1,108 +1,108 @@
-<div class="grid grid--12of12 grid-md--6of12">
-  <div class="grid-cell">
-    <h4>Projects</h4>
-    <div class="card">
-      <div class="card-block">
-        {{#if this.projects.isRunning}}
-          <div class="empty">
-            <LoadingIcon />
-          </div>
-        {{else}}
-          {{#let this.projects.lastSuccessful.value as |projects|}}
-            {{#if projects}}
-              <table class="table table--striped">
-                <thead>
-                  <tr>
-                    <th>Customer</th>
-                    <th>Project</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each projects as |project|}}
-                    <tr>
-                      <td>{{project.customer.name}}</td>
-                      <td>{{project.name}}</td>
-                    </tr>
-                  {{/each}}
-                </tbody>
-              </table>
-            {{else}}
-              <div class="card-block empty">
-                <div>
-                  <FaIcon @icon="folder-open" />
-                  <p>
-                    No projects found...
-                  </p>
-                </div>
-              </div>
-            {{/if}}
-          {{/let}}
-        {{/if}}
-      </div>
-    </div>
-  </div>
+<div class="grid gap-2 md:grid-cols-2">
 
-  <div class="grid-cell">
-    <h4>Supervisees</h4>
-    <div class="card">
-      <div class="card-block">
-        {{#if this.supervisees.isRunning}}
-          <div class="empty">
-            <LoadingIcon />
-          </div>
-        {{else}}
-          {{#let this.supervisees.lastSuccessful.value as |supervisees|}}
-            {{#if supervisees}}
-              <table class="table table--striped">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Current worktime balance</th>
-                    <th>Remaining vacation days</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each supervisees as |supervisee|}}
-                    <tr
+  <Card class="grid grid-rows-[min-content,1fr,min-content]">
+    <Card::Header><h4>Projects</h4></Card::Header>
+    <Card::Block>
+      {{#if this.projects.isRunning}}
+        <Empty>
+          <LoadingIcon />
+        </Empty>
+      {{else}}
+        {{#let this.projects.lastSuccessful.value as |projects|}}
+          {{#if projects}}
+            <Table class="table--striped table">
+              <Table::Thead>
+                <Table::Tr>
+                  <Table::Th>Customer</Table::Th>
+                  <Table::Th>Project</Table::Th>
+                </Table::Tr>
+              </Table::Thead>
+              <tbody>
+                {{#each projects as |project|}}
+                  <Table::Tr @striped={{true}} @last={{true}}>
+                    <Table::Td>{{project.customer.name}}</Table::Td>
+                    <Table::Td>{{project.name}}</Table::Td>
+                  </Table::Tr>
+                {{/each}}
+              </tbody>
+            </Table>
+          {{else}}
+            <Empty>
+              <FaIcon @icon="folder-open" />
+              <p>
+                No projects found...
+              </p>
+            </Empty>
+          {{/if}}
+        {{/let}}
+      {{/if}}
+    </Card::Block>
+    <Card::Footer />
+  </Card>
+
+  <Card class="grid grid-rows-[min-content,1fr,min-content]">
+    <Card::Header><h4>Supervisees</h4></Card::Header>
+    <Card::Block>
+      {{#if this.supervisees.isRunning}}
+        <Empty>
+          <LoadingIcon />
+        </Empty>
+      {{else}}
+        {{#let this.supervisees.lastSuccessful.value as |supervisees|}}
+          {{#if supervisees}}
+            <Table class="table--striped table">
+              <Table::Thead>
+                <Table::Tr>
+                  <Table::Th>Name</Table::Th>
+                  <Table::Th>Current worktime balance</Table::Th>
+                  <Table::Th>Remaining vacation days</Table::Th>
+                </Table::Tr>
+              </Table::Thead>
+              <tbody>
+                {{#each supervisees as |supervisee|}}
+                  <Table::Tr
+                    @striped={{true}}
+                    @last={{true}}
+                    @hover={{true}}
                     role="link"
-                      {{on "click" (fn this.openSupervisorProfile supervisee.id)}}
-                      class="pointer"
-                    >
-                      <td>{{supervisee.fullName}}</td>
-                      <td>
-                        <span
-                          class="worktime-balance
-                            {{balance-highlight-class
-                              supervisee.currentWorktimeBalance.balance
-                            }}"
-                        >
-                          {{format-duration
+                    {{on "click" (fn this.openSupervisorProfile supervisee.id)}}
+                  >
+                    <Table::Td>{{supervisee.fullName}}</Table::Td>
+                    <Table::Td>
+                      <span
+                        class="worktime-balance
+                          {{balance-highlight-class
                             supervisee.currentWorktimeBalance.balance
-                            false
-                          }}
-                        </span>
-                      </td>
+                          }}"
+                      >
+                        {{format-duration
+                          supervisee.currentWorktimeBalance.balance
+                          false
+                        }}
+                      </span>
+                    </Table::Td>
 
-                      {{!
+                    {{!
                       absenceBalances has to be an array but will always only
                       contain one element. This is why we get the first object here.
                     }}
-                      <td>{{get (object-at 0 supervisee.absenceBalances) "balance"}}</td>
-                    </tr>
-                  {{/each}}
-                </tbody>
-              </table>
-            {{else}}
-              <div class="card-block empty">
-                <div>
-                  <FaIcon @icon="users" @prefix="fas" />
-                  <p>No supervisees found...</p>
-                </div>
-              </div>
-            {{/if}}
-          {{/let}}
-        {{/if}}
-      </div>
-    </div>
-  </div>
+                    <Table::Td>{{get
+                        (object-at 0 supervisee.absenceBalances)
+                        "balance"
+                      }}</Table::Td>
+                  </Table::Tr>
+                {{/each}}
+              </tbody>
+            </Table>
+          {{else}}
+            <Empty>
+              <FaIcon @icon="users" @prefix="fas" />
+              <p>No supervisees found...</p>
+            </Empty>
+          {{/if}}
+        {{/let}}
+      {{/if}}
+    </Card::Block>
+    <Card::Footer />
+  </Card>
 </div>

@@ -1,42 +1,54 @@
 {{#let (changeset @report this.ReportValidations) as |cs|}}
-  <form ...attributes class="form-list-row" title={{this.title}} {{on "submit" (prevent-default (perform this.save cs))}} >
+  <ValidatedForm
+    @model={{cs}}
+    class="report-row grid grid-cols-4 gap-2 p-1 lg:grid-cols-[repeat(3,minmax(0,0.9fr)),minmax(0,1.6fr),minmax(0,0.45fr),minmax(2rem,0.6fr),repeat(2,minmax(2rem,0.6fr))] lg:p-1.5 xl:grid-cols-[repeat(3,minmax(0,1.2fr)),minmax(0,1.8fr),minmax(0,0.4fr),minmax(2rem,0.5fr),repeat(2,minmax(2rem,0.5fr))] xl:p-2.5 max-lg:[&>*]:w-full"
+    title={{this.title}}
+    @on-submit={{perform this.save}}
+    ...attributes
+    as |f|
+  >
     <TaskSelection
       @disabled={{not this.editable}}
       @task={{cs.task}}
       @on-set-task={{fn this.updateTask cs}}
       as |t|
     >
-      <div
-        class="form-list-cell form-group {{if cs.error.task 'has-error'}}"
-      >{{t.customer}}</div>
-      <div
-        class="form-list-cell form-group {{if cs.error.task 'has-error'}}"
-      >{{t.project}}</div>
-      <div
-        class="form-list-cell form-group {{if cs.error.task 'has-error'}}"
-      >{{t.task}}</div>
+      <t.customer
+        class="form-group max-lg:col-span-full {{if cs.error.task 'has-error'}}"
+      />
+      <t.project
+        class="form-group max-lg:col-span-full {{if cs.error.task 'has-error'}}"
+      />
+      <f.input @labelComponent="void" @errorComponent="void" @name="task">
+        <t.task
+          class="form-group max-lg:col-span-full
+            {{if cs.error.task 'has-error'}}"
+        />
+      </f.input>
     </TaskSelection>
 
-    <div class="form-list-cell form-group">
+    <div class="form-list-cell form-group max-lg:col-span-full">
       <label for="row-comment" hidden>Comment</label>
       <input
         type="text"
-        class="form-control comment-field"
+        class="form-control comment-field rounded
+          {{if cs.task.project.customerVisible 'customer-comment'}}"
         placeholder="Comment"
         name="comment"
         id="row-comment"
         value={{cs.comment}}
         disabled={{not this.editable}}
+        title={{if
+          cs.task.project.customerVisible
+          "This project's comments are visible to the customer"
+        }}
         spellcheck="true"
         {{on "change" (pick "target.value" (fn (mut cs.comment)))}}
         data-test-report-comment
       />
-      {{#if cs.task.project.customerVisible}}
-        <CustomerVisibleIcon class="customer-visible-icon" />
-      {{/if}}
     </div>
     <div class="form-list-cell form-group cell-duration">
-      <SyDurationpickerDay
+      <DurationpickerDay
         data-test-report-duration
         @disabled={{not this.editable}}
         @value={{cs.duration}}
@@ -46,27 +58,21 @@
     </div>
     <div class="form-list-cell form-group cell-remaining-effort">
       {{#if cs.task.project.remainingEffortTracking}}
-        <SyDurationpicker
+        <Durationpicker
           data-test-report-remaining-effort
+          class="remaining-effort"
           @disabled={{not this.editable}}
           @value={{cs.remainingEffort}}
           @onChange={{fn (mut cs.remainingEffort)}}
           @title="Remaining estimated effort"
-        >
-          <span class="fa-layers fa-fw color-secondary">
-            <FaIcon @icon="clock" />
-            <FaIcon
-              @icon="plus"
-              @prefix="fas"
-              @transform="shrink-6 right-10 up-6"
-            />
-          </span>
-        </SyDurationpicker>
+        />
       {{/if}}
     </div>
 
-    <div class="form-list-cell form-group cell-review-billable-icons">
-      <SyToggle
+    <div
+      class="form-list-cell form-group cell-review-billable-icons grid grid-cols-2 content-between gap-1 self-center"
+    >
+      <Toggle
         class="margin-small-right form-control"
         data-test-report-review
         @disabled={{not this.editable}}
@@ -82,8 +88,8 @@
             @transform="shrink-6 up-7 right-8"
           />
         </span>
-      </SyToggle>
-      <SyToggle
+      </Toggle>
+      <Toggle
         class="form-control"
         data-test-report-not-billable
         @disabled={{not this.editable}}
@@ -95,24 +101,27 @@
           <FaIcon @icon="dollar-sign" @prefix="fas" />
           <FaIcon @icon="slash" @prefix="fas" />
         </span>
-      </SyToggle>
+      </Toggle>
     </div>
-    <div class="form-list-cell form-group cell-buttons">
+    <div
+      class="form-list-cell form-group cell-buttons grid grid-cols-2 justify-around gap-2 self-center text-sm [&>*]:px-2"
+    >
       {{#if this.editable}}
         <button
           type="button"
           data-test-delete-report
           class="btn btn-danger"
-          disabled={{this.report.verifiedBy.id}}
+          disabled={{or this.report.verifiedBy.id cs.isNew}}
           {{on "click" (fn (optional @onDelete) @report)}}
         ><FaIcon @icon="trash-can" /></button>
-        <button
-          type="submit"
+        <f.submit
           data-test-save-report
-          class="btn btn-primary"
-          disabled={{or this.save.isRunning (and (not cs.isNew) (or (not cs.isDirty) (not cs.isValid)))}}
-        ><FaIcon @icon="floppy-disk" /></button>
+          disabled={{or
+            this.save.isRunning
+            (or (not cs.isValid) (not (or cs.isDirty cs.isNew)))
+          }}
+        ><FaIcon @icon="floppy-disk" /></f.submit>
       {{/if}}
     </div>
-  </form>
+  </ValidatedForm>
 {{/let}}

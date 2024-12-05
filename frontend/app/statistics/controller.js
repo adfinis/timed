@@ -17,16 +17,21 @@ const TYPES = {
   project: {
     include: "customer",
     requiredParams: ["customer"],
+    mobile: false,
   },
   task: {
     include: "project,project.customer",
     requiredParams: ["customer", "project"],
+    mobile: false,
   },
   user: { include: "user", requiredParams: [] },
 };
 
 export default class StatisticsController extends QPController {
   types = Object.keys(TYPES);
+  mobileTypes = Object.entries(TYPES)
+    .filter(([, v]) => v.mobile !== false)
+    .map(([k]) => k);
 
   queryParams = [
     "customer",
@@ -122,7 +127,7 @@ export default class StatisticsController extends QPController {
 
   get missingParams() {
     return this.requiredParams.filter(
-      (param) => !queryParamsState(this)[param].changed
+      (param) => !queryParamsState(this)[param].changed,
     );
   }
 
@@ -169,7 +174,7 @@ export default class StatisticsController extends QPController {
     const type = this.type;
 
     let params = underscoreQueryParams(
-      serializeQueryParams(this.allQueryParams, queryParamsState(this))
+      serializeQueryParams(this.allQueryParams, queryParamsState(this)),
     );
 
     params = Object.keys(params).reduce((obj, key) => {

@@ -1,11 +1,18 @@
 <svg
-  class="timed-clock"
+  class="timed-clock h-[var(--clock-size)] w-[--clock-size] stroke-[--clock]"
   viewBox="0 0 512 512"
   width="100%"
   height="100%"
   {{style --clock-size=(concat (or @clockSize 50) "px")}}
+  ...attributes
 >
-  <circle class="circle" r="240" cx="256" cy="256" stroke-width="20" />
+  <circle
+    class="circle fill-transparent"
+    r="240"
+    cx="256"
+    cy="256"
+    stroke-width="20"
+  />
   <line
     class="hour"
     x1="256"
@@ -27,7 +34,7 @@
     transform="rotate({{this.minute}} 256 256)"
   />
   <line
-    class="second"
+    class="second stroke-[--clock-accent]"
     x1="256"
     y1="64"
     x2="256"

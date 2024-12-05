@@ -11,7 +11,7 @@ module("Integration | Component | statistic list/column", function (hooks) {
   test("renders with default layout", async function (assert) {
     this.set("value", "test");
     await render(
-      hbs`<StatisticList::Column @layout="PLAIN" @value={{this.value}}/>`
+      hbs`<StatisticList::Column @layout="PLAIN" @value={{this.value}} />`,
     );
     assert.dom("td").hasText(this.value);
   });
@@ -20,7 +20,7 @@ module("Integration | Component | statistic list/column", function (hooks) {
     const duration = moment.duration({ h: 3 });
     this.set("value", duration);
     await render(
-      hbs`<StatisticList::Column @layout="DURATION" @value={{this.value}}/>`
+      hbs`<StatisticList::Column @layout="DURATION" @value={{this.value}} />`,
     );
     assert.dom("td").hasText(humanizeDuration(duration));
   });
@@ -29,7 +29,7 @@ module("Integration | Component | statistic list/column", function (hooks) {
     const date = moment();
     this.set("value", date);
     await render(
-      hbs`<StatisticList::Column @layout="MONTH" @value={{this.value}}/>`
+      hbs`<StatisticList::Column @layout="MONTH" @value={{this.value}} />`,
     );
     assert.dom("td").hasText(date.format("MMMM"));
   });

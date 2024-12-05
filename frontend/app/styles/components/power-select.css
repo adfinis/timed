@@ -1,0 +1,60 @@
+.ember-power-select-dropdown {
+  @apply min-w-64 lg:min-w-72;
+}
+
+.ember-power-select-trigger {
+  @apply form-select focus:border-primary-light focus:ring-primary-light relative flex overflow-hidden;
+}
+
+.ember-power-select-selected-item {
+  @apply w-full;
+}
+
+.ember-power-select-option div {
+  @apply cursor-pointer px-2;
+}
+
+.ember-power-select-option[aria-current="true"] div {
+  @apply text-foreground-primary bg-primary-light;
+}
+
+.ember-power-select-option[aria-selected="true"] div {
+  @apply bg-primary-dark text-foreground-primary;
+}
+
+.ember-power-select-option div.inactive {
+  @apply bg-secondary-light/70 text-foreground-secondary;
+}
+
+.ember-power-select-option[aria-current="true"] div.inactive {
+  @apply bg-secondary-light/90;
+}
+
+.ember-power-select-option[aria-selected="true"] div.inactive {
+  @apply bg-secondary-dark text-foreground-primary;
+}
+
+.ember-power-select-visually-hidden {
+  @apply hidden;
+}
+
+.ember-power-select-placeholder {
+  @apply truncate;
+}
+
+.ember-power-select-trigger[aria-disabled="false"]
+  .ember-power-select-placeholder {
+  @apply text-foreground-accent/70;
+}
+
+.ember-basic-dropdown-trigger--above {
+  @apply rounded-t-none;
+}
+
+.ember-basic-dropdown-trigger--below {
+  @apply rounded-b-none;
+}
+
+.ember-power-select-options[role="listbox"] {
+  @apply max-h-96 overflow-y-auto lg:max-h-[28rem];
+}

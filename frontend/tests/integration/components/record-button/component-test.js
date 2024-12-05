@@ -23,13 +23,11 @@ module("Integration | Component | record button", function (hooks) {
       assert.dom("[data-test-record-stop]").doesNotExist();
     });
 
-    await render(hbs`
-      <RecordButton
-        @recording={{this.recording}}
-        @activity={{this.activity}}
-        @onStop={{this.stopAction}}
-      />
-    `);
+    await render(hbs`<RecordButton
+  @recording={{this.recording}}
+  @activity={{this.activity}}
+  @onStop={{this.stopAction}}
+/>`);
 
     await click("[data-test-record-stop]");
 
@@ -47,13 +45,11 @@ module("Integration | Component | record button", function (hooks) {
       assert.dom("[data-test-record-stop]").exists({ count: 1 });
     });
 
-    await render(hbs`
-      <RecordButton
-        @recording={{this.recording}}
-        @activity={{this.activity}}
-        @onStart={{this.startAction}}
-      />
-    `);
+    await render(hbs`<RecordButton
+  @recording={{this.recording}}
+  @activity={{this.activity}}
+  @onStart={{this.startAction}}
+/>`);
 
     await click("[data-test-record-start]");
 

@@ -20,7 +20,7 @@ module("Integration | Component | weekly overview benchmark", function (hooks) {
 
   test("shows labels only when permitted", async function (assert) {
     await render(
-      hbs`<WeeklyOverviewBenchmark @showLabel={{true}} @hours={{8.5}} />`
+      hbs`<WeeklyOverviewBenchmark @showLabel={{true}} @hours={{8.5}} />`,
     );
 
     assert.strictEqual(find("span").textContent, "8.5h");

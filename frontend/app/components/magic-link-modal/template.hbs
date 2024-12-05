@@ -1,112 +1,87 @@
-<SyModal
-  @size="auto"
+<Modal
   @visible={{@isVisible}}
   @onClose={{@onClose}}
   data-test-magic-link-modal
+  class="md:w-auto"
   as |modal|
 >
-  <div
-    class="magic-link-modal"
-    data-test-magic-link-form
-  >
+  <div class="magic-link-modal sm:min-w-[32rem]" data-test-magic-link-form>
     <modal.header>
-      Create a magic link
+      <h3>Create a magic link</h3>
     </modal.header>
-    <modal.body>
-      <div data-test-task-selector>
-        <TaskSelection
-          @disabled={{false}}
-          @task={{this.task}}
-          @on-set-task={{this.onSetTask}}
-          as |t|
-        >
-          <div
-            class="form-list-cell form-group"
-          >{{t.customer}}</div>
-          <div
-            class="form-list-cell form-group"
-          >{{t.project}}</div>
-          <div
-            class="form-list-cell form-group"
-          >{{t.task}}</div>
-        </TaskSelection>
-      </div>
+    <modal.body class="grid gap-2" data-test-task-selector>
+      <TaskSelection
+        @disabled={{false}}
+        @task={{this.task}}
+        @on-set-task={{this.onSetTask}}
+        as |t|
+      >
+        <t.customer @dropdownClass="z-[60]" />
+        <t.project @dropdownClass="z-[60]" />
+        <t.task @dropdownClass="z-[60]" />
+      </TaskSelection>
 
-      <div class="margin-medium-bottom">
-        <input
-          value={{this.comment}}
-          {{on "change" (pick "target.value" (fn (mut this.comment)))}}
-          class="ember-text-field form-control"
-          placeholder="Comment"
-          aria-label="Comment for the timed entry"
-          data-test-magic-link-comment
-        />
-      </div>
-
-      <div class="margin-medium-bottom">
-        <div class="flex">
-          <SyDurationpickerDay
-            @disabled={{false}}
-            @value={{this.duration}}
-            @onChange={{fn (mut this.duration)}}
-            @title="Task duration"
-            data-test-magic-link-duration
-            class="flex-grow"
-          />
-          <SyToggle
-            class="margin-small-right form-control flex-shrink"
-            data-test-magic-link-review
-            @hint="Needs review"
-            @onToggle={{toggle "review" this}}
-            @value={{this.review}}
-          >
-            <span class="fa-layers fa-fw">
-              <FaIcon @icon="user" />
-              <FaIcon
-                @icon="question"
-                @prefix="fas"
-                @transform="shrink-6 up-7 right-8"
-              />
-            </span>
-          </SyToggle>
-          <SyToggle
-            class="form-control flex-shrink"
-            data-test-magic-link-not-billable
-            @hint="Not billable"
-            @onToggle={{toggle "notBillable" this}}
-            @value={{this.notBillable}}
-          >
-            <span class="fa-layers fa-fw">
-              <FaIcon @icon="dollar-sign" @prefix="fas" />
-              <FaIcon @icon="slash" @prefix="fas" />
-            </span>
-          </SyToggle>
-        </div>
-      </div>
+      <input
+        value={{this.comment}}
+        type="text"
+        {{on "change" (pick "target.value" (fn (mut this.comment)))}}
+        class="ember-text-field form-control rounded"
+        placeholder="Comment"
+        aria-label="Comment for the timed entry"
+        data-test-magic-link-comment
+      />
 
       <div class="flex">
-        <input
-          value={{this.magicLinkString}}
-          disabled={{true}}
-          class="flex-grow form-control"
-          aria-label="magic link string"
-          data-test-magic-link-string
+        <DurationpickerDay
+          @disabled={{false}}
+          @value={{this.duration}}
+          @onChange={{fn (mut this.duration)}}
+          @title="Task duration"
+          data-test-magic-link-duration
+          class="flex-grow"
         />
+        <Toggle
+          class="margin-small-right form-control flex-shrink"
+          data-test-magic-link-review
+          @hint="Needs review"
+          @onToggle={{toggle "review" this}}
+          @value={{this.review}}
+        >
+          <span class="fa-layers fa-fw">
+            <FaIcon @icon="user" />
+            <FaIcon
+              @icon="question"
+              @prefix="fas"
+              @transform="shrink-6 up-7 right-8"
+            />
+          </span>
+        </Toggle>
+        <Toggle
+          class="form-control flex-shrink"
+          data-test-magic-link-not-billable
+          @hint="Not billable"
+          @onToggle={{toggle "notBillable" this}}
+          @value={{this.notBillable}}
+        >
+          <span class="fa-layers fa-fw">
+            <FaIcon @icon="dollar-sign" @prefix="fas" />
+            <FaIcon @icon="slash" @prefix="fas" />
+          </span>
+        </Toggle>
       </div>
-      {{#if this.statusMsg}}
-        <div class="alert alert-success margin-medium-top">
-          {{this.statusMsg}}
-        </div>
-      {{/if}}
-      {{#if this.errorMsg}}
-        <div class="alert alert-warning margin-medium-top">
-          {{this.errorMsg}}
-        </div>
-      {{/if}}
+
+      <input
+        value={{this.magicLinkString}}
+        disabled={{true}}
+        type="url"
+        class="form-control mt-2 flex-grow rounded"
+        aria-label="magic link string"
+        data-test-magic-link-string
+      />
     </modal.body>
-    <modal.footer>
+    <modal.footer class="flex justify-end">
       <button
-        class="btn btn-default margin-small-left"
+        class="btn btn-primary"
         {{on "click" this.copyToClipboard}}
         disabled={{not this.task}}
         type="button"
@@ -116,4 +91,4 @@
       </button>
     </modal.footer>
   </div>
-</SyModal>
+</Modal>

@@ -1,18 +1,25 @@
-<div class="filter-sidebar-group {{if this.expanded 'filter-sidebar-group--expanded'}}">
-  <a
-    href="#"
-    class="filter-sidebar-group-label"
-    {{on "click" (toggle "expanded" this)}}>
+<div
+  class="filter-sidebar-group
+    {{if this.expanded 'expanded filter-sidebar-group--expanded'}}
+    group flex flex-col border-t p-2.5"
+>
+  <button
+    type="button"
+    class="filter-sidebar-group-label hover:text-foreground group-[.expanded]:text-foreground text-foreground-muted flex items-center justify-between text-xl transition-colors"
+    {{on "click" (toggle "expanded" this)}}
+  >
     {{@label}}
     <FaIcon
       @icon="angle-right"
       @prefix="fas"
       @transform="{{if this.expanded 'rotate-90'}}"
-      />
-    </a>
-    <div class="filter-sidebar-group-body">
-      <div class="filter-sidebar-group-content">
-        {{yield}}
-      </div>
+    />
+  </button>
+  <div
+    class="filter-sidebar-group-body max-h-0 overflow-hidden transition-[max-height] group-[.expanded]:max-h-[32rem]"
+  >
+    <div class="filter-sidebar-group-content py-2 [&>*]:mt-1">
+      {{yield}}
     </div>
   </div>
+</div>

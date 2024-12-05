@@ -22,7 +22,7 @@ export default class ReportAbility extends Ability {
       (this.model?.taskAssignees ?? [])
         .concat(
           this.model?.projectAssignees ?? [],
-          this.model?.customerAssignees ?? []
+          this.model?.customerAssignees ?? [],
         )
         .filter((a) => a?.user)
         .map((a) => a.user.get("id"))

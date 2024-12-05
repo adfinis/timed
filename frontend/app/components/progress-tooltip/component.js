@@ -82,37 +82,41 @@ export default class ProgressTooltipComponent extends Component {
       : 0;
   }
 
+  get badgeClass() {
+    return "text-foreground-primary rounded-xl py-1 px-1.5 font-mono text-xs rounded-xl m-0.5 inline-block min-w-2.5 text-center whitespace-nowrap";
+  }
+
   // The color of the badge and progress bar for billable time spent
   get colorBillable() {
     if (this.progressBillable > 1) {
-      return "danger";
+      return "bg-danger";
     } else if (this.progressBillable >= 0.9) {
-      return "warning";
+      return "bg-warning";
     }
 
-    return "success";
+    return "bg-success";
   }
 
   // The color of the badge and progress bar for total time spent
   get colorTotal() {
     if (this.progressTotal > 1) {
-      return "danger";
+      return "bg-danger";
     } else if (this.progressTotal >= 0.9) {
-      return "warning";
+      return "bg-warning";
     }
 
-    return "success";
+    return "bg-success";
   }
 
   // The color of the badge and progress bar for remaining effort
   get colorRemainingEffort() {
     if (this.progressRemainingEffort > 1) {
-      return "danger";
+      return "bg-danger";
     } else if (this.progressRemainingEffort >= 0.9) {
-      return "warning";
+      return "bg-warning";
     }
 
-    return "success";
+    return "bg-success";
   }
 
   get tooltipVisible() {

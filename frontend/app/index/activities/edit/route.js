@@ -52,7 +52,7 @@ export default class IndexActivityEditController extends Route {
     const changeset = new Changeset(
       model,
       lookupValidator(ActivityValidator),
-      ActivityValidator
+      ActivityValidator,
     );
     changeset.validate();
 

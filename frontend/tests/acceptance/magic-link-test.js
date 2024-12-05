@@ -28,7 +28,7 @@ module("Acceptance | magic links", function (hooks) {
     assert.dom("[data-test-magic-link-form]").isVisible();
 
     await waitFor(".customer-select");
-    await taskSelect("[data-test-task-selector] div");
+    await taskSelect("[data-test-task-selector]");
     await fillIn("[data-test-magic-link-comment]", "some great comment");
 
     await fillIn("[data-test-magic-link-duration]", "02:00");
@@ -55,7 +55,7 @@ module("Acceptance | magic links", function (hooks) {
 
   test("can create a new draft report from a magic link", async function (assert) {
     await visit(
-      "/reports?task=2&duration=PT2H&comment=some+great+comment&review=true&notBillable=true"
+      "/reports?task=2&duration=PT2H&comment=some+great+comment&review=true&notBillable=true",
     );
     const task = this.server.db.tasks.find(2);
     const project = this.server.db.projects.find(task.projectId);
@@ -65,17 +65,17 @@ module("Acceptance | magic links", function (hooks) {
 
     assert
       .dom(
-        "[data-test-report-row]:last-child .customer-select .ember-power-select-selected-item"
+        "[data-test-report-row]:last-child .customer-select .ember-power-select-selected-item",
       )
       .containsText(customer.name, "it sets the correct customer");
     assert
       .dom(
-        "[data-test-report-row]:last-child .project-select .ember-power-select-selected-item"
+        "[data-test-report-row]:last-child .project-select .ember-power-select-selected-item",
       )
       .containsText(project.name, "it sets the correct project");
     assert
       .dom(
-        "[data-test-report-row]:last-child .task-select .ember-power-select-selected-item"
+        "[data-test-report-row]:last-child .task-select .ember-power-select-selected-item",
       )
       .containsText(task.name, "it sets the correct task");
     assert
@@ -103,7 +103,7 @@ module("Acceptance | magic links", function (hooks) {
     assert.dom("[data-test-magic-link-form]").isVisible();
 
     await waitFor(".customer-select");
-    await taskSelect("[data-test-task-selector] div");
+    await taskSelect("[data-test-task-selector]");
     await fillIn("[data-test-magic-link-comment]", "some great comment");
     await fillIn("[data-test-magic-link-duration]", "02:00");
 

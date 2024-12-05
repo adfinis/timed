@@ -24,7 +24,7 @@ module("Acceptance | tour", function (hooks) {
 
     localStorage.removeItem("timed-tour");
 
-    setBreakpoint("xl");
+    setBreakpoint("md");
   });
 
   test("shows a welcome dialog", async function (assert) {
@@ -105,7 +105,7 @@ module("Acceptance | tour", function (hooks) {
       assert.strictEqual(currentRouteName().replace(/\.index$/, ""), site);
       for (const step of TOURS[site]) {
         const header = Array.from(
-          document.getElementsByClassName("shepherd-header")
+          document.getElementsByClassName("shepherd-header"),
         ).pop();
         assert.dom(header).hasText(step.title);
         Array.from(document.getElementsByClassName("shepherd-button-primary"))

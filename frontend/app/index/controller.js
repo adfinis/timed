@@ -23,6 +23,8 @@ import { cached } from "tracked-toolbox";
 export default class IndexController extends Controller {
   queryParams = ["day"];
 
+  negate = (n) => n * -1;
+
   @tracked showAddModal = false;
   @tracked showEditModal = false;
   @tracked day = moment().format("YYYY-MM-DD");
@@ -33,10 +35,11 @@ export default class IndexController extends Controller {
   /* istanbul ignore next */
   @trackedWrapper disabledDates = [];
 
-  @service store;
-  @service notify;
-  @service tracking;
   @service currentUser;
+  @service media;
+  @service notify;
+  @service store;
+  @service tracking;
 
   AbsenceValidations = AbsenceValidations;
   MultipleAbsenceValidations = MultipleAbsenceValidations;
@@ -253,7 +256,7 @@ export default class IndexController extends Controller {
 
     return [...reportDurations, ...absenceDurations].reduce(
       (val, dur) => val.add(dur),
-      moment.duration()
+      moment.duration(),
     );
   }
 
@@ -318,6 +321,22 @@ export default class IndexController extends Controller {
     return get(this, "currentUser.user.activeEmployment.location.workdays");
   }
 
+  get weeklyOverviewSliceValue() {
+    if (this.media.isLg) {
+      return 5;
+    }
+
+    if (this.media.isMd) {
+      return 10;
+    }
+
+    if (this.media.isSm) {
+      return 15;
+    }
+
+    return 21;
+  }
+
   /**
    * The task to compute the data for the weekly overview
    *
@@ -329,14 +348,14 @@ export default class IndexController extends Controller {
       (report) =>
         report.get("user.id") === this.currentUser.user.get("id") &&
         !report.get("isDeleted") &&
-        !report.get("isNew")
+        !report.get("isNew"),
     );
 
     const allAbsences = this.allAbsences.filter(
       (absence) =>
         absence.get("user.id") === this.currentUser.user.get("id") &&
         !absence.get("isDeleted") &&
-        !absence.get("isNew")
+        !absence.get("isNew"),
     );
 
     const allHolidays = this.store.peekAll("public-holiday");
@@ -360,11 +379,11 @@ export default class IndexController extends Controller {
 
         return obj;
       },
-      {}
+      {},
     );
 
-    return Array.from({ length: 31 }, (value, index) =>
-      moment(this.date).add(index - 20, "days")
+    return Array.from({ length: 56 }, (value, index) =>
+      moment(this.date).add(index - 28, "days"),
     ).map((d) => {
       const {
         reports = [],
@@ -461,7 +480,7 @@ export default class IndexController extends Controller {
    */
   get disabledDatesForEdit() {
     return this.disabledDates.filter(
-      (date) => !date.isSame(this.absence.date, "day")
+      (date) => !date.isSame(this.absence.date, "day"),
     );
   }
 

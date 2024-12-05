@@ -1,13 +1,11 @@
-<div class="date-navigation btn-toolbar" ...attributes>
-  <div class="btn-group">
-    <MagicLinkBtn />
-  </div>
-  <div class="btn-group">
+<div class="flex h-full flex-row justify-between" ...attributes>
+  <div><MagicLinkBtn class="h-full" /></div>
+  <div class="btn-group mx-6 flex h-full flex-row">
     <button
       type="button"
       data-test-previous
       title="Previous day"
-      class="btn btn-default"
+      class="btn btn-default h-full"
       {{on "click" this.setPrevious}}
     >
       <FaIcon @icon="arrow-left" @prefix="fas" />
@@ -25,12 +23,16 @@
       type="button"
       data-test-next
       title="Next day"
-      class="btn btn-default"
+      class="btn btn-default h-full"
       {{on "click" this.setNext}}
     >
       <FaIcon @icon="arrow-right" @prefix="fas" />
     </button>
   </div>
 
-  <SyDatepickerBtn @value={{@current}} @onChange={{@onChange}} />
+  <DatepickerButton
+    class="h-full"
+    @value={{@current}}
+    @onChange={{@onChange}}
+  />
 </div>

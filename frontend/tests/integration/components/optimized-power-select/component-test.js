@@ -25,18 +25,18 @@ module("Integration | Component | optimized power select", function (hooks) {
     this.set("selectedTemplate", customSelectedTemplate);
     this.set("optionTemplate", taskOptionTemplate);
 
-    await render(hbs`
-      {{component (ensure-safe-component "optimized-power-select") options            = this.options
-          selected           = this.selected
-          onChange           = (fn (mut this.selected))
-          tagName            = 'div'
-          renderInPlace      = true
-          searchField        = 'name'
-          extra              = (hash
-            optionTemplate   = this.optionTemplate
-            selectedTemplate = this.selectedTemplate
-          )}}
-    `);
+    await render(hbs`{{component
+  (ensure-safe-component "optimized-power-select")
+  options=this.options
+  selected=this.selected
+  onChange=(fn (mut this.selected))
+  tagName="div"
+  renderInPlace=true
+  searchField="name"
+  extra=(hash
+    optionTemplate=this.optionTemplate selectedTemplate=this.selectedTemplate
+  )
+}}`);
 
     await clickTrigger();
 
@@ -52,18 +52,18 @@ module("Integration | Component | optimized power select", function (hooks) {
     this.set("selectedTemplate", customSelectedTemplate);
     this.set("optionTemplate", taskOptionTemplate);
 
-    await render(hbs`
-      {{component (ensure-safe-component "optimized-power-select") options            = this.options
-          selected           = this.selected
-          onChange           = (fn (mut this.selected))
-          tagName            = 'div'
-          renderInPlace      = true
-          searchField        = 'name'
-          extra              = (hash
-            optionTemplate   = this.optionTemplate
-            selectedTemplate = this.selectedTemplate
-          )}}
-    `);
+    await render(hbs`{{component
+  (ensure-safe-component "optimized-power-select")
+  options=this.options
+  selected=this.selected
+  onChange=(fn (mut this.selected))
+  tagName="div"
+  renderInPlace=true
+  searchField="name"
+  extra=(hash
+    optionTemplate=this.optionTemplate selectedTemplate=this.selectedTemplate
+  )
+}}`);
 
     await clickTrigger();
     await typeInSearch("2");
@@ -81,18 +81,18 @@ module("Integration | Component | optimized power select", function (hooks) {
     this.set("selectedTemplate", customSelectedTemplate);
     this.set("optionTemplate", taskOptionTemplate);
 
-    await render(hbs`
-      {{component (ensure-safe-component "optimized-power-select") options            = this.options
-          selected           = this.selected
-          onChange           = (fn (mut this.selected))
-          tagName            = 'div'
-          renderInPlace      = true
-          searchField        = 'name'
-          extra              = (hash
-            optionTemplate   = this.optionTemplate
-            selectedTemplate = this.selectedTemplate
-          )}}
-    `);
+    await render(hbs`{{component
+  (ensure-safe-component "optimized-power-select")
+  options=this.options
+  selected=this.selected
+  onChange=(fn (mut this.selected))
+  tagName="div"
+  renderInPlace=true
+  searchField="name"
+  extra=(hash
+    optionTemplate=this.optionTemplate selectedTemplate=this.selectedTemplate
+  )
+}}`);
 
     await clickTrigger();
     await typeInSearch("2");

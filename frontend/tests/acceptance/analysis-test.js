@@ -9,6 +9,7 @@ import {
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { selectChoose } from "ember-power-select/test-support";
 import { setupApplicationTest } from "ember-qunit";
+import { setBreakpoint } from "ember-responsive/test-support";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
@@ -20,6 +21,7 @@ module("Acceptance | analysis", function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
+    setBreakpoint("md");
     this.user = this.server.create("user");
 
     // eslint-disable-next-line camelcase
@@ -45,7 +47,7 @@ module("Acceptance | analysis", function (hooks) {
     await selectChoose(
       "[data-test-filter-customer]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     await click(".export-buttons .btn:first-child");
@@ -66,7 +68,7 @@ module("Acceptance | analysis", function (hooks) {
     await selectChoose(
       "[data-test-filter-customer]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     assert.dom(".export-buttons .btn:first-child").isDisabled();
@@ -110,7 +112,7 @@ module("Acceptance | analysis", function (hooks) {
     await visit(
       `/analysis?${Object.keys(params)
         .map((k) => `${k}=${params[k]}`)
-        .join("&")}`
+        .join("&")}`,
     );
 
     assert
@@ -130,11 +132,11 @@ module("Acceptance | analysis", function (hooks) {
       .exists();
     assert.strictEqual(
       find("[data-test-filter-billing-type] select").selectedIndex,
-      1
+      1,
     );
     assert.strictEqual(
       find("[data-test-filter-cost-center] select").selectedIndex,
-      1
+      1,
     );
 
     assert.dom("[data-test-filter-from-date] input").hasValue("01.12.2016");
@@ -142,21 +144,21 @@ module("Acceptance | analysis", function (hooks) {
 
     assert.strictEqual(
       findAll("[data-test-filter-review] button").indexOf(
-        find("[data-test-filter-review] button.active")
+        find("[data-test-filter-review] button.active"),
       ),
-      0
+      0,
     );
     assert.strictEqual(
       findAll("[data-test-filter-not-billable] button").indexOf(
-        find("[data-test-filter-not-billable] button.active")
+        find("[data-test-filter-not-billable] button.active"),
       ),
-      0
+      0,
     );
     assert.strictEqual(
       findAll("[data-test-filter-verified] button").indexOf(
-        find("[data-test-filter-verified] button.active")
+        find("[data-test-filter-verified] button.active"),
       ),
-      0
+      0,
     );
   });
 
@@ -166,7 +168,7 @@ module("Acceptance | analysis", function (hooks) {
     await selectChoose(
       "[data-test-filter-customer]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     await click("tbody > tr:first-child");
@@ -193,7 +195,7 @@ module("Acceptance | analysis", function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      "/analysis/edit?editable=1&ordering=-date%2Cid"
+      "/analysis/edit?editable=1&ordering=-date%2Cid",
     );
   });
 
@@ -205,7 +207,7 @@ module("Acceptance | analysis", function (hooks) {
     await selectChoose(
       "[data-test-filter-customer]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     await click("tbody > tr:nth-child(1)");
@@ -248,7 +250,7 @@ module("Acceptance | analysis", function (hooks) {
     await selectChoose(
       "[data-test-filter-customer]",
       ".ember-power-select-option",
-      0
+      0,
     );
     await click("tbody > tr:nth-child(1)");
     await click("tbody > tr:nth-child(2)");

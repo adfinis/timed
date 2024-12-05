@@ -1,23 +1,21 @@
 {{#if @data.isRunning}}
-  <div class="empty">
+  <Empty>
     <LoadingIcon />
-  </div>
+  </Empty>
 {{else if @data.isError}}
-  <div class="empty">
-    <div>
-      <FaIcon @icon="bolt" @prefix="fas" />
-      <h3>Oops... Something went wrong</h3>
-      <p>
-        Have you tried turning it off and on again?
-        <br />
-        Please try refreshing the page.
-      </p>
-    </div>
-  </div>
+  <Empty>
+    <FaIcon @icon="bolt" @prefix="fas" />
+    <h3>Oops... Something went wrong</h3>
+    <p>
+      Have you tried turning it off and on again?
+      <br />
+      Please try refreshing the page.
+    </p>
+  </Empty>
 {{else if (not @data.value.length)}}
-  <div class="empty">
+  <Empty>
     {{yield "empty" @data.value}}
-  </div>
+  </Empty>
 {{else}}
   {{yield "body" @data.value}}
 {{/if}}

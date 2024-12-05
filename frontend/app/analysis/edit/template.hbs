@@ -1,41 +1,55 @@
 <PagePermission>
-  <div class="grid grid--12of12 grid-md--4of12">
+  <div class="grid md:grid-cols-4">
     <div class="grid-cell"></div>
-    <div class="grid-cell">
+    <div class="grid-cell col-span-2">
       {{#if this.intersection.isRunning}}
-        <div class="empty">
+        <Empty>
           <LoadingIcon />
-        </div>
+        </Empty>
       {{else}}
-        <h1 class="text-center">
-          {{#if (eq this.intersection.lastSuccessful.value.meta.count 1)}}
-            Edit report
-          {{else}}
-            Bulk edit
-            {{this.intersection.lastSuccessful.value.meta.count}}
-            reports
-          {{/if}}
-        </h1>
-        <div class="card">
-          <div class="card-block">
-            {{#let this.intersection.lastSuccessful.value.model as |model|}}
-              <ValidatedForm
-                @model={{changeset model this.IntersectionValidations}}
-                @on-submit={{perform this.save}}
-                as |f|
-              >
-                <TaskSelection
-                  @on-set-customer={{queue (fn (mut f.model.customer)) (fn this.validate f.model)}}
-                  @on-set-project={{queue (fn (mut f.model.project)) (fn this.validate f.model)}}
-                  @on-set-task={{queue (fn (mut f.model.task)) (fn this.validate f.model)}}
-                  @initial={{hash
-                    customer=this._customer
-                    project=this._project
-                    task=this._task
+        {{#let this.intersection.lastSuccessful.value.model as |model|}}
+          <ValidatedForm
+            @model={{changeset model this.IntersectionValidations}}
+            @on-submit={{perform this.save}}
+            as |f|
+          >
+            <Card>
+              <Card::Header>
+                <h1 class="text-foreground text-center">
+                  {{#if
+                    (eq this.intersection.lastSuccessful.value.meta.count 1)
                   }}
-                  as |t|
-                >
-                  <f.input @name="task">
+                    Edit report
+                  {{else}}
+                    Bulk edit
+                    {{this.intersection.lastSuccessful.value.meta.count}}
+                    reports
+                  {{/if}}
+                </h1>
+              </Card::Header>
+
+              <TaskSelection
+                @on-set-customer={{queue
+                  (fn (mut f.model.customer))
+                  (fn this.validate f.model)
+                }}
+                @on-set-project={{queue
+                  (fn (mut f.model.project))
+                  (fn this.validate f.model)
+                }}
+                @on-set-task={{queue
+                  (fn (mut f.model.task))
+                  (fn this.validate f.model)
+                }}
+                @initial={{hash
+                  customer=this._customer
+                  project=this._project
+                  task=this._task
+                }}
+                as |t|
+              >
+                <Card::Block class="grid gap-2">
+                  <f.input @labelComponent="void" @name="task">
                     <div class="form-group" data-test-customer>
                       <label>
                         Customer
@@ -93,7 +107,7 @@
                     </div>
                   </f.input>
 
-                  <f.input @name="comment" as |fi|>
+                  <f.input @name="comment" @labelComponent="void" as |fi|>
                     <label>
                       Comment
                       {{#if (eq model.comment null)}}
@@ -106,130 +120,139 @@
                         data-test-comment
                         type="text"
                         placeholder="Enter comment..."
-                        class="form-control comment-field"
+                        class="form-control comment-field rounded
+                          {{if
+                            model.task.project.customerVisible
+                            'customer-comment'
+                          }}"
+                        title={{if
+                          model.task.project.customerVisible
+                          "This project's comments are visible to the customer"
+                        }}
                         {{on "change" (pick "target.value" fi.update)}}
                         value={{fi.value}}
                       />
                     </label>
-                    {{#if model.task.project.customerVisible}}
-                      <CustomerVisibleIcon class="customer-visible-icon" />
-                    {{/if}}
                   </f.input>
 
-                  <f.input @name="notBillable" as |fi|>
-                    <SyCheckbox
-                      data-test-not-billable
-                      @checked={{fi.value}}
-                      @onChange={{fi.update}}
-                    >
-                      Not billable
-                      {{#if (eq model.notBillable null)}}
-                        <NotIdenticalWarning />
-                      {{/if}}
-                      {{#if (not-eq f.model.notBillable model.notBillable)}}
-                        <ChangedWarning />
-                      {{/if}}
-                    </SyCheckbox>
-                  </f.input>
+                  <div class="grid gap-1">
+                    <f.input @name="notBillable" @labelComponent="void" as |fi|>
+                      <Checkbox
+                        data-test-not-billable
+                        @checked={{fi.value}}
+                        @onChange={{fi.update}}
+                      >
+                        Not billable
+                        {{#if (eq model.notBillable null)}}
+                          <NotIdenticalWarning />
+                        {{/if}}
+                        {{#if (not-eq f.model.notBillable model.notBillable)}}
+                          <ChangedWarning />
+                        {{/if}}
+                      </Checkbox>
+                    </f.input>
 
-                  <f.input @name="review" as |fi|>
-                    <SyCheckbox
-                      data-test-review
-                      @checked={{fi.value}}
-                      @onChange={{fi.update}}
-                    >
-                      Needs Review
-                      {{#if (eq model.review null)}}
-                        <NotIdenticalWarning />
-                      {{/if}}
-                      {{#if (not-eq f.model.review model.review)}}
-                        <ChangedWarning />
-                      {{/if}}
-                    </SyCheckbox>
-                  </f.input>
+                    <f.input @name="review" @labelComponent="void" as |fi|>
+                      <Checkbox
+                        data-test-review
+                        @checked={{fi.value}}
+                        @onChange={{fi.update}}
+                      >
+                        Needs Review
+                        {{#if (eq model.review null)}}
+                          <NotIdenticalWarning />
+                        {{/if}}
+                        {{#if (not-eq f.model.review model.review)}}
+                          <ChangedWarning />
+                        {{/if}}
+                      </Checkbox>
+                    </f.input>
 
-                  <f.input @name="rejected" as |fi|>
-                    <SyCheckbox
-                      data-test-rejected
-                      @checked={{fi.value}}
-                      @onChange={{fi.update}}
-                      @disabled={{or
-                        (and (not this.isReviewer) (not this.isSuperuser))
-                        this.hasSelectedOwnReports
-                      }}
-                    >
-                      Reject report
-                      {{#if (eq model.rejected null)}}
-                        <NotIdenticalWarning />
-                      {{/if}}
-                      {{#if (not-eq f.model.rejected model.rejected)}}
-                        <ChangedWarning />
-                      {{/if}}
-                    </SyCheckbox>
-                  </f.input>
+                    <f.input @name="rejected" @labelComponent="void" as |fi|>
+                      <Checkbox
+                        data-test-rejected
+                        @checked={{fi.value}}
+                        @onChange={{fi.update}}
+                        @disabled={{or
+                          (and (not this.isReviewer) (not this.isSuperuser))
+                          this.hasSelectedOwnReports
+                        }}
+                      >
+                        Reject report
+                        {{#if (eq model.rejected null)}}
+                          <NotIdenticalWarning />
+                        {{/if}}
+                        {{#if (not-eq f.model.rejected model.rejected)}}
+                          <ChangedWarning />
+                        {{/if}}
+                      </Checkbox>
+                    </f.input>
 
-                  <f.input @name="billed" as |fi|>
-                    <SyCheckbox
-                      data-test-billed
-                      @checked={{fi.value}}
-                      @onChange={{fi.update}}
-                      @title={{not
-                        this.canBill
-                        "You do not have appropriate roles for this action."
-                      }}
-                      @disabled={{not this.canBill}}
-                    >
-                      Billed
-                      {{#if (eq model.billed null)}}
-                        <NotIdenticalWarning />
-                      {{/if}}
-                      {{#if (not-eq f.model.billed model.billed)}}
-                        <ChangedWarning />
-                      {{/if}}
-                    </SyCheckbox>
-                  </f.input>
+                    <f.input @name="billed" @labelComponent="void" as |fi|>
+                      <Checkbox
+                        data-test-billed
+                        @checked={{fi.value}}
+                        @onChange={{fi.update}}
+                        @title={{not
+                          this.canBill
+                          "You do not have appropriate roles for this action."
+                        }}
+                        @disabled={{not this.canBill}}
+                      >
+                        Billed
+                        {{#if (eq model.billed null)}}
+                          <NotIdenticalWarning />
+                        {{/if}}
+                        {{#if (not-eq f.model.billed model.billed)}}
+                          <ChangedWarning />
+                        {{/if}}
+                      </Checkbox>
+                    </f.input>
 
-                  <f.input @name="verified" as |fi|>
-                    <SyCheckbox
-                      data-test-verified
-                      @checked={{fi.value}}
-                      @onChange={{fi.update}}
-                      @title={{this.toolTipText}}
-                      @disabled={{or (not this.canVerify) this.needsReview}}
-                    >
-                      Verified
-                      {{#if (eq model.verified null)}}
-                        <NotIdenticalWarning />
-                      {{/if}}
-                      {{#if (not-eq f.model.verified model.verified)}}
-                        <ChangedWarning />
-                      {{/if}}
-                    </SyCheckbox>
-                  </f.input>
+                    <f.input @name="verified" @labelComponent="void" as |fi|>
+                      <Checkbox
+                        data-test-verified
+                        @checked={{fi.value}}
+                        @onChange={{fi.update}}
+                        @title={{this.toolTipText}}
+                        @disabled={{or (not this.canVerify) this.needsReview}}
+                      >
+                        Verified
+                        {{#if (eq model.verified null)}}
+                          <NotIdenticalWarning />
+                        {{/if}}
+                        {{#if (not-eq f.model.verified model.verified)}}
+                          <ChangedWarning />
+                        {{/if}}
+                      </Checkbox>
+                    </f.input>
+                  </div>
 
-                  <div class="text-right">
+                </Card::Block>
+                <Card::Footer class="flex justify-between">
+                  <div class="flex gap-2">
                     <button
                       data-test-cancel
                       type="button"
-                      class="btn"
+                      class="btn btn-default"
                       {{on "click" this.cancel}}
                     >Cancel</button>
                     <button
                       data-test-reset
                       type="button"
-                      class="btn"
+                      class="btn btn-default"
                       {{on
                         "click"
                         (queue t.reset (fn this.resetChangeset f.model))
                       }}
                     >Reset</button>
-                    <f.submit />
                   </div>
-                </TaskSelection>
-              </ValidatedForm>
-            {{/let}}
-          </div>
-        </div>
+                  <f.submit />
+                </Card::Footer>
+              </TaskSelection>
+            </Card>
+          </ValidatedForm>
+        {{/let}}
       {{/if}}
     </div>
     <div class="grid-cell"></div>

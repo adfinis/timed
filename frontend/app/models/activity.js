@@ -104,7 +104,7 @@ export default class Activity extends Model {
           review: this.review,
           notBillable: this.notBillable,
           fromTime: moment({ h: 0, m: 0, s: 0 }),
-        })
+        }),
       );
     }
 
@@ -121,18 +121,18 @@ export default class Activity extends Model {
               m: 59,
               s: 59,
             }),
-            moment()
-          )
+            moment(),
+          ),
         );
 
         await activity.save();
-      })
+      }),
     );
 
     if (moment().diff(this.date, "days") > 1) {
       this.notify.info(
         "The activity overlapped multiple days, which is not possible. The activity was stopped at midnight of the day it was started.",
-        { closeAfter: 5000 }
+        { closeAfter: 5000 },
       );
     }
   }

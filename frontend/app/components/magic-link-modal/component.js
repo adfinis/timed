@@ -13,6 +13,7 @@ export default class MagicLinkModal extends Component {
   @tracked errorMsg;
 
   @service router;
+  @service notify;
 
   @action
   onSetTask(task) {
@@ -37,11 +38,11 @@ export default class MagicLinkModal extends Component {
   copyToClipboard() {
     try {
       navigator.clipboard.writeText(this.magicLinkString);
-      this.statusMsg =
-        "Magic link copied to clipboard. You can now send it to a friendly coworker!";
+      this.notify.success(
+        "Magic link copied to clipboard.\nYou can now send it to a friendly coworker!",
+      );
     } catch {
-      /* istanbul ignore next */
-      this.errorMsg = "Could not copy to clipboard";
+      this.notify.error("Could not copy to clipboard");
     }
   }
 }

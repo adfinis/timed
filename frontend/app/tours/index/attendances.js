@@ -1,7 +1,7 @@
 export default [
   {
     id: "addAttendance",
-    target: ".btn-toolbar .btn-success",
+    target: "#add-attendance",
     placement: "left",
     title: "Add attendance",
     content: `

@@ -1,71 +1,66 @@
-<div class="btn-toolbar btn-toolbar--right form-group">
-  <button
-    type="button"
-    class="btn btn-success"
-    data-test-add-attendance
-    {{on "click" this.addAttendance}}
-  >Add attendance</button>
-</div>
-<div class="attendances">
+<NavTabs::LowerButton
+  id="add-attendance"
+  data-test-add-attendance
+  @onClick={{this.addAttendance}}
+>Add attendance
+</NavTabs::LowerButton>
+
+<div class="attendances grid gap-6">
   {{#if this.attendances}}
-    {{#if (or (media "isXl") (media "isLg") (media "isMd"))}}
+    <div class="max-sm:hidden">
       {{#each this.attendances as |attendance|}}
         <AttendanceSlider
           data-test-attendance-slider
+          data-test-attendance-slider-desktop
           data-test-attendance-slider-id={{attendance.id}}
           @attendance={{changeset attendance this.AttendanceValidator}}
           @onSave={{queue this.validateChangeset this.saveAttendance}}
           @onDelete={{this.deleteAttendance}}
         />
       {{/each}}
-    {{else}}
-      <table class="table table--striped table--attendances">
-        <tbody>
-          {{#each this.attendances as |attendance|}}
-            {{#let (changeset attendance this.AttendanceValidator) as |model|}}
-              <tr
-                data-test-attendance-slider
-                data-test-attendance-slider-id={{attendance.id}}
-              >
-                <td class="form-group {{if model.error.from 'has-error'}}">
-                  <SyTimepicker
-                    @value={{model.from}}
-                    @onChange={{fn (mut model.from)}}
-                    @max={{model.to}}
-                    @onFocusOut={{fn this.validateChangeset model}}
-                  />
-                </td>
-                <td class="form-group {{if model.error.to 'has-error'}}">
-                  <SyTimepicker
-                    @value={{model.to}}
-                    @onChange={{fn (mut model.to)}}
-                    @min={{model.from}}
-                    @onFocusOut={{fn this.validateChangeset model}}
-                  />
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    {{on "click" (fn this.deleteAttendance model)}}
-                  ><FaIcon @icon="trash-can" /></button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    disabled={{not (and model.isDirty model.isValid)}}
-                    {{on "click" (fn this.saveAttendance model)}}
-                  ><FaIcon @icon="floppy-disk" /></button>
-                </td>
-              </tr>
-            {{/let}}
-          {{/each}}
-        </tbody>
-      </table>
-    {{/if}}
+    </div>
+
+    <div class="sm:hidden">
+      {{#each this.attendances as |attendance|}}
+        {{#let (changeset attendance this.AttendanceValidator) as |model|}}
+          <div
+            class="striped border-border/50 grid grid-cols-[repeat(2,minmax(0,1fr)),auto] gap-1 border-t p-1 last:border-b"
+            data-test-attendance-slider
+            data-test-attendance-slider-mobile
+            data-test-attendance-slider-id={{attendance.id}}
+          >
+            <Timepicker
+              class="{{if model.error.from 'has-error'}}"
+              @value={{model.from}}
+              @onChange={{fn (mut model.from)}}
+              @max={{model.to}}
+              @onFocusOut={{fn this.validateChangeset model}}
+            />
+            <Timepicker
+              class="{{if model.error.to 'has-error'}}"
+              @value={{model.to}}
+              @onChange={{fn (mut model.to)}}
+              @min={{model.from}}
+              @onFocusOut={{fn this.validateChangeset model}}
+            />
+            <div class="flex gap-1">
+              <button
+                type="button"
+                class="btn btn-danger"
+                {{on "click" (fn this.deleteAttendance model)}}
+              ><FaIcon @icon="trash-can" /></button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                disabled={{not (and model.isDirty model.isValid)}}
+                {{on "click" (fn this.saveAttendance model)}}
+              ><FaIcon @icon="floppy-disk" /></button>
+            </div>
+          </div>
+        {{/let}}
+      {{/each}}
+    </div>
   {{else}}
     <div class="text-center"><em>No attendances yet</em></div>
   {{/if}}
-  <div class="text-center">
-    <br />
-  </div>
 </div>

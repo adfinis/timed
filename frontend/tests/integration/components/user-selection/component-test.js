@@ -13,15 +13,13 @@ module("Integration | Component | user selection", function (hooks) {
     const user = this.server.create("user");
     this.set("user", user);
 
-    await render(hbs`
-      <UserSelection @user={{this.user}} @onChange={{fn (mut this.user)}} as |u|>
-        {{u.user}}
-      </UserSelection>
-    `);
+    await render(hbs`<UserSelection @user={{this.user}} @onChange={{fn (mut this.user)}} as |u|>
+  {{u.user}}
+</UserSelection>`);
 
     assert.strictEqual(
       find(".user-select .ember-power-select-selected-item").textContent.trim(),
-      user.longName
+      user.longName,
     );
   });
 });

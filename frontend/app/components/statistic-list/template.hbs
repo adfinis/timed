@@ -1,10 +1,10 @@
 <div ...attributes>
   {{#if @data.isRunning}}
-    <div class="empty">
+    <Empty data-test-loading>
       <LoadingIcon />
-    </div>
+    </Empty>
   {{else if @data.last.isError}}
-    <div class="empty">
+    <Empty data-test-something-went-wrong>
       <div>
         <FaIcon @icon="bolt" @prefix="fas" />
         <h3>Oops... Something went wrong</h3>
@@ -14,27 +14,23 @@
           Please try refreshing the page.
         </p>
       </div>
-    </div>
+    </Empty>
   {{else if @missingParams}}
-    <div class="empty">
-      <div>
-        <FaIcon @icon="magnifying-glass" @prefix="fas" />
-        <h3>Missing filter parameters</h3>
-        <p>{{this.missingParamsMessage}}</p>
-      </div>
-    </div>
+    <Empty data-test-missing-filter-params>
+      <FaIcon @icon="magnifying-glass" @prefix="fas" />
+      <h3>Missing filter parameters</h3>
+      <p>{{this.missingParamsMessage}}</p>
+    </Empty>
   {{else if (not @data.last.value)}}
-    <div class="empty">
-      <div>
-        <FaIcon @icon="chart-bar" />
-        <h3>No statistics to display</h3>
-        <p>Maybe try loosening your filters</p>
-      </div>
-    </div>
+    <Empty>
+      <FaIcon @icon="chart-bar" />
+      <h3>No statistics to display</h3>
+      <p>Maybe try loosening your filters</p>
+    </Empty>
   {{else}}
-    <table class="table table-striped table--statistics">
-      <thead>
-        <tr>
+    <Table class="table-striped table--statistics table">
+      <Table::Thead>
+        <Table::Tr>
           {{#each this.columns as |column|}}
             {{#if column.ordering}}
               <SortHeader
@@ -45,21 +41,26 @@
                 {{column.title}}
               </SortHeader>
             {{else}}
-              <th>{{column.title}}</th>
+              <Table::Th @light={{true}}>{{column.title}}</Table::Th>
             {{/if}}
           {{/each}}
-          <th></th>
-        </tr>
-      </thead>
+          <th class="max-sm:hidden"></th>
+        </Table::Tr>
+      </Table::Thead>
       <VerticalCollection
         @items={{slice @data.last.value}}
         @tagName="tbody"
         @estimateHeight={{40}}
+        @staticHeight={{true}}
         @bufferSize={{10}}
         @containerSelector=".page-content--scroll"
         as |row|
       >
-        <tr data-test-statistic-list-row>
+        <Table::Tr
+          @striped={{true}}
+          data-test-statistic-list-row
+          class="[&>*]:leading-5"
+        >
           {{#each this.columns as |column|}}
             <StatisticList::Column
               data-test-statistic-list-column
@@ -67,7 +68,7 @@
               @value={{get row column.path}}
             />
           {{/each}}
-          <td>
+          <Table::Td class="w-1/2 max-sm:hidden">
             {{#let
               (or row.totalRemainingEffort row.mostRecentRemainingEffort)
               as |remainingEffort|
@@ -84,13 +85,13 @@
                 />
               {{/let}}
             {{/let}}
-          </td>
-        </tr>
+          </Table::Td>
+        </Table::Tr>
       </VerticalCollection>
-      <tfoot>
-        <tr>
+      <Table::Tfoot>
+        <Table::Tr>
           {{#each this.columns as |column index|}}
-            <td>
+            <Table::Td>
               <strong>
                 {{#if (not index)}}
                   Total:
@@ -101,11 +102,11 @@
                     }}</span>
                 {{/if}}
               </strong>
-            </td>
+            </Table::Td>
           {{/each}}
-          <td></td>
-        </tr>
-      </tfoot>
-    </table>
+          <Table::Td class="max-sm:hidden" />
+        </Table::Tr>
+      </Table::Tfoot>
+    </Table>
   {{/if}}
 </div>

@@ -47,36 +47,32 @@ module("Acceptance | index reports", function (hooks) {
     await visit("/reports");
 
     await waitFor(".customer-select");
-    await taskSelect(".form-list--reports .form-list-row:last-child");
+    await taskSelect(".reports .report-row:last-child");
 
     await fillIn(
-      ".form-list--reports .form-list-row:last-child [data-test-report-duration]",
-      "03:30"
+      ".reports .report-row:last-child [data-test-report-duration]",
+      "03:30",
     );
     await fillIn(
-      ".form-list--reports .form-list-row:last-child [data-test-report-comment]",
-      "Test comment report"
+      ".reports .report-row:last-child  [data-test-report-comment]",
+      "Test comment report",
     );
 
+    await click(".reports .report-row:last-child  [data-test-report-review]");
     await click(
-      ".form-list--reports .form-list-row:last-child [data-test-report-review]"
-    );
-    await click(
-      ".form-list--reports .form-list-row:last-child [data-test-report-not-billable]"
+      ".reports .report-row:last-child  [data-test-report-not-billable]",
     );
 
-    await click(
-      ".form-list--reports .form-list-row:last-child [data-test-save-report]"
-    );
+    await click(".reports .report-row:last-child  [data-test-save-report]");
 
     assert
       .dom(
-        "[data-test-report-row]:nth-last-child(2) [data-test-report-duration]"
+        "[data-test-report-row]:nth-last-child(2) [data-test-report-duration]",
       )
       .hasValue("03:30");
     assert
       .dom(
-        "[data-test-report-row]:nth-last-child(2) [data-test-report-comment]"
+        "[data-test-report-row]:nth-last-child(2) [data-test-report-comment]",
       )
       .hasValue("Test comment report");
   });
@@ -92,11 +88,11 @@ module("Acceptance | index reports", function (hooks) {
 
     await fillIn(
       `[data-test-report-row-id="${id}"] [data-test-report-duration]`,
-      "00:15"
+      "00:15",
     );
     await fillIn(
       `[data-test-report-row-id="${id}"] [data-test-report-comment]`,
-      "Testyy"
+      "Testyy",
     );
 
     assert
@@ -153,7 +149,7 @@ module("Acceptance | index reports", function (hooks) {
 
     await fillIn(
       `[data-test-report-row-id="${id}"] [data-test-report-comment]`,
-      "test"
+      "test",
     );
     await click(`[data-test-report-row-id="${id}"] [data-test-save-report]`);
 

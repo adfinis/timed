@@ -39,7 +39,7 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      `/users/${this.user.id}/credits/overtime-credits/${id}`
+      `/users/${this.user.id}/credits/overtime-credits/${id}`,
     );
 
     await fillIn("input[name=date]", moment().format("DD.MM.YYYY"));
@@ -54,19 +54,19 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
 
     assert
       .dom(
-        "[data-test-overtime-credits] tbody > tr:first-child > td:nth-child(1)"
+        "[data-test-overtime-credits] tbody > tr:first-child > td:nth-child(1)",
       )
       .hasText(moment().format("DD.MM.YYYY"));
 
     assert
       .dom(
-        "[data-test-overtime-credits] tbody > tr:first-child > td:nth-child(2)"
+        "[data-test-overtime-credits] tbody > tr:first-child > td:nth-child(2)",
       )
       .hasText("20h 0m");
 
     assert
       .dom(
-        "[data-test-overtime-credits] tbody > tr:first-child > td:nth-child(3)"
+        "[data-test-overtime-credits] tbody > tr:first-child > td:nth-child(3)",
       )
       .hasText("Ding dong");
   });
@@ -88,7 +88,7 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
 
     await fillIn(
       "input[name=date]",
-      moment().add(1, "years").format("DD.MM.YYYY")
+      moment().add(1, "years").format("DD.MM.YYYY"),
     );
     await fillIn("input[name=duration]", "20:00");
     await fillIn("input[name=comment]", "Ding dong");
@@ -97,7 +97,7 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      `/users/${this.user.id}/credits?year=${moment().year() + 1}`
+      `/users/${this.user.id}/credits?year=${moment().year() + 1}`,
     );
   });
 });

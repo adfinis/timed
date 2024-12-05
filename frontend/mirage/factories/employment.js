@@ -12,7 +12,7 @@ export default Factory.extend({
 
   worktimePerDay() {
     const worktime = moment.duration(
-      (moment.duration({ h: 8, m: 30 }) / 100) * this.percentage
+      (moment.duration({ h: 8, m: 30 }) / 100) * this.percentage,
     );
 
     return DjangoDurationTransform.create().serialize(worktime);
