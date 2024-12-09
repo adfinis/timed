@@ -12,7 +12,7 @@ import ApplicationAdapter from "timed/adapters/application";
  * @extends ApplicationAdapter
  * @public
  */
-export default ApplicationAdapter.extend({
+export default class ActivityBlockAdapter extends ApplicationAdapter {
   /**
    * Custom url for updating records
    *
@@ -24,8 +24,8 @@ export default ApplicationAdapter.extend({
    * @public
    */
   urlForUpdateRecord(...args) {
-    return `${this._super(...args)}?include=activity`;
-  },
+    return `${super.urlForUpdateRecord(...args)}?include=activity`;
+  }
 
   /**
    * Custom url for creating records
@@ -38,6 +38,6 @@ export default ApplicationAdapter.extend({
    * @public
    */
   urlForCreateRecord(...args) {
-    return `${this._super(...args)}?include=activity`;
-  },
-});
+    return `${super.urlForCreateRecord(...args)}?include=activity`;
+  }
+}
