@@ -3,7 +3,7 @@ import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
 import moment from "moment";
 import { module, test } from "qunit";
-import WorktimeBalanceChart from "timed/components/worktime-balance-chart/component";
+import WorktimeBalanceChart from "timed/components/worktime-balance-chart";
 
 module("Integration | Component | worktime balance chart", function (hooks) {
   setupRenderingTest(hooks);
