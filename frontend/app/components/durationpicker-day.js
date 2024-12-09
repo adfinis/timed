@@ -15,7 +15,7 @@ export default class DurationpickerDayComponent extends DurationpickerComponent 
   }
 
   get pattern() {
-    return "^(?:[01]?\\d|2[0-3]):?(?:00|15|30|45)?$";
+    return "^(?:[01]?\\d|2[0-3])?:?(?:00|15|30|45)?$";
   }
 
   @action
