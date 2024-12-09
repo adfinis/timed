@@ -14,6 +14,16 @@ module("Unit | Utility | parse day time", function () {
     assert.deepEqual([2, 0], result);
   });
 
+  test("single numbers over 23 will be minutes if valid", function (assert) {
+    assert.deepEqual([0, 30], parseDayTime("30"));
+    assert.deepEqual([0, 45], parseDayTime("45"));
+  });
+
+  test("anything after : will be minutes", function (assert) {
+    assert.deepEqual([0, 15], parseDayTime(":15"));
+    assert.deepEqual([0, 30], parseDayTime(":30"));
+  });
+
   test("works without :", function (assert) {
     const result = parseDayTime("230");
 
