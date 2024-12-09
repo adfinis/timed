@@ -8,7 +8,11 @@
     indeterminate={{eq @checked null}}
     {{on "change" (pick "target.checked" (optional @onChange))}}
   />
-  <label for={{this.checkboxElementId}} title={{@title}}>
+  <label
+    for={{this.checkboxElementId}}
+    title={{@title}}
+    class="text-sm xl:text-base"
+  >
     {{#if (has-block)}}
       {{yield}}
     {{else}}
