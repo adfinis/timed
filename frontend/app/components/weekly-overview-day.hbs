@@ -13,7 +13,7 @@
       'text-overview-absence hover:text-overview-absence-hf focus:text-overview-absence-hf [&.active]:text-overview-absence-active'
       (or
         (if
-          @workday
+          (and @workday (not @holiday))
           'text-overview-workday hover:text-overview-workday-hf focus:text-overview-workday-hf [&.active]:text-overview-workday-active'
         )
         'text-overview-weekend hover:text-overview-weekend-hf focus:text-overview-weekend-hf [&.active]:text-overview-weekend-active'
