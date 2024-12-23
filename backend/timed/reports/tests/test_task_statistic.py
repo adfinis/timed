@@ -94,7 +94,7 @@ def test_task_statistic_list(
 
 @pytest.mark.parametrize(
     ("filter", "expected_result"),
-    [("from_date", 5), ("customer", 3), ("cost_center", 3), ("reviewer", 3)],
+    [("from_date", 6), ("customer", 3), ("cost_center", 3), ("reviewer", 3)],
 )
 def test_task_statistic_filtered(
     auth_client,
@@ -118,7 +118,7 @@ def test_task_statistic_filtered(
 
     ReportFactory.create(duration=timedelta(hours=1), date="2022-08-05", task=task_test)
     ReportFactory.create(duration=timedelta(hours=2), date="2022-08-30", task=task_test)
-    ReportFactory.create(duration=timedelta(hours=3), date="2022-09-01", task=task_z)
+    ReportFactory.create(duration=timedelta(hours=4), date="2022-09-01", task=task_z)
 
     filter_values = {
         "from_date": "2022-08-20",  # last two reports
