@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from zipfile import ZipFile
 
 from django.conf import settings
-from django.db.models import F, Q, QuerySet, Sum
+from django.db.models import Exists, F, OuterRef, Q, QuerySet, Sum
 from django.db.models.functions import ExtractMonth, ExtractYear
 from django.http import HttpResponse
 from django.utils.http import content_disposition_header
@@ -117,9 +117,14 @@ class StatisticQueryset(QuerySet):
         return new_qs
 
     def filter_base(self, *args, **kwargs):
+        filtered = (
+            self.model.objects.filter(*args, **kwargs)
+            .values("pk")
+            .filter(pk=OuterRef("pk"))
+        )
         return StatisticQueryset(
             model=self.model,
-            base_qs=self._base.filter(*args, **kwargs),
+            base_qs=self._base.filter(Exists(filtered)),
             catch_prefixes=self._catch_prefixes,
             agg_filters=self._agg_filters,
         )
