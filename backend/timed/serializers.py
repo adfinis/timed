@@ -12,6 +12,7 @@ class TotalTimeRootMetaMixin:
         if many:
             view = self.context["view"]
             queryset = view.filter_queryset(view.get_queryset())
+            breakpoint()
             data = queryset.aggregate(total_time=Sum(self.duration_field))
             data["total_time"] = duration_string(data["total_time"] or timedelta(0))
             return data

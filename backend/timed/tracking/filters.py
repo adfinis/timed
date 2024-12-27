@@ -93,6 +93,26 @@ class AttendanceFilterSet(FilterSet):
         fields = ("date",)
 
 
+class CostCenterFilter(NumberFilter):
+    def __init__(self, *, task_prefix, **kwargs):
+        super().__init__(**kwargs)
+        self._task_prefix = task_prefix
+
+    def filter(self, qs: QuerySet, value: int) -> QuerySet:
+        """Filter report by cost center.
+
+        Cost center on task has higher priority over project cost
+        center.
+        """
+        prefix = f"{self._task_prefix}__" if self._task_prefix else ""
+        return qs.filter(
+            Q(**{f"{prefix}cost_center": value})
+            | Q(**{f"{prefix}project__cost_center": value})
+            & Q(**{f"{prefix}cost_center__isnull": True})
+        )
+        return super().filter(qs, value)
+
+
 class ReportFilterSet(FilterSet):
     """Filter set for the reports endpoint."""
 
@@ -112,7 +132,7 @@ class ReportFilterSet(FilterSet):
     verifier = NumberFilter(field_name="verified_by")
     billing_type = NumberFilter(field_name="task__project__billing_type")
     user = NumberFilter(field_name="user_id")
-    cost_center = NumberFilter(method="filter_cost_center")
+    cost_center = CostCenterFilter(task_prefix="task")
     rejected = NumberFilter(field_name="rejected")
     comment = CharFilter(method="filter_comment")
 
@@ -218,19 +238,6 @@ class ReportFilterSet(FilterSet):
             return queryset.exclude(unfinished_filter)
 
         return queryset.exclude(editable_filter)
-
-    def filter_cost_center(
-        self, queryset: QuerySet[models.Report], _name: str, value: int
-    ) -> QuerySet[models.Report]:
-        """Filter report by cost center.
-
-        Cost center on task has higher priority over project cost
-        center.
-        """
-        return queryset.filter(
-            Q(task__cost_center=value)
-            | Q(task__project__cost_center=value) & Q(task__cost_center__isnull=True)
-        )
 
     def filter_comment(
         self, queryset: QuerySet[models.Report], _name: str, value: str

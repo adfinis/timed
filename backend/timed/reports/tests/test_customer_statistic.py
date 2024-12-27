@@ -10,13 +10,19 @@ from timed.tracking.factories import ReportFactory
 
 
 @pytest.mark.parametrize(
-    ("is_employed", "is_customer_assignee", "is_customer", "expected", "status_code"),
+    (
+        "is_employed",
+        "is_customer_assignee",
+        "is_customer",
+        "num_queries",
+        "status_code",
+    ),
     [
         (False, True, False, 1, status.HTTP_403_FORBIDDEN),
         (False, True, True, 1, status.HTTP_403_FORBIDDEN),
-        (True, False, False, 3, status.HTTP_200_OK),
-        (True, True, False, 3, status.HTTP_200_OK),
-        (True, True, True, 3, status.HTTP_200_OK),
+        (True, False, False, 5, status.HTTP_200_OK),
+        (True, True, False, 5, status.HTTP_200_OK),
+        (True, True, True, 5, status.HTTP_200_OK),
     ],
 )
 def test_customer_statistic_list(
@@ -24,7 +30,7 @@ def test_customer_statistic_list(
     is_employed,
     is_customer_assignee,
     is_customer,
-    expected,
+    num_queries,
     status_code,
     django_assert_num_queries,
     setup_customer_and_employment_status,
@@ -49,7 +55,7 @@ def test_customer_statistic_list(
     report2 = ReportFactory.create(duration=timedelta(hours=4))
 
     url = reverse("customer-statistic-list")
-    with django_assert_num_queries(expected):
+    with django_assert_num_queries(num_queries):
         result = auth_client.get(url, data={"ordering": "duration"})
     assert result.status_code == status_code
 

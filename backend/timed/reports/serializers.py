@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import timedelta
 from typing import TYPE_CHECKING
 
 from django.contrib.auth import get_user_model
@@ -21,8 +22,25 @@ if TYPE_CHECKING:
     from typing import ClassVar
 
 
+class ReportDurationField(DurationField):
+    """Custom duration field, to turn None into 00:00:00.
+
+    We don't wanna complicate the query any more than neccessary, and
+    cast the NULL durations into something else on DB level. Let's just
+    do it at deserialisation time instead.
+    """
+
+    # TODO: this shouldn't be needed, for total_time calc we still need
+    # the *numbers* in the QS
+
+    def to_representation(self, value):
+        if value is None:
+            value = timedelta(seconds=0)
+        return super().to_representation(value)
+
+
 class YearStatisticSerializer(TotalTimeRootMetaMixin, Serializer):
-    duration = DurationField()
+    duration = DurationField(read_only=True)
     year = IntegerField()
 
     class Meta:
@@ -30,7 +48,7 @@ class YearStatisticSerializer(TotalTimeRootMetaMixin, Serializer):
 
 
 class MonthStatisticSerializer(TotalTimeRootMetaMixin, Serializer):
-    duration = DurationField()
+    duration = DurationField(read_only=True)
     year = IntegerField()
     month = IntegerField()
 
@@ -39,7 +57,7 @@ class MonthStatisticSerializer(TotalTimeRootMetaMixin, Serializer):
 
 
 class CustomerStatisticSerializer(TotalTimeRootMetaMixin, Serializer):
-    duration = DurationField()
+    duration = DurationField(read_only=True)
     name = CharField(read_only=True)
 
     class Meta:
@@ -47,8 +65,8 @@ class CustomerStatisticSerializer(TotalTimeRootMetaMixin, Serializer):
 
 
 class ProjectStatisticSerializer(TotalTimeRootMetaMixin, Serializer):
-    duration = DurationField()
-    name = CharField()
+    duration = DurationField(read_only=True)
+    name = CharField(source="project__name")
     amount_offered = DecimalField(max_digits=None, decimal_places=2)
     amount_offered_currency = CharField()
     amount_invoiced = DecimalField(max_digits=None, decimal_places=2)

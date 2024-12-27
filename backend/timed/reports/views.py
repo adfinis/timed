@@ -1,14 +1,15 @@
 from __future__ import annotations
+from django_filters.rest_framework import DjangoFilterBackend
 
 import re
 from collections import defaultdict
-from datetime import date
+from datetime import date, timedelta
 from io import BytesIO
 from typing import TYPE_CHECKING
 from zipfile import ZipFile
 
 from django.conf import settings
-from django.db.models import Exists, F, OuterRef, Q, QuerySet, Sum
+from django.db.models import Exists, F, OuterRef, Q, QuerySet, Sum, Value, When, Case
 from django.db.models.functions import ExtractMonth, ExtractYear
 from django.http import HttpResponse
 from django.utils.http import content_disposition_header
@@ -20,7 +21,9 @@ from rest_framework.viewsets import GenericViewSet, ReadOnlyModelViewSet
 from timed.mixins import AggregateQuerysetMixin
 from timed.permissions import IsAuthenticated, IsInternal, IsSuperUser
 from timed.projects.models import Customer, Project, Task
+from timed.projects import filters as project_filters
 from timed.reports import serializers
+from timed.reports.models import ReportStatistic
 from timed.tracking.filters import ReportFilterSet
 from timed.tracking.models import Report
 from timed.tracking.views import ReportViewSet
@@ -35,7 +38,7 @@ if TYPE_CHECKING:
     from timed.employment.models import User
 
 
-class BaseStatisticQuerysetMixin:
+class BaseStatisticQuerysetMixin(AggregateQuerysetMixin):
     """Base statistics queryset mixin.
 
     Build and filter the statistics queryset according to the following
@@ -51,7 +54,7 @@ class BaseStatisticQuerysetMixin:
 
     For this to work, each viewset defines two properties:
 
-    * The `qs_fields` define which fields are to be selected
+    * The `select_fields` is a list of fields to select (and implicitly GROUP BY)
     * The `pk_field` is an expression that will be used as a primary key in the
       REST sense (not really related to the database primary key, but serves as
       a row identifier)
@@ -61,30 +64,40 @@ class BaseStatisticQuerysetMixin:
     """
 
     def get_queryset(self):
-        return (
-            Report.objects.all()
-            .select_related("user", "task", "task__project", "task__project__customer")
-            .annotate(year=ExtractYear("date"))
-            .annotate(month=ExtractYear("date") * 100 + ExtractMonth("date"))
-        )
+        # TODO we're doing select_related() here, which makes a JOIN inside
+        # the VIEW superfluous. Refactor this to drop it in the VIEW and join
+        # normally here - should be slightly faster. But "first make it correct"
+        return ReportStatistic.objects.all()
 
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)
-        if isinstance(self.qs_fields, dict):
-            # qs fields need to be aliased
-            queryset = queryset.annotate(**self.qs_fields)
+        old_sql = str(queryset.query)
+        # invariant
+        count_before = queryset.count()
 
-        queryset = queryset.values(*list(self.qs_fields))
-        queryset = queryset.annotate(duration=Sum("duration"))
-        queryset = queryset.annotate(pk=F(self.pk_field))
-        return queryset
+        queryset = queryset.values(*self.select_fields)
+        queryset = queryset.annotate(
+            duration=Sum(
+                Case(
+                    When(duration__isnull=True, then=Value(timedelta(seconds=0))),
+                    default=F("duration"),
+                ),
+            ),
+            pk=F(self.pk_field),
+        )
+
+        count_after = queryset.count()
+        assert (
+            count_after == count_before
+        ), f"qs size changed! old sql: \n{old_sql}\n\nnew sql: \n{queryset.query}"
+        return queryset  # noqa: RET504
 
 
 class YearStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
     """Year statistics calculates total reported time per year."""
 
     serializer_class = serializers.YearStatisticSerializer
-    filterset_class = ReportFilterSet
+    filterset_class = filters.ReportStatisticFilterset
     ordering_fields = (
         "year",
         "duration",
@@ -97,15 +110,15 @@ class YearStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
         ),
     )
 
-    qs_fields = ("year", "duration")
     pk_field = "year"
+    select_fields = ("year",)
 
 
 class MonthStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
     """Month statistics calculates total reported time per month."""
 
     serializer_class = serializers.MonthStatisticSerializer
-    filterset_class = ReportFilterSet
+    filterset_class = filters.ReportStatisticFilterset
     ordering_fields = (
         "year",
         "month",
@@ -122,45 +135,54 @@ class MonthStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
         ),
     )
 
-    qs_fields = ("year", "month", "duration")
-    pk_field = "month"
+    queryset = ReportStatistic.objects
+
+    pk_field = "full_month"
+    select_fields = ("full_month", "month", "year")
 
 
-class CustomerStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
+class CustomerStatisticViewSet(ReadOnlyModelViewSet):
     """Customer statistics calculates total reported time per customer."""
 
     serializer_class = serializers.CustomerStatisticSerializer
-    filterset_class = ReportFilterSet
+    filterset_class = filters.ReportStatisticFilterset
     ordering_fields = (
-        "task__project__customer__name",
+        "customer__name",
         "duration",
-        "estimated_time",
-        "remaining_effort",
     )
+    filter_backends = (
+        DjangoFilterBackend,
+        filters.StatisticSecondaryFilterBackend,
+        # TODO: rest_framework.filters.OrderingFilter
+    )
+    queryset = ReportStatistic.objects
+    secondary_link_field = "customer_id"
+    secondary_queryset = Customer.objects.all().prefetch_related(
+        "projects", "projects__tasks"
+    )
+    secondary_filterset_class = filters.CustomerReportStatisticFilterSet
 
-    ordering = ("name",)
+    ordering = ("customer__name",)
     permission_classes = (
         (
             # internal employees or super users may read all customer statistics
             (IsInternal | IsSuperUser) & IsAuthenticated
         ),
     )
-    qs_fields = {  # noqa: RUF012
-        "year": F("year"),
-        "month": F("month"),
-        "name": F("task__project__customer__name"),
-        "customer_id": F("task__project__customer_id"),
-    }
-    pk_field = "customer_id"
 
 
-class ProjectStatisticViewSet(AggregateQuerysetMixin, ReadOnlyModelViewSet):
+class ProjectStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
     """Project statistics calculates total reported time per project."""
 
     serializer_class = serializers.ProjectStatisticSerializer
-    filterset_class = ReportFilterSet
+    filterset_class = filters.ReportStatisticFilterset
+    filter_backends = (
+        DjangoFilterBackend,
+        filters.StatisticSecondaryFilterBackend,
+        # TODO: rest_framework.filters.OrderingFilter
+    )
     ordering_fields = (
-        "task__project__name",
+        "project__name",
         "duration",
         "estimated_time",
         "remaining_effort",
@@ -173,20 +195,20 @@ class ProjectStatisticViewSet(AggregateQuerysetMixin, ReadOnlyModelViewSet):
         ),
     )
 
-    qs_fields = {  # noqa: RUF012
-        "year": F("year"),
-        "month": F("month"),
-        "name": F("task__project__name"),
-        "project_id": F("task__project_id"),
-    }
     pk_field = "project_id"
+    select_fields = (
+        "customer__name",
+        "project__name",
+        "task__estimated_time",
+        "task__remaining_effort",
+    )
 
 
 class TaskStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
     """Task statistics calculates total reported time per task."""
 
     serializer_class = serializers.TaskStatisticSerializer
-    filterset_class = ReportFilterSet
+    filterset_class = filters.ReportStatisticFilterset
     ordering_fields = (
         "task__name",
         "duration",
@@ -195,25 +217,23 @@ class TaskStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
     )
     ordering = ("task__name",)
     permission_classes = (
-        (
-            # internal employees or super users may read all customer statistics
-            (IsInternal | IsSuperUser) & IsAuthenticated
-        ),
+        # internal employees or super users may read all customer statistics
+        ((IsInternal | IsSuperUser) & IsAuthenticated),
     )
 
-    qs_fields = {  # noqa: RUF012
-        "year": F("year"),
-        "month": F("month"),
-        "name": F("task__name"),
-    }
     pk_field = "task_id"
+    select_fields = (
+        "task__name",
+        "task__estimated_time",
+        "task__remaining_effort",
+    )
 
 
 class UserStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
     """User calculates total reported time per user."""
 
     serializer_class = serializers.UserStatisticSerializer
-    filterset_class = ReportFilterSet
+    filterset_class = filters.ReportStatisticFilterset
     ordering_fields = (
         "user__username",
         "duration",
@@ -227,6 +247,7 @@ class UserStatisticViewSet(BaseStatisticQuerysetMixin, ReadOnlyModelViewSet):
     )
 
     pk_field = "user"
+    select_fields = ("user__username",)
 
 
 class WorkReportViewSet(GenericViewSet):
@@ -236,7 +257,7 @@ class WorkReportViewSet(GenericViewSet):
     in several projects work reports will be returned as zip.
     """
 
-    filterset_class = ReportFilterSet
+    filterset_class = filters.ReportStatisticFilterset
     ordering = ReportViewSet.ordering
     ordering_fields = ReportViewSet.ordering_fields
 
