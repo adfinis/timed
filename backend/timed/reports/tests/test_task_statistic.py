@@ -138,3 +138,40 @@ def test_task_statistic_filtered(
     json = result.json()
 
     assert json["meta"]["total-time"] == f"{expected_result:02}:00:00"
+
+
+def test_task_statistic_multiple_filters(
+    auth_client,
+    setup_customer_and_employment_status,
+):
+    user = auth_client.user
+    setup_customer_and_employment_status(
+        user=user,
+        is_assignee=True,
+        is_customer=True,
+        is_employed=True,
+        is_external=False,
+    )
+
+    cost_center = CostCenterFactory()
+    task_z = TaskFactory.create(name="Z", cost_center=cost_center)
+    task_test = TaskFactory.create(name="Test")
+    reviewer = TaskAssigneeFactory(user=UserFactory(), task=task_test, is_reviewer=True)
+
+    ReportFactory.create(duration=timedelta(hours=1), date="2022-08-05", task=task_test)
+    ReportFactory.create(duration=timedelta(hours=2), date="2022-08-30", task=task_test)
+    ReportFactory.create(duration=timedelta(hours=4), date="2022-09-01", task=task_z)
+
+    url = reverse("task-statistic-list")
+    result = auth_client.get(
+        url,
+        data={
+            "ordering": "name",
+            "include": "project,project.customer",
+            "from_date": "2022-08-20",
+            "reviewer": str(reviewer.user.pk),
+        },
+    )
+    assert result.status_code == status.HTTP_200_OK
+    json = result.json()
+    assert json["meta"]["total-time"] == "02:00:00"
