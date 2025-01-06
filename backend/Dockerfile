@@ -1,6 +1,6 @@
 FROM python:3.13-alpine AS base
 
-RUN apk update --no-cache && apk upgrade --no-cache && apk add shadow --no-cache && useradd -m -r -u 1001 timed && apk del shadow && rm -rf /var/cache/apk/*
+RUN apk update --no-cache && apk upgrade --no-cache && apk add shadow git --no-cache && useradd -m -r -u 1001 timed && apk del shadow && rm -rf /var/cache/apk/*
 
 RUN mkdir -p /var/www/static && chown timed:timed /var/www/static
 

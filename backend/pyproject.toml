@@ -36,7 +36,7 @@ django-excel = "^0.0.10"
 django-nested-inline = "^0.4.5"
 pyexcel-ods3 = "^0.6.1"
 pyexcel-xlsx = "^0.6.0"
-pyexcel-ezodf = "^0.3.4"
+pyexcel-ezodf = {git = "https://github.com/c0rydoras/pyexcel-ezodf", rev = "fix/python-3.13-compat"}
 django-environ = "^0.11.2"
 django-money = "^3.5.3"
 python-redmine = "^2.5.0"

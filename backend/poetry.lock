@@ -1341,16 +1341,20 @@ xlsx = ["pyexcel-xlsx (>=0.6.0)"]
 [[package]]
 name = "pyexcel-ezodf"
 version = "0.3.4"
-description = "A Python package to create/manipulate OpenDocumentFormat files"
+description = ""
 optional = false
 python-versions = "*"
-files = [
-    {file = "pyexcel-ezodf-0.3.4.tar.gz", hash = "sha256:972eeea9b0e4bab60dfc5cdcb7378cc7ba5e070a0b7282746c0182c5de011ff1"},
-    {file = "pyexcel_ezodf-0.3.4-py2.py3-none-any.whl", hash = "sha256:a74ac7636a015fff31d35c5350dc5ad347ba98ecb453de4dbcbb9a9168434e8c"},
-]
+files = []
+develop = false
 
 [package.dependencies]
 lxml = "*"
+
+[package.source]
+type = "git"
+url = "https://github.com/c0rydoras/pyexcel-ezodf"
+reference = "fix/python-3.13-compat"
+resolved_reference = "8c86e420961c569fca58550d7c927b75a2e499c0"
 
 [[package]]
 name = "pyexcel-io"
@@ -1971,4 +1975,4 @@ test = ["pytest"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a9da8fa92eae41def625316a7e14d1d0c7adfe5641e1b6b9fc3f083b456d18de"
+content-hash = "3785b1cf91d52441106da8457488a0828a9a7f6f53dfcfddb9d083384e04abfa"
