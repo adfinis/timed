@@ -36,7 +36,7 @@ django-excel = "^0.0.10"
 django-nested-inline = "^0.4.5"
 pyexcel-ods3 = "^0.6.1"
 pyexcel-xlsx = "^0.6.0"
-pyexcel-ezodf = "^0.3.4"
+pyexcel-ezodf = {git = "https://github.com/c0rydoras/pyexcel-ezodf", rev = "fix/python-3.13-compat"}
 django-environ = "^0.11.2"
 django-money = "^3.5.3"
 python-redmine = "^2.5.0"
@@ -82,7 +82,8 @@ filterwarnings = [
     "ignore:.*is deprecated in favour of new moneyed.l10n.format_money.*",
     "ignore:.*invalid escape sequence.*",
     "ignore:pkg_resources is deprecated as an API:DeprecationWarning",
-    "ignore:.*datetime.datetime.utcnow.*" # https://foss.heptapod.net/openpyxl/openpyxl/-/merge_requests/435 isn't included in a release of openpyxl yet and we are stuck on 3.0.10 because of https://github.com/pyexcel/pyexcel-xlsx/issues/52
+    "ignore:.*datetime.datetime.utcnow.*", # https://foss.heptapod.net/openpyxl/openpyxl/-/merge_requests/435 isn't included in a release of openpyxl yet and we are stuck on 3.0.10 because of https://github.com/pyexcel/pyexcel-xlsx/issues/52
+    "ignore:CSR support in pyOpenSSL is deprecated. You should use the APIs in cryptography.",
 ]
 
 [tool.coverage.run]
