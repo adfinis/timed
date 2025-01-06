@@ -211,4 +211,7 @@
   --danger: color-mix(in srgb, rgb(var(--red)), rgb(var(--old-danger)));
 
   --clock: rgb(var(--foreground-muted));
+
+  --overview-workday: rgb(var(--old-weekend));
+  --overview-weekend: var(--secondary);
 }
