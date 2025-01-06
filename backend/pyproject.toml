@@ -82,7 +82,8 @@ filterwarnings = [
     "ignore:.*is deprecated in favour of new moneyed.l10n.format_money.*",
     "ignore:.*invalid escape sequence.*",
     "ignore:pkg_resources is deprecated as an API:DeprecationWarning",
-    "ignore:.*datetime.datetime.utcnow.*" # https://foss.heptapod.net/openpyxl/openpyxl/-/merge_requests/435 isn't included in a release of openpyxl yet and we are stuck on 3.0.10 because of https://github.com/pyexcel/pyexcel-xlsx/issues/52
+    "ignore:.*datetime.datetime.utcnow.*", # https://foss.heptapod.net/openpyxl/openpyxl/-/merge_requests/435 isn't included in a release of openpyxl yet and we are stuck on 3.0.10 because of https://github.com/pyexcel/pyexcel-xlsx/issues/52
+    "ignore:CSR support in pyOpenSSL is deprecated. You should use the APIs in cryptography.",
 ]
 
 [tool.coverage.run]
