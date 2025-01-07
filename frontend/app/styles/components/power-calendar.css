@@ -28,7 +28,11 @@
 }
 
 .ember-power-calendar-day--current-month {
-  @apply bg-background-muted;
+  @apply bg-secondary/20;
+}
+
+.ember-power-calendar-day--today {
+  @apply bg-secondary/50;
 }
 
 .ember-power-calendar-day--selected {
@@ -36,7 +40,7 @@
 }
 
 .ember-power-calendar-day--current-month:not([disabled]) {
-  @apply hover:bg-background-secondary/50;
+  @apply hover:bg-secondary-light/55;
 }
 
 .ember-power-calendar-day--other-month:not([disabled]):hover {
