@@ -1,6 +1,6 @@
 """Factories for testing the projects app."""
 
-from factory import Faker, SubFactory
+from factory import Faker, Sequence, SubFactory
 from factory.django import DjangoModelFactory
 
 from timed.projects import models
@@ -22,7 +22,9 @@ class CustomerFactory(DjangoModelFactory):
 
 
 class BillingTypeFactory(DjangoModelFactory):
-    name = Faker("currency_name")
+    # name is unique, therefore don't use a "traditional" faker, but
+    # something guaranteed distinct
+    name = Sequence(lambda x: f"Billing Type {x}")
     reference = None
 
     class Meta:
