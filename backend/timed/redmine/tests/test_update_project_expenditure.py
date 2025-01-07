@@ -35,7 +35,8 @@ def test_update_project_expenditure(
         redmine_instance.issue.get.assert_called_once_with(1000)
         assert issue.estimated_hours == project.estimated_time.total_seconds() / 3600
         assert issue.custom_fields[0]["value"] == offered
-        assert issue.custom_fields[1]["value"] == project.amount_invoiced.amount
+        # Model has Decimal, JSON does only float
+        assert issue.custom_fields[1]["value"] == float(project.amount_invoiced.amount)
         issue.save.assert_called_once_with()
     else:
         out, _ = capsys.readouterr()
