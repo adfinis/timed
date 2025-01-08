@@ -4,7 +4,7 @@
  * @public
  */
 
-const DAY_TIME_REGEX = /^(?<hours>[01]?\d|2[0-3]):?(?<minutes>00|15|30|45)?$/;
+const DAY_TIME_REGEX = /^(?<hours>[01]?\d|2[0-3])?:?(?<minutes>00|15|30|45)?$/;
 
 /**
  * Converts a django duration string to a moment duration
@@ -23,5 +23,5 @@ export default function parseDayTime(str) {
   if (!matches) return null;
   const { hours, minutes } = matches.groups;
 
-  return [parseInt(hours), parseInt(minutes ?? "0")];
+  return [parseInt(hours ?? "0"), parseInt(minutes ?? "0")];
 }
