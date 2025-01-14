@@ -1,6 +1,10 @@
 {{#if @visible}}
   {{#in-element this.target insertBefore=null}}
-    <Modal::Overlay @visible={{@visible}} @onClose={{optional @onClose}}>
+    <Modal::Overlay
+      @visible={{@visible}}
+      @onClose={{optional @onClose}}
+      {{focus-trap}}
+    >
       <div
         class="modal-dialog bg-background z-50 max-h-[100%] w-full rounded border"
         ...attributes
