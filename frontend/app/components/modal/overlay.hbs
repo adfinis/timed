@@ -5,6 +5,7 @@
   id={{this.id}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" this.handleClick}}
+  ...attributes
 >
   {{yield}}
 </div>
