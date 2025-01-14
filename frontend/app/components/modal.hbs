@@ -3,7 +3,7 @@
     <Modal::Overlay
       @visible={{@visible}}
       @onClose={{optional @onClose}}
-      {{focus-trap}}
+      {{focus-trap additionalElements=(array this.target)}}
     >
       <div
         class="modal-dialog bg-background z-50 max-h-[100%] w-full rounded border"
