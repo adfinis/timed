@@ -91,6 +91,17 @@
         <Topnav::ListItem>
           <Topnav::LinkTo
             @onClick={{fn (mut this.expand) false}}
+            title="Timed Documentation Of This Page"
+            href={{this.docs.docsEndpoint}}
+            target="_blank"
+          >
+            <FaIcon @icon="book" />
+            Docs
+          </Topnav::LinkTo>
+        </Topnav::ListItem>
+        <Topnav::ListItem>
+          <Topnav::LinkTo
+            @onClick={{fn (mut this.expand) false}}
             @route="users.edit"
             @model={{this.currentUser.user.id}}
           >

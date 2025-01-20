@@ -51,7 +51,7 @@ module("Acceptance | external employee", function (hooks) {
   test("can only view tracking in top navigation", async function (assert) {
     await visit("/");
 
-    assert.dom("section > ul > li").exists({ count: 3 });
+    assert.dom("section > ul > li").exists({ count: 4 });
     assert.dom("section > ul > li").includesText("Tracking");
   });
 
