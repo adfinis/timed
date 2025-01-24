@@ -400,7 +400,7 @@ class WorkReportViewSet(GenericViewSet):
         # calculate location of total billable hours as insert rows moved it
         table[
             pos + len(tasks) + 2, 2
-        ].formula = f'of:=SUMIF(F13:F{pos -1!s};"yes";C13:C{pos - 1!s})'
+        ].formula = f'of:=SUMIF(F13:F{pos - 1!s};"yes";C13:C{pos - 1!s})'
 
         name = self._generate_workreport_name(from_date, project)
         return (name, doc)

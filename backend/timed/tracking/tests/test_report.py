@@ -1296,7 +1296,7 @@ def test_report_update_bulk_verify_reviewer_multiple_notify(
         }
     }
 
-    query_params = "?editable=1" f"&reviewer={reviewer.id}" "&id=" + ",".join(
+    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
         str(r.id) for r in [report1_1, report1_2, report2, report3]
     )
     response = internal_employee_client.post(url + query_params, data)
@@ -1429,7 +1429,7 @@ def test_report_notify_rendering(
 
     url = reverse("report-bulk")
 
-    query_params = "?editable=1" f"&reviewer={reviewer.id}" "&id=" + ",".join(
+    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
         str(r.id) for r in [report1, report2, report3, report4]
     )
     response = internal_employee_client.post(url + query_params, data)
@@ -1805,7 +1805,7 @@ def test_report_reject_multiple_notify(
         }
     }
 
-    query_params = "?editable=1" f"&reviewer={reviewer.id}" "&id=" + ",".join(
+    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
         str(r.id) for r in [report1_1, report1_2, report2, report3]
     )
     response = internal_employee_client.post(url + query_params, data)
