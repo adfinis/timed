@@ -44,7 +44,7 @@ sentry-sdk = "^2.19.2"
 whitenoise = "^6.8.2"
 django-hurricane = "^1.6.0"
 openpyxl = "3.0.10" # TODO: dependency of `pyexcel-xlsx` Remove as soon as https://github.com/pyexcel/pyexcel-xlsx/issues/52 is resolved.
-psycopg = {extras = ["binary"], version = "^3.2.3"}
+psycopg = {extras = ["binary"], version = "^3.2.4"}
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.9.3"
