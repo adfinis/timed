@@ -19,7 +19,12 @@
   {{#if @goal}}
     <div
       ...attributes
-      class="statistic-list-bar-goal before:border-danger before:border-r-2 before:border-dotted"
+      class="statistic-list-bar-goal z-20 before:border-r-2 before:border-dotted
+        {{if
+          (gt @value @goal)
+          'before:border-foreground-primary'
+          'before:border-danger'
+        }}"
       {{style --value=(concat (min "0.99" @goal))}}
     ></div>
   {{/if}}
