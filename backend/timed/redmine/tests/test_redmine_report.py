@@ -28,6 +28,7 @@ def test_redmine_report(freezer, mocker, report_factory, not_billable, review):
     )
     report_hours = report.duration.total_seconds() / 3600
     estimated_hours = report.task.project.estimated_time.total_seconds() / 3600
+    billable_hours = 0 if not_billable else report_hours
     RedmineProject.objects.create(project=report.task.project, issue_id=1000)
     # report not attached to redmine
     other = report_factory()
@@ -38,6 +39,7 @@ def test_redmine_report(freezer, mocker, report_factory, not_billable, review):
     redmine_instance.issue.get.assert_called_once_with(1000)
     assert issue.custom_fields == [{"id": 0, "value": report_hours}]
     assert f"Total hours: {report_hours}" in issue.notes
+    assert f"Billable hours: {billable_hours}" in issue.notes
     assert f"Estimated hours: {estimated_hours}" in issue.notes
     assert f"Hours in last 7 days: {report_hours}\n" in issue.notes
     assert report.comment in issue.notes
@@ -97,18 +99,25 @@ def test_redmine_report_calculate_total_hours(freezer, mocker, task, report_fact
     redmine_class.return_value = redmine_instance
 
     freezer.move_to("2017-07-15")
-    reports = report_factory.create_batch(10, task=task)
+    reports = report_factory.create_batch(5, task=task)
+    reports += report_factory.create_batch(5, task=task, not_billable=True)
 
     freezer.move_to("2017-07-24")
-    reports_last_seven_days = report_factory.create_batch(10, task=task)
+    reports_last_seven_days = report_factory.create_batch(5, task=task)
+    reports_last_seven_days += report_factory.create_batch(
+        5, task=task, not_billable=True
+    )
 
     total_hours_last_seven_days = 0
     for report in reports_last_seven_days:
         total_hours_last_seven_days += report.duration.total_seconds() / 3600
 
     total_hours = 0
+    billable_hours = 0
     for report in reports + reports_last_seven_days:
         total_hours += report.duration.total_seconds() / 3600
+        if not report.not_billable:
+            billable_hours += report.duration.total_seconds() / 3600
 
     RedmineProject.objects.create(project=task.project, issue_id=1000)
 
@@ -117,4 +126,5 @@ def test_redmine_report_calculate_total_hours(freezer, mocker, task, report_fact
 
     redmine_instance.issue.get.assert_called_once_with(1000)
     assert f"Total hours: {total_hours}" in issue.notes
+    assert f"Billable hours: {billable_hours}" in issue.notes
     assert f"Hours in last 7 days: {total_hours_last_seven_days}\n" in issue.notes
