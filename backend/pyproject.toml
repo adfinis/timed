@@ -50,7 +50,7 @@ psycopg = {extras = ["binary"], version = "^3.2.4"}
 ruff = "^0.9.5"
 coverage = "7.6.10"
 django-extensions = "3.2.3"
-factory-boy = "3.3.1"
+factory-boy = "3.3.3"
 ipdb = "0.13.13"
 pdbpp = "0.10.3"
 pytest = "8.2.0"
