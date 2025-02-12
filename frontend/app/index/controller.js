@@ -6,8 +6,8 @@ import { camelize } from "@ember/string";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, timeout } from "ember-concurrency";
-import { trackedFunction } from "ember-resources/util/function";
 import moment from "moment";
+import { trackedFunction } from "reactiveweb/function";
 import AbsenceValidations from "timed/validations/absence";
 import MultipleAbsenceValidations from "timed/validations/multiple-absence";
 import { tracked as trackedWrapper } from "tracked-built-ins";
@@ -137,8 +137,8 @@ export default class IndexController extends Controller {
    * @method _activitySumTask
    * @private
    */
-  @dropTask
-  *_activitySumTask() {
+  _activitySumTask = dropTask(async () => {
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       this._activitySum();
 
@@ -146,10 +146,10 @@ export default class IndexController extends Controller {
         break;
       }
 
-      /* istanbul ignore next */
-      yield timeout(1000);
+      // eslint-disable-next-line no-await-in-loop
+      await timeout(1000);
     }
-  }
+  });
 
   /**
    * All attendances
@@ -343,7 +343,7 @@ export default class IndexController extends Controller {
    * @property {EmberConcurrency.Task} _weeklyOverviewData
    * @private
    */
-  weeklyOverviewData = trackedFunction(this, {}, async () => {
+  weeklyOverviewData = trackedFunction(this, async () => {
     const allReports = this.allReports.filter(
       (report) =>
         report.get("user.id") === this.currentUser.user.get("id") &&
@@ -423,9 +423,8 @@ export default class IndexController extends Controller {
    * @param {Date} value.date The date version of the value
    * @public
    */
-  @dropTask
-  *setCenter({ moment: center }) {
-    yield Promise.resolve();
+  setCenter = dropTask(async ({ moment: center }) => {
+    await Promise.resolve();
 
     const from = moment(center)
       .startOf("month")
@@ -443,12 +442,12 @@ export default class IndexController extends Controller {
       to_date: to.format("YYYY-MM-DD"),
     };
 
-    const absences = yield this.store.query("absence", {
+    const absences = await this.store.query("absence", {
       ...params,
       user: this.currentUser.user.id,
     });
 
-    const publicHolidays = yield this.store.query("public-holiday", {
+    const publicHolidays = await this.store.query("public-holiday", {
       ...params,
       // eslint-disable-next-line ember/no-get
       location: this.currentUser.user.activeEmployment.location.get("id"),
@@ -470,7 +469,7 @@ export default class IndexController extends Controller {
 
     this.disabledDates = disabled;
     this.center = center;
-  }
+  });
 
   /**
    * The disabled dates without the current date

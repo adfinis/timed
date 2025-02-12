@@ -125,8 +125,7 @@ export default class AttendanceSlider extends Component {
    * @param {Number[]} values The time in minutes
    * @public
    */
-  @dropTask
-  *save([fromMin, toMin]) {
+  save = dropTask(async ([fromMin, toMin]) => {
     const attendance = this.args.attendance;
 
     attendance.set(
@@ -135,8 +134,8 @@ export default class AttendanceSlider extends Component {
     );
     attendance.set("to", moment(attendance.get("to")).hour(0).minute(toMin));
 
-    yield this.args.onSave(attendance);
-  }
+    await this.args.onSave(attendance);
+  });
 
   /**
    * Delete the attendance
@@ -144,8 +143,7 @@ export default class AttendanceSlider extends Component {
    * @method delete
    * @public
    */
-  @dropTask
-  *delete() {
-    yield this.args.onDelete(this.args.attendance);
-  }
+  delete = dropTask(async () => {
+    await this.args.onDelete(this.args.attendance);
+  });
 }

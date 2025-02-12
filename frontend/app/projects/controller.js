@@ -41,17 +41,16 @@ export default class ProjectsController extends Controller {
     ).toSorted((c) => c.get("name"));
   }
 
-  @task
-  *fetchProjectsByUser() {
+  fetchProjectsByUser = task(async () => {
     try {
       let projects;
       const include = "customer,billing-type";
       if (this.user.isSuperuser) {
-        projects = yield this.store.findAll("project", {
+        projects = await this.store.findAll("project", {
           include,
         });
       } else {
-        projects = yield this.store.query("project", {
+        projects = await this.store.query("project", {
           has_manager: this.user.get("id"),
           include,
         });
@@ -62,33 +61,31 @@ export default class ProjectsController extends Controller {
       /* istanbul ignore next */
       this.notify.error("Error while fetching projects");
     }
-  }
+  });
 
-  @task
-  *filterProjects() {
-    return yield this.projects.filter(
-      (project) =>
-        project.get("customer.id") === this.selectedCustomer.get("id"),
-    );
-  }
+  filterProjects = task(
+    async () =>
+      await this.projects.filter(
+        (project) =>
+          project.get("customer.id") === this.selectedCustomer.get("id"),
+      ),
+  );
 
-  @dropTask
-  *fetchTasksByProject() {
+  fetchTasksByProject = dropTask(async () => {
     try {
       const id = this.selectedProject.get("id");
-      return yield this.store.query("task", {
+      return await this.store.query("task", {
         project: id,
       });
     } catch (error) {
       /* istanbul ignore next */
       this.notify.error("Error while fetching tasks");
     }
-  }
+  });
 
-  @dropTask
-  *saveTask(changeset) {
+  saveTask = dropTask(async (changeset) => {
     try {
-      yield changeset.save();
+      await changeset.save();
 
       this.notify.success("Task was saved");
     } catch (error) {
@@ -97,26 +94,24 @@ export default class ProjectsController extends Controller {
     }
 
     this.fetchTasksByProject.perform(this.selectedProject);
-  }
+  });
 
-  @dropTask
-  *saveProject(changeset) {
+  saveProject = dropTask(async (changeset) => {
     try {
-      yield changeset.save();
+      await changeset.save();
       this.notify.success("Project was saved");
     } catch (error) {
       /* istanbul ignore next */
       this.notify.error("Error while saving project");
     }
     this.fetchTasksByProject.perform(this.selectedProject);
-  }
+  });
 
-  @dropTask
-  *createTask() {
-    this.selectedTask = yield this.store.createRecord("task", {
+  createTask = dropTask(async () => {
+    this.selectedTask = await this.store.createRecord("task", {
       project: this.selectedProject,
     });
-  }
+  });
 
   @action
   handleCustomerChange(customer) {

@@ -5,8 +5,8 @@ import { camelize, capitalize } from "@ember/string";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, task, timeout } from "ember-concurrency";
-import { trackedTask } from "ember-resources/util/ember-concurrency";
 import moment from "moment";
+import { trackedTask } from "reactiveweb/ember-concurrency";
 import formatDuration from "timed/utils/format-duration";
 
 /**
@@ -67,11 +67,10 @@ export default class TrackingService extends Service {
    * @method init
    * @public
    */
-  @task
-  *fetchActiveActivity() {
-    yield Promise.resolve();
+  fetchActiveActivity = task(async () => {
+    await Promise.resolve();
 
-    const actives = yield this.store.query("activity", {
+    const actives = await this.store.query("activity", {
       include: "task,task.project,task.project.customer",
       active: true,
     });
@@ -79,7 +78,7 @@ export default class TrackingService extends Service {
     this.activity = actives[0] ?? null;
 
     this._computeTitle.perform();
-  }
+  });
 
   /**
    * The application
@@ -127,8 +126,7 @@ export default class TrackingService extends Service {
    * @method _computeTitle
    * @private
    */
-  @task
-  *_computeTitle() {
+  _computeTitle = task(async () => {
     while (this.activity.active) {
       const duration = moment.duration(moment().diff(this.activity.from));
 
@@ -148,9 +146,10 @@ export default class TrackingService extends Service {
         return;
       }
 
-      yield timeout(1000);
+      // eslint-disable-next-line no-await-in-loop
+      await timeout(1000);
     }
-  }
+  });
 
   /**
    * The current activity
@@ -182,10 +181,9 @@ export default class TrackingService extends Service {
    * @method startActivity
    * @public
    */
-  @dropTask
-  *startActivity() {
+  startActivity = dropTask(async () => {
     try {
-      const activity = yield this.activity.start();
+      const activity = await this.activity.start();
       this.activity = activity;
 
       this.notify.success("Activity was started");
@@ -194,7 +192,7 @@ export default class TrackingService extends Service {
     } finally {
       this._computeTitle.perform();
     }
-  }
+  });
 
   /**
    * Stop the activity
@@ -202,11 +200,10 @@ export default class TrackingService extends Service {
    * @method stopActivity
    * @public
    */
-  @dropTask
-  *stopActivity() {
+  stopActivity = dropTask(async () => {
     try {
       if (!this.activity?.isNew) {
-        yield this.activity.stop();
+        await this.activity.stop();
 
         this.notify.success("Activity was stopped");
       }
@@ -217,7 +214,7 @@ export default class TrackingService extends Service {
     } finally {
       this.setTitle(this.title);
     }
-  }
+  });
 
   get hasActiveActivity() {
     return this.activity?.active;
@@ -243,16 +240,13 @@ export default class TrackingService extends Service {
    * @property {EmberConcurrency.Task} recentTasks
    * @public
    */
-  @dropTask
-  *fetchRecentTasks() {
-    yield Promise.resolve();
-    return yield this.store.query("task", {
+  fetchRecentTasks = dropTask(async () => {
+    await Promise.resolve();
+    return await this.store.query("task", {
       my_most_frequent: 10, // eslint-disable-line camelcase
       include: "project,project.customer",
     });
-  }
-
-  recentTasksData = trackedTask(this, this.fetchRecentTasks, () => []);
+  });
 
   get recentTasks() {
     return this.recentTasksData.value ?? [];
@@ -264,10 +258,7 @@ export default class TrackingService extends Service {
    * @property {EmberConcurrency.Task} users
    * @public
    */
-  @dropTask
-  *users() {
-    return yield this.store.query("user", {});
-  }
+  users = dropTask(async () => await this.store.query("user", {}));
 
   /**
    * All customers
@@ -275,11 +266,10 @@ export default class TrackingService extends Service {
    * @property {EmberConcurrency.Task} customers
    * @public
    */
-  @dropTask
-  *fetchCustomers() {
-    yield Promise.resolve();
-    return yield this.store.query("customer", {});
-  }
+  fetchCustomers = dropTask(async () => {
+    await Promise.resolve();
+    return await this.store.query("customer", {});
+  });
 
   customersData = trackedTask(this, this.fetchCustomers, () => {});
 
@@ -294,8 +284,7 @@ export default class TrackingService extends Service {
    * @param {Number} customer The customer id to filter by
    * @public
    */
-  @task
-  *projects(customer) {
+  projects = task(async (customer) => {
     if (!customer) {
       // We can't test this because the UI prevents it
       throw new Error("No customer selected");
@@ -314,16 +303,16 @@ export default class TrackingService extends Service {
 
     // Give it 100ms to "collect" similar requests and
     // increases the efficiency even more.
-    yield timeout(100);
+    await timeout(100);
 
-    yield this.store.query("project", {
+    await this.store.query("project", {
       customer: [...this.customerQueue].join(","),
     });
 
     this.customerQueue.clear();
 
     return;
-  }
+  });
 
   /**
    * Tasks filtered by project
@@ -332,8 +321,7 @@ export default class TrackingService extends Service {
    * @param {Number} project The project id to filter by
    * @public
    */
-  @task
-  *tasks(project) {
+  tasks = task(async (project) => {
     if (!project) {
       // We can't test this because the UI prevents it
       throw new Error("No project selected");
@@ -352,14 +340,16 @@ export default class TrackingService extends Service {
 
     // Give it 100ms to "collect" similar requests and
     // increases the efficiency even more.
-    yield timeout(100);
+    await timeout(100);
 
-    yield this.store.query("task", {
+    await this.store.query("task", {
       project: [...this.projectQueue].join(","),
     });
 
     this.projectQueue.clear();
 
     return;
-  }
+  });
+
+  recentTasksData = trackedTask(this, this.fetchRecentTasks, () => []);
 }

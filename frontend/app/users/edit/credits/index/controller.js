@@ -26,9 +26,8 @@ export default class UsersEditCredits extends Controller {
     this.overtimeCredits.perform();
   }
 
-  @restartableTask
-  *years(userId = 0) {
-    const employments = yield this.store.query("employment", {
+  years = restartableTask(async (userId = 0) => {
+    const employments = await this.store.query("employment", {
       user: userId === 0 ? this.model.id : userId,
       ordering: "start_date",
     });
@@ -37,7 +36,7 @@ export default class UsersEditCredits extends Controller {
     const to = moment().add(1, "year").year();
 
     return [...new Array(to + 1 - from).keys()].map((i) => `${from + i}`);
-  }
+  });
 
   get allowTransfer() {
     return (
@@ -47,38 +46,35 @@ export default class UsersEditCredits extends Controller {
     );
   }
 
-  @restartableTask
-  *absenceCredits() {
+  absenceCredits = restartableTask(async () => {
     const year = this.year;
 
-    return yield this.store.query("absence-credit", {
+    return await this.store.query("absence-credit", {
       user: this.model.id,
       include: "absence_type",
       ordering: "-date",
       ...(year ? { year } : {}),
     });
-  }
+  });
 
-  @restartableTask
-  *overtimeCredits() {
+  overtimeCredits = restartableTask(async () => {
     const year = this.year;
 
-    return yield this.store.query("overtime-credit", {
+    return await this.store.query("overtime-credit", {
       user: this.model.id,
       ordering: "-date",
       ...(year ? { year } : {}),
     });
-  }
+  });
 
-  @dropTask
-  *transfer() {
+  transfer = dropTask(async () => {
     /* istanbul ignore next */
     if (!this.allowTransfer) {
       return;
     }
 
     try {
-      yield this.fetch.fetch(`/api/v1/users/${this.model.id}/transfer`, {
+      await this.fetch.fetch(`/api/v1/users/${this.model.id}/transfer`, {
         method: "POST",
       });
 
@@ -91,25 +87,23 @@ export default class UsersEditCredits extends Controller {
       /* istanbul ignore next */
       this.notify.error("Error while transfering");
     }
-  }
+  });
 
-  @dropTask
-  *editAbsenceCredit(id) {
+  editAbsenceCredit = dropTask(async (id) => {
     if (this.abilities.can("edit absence-credit")) {
-      yield this.router.transitionTo(
+      await this.router.transitionTo(
         "users.edit.credits.absence-credits.edit",
         id,
       );
     }
-  }
+  });
 
-  @dropTask
-  *editOvertimeCredit(id) {
+  editOvertimeCredit = dropTask(async (id) => {
     if (this.abilities.can("edit overtime-credit")) {
-      yield this.router.transitionTo(
+      await this.router.transitionTo(
         "users.edit.credits.overtime-credits.edit",
         id,
       );
     }
-  }
+  });
 }

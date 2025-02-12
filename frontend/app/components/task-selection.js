@@ -3,7 +3,7 @@ import { later } from "@ember/runloop";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
-import { trackedTask } from "ember-resources/util/ember-concurrency";
+import { trackedTask } from "reactiveweb/ember-concurrency";
 import { resolve } from "rsvp";
 import customerOptionTemplate from "timed/components/optimized-power-select/custom-options/customer-option";
 import projectOptionTemplate from "timed/components/optimized-power-select/custom-options/project-option";
@@ -78,15 +78,14 @@ export default class TaskSelectionComponent extends Component {
     super.willDestroy(...args);
   }
 
-  @restartableTask
-  *handleTrackingActiveActivityChanged() {
+  handleTrackingActiveActivityChanged = restartableTask(async () => {
     // wait a little to catch multiple updates to the prop.
-    yield timeout(50);
+    await timeout(50);
 
     if (this.args.liveTracking && !this.tracking.hasActiveActivity) {
       this.clear();
     }
-  }
+  });
 
   async _setInitial() {
     await this.tracking.fetchActiveActivity?.last;
@@ -220,17 +219,16 @@ export default class TaskSelectionComponent extends Component {
    * @property {Array} customersAndRecentTasks
    * @public
    */
-  @dropTask
-  *customersAndRecentTasksTask() {
-    yield Promise.resolve();
+  customersAndRecentTasksTask = dropTask(async () => {
+    await Promise.resolve();
 
     /* istanbul ignore if*/
     if (
       !this.tracking.customers?.length ||
       !this.tracking.recentTasks?.length
     ) {
-      yield this.tracking.fetchRecentTasks.last;
-      yield this.tracking.fetchCustomers.last;
+      await this.tracking.fetchRecentTasks.last;
+      await this.tracking.fetchCustomers.last;
     }
 
     let ids = [];
@@ -251,13 +249,7 @@ export default class TaskSelectionComponent extends Component {
     });
 
     return [...tasks, ...customers];
-  }
-
-  _customersAndRecentTasks = trackedTask(
-    this,
-    this.customersAndRecentTasksTask,
-    () => [this.history, this.tracking.recentTasks, this.archived],
-  );
+  });
 
   get customersAndRecentTasks() {
     return this._customersAndRecentTasks.value ?? [];
@@ -389,4 +381,10 @@ export default class TaskSelectionComponent extends Component {
       });
     }
   }
+
+  _customersAndRecentTasks = trackedTask(
+    this,
+    this.customersAndRecentTasksTask,
+    () => [this.history, this.tracking.recentTasks, this.archived],
+  );
 }
