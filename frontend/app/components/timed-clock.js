@@ -27,16 +27,17 @@ export default class TimedClock extends Component {
     scheduleOnce("actions", this.timer, "perform");
   }
 
-  @task
-  *timer() {
-    for (;;) {
+  timer = task(async () => {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
       this._update();
 
       if (macroCondition(isTesting())) {
         return;
       }
 
-      yield timeout(1000);
+      // eslint-disable-next-line no-await-in-loop
+      await timeout(1000);
     }
-  }
+  });
 }

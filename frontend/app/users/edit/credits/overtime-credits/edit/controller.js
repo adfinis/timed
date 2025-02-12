@@ -12,21 +12,19 @@ export default class UsersEditOvertimeCreditsController extends Controller {
 
   OvertimeCreditValidations = OvertimeCreditValidations;
 
-  @task
-  *credit() {
+  credit = task(async () => {
     const id = this.model;
 
     return id
-      ? yield this.store.findRecord("overtime-credit", id)
-      : yield this.store.createRecord("overtime-credit", {
+      ? await this.store.findRecord("overtime-credit", id)
+      : await this.store.createRecord("overtime-credit", {
           user: this.user,
         });
-  }
+  });
 
-  @dropTask
-  *save(changeset) {
+  save = dropTask(async (changeset) => {
     try {
-      yield changeset.save();
+      await changeset.save();
 
       this.notify.success("Overtime credit was saved");
 
@@ -35,25 +33,24 @@ export default class UsersEditOvertimeCreditsController extends Controller {
       let allYears = this.userCreditsController.years.lastSuccessful?.value;
 
       if (!allYears) {
-        allYears = yield this.userCreditsController.years.perform(this.user.id);
+        allYears = await this.userCreditsController.years.perform(this.user.id);
       }
 
       const year =
         allYears.find((y) => y === String(changeset.get("date").year())) || "";
 
-      yield this.router.transitionTo("users.edit.credits", this.user.id, {
+      await this.router.transitionTo("users.edit.credits", this.user.id, {
         queryParams: { year },
       });
     } catch (e) {
       /* istanbul ignore next */
       this.notify.error("Error while saving the overtime credit");
     }
-  }
+  });
 
-  @dropTask
-  *delete(credit) {
+  delete = dropTask(async (credit) => {
     try {
-      yield credit.destroyRecord();
+      await credit.destroyRecord();
 
       this.notify.success("Overtime credit was deleted");
 
@@ -64,5 +61,5 @@ export default class UsersEditOvertimeCreditsController extends Controller {
       /* istanbul ignore next */
       this.notify.error("Error while deleting the overtime credit");
     }
-  }
+  });
 }

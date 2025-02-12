@@ -93,9 +93,8 @@ export default class AnalysisEditController extends Controller {
     return this.currentUser.user.isSuperuser;
   }
 
-  @task
-  *intersection() {
-    const res = yield this.fetch.fetch(
+  intersection = task(async () => {
+    const res = await this.fetch.fetch(
       `/api/v1/reports/intersection?${new URLSearchParams({
         ...this.prepareParams(allQueryParams(this)),
         editable: 1,
@@ -106,7 +105,7 @@ export default class AnalysisEditController extends Controller {
       },
     );
 
-    yield this.store.pushPayload("report-intersection", res);
+    await this.store.pushPayload("report-intersection", res);
 
     const model = this.store.peekRecord("report-intersection", res.data.id);
 
@@ -122,7 +121,7 @@ export default class AnalysisEditController extends Controller {
       model,
       meta: res.meta,
     };
-  }
+  });
 
   get _customer() {
     const id = this.intersectionModel.customer.get("id");
@@ -177,14 +176,13 @@ export default class AnalysisEditController extends Controller {
     return result;
   }
 
-  @task
-  *save(changeset) {
+  save = task(async (changeset) => {
     try {
       const params = this.prepareParams(allQueryParams(this));
 
       const queryString = toQueryString(params);
 
-      yield changeset.execute();
+      await changeset.execute();
       const {
         data: { attributes, relationships },
       } = this.intersectionModel.serialize();
@@ -195,7 +193,7 @@ export default class AnalysisEditController extends Controller {
         relationships: filterUnchanged(relationships, changeset.get("changes")),
       };
 
-      yield this.fetch.fetch(`/api/v1/reports/bulk?editable=1&${queryString}`, {
+      await this.fetch.fetch(`/api/v1/reports/bulk?editable=1&${queryString}`, {
         method: "POST",
         data,
       });
@@ -212,7 +210,7 @@ export default class AnalysisEditController extends Controller {
     }
 
     this.unverifiedReports.pollReports();
-  }
+  });
 
   @action
   validate(changeset) {
