@@ -56,7 +56,7 @@ export default class AnalysisController extends QPController {
   @service store;
   @service router;
   @service notify;
-  @service can;
+  @service abilities;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -363,7 +363,7 @@ export default class AnalysisController extends QPController {
 
   @action
   selectRow(report) {
-    if (this.can.can("edit report", report) || this.canBill) {
+    if (this.abilities.can("edit report", report) || this.canBill) {
       const selected = this.selectedReportIds;
 
       if (selected.includes(report.id)) {
