@@ -75,9 +75,9 @@ export default class DurationSinceComponent extends Component {
    * @proprety {*} timer
    * @public
    */
-  @task
-  *timer() {
-    for (;;) {
+  timer = task(async () => {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
       this._compute();
 
       /* istanbul ignore else */
@@ -86,7 +86,8 @@ export default class DurationSinceComponent extends Component {
       }
 
       /* istanbul ignore next */
-      yield timeout(1000);
+      // eslint-disable-next-line no-await-in-loop
+      await timeout(1000);
     }
-  }
+  });
 }

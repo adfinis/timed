@@ -27,12 +27,11 @@ export default class ReportRowComponent extends Component {
    * @method save
    * @public
    */
-  @dropTask
-  *save(changeset) {
+  save = dropTask(async (changeset) => {
     if (this.args.onSave) {
-      yield this.args.onSave(changeset);
+      await this.args.onSave(changeset);
     }
-  }
+  });
   /**
    * Delete the row
    *

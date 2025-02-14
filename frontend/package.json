@@ -51,7 +51,7 @@
     "downloadjs": "1.4.7",
     "ember-auto-import": "~2.7.4",
     "ember-basic-dropdown": "^8.2.0",
-    "ember-can": "4.2.0",
+    "ember-can": "7.0.0",
     "ember-changeset": "4.1.2",
     "ember-changeset-validations": "4.1.1",
     "ember-cli": "~5.4.0",
@@ -74,6 +74,7 @@
     "ember-decorators": "6.1.1",
     "ember-event-helpers": "^0.1.1",
     "ember-fetch": "8.1.2",
+    "ember-focus-trap": "^1.1.1",
     "ember-in-viewport": "4.1.0",
     "ember-keyboard": "^9.0.1",
     "ember-load-initializers": "2.1.2",
@@ -87,7 +88,7 @@
     "ember-power-select": "^8.3.0",
     "ember-qunit": "6.2.0",
     "ember-resolver": "10.0.0",
-    "ember-resources": "5.6.2",
+    "ember-resources": "7.0.3",
     "ember-responsive": "5.0.0",
     "ember-shepherd": "^17.0.0",
     "ember-simple-auth": "6.0.0",
@@ -121,6 +122,7 @@
     "prettier-plugin-tailwindcss": "^0.6.9",
     "qunit": "2.19.4",
     "qunit-dom": "3.0.0",
+    "reactiveweb": "^1.4.0",
     "shepherd.js": "^11.2.0",
     "simplebar": "^6.2.5",
     "stylelint": "^16.4.0",
@@ -149,5 +151,5 @@
       ]
     }
   },
-  "packageManager": "pnpm@9.5.0-beta.0+sha512.c2e60e7ed04e459591c982f2760cd8f7d1f48fe1ca4d46ccbbf8377df1eb2d077ace1e9d334b06250dddf23c03b4562858f77992b9a3bb4a93355aefd173df32"
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 }

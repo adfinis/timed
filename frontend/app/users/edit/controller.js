@@ -6,53 +6,48 @@ import moment from "moment";
 export default class UsersEditController extends Controller {
   @service store;
 
-  @task
-  *data(uid) {
-    return yield hash({
+  data = task(async (uid) => {
+    return await hash({
       worktimeBalanceLastValidTimesheet:
         this.worktimeBalanceLastValidTimesheet.perform(uid),
       worktimeBalanceToday: this.worktimeBalanceToday.perform(uid),
       worktimeBalances: this.worktimeBalances.perform(uid),
       absenceBalances: this.absenceBalances.perform(uid),
     });
-  }
+  });
 
-  @task
-  *worktimeBalanceLastValidTimesheet(user) {
-    const worktimeBalance = yield this.store.query("worktime-balance", {
+  worktimeBalanceLastValidTimesheet = task(async (user) => {
+    const worktimeBalance = await this.store.query("worktime-balance", {
       user,
       last_reported_date: 1, // eslint-disable-line camelcase
     });
 
     return worktimeBalance[0];
-  }
+  });
 
-  @task
-  *worktimeBalanceToday(user) {
-    const worktimeBalance = yield this.store.query("worktime-balance", {
+  worktimeBalanceToday = task(async (user) => {
+    const worktimeBalance = await this.store.query("worktime-balance", {
       user,
       date: moment().format("YYYY-MM-DD"),
     });
 
     return worktimeBalance[0];
-  }
+  });
 
-  @task
-  *absenceBalances(user) {
-    return yield this.store.query("absence-balance", {
+  absenceBalances = task(async (user) => {
+    return await this.store.query("absence-balance", {
       user,
       date: moment().format("YYYY-MM-DD"),
       include: "absence_type",
     });
-  }
+  });
 
-  @task
-  *worktimeBalances(user) {
+  worktimeBalances = task(async (user) => {
     const dates = [...Array(10).keys()]
       .map((i) => moment().subtract(i, "days"))
       .reverse();
 
-    return yield all(
+    return await all(
       dates.map(async (date) => {
         const balance = await this.store.query("worktime-balance", {
           user,
@@ -62,5 +57,5 @@ export default class UsersEditController extends Controller {
         return balance[0];
       }),
     );
-  }
+  });
 }

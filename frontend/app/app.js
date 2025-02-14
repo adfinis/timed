@@ -1,5 +1,6 @@
 import Application from "@ember/application";
 import * as Sentry from "@sentry/ember";
+import { extendResolver } from "ember-can";
 import loadInitializers from "ember-load-initializers";
 import { registerDateLibrary } from "ember-power-calendar";
 import DateUtils from "ember-power-calendar-moment";
@@ -64,7 +65,7 @@ registerDateLibrary(DateUtils);
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver;
+  Resolver = extendResolver(Resolver);
 }
 
 loadInitializers(App, config.modulePrefix);

@@ -56,7 +56,7 @@ export default class AnalysisController extends QPController {
   @service store;
   @service router;
   @service notify;
-  @service can;
+  @service abilities;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -255,8 +255,7 @@ export default class AnalysisController extends QPController {
     return this._dataCache;
   });
 
-  @task
-  *fetchAssignees(data) {
+  fetchAssignees = task(async (data) => {
     const projectIds = [
       ...new Set(data.map((report) => report.get("task.project.id"))),
     ].join(",");
@@ -268,21 +267,21 @@ export default class AnalysisController extends QPController {
     ].join(",");
 
     const projectAssignees = projectIds.length
-      ? yield this.store.query("project-assignee", {
+      ? await this.store.query("project-assignee", {
           is_reviewer: 1,
           projects: projectIds,
           include: "project,user",
         })
       : [];
     const taskAssignees = taskIds.length
-      ? yield this.store.query("task-assignee", {
+      ? await this.store.query("task-assignee", {
           is_reviewer: 1,
           tasks: taskIds,
           include: "task,user",
         })
       : [];
     const customerAssignees = customerIds.length
-      ? yield this.store.query("customer-assignee", {
+      ? await this.store.query("customer-assignee", {
           is_reviewer: 1,
           customers: customerIds,
           include: "customer,user",
@@ -290,21 +289,21 @@ export default class AnalysisController extends QPController {
       : [];
 
     return { projectAssignees, taskAssignees, customerAssignees };
-  }
+  });
 
-  @dropTask
-  *loadNext() {
+  loadNext = dropTask(async () => {
     this._shouldLoadMore = true;
 
     while (this._shouldLoadMore && this._canLoadMore) {
-      yield this.data.perform();
+      // eslint-disable-next-line no-await-in-loop
+      await this.data.perform();
 
-      yield animationFrame();
+      // eslint-disable-next-line no-await-in-loop
+      await animationFrame();
     }
-  }
+  });
 
-  @task
-  *download({ url = null, params = {} }) {
+  download = task(async ({ url = null, params = {} }) => {
     try {
       this.url = url;
       this.params = params;
@@ -321,7 +320,7 @@ export default class AnalysisController extends QPController {
         ),
       );
 
-      const res = yield fetch(`${url}?${queryString}`, {
+      const res = await fetch(`${url}?${queryString}`, {
         headers: {
           Authorization: `Bearer ${this.jwt}`,
         },
@@ -331,7 +330,7 @@ export default class AnalysisController extends QPController {
         throw new Error(res.statusText);
       }
 
-      const file = yield res.blob();
+      const file = await res.blob();
 
       const filename = parseFileName(res.headers.get("content-disposition"));
 
@@ -348,7 +347,7 @@ export default class AnalysisController extends QPController {
         "Error while downloading, try again or try reducing results",
       );
     }
-  }
+  });
 
   @action
   edit(selectedIds = [], event) {
@@ -363,7 +362,7 @@ export default class AnalysisController extends QPController {
 
   @action
   selectRow(report) {
-    if (this.can.can("edit report", report) || this.canBill) {
+    if (this.abilities.can("edit report", report) || this.canBill) {
       const selected = this.selectedReportIds;
 
       if (selected.includes(report.id)) {

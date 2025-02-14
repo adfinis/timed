@@ -56,8 +56,7 @@ export default class MetadataFetcherService extends Service {
    * @return {Object} An object with the parsed metadata
    * @public
    */
-  @restartableTask
-  *fetchSingleRecordMetadata(type, id) {
+  fetchSingleRecordMetadata = restartableTask(async (type, id) => {
     if (!id) {
       throw new Error(`${capitalize(type)} ID is missing`);
     }
@@ -65,7 +64,7 @@ export default class MetadataFetcherService extends Service {
     const {
       data: { attributes = {} },
       meta = {},
-    } = yield this.fetch.fetch(`/api/v1/${dasherize(type)}s/${id}`);
+    } = await this.fetch.fetch(`/api/v1/${dasherize(type)}s/${id}`);
 
     const metaValues = Object.keys(META_MODELS[camelize(type)]).reduce(
       (parsedMeta, key) => {
@@ -93,5 +92,5 @@ export default class MetadataFetcherService extends Service {
     }, {});
 
     return { ...attributesValues, ...metaValues };
-  }
+  });
 }
