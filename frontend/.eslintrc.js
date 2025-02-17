@@ -5,6 +5,5 @@ module.exports = {
   rules: {
     "ember/no-observers": "warn",
     "qunit/no-assert-equal": "warn",
-    "ember/require-tagless-components": "warn",
   },
 };
