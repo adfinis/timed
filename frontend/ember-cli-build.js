@@ -36,6 +36,11 @@ module.exports = function (defaults) {
     "ember-validated-form": {
       theme: "bootstrap",
     },
+    autoImport: {
+      alias: {
+        "ember-composable-helpers": "@nullvoxpopuli/ember-composable-helpers",
+      },
+    },
   });
 
   app.import("node_modules/simplebar/dist/simplebar.css");
