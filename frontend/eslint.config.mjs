@@ -9,7 +9,6 @@ export default [
       "import/internal-regex": "^timed/",
     },
     rules: {
-      "ember/no-runloop": "warn",
       "ember/no-observers": "warn",
     },
   },
