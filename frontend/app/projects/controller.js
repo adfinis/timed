@@ -58,8 +58,7 @@ export default class ProjectsController extends Controller {
       }
 
       return projects.toSorted((p) => p.name);
-    } catch (error) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while fetching projects");
     }
   });
@@ -78,8 +77,7 @@ export default class ProjectsController extends Controller {
       return await this.store.query("task", {
         project: id,
       });
-    } catch (error) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while fetching tasks");
     }
   });
@@ -89,8 +87,7 @@ export default class ProjectsController extends Controller {
       await changeset.save();
 
       this.notify.success("Task was saved");
-    } catch (error) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving task");
     }
 
@@ -101,8 +98,7 @@ export default class ProjectsController extends Controller {
     try {
       await changeset.save();
       this.notify.success("Project was saved");
-    } catch (error) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving project");
     }
     this.fetchTasksByProject.perform(this.selectedProject);

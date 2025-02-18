@@ -151,7 +151,7 @@ export default class TourService extends Tour {
 
               await user.save();
               this.notify.info("Congratulations you completed the tour!");
-            } catch (error) {
+            } catch {
               /* istanbul ignore next */
               this.notify.error("Error while saving the user");
             }

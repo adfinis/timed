@@ -519,8 +519,7 @@ export default class IndexController extends Controller {
       await changeset.save();
 
       this.showEditModal = false;
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the absence");
     } finally {
       this.send("finished");
@@ -542,8 +541,7 @@ export default class IndexController extends Controller {
       await absence.destroyRecord();
 
       this.showEditModal = false;
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while deleting the absence");
     } finally {
       this.send("finished");
@@ -579,7 +577,7 @@ export default class IndexController extends Controller {
       changeset.rollback();
 
       this.showAddModal = false;
-    } catch (e) {
+    } catch {
       this.notify.error("Error while adding the absence");
     } finally {
       this.send("finished");

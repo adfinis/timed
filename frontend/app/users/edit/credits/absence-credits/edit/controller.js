@@ -51,8 +51,7 @@ export default class UsersEditAbsenceCreditsController extends Controller {
       await this.router.transitionTo("users.edit.credits", this.user.id, {
         queryParams: { year },
       });
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the absence credit");
     }
   });
@@ -66,8 +65,7 @@ export default class UsersEditAbsenceCreditsController extends Controller {
       this.userController.data.perform(this.user.id);
 
       this.router.transitionTo("users.edit.credits");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while deleting the absence credit");
     }
   });

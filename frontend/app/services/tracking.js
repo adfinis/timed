@@ -188,7 +188,7 @@ export default class TrackingService extends Service {
       this.activity = activity;
 
       this.notify.success("Activity was started");
-    } catch (e) {
+    } catch {
       this.notify.error("Error while starting the activity");
     } finally {
       this._computeTitle.perform();
@@ -210,7 +210,7 @@ export default class TrackingService extends Service {
       }
 
       this.activity = null;
-    } catch (e) {
+    } catch {
       this.notify.error("Error while stopping the activity");
     } finally {
       this.setTitle(this.title);

@@ -342,8 +342,7 @@ export default class AnalysisController extends QPController {
       download(file, filename, file.type);
 
       this.notify.success("File was downloaded");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error(
         "Error while downloading, try again or try reducing results",
       );

@@ -74,8 +74,7 @@ export default class AttendanceController extends Controller {
       await attendance.save();
 
       this.notify.success("Attendance was saved");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the attendance");
     }
   }
@@ -93,8 +92,7 @@ export default class AttendanceController extends Controller {
       await this.store.peekRecord("attendance", attendance.id).destroyRecord();
 
       this.notify.success("Attendance was deleted");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while deleting the attendance");
     }
   }
@@ -122,8 +120,7 @@ export default class AttendanceController extends Controller {
       await attendance.save();
 
       this.notify.success("Attendance was added");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while adding the attendance");
     }
   }
