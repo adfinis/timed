@@ -10,7 +10,7 @@ export default class EditUser extends Controller {
     return await this.store.query("absence", {
       user: this.user.id,
       ordering: "-date",
-      // eslint-disable-next-line camelcase
+
       from_date: moment({
         day: 1,
         month: 0,

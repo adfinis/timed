@@ -1,5 +1,6 @@
 import moment from "moment";
 import { module, test } from "qunit";
+
 import { balanceHighlightClass } from "timed/helpers/balance-highlight-class";
 
 module("Unit | Helper | balance highlight class", function () {

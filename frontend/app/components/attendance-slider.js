@@ -9,6 +9,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { dropTask } from "ember-concurrency";
 import moment from "moment";
+
 import formatDuration from "timed/utils/format-duration";
 import { pad2joincolon } from "timed/utils/pad";
 

@@ -4,6 +4,7 @@
  * @public
  */
 import { helper } from "@ember/component/helper";
+
 import humanizeDuration from "timed/utils/humanize-duration";
 
 /**

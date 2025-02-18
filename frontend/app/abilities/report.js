@@ -12,9 +12,7 @@ export default class ReportAbility extends Ability {
     const isEditable =
       this.user?.isSuperuser ||
       (!this.model?.verifiedBy?.get("id") &&
-        // eslint-disable-next-line ember/no-get
         (this.model?.user?.get("id") === this.user?.get("id") ||
-          // eslint-disable-next-line ember/no-get
           (this.model?.user?.get("supervisors") ?? [])
             .map((s) => s.id)
             .includes(this.user?.get("id"))));

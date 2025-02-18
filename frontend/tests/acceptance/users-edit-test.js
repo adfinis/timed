@@ -14,7 +14,6 @@ module("Acceptance | users edit", function (hooks) {
     this.allowed = this.server.create("user", { supervisorIds: [user.id] });
     this.notAllowed = this.server.create("user");
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
   });
 
@@ -34,7 +33,6 @@ module("Acceptance | users edit", function (hooks) {
   test("allows all to superuser", async function (assert) {
     const user = this.server.create("user", { isSuperuser: true });
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     await visit(`/users/${this.notAllowed.id}`);

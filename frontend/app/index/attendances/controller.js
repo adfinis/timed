@@ -6,6 +6,7 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
+
 import AttendanceValidator from "timed/validations/attendance";
 
 /**

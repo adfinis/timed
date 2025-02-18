@@ -1,6 +1,7 @@
 import Controller, { inject as controller } from "@ember/controller";
 import { service } from "@ember/service";
 import { task, dropTask } from "ember-concurrency";
+
 import AbsenceCreditValidations from "timed/validations/absence-credit";
 
 export default class UsersEditAbsenceCreditsController extends Controller {
@@ -14,7 +15,7 @@ export default class UsersEditAbsenceCreditsController extends Controller {
 
   absenceTypes = task(async () => {
     return await this.store.query("absence-type", {
-      fill_worktime: 0, // eslint-disable-line camelcase
+      fill_worktime: 0,
     });
   });
 

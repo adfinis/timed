@@ -1,6 +1,7 @@
 import Controller, { inject as controller } from "@ember/controller";
 import { service } from "@ember/service";
 import { task, dropTask } from "ember-concurrency";
+
 import OvertimeCreditValidations from "timed/validations/overtime-credit";
 
 export default class UsersEditOvertimeCreditsController extends Controller {

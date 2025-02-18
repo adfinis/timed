@@ -6,6 +6,7 @@ import { service } from "@ember/service";
 import { dasherize } from "@ember/string";
 import { tracked } from "@glimmer/tracking";
 import { task } from "ember-concurrency";
+
 import {
   underscoreQueryParams,
   serializeQueryParams,

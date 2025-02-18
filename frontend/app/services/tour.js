@@ -4,8 +4,9 @@ import { waitFor } from "@ember/test-waiters";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import Tour from "ember-shepherd/services/tour";
-import TOURS from "timed/tours";
 import { cached } from "tracked-toolbox";
+
+import TOURS from "timed/tours";
 
 export default class TourService extends Tour {
   @service notify;

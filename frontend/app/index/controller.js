@@ -8,10 +8,11 @@ import { tracked } from "@glimmer/tracking";
 import { dropTask, timeout } from "ember-concurrency";
 import moment from "moment";
 import { trackedFunction } from "reactiveweb/function";
-import AbsenceValidations from "timed/validations/absence";
-import MultipleAbsenceValidations from "timed/validations/multiple-absence";
 import { tracked as trackedWrapper } from "tracked-built-ins";
 import { cached } from "tracked-toolbox";
+
+import AbsenceValidations from "timed/validations/absence";
+import MultipleAbsenceValidations from "timed/validations/multiple-absence";
 
 /**
  * The index controller
@@ -138,7 +139,6 @@ export default class IndexController extends Controller {
    * @private
    */
   _activitySumTask = dropTask(async () => {
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       this._activitySum();
 
@@ -449,7 +449,7 @@ export default class IndexController extends Controller {
 
     const publicHolidays = await this.store.query("public-holiday", {
       ...params,
-      // eslint-disable-next-line ember/no-get
+
       location: this.currentUser.user.activeEmployment.location.get("id"),
     });
 

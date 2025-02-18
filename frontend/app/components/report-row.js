@@ -2,6 +2,7 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { dropTask } from "ember-concurrency";
+
 import ReportValidations from "timed/validations/report";
 
 export default class ReportRowComponent extends Component {

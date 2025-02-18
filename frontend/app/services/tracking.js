@@ -7,6 +7,7 @@ import { tracked } from "@glimmer/tracking";
 import { dropTask, task, timeout } from "ember-concurrency";
 import moment from "moment";
 import { trackedTask } from "reactiveweb/ember-concurrency";
+
 import formatDuration from "timed/utils/format-duration";
 
 /**
@@ -243,7 +244,7 @@ export default class TrackingService extends Service {
   fetchRecentTasks = dropTask(async () => {
     await Promise.resolve();
     return await this.store.query("task", {
-      my_most_frequent: 10, // eslint-disable-line camelcase
+      my_most_frequent: 10,
       include: "project,project.customer",
     });
   });

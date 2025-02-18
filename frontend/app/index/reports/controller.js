@@ -10,8 +10,9 @@ import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import moment from "moment";
 import { all } from "rsvp";
-import ReportValidations from "timed/validations/report";
 import { cached } from "tracked-toolbox";
+
+import ReportValidations from "timed/validations/report";
 /**
  * The index reports controller
  *

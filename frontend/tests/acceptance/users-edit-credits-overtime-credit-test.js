@@ -12,7 +12,6 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
   hooks.beforeEach(async function () {
     this.user = this.server.create("user", { isSuperuser: true });
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: this.user.id });
   });
 

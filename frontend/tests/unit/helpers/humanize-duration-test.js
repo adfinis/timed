@@ -1,5 +1,6 @@
 import moment from "moment";
 import { module, test } from "qunit";
+
 import { humanizeDurationFn } from "timed/helpers/humanize-duration";
 
 module("Unit | Helper | humanize duration", function () {

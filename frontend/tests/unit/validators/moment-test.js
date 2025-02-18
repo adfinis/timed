@@ -1,5 +1,6 @@
 import moment from "moment";
 import { module, test } from "qunit";
+
 import validateMoment from "timed/validators/moment";
 
 module("Unit | Validator | moment", function () {

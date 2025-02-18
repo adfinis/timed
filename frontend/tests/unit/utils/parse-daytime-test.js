@@ -1,4 +1,5 @@
 import { module, test } from "qunit";
+
 import parseDayTime from "timed/utils/parse-daytime";
 
 module("Unit | Utility | parse day time", function () {

@@ -4,6 +4,7 @@ import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout, hash } from "ember-concurrency";
 import moment from "moment";
 import { trackedTask } from "reactiveweb/ember-concurrency";
+
 import QPController from "timed/controllers/qpcontroller";
 
 export default class UsersIndexController extends QPController {

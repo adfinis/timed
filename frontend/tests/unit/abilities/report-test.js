@@ -1,6 +1,7 @@
 import EmberObject from "@ember/object";
 import { setupTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import setupCurrentUser from "timed/tests/helpers/current-user-mock";
 
 module("Unit | Ability | report", function (hooks) {
