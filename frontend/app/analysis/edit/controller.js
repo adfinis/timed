@@ -1,11 +1,11 @@
 import { getOwner } from "@ember/application";
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { later } from "@ember/runloop";
 import { service } from "@ember/service";
 import { dasherize } from "@ember/string";
 import { tracked } from "@glimmer/tracking";
 import { task } from "ember-concurrency";
+import { runTask } from "ember-lifeline";
 
 import {
   underscoreQueryParams,
@@ -241,7 +241,7 @@ export default class AnalysisEditController extends Controller {
     // We have to defer the rollback for some milliseconds since the combobox
     // reset action triggers mutation of customer, task, and project which
     // would be run after this rollback and therefore trigger changes
-    later(() => {
+    runTask(this, () => {
       changeset.rollback();
     });
   }

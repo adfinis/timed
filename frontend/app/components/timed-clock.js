@@ -1,9 +1,9 @@
 import { setProperties } from "@ember/object";
-import { scheduleOnce } from "@ember/runloop";
 import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { task, timeout } from "ember-concurrency";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 
 export default class TimedClock extends Component {
@@ -24,7 +24,7 @@ export default class TimedClock extends Component {
   constructor(...args) {
     super(...args);
 
-    scheduleOnce("actions", this.timer, "perform");
+    scheduleTask(this.timer, "actions", "perform");
   }
 
   timer = task(async () => {

@@ -1,10 +1,10 @@
 import { getOwner } from "@ember/application";
-import { scheduleOnce } from "@ember/runloop";
 import Service, { service } from "@ember/service";
 import { camelize, capitalize } from "@ember/string";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, task, timeout } from "ember-concurrency";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 
@@ -109,11 +109,7 @@ export default class TrackingService extends Service {
    * @public
    */
   setTitle(title) {
-    scheduleOnce(
-      "afterRender",
-      this,
-      this.scheduleDocumentTitle.bind(this, title),
-    );
+    scheduleTask(this, "actions", this.scheduleDocumentTitle.bind(this, title));
   }
 
   scheduleDocumentTitle(t) {
