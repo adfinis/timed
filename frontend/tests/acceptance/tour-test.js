@@ -10,6 +10,7 @@ import { setupApplicationTest } from "ember-qunit";
 import { setBreakpoint } from "ember-responsive/test-support";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
+
 import TOURS from "timed/tours";
 
 module("Acceptance | tour", function (hooks) {
@@ -19,7 +20,6 @@ module("Acceptance | tour", function (hooks) {
   hooks.beforeEach(async function () {
     const user = this.server.create("user", { tourDone: false });
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     localStorage.removeItem("timed-tour");
@@ -40,7 +40,6 @@ module("Acceptance | tour", function (hooks) {
       return user;
     });
 
-    // eslint-disable-next-line camelcase
     await authenticateSession();
 
     await visit("/");

@@ -1,6 +1,7 @@
 import Service, { service } from "@ember/service";
 import { camelize, capitalize, dasherize } from "@ember/string";
 import { restartableTask } from "ember-concurrency";
+
 import DjangoDurationTransform from "timed/transforms/django-duration";
 
 const DJANGO_DURATION_TRANSFORM = DjangoDurationTransform.create();

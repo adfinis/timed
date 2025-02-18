@@ -5,8 +5,9 @@
  */
 
 import { action } from "@ember/object";
-import Datepicker from "timed/components/datepicker";
 import { localCopy } from "tracked-toolbox";
+
+import Datepicker from "timed/components/datepicker";
 
 /**
  * The datepicker buttn component

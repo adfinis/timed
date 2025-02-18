@@ -13,6 +13,9 @@ import {
 } from "ember-concurrency";
 import fetch from "fetch";
 import moment from "moment";
+
+import config from "../../config/environment";
+
 import QPController from "timed/controllers/qpcontroller";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 import parseFileName from "timed/utils/parse-filename";
@@ -23,8 +26,6 @@ import {
 } from "timed/utils/query-params";
 import { serializeMoment } from "timed/utils/serialize-moment";
 import { cleanParams, toQueryString } from "timed/utils/url";
-
-import config from "../../config/environment";
 
 export default class AnalysisController extends QPController {
   queryParams = [
@@ -341,8 +342,7 @@ export default class AnalysisController extends QPController {
       download(file, filename, file.type);
 
       this.notify.success("File was downloaded");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error(
         "Error while downloading, try again or try reducing results",
       );

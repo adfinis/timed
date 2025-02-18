@@ -5,11 +5,12 @@ import Component from "@glimmer/component";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 import { resolve } from "rsvp";
+import { localCopy } from "tracked-toolbox";
+
 import customerOptionTemplate from "timed/components/optimized-power-select/custom-options/customer-option";
 import projectOptionTemplate from "timed/components/optimized-power-select/custom-options/project-option";
 import taskOptionTemplate from "timed/components/optimized-power-select/custom-options/task-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/task-selection";
-import { localCopy } from "tracked-toolbox";
 /**
  * Component for selecting a task, which consists of selecting a customer and
  * project first.

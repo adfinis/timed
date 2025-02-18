@@ -14,7 +14,6 @@ module("Acceptance | index attendances", function (hooks) {
 
     const user = this.server.create("user");
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     this.server.create("attendance", "morning", { userId: user.id });

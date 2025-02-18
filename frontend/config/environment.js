@@ -115,7 +115,6 @@ module.exports = function (environment) {
     };
   }
 
-  // eslint-disable-next-line no-empty
   if (environment === "production") {
     ENV["ember-simple-auth-oidc"].host = "sso-client-host";
     ENV["ember-simple-auth-oidc"].clientId = "sso-client-id";

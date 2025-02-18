@@ -6,6 +6,7 @@ import { service } from "@ember/service";
 import { dasherize } from "@ember/string";
 import { tracked } from "@glimmer/tracking";
 import { task } from "ember-concurrency";
+
 import {
   underscoreQueryParams,
   serializeQueryParams,
@@ -205,7 +206,7 @@ export default class AnalysisEditController extends Controller {
       });
 
       this.notify.success("Reports were saved");
-    } catch (e) {
+    } catch {
       this.notify.error("Error while saving the reports");
     }
 

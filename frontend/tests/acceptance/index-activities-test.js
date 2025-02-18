@@ -4,6 +4,7 @@ import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import moment from "moment";
 import { module, skip, test } from "qunit";
+
 import formatDuration from "timed/utils/format-duration";
 
 module("Acceptance | index activities", function (hooks) {
@@ -13,7 +14,6 @@ module("Acceptance | index activities", function (hooks) {
   hooks.beforeEach(async function () {
     const user = this.server.create("user");
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     this.activities = this.server.createList("activity", 5, {

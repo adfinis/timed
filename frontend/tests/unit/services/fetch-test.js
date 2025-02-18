@@ -1,5 +1,6 @@
 import { setupTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import setupSession from "timed/tests/helpers/session-mock";
 
 module("Unit | Service | fetch", function (hooks) {

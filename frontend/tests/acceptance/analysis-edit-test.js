@@ -12,7 +12,6 @@ module("Acceptance | analysis edit", function (hooks) {
     const user = this.server.create("user", { isSuperuser: true });
     this.user = user;
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     this.reportIntersection = this.server.create("report-intersection", {

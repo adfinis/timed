@@ -20,7 +20,6 @@ module("Acceptance | users edit responsibilities", function (hooks) {
       lastName: "LastName",
     });
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: this.admin.id });
   });
 

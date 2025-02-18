@@ -1,4 +1,5 @@
 import Route from "@ember/routing/route";
+
 import { resetQueryParams } from "timed/utils/query-params";
 
 export default class AnalysisEditRoute extends Route {

@@ -1,5 +1,6 @@
 import { action } from "@ember/object";
 import moment from "moment";
+
 import DurationpickerComponent from "timed/components/durationpicker";
 import parseDayTime from "timed/utils/parse-daytime";
 

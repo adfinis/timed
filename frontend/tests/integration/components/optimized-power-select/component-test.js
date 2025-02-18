@@ -6,6 +6,7 @@ import {
 } from "ember-power-select/test-support/helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import taskOptionTemplate from "timed/components/optimized-power-select/custom-options/task-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/task-selection";
 

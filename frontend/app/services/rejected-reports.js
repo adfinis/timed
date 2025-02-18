@@ -44,7 +44,7 @@ export default class RejectedReportsService extends Service {
       });
 
       this.amountReports = reports.meta.pagination.count;
-    } catch (e) {
+    } catch {
       this.notify.error("Error while polling reports");
     }
   }

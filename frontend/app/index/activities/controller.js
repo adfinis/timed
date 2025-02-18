@@ -223,8 +223,7 @@ export default class ActivitiesIndexController extends Controller {
         }, resolve());
 
       this.router.transitionTo("index.reports");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while generating reports");
     } finally {
       this.tracking.generatingReports = false;

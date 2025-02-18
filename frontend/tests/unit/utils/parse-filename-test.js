@@ -1,4 +1,5 @@
 import { module, test } from "qunit";
+
 import parseFileName from "timed/utils/parse-filename";
 
 module("Unit | Utility | parse filename", function () {

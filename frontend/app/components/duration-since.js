@@ -76,7 +76,6 @@ export default class DurationSinceComponent extends Component {
    * @public
    */
   timer = task(async () => {
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       this._compute();
 

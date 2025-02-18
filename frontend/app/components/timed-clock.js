@@ -28,7 +28,6 @@ export default class TimedClock extends Component {
   }
 
   timer = task(async () => {
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       this._update();
 

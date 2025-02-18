@@ -7,6 +7,7 @@ import Route from "@ember/routing/route";
 import { service } from "@ember/service";
 import Changeset from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
+
 import ActivityValidator from "timed/validations/activity";
 
 /**
