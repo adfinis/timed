@@ -93,8 +93,8 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0(@ember/string@3.1.1)(@ember/test-helpers@4.0.5(@babel/core@7.22.9)(@glint/template@1.4.0)(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)))(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1))
       ember-can:
-        specifier: 7.0.0
-        version: 7.0.0(@babel/core@7.22.9)(@ember/string@3.1.1)(ember-inflector@4.0.2)(ember-resolver@13.1.0(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)))(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1))
+        specifier: anehx/ember-can#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can
+        version: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.22.9)(@ember/string@3.1.1)(ember-resolver@13.1.0(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)))(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1))
       ember-changeset:
         specifier: 4.1.2
         version: 4.1.2(@glint/template@1.4.0)(ember-data@4.12.8(@babel/core@7.22.9)(@ember/string@3.1.1)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1))(webpack@5.92.1))(webpack@5.92.1)
@@ -3433,11 +3433,11 @@ packages:
     peerDependencies:
       ember-source: ^3.13.0 || ^4.0.0 || >= 5.0.0
 
-  ember-can@7.0.0:
-    resolution: {integrity: sha512-qB5P9o6ByROmOmsQCoSQgeb4fYH7xxN9p2Kc2LOlbi5JudB3gjRwSOlPwZf74Tpe4I3sPyNgMmE7Uw6Vb1S4Ew==}
+  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can:
+    resolution: {path: /ember-can, tarball: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935}
+    version: 5.0.4
     peerDependencies:
-      '@ember/string': ^3.1.1 || ^4.0.0
-      ember-inflector: ^4.0.2 || ^5.0.1
+      '@ember/string': ^3.1.1
       ember-resolver: '>= 8.0.0'
       ember-source: ^3.28.0 || ^4.0.0 || >=5.0.0
 
@@ -13991,11 +13991,11 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-can@7.0.0(@babel/core@7.22.9)(@ember/string@3.1.1)(ember-inflector@4.0.2)(ember-resolver@13.1.0(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)))(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)):
+  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.22.9)(@ember/string@3.1.1)(ember-resolver@13.1.0(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)))(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)):
     dependencies:
       '@ember/string': 3.1.1
-      '@embroider/addon-shim': 1.8.9
-      decorator-transforms: 2.0.0(@babel/core@7.22.9)
+      '@embroider/addon-shim': 1.9.0
+      decorator-transforms: 2.3.0(@babel/core@7.22.9)
       ember-inflector: 4.0.2
       ember-resolver: 13.1.0(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1))
       ember-source: 5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)
