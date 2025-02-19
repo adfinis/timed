@@ -10,18 +10,6 @@ export default class ReportRowComponent extends Component {
 
   ReportValidations = ReportValidations;
 
-  get editable() {
-    return this.abilities.can("edit report", this.args.report);
-  }
-
-  get title() {
-    return this.editable
-      ? ""
-      : `This entry was already verified by ${this.args.report.get(
-          "verifiedBy.fullName",
-        )} and therefore not editable anymore`;
-  }
-
   /**
    * Save the row
    *
