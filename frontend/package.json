@@ -87,6 +87,7 @@
     "ember-power-calendar": "^1.0.2",
     "ember-power-calendar-moment": "^1.0.2",
     "ember-power-select": "^8.3.0",
+    "ember-promise-helpers": "^2.0.0",
     "ember-qunit": "8.1.1",
     "ember-resolver": "13.1.0",
     "ember-resources": "7.0.3",
