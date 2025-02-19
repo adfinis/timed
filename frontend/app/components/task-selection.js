@@ -4,6 +4,7 @@ import Component from "@glimmer/component";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
 import { runTask } from "ember-lifeline";
 import { trackedTask } from "reactiveweb/ember-concurrency";
+import { trackedFunction } from "reactiveweb/function";
 import { resolve } from "rsvp";
 import { localCopy } from "tracked-toolbox";
 
@@ -256,16 +257,24 @@ export default class TaskSelectionComponent extends Component {
     return this._customersAndRecentTasks.value ?? [];
   }
 
-  get projects() {
-    return this.customer?.projects
+  #projects = trackedFunction(this, async () => {
+    return (await this.customer?.projects)
       ?.filter(this.filterByArchived)
       .toSorted((p) => p.name);
+  });
+
+  get projects() {
+    return this.#projects.value ?? [];
   }
 
-  get tasks() {
-    return this.project?.tasks
+  #tasks = trackedFunction(this, async () => {
+    return (await this.project?.tasks)
       ?.filter(this.filterByArchived)
       .toSorted((t) => t.name);
+  });
+
+  get tasks() {
+    return this.#tasks.value ?? [];
   }
 
   @action
