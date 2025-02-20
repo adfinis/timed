@@ -1,8 +1,8 @@
 import { action } from "@ember/object";
-import { later } from "@ember/runloop";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
+import { runTask } from "ember-lifeline";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 import { resolve } from "rsvp";
 import { localCopy } from "tracked-toolbox";
@@ -318,7 +318,7 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!options.preventAction) {
-      later(this, () => {
+      runTask(this, () => {
         (this.args["on-set-customer"] === undefined
           ? () => {}
           : this.args["on-set-customer"])(value);
@@ -350,7 +350,7 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!options.preventAction) {
-      later(this, () => {
+      runTask(this, () => {
         (this.args["on-set-project"] === undefined
           ? () => {}
           : this.args["on-set-project"])(value);
@@ -375,7 +375,7 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!options.preventAction) {
-      later(this, async () => {
+      runTask(this, async () => {
         (this.args["on-set-task"] === undefined
           ? () => {}
           : this.args["on-set-task"])(value);

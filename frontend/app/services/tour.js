@@ -1,8 +1,8 @@
-import { schedule, later } from "@ember/runloop";
 import { service } from "@ember/service";
 import { waitFor } from "@ember/test-waiters";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
+import { scheduleTask, runTask } from "ember-lifeline";
 import Tour from "ember-shepherd/services/tour";
 import { cached } from "tracked-toolbox";
 
@@ -33,8 +33,8 @@ export default class TourService extends Tour {
     };
     this.defaultStepOptions = {
       beforeShowPromise() {
-        return new Promise(function (resolve) {
-          schedule("afterRender", this, function () {
+        return new Promise((resolve) => {
+          scheduleTask(this, "actions", () => {
             window.scrollTo(0, 0);
             resolve();
           });
@@ -137,7 +137,7 @@ export default class TourService extends Tour {
   async startTour() {
     if (this._wantsTour && this.hasTourForRoute) {
       await this.prepareTourForCurrentRoute();
-      schedule("afterRender", this, () => {
+      scheduleTask(this, "render", () => {
         this._onTourFinish = async () => {
           const done = this.autostartTour.done;
           done.push(this.routeName);
@@ -166,9 +166,13 @@ export default class TourService extends Tour {
           }
         };
 
-        later(this, () => {
-          this.start();
-        });
+        runTask(
+          this,
+          () => {
+            this.start();
+          },
+          1,
+        );
       });
     }
   }

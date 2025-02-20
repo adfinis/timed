@@ -1,9 +1,9 @@
 import { action } from "@ember/object";
 import { guidFor } from "@ember/object/internals";
-import { scheduleOnce } from "@ember/runloop";
 import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 
 const DISPLAY_FORMAT = "DD.MM.YYYY";
@@ -50,7 +50,7 @@ export default class Datepicker extends Component {
 
   @action
   checkValidity() {
-    scheduleOnce("afterRender", this, this.deferredWork);
+    scheduleTask(this, "actions", this.deferredWork);
   }
 
   @action

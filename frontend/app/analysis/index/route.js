@@ -1,5 +1,5 @@
 import Route from "@ember/routing/route";
-import { next } from "@ember/runloop";
+import { runTask } from "ember-lifeline";
 
 export default class AnalysisIndexRoute extends Route {
   queryParams = {
@@ -15,11 +15,15 @@ export default class AnalysisIndexRoute extends Route {
     /* eslint-disable-next-line ember/no-controller-access-in-routes */
     const controller = this.controllerFor("analysis.index");
     const skipReset = controller.skipResetOnSetup;
-    next(() => {
-      if (!skipReset) {
-        controller._reset();
-      }
-    });
+    runTask(
+      this,
+      () => {
+        if (!skipReset) {
+          controller._reset();
+        }
+      },
+      1,
+    );
   }
 
   setupController(controller) {

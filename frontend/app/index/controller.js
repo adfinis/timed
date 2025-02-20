@@ -1,11 +1,11 @@
 import Controller from "@ember/controller";
 import { action, get } from "@ember/object";
-import { scheduleOnce } from "@ember/runloop";
 import { service } from "@ember/service";
 import { camelize } from "@ember/string";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, timeout } from "ember-concurrency";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 import { trackedFunction } from "reactiveweb/function";
 import { tracked as trackedWrapper } from "tracked-built-ins";
@@ -48,7 +48,7 @@ export default class IndexController extends Controller {
   constructor(...args) {
     super(...args);
     // this kicks off the activity sum loop
-    scheduleOnce("afterRender", this, this._activitySumTask.perform);
+    scheduleTask(this._activitySumTask, "actions", "perform");
   }
 
   get _allActivities() {
@@ -123,7 +123,7 @@ export default class IndexController extends Controller {
 
     // Save latest activitySum for display while reports are generated.
     // See activitySum getter.
-    scheduleOnce("afterRender", this, "_storeLastActivitySum");
+    scheduleTask(this, "actions", "_storeLastActivitySum");
 
     return duration;
   }

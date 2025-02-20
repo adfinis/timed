@@ -1,5 +1,5 @@
 import Controller from "@ember/controller";
-import { next } from "@ember/runloop";
+import { runTask } from "ember-lifeline";
 
 export default class ControllersQPControllerController extends Controller {
   #defaults = {};
@@ -8,7 +8,7 @@ export default class ControllersQPControllerController extends Controller {
     super(...args);
 
     // defer until the extending controller has set it's query params
-    next(() => this.storeQPDefaults());
+    runTask(this, () => this.storeQPDefaults(), 1);
   }
 
   storeQPDefaults() {

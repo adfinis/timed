@@ -5,9 +5,9 @@
  */
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { scheduleOnce } from "@ember/runloop";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 import { all } from "rsvp";
 import { cached } from "tracked-toolbox";
@@ -76,7 +76,7 @@ export default class IndexReportController extends Controller {
     });
 
     if (!reportsToday.find((r) => r.isNew)) {
-      scheduleOnce("actions", this, "createEmptyReport");
+      scheduleTask(this, "actions", "createEmptyReport");
     }
 
     return reportsToday.toSorted((r) => r.isNew);

@@ -167,6 +167,9 @@ importers:
       ember-keyboard:
         specifier: ^9.0.1
         version: 9.0.1(@babel/core@7.22.9)(@ember/test-helpers@4.0.5(@babel/core@7.22.9)(@glint/template@1.4.0)(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)))(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1))
+      ember-lifeline:
+        specifier: ^7.0.0
+        version: 7.0.0(@ember/test-helpers@4.0.5(@babel/core@7.22.9)(@glint/template@1.4.0)(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)))
       ember-load-initializers:
         specifier: 2.1.2
         version: 2.1.2(@babel/core@7.22.9)
@@ -14846,7 +14849,7 @@ snapshots:
 
   ember-keyboard@9.0.1(@babel/core@7.22.9)(@ember/test-helpers@4.0.5(@babel/core@7.22.9)(@glint/template@1.4.0)(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)))(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1)):
     dependencies:
-      '@embroider/addon-shim': 1.8.9
+      '@embroider/addon-shim': 1.9.0
       ember-destroyable-polyfill: 2.0.3(@babel/core@7.22.9)
       ember-modifier: 4.2.0(@babel/core@7.22.9)(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1))
       ember-modifier-manager-polyfill: 1.2.0(@babel/core@7.22.9)
@@ -14859,7 +14862,7 @@ snapshots:
 
   ember-lifeline@7.0.0(@ember/test-helpers@4.0.5(@babel/core@7.22.9)(@glint/template@1.4.0)(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1))):
     dependencies:
-      '@embroider/addon-shim': 1.8.9
+      '@embroider/addon-shim': 1.9.0
     optionalDependencies:
       '@ember/test-helpers': 4.0.5(@babel/core@7.22.9)(@glint/template@1.4.0)(ember-source@5.4.1(@babel/core@7.22.9)(@glimmer/component@1.1.2(@babel/core@7.22.9))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.92.1))
     transitivePeerDependencies:
