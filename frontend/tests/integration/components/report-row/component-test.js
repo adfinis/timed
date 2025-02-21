@@ -63,7 +63,7 @@ module("Integration | Component | report row", function (hooks) {
     );
 
     assert.dom("input").isNotDisabled();
-    assert.dom("form").hasAttribute("title", "");
+    assert.dom("form").hasNoAttribute("title");
     assert.dom(".btn").exists({ count: 2 });
   });
 });

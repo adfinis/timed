@@ -330,56 +330,65 @@
                 <tbody>
                   {{#each reports as |report|}}
                     {{! template-lint-disable}}
-                    <Table::Tr
-                      class="{{if
-                          (includes report.id this.selectedReportIds)
-                          'selected bg-primary text-foreground-primary'
-                          'striped'
+                    <CanEdit @report={{report}} as |canEdit|>
+                      <Table::Tr
+                        class="{{if
+                            (includes report.id this.selectedReportIds)
+                            'selected bg-primary text-foreground-primary'
+                            'striped'
+                          }}
+                          {{if
+                            (or this.isAccountant canEdit)
+                            'text-foreground-accent cursor-pointer'
+                          }}
+                          shadow-foreground/5 align-top shadow transition-colors"
+                        {{on
+                          "click"
+                          (if
+                            (or this.isAccountant canEdit)
+                            (fn this.selectRow report)
+                            (noop)
+                          )
                         }}
-                        {{if
-                          (or this.canBill (can 'edit report' report))
-                          'text-foreground-accent cursor-pointer'
-                        }}
-                        shadow-foreground/5 align-top shadow transition-colors"
-                      {{on "click" (fn this.selectRow report)}}
-                    >
-                      <Table::Td>{{report.user.username}}</Table::Td>
-                      <Table::Td>{{moment-format
-                          report.date
-                          "DD.MM.YYYY"
-                        }}</Table::Td>
-                      <Table::Td>{{format-duration
-                          report.duration
-                          false
-                        }}</Table::Td>
-                      <Table::Td
-                      >{{report.task.project.customer.name}}</Table::Td>
-                      <Table::Td>{{report.task.project.name}}</Table::Td>
-                      <Table::Td>{{report.task.name}}</Table::Td>
-                      <Table::Td><span
-                          title="{{report.comment}}"
-                        >{{report.comment}}</span></Table::Td>
-                      <Table::Td>{{if
-                          report.verifiedBy
-                          report.verifiedBy.username
-                        }}</Table::Td>
-                      <Table::Td><Checkmark
-                          @checked={{report.rejected}}
-                          @highlight={{true}}
-                        /></Table::Td>
-                      <Table::Td><Checkmark
-                          @checked={{report.review}}
-                          @highlight={{true}}
-                        /></Table::Td>
-                      <Table::Td><Checkmark
-                          @checked={{report.notBillable}}
-                          @highlight={{true}}
-                        /></Table::Td>
-                      <Table::Td><Checkmark
-                          @checked={{report.billed}}
-                          @highlight={{true}}
-                        /></Table::Td>
-                    </Table::Tr>
+                      >
+                        <Table::Td>{{report.user.username}}</Table::Td>
+                        <Table::Td>{{moment-format
+                            report.date
+                            "DD.MM.YYYY"
+                          }}</Table::Td>
+                        <Table::Td>{{format-duration
+                            report.duration
+                            false
+                          }}</Table::Td>
+                        <Table::Td
+                        >{{report.task.project.customer.name}}</Table::Td>
+                        <Table::Td>{{report.task.project.name}}</Table::Td>
+                        <Table::Td>{{report.task.name}}</Table::Td>
+                        <Table::Td><span
+                            title="{{report.comment}}"
+                          >{{report.comment}}</span></Table::Td>
+                        <Table::Td>{{if
+                            report.verifiedBy
+                            report.verifiedBy.username
+                          }}</Table::Td>
+                        <Table::Td><Checkmark
+                            @checked={{report.rejected}}
+                            @highlight={{true}}
+                          /></Table::Td>
+                        <Table::Td><Checkmark
+                            @checked={{report.review}}
+                            @highlight={{true}}
+                          /></Table::Td>
+                        <Table::Td><Checkmark
+                            @checked={{report.notBillable}}
+                            @highlight={{true}}
+                          /></Table::Td>
+                        <Table::Td><Checkmark
+                            @checked={{report.billed}}
+                            @highlight={{true}}
+                          /></Table::Td>
+                      </Table::Tr>
+                    </CanEdit>
                   {{/each}}
                   {{#if this._canLoadMore}}
                     <tr

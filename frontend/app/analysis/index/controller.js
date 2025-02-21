@@ -122,10 +122,8 @@ export default class AnalysisController extends QPController {
     return `The export limit is ${this.exportLimit}. Please use filters to reduce the amount of reports.`;
   }
 
-  get canBill() {
-    return (
-      this.currentUser.user.isAccountant || this.currentUser.user.isSuperuser
-    );
+  get isAccountant() {
+    return this.currentUser.user.isAccountant;
   }
 
   get appliedFilters() {
@@ -362,16 +360,14 @@ export default class AnalysisController extends QPController {
 
   @action
   selectRow(report) {
-    if (this.abilities.can("edit report", report) || this.canBill) {
-      const selected = this.selectedReportIds;
+    const selected = this.selectedReportIds;
 
-      if (selected.includes(report.id)) {
-        this.selectedReportIds = A([
-          ...selected.filter((id) => id !== report.id),
-        ]);
-      } else {
-        this.selectedReportIds = A([...selected, report.id]);
-      }
+    if (selected.includes(report.id)) {
+      this.selectedReportIds = A([
+        ...selected.filter((id) => id !== report.id),
+      ]);
+    } else {
+      this.selectedReportIds = A([...selected, report.id]);
     }
   }
 }

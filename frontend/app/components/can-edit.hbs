@@ -1,0 +1,9 @@
+{{#let (can "editSync report" @report) as |sync|}}
+  {{#if sync}}
+    {{yield true}}
+  {{else}}
+    {{#let (can "editAsync report" @report) as |promise|}}
+      {{yield (await promise)}}
+    {{/let}}
+  {{/if}}
+{{/let}}
