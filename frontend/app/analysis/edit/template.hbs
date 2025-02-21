@@ -58,7 +58,7 @@
                         {{/unless}}
                         {{#if
                           (and
-                            f.model.change.customer
+                            f.model.change.customer.id
                             (not
                               (eq f.model.change.customer.id model.customer.id)
                             )
@@ -77,7 +77,7 @@
                         {{/unless}}
                         {{#if
                           (and
-                            f.model.change.project
+                            f.model.change.project.id
                             (not
                               (eq f.model.change.project.id model.project.id)
                             )

@@ -111,11 +111,11 @@ export default class AnalysisEditController extends Controller {
     const model = this.store.peekRecord("report-intersection", res.data.id);
 
     if (model.customer) {
-      this.store.query("project", { customer: model.customer.id });
+      await this.store.query("project", { customer: model.customer.id });
     }
 
     if (model.project) {
-      this.store.query("task", { project: model.project.id });
+      await this.store.query("task", { project: model.project.id });
     }
 
     return {
@@ -183,15 +183,45 @@ export default class AnalysisEditController extends Controller {
 
       const queryString = toQueryString(params);
 
-      await changeset.execute();
+      // this is an ugly mess, to get around the changeset using a PromiseProxy
+      const changes = changeset.get("changes");
+
+      const { comment, notBillable, rejected, review, billed, verified } =
+        changeset;
+      const _attributes = {
+        comment,
+        notBillable,
+        rejected,
+        review,
+        billed,
+        verified,
+      };
+
+      const [user, customer, project, task] = [
+        changeset.get("user.id") &&
+          this.store.peekRecord("user", changeset.get("user.id")),
+        changeset.get("customer.id") &&
+          this.store.peekRecord("customer", changeset.get("customer.id")),
+        changeset.get("project.id") &&
+          this.store.peekRecord("project", changeset.get("project.id")),
+        changeset.get("task.id") &&
+          this.store.peekRecord("task", changeset.get("task.id")),
+      ];
+      const _relationships = { user, customer, project, task };
+
       const {
         data: { attributes, relationships },
-      } = this.intersectionModel.serialize();
+      } = this.store
+        .createRecord("report-intersection", {
+          ..._attributes,
+          ..._relationships,
+        })
+        .serialize();
 
       const data = {
         type: "report-bulks",
-        attributes: filterUnchanged(attributes, changeset.get("changes")),
-        relationships: filterUnchanged(relationships, changeset.get("changes")),
+        attributes: filterUnchanged(attributes, changes),
+        relationships: filterUnchanged(relationships, changes),
       };
 
       await this.fetch.fetch(`/api/v1/reports/bulk?editable=1&${queryString}`, {
