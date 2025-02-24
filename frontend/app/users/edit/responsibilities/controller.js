@@ -3,7 +3,6 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { task } from "ember-concurrency";
 import moment from "moment";
-import { all } from "rsvp";
 
 export default class UsersEditResponsibilitiesController extends Controller {
   @service router;
@@ -23,6 +22,10 @@ export default class UsersEditResponsibilitiesController extends Controller {
     });
   });
 
+  async getBalance(supervisee) {
+    return (await supervisee.absenceBalances)[0].balance;
+  }
+
   supervisees = task(async () => {
     const supervisor = this.user?.id;
 
@@ -32,7 +35,7 @@ export default class UsersEditResponsibilitiesController extends Controller {
       include: "user",
     });
 
-    return await all(
+    return await Promise.all(
       balances
         .map((b) => b.user)
         .filter((u) => u.get("isActive"))
