@@ -109,10 +109,10 @@ export default class TaskSelectionComponent extends Component {
     this._task = task ?? this.args.task;
     this._project = this._task
       ? await this._task.customer
-      : project ?? this.args.project;
+      : (project ?? this.args.project);
     this._customer = this._project
       ? await this._project.customer
-      : customer ?? this.args.customer;
+      : (customer ?? this.args.customer);
 
     if (this._task) {
       this.onTaskChange(this._task, options);
