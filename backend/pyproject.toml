@@ -47,7 +47,7 @@ openpyxl = "3.0.10" # TODO: dependency of `pyexcel-xlsx` Remove as soon as https
 psycopg = {extras = ["binary"], version = "^3.2.5"}
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.9.7"
+ruff = "^0.9.9"
 coverage = "7.6.12"
 django-extensions = "3.2.3"
 factory-boy = "3.3.3"
