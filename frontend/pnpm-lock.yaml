@@ -132,8 +132,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.3(a3f5fqa4s4ppirqm6aaissibea)
       ember-cli-nouislider:
-        specifier: derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
-        version: git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
+        specifier: git+https://github.com/derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
+        version: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872
       ember-cli-postcss:
         specifier: ^8.2.0
         version: 8.2.0
@@ -4073,8 +4073,8 @@ packages:
   ember-cli-normalize-entity-name@1.0.0:
     resolution: {integrity: sha512-rF4P1rW2P1gVX1ynZYPmuIf7TnAFDiJmIUFI1Xz16VYykUAyiOCme0Y22LeZq8rTzwBMiwBwoE3RO4GYWehXZA==}
 
-  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
-    resolution: {commit: cf0d87986cf25d5795e1edd6c8b9f008c5b39872, repo: git@github.com:derrabauke/ember-cli-nouislider.git, type: git}
+  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+    resolution: {tarball: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872}
     version: 1.2.1
     engines: {node: 10.* || >= 12}
 
@@ -15827,7 +15827,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
     dependencies:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0

@@ -65,7 +65,7 @@
     "ember-cli-htmlbars": "~6.3.0",
     "ember-cli-inject-live-reload": "2.1.0",
     "ember-cli-mirage": "^3.0.0",
-    "ember-cli-nouislider": "derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872",
+    "ember-cli-nouislider": "git+https://github.com/derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872",
     "ember-cli-postcss": "^8.2.0",
     "ember-cli-sri": "2.1.1",
     "ember-cli-terser": "4.0.2",
