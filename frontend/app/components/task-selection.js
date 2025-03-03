@@ -183,7 +183,7 @@ export default class TaskSelectionComponent extends Component {
   get customer() {
     // Without unwrapping of the proxy ember-power-select will stick to wrong reference after clearing
     return this.args.liveTracking
-      ? this.tracking.activeCustomer?.content ?? this._customer
+      ? (this.tracking.activeCustomer?.content ?? this._customer)
       : this._customer;
   }
 
@@ -199,7 +199,7 @@ export default class TaskSelectionComponent extends Component {
   get project() {
     // Without unwrapping of the proxy ember-power-select will stick to wrong reference after clearing
     return this.args.liveTracking
-      ? this.tracking.activeProject?.content ?? this._project
+      ? (this.tracking.activeProject?.content ?? this._project)
       : this._project;
   }
 
@@ -211,7 +211,7 @@ export default class TaskSelectionComponent extends Component {
    */
   get task() {
     return this.args.liveTracking
-      ? this.tracking.activeTask?.content ?? this._task
+      ? (this.tracking.activeTask?.content ?? this._task)
       : this._task;
   }
 
