@@ -50,7 +50,7 @@
     "broccoli-funnel": "^3.0.8",
     "concurrently": "^8.0.1",
     "downloadjs": "1.4.7",
-    "ember-auto-import": "~2.7.4",
+    "ember-auto-import": "~2.10.0",
     "ember-basic-dropdown": "^8.2.0",
     "ember-can": "anehx/ember-can#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can",
     "ember-changeset": "4.1.2",
