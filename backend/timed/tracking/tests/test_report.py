@@ -107,6 +107,7 @@ def test_report_intersection_full(
 def test_report_intersection_partial(
     internal_employee_client,
     report_factory,
+    snapshot,
 ):
     user = internal_employee_client.user
     report = report_factory.create(review=True, not_billable=True, comment="test")
@@ -120,28 +121,7 @@ def test_report_intersection_partial(
     assert response.status_code == status.HTTP_200_OK
 
     json = response.json()
-    expected = {
-        "data": {
-            "id": None,
-            "type": "report-intersections",
-            "attributes": {
-                "comment": "test",
-                "not-billable": None,
-                "verified": None,
-                "review": None,
-                "billed": None,
-                "rejected": False,
-            },
-            "relationships": {
-                "customer": {"data": None},
-                "project": {"data": None},
-                "task": {"data": None},
-                "user": {"data": None},
-            },
-        },
-        "meta": {"count": 2},
-    }
-    assert json == expected
+    assert json == snapshot
 
 
 def test_report_intersection_accountant_editable(
