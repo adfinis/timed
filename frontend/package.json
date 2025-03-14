@@ -127,7 +127,7 @@
     "reactiveweb": "^1.4.0",
     "shepherd.js": "^11.2.0",
     "simplebar": "^6.2.5",
-    "stylelint": "16.15.0",
+    "stylelint": "16.16.0",
     "stylelint-config-standard": "37.0.0",
     "stylelint-prettier": "5.0.3",
     "tailwindcss": "^3.0.0",
