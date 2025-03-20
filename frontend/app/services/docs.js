@@ -1,4 +1,5 @@
 import Service, { service } from "@ember/service";
+
 import config from "timed/config/environment";
 
 const ROUTE_DOCS_MAPPING = {
