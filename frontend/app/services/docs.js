@@ -1,6 +1,7 @@
 import Service, { service } from "@ember/service";
+import config from "timed/config/environment";
 
-const docsUrlMatch = {
+const ROUTE_DOCS_MAPPING = {
   // index.name: DocsUrl
   "index.attendances": "tracking/attendances",
   "index.reports": "tracking/timesheet",
@@ -13,14 +14,13 @@ const docsUrlMatch = {
 };
 
 export default class DocsService extends Service {
-  timedDocsURL = "https://timed.dev/docs/";
   @service router;
 
   get docsEndpoint() {
-    return this.timedDocsURL + this.getDocsURL;
+    return config.docsBaseUrl + this.getDocsURL;
   }
 
   get getDocsURL() {
-    return docsUrlMatch[this.router.currentRouteName] || "";
+    return ROUTE_DOCS_MAPPING[this.router.currentRouteName] || "";
   }
 }
