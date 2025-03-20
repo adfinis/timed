@@ -1,5 +1,6 @@
-import { setupTest } from "timed/tests/helpers";
 import { module, test } from "qunit";
+
+import { setupTest } from "timed/tests/helpers";
 
 module("Unit | Service | docs", function (hooks) {
   setupTest(hooks);
