@@ -1,8 +1,10 @@
-<main class="page-main">
+<main class="page-main relative">
   {{#if this.loading}}<span class="loader"></span>{{/if}}
-  <div class="page-content page-content--scroll">
-    <SyTopnav @onLogout={{this.invalidateSession}} />
-
+  <div
+    class="page-content--scroll flex h-screen min-h-screen flex-col overflow-auto px-2 py-2.5 lg:px-3.5 lg:py-4 xl:px-4 xl:py-5"
+  >
+    <Topnav @onLogout={{this.invalidateSession}} />
+    <div class="mt-16" />
     {{outlet}}
   </div>
 </main>

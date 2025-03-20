@@ -13,7 +13,7 @@ from rest_framework.reverse import reverse
 from timed.employment.factories import UserFactory
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.parametrize("is_id_token", [True, False])
 @pytest.mark.parametrize(
     ("authentication_header", "error"),
@@ -63,7 +63,7 @@ def test_authentication(
             )
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     ("create_user", "username", "expected_count"),
     [(False, "", 0), (True, "", 1), (True, "foo@example.com", 1)],
@@ -90,7 +90,7 @@ def test_authentication_new_user(
     assert user_model.objects.count() == expected_count
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_authentication_update_user_data(rf, requests_mock, settings):
     user_model = get_user_model()
     user = UserFactory.create()
@@ -114,7 +114,7 @@ def test_authentication_update_user_data(rf, requests_mock, settings):
     assert user.email == "test@localhost"
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_authentication_idp_502(rf, requests_mock, settings):
     requests_mock.get(
         settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_502_BAD_GATEWAY
@@ -125,7 +125,7 @@ def test_authentication_idp_502(rf, requests_mock, settings):
         OIDCAuthentication().authenticate(request)
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_authentication_idp_missing_claim(rf, requests_mock, settings):
     settings.OIDC_USERNAME_CLAIM = "missing"
     userinfo = {"preferred_username": "1"}
@@ -136,7 +136,7 @@ def test_authentication_idp_missing_claim(rf, requests_mock, settings):
         OIDCAuthentication().authenticate(request)
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_authentication_no_client(rf, requests_mock, settings):
     requests_mock.get(
         settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_401_UNAUTHORIZED
@@ -151,7 +151,7 @@ def test_authentication_no_client(rf, requests_mock, settings):
         OIDCAuthentication().authenticate(request)
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.parametrize("check_introspect", [True, False])
 def test_userinfo_introspection_failure(
     client, rf, requests_mock, settings, check_introspect

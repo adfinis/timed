@@ -15,7 +15,7 @@ module("Acceptance | projects", function (hooks) {
     this.server.create("project-assignee", {
       user,
     });
-    // eslint-disable-next-line camelcase
+
     await authenticateSession({ user_id: user.id });
   });
 
@@ -56,13 +56,13 @@ module("Acceptance | projects", function (hooks) {
     await selectChoose(
       "[data-test-customer-selection]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     await selectChoose(
       "[data-test-project-selection]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     assert.dom("[data-test-add-task]").exists();
@@ -93,13 +93,13 @@ module("Acceptance | projects", function (hooks) {
     await selectChoose(
       "[data-test-customer-selection]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     await selectChoose(
       "[data-test-project-selection]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     assert.dom("[data-test-add-task]").exists();
@@ -152,7 +152,6 @@ module("Acceptance | projects", function (hooks) {
       return user;
     });
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     await visit("/projects");
@@ -187,13 +186,13 @@ module("Acceptance | projects", function (hooks) {
     await selectChoose(
       "[data-test-customer-selection]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     await selectChoose(
       "[data-test-project-selection]",
       ".ember-power-select-option",
-      0
+      0,
     );
 
     assert.ok(notifyErrorFunction.calledOnce);

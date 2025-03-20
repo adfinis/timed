@@ -1,6 +1,6 @@
 import { A } from "@ember/array";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import download from "downloadjs";
@@ -13,6 +13,9 @@ import {
 } from "ember-concurrency";
 import fetch from "fetch";
 import moment from "moment";
+
+import config from "../../config/environment";
+
 import QPController from "timed/controllers/qpcontroller";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 import parseFileName from "timed/utils/parse-filename";
@@ -24,11 +27,10 @@ import {
 import { serializeMoment } from "timed/utils/serialize-moment";
 import { cleanParams, toQueryString } from "timed/utils/url";
 
-import config from "../../config/environment";
-
 export default class AnalysisController extends QPController {
   queryParams = [
     "customer",
+    "comment",
     "costCenter",
     "project",
     "task",
@@ -55,7 +57,7 @@ export default class AnalysisController extends QPController {
   @service store;
   @service router;
   @service notify;
-  @service can;
+  @service abilities;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -82,13 +84,14 @@ export default class AnalysisController extends QPController {
   @tracked billed;
   @tracked costCenter;
   @tracked ordering = "-date";
+  @tracked comment;
 
   get billingTypes() {
-    return this.store.findAll("billing-type");
+    return this.store.peekAll("billing-type");
   }
 
   get costCenters() {
-    return this.store.findAll("cost-center");
+    return this.store.peekAll("cost-center");
   }
 
   get selectedCustomer() {
@@ -119,10 +122,8 @@ export default class AnalysisController extends QPController {
     return `The export limit is ${this.exportLimit}. Please use filters to reduce the amount of reports.`;
   }
 
-  get canBill() {
-    return (
-      this.currentUser.user.isAccountant || this.currentUser.user.isSuperuser
-    );
+  get isAccountant() {
+    return this.currentUser.user.isAccountant;
   }
 
   get appliedFilters() {
@@ -150,6 +151,12 @@ export default class AnalysisController extends QPController {
   }
 
   @action
+  setModelFilterOnChange(key, event) {
+    this[key] = event.target.value ? event.target.value : undefined;
+    this._reset();
+  }
+
+  @action
   reset() {
     this.resetQueryParams({ except: ["ordering"] });
   }
@@ -169,8 +176,7 @@ export default class AnalysisController extends QPController {
     this.data.perform();
   }
 
-  @task
-  *prefetchData() {
+  prefetchData = task(async () => {
     const {
       customer: customerId,
       project: projectId,
@@ -179,7 +185,7 @@ export default class AnalysisController extends QPController {
       reviewer: reviewerId,
     } = this.allQueryParams;
 
-    return yield hash({
+    return await hash({
       customer: customerId && this.store.findRecord("customer", customerId),
       project: projectId && this.store.findRecord("project", projectId),
       task: taskId && this.store.findRecord("task", taskId),
@@ -188,16 +194,15 @@ export default class AnalysisController extends QPController {
       billingTypes: this.store.findAll("billing-type"),
       costCenters: this.store.findAll("cost-center"),
     });
-  }
+  });
 
-  @enqueueTask
-  *data() {
+  data = enqueueTask(async () => {
     const params = underscoreQueryParams(
-      serializeQueryParams(this.allQueryParams, queryParamsState(this))
+      serializeQueryParams(this.allQueryParams, queryParamsState(this)),
     );
 
     if (this._canLoadMore) {
-      const data = yield this.store.query("report", {
+      const data = await this.store.query("report", {
         page: {
           number: this._lastPage + 1,
           size: 20,
@@ -206,49 +211,50 @@ export default class AnalysisController extends QPController {
         include: "task,task.project,task.project.customer,user",
       });
 
-      const assignees = yield this.fetchAssignees.perform(data);
+      const assignees = await this.fetchAssignees.perform(data);
 
       const mappedReports = data.map((report) => {
         report.set(
           "taskAssignees",
           assignees.taskAssignees.filter(
             (taskAssignee) =>
-              report.get("task.id") === taskAssignee.get("task.id")
-          )
+              report.get("task.id") === taskAssignee.get("task.id"),
+          ),
         );
         report.set(
           "projectAssignees",
           assignees.projectAssignees.filter(
             (projectAssignee) =>
               report.get("task.project.id") ===
-              projectAssignee.get("project.id")
-          )
+              projectAssignee.get("project.id"),
+          ),
         );
         report.set(
           "customerAssignees",
           assignees.customerAssignees.filter(
             (customerAssignee) =>
               report.get("task.project.customer.id") ===
-              customerAssignee.get("customer.id")
-          )
+              customerAssignee.get("customer.id"),
+          ),
         );
         return report;
       });
 
-      this.totalTime = parseDjangoDuration(data.get("meta.total-time"));
-      this.totalItems = parseInt(data.get("meta.pagination.count"));
-      this._canLoadMore =
-        data.get("meta.pagination.pages") !== data.get("meta.pagination.page");
-      this._lastPage = data.get("meta.pagination.page");
+      const meta = await data.meta;
+      const pagination = meta.pagination;
+
+      this.totalTime = parseDjangoDuration(meta["total-time"]);
+      this.totalItems = parseInt(pagination.count);
+      this._canLoadMore = pagination.pages !== pagination.page;
+      this._lastPage = pagination.page;
 
       this._dataCache.pushObjects(mappedReports);
     }
 
     return this._dataCache;
-  }
+  });
 
-  @task
-  *fetchAssignees(data) {
+  fetchAssignees = task(async (data) => {
     const projectIds = [
       ...new Set(data.map((report) => report.get("task.project.id"))),
     ].join(",");
@@ -260,21 +266,21 @@ export default class AnalysisController extends QPController {
     ].join(",");
 
     const projectAssignees = projectIds.length
-      ? yield this.store.query("project-assignee", {
+      ? await this.store.query("project-assignee", {
           is_reviewer: 1,
           projects: projectIds,
           include: "project,user",
         })
       : [];
     const taskAssignees = taskIds.length
-      ? yield this.store.query("task-assignee", {
+      ? await this.store.query("task-assignee", {
           is_reviewer: 1,
           tasks: taskIds,
           include: "task,user",
         })
       : [];
     const customerAssignees = customerIds.length
-      ? yield this.store.query("customer-assignee", {
+      ? await this.store.query("customer-assignee", {
           is_reviewer: 1,
           customers: customerIds,
           include: "customer,user",
@@ -282,21 +288,21 @@ export default class AnalysisController extends QPController {
       : [];
 
     return { projectAssignees, taskAssignees, customerAssignees };
-  }
+  });
 
-  @dropTask
-  *loadNext() {
+  loadNext = dropTask(async () => {
     this._shouldLoadMore = true;
 
     while (this._shouldLoadMore && this._canLoadMore) {
-      yield this.data.perform();
+      // eslint-disable-next-line no-await-in-loop
+      await this.data.perform();
 
-      yield animationFrame();
+      // eslint-disable-next-line no-await-in-loop
+      await animationFrame();
     }
-  }
+  });
 
-  @task
-  *download({ url = null, params = {} }) {
+  download = task(async ({ url = null, params = {} }) => {
     try {
       this.url = url;
       this.params = params;
@@ -307,13 +313,13 @@ export default class AnalysisController extends QPController {
             ...params,
             ...serializeQueryParams(
               this.allQueryParams,
-              queryParamsState(this)
+              queryParamsState(this),
             ),
-          })
-        )
+          }),
+        ),
       );
 
-      const res = yield fetch(`${url}?${queryString}`, {
+      const res = await fetch(`${url}?${queryString}`, {
         headers: {
           Authorization: `Bearer ${this.jwt}`,
         },
@@ -323,7 +329,7 @@ export default class AnalysisController extends QPController {
         throw new Error(res.statusText);
       }
 
-      const file = yield res.blob();
+      const file = await res.blob();
 
       const filename = parseFileName(res.headers.get("content-disposition"));
 
@@ -334,13 +340,12 @@ export default class AnalysisController extends QPController {
       download(file, filename, file.type);
 
       this.notify.success("File was downloaded");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error(
-        "Error while downloading, try again or try reducing results"
+        "Error while downloading, try again or try reducing results",
       );
     }
-  }
+  });
 
   @action
   edit(selectedIds = [], event) {
@@ -355,16 +360,14 @@ export default class AnalysisController extends QPController {
 
   @action
   selectRow(report) {
-    if (this.can.can("edit report", report) || this.canBill) {
-      const selected = this.selectedReportIds;
+    const selected = this.selectedReportIds;
 
-      if (selected.includes(report.id)) {
-        this.selectedReportIds = A([
-          ...selected.filter((id) => id !== report.id),
-        ]);
-      } else {
-        this.selectedReportIds = A([...selected, report.id]);
-      }
+    if (selected.includes(report.id)) {
+      this.selectedReportIds = A([
+        ...selected.filter((id) => id !== report.id),
+      ]);
+    } else {
+      this.selectedReportIds = A([...selected, report.id]);
     }
   }
 }

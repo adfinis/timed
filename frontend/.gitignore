@@ -19,9 +19,6 @@ testem.log
 *.swp
 *.orig
 
-# vscode
-jsconfig.json
-
 /.vscode/
 /.idea/
 

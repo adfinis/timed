@@ -1,4 +1,4 @@
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import Model, { attr, belongsTo } from "@ember-data/model";
 import moment from "moment";
 import { all } from "rsvp";
@@ -11,8 +11,8 @@ export default class Activity extends Model {
   @attr("boolean", { defaultValue: false }) transferred;
   @attr("boolean", { defaultValue: false }) review;
   @attr("boolean", { defaultValue: false }) notBillable;
-  @belongsTo("task") task;
-  @belongsTo("user") user;
+  @belongsTo("task", { async: true, inverse: null }) task;
+  @belongsTo("user", { async: true, inverse: null }) user;
 
   @service notify;
   @service store;
@@ -60,12 +60,12 @@ export default class Activity extends Model {
   }
 
   async start() {
-    const activity = this.store.createRecord("activity", {
+    const activity = await this.store.createRecord("activity", {
       date: moment(),
       fromTime: moment(),
-      task: this.task,
+      task: await this.task,
       comment: this.comment,
-      review: this.review,
+      review: await this.review,
       notBillable: this.notBillable,
     });
 
@@ -97,14 +97,14 @@ export default class Activity extends Model {
     if (moment().diff(this.date, "days") === 1) {
       activities.push(
         this.store.createRecord("activity", {
-          task: this.task,
+          task: await this.task,
           comment: this.comment,
-          user: this.user,
+          user: await this.user,
           date: moment(this.date).add(1, "days"),
           review: this.review,
           notBillable: this.notBillable,
           fromTime: moment({ h: 0, m: 0, s: 0 }),
-        })
+        }),
       );
     }
 
@@ -121,18 +121,18 @@ export default class Activity extends Model {
               m: 59,
               s: 59,
             }),
-            moment()
-          )
+            moment(),
+          ),
         );
 
         await activity.save();
-      })
+      }),
     );
 
     if (moment().diff(this.date, "days") > 1) {
       this.notify.info(
         "The activity overlapped multiple days, which is not possible. The activity was stopped at midnight of the day it was started.",
-        { closeAfter: 5000 }
+        { closeAfter: 5000 },
       );
     }
   }

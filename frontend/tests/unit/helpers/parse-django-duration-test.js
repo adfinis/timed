@@ -1,4 +1,5 @@
 import { module, test } from "qunit";
+
 import { parseDjangoDurationFn } from "timed/helpers/parse-django-duration";
 
 module("Unit | Helper | parse django duration", function () {

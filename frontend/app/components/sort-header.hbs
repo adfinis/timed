@@ -1,0 +1,14 @@
+{{! template-lint-disable}}
+<Table::Th
+  @light={{true}}
+  class="sort-header align-bottom whitespace-nowrap cursor-pointer"
+  {{on "click" this.click}}
+  ...attributes
+>
+  {{yield}}
+  {{#if this.active}}
+    <FaIcon @prefix="fas" @icon="sort-{{this.direction}}" />
+  {{else}}
+    <FaIcon @prefix="fas" @icon="sort" />
+  {{/if}}
+</Table::Th>

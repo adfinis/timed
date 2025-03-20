@@ -32,7 +32,7 @@ backend-test: ## Test the backend
 
 .PHONY: backend-dbshell
 backend-dbshell: ## Start a psql shell
-	@$(ORCHESTRATOR) compose run -it --rm db psql -Utimed timed
+	@$(ORCHESTRATOR) compose exec -it db psql -Utimed timed
 
 .PHONY: shellplus
 shellplus: ## Run shell_plus

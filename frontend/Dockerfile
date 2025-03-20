@@ -1,8 +1,10 @@
-FROM node:18-slim as build
+FROM node:20-slim as build
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN apt-get -y update && apt-get -y install git && \
+  corepack enable && \
+  corepack prepare pnpm@9.15.4 --activate
 
 WORKDIR /ember
 
@@ -15,6 +17,11 @@ COPY . .
 RUN pnpm build --environment=production
 
 FROM nginx:alpine
+
+RUN apk update --no-cache && \
+  apk upgrade --no-cache && \
+  apk add shadow --no-cache && \
+  rm -rf /var/cache/apk/*
 
 EXPOSE 80
 

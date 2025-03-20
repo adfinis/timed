@@ -4,6 +4,7 @@ import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import moment from "moment";
 import { module, skip, test } from "qunit";
+
 import formatDuration from "timed/utils/format-duration";
 
 module("Acceptance | index activities", function (hooks) {
@@ -13,7 +14,6 @@ module("Acceptance | index activities", function (hooks) {
   hooks.beforeEach(async function () {
     const user = this.server.create("user");
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     this.activities = this.server.createList("activity", 5, {
@@ -40,7 +40,7 @@ module("Acceptance | index activities", function (hooks) {
 
     await click('[data-test-activity-row-id="1"] [data-test-start-activity]');
 
-    assert.dom('[data-test-activity-row-id="6"]').hasClass("primary");
+    assert.dom('[data-test-activity-row-id="6"]').hasClass("active");
   });
 
   test("can start an activity of a past day", async function (assert) {
@@ -55,7 +55,7 @@ module("Acceptance | index activities", function (hooks) {
     await visit(`/?day=${lastDay.format("YYYY-MM-DD")}`);
 
     await click(
-      `[data-test-activity-row-id="${activity.id}"] [data-test-start-activity]`
+      `[data-test-activity-row-id="${activity.id}"] [data-test-start-activity]`,
     );
 
     assert.strictEqual(currentURL(), "/");
@@ -70,11 +70,11 @@ module("Acceptance | index activities", function (hooks) {
 
     await click('[data-test-activity-row-id="1"] [data-test-start-activity]');
 
-    assert.dom('[data-test-activity-row-id="6"]').hasClass("primary");
+    assert.dom('[data-test-activity-row-id="6"]').hasClass("active");
 
     await click('[data-test-activity-row-id="6"] [data-test-stop-activity]');
 
-    assert.dom('[data-test-activity-row-id="6"]').doesNotHaveClass("primary");
+    assert.dom('[data-test-activity-row-id="6"]').doesNotHaveClass("active");
   });
 
   test("can generate reports", async function (assert) {
@@ -95,17 +95,17 @@ module("Acceptance | index activities", function (hooks) {
 
     assert
       .dom(
-        `[data-test-report-row-id="${id}"] .form-group:first-child .ember-power-select-selected-item`
+        `[data-test-report-row-id="${id}"] .customer-select .ember-power-select-selected-item`,
       )
       .hasText(activity.task.project.customer.name);
     assert
       .dom(
-        `[data-test-report-row-id="${id}"] .form-group:nth-child(2) .ember-power-select-selected-item`
+        `[data-test-report-row-id="${id}"] .project-select .ember-power-select-selected-item`,
       )
       .hasText(activity.task.project.name);
     assert
       .dom(
-        `[data-test-report-row-id="${id}"] .form-group:nth-child(3) .ember-power-select-selected-item`
+        `[data-test-report-row-id="${id}"] .task-select .ember-power-select-selected-item`,
       )
       .hasText(activity.task.name);
 

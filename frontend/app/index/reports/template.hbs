@@ -1,39 +1,36 @@
-<div class="btn-toolbar btn-toolbar--right form-group">
-  <button
-    type="button"
-    class="btn btn-success"
-    title="Move all entries to another date"
-    data-test-report-reschedule
-    {{on "click" (fn (mut this.showReschedule) true)}}
-  >Reschedule</button>
+<NavTabs::LowerButton
+  title="Move all entries to another date"
+  id="reschedule"
+  data-test-report-reschedule
+  @onClick={{fn (mut this.showReschedule) true}}
+>Reschedule
+</NavTabs::LowerButton>
+
+<div class="reports">
+  {{#each this.reports as |report|}}
+    <ReportRow
+      class="striped border-t last:border-b"
+      @report={{report}}
+      @onSave={{this.saveReport}}
+      @onDelete={{this.deleteReport}}
+      data-test-report-row-id={{report.id}}
+      data-test-report-row
+    />
+  {{/each}}
 </div>
 
-<div class="form-list form-list--reports">
-  <div class="form-list-body">
-    {{#each this.reports as |report|}}
-      <ReportRow
-        @report={{report}}
-        @onSave={{this.saveReport}}
-        @onDelete={{this.deleteReport}}
-        data-test-report-row-id={{report.id}}
-        data-test-report-row
-      />
-    {{/each}}
-  </div>
-</div>
-
-<SyModal
+<Modal
   @visible={{this.showReschedule}}
   @onClose={{toggle "showReschedule" this}}
-  @size="small"
+  class="!w-fit md:w-96"
   as |modal|
 >
   <modal.header>
-    Reschedule timesheet
+    <h3>Reschedule timesheet</h3>
   </modal.header>
   <modal.body>
     <PowerCalendar
-      class="calendar"
+      class="calendar [--size:2.5rem] sm:[--size:2.75rem] md:[--size:3rem] lg:[--size:3.25rem]"
       @center={{this.center}}
       @selected={{this.rescheduleDate}}
       @onCenterChange={{pick "moment" (fn (mut this.center))}}
@@ -49,7 +46,13 @@
       </div>
     </PowerCalendar>
   </modal.body>
-  <modal.footer>
+  <modal.footer class="flex justify-between">
+    <button
+      type="reset"
+      class="btn btn-default"
+      data-test-reschedule-cancel
+      {{on "click" (toggle "showReschedule" this)}}
+    >Cancel</button>
     <button
       type="submit"
       class="btn btn-primary"
@@ -57,4 +60,4 @@
       {{on "click" (prevent-default (fn this.reschedule this.rescheduleDate))}}
     >Save</button>
   </modal.footer>
-</SyModal>
+</Modal>

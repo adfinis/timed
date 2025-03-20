@@ -5,11 +5,13 @@ from __future__ import annotations
 from functools import wraps
 from typing import TYPE_CHECKING
 
+from django.contrib.postgres.search import SearchQuery
 from django.db.models import Q
 from django_filters.constants import EMPTY_VALUES
 from django_filters.rest_framework import (
     BaseInFilter,
     BooleanFilter,
+    CharFilter,
     DateFilter,
     Filter,
     FilterSet,
@@ -112,6 +114,7 @@ class ReportFilterSet(FilterSet):
     user = NumberFilter(field_name="user_id")
     cost_center = NumberFilter(method="filter_cost_center")
     rejected = NumberFilter(field_name="rejected")
+    comment = CharFilter(method="filter_comment")
 
     def filter_has_reviewer(
         self, queryset: QuerySet[models.Report], _name: str, value: int
@@ -228,6 +231,11 @@ class ReportFilterSet(FilterSet):
             Q(task__cost_center=value)
             | Q(task__project__cost_center=value) & Q(task__cost_center__isnull=True)
         )
+
+    def filter_comment(
+        self, queryset: QuerySet[models.Report], _name: str, value: str
+    ) -> QuerySet[models.Report]:
+        return queryset.filter(search_vector=SearchQuery(value, config="english"))
 
     class Meta:
         """Meta information for the report filter set."""

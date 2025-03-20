@@ -1,8 +1,10 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import { keyResponder, onKey } from "ember-keyboard";
 
+@keyResponder
 export default class ProtectedController extends Controller {
   @service notify;
   @service router;
@@ -10,6 +12,7 @@ export default class ProtectedController extends Controller {
   @service currentUser;
   @service("autostart-tour") autostartTour;
   @service tour;
+  @service appearance;
 
   @tracked visible;
   @tracked loading;
@@ -42,8 +45,7 @@ export default class ProtectedController extends Controller {
       user.tourDone = true;
       await user.save();
       this.visible = false;
-    } catch (error) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the user");
     }
   }
@@ -73,5 +75,22 @@ export default class ProtectedController extends Controller {
 
     this.tour.prepare(this.currentUser.user);
     this.tour.startTour();
+  }
+
+  constructor(...args) {
+    super(...args);
+    this.appearance.loadConfiguration();
+  }
+
+  @onKey("ctrl+,")
+  _toggleColorScheme(e) {
+    e.preventDefault();
+    this.appearance.toggleColorScheme();
+  }
+
+  @onKey("ctrl+.")
+  _cycleTheme(e) {
+    e.preventDefault();
+    this.appearance.cycleTheme();
   }
 }

@@ -38,7 +38,7 @@ export default class Customer extends Model {
    * @type {Project[]}
    * @public
    */
-  @hasMany("project") projects;
+  @hasMany("project", { async: true, inverse: "customer" }) projects;
 
   /**
    * Long name - alias for name, used for filtering in the customer box
@@ -57,5 +57,5 @@ export default class Customer extends Model {
    * @type {CustomerAssignee[]}
    * @public
    */
-  @hasMany("customer-assignee") assignees;
+  @hasMany("customer-assignee", { async: true, inverse: null }) assignees;
 }

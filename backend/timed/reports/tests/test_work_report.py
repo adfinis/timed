@@ -138,7 +138,7 @@ def test_work_report_empty(auth_client):
 
 
 @pytest.mark.freeze_time("2017-08-18")
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     ("customer_name", "project_name", "expected"),
     [

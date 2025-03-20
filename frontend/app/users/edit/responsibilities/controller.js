@@ -1,9 +1,8 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { task } from "ember-concurrency";
 import moment from "moment";
-import { all } from "rsvp";
 
 export default class UsersEditResponsibilitiesController extends Controller {
   @service router;
@@ -14,26 +13,29 @@ export default class UsersEditResponsibilitiesController extends Controller {
     return this.router.transitionTo("users.edit", superviseId);
   }
 
-  @task
-  *projects() {
-    return yield this.store.query("project", {
+  projects = task(async () => {
+    return await this.store.query("project", {
       has_reviewer: this.user?.id,
       include: "customer",
       ordering: "customer__name,name",
+      archived: 0,
     });
+  });
+
+  async getBalance(supervisee) {
+    return (await supervisee.absenceBalances)[0].balance;
   }
 
-  @task
-  *supervisees() {
+  supervisees = task(async () => {
     const supervisor = this.user?.id;
 
-    const balances = yield this.store.query("worktime-balance", {
+    const balances = await this.store.query("worktime-balance", {
       supervisor,
       date: moment().format("YYYY-MM-DD"),
       include: "user",
     });
 
-    return yield all(
+    return await Promise.all(
       balances
         .map((b) => b.user)
         .filter((u) => u.get("isActive"))
@@ -47,7 +49,7 @@ export default class UsersEditResponsibilitiesController extends Controller {
           user.set("absenceBalances", absenceBalances);
 
           return user;
-        })
+        }),
     );
-  }
+  });
 }

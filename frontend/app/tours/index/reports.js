@@ -1,7 +1,7 @@
 export default [
   {
     id: "timesheet",
-    target: ".form-list-body",
+    target: ".reports",
     placement: "top",
     title: "Timesheet",
     content: `
@@ -31,7 +31,7 @@ export default [
   },
   {
     id: "newEntry",
-    target: ".form-list-row",
+    target: ".reports .report-row",
     placement: "bottom",
     title: "New entry",
     content: `
@@ -43,7 +43,7 @@ export default [
   },
   {
     id: "reschedule",
-    target: ".btn-toolbar .btn-success",
+    target: "#reschedule",
     placement: "left",
     title: "Reschedule",
     content: `

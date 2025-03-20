@@ -30,7 +30,6 @@ module("Acceptance | auth", function (hooks) {
   });
 
   test("can logout", async function (assert) {
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: this.user.id });
 
     await visit("/");

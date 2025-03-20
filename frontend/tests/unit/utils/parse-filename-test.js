@@ -1,10 +1,11 @@
 import { module, test } from "qunit";
+
 import parseFileName from "timed/utils/parse-filename";
 
-module("Unit | Helper | parse filename", function () {
+module("Unit | Utility | parse filename", function () {
   test("works with double quotes", function (assert) {
     const result = parseFileName(
-      'attachment; filename="1805-20240710-Customer-Sample_Project.ods"'
+      'attachment; filename="1805-20240710-Customer-Sample_Project.ods"',
     );
 
     assert.strictEqual(result, "1805-20240710-Customer-Sample_Project.ods");
@@ -12,7 +13,7 @@ module("Unit | Helper | parse filename", function () {
 
   test("works with single quotes", function (assert) {
     const result = parseFileName(
-      "attachment; filename='1805-20240710-Customer-Sample_Project.ods'"
+      "attachment; filename='1805-20240710-Customer-Sample_Project.ods'",
     );
 
     assert.strictEqual(result, "1805-20240710-Customer-Sample_Project.ods");
@@ -20,10 +21,18 @@ module("Unit | Helper | parse filename", function () {
 
   test("works without quotes", function (assert) {
     const result = parseFileName(
-      "attachment; filename=1805-20240710-Customer-Sample_Project.ods"
+      "attachment; filename=1805-20240710-Customer-Sample_Project.ods",
     );
 
     assert.strictEqual(result, "1805-20240710-Customer-Sample_Project.ods");
+  });
+
+  test("works with umlauts", function (assert) {
+    const result = parseFileName(
+      "attachment; filename*=utf-8''1805-20240710-C%C3%BCstomer-Sample_Project.ods",
+    );
+
+    assert.strictEqual(result, "1805-20240710-Cüstomer-Sample_Project.ods");
   });
 
   test("falls back to 'Unknown file'", function (assert) {

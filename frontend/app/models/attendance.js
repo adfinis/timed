@@ -45,7 +45,7 @@ export default class Attendance extends Model {
    * @type {User}
    * @public
    */
-  @belongsTo("user") user;
+  @belongsTo("user", { async: true, inverse: null }) user;
 
   /**
    * The duration between start and end time

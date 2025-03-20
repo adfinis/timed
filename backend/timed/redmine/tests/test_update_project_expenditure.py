@@ -7,7 +7,7 @@ from redminelib.exceptions import ResourceNotFoundError
 from timed.redmine.models import RedmineProject
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.parametrize("pretend", [True, False])
 @pytest.mark.parametrize("amount_offered", [None, 100.00, 0])
 def test_update_project_expenditure(
@@ -35,7 +35,8 @@ def test_update_project_expenditure(
         redmine_instance.issue.get.assert_called_once_with(1000)
         assert issue.estimated_hours == project.estimated_time.total_seconds() / 3600
         assert issue.custom_fields[0]["value"] == offered
-        assert issue.custom_fields[1]["value"] == project.amount_invoiced.amount
+        # Model has Decimal, JSON does only float
+        assert issue.custom_fields[1]["value"] == float(project.amount_invoiced.amount)
         issue.save.assert_called_once_with()
     else:
         out, _ = capsys.readouterr()
@@ -44,7 +45,7 @@ def test_update_project_expenditure(
         assert f"amount invoiced {project.amount_invoiced.amount}" in out
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.usefixtures("freezer")
 def test_update_project_expenditure_invalid_issue(mocker, capsys, report_factory):
     redmine_instance = mocker.MagicMock()

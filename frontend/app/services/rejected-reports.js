@@ -1,4 +1,4 @@
-import Service, { inject as service } from "@ember/service";
+import Service, { service } from "@ember/service";
 import { macroCondition, isTesting } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 
@@ -29,7 +29,7 @@ export default class RejectedReportsService extends Service {
     } else {
       this.intervalId = setInterval(
         this.pollReports.bind(this),
-        INTERVAL_DELAY
+        INTERVAL_DELAY,
       );
     }
   }
@@ -44,7 +44,7 @@ export default class RejectedReportsService extends Service {
       });
 
       this.amountReports = reports.meta.pagination.count;
-    } catch (e) {
+    } catch {
       this.notify.error("Error while polling reports");
     }
   }

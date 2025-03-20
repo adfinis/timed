@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "timed.redmine",
     "timed.subscription",
     "timed.notifications",
+    "django.contrib.postgres",
 ]
 
 if ENV == "dev":

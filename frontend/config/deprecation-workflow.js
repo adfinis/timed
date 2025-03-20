@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 window.deprecationWorkflow = window.deprecationWorkflow || {};
 self.deprecationWorkflow.config = {
   workflow: [

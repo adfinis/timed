@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import date, time, timedelta
 from typing import TYPE_CHECKING
 
 from django.contrib.auth import get_user_model
@@ -24,6 +24,7 @@ from timed.employment.relations import CurrentUserResourceRelatedField
 from timed.projects.models import Customer, Project, Task
 from timed.serializers import TotalTimeRootMetaMixin
 from timed.tracking import models
+from timed.utils import round_time
 
 if TYPE_CHECKING:
     from typing import ClassVar
@@ -48,7 +49,7 @@ class ActivitySerializer(ModelSerializer):
         instance = self.instance
         from_time = data.get("from_time", instance and instance.from_time)
         to_time = data.get("to_time", instance and instance.to_time)
-        user = instance and instance.user or data["user"]
+        user = (instance and instance.user) or data["user"]
 
         def validate_running_activity():
             if activity.filter(to_time__isnull=True).exists():
@@ -105,11 +106,11 @@ class AttendanceSerializer(ModelSerializer):
         Ensure that attendances end after they start.
         """
         instance = self.instance
-        from_time = data.get("from_time", instance and instance.from_time)
-        to_time = data.get("to_time", instance and instance.to_time)
+        from_time = round_time(data.get("from_time", instance and instance.from_time))
+        to_time = round_time(data.get("to_time", instance and instance.to_time))
 
-        # validate that to is not before from
-        if to_time is not None and to_time < from_time:
+        # allow attendances to end at midnight (00:00)
+        if to_time < from_time and to_time != time(0, 0):
             raise ValidationError(_("An attendance may not end before it starts."))
 
         return data

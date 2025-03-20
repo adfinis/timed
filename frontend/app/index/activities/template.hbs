@@ -1,113 +1,150 @@
-<div class="btn-toolbar btn-toolbar--right form-group">
-  <button
-    type="button"
-    class="btn btn-success"
-    title="Generate timesheet for all the activities listed above"
-    {{on "click" this.generateReportsCheck}}
-    data-test-activity-generate-timesheet
-  >
-    Generate timesheet
-  </button>
-</div>
+<NavTabs::LowerButton
+  @onClick={{this.generateReportsCheck}}
+  id="generate-timesheet"
+  title="Generate timesheet for all the activities listed above"
+  data-test-activity-generate-timesheet
+>Generate timesheet</NavTabs::LowerButton>
 
-<div class="activities">
-  <div class="activities-edit">{{outlet}}</div>
+<div class="activities flex flex-row-reverse">
+  <div
+    class="activities-edit peer max-lg:[&:not(:empty)]:flex-grow lg:[&:not(:empty)]:basis-1/3"
+  >{{outlet}}</div>
 
-  <div class="activities-list">
+  <div class="activities-list flex-grow max-lg:peer-[:not(:empty)]:hidden">
     {{#if this.activities}}
-      <table class="table table--striped table--activities">
+      <Table class="table--striped table--activities table">
         <tbody>
           {{#each this.sortedActivities as |activity|}}
-            {{!template-lint-disable no-invalid-interactive}}
-            <tr
-              title={{unless activity.transferred "Click to edit"}}
-              data-test-activity-row
-              data-test-activity-row-id={{activity.id}}
-              class="{{if activity.transferred 'transferred' 'pointer'}}
-                {{if activity.active 'primary'}}
-                {{if (eq activity.id this.editId) 'selected'}}"
-              {{on "click" (fn this.editActivity activity)}}
-            >
-              <td>
-                {{moment-format activity.from "HH:mm"}}
-                -
-                {{#unless activity.active}}
-                  {{moment-format activity.to "HH:mm"}}
-                {{/unless}}
-              </td>
-              <td
-                title="{{activity.task.project.customer.name}} > {{activity.task.project.name}} > {{activity.task.name}}"
+            {{#let (eq activity.id this.editId) as |selected|}}
+              {{!template-lint-disable no-invalid-interactive}}
+              <Table::Tr
+                title={{unless activity.transferred "Click to edit"}}
+                @striped={{not
+                  (or
+                    (or activity.transferred activity.active)
+                    (eq activity.id this.editId)
+                  )
+                }}
+                @hover={{not
+                  (or activity.transferred activity.active selected)
+                }}
+                data-test-activity-row
+                data-test-activity-row-id={{activity.id}}
+                class="{{if
+                    activity.transferred
+                    'transferred text-foreground-muted cursor-not-allowed'
+                    'cursor-pointer'
+                  }}
+                  {{if
+                    (and activity.active (not selected))
+                    'active bg-primary/20'
+                  }}
+                  {{if selected 'selected bg-primary text-foreground-primary'}}
+                  last:border-b max-sm:[&>*]:flex"
+                {{on "click" (fn this.editActivity activity)}}
               >
-                {{#if activity.task}}
-                  <div>
-                    {{activity.task.project.customer.name}}
-                    <strong>&gt;</strong>
-                    {{activity.task.project.name}}
-                    <strong>&gt;</strong>
-                    {{activity.task.name}}
+                <Table::Td>
+                  {{moment-format activity.from "HH:mm"}}
+                  -
+                  {{#unless activity.active}}
+                    {{moment-format activity.to "HH:mm"}}
+                  {{/unless}}
+                </Table::Td>
+                <Table::Td
+                  title="{{activity.task.project.customer.name}} > {{activity.task.project.name}} > {{activity.task.name}}"
+                >
+                  {{#if activity.task}}
+                    <div>
+                      {{activity.task.project.customer.name}}
+                      <strong>&gt;</strong>
+                      {{activity.task.project.name}}
+                      <strong>&gt;</strong>
+                      {{activity.task.name}}
+                    </div>
+                  {{else}}
+                    <strong>Unknown task</strong>
+                  {{/if}}
+                </Table::Td>
+                <Table::Td title={{activity.comment}}>
+                  <div class="comment-field">{{activity.comment}}</div>
+                  {{#if activity.task.project.customerVisible}}
+                    <CustomerVisibleIcon
+                      class="activity-customer-visible-icon"
+                    />
+                  {{/if}}
+                </Table::Td>
+                <Table::Td>
+                  <div><Checkmark
+                      @checked={{activity.review}}
+                      @highlight={{true}}
+                    />
+                    Needs review</div>
+                  <div><Checkmark
+                      @checked={{activity.notBillable}}
+                      @highlight={{true}}
+                    />
+                    Not billable</div>
+                </Table::Td>
+                <Table::Td>
+                  {{#if activity.active}}
+                    <DurationSince @from={{activity.from}} />
+                  {{else}}
+                    {{format-duration activity.duration}}
+                  {{/if}}
+                </Table::Td>
+                <Table::Td class="px-4">
+                  <div class="grid h-full w-full place-items-end">
+                    {{#if activity.active}}
+                      <button
+                        type="button"
+                        data-test-stop-activity
+                        class="btn btn-danger"
+                        {{on "click" (fn this.stopActivity activity)}}
+                      >
+                        <FaIcon @icon="stop" @prefix="fas" />
+                      </button>
+                    {{else}}
+                      <button
+                        type="button"
+                        data-test-start-activity
+                        class="btn btn-success"
+                        {{on "click" (fn this.startActivity activity)}}
+                      >
+                        <FaIcon @icon="play" @prefix="fas" />
+                      </button>
+                    {{/if}}
                   </div>
-                {{else}}
-                  <strong>Unknown task</strong>
-                {{/if}}
-              </td>
-              <td title={{activity.comment}}>
-                <div class="comment-field">{{activity.comment}}</div>
-                {{#if activity.task.project.customerVisible}}
-                  <CustomerVisibleIcon class="activity-customer-visible-icon" />
-                {{/if}}
-              </td>
-              <td>
-                <div><SyCheckmark @checked={{activity.review}} @highlight={{true}} />
-                  Needs review</div>
-                <div><SyCheckmark @checked={{activity.notBillable}} @highlight={{true}} />
-                  Not billable</div>
-              </td>
-              <td>
-                {{#if activity.active}}
-                  <DurationSince @from={{activity.from}} />
-                {{else}}
-                  {{format-duration activity.duration}}
-                {{/if}}
-              </td>
-              <td>
-                {{#if activity.active}}
-                  <button
-                    type="button"
-                    data-test-stop-activity
-                    class="btn btn-danger"
-                    {{on "click" (fn this.stopActivity activity)}}
-                  >
-                    <FaIcon @icon="stop" @prefix="fas" />
-                  </button>
-                {{else}}
-                  <button
-                    type="button"
-                    data-test-start-activity
-                    class="btn btn-success"
-                    {{on "click" (fn this.startActivity activity)}}
-                  >
-                    <FaIcon @icon="play" @prefix="fas" />
-                  </button>
-                {{/if}}
-              </td>
-            </tr>
+                </Table::Td>
+              </Table::Tr>
+            {{/let}}
           {{/each}}
         </tbody>
-      </table>
+      </Table>
     {{else}}
       <div class="text-center"><em>No activities yet</em></div>
     {{/if}}
   </div>
 </div>
 
-<SyModal @visible={{this.showOverlappingWarning}} as |modal|>
+<Modal class="md:w-[36rem]" @visible={{this.showOverlappingWarning}} as |modal|>
   <modal.header>
-    Activities overlap
+    <h3>Activities overlap</h3>
   </modal.header>
   <modal.body>
     Overlapping activities will not be taken into account for the timesheet.
   </modal.body>
-  <modal.footer data-test-overlapping-warning>
+  <modal.footer class="flex justify-between" data-test-overlapping-warning>
+    <button
+      class="btn btn-default"
+      type="button"
+      {{on
+        "click"
+        (queue
+          (fn (mut this.showOverlappingWarning) false)
+          (fn (mut this.showUnknownWarning) false)
+        )
+      }}
+    >Cancel</button>
     <button
       class="btn btn-primary"
       type="button"
@@ -120,28 +157,28 @@
         )
       }}
     >That's fine</button>
+  </modal.footer>
+</Modal>
+
+<Modal class="md:w-[36rem]" @visible={{this.showUnknownWarning}} as |modal|>
+  <modal.header>
+    <h3>Activities contain unknown tasks</h3>
+  </modal.header>
+  <modal.body>
+    Unknown tasks will not be taken into account for the timesheet.
+  </modal.body>
+  <modal.footer class="flex justify-between" data-test-unknown-warning>
     <button
       class="btn btn-default"
       type="button"
       {{on
         "click"
         (queue
-          (fn (mut this.showOverlappingWarning) false)
           (fn (mut this.showUnknownWarning) false)
+          (fn (mut this.showOverlappingWarning) false)
         )
       }}
     >Cancel</button>
-  </modal.footer>
-</SyModal>
-
-<SyModal @visible={{this.showUnknownWarning}} as |modal|>
-  <modal.header>
-    Activities contain unknown tasks
-  </modal.header>
-  <modal.body>
-    Unknown tasks will not be taken into account for the timesheet.
-  </modal.body>
-  <modal.footer data-test-unknown-warning>
     <button
       class="btn btn-primary"
       type="button"
@@ -154,16 +191,5 @@
         )
       }}
     >That's fine</button>
-    <button
-      class="btn btn-default"
-      type="button"
-      {{on
-        "click"
-        (queue
-          (fn (mut this.showUnknownWarning) false)
-          (fn (mut this.showOverlappingWarning) false)
-        )
-      }}
-    >Cancel</button>
   </modal.footer>
-</SyModal>
+</Modal>

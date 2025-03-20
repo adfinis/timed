@@ -8,8 +8,8 @@ export default class ReportIntersection extends Model {
   @attr("boolean", { allowNull: true, defaultValue: null }) billed;
   @attr("boolean", { allowNull: true, defaultValue: null }) verified;
 
-  @belongsTo("customer") customer;
-  @belongsTo("project") project;
-  @belongsTo("task") task;
-  @belongsTo("user") user;
+  @belongsTo("customer", { async: true, inverse: null }) customer;
+  @belongsTo("project", { async: true, inverse: null }) project;
+  @belongsTo("task", { async: true, inverse: null }) task;
+  @belongsTo("user", { async: true, inverse: null }) user;
 }

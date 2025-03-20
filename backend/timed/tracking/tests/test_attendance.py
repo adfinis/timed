@@ -104,17 +104,40 @@ def test_attendance_delete(internal_employee_client):
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
 
-def test_attendance_to_before_from(internal_employee_client, attendance_factory):
-    """Test that to is not before from."""
-    attendance = attendance_factory(
-        user=internal_employee_client.user, from_time=time(7, 30), to_time=time(8, 30)
-    )
+@pytest.mark.parametrize(
+    (
+        "attendance__from_time",
+        "attendance__to_time",
+        "set_from_time",
+        "set_to_time",
+        "error",
+    ),
+    [
+        (time(7, 30), time(8, 30), "07:30", "08:30", None),
+        (time(7, 30), time(8, 30), "07:30", "00:00", None),
+        (
+            time(7, 30),
+            time(8, 30),
+            "07:30",
+            "07:00",
+            "An attendance may not end before it starts.",
+        ),
+    ],
+)
+def test_attendance_validation(
+    internal_employee_client, attendance, set_from_time, set_to_time, error
+):
+    attendance.user = internal_employee_client.user
+    attendance.save()
 
     data = {
         "data": {
             "type": "attendances",
             "id": attendance.id,
-            "attributes": {"to-time": "07:00"},
+            "attributes": {
+                "to-time": set_to_time,
+                "from-time": set_from_time,
+            },
         }
     }
 
@@ -122,8 +145,9 @@ def test_attendance_to_before_from(internal_employee_client, attendance_factory)
 
     res = internal_employee_client.patch(url, data)
 
-    assert res.status_code == status.HTTP_400_BAD_REQUEST
-    json = res.json()
-    assert json["errors"][0]["detail"] == (
-        "An attendance may not end before it starts."
-    )
+    status_code = status.HTTP_400_BAD_REQUEST if error else status.HTTP_200_OK
+    assert res.status_code == status_code
+
+    if error:
+        json = res.json()
+        assert json["errors"][0]["detail"] == error

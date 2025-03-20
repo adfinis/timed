@@ -1,17 +1,18 @@
 import Controller from "@ember/controller";
 import { action, get } from "@ember/object";
-import { scheduleOnce } from "@ember/runloop";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { camelize } from "@ember/string";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, timeout } from "ember-concurrency";
-import { trackedFunction } from "ember-resources/util/function";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
-import AbsenceValidations from "timed/validations/absence";
-import MultipleAbsenceValidations from "timed/validations/multiple-absence";
+import { trackedFunction } from "reactiveweb/function";
 import { tracked as trackedWrapper } from "tracked-built-ins";
 import { cached } from "tracked-toolbox";
+
+import AbsenceValidations from "timed/validations/absence";
+import MultipleAbsenceValidations from "timed/validations/multiple-absence";
 
 /**
  * The index controller
@@ -23,6 +24,8 @@ import { cached } from "tracked-toolbox";
 export default class IndexController extends Controller {
   queryParams = ["day"];
 
+  negate = (n) => n * -1;
+
   @tracked showAddModal = false;
   @tracked showEditModal = false;
   @tracked day = moment().format("YYYY-MM-DD");
@@ -33,10 +36,11 @@ export default class IndexController extends Controller {
   /* istanbul ignore next */
   @trackedWrapper disabledDates = [];
 
-  @service store;
-  @service notify;
-  @service tracking;
   @service currentUser;
+  @service media;
+  @service notify;
+  @service store;
+  @service tracking;
 
   AbsenceValidations = AbsenceValidations;
   MultipleAbsenceValidations = MultipleAbsenceValidations;
@@ -44,7 +48,7 @@ export default class IndexController extends Controller {
   constructor(...args) {
     super(...args);
     // this kicks off the activity sum loop
-    scheduleOnce("afterRender", this, this._activitySumTask.perform);
+    scheduleTask(this._activitySumTask, "actions", "perform");
   }
 
   get _allActivities() {
@@ -119,7 +123,7 @@ export default class IndexController extends Controller {
 
     // Save latest activitySum for display while reports are generated.
     // See activitySum getter.
-    scheduleOnce("afterRender", this, "_storeLastActivitySum");
+    scheduleTask(this, "actions", "_storeLastActivitySum");
 
     return duration;
   }
@@ -134,8 +138,7 @@ export default class IndexController extends Controller {
    * @method _activitySumTask
    * @private
    */
-  @dropTask
-  *_activitySumTask() {
+  _activitySumTask = dropTask(async () => {
     while (true) {
       this._activitySum();
 
@@ -143,10 +146,10 @@ export default class IndexController extends Controller {
         break;
       }
 
-      /* istanbul ignore next */
-      yield timeout(1000);
+      // eslint-disable-next-line no-await-in-loop
+      await timeout(1000);
     }
-  }
+  });
 
   /**
    * All attendances
@@ -253,7 +256,7 @@ export default class IndexController extends Controller {
 
     return [...reportDurations, ...absenceDurations].reduce(
       (val, dur) => val.add(dur),
-      moment.duration()
+      moment.duration(),
     );
   }
 
@@ -318,25 +321,41 @@ export default class IndexController extends Controller {
     return get(this, "currentUser.user.activeEmployment.location.workdays");
   }
 
+  get weeklyOverviewSliceValue() {
+    if (this.media.isLg) {
+      return 5;
+    }
+
+    if (this.media.isMd) {
+      return 10;
+    }
+
+    if (this.media.isSm) {
+      return 15;
+    }
+
+    return 21;
+  }
+
   /**
    * The task to compute the data for the weekly overview
    *
    * @property {EmberConcurrency.Task} _weeklyOverviewData
    * @private
    */
-  weeklyOverviewData = trackedFunction(this, {}, async () => {
+  weeklyOverviewData = trackedFunction(this, async () => {
     const allReports = this.allReports.filter(
       (report) =>
         report.get("user.id") === this.currentUser.user.get("id") &&
         !report.get("isDeleted") &&
-        !report.get("isNew")
+        !report.get("isNew"),
     );
 
     const allAbsences = this.allAbsences.filter(
       (absence) =>
         absence.get("user.id") === this.currentUser.user.get("id") &&
         !absence.get("isDeleted") &&
-        !absence.get("isNew")
+        !absence.get("isNew"),
     );
 
     const allHolidays = this.store.peekAll("public-holiday");
@@ -360,11 +379,11 @@ export default class IndexController extends Controller {
 
         return obj;
       },
-      {}
+      {},
     );
 
-    return Array.from({ length: 31 }, (value, index) =>
-      moment(this.date).add(index - 20, "days")
+    return Array.from({ length: 56 }, (value, index) =>
+      moment(this.date).add(index - 28, "days"),
     ).map((d) => {
       const {
         reports = [],
@@ -404,9 +423,8 @@ export default class IndexController extends Controller {
    * @param {Date} value.date The date version of the value
    * @public
    */
-  @dropTask
-  *setCenter({ moment: center }) {
-    yield Promise.resolve();
+  setCenter = dropTask(async ({ moment: center }) => {
+    await Promise.resolve();
 
     const from = moment(center)
       .startOf("month")
@@ -424,14 +442,14 @@ export default class IndexController extends Controller {
       to_date: to.format("YYYY-MM-DD"),
     };
 
-    const absences = yield this.store.query("absence", {
+    const absences = await this.store.query("absence", {
       ...params,
       user: this.currentUser.user.id,
     });
 
-    const publicHolidays = yield this.store.query("public-holiday", {
+    const publicHolidays = await this.store.query("public-holiday", {
       ...params,
-      // eslint-disable-next-line ember/no-get
+
       location: this.currentUser.user.activeEmployment.location.get("id"),
     });
 
@@ -451,7 +469,7 @@ export default class IndexController extends Controller {
 
     this.disabledDates = disabled;
     this.center = center;
-  }
+  });
 
   /**
    * The disabled dates without the current date
@@ -461,7 +479,7 @@ export default class IndexController extends Controller {
    */
   get disabledDatesForEdit() {
     return this.disabledDates.filter(
-      (date) => !date.isSame(this.absence.date, "day")
+      (date) => !date.isSame(this.absence.date, "day"),
     );
   }
 
@@ -501,8 +519,7 @@ export default class IndexController extends Controller {
       await changeset.save();
 
       this.showEditModal = false;
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the absence");
     } finally {
       this.send("finished");
@@ -524,8 +541,7 @@ export default class IndexController extends Controller {
       await absence.destroyRecord();
 
       this.showEditModal = false;
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while deleting the absence");
     } finally {
       this.send("finished");
@@ -561,7 +577,7 @@ export default class IndexController extends Controller {
       changeset.rollback();
 
       this.showAddModal = false;
-    } catch (e) {
+    } catch {
       this.notify.error("Error while adding the absence");
     } finally {
       this.send("finished");

@@ -3,7 +3,7 @@
  * @submodule timed-models
  * @public
  */
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import Model, { attr, hasMany } from "@ember-data/model";
 import moment from "moment";
 /**
@@ -90,7 +90,7 @@ export default class User extends Model {
    * @property {User[]} supervisors
    * @public
    */
-  @hasMany("user", { inverse: "supervisees" }) supervisors;
+  @hasMany("user", { inverse: "supervisees", async: false }) supervisors;
 
   /**
    * The users supervisees
@@ -98,7 +98,7 @@ export default class User extends Model {
    * @property {User[]} supervisees
    * @public
    */
-  @hasMany("user", { inverse: "supervisors" }) supervisees;
+  @hasMany("user", { inverse: "supervisors", async: false }) supervisees;
 
   /**
    * The users employments
@@ -106,7 +106,7 @@ export default class User extends Model {
    * @property {Employment[]} employments
    * @public
    */
-  @hasMany("employment") employments;
+  @hasMany("employment", { async: true, inverse: "user" }) employments;
 
   /**
    * The users worktime balances
@@ -114,7 +114,8 @@ export default class User extends Model {
    * @property {WorktimeBalance[]} worktimeBalances
    * @public
    */
-  @hasMany("worktime-balances") worktimeBalances;
+  @hasMany("worktime-balances", { async: true, inverse: "user" })
+  worktimeBalances;
 
   /**
    * The users absence balances
@@ -122,7 +123,7 @@ export default class User extends Model {
    * @property {AbsenceBalance[]} absenceBalances
    * @public
    */
-  @hasMany("absence-balance") absenceBalances;
+  @hasMany("absence-balance", { async: true, inverse: "user" }) absenceBalances;
 
   /**
    * The full name

@@ -28,7 +28,7 @@ services:
       - TIMED_SSO_CLIENT_ID=timed-public
 
   keycloak:
-    image: keycloak/keycloak:24.0.3
+    image: keycloak/keycloak:26.0.6
     depends_on:
       - db
     volumes:
@@ -41,12 +41,13 @@ services:
       - KC_HOSTNAME_STRICT=false
       - KC_HOSTNAME_STRICT_HTTPS=false
       - KC_HTTP_RELATIVE_PATH=/auth
+      - KC_HTTP_ENABLED=true
       - KC_PROXY=edge
       - KC_DB_PASSWORD=keycloak
       - KEYCLOAK_ADMIN_PASSWORD=admin
     # import: docker compose exec keycloak /opt/keycloak/bin/kc.sh import --override true --file /opt/keycloak/data/import/config.json
     # export: docker compose exec keycloak /opt/keycloak/bin/kc.sh export --file /opt/keycloak/data/import/config.json
-    command: "start"
+    command: "start --hostname timed.localhost --proxy-headers xforwarded"
 
   caddy:
     image: caddy:2.6-alpine

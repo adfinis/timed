@@ -6,7 +6,11 @@ from datetime import timedelta
 from typing import TYPE_CHECKING
 
 from django.conf import settings
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVectorField
 from django.db import models
+
+from timed.utils import round_timedelta
 
 if TYPE_CHECKING:
     from timed.employment.models import Employment
@@ -96,10 +100,15 @@ class Report(models.Model):
     rejected = models.BooleanField(default=False)
     remaining_effort = models.DurationField(default=timedelta(0), null=True)
 
+    search_vector = SearchVectorField(null=True)
+
     class Meta:
         """Meta information for the report model."""
 
-        indexes = (models.Index(fields=["date"]),)
+        indexes = (
+            models.Index(fields=["date"]),
+            GinIndex(fields=["search_vector"]),
+        )
 
     def __str__(self) -> str:
         """Represent the model as a string."""
@@ -111,9 +120,7 @@ class Report(models.Model):
         This rounds the duration of the report to the nearest 15 minutes.
         However, the duration must at least be 15 minutes long.
         """
-        self.duration = timedelta(
-            seconds=max(15 * 60, round(self.duration.seconds / (15 * 60)) * (15 * 60))
-        )
+        self.duration = round_timedelta(self.duration)
 
         super().save(*args, **kwargs)
 

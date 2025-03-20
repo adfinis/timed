@@ -12,20 +12,15 @@ import ApplicationSerializer from "timed/serializers/application";
  * @extends ApplicationSerializer
  * @public
  */
-export default ApplicationSerializer.extend({
+export default class AttendanceSerializer extends ApplicationSerializer {
   /**
    * The attribute mapping
    *
    * This mapps some properties of the response to another
    * property name of the model
-   *
-   * @property {Object} attrs
-   * @property {String} from
-   * @property {String} to
-   * @public
    */
-  attrs: {
+  attrs = {
     from: "from-time",
     to: "to-time",
-  },
-});
+  };
+}

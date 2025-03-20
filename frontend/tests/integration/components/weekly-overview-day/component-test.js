@@ -13,12 +13,16 @@ module("Integration | Component | weekly overview day", function (hooks) {
     this.set("worktime", moment.duration({ h: 8 }));
 
     await render(
-      hbs`<WeeklyOverviewDay @day={{this.day}} @expected={{this.expected}} @worktime={{this.worktime}} />`
+      hbs`<WeeklyOverviewDay
+  @day={{this.day}}
+  @expected={{this.expected}}
+  @worktime={{this.worktime}}
+/>`,
     );
 
     assert.ok(this.element);
 
-    assert.strictEqual(find(".day").textContent.trim(), "05\n  Th");
+    assert.strictEqual(find(".day").textContent.trim(), "05\n    Th");
   });
 
   test("computes a title", async function (assert) {
@@ -27,7 +31,12 @@ module("Integration | Component | weekly overview day", function (hooks) {
     this.set("worktime", moment.duration({ h: 8, m: 30 }));
 
     await render(
-      hbs`<WeeklyOverviewDay @day={{this.day}} @expected={{this.expected}} @worktime={{this.worktime}} @prefix='Ferien' />`
+      hbs`<WeeklyOverviewDay
+  @day={{this.day}}
+  @expected={{this.expected}}
+  @worktime={{this.worktime}}
+  @prefix="Ferien"
+/>`,
     );
 
     assert
@@ -42,7 +51,11 @@ module("Integration | Component | weekly overview day", function (hooks) {
     this.set("clicked", false);
 
     await render(
-      hbs`<WeeklyOverviewDay @day={{this.day}} @expected={{this.expected}} @worktime={{this.worktime}} />`
+      hbs`<WeeklyOverviewDay
+  @day={{this.day}}
+  @expected={{this.expected}}
+  @worktime={{this.worktime}}
+/>`,
     );
 
     assert.notOk(this.clicked);
@@ -51,7 +64,12 @@ module("Integration | Component | weekly overview day", function (hooks) {
     assert.notOk(this.clicked);
 
     await render(
-      hbs`<WeeklyOverviewDay @day={{this.day}} @expected={{this.expected}} @worktime={{this.worktime}} @onClick={{fn (mut this.clicked) true}} />`
+      hbs`<WeeklyOverviewDay
+  @day={{this.day}}
+  @expected={{this.expected}}
+  @worktime={{this.worktime}}
+  @onClick={{fn (mut this.clicked) true}}
+/>`,
     );
 
     assert.notOk(this.clicked);

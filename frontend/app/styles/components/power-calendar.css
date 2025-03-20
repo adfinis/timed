@@ -1,0 +1,64 @@
+.ember-power-calendar {
+  --size: 3rem;
+}
+
+.ember-power-calendar-day-grid {
+  @apply grid gap-0.5;
+}
+
+.ember-power-calendar-row {
+  @apply flex justify-between gap-0.5;
+}
+
+.ember-power-calendar-day,
+.ember-power-calendar-weekday {
+  @apply grid h-[--size] max-h-[--size] w-[--size] max-w-[--size] place-items-center;
+}
+
+.ember-power-calendar-day--interactive[disabled] {
+  @apply opacity-40;
+}
+
+.ember-power-calendar-day:not([disabled]) {
+  @apply transition-colors;
+}
+
+.ember-power-calendar-day--other-month {
+  @apply text-foreground-muted;
+}
+
+.ember-power-calendar-day--current-month {
+  @apply bg-secondary/20;
+}
+
+.ember-power-calendar-day--today {
+  @apply bg-secondary/50;
+}
+
+.ember-power-calendar-day--selected {
+  @apply bg-primary text-foreground-primary;
+}
+
+.ember-power-calendar-day--current-month:not([disabled]) {
+  @apply hover:bg-secondary-light/55;
+}
+
+.ember-power-calendar-day--other-month:not([disabled]):hover {
+  @apply text-foreground bg-background-secondary/40;
+}
+
+.ember-power-calendar-day--selected:not([disabled]):hover {
+  @apply bg-primary-light text-foreground-primary;
+}
+
+.ember-power-calendar-nav {
+  @apply flex items-center justify-between;
+}
+
+.ember-power-calendar-nav-title {
+  @apply font-medium;
+}
+
+.ember-power-calendar-nav-control {
+  @apply text-primary text-2xl;
+}

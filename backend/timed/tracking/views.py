@@ -249,7 +249,7 @@ class ReportViewSet(ModelViewSet):
                     _("Reviewer filter needs to be set to verifying user")
                 )
 
-            fields["verified_by"] = verified and user or None
+            fields["verified_by"] = (verified and user) or None
 
             if fields.get("review") or any(queryset.values_list("review", flat=True)):
                 raise exceptions.ParseError(

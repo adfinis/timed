@@ -61,7 +61,7 @@ export default class Project extends Model {
    * @type {Customer}
    * @public
    */
-  @belongsTo("customer") customer;
+  @belongsTo("customer", { async: true, inverse: "projects" }) customer;
 
   /**
    * Whether the project's comments are visible to the customer
@@ -78,7 +78,7 @@ export default class Project extends Model {
    * @property {BillingType} billingType
    * @public
    */
-  @belongsTo("billing-type") billingType;
+  @belongsTo("billing-type", { async: false, inverse: null }) billingType;
 
   /**
    * The tasks
@@ -87,7 +87,7 @@ export default class Project extends Model {
    * @type {Task[]}
    * @public
    */
-  @hasMany("task") tasks;
+  @hasMany("task", { async: true, inverse: "project" }) tasks;
 
   /**
    * Assigned users to this project
@@ -96,5 +96,5 @@ export default class Project extends Model {
    * @type {ProjectAssignee[]}
    * @public
    */
-  @hasMany("project-assignee") assignees;
+  @hasMany("project-assignee", { async: true, inverse: null }) assignees;
 }

@@ -1,5 +1,5 @@
 import Route from "@ember/routing/route";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import moment from "moment";
 
 export default class IndexReportsRoute extends Route {
@@ -51,12 +51,13 @@ export default class IndexReportsRoute extends Route {
         controller.notBillable = null;
 
         this.notify.success(
-          "Temporary report was created. Please amend it and save it or delete it."
+          "Temporary report was created. Please amend it and save it or delete it.",
         );
       } catch {
         /* istanbul ignore next */
         this.notify.error("Could not create report");
       }
     }
+    controller.checkForEmptyRecord = true;
   }
 }

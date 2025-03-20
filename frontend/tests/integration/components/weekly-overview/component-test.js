@@ -29,15 +29,13 @@ module("Integration | Component | weekly overview", function (hooks) {
     this.set("expected", moment.duration({ h: 8 }));
     this.set("worktime", moment.duration({ h: 8 }));
 
-    await render(hbs`
-      <WeeklyOverview @expected={{this.expected}} >
-        <WeeklyOverviewDay
-          @day={{ this.day }}
-          @expected={{ this.expected }}
-          @worktime={{ this.worktime }}
-        />
-      </WeeklyOverview>
-    `);
+    await render(hbs`<WeeklyOverview @expected={{this.expected}}>
+  <WeeklyOverviewDay
+    @day={{this.day}}
+    @expected={{this.expected}}
+    @worktime={{this.worktime}}
+  />
+</WeeklyOverview>`);
 
     assert.dom(".bar").exists();
   });

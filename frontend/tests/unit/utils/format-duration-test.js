@@ -1,5 +1,6 @@
 import moment from "moment";
 import { module, test } from "qunit";
+
 import formatDuration from "timed/utils/format-duration";
 
 module("Unit | Utility | format duration", function () {

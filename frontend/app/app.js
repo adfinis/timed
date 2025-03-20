@@ -5,6 +5,7 @@ import { registerDateLibrary } from "ember-power-calendar";
 import DateUtils from "ember-power-calendar-moment";
 import Resolver from "ember-resolver";
 import fastRedact from "fast-redact";
+
 import config from "timed/config/environment";
 
 import "simplebar";

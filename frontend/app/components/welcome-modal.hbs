@@ -1,0 +1,41 @@
+<Modal class="md:w-auto" @visible={{@visible}} as |modal|>
+  <modal.header><h1 class="text-foreground">Welcome to Timed!</h1></modal.header>
+  <modal.body>
+    <div class="welcome-modal-body text-center">
+
+      <TimedClock class="m-2" @clockSize="5rem" />
+      <h3>Would you like to take a tour?</h3>
+    </div>
+  </modal.body>
+
+  <modal.footer class="flex justify-between">
+    <button
+      type="button"
+      class="btn btn-danger"
+      data-test-tour-never
+      {{on "click" (optional @onNever)}}
+    >
+      Never
+    </button>
+
+    <div class="flex gap-2">
+      <button
+        type="button"
+        class="btn btn-default"
+        data-test-tour-later
+        {{on "click" (optional @onLater)}}
+      >
+        Later
+      </button>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        data-test-tour-start
+        {{on "click" (optional @onStart)}}
+      >
+        Sure
+      </button>
+    </div>
+  </modal.footer>
+</Modal>

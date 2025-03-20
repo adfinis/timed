@@ -1,0 +1,74 @@
+{{#in-element this.destination}}
+  <aside
+    class="filter-sidebar min-w-72 max-w-96
+      {{if
+        this.visible
+        'filter-sidebar--visible translate-x-0'
+        'translate-x-full'
+      }}
+      bg-background fixed bottom-0 right-0 top-[54px] z-20 flex flex-col transition-transform duration-300 xl:top-[50px]"
+    ...attributes
+  >
+    <div
+      class="filter-sidebar-title flex justify-between px-2.5 py-3 text-lg font-semibold"
+    >
+      {{#if @appliedCount}}
+        {{@appliedCount}}
+        Filter{{if (not-eq @appliedCount 1) "s"}}
+        applied
+      {{else}}
+        Filters
+      {{/if}}
+      {{#if @onReset}}
+        <a
+          href="#"
+          class="filter-sidebar-reset text-primary font-medium"
+          {{on "click" @onReset}}
+        >
+          Reset
+        </a>
+      {{/if}}
+    </div>
+
+    <div class="filter-sidebar-content overflow-y-auto">
+      {{yield
+        (hash
+          group=(component "filter-sidebar/group")
+          label=(component "filter-sidebar/label")
+          filter=(component "filter-sidebar/filter")
+        )
+      }}
+    </div>
+
+    <button
+      title="{{if this.visible 'Hide' 'Show'}} filters"
+      class="filter-sidebar-toggle text-foreground-primary group absolute left-0 top-4 h-16 w-[6.5rem] -translate-x-full overflow-hidden py-2 [&>*]:absolute [&>*]:right-0 [&>*]:top-2 [&>*]:grid [&>*]:h-12 [&>*]:place-items-center"
+      type="button"
+      {{on "click" (toggle "visible" this)}}
+    >
+      <span
+        class="filter-sidebar-toggle-background bg-primary w-full translate-x-14 rounded-l shadow-sm transition-transform duration-300 group-hover:translate-x-0"
+      ></span>
+      <span class="filter-sidebar-toggle-icon w-12">
+        <FaIcon @icon="sliders" @prefix="fas" />
+        {{#if @appliedCount}}
+          <span
+            class="filter-sidebar-toggle-icon-badge bg-success-light text-foreground-primary absolute right-2 top-2 rounded-[50%] px-1 py-0.5 font-mono text-xs shadow-sm duration-300"
+          >{{@appliedCount}}</span>
+        {{/if}}
+      </span>
+      <span
+        class="filter-sidebar-toggle-text left-3 right-auto w-12 translate-x-14 opacity-0 transition-[transform,opacity] duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+      >Filters</span>
+    </button>
+  </aside>
+  <div
+    class="filter-sidebar-overlay fixed z-10 opacity-0 transition-all duration-300
+      {{if
+        this.visible
+        'filter-sidebar-overlay--visible pointer-events-all bg-foreground-muted/30 inset-0 top-12 opacity-100'
+      }}"
+    {{! template-lint-disable}}
+    {{on "click" (fn (mut this.visible) false)}}
+  ></div>
+{{/in-element}}

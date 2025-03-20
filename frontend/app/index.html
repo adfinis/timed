@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" class="scroll-smooth">
   <head>
     <meta charset="utf-8">
     <title>Timed</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="{{rootURL}}assets/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="{{rootURL}}assets/favicon-16x16.png" sizes="16x16" />
-    <link rel="shortcut icon" href="{{rootURL}}assets/favicon.ico" type="image/x-icon" />
+    <link rel="icon" type="image/png" href="{{rootURL}}assets/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{rootURL}}assets/favicon-16x16.png" sizes="16x16">
+    <link rel="shortcut icon" href="{{rootURL}}assets/favicon.ico" type="image/x-icon">
 
     {{content-for "head"}}
 
     <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link rel="stylesheet" href="{{rootURL}}assets/timed.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 
     {{content-for "head-footer"}}
   </head>
-  <body>
+  <body class="text-foreground bg-background">
     {{content-for "body"}}
 
     <script src="{{rootURL}}assets/vendor.js"></script>

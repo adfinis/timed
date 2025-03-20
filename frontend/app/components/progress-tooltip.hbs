@@ -1,0 +1,66 @@
+{{#if this.tooltipVisible}}
+  <EmberTether
+    class="progress-tooltip bg-secondary-dark text-foreground-primary z-30 px-2 py-1.5"
+    @target={{@target}}
+    @targetAttachment="middle left"
+    @attachment="middle right"
+    @offset="0 20px"
+  >
+    <div class="time-info grid grid-cols-[minmax(0,1fr),auto]">
+
+      <span data-test-spent-total>Spent (Total):
+        {{humanize-duration this.spent}}</span>
+      <div class="progress-badge">
+        {{#if this.progressTotal}}
+          <span class="badge {{this.colorTotal}} {{this.badgeClass}}">
+            {{#if (gt this.progressTotal 1)}}<FaIcon
+                @icon="exclamation-triangle"
+                @prefix="fas"
+              />
+            {{/if}}{{round (mult 100 this.progressTotal)}}%
+          </span>
+        {{/if}}
+      </div>
+
+      <span data-test-spent-billable>Spent (Billable):
+        {{humanize-duration this.billable}}</span>
+      <div class="progress-badge">
+        {{#if this.progressBillable}}
+          <span class="badge {{this.colorBillable}} {{this.badgeClass}}">
+            {{#if (gt this.progressBillable 1)}}<FaIcon
+                @icon="exclamation-triangle"
+                @prefix="fas"
+              />
+            {{/if}}
+            {{round (mult 100 this.progressBillable)}}%
+          </span>
+        {{/if}}
+      </div>
+
+      <span data-test-budget class="col-span-2">Budget:
+        {{if this.estimated (humanize-duration this.estimated) "None"}}</span>
+
+      {{#if this.remainingEffort}}
+        <span data-test-remaining-effort>{{concat
+            "Remaining effort: "
+            (humanize-duration this.remainingEffort)
+          }}</span>
+        <div class="progress-badge">
+          {{#if this.progressRemainingEffort}}
+            <span
+              class="badge {{this.colorRemainingEffort}} {{this.badgeClass}}"
+            >
+              {{#if (gt this.progressRemainingEffort 1)}}<FaIcon
+                  @icon="exclamation-triangle"
+                  @prefix="fas"
+                />
+              {{/if}}
+              {{round (mult 100 this.progressRemainingEffort)}}%
+            </span>
+          {{/if}}
+        </div>
+      {{/if}}
+
+    </div>
+  </EmberTether>
+{{/if}}
