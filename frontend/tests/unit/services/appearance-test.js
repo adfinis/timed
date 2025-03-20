@@ -1,4 +1,5 @@
 import { module, test } from "qunit";
+
 import { setupTest } from "timed/tests/helpers";
 
 module("Unit | Service | appearance", function (hooks) {

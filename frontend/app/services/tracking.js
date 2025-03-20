@@ -1,12 +1,13 @@
 import { getOwner } from "@ember/application";
-import { scheduleOnce } from "@ember/runloop";
 import Service, { service } from "@ember/service";
 import { camelize, capitalize } from "@ember/string";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, task, timeout } from "ember-concurrency";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 import { trackedTask } from "reactiveweb/ember-concurrency";
+
 import formatDuration from "timed/utils/format-duration";
 
 /**
@@ -108,11 +109,7 @@ export default class TrackingService extends Service {
    * @public
    */
   setTitle(title) {
-    scheduleOnce(
-      "afterRender",
-      this,
-      this.scheduleDocumentTitle.bind(this, title),
-    );
+    scheduleTask(this, "actions", this.scheduleDocumentTitle.bind(this, title));
   }
 
   scheduleDocumentTitle(t) {
@@ -187,7 +184,7 @@ export default class TrackingService extends Service {
       this.activity = activity;
 
       this.notify.success("Activity was started");
-    } catch (e) {
+    } catch {
       this.notify.error("Error while starting the activity");
     } finally {
       this._computeTitle.perform();
@@ -209,7 +206,7 @@ export default class TrackingService extends Service {
       }
 
       this.activity = null;
-    } catch (e) {
+    } catch {
       this.notify.error("Error while stopping the activity");
     } finally {
       this.setTitle(this.title);
@@ -243,7 +240,7 @@ export default class TrackingService extends Service {
   fetchRecentTasks = dropTask(async () => {
     await Promise.resolve();
     return await this.store.query("task", {
-      my_most_frequent: 10, // eslint-disable-line camelcase
+      my_most_frequent: 10,
       include: "project,project.customer",
     });
   });

@@ -13,6 +13,9 @@ import {
 } from "ember-concurrency";
 import fetch from "fetch";
 import moment from "moment";
+
+import config from "../../config/environment";
+
 import QPController from "timed/controllers/qpcontroller";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 import parseFileName from "timed/utils/parse-filename";
@@ -23,8 +26,6 @@ import {
 } from "timed/utils/query-params";
 import { serializeMoment } from "timed/utils/serialize-moment";
 import { cleanParams, toQueryString } from "timed/utils/url";
-
-import config from "../../config/environment";
 
 export default class AnalysisController extends QPController {
   queryParams = [
@@ -121,10 +122,8 @@ export default class AnalysisController extends QPController {
     return `The export limit is ${this.exportLimit}. Please use filters to reduce the amount of reports.`;
   }
 
-  get canBill() {
-    return (
-      this.currentUser.user.isAccountant || this.currentUser.user.isSuperuser
-    );
+  get isAccountant() {
+    return this.currentUser.user.isAccountant;
   }
 
   get appliedFilters() {
@@ -341,8 +340,7 @@ export default class AnalysisController extends QPController {
       download(file, filename, file.type);
 
       this.notify.success("File was downloaded");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error(
         "Error while downloading, try again or try reducing results",
       );
@@ -362,16 +360,14 @@ export default class AnalysisController extends QPController {
 
   @action
   selectRow(report) {
-    if (this.abilities.can("edit report", report) || this.canBill) {
-      const selected = this.selectedReportIds;
+    const selected = this.selectedReportIds;
 
-      if (selected.includes(report.id)) {
-        this.selectedReportIds = A([
-          ...selected.filter((id) => id !== report.id),
-        ]);
-      } else {
-        this.selectedReportIds = A([...selected, report.id]);
-      }
+    if (selected.includes(report.id)) {
+      this.selectedReportIds = A([
+        ...selected.filter((id) => id !== report.id),
+      ]);
+    } else {
+      this.selectedReportIds = A([...selected, report.id]);
     }
   }
 }

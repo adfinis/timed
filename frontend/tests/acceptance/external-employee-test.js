@@ -13,7 +13,6 @@ module("Acceptance | external employee", function (hooks) {
     const user = this.server.create("user");
     this.user = user;
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     // get active employment and set it to isExternal

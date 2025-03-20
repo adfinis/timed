@@ -4,6 +4,7 @@
  * @public
  */
 import { helper } from "@ember/component/helper";
+
 import formatDuration from "timed/utils/format-duration";
 
 /**

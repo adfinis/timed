@@ -86,9 +86,8 @@
                       absenceBalances has to be an array but will always only
                       contain one element. This is why we get the first object here.
                     }}
-                    <Table::Td>{{get
-                        (object-at 0 supervisee.absenceBalances)
-                        "balance"
+                    <Table::Td>{{await
+                        (this.getBalance supervisee)
                       }}</Table::Td>
                   </Table::Tr>
                 {{/each}}

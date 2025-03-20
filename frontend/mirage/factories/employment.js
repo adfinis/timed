@@ -1,6 +1,7 @@
 import faker from "faker";
 import { Factory, trait } from "miragejs";
 import moment from "moment";
+
 import DjangoDurationTransform from "timed/transforms/django-duration";
 
 export default Factory.extend({

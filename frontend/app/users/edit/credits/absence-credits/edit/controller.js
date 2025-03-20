@@ -1,6 +1,7 @@
 import Controller, { inject as controller } from "@ember/controller";
 import { service } from "@ember/service";
 import { task, dropTask } from "ember-concurrency";
+
 import AbsenceCreditValidations from "timed/validations/absence-credit";
 
 export default class UsersEditAbsenceCreditsController extends Controller {
@@ -14,7 +15,7 @@ export default class UsersEditAbsenceCreditsController extends Controller {
 
   absenceTypes = task(async () => {
     return await this.store.query("absence-type", {
-      fill_worktime: 0, // eslint-disable-line camelcase
+      fill_worktime: 0,
     });
   });
 
@@ -50,8 +51,7 @@ export default class UsersEditAbsenceCreditsController extends Controller {
       await this.router.transitionTo("users.edit.credits", this.user.id, {
         queryParams: { year },
       });
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the absence credit");
     }
   });
@@ -65,8 +65,7 @@ export default class UsersEditAbsenceCreditsController extends Controller {
       this.userController.data.perform(this.user.id);
 
       this.router.transitionTo("users.edit.credits");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while deleting the absence credit");
     }
   });

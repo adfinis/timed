@@ -24,7 +24,6 @@ module("Acceptance | analysis", function (hooks) {
     setBreakpoint("md");
     this.user = this.server.create("user");
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: this.user.id });
 
     this.server.createList("report", 40, { userId: this.user.id });

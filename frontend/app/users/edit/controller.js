@@ -19,7 +19,7 @@ export default class UsersEditController extends Controller {
   worktimeBalanceLastValidTimesheet = task(async (user) => {
     const worktimeBalance = await this.store.query("worktime-balance", {
       user,
-      last_reported_date: 1, // eslint-disable-line camelcase
+      last_reported_date: 1,
     });
 
     return worktimeBalance[0];

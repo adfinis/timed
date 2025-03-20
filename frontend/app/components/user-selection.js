@@ -3,6 +3,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask } from "ember-concurrency";
 import { trackedTask } from "reactiveweb/ember-concurrency";
+
 import customOptionTemplate from "timed/components/optimized-power-select/custom-options/user-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/user-selection";
 

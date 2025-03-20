@@ -1,15 +1,17 @@
 import { action } from "@ember/object";
-import { later } from "@ember/runloop";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
+import { runTask } from "ember-lifeline";
 import { trackedTask } from "reactiveweb/ember-concurrency";
+import { trackedFunction } from "reactiveweb/function";
 import { resolve } from "rsvp";
+import { localCopy } from "tracked-toolbox";
+
 import customerOptionTemplate from "timed/components/optimized-power-select/custom-options/customer-option";
 import projectOptionTemplate from "timed/components/optimized-power-select/custom-options/project-option";
 import taskOptionTemplate from "timed/components/optimized-power-select/custom-options/task-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/task-selection";
-import { localCopy } from "tracked-toolbox";
 /**
  * Component for selecting a task, which consists of selecting a customer and
  * project first.
@@ -181,7 +183,7 @@ export default class TaskSelectionComponent extends Component {
   get customer() {
     // Without unwrapping of the proxy ember-power-select will stick to wrong reference after clearing
     return this.args.liveTracking
-      ? this.tracking.activeCustomer?.content ?? this._customer
+      ? (this.tracking.activeCustomer?.content ?? this._customer)
       : this._customer;
   }
 
@@ -197,7 +199,7 @@ export default class TaskSelectionComponent extends Component {
   get project() {
     // Without unwrapping of the proxy ember-power-select will stick to wrong reference after clearing
     return this.args.liveTracking
-      ? this.tracking.activeProject?.content ?? this._project
+      ? (this.tracking.activeProject?.content ?? this._project)
       : this._project;
   }
 
@@ -209,7 +211,7 @@ export default class TaskSelectionComponent extends Component {
    */
   get task() {
     return this.args.liveTracking
-      ? this.tracking.activeTask?.content ?? this._task
+      ? (this.tracking.activeTask?.content ?? this._task)
       : this._task;
   }
 
@@ -255,16 +257,24 @@ export default class TaskSelectionComponent extends Component {
     return this._customersAndRecentTasks.value ?? [];
   }
 
-  get projects() {
-    return this.customer?.projects
+  #projects = trackedFunction(this, async () => {
+    return (await this.customer?.projects)
       ?.filter(this.filterByArchived)
       .toSorted((p) => p.name);
+  });
+
+  get projects() {
+    return this.#projects.value ?? [];
   }
 
-  get tasks() {
-    return this.project?.tasks
+  #tasks = trackedFunction(this, async () => {
+    return (await this.project?.tasks)
       ?.filter(this.filterByArchived)
       .toSorted((t) => t.name);
+  });
+
+  get tasks() {
+    return this.#tasks.value ?? [];
   }
 
   @action
@@ -317,7 +327,7 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!options.preventAction) {
-      later(this, () => {
+      runTask(this, () => {
         (this.args["on-set-customer"] === undefined
           ? () => {}
           : this.args["on-set-customer"])(value);
@@ -349,7 +359,7 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!options.preventAction) {
-      later(this, () => {
+      runTask(this, () => {
         (this.args["on-set-project"] === undefined
           ? () => {}
           : this.args["on-set-project"])(value);
@@ -374,7 +384,7 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!options.preventAction) {
-      later(this, async () => {
+      runTask(this, async () => {
         (this.args["on-set-task"] === undefined
           ? () => {}
           : this.args["on-set-task"])(value);

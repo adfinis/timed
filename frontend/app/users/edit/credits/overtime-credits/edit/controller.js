@@ -1,6 +1,7 @@
 import Controller, { inject as controller } from "@ember/controller";
 import { service } from "@ember/service";
 import { task, dropTask } from "ember-concurrency";
+
 import OvertimeCreditValidations from "timed/validations/overtime-credit";
 
 export default class UsersEditOvertimeCreditsController extends Controller {
@@ -42,8 +43,7 @@ export default class UsersEditOvertimeCreditsController extends Controller {
       await this.router.transitionTo("users.edit.credits", this.user.id, {
         queryParams: { year },
       });
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the overtime credit");
     }
   });
@@ -57,8 +57,7 @@ export default class UsersEditOvertimeCreditsController extends Controller {
       this.userController.data.perform(this.user.id);
 
       this.router.transitionTo("users.edit.credits");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while deleting the overtime credit");
     }
   });

@@ -1,17 +1,18 @@
 import Controller from "@ember/controller";
 import { action, get } from "@ember/object";
-import { scheduleOnce } from "@ember/runloop";
 import { service } from "@ember/service";
 import { camelize } from "@ember/string";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, timeout } from "ember-concurrency";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 import { trackedFunction } from "reactiveweb/function";
-import AbsenceValidations from "timed/validations/absence";
-import MultipleAbsenceValidations from "timed/validations/multiple-absence";
 import { tracked as trackedWrapper } from "tracked-built-ins";
 import { cached } from "tracked-toolbox";
+
+import AbsenceValidations from "timed/validations/absence";
+import MultipleAbsenceValidations from "timed/validations/multiple-absence";
 
 /**
  * The index controller
@@ -47,7 +48,7 @@ export default class IndexController extends Controller {
   constructor(...args) {
     super(...args);
     // this kicks off the activity sum loop
-    scheduleOnce("afterRender", this, this._activitySumTask.perform);
+    scheduleTask(this._activitySumTask, "actions", "perform");
   }
 
   get _allActivities() {
@@ -122,7 +123,7 @@ export default class IndexController extends Controller {
 
     // Save latest activitySum for display while reports are generated.
     // See activitySum getter.
-    scheduleOnce("afterRender", this, "_storeLastActivitySum");
+    scheduleTask(this, "actions", "_storeLastActivitySum");
 
     return duration;
   }
@@ -138,7 +139,6 @@ export default class IndexController extends Controller {
    * @private
    */
   _activitySumTask = dropTask(async () => {
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       this._activitySum();
 
@@ -449,7 +449,7 @@ export default class IndexController extends Controller {
 
     const publicHolidays = await this.store.query("public-holiday", {
       ...params,
-      // eslint-disable-next-line ember/no-get
+
       location: this.currentUser.user.activeEmployment.location.get("id"),
     });
 
@@ -519,8 +519,7 @@ export default class IndexController extends Controller {
       await changeset.save();
 
       this.showEditModal = false;
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the absence");
     } finally {
       this.send("finished");
@@ -542,8 +541,7 @@ export default class IndexController extends Controller {
       await absence.destroyRecord();
 
       this.showEditModal = false;
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while deleting the absence");
     } finally {
       this.send("finished");
@@ -579,7 +577,7 @@ export default class IndexController extends Controller {
       changeset.rollback();
 
       this.showAddModal = false;
-    } catch (e) {
+    } catch {
       this.notify.error("Error while adding the absence");
     } finally {
       this.send("finished");
