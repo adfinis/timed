@@ -65,4 +65,16 @@ export default [
     </p>
     `,
   },
+  {
+    id: "Docs",
+    target: "[data-test-docs-link]",
+    placement: "bottom",
+    title: "Timed Documentation",
+    content: `
+    <p>
+      You can access Timed documentation by clicking this link, and each time it will route you
+      to the content of the current opened page (ex: now it will route you to <strong>Time Sheet</strong> docs)
+    </p>
+    `,
+  },
 ];
