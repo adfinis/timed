@@ -6,7 +6,7 @@ the reports to the correct project / task.
 Reviewer: {{reviewer.first_name }} {{ reviewer.last_name }}
 {% for changeset in user_changes %}
 
-Date: {{ changeset.report.date|date:"SHORT_DATE_FORMAT" }}
+Date: {{ changeset.report.date|date:"d F Y" }}
 Duration: {{ changeset.report.duration|duration }}
 Task: {{ changeset.report.task }}
 Comment: {{ changeset.report.comment }}

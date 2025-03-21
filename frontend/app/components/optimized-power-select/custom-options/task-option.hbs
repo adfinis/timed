@@ -1,9 +1,9 @@
 <div
   title="{{@option.name}}{{if @option.archived ' (archived)'}}"
-  class="{{if @option.archived 'inactive'}}"
+  class="{{if @option.archived 'inactive'}} flex items-center justify-between"
   id="task-option-{{@option.id}}"
 >
-  {{#if (and @current (or (media "isMd") (media "isLg") (media "isXl")))}}
+  {{#if (and @current (media "isMd"))}}
     <ProgressTooltip
       @target={{concat "#task-option-" @option.id}}
       @visible={{@current}}
@@ -12,6 +12,6 @@
   {{/if}}
   {{@option.name}}
   {{#if @option.archived}}
-    <i class="fa fa-archive"></i>
+    <FaIcon @icon="archive" @prefix="fas" />
   {{/if}}
 </div>

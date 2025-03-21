@@ -5,5 +5,5 @@ export default class ProjectStatistics extends Model {
   @attr("django-duration") estimatedTime;
   @attr("django-duration") duration;
   @attr("django-duration") totalRemainingEffort;
-  @belongsTo("customer") customer;
+  @belongsTo("customer", { async: true, inverse: null }) customer;
 }

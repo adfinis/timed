@@ -107,6 +107,7 @@ def test_report_intersection_full(
 def test_report_intersection_partial(
     internal_employee_client,
     report_factory,
+    snapshot,
 ):
     user = internal_employee_client.user
     report = report_factory.create(review=True, not_billable=True, comment="test")
@@ -120,28 +121,7 @@ def test_report_intersection_partial(
     assert response.status_code == status.HTTP_200_OK
 
     json = response.json()
-    expected = {
-        "data": {
-            "id": None,
-            "type": "report-intersections",
-            "attributes": {
-                "comment": "test",
-                "not-billable": None,
-                "verified": None,
-                "review": None,
-                "billed": None,
-                "rejected": False,
-            },
-            "relationships": {
-                "customer": {"data": None},
-                "project": {"data": None},
-                "task": {"data": None},
-                "user": {"data": None},
-            },
-        },
-        "meta": {"count": 2},
-    }
-    assert json == expected
+    assert json == snapshot
 
 
 def test_report_intersection_accountant_editable(
@@ -1102,7 +1082,7 @@ def test_report_delete_not_report_owner(
     ]
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_report_round_duration(report_factory):
     """Should round the duration of a report to 15 minutes."""
     report = report_factory.create()
@@ -1296,7 +1276,7 @@ def test_report_update_bulk_verify_reviewer_multiple_notify(
         }
     }
 
-    query_params = "?editable=1" f"&reviewer={reviewer.id}" "&id=" + ",".join(
+    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
         str(r.id) for r in [report1_1, report1_2, report2, report3]
     )
     response = internal_employee_client.post(url + query_params, data)
@@ -1429,7 +1409,7 @@ def test_report_notify_rendering(
 
     url = reverse("report-bulk")
 
-    query_params = "?editable=1" f"&reviewer={reviewer.id}" "&id=" + ",".join(
+    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
         str(r.id) for r in [report1, report2, report3, report4]
     )
     response = internal_employee_client.post(url + query_params, data)
@@ -1439,7 +1419,7 @@ def test_report_notify_rendering(
     snapshot.assert_match(mailoutbox[0].body)
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.usefixtures("project", "task")
 @pytest.mark.parametrize(
     ("report__review", "needs_review"), [(True, False), (False, True), (True, True)]
@@ -1805,7 +1785,7 @@ def test_report_reject_multiple_notify(
         }
     }
 
-    query_params = "?editable=1" f"&reviewer={reviewer.id}" "&id=" + ",".join(
+    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
         str(r.id) for r in [report1_1, report1_2, report2, report3]
     )
     response = internal_employee_client.post(url + query_params, data)
@@ -2094,3 +2074,29 @@ def test_report_remaining_effort_update(
     report.task.refresh_from_db()
     assert report.task.most_recent_remaining_effort == timedelta(hours=3)
     assert report.task.project.total_remaining_effort == timedelta(hours=3)
+
+
+def test_report_list_filter_comment(
+    internal_employee_client,
+    report_factory,
+):
+    report_1 = report_factory.create(comment="review thing with Test User")
+    report_2 = report_factory.create(comment="help Test User setup their laptop")
+    report_3 = report_factory.create(comment="created LDAP account for Test User")
+    report_factory(comment="nothing related to the other comments")
+
+    url = reverse("report-list")
+
+    response = internal_employee_client.get(
+        url,
+        data={
+            "comment": "Test User",
+            "ordering": "id",
+        },
+    )
+    assert response.status_code == status.HTTP_200_OK
+    json = response.json()
+    assert len(json["data"]) == 3
+    assert json["data"][0]["id"] == str(report_1.id)
+    assert json["data"][1]["id"] == str(report_2.id)
+    assert json["data"][2]["id"] == str(report_3.id)

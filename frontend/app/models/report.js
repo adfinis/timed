@@ -86,7 +86,7 @@ export default class Report extends Model {
    * @property {Task} task
    * @public
    */
-  @belongsTo("task") task;
+  @belongsTo("task", { async: false, inverse: null }) task;
 
   /**
    * The user
@@ -94,7 +94,7 @@ export default class Report extends Model {
    * @property {User} user
    * @public
    */
-  @belongsTo("user") user;
+  @belongsTo("user", { async: false, inverse: null }) user;
 
   /**
    * The user which verified this report
@@ -102,5 +102,5 @@ export default class Report extends Model {
    * @property {User} verifiedBy
    * @public
    */
-  @belongsTo("user") verifiedBy;
+  @belongsTo("user", { async: true, inverse: null }) verifiedBy;
 }

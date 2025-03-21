@@ -20,7 +20,7 @@ export default class ProjectAssignee extends Model {
    * @type {Project}
    * @public
    */
-  @belongsTo("project") project;
+  @belongsTo("project", { async: true, inverse: null }) project;
 
   /**
    * The user
@@ -29,7 +29,7 @@ export default class ProjectAssignee extends Model {
    * @type {User}
    * @public
    */
-  @belongsTo("user") user;
+  @belongsTo("user", { async: true, inverse: null }) user;
 
   /**
    * Whether the assignee is a reviewer

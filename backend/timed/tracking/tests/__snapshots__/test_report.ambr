@@ -1,4 +1,37 @@
 # serializer version: 1
+# name: test_report_intersection_partial
+  dict({
+    'data': dict({
+      'attributes': dict({
+        'billed': None,
+        'comment': 'test',
+        'not-billable': None,
+        'rejected': False,
+        'review': None,
+        'verified': None,
+      }),
+      'id': '',
+      'relationships': dict({
+        'customer': dict({
+          'data': None,
+        }),
+        'project': dict({
+          'data': None,
+        }),
+        'task': dict({
+          'data': None,
+        }),
+        'user': dict({
+          'data': None,
+        }),
+      }),
+      'type': 'report-intersections',
+    }),
+    'meta': dict({
+      'count': 2,
+    }),
+  })
+# ---
 # name: test_report_notify_rendering
   '''
   
@@ -7,14 +40,14 @@
   Reviewer: Test User
   
   
-  Date: 10/03/1998
+  Date: 02 March 1975
   Duration: 3:15 (h:mm)
   
   
   
   * Task
-    [old] Allen Inc > Cross-platform content-based synergy > and Sons
-    [new] Allen Inc > Cross-platform content-based synergy > LLC
+    [old] Brown LLC > Synchronized impactful attitude > LLC
+    [new] Brown LLC > Synchronized impactful attitude > LLC
   
   * Comment
     [old] foo
@@ -22,20 +55,20 @@
   
   ---
   
-  Date: 05/27/2000
-  Duration: 2:30 (h:mm)
+  Date: 30 April 1993
+  Duration: 1:00 (h:mm)
+  Task: Brown LLC > Synchronized impactful attitude > LLC
   
-  Comment: some other comment
   
-  * Task
-    [old] Allen Inc > Cross-platform content-based synergy > Ltd
-    [new] Allen Inc > Cross-platform content-based synergy > LLC
+  * Comment
+    [old] original comment
+    [new] some other comment
   
   ---
   
-  Date: 04/20/2005
+  Date: 16 August 1996
   Duration: 0:15 (h:mm)
-  Task: Allen Inc > Cross-platform content-based synergy > LLC
+  Task: Brown LLC > Synchronized impactful attitude > LLC
   Comment: some other comment
   
   * Not_Billable
@@ -44,14 +77,14 @@
   
   ---
   
-  Date: 03/23/2016
-  Duration: 1:00 (h:mm)
-  Task: Allen Inc > Cross-platform content-based synergy > LLC
+  Date: 22 August 1998
+  Duration: 2:30 (h:mm)
   
+  Comment: some other comment
   
-  * Comment
-    [old] original comment
-    [new] some other comment
+  * Task
+    [old] Brown LLC > Synchronized impactful attitude > and Sons
+    [new] Brown LLC > Synchronized impactful attitude > LLC
   
   ---
   

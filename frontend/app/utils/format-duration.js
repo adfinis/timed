@@ -4,6 +4,7 @@
  * @public
  */
 import moment from "moment";
+
 import { pad2joincolon } from "timed/utils/pad";
 
 const { floor, abs } = Math;

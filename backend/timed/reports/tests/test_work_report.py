@@ -29,6 +29,7 @@ def test_work_report_single_project(
     is_employed,
     is_customer_assignee,
     is_customer,
+    snapshot,
     expected,
     status_code,
     django_assert_num_queries,
@@ -80,6 +81,7 @@ def test_work_report_single_project(
     if status_code == status.HTTP_200_OK:
         assert "1708-20170901-Customer_Name-Project.ods" in (res["Content-Disposition"])
 
+        assert snapshot == res.content
         content = io.BytesIO(res.content)
         doc = ezodf.opendoc(content)
         table = doc.sheets[0]
@@ -136,7 +138,7 @@ def test_work_report_empty(auth_client):
 
 
 @pytest.mark.freeze_time("2017-08-18")
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     ("customer_name", "project_name", "expected"),
     [

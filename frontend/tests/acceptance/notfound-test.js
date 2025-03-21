@@ -11,7 +11,6 @@ module("Acceptance | notfound", function (hooks) {
   test("displays a 404 page for undefined routes if logged in", async function (assert) {
     const user = this.server.create("user");
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     await visit("/thiswillneverbeavalidrouteurl");

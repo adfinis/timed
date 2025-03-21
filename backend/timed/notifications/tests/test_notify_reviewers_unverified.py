@@ -14,7 +14,7 @@ from timed.projects.factories import (
 from timed.tracking.factories import ReportFactory
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.freeze_time("2017-8-4")
 @pytest.mark.parametrize(
     ("cc", "message"),
@@ -57,16 +57,13 @@ def test_notify_reviewers_with_cc_and_message(mailoutbox, cc, message):
     assert len(mailoutbox) == 1
     mail = mailoutbox[0]
     assert mail.to == [reviewer_work.email]
-    url = (
-        "http://localhost:4200/analysis?fromDate=2017-07-01&"
-        "toDate=2017-07-31&reviewer=%d&editable=1"
-    ) % reviewer_work.id
+    url = f"http://localhost:4200/analysis?fromDate=2017-07-01&toDate=2017-07-31&reviewer={reviewer_work.id}&editable=1"
     assert url in mail.body
     assert message in mail.body
     assert mail.cc[0] == cc
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.freeze_time("2017-8-4")
 def test_notify_reviewers(mailoutbox):
     """Test time range 2017-7-1 till 2017-7-31."""
@@ -85,15 +82,12 @@ def test_notify_reviewers(mailoutbox):
     assert len(mailoutbox) == 1
     mail = mailoutbox[0]
     assert mail.to == [reviewer_work.email]
-    url = (
-        "http://localhost:4200/analysis?fromDate=2017-07-01&"
-        "toDate=2017-07-31&reviewer=%d&editable=1"
-    ) % reviewer_work.id
+    url = f"http://localhost:4200/analysis?fromDate=2017-07-01&toDate=2017-07-31&reviewer={reviewer_work.id}&editable=1"
     assert url in mail.body
     assert Notification.objects.count() == 1
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.freeze_time("2017-8-4")
 def test_notify_reviewers_reviewer_hierarchy(mailoutbox):
     """Test notification with reviewer hierarchy.
@@ -118,8 +112,5 @@ def test_notify_reviewers_reviewer_hierarchy(mailoutbox):
     assert len(mailoutbox) == 1
     mail = mailoutbox[0]
     assert mail.to == [task_reviewer.email]
-    url = (
-        "http://localhost:4200/analysis?fromDate=2017-07-01&"
-        "toDate=2017-07-31&reviewer=%d&editable=1"
-    ) % task_reviewer.id
+    url = f"http://localhost:4200/analysis?fromDate=2017-07-01&toDate=2017-07-31&reviewer={task_reviewer.id}&editable=1"
     assert url in mail.body

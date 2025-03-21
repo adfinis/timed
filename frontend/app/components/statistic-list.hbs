@@ -1,0 +1,112 @@
+<div ...attributes>
+  {{#if @data.isRunning}}
+    <Empty data-test-loading>
+      <LoadingIcon />
+    </Empty>
+  {{else if @data.last.isError}}
+    <Empty data-test-something-went-wrong>
+      <div>
+        <FaIcon @icon="bolt" @prefix="fas" />
+        <h3>Oops... Something went wrong</h3>
+        <p>
+          Have you tried turning it off and on again?
+          <br />
+          Please try refreshing the page.
+        </p>
+      </div>
+    </Empty>
+  {{else if @missingParams}}
+    <Empty data-test-missing-filter-params>
+      <FaIcon @icon="magnifying-glass" @prefix="fas" />
+      <h3>Missing filter parameters</h3>
+      <p>{{this.missingParamsMessage}}</p>
+    </Empty>
+  {{else if (not @data.last.value)}}
+    <Empty>
+      <FaIcon @icon="chart-bar" />
+      <h3>No statistics to display</h3>
+      <p>Maybe try loosening your filters</p>
+    </Empty>
+  {{else}}
+    <Table class="table-striped table--statistics table">
+      <Table::Thead>
+        <Table::Tr>
+          {{#each this.columns as |column|}}
+            {{#if column.ordering}}
+              <SortHeader
+                @current={{@ordering}}
+                @update={{@onOrderingChange}}
+                @by={{column.ordering}}
+              >
+                {{column.title}}
+              </SortHeader>
+            {{else}}
+              <Table::Th @light={{true}}>{{column.title}}</Table::Th>
+            {{/if}}
+          {{/each}}
+          <th class="max-sm:hidden"></th>
+        </Table::Tr>
+      </Table::Thead>
+      <VerticalCollection
+        @items={{slice @data.last.value}}
+        @tagName="tbody"
+        @estimateHeight={{40}}
+        @staticHeight={{true}}
+        @bufferSize={{10}}
+        @containerSelector=".page-content--scroll"
+        as |row|
+      >
+        <Table::Tr
+          @striped={{true}}
+          data-test-statistic-list-row
+          class="[&>*]:leading-5"
+        >
+          {{#each this.columns as |column|}}
+            <StatisticList::Column
+              data-test-statistic-list-column
+              @layout={{column.layout}}
+              @value={{get row column.path}}
+            />
+          {{/each}}
+          <Table::Td class="w-1/2 max-sm:hidden">
+            {{#let
+              (or row.totalRemainingEffort row.mostRecentRemainingEffort)
+              as |remainingEffort|
+            }}
+              {{#let
+                (if (gt remainingEffort 0) (add row.duration remainingEffort) 0)
+                as |allotted|
+              }}
+                <StatisticList::Bar
+                  @value={{div row.duration this.maxDuration}}
+                  @remaining={{div allotted this.maxDuration}}
+                  @goal={{div row.estimatedTime this.maxDuration}}
+                  @archived={{row.archived}}
+                />
+              {{/let}}
+            {{/let}}
+          </Table::Td>
+        </Table::Tr>
+      </VerticalCollection>
+      <Table::Tfoot>
+        <Table::Tr>
+          {{#each this.columns as |column index|}}
+            <Table::Td>
+              <strong>
+                {{#if (not index)}}
+                  Total:
+                {{else if (eq column.title "Duration")}}
+                  <span class="total">{{humanize-duration
+                      this.total
+                      false
+                    }}</span>
+                {{/if}}
+              </strong>
+            </Table::Td>
+          {{/each}}
+          <Table::Td class="max-sm:hidden" />
+        </Table::Tr>
+      </Table::Tfoot>
+    </Table>
+  {{/if}}
+</div>

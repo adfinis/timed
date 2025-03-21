@@ -7,31 +7,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  scan-backend:
-    name: Scan backend image
-    runs-on: ubuntu-latest
-    permissions:
-      actions: none
-      checks: none
-      contents: none
-      deployments: none
-      issues: none
-      packages: write
-      pull-requests: none
-      repository-projects: none
-      security-events: write
-      statuses: none
-      # needed for `cosign attest`
-      id-token: write
-    steps:
-      - uses: adfinis/container-scanning-action@v0.2.3
-        with:
-          image-ref: ghcr.io/${{ github.repository }}/backend
-          attest: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+  scan:
+    strategy:
+      matrix:
+        image: [backend, frontend]
 
-  scan-frontend:
-    name: Scan frontend image
+    name: Scan ${{ matrix.image }} image
     runs-on: ubuntu-latest
     permissions:
       actions: none
@@ -47,8 +28,8 @@ jobs:
       # needed for `cosign attest`
       id-token: write
     steps:
-      - uses: adfinis/container-scanning-action@v0.2.3
+      - uses: adfinis/container-scanning-action@v0.2.11
         with:
-          image-ref: ghcr.io/${{ github.repository }}/frontend
+          image-ref: ghcr.io/${{ github.repository }}/${{ matrix.image }}
           attest: true
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -6,13 +6,14 @@ services:
       context: ./backend
       target: dev
     depends_on:
-      - mailhog
+      - mailpit
       - db
     environment:
       - ENV=dev
-      - EMAIL_URL=smtp://mailhog:1025
+      - EMAIL_URL=smtp://mailpit:1025
       - DJANGO_OIDC_USERNAME_CLAIM=preferred_username
       - STATIC_ROOT=/var/www/static
+      - DJANGO_EMAIL_USE_TLS=False
     volumes:
       - ./backend:/app
     ports:
@@ -23,11 +24,11 @@ services:
     build:
       context: ./frontend
     environment:
-      - TIMED_SSO_CLIENT_HOST=https://timed.local/auth/realms/timed/protocol/openid-connect
+      - TIMED_SSO_CLIENT_HOST=https://timed.localhost/auth/realms/timed/protocol/openid-connect
       - TIMED_SSO_CLIENT_ID=timed-public
 
   keycloak:
-    image: keycloak/keycloak:24.0.3
+    image: keycloak/keycloak:26.0.6
     depends_on:
       - db
     volumes:
@@ -40,12 +41,13 @@ services:
       - KC_HOSTNAME_STRICT=false
       - KC_HOSTNAME_STRICT_HTTPS=false
       - KC_HTTP_RELATIVE_PATH=/auth
+      - KC_HTTP_ENABLED=true
       - KC_PROXY=edge
       - KC_DB_PASSWORD=keycloak
       - KEYCLOAK_ADMIN_PASSWORD=admin
     # import: docker compose exec keycloak /opt/keycloak/bin/kc.sh import --override true --file /opt/keycloak/data/import/config.json
     # export: docker compose exec keycloak /opt/keycloak/bin/kc.sh export --file /opt/keycloak/data/import/config.json
-    command: "start"
+    command: "start --hostname timed.localhost --proxy-headers xforwarded"
 
   caddy:
     image: caddy:2.6-alpine
@@ -57,16 +59,18 @@ services:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
     environment:
-      - DOMAIN_NAME=timed.local
+      - DOMAIN_NAME=timed.localhost
     networks:
       default:
         aliases:
-          - timed.local
+          - timed.localhost
 
-  mailhog:
-    image: mailhog/mailhog
+  mailpit:
+    image: axllent/mailpit
     environment:
-      - MH_UI_WEB_PATH=mailhog
+      MP_WEBROOT: mailpit
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
   db:
     image: postgres:14.4

@@ -1,14 +1,12 @@
 <label hidden for="activity-edit-form">Edit activity</label>
 <form
   id="activity-edit-form"
+  class="pl-2"
   data-test-activity-edit-form
   {{on "submit" this.save}}
 >
-  <div class="card">
-    <div class="card-header hidden-lg">
-      <LinkTo @route="index.activities"><FaIcon @icon="chevron-left" /></LinkTo>
-    </div>
-    <div class="card-block">
+  <Card class="grid">
+    <Card::Block class="grid gap-2 p-2">
       <TaskSelection
         @initial={{hash task=this.changeset.task}}
         @task={{this.changeset.task}}
@@ -17,18 +15,27 @@
       >
         <div class="form-group">{{t.customer}}</div>
         <div class="form-group">{{t.project}}</div>
+        {{! template-lint-disable no-at-ember-render-modifiers }}
         <div
           class="form-group"
           {{did-update t.reset @model.task.id}}
         >{{t.task}}</div>
       </TaskSelection>
-    </div>
-    <div class="card-footer text-right">
+    </Card::Block>
+    <Card::Footer class="text-right">
       <div class="form-group">
         <label hidden for="comment">Comment</label>
         <input
           type="text"
-          class="form-control comment-field"
+          class="form-control comment-field rounded
+            {{if
+              this.changeset.task.project.customerVisible
+              'customer-comment'
+            }}"
+          title={{if
+            this.changeset.task.project.customerVisible
+            "This project's comments are visible to the customer"
+          }}
           placeholder="Comment"
           name="comment"
           id="comment"
@@ -39,65 +46,72 @@
             (pick "target.value" (fn (mut this.changeset.comment)))
           }}
         />
-        {{#if this.changeset.task.project.customerVisible}}
-          <CustomerVisibleIcon class="customer-visible-icon" />
-        {{/if}}
       </div>
-      <div class="form-group checkboxes">
-        <SyCheckbox
+      <div
+        class="form-group checkboxes flex justify-between p-2 [&>*]:grid [&>*]:w-full [&>*]:grid-cols-[auto,minmax(0,1fr)] [&>*]:items-center [&>*]:justify-items-start [&>*]:gap-x-2"
+      >
+        <Checkbox
           data-test-activity-review
           @checked={{this.changeset.review}}
-          @label={{"Needs review"}}
+          @label="Needs review"
           @onChange={{toggle "review" this.changeset}}
         />
-        <SyCheckbox
+        <Checkbox
           data-test-activity-not-billable
           @checked={{this.changeset.notBillable}}
           @label="Not billable"
           @onChange={{toggle "notBillable" this.changeset}}
         />
       </div>
-      <table class="table table--striped table--activity-edit">
+      <table class="table--striped table--activity-edit table w-full">
         <tbody>
           <tr data-test-activity-block-row>
             <td class="form-group {{if this.changeset.error.from 'has-error'}}">
-              <SyTimepicker
+              <Timepicker
                 @value={{this.changeset.from}}
                 @max={{this.changeset.to}}
                 @precision={{1}}
-                @onFocusOut={{(fn this.validateChangeset this.changeset)}}
-                @onChange={{(fn (mut this.changeset.from))}}
+                @onFocusOut={{fn this.validateChangeset this.changeset}}
+                @onChange={{fn (mut this.changeset.from)}}
               />
             </td>
             <td>-</td>
             <td class="form-group {{if this.changeset.error.to 'has-error'}}">
-              <SyTimepicker
+              <Timepicker
                 @value={{this.changeset.to}}
                 @min={{this.changeset.from}}
                 @precision={{1}}
-                @disabled={{(if this.changeset.active true)}}
-                @onFocusOut={{(fn this.validateChangeset this.changeset)}}
-                @onChange={{(fn (mut this.changeset.to))}}
+                @disabled={{if this.changeset.active true}}
+                @onFocusOut={{fn this.validateChangeset this.changeset}}
+                @onChange={{fn (mut this.changeset.to)}}
               />
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
-    <div class="card-footer text-right">
-      <button
-        class="btn btn-danger"
-        type="button"
-        disabled={{@model.active}}
-        {{on "click" this.delete}}
-        data-test-activity-edit-form-delete
-      >Delete</button>
-      <button
-        class="btn btn-primary"
-        type="submit"
-        disabled={{not this.saveEnabled}}
-        data-test-activity-edit-form-save
-      >Save</button>
-    </div>
-  </div>
+    </Card::Footer>
+    <Card::Footer class="flex justify-between text-right">
+      <LinkTo
+        @route="index.activities"
+        class="btn btn-default lg:hidden"
+        role="button"
+        data-test-activity-edit-form-cancel
+      >Cancel</LinkTo>
+      <div class="flex gap-2 lg:w-full lg:justify-between">
+        <button
+          class="btn btn-danger"
+          type="button"
+          disabled={{@model.active}}
+          {{on "click" this.delete}}
+          data-test-activity-edit-form-delete
+        >Delete</button>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          disabled={{not this.saveEnabled}}
+          data-test-activity-edit-form-save
+        >Save</button>
+      </div>
+    </Card::Footer>
+  </Card>
 </form>

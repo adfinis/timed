@@ -1,8 +1,10 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, lastValue, task } from "ember-concurrency";
+import uniqBy from "lodash.uniqby";
+
 import ProjectValidations from "timed/validations/project";
 import TaskValidations from "timed/validations/task";
 
@@ -17,6 +19,7 @@ export default class ProjectsController extends Controller {
   @tracked selectedCustomer;
   @tracked selectedProject;
   @tracked selectedTask;
+  @tracked hideArchivedTasks = false;
 
   @lastValue("fetchProjectsByUser") projects;
 
@@ -33,91 +36,79 @@ export default class ProjectsController extends Controller {
   }
 
   get customers() {
-    return (
-      this.projects
-        ?.map((p) => p.get("customer"))
-        .filter(Boolean)
-        .uniqBy("id")
-        .sortBy("name") ?? []
-    );
+    return uniqBy(
+      this.projects?.map((p) => p?.get("customer")).filter(Boolean) ?? [],
+      (c) => c.get("id"),
+    ).toSorted((c) => c.get("name"));
   }
 
-  @task
-  *fetchProjectsByUser() {
+  fetchProjectsByUser = task(async () => {
     try {
       let projects;
       const include = "customer,billing-type";
       if (this.user.isSuperuser) {
-        projects = yield this.store.findAll("project", {
+        projects = await this.store.findAll("project", {
           include,
         });
       } else {
-        projects = yield this.store.query("project", {
+        projects = await this.store.query("project", {
           has_manager: this.user.get("id"),
           include,
         });
       }
 
-      return projects.sortBy("name");
-    } catch (error) {
-      /* istanbul ignore next */
+      return projects.toSorted((p) => p.name);
+    } catch {
       this.notify.error("Error while fetching projects");
     }
-  }
+  });
 
-  @task
-  *filterProjects() {
-    return yield this.projects.filter(
-      (project) =>
-        project.get("customer.id") === this.selectedCustomer.get("id")
-    );
-  }
+  filterProjects = task(
+    async () =>
+      await this.projects.filter(
+        (project) =>
+          project.get("customer.id") === this.selectedCustomer.get("id"),
+      ),
+  );
 
-  @dropTask
-  *fetchTasksByProject() {
+  fetchTasksByProject = dropTask(async () => {
     try {
       const id = this.selectedProject.get("id");
-      return yield this.store.query("task", {
+      return await this.store.query("task", {
         project: id,
       });
-    } catch (error) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while fetching tasks");
     }
-  }
+  });
 
-  @dropTask
-  *saveTask(changeset) {
+  saveTask = dropTask(async (changeset) => {
     try {
-      yield changeset.save();
+      await changeset.save();
 
       this.notify.success("Task was saved");
-    } catch (error) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving task");
     }
 
     this.fetchTasksByProject.perform(this.selectedProject);
-  }
+  });
 
-  @dropTask
-  *saveProject(changeset) {
+  saveProject = dropTask(async (changeset) => {
     try {
-      yield changeset.save();
+      await changeset.save();
       this.notify.success("Project was saved");
-    } catch (error) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving project");
     }
     this.fetchTasksByProject.perform(this.selectedProject);
-  }
+  });
 
-  @dropTask
-  *createTask() {
-    this.selectedTask = yield this.store.createRecord("task", {
+  createTask = dropTask(async () => {
+    this.selectedTask = await this.store.createRecord("task", {
       project: this.selectedProject,
     });
-  }
+  });
 
   @action
   handleCustomerChange(customer) {
@@ -151,7 +142,7 @@ export default class ProjectsController extends Controller {
     ) {
       changeset.set(
         "mostRecentRemainingEffort",
-        changeset.get("estimatedTime")
+        changeset.get("estimatedTime"),
       );
     }
   }

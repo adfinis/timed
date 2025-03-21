@@ -7,22 +7,18 @@ module("Integration | Component | filter sidebar/group", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(hbs`
-      {{#filter-sidebar/group label='Group'}}
-        Group content
-      {{/filter-sidebar/group}}
-    `);
+    await render(hbs`<FilterSidebar::Group @label="Group">
+  Group content
+</FilterSidebar::Group>`);
 
     assert.dom(".filter-sidebar-group-label").includesText("Group");
     assert.dom(".filter-sidebar-group-body").includesText("Group content");
   });
 
   test("can be toggled", async function (assert) {
-    await render(hbs`
-      {{#filter-sidebar/group label='Group'}}
-        Group content
-      {{/filter-sidebar/group}}
-    `);
+    await render(hbs`<FilterSidebar::Group @label="Group">
+  Group content
+</FilterSidebar::Group>`);
 
     assert.dom(".filter-sidebar-group--expanded").doesNotExist();
 

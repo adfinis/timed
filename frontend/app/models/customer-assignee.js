@@ -20,7 +20,7 @@ export default class CustomerAssignee extends Model {
    * @type {Customer}
    * @public
    */
-  @belongsTo("customer") customer;
+  @belongsTo("customer", { async: true, inverse: null }) customer;
   /**
    * The user
    *
@@ -28,7 +28,7 @@ export default class CustomerAssignee extends Model {
    * @type {User}
    * @public
    */
-  @belongsTo("user") user;
+  @belongsTo("user", { async: true, inverse: null }) user;
 
   /**
    * Whether the assignee is a reviewer

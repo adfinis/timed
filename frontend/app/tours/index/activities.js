@@ -39,7 +39,7 @@ export default [
   },
   {
     id: "generatingTimesheet",
-    target: ".btn-toolbar .btn-success",
+    target: "#generate-timesheet",
     placement: "left",
     title: "Generating the timesheet",
     content: `

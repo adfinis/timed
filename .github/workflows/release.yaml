@@ -34,11 +34,21 @@ jobs:
         with:
           github-token: ${{ secrets.ADFINISBOT_PAT }}
           allow-initial-development-versions: true
-  backend:
-    name: Release Backend
+
+  containers:
+    name: Release Containers
     runs-on: ubuntu-latest
     if: needs.semrel.outputs.version != ''
     needs: semrel
+
+    strategy:
+      matrix:
+        config:
+          - name: backend
+            version-file: pyproject.toml
+          - name: frontend
+            version-file: package.json
+
     permissions:
       actions: none
       checks: none
@@ -58,7 +68,7 @@ jobs:
 
       - name: Adjust Version
         run: |
-          sed 's/"0.0.0"/"${{ needs.semrel.outputs.version }}"/g' -i ./backend/pyproject.toml
+          sed 's/"0.0.0"/"${{ needs.semrel.outputs.version }}"/g' -i ./${{ matrix.config.name }}/${{ matrix.config.version-file }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -74,7 +84,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}/backend
+          images: ghcr.io/${{ github.repository }}/${{ matrix.config.name }}
           flavor: |
             latest=auto
           tags: |
@@ -82,100 +92,27 @@ jobs:
             type=semver,pattern={{major}}.{{minor}},value=${{ needs.semrel.outputs.version }}
             type=semver,pattern={{major}},value=${{ needs.semrel.outputs.version }}
           labels: |
-            org.opencontainers.image.title=backend
+            org.opencontainers.image.title=${{ matrix.config.name }}
             org.opencontainers.image.description=${{ github.event.repository.description }}
             org.opencontainers.image.url=${{ github.event.repository.html_url }}
             org.opencontainers.image.source=${{ github.event.repository.clone_url }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
 
-      - name: Build and Push backend Docker Image
-        uses: docker/build-push-action@v5
+      - name: Build and Push ${{ matrix.config.name }} Docker Image
+        uses: docker/build-push-action@v6
         id: docker
         with:
-          context: ./backend/
+          context: ./${{ matrix.config.name }}/
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: |
             ${{ steps.meta.outputs.labels }}
 
-      - name: Sign backend image and attach SBOM attestation
-        uses: adfinis/container-scanning-action@v0.2.3
+      - name: Sign ${{ matrix.config.name }} image and attach SBOM attestation
+        uses: adfinis/container-scanning-action@v0.2.11
         with:
-          image-ref: ghcr.io/${{ github.repository }}/backend
-          token: ${{ secrets.GITHUB_TOKEN }}
-          digest: ${{ steps.docker.outputs.digest }}
-          attest: true
-
-  frontend:
-    name: Release frontend
-    runs-on: ubuntu-latest
-    if: needs.semrel.outputs.version != ''
-    needs: semrel
-    permissions:
-      actions: none
-      checks: none
-      contents: none
-      deployments: none
-      issues: none
-      packages: write
-      pull-requests: none
-      repository-projects: none
-      security-events: write
-      statuses: none
-      id-token: write # needed for signing the images with GitHub OIDC using cosign
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Adjust Version
-        run: |
-          sed 's/"0.0.0"/"${{ needs.semrel.outputs.version }}"/g' -i ./frontend/package.json
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}/frontend
-          flavor: |
-            latest=auto
-          tags: |
-            type=semver,pattern={{version}},value=${{ needs.semrel.outputs.version }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ needs.semrel.outputs.version }}
-            type=semver,pattern={{major}},value=${{ needs.semrel.outputs.version }}
-          labels: |
-            org.opencontainers.image.title=frontend
-            org.opencontainers.image.description=${{ github.event.repository.description }}
-            org.opencontainers.image.url=${{ github.event.repository.html_url }}
-            org.opencontainers.image.source=${{ github.event.repository.clone_url }}
-            org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
-
-      - name: Build and Push
-        uses: docker/build-push-action@v5
-        id: docker
-        with:
-          context: ./frontend/
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: |
-            ${{ steps.meta.outputs.labels }}
-
-      - name: Sign image and attach SBOM attestation
-        uses: adfinis/container-scanning-action@v0.2.3
-        with:
-          image-ref: ghcr.io/${{ github.repository }}/frontend
+          image-ref: ghcr.io/${{ github.repository }}/${{ matrix.config.name }}
           token: ${{ secrets.GITHUB_TOKEN }}
           digest: ${{ steps.docker.outputs.digest }}
           attest: true
@@ -185,8 +122,7 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.semrel.outputs.version != ''
     needs:
-      - backend
-      - frontend
+      - containers
       - semrel
     permissions:
       actions: none

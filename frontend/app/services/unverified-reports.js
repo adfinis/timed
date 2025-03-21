@@ -1,4 +1,4 @@
-import Service, { inject as service } from "@ember/service";
+import Service, { service } from "@ember/service";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import moment from "moment";
@@ -40,7 +40,7 @@ export default class UnverifiedReportsService extends Service {
     if (macroCondition(!isTesting())) {
       this.intervalId = setInterval(
         this.pollReports.bind(this),
-        INTERVAL_DELAY
+        INTERVAL_DELAY,
       );
     }
   }
@@ -56,7 +56,7 @@ export default class UnverifiedReportsService extends Service {
       });
 
       this.amountReports = reports.meta.pagination.count;
-    } catch (e) {
+    } catch {
       this.notify.error("Error while polling reports");
     }
   }

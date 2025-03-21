@@ -10,7 +10,7 @@ from timed.projects.factories import TaskFactory
 from timed.tracking.factories import ReportFactory
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.freeze_time("2017-7-27")
 def test_notify_supervisors(mailoutbox):
     """Test time range 2017-7-17 till 2017-7-23."""
@@ -49,7 +49,7 @@ def test_notify_supervisors(mailoutbox):
     assert Notification.objects.count() == 1
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_notify_supervisors_no_employment(mailoutbox):
     """Check that supervisees without employment do not notify supervisor."""
     supervisee = UserFactory.create()

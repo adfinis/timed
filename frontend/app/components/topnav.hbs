@@ -1,0 +1,114 @@
+<div class="fixed left-0 top-0 z-40 w-full">
+  <nav
+    class="bg-background dark:bg-background-muted flex w-full flex-col px-2 py-1 shadow-md transition-all md:flex-row lg:px-3.5 lg:py-0.5 xl:px-4 xl:py-0"
+  >
+    <header class="flex justify-between {{if this.expand 'max-md:mb-1'}}">
+      <button
+        class="w-12 md:hidden"
+        type="button"
+        {{on "click" (toggle "expand" this)}}
+      >
+        <FaIcon
+          @icon={{if this.expand "chevron-up" "bars"}}
+          @rotation={{if this.expand 180 0}}
+          @prefix="fas"
+          @size="2x"
+        />
+      </button>
+      <LinkTo
+        @route="index"
+        class="mr-1 grid place-items-center transition-[margin] md:grid-cols-2 lg:mr-2"
+      >
+        <TimedClock class="p-1" />
+        <div
+          class="leading-4 transition-all max-md:hidden lg:ml-1 lg:text-[1.075rem]"
+        >
+          Timed
+          <div class="text-2xs text-foreground-muted font-mono font-normal">
+            v{{app-version versionOnly=true showExtended=true}}
+          </div>
+        </div>
+      </LinkTo>
+    </header>
+    <section
+      class="w-full md:flex md:max-h-full md:w-auto md:flex-grow md:flex-row
+        {{if
+          this.expand
+          'max-md:block max-md:h-full max-md:max-h-96 max-md:overflow-y-auto'
+          'max-h-0 overflow-hidden'
+        }}"
+    >
+      <Topnav::List>
+        <Topnav::ListItem class="max-md:w-full">
+          <Topnav::LinkTo
+            @route="index"
+            @onClick={{fn (mut this.expand) false}}
+          >
+            <FaIcon @icon="clock" @size="lg" />
+            <span>Tracking</span>
+          </Topnav::LinkTo>
+        </Topnav::ListItem>
+        {{#if (can "access page")}}
+          <Topnav::ListItem class="max-md:hidden">
+            <Topnav::LinkTo @route="analysis">
+              <FaIcon @icon="chart-line" @prefix="fas" />
+              Analysis
+            </Topnav::LinkTo>
+          </Topnav::ListItem>
+          <Topnav::ListItem>
+            <Topnav::LinkTo
+              @route="statistics"
+              @onClick={{fn (mut this.expand) false}}
+            >
+              <FaIcon @icon="chart-bar" />
+              Statistics
+            </Topnav::LinkTo>
+          </Topnav::ListItem>
+          <Topnav::ListItem>
+            <Topnav::LinkTo
+              @route="projects"
+              @onClick={{fn (mut this.expand) false}}
+            >
+              <FaIcon @icon="briefcase" @prefix="fas" />
+              Projects
+            </Topnav::LinkTo>
+          </Topnav::ListItem>
+        {{/if}}
+        {{#if this.currentUser.user.isSuperuser}}
+          <Topnav::ListItem>
+            <Topnav::LinkTo
+              @onClick={{fn (mut this.expand) false}}
+              @route="users.index"
+            >
+              <FaIcon @icon="users" @prefix="fas" />
+              Users
+            </Topnav::LinkTo>
+          </Topnav::ListItem>
+        {{/if}}
+      </Topnav::List>
+      <Topnav::List class="md:ml-auto md:border-t-0">
+        <ReportReviewWarning @class="max-md:hidden" />
+        <Topnav::ListItem>
+          <Topnav::LinkTo
+            @onClick={{fn (mut this.expand) false}}
+            @route="users.edit"
+            @model={{this.currentUser.user.id}}
+          >
+            <FaIcon @icon="user" />
+            {{this.currentUser.user.fullName}}
+          </Topnav::LinkTo>
+        </Topnav::ListItem>
+        <Topnav::ListItem>
+          <Topnav::LinkTo
+            href="#"
+            data-test-logout
+            {{on "click" (optional @onLogout)}}
+          >
+            <FaIcon @icon="power-off" @prefix="fas" />
+            Logout
+          </Topnav::LinkTo>
+        </Topnav::ListItem>
+      </Topnav::List>
+    </section>
+  </nav>
+</div>

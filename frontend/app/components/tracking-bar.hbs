@@ -1,0 +1,58 @@
+<div class="tracking-bar mb-6 border-b pb-6" ...attributes>
+  <TaskSelection
+    @disabled={{this.tracking.activity.active}}
+    @liveTracking={{true}}
+    @on-set-task={{fn (mut this.tracking.activity.task)}}
+    @initial={{hash task=this.tracking.activity.task}}
+    as |t|
+  >
+    <label hidden form="task-form">Select task</label>
+    <form
+      id="task-form"
+      class="grid gap-2 lg:grid-cols-[repeat(3,minmax(0,1fr)),minmax(0,1.5fr),minmax(0,auto)]"
+      {{on "submit" (optional this.start)}}
+    >
+      <div data-test-tracking-customer>
+        <t.customer />
+      </div>
+      <div data-test-tracking-project>
+        <t.project />
+      </div>
+      <div data-test-tracking-task>
+        <t.task />
+      </div>
+      <div data-test-tracking-comment>
+        <input
+          type="text"
+          id="task-comment"
+          class="form-control rounded
+            {{if
+              this.tracking.activity.task.project.customerVisible
+              'customer-comment'
+            }}"
+          placeholder="Comment"
+          name="comment"
+          spellcheck="true"
+          value={{this.tracking.activity.comment}}
+          title={{if
+            this.tracking.activity.task.project.customerVisible
+            "This project's comments are visible to the customer"
+          }}
+          {{on
+            "change"
+            (pick "target.value" (fn (mut this.tracking.activity.comment)))
+          }}
+          disabled={{this.tracking.activity.active}}
+        />
+      </div>
+      <div class="grid h-full place-self-center">
+        <RecordButton
+          @activity={{this.tracking.activity}}
+          @recording={{this.tracking.activity.active}}
+          @onStart={{perform this.tracking.startActivity}}
+          @onStop={{perform this.tracking.stopActivity}}
+        />
+      </div>
+    </form>
+  </TaskSelection>
+</div>

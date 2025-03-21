@@ -12,6 +12,7 @@ module.exports = function (environment) {
       includeTimezone: "all",
     },
     EmberENV: {
+      EXTEND_PROTOTYPES: false,
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -90,7 +91,7 @@ module.exports = function (environment) {
 
   if (environment === "development") {
     ENV["ember-simple-auth-oidc"].host =
-      "https://timed.local/auth/realms/timed/protocol/openid-connect";
+      "https://timed.localhost/auth/realms/timed/protocol/openid-connect";
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -114,7 +115,6 @@ module.exports = function (environment) {
     };
   }
 
-  // eslint-disable-next-line no-empty
   if (environment === "production") {
     ENV["ember-simple-auth-oidc"].host = "sso-client-host";
     ENV["ember-simple-auth-oidc"].clientId = "sso-client-id";

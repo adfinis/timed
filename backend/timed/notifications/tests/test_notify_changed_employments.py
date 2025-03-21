@@ -7,7 +7,7 @@ from timed.employment.factories import EmploymentFactory
 from timed.notifications.models import Notification
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 def test_notify_changed_employments(mailoutbox, freezer):
     email = "test@example.net"
 

@@ -5,13 +5,14 @@
  */
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { scheduleOnce } from "@ember/runloop";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 import { all } from "rsvp";
-import ReportValidations from "timed/validations/report";
 import { cached } from "tracked-toolbox";
+
+import ReportValidations from "timed/validations/report";
 /**
  * The index reports controller
  *
@@ -29,6 +30,7 @@ export default class IndexReportController extends Controller {
   @tracked notBillable = false;
 
   @tracked showReschedule = false;
+  @tracked checkForEmptyRecord = false;
   @tracked _center;
 
   @service store;
@@ -74,10 +76,10 @@ export default class IndexReportController extends Controller {
     });
 
     if (!reportsToday.find((r) => r.isNew)) {
-      scheduleOnce("actions", this, "createEmptyReport");
+      scheduleTask(this, "actions", "createEmptyReport");
     }
 
-    return reportsToday.sort((r) => r.isNew);
+    return reportsToday.toSorted((r) => r.isNew);
   }
 
   @cached
@@ -91,11 +93,12 @@ export default class IndexReportController extends Controller {
       );
     });
 
-    return absences.firstObject;
+    return absences[0];
   }
 
   @action
   async createEmptyReport() {
+    if (!this.checkForEmptyRecord) return;
     await this.store.createRecord("report", {
       date: this.model,
       user: this.currentUser.user,
@@ -119,7 +122,7 @@ export default class IndexReportController extends Controller {
       if (this.absence) {
         await this.absence.reload();
       }
-    } catch (e) {
+    } catch {
       this.notify.error("Error while saving the report");
     } finally {
       this.send("finished");
@@ -145,7 +148,7 @@ export default class IndexReportController extends Controller {
           await this.absence.reload();
         }
       }
-    } catch (e) {
+    } catch {
       this.notify.error("Error while deleting the report");
     } finally {
       this.send("finished");
@@ -156,15 +159,15 @@ export default class IndexReportController extends Controller {
   async reschedule(date) {
     try {
       const reports = this.reports
-        .filterBy("isNew", false)
-        .rejectBy("verifiedBy.id");
+        .filter((r) => r.isNew === false)
+        .filter((r) => !r.verifiedBy.id);
 
       // The magic number "-1" is the placeholder report row which we filter out
       // via the filterBy("isNew") line above.
       if (reports.length < this.reports.length - 1) {
         /* istanbul ignore next */
         this.notify.warning(
-          "Reports that got verified already can not get transferred."
+          "Reports that got verified already can not get transferred.",
         );
       }
 
@@ -172,13 +175,13 @@ export default class IndexReportController extends Controller {
         reports.map(async (report) => {
           report.set("date", date);
           return await report.save();
-        })
+        }),
       );
       this.showReschedule = false;
       this.router.transitionTo({
         queryParams: { day: date.format("YYYY-MM-DD") },
       });
-    } catch (e) {
+    } catch {
       this.notify.error("Error while rescheduling the timesheet");
     }
   }

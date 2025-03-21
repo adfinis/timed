@@ -1,4 +1,4 @@
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { Ability } from "ember-can";
 
 export default class UserAbility extends Ability {
@@ -12,7 +12,7 @@ export default class UserAbility extends Ability {
     return (
       this.user?.isSuperuser ||
       this.user?.id === this.model.id ||
-      this.model.supervisors.mapBy("id").includes(this.user?.id)
+      this.model.supervisors.map((s) => s.id).includes(this.user?.id)
     );
   }
 }

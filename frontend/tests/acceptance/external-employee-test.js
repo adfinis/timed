@@ -1,6 +1,7 @@
 import { visit } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
+import { setBreakpoint } from "ember-responsive/test-support";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
@@ -12,12 +13,11 @@ module("Acceptance | external employee", function (hooks) {
     const user = this.server.create("user");
     this.user = user;
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     // get active employment and set it to isExternal
     const activeEmployment = this.user.employments.filter(
-      (e) => e.end === null
+      (e) => e.end === null,
     );
     activeEmployment.update({ isExternal: true });
   });
@@ -32,6 +32,7 @@ module("Acceptance | external employee", function (hooks) {
   });
 
   test("cant view analysis", async function (assert) {
+    setBreakpoint("md");
     await visit("/analysis");
 
     assert.dom("h1").includesText("Access forbidden");

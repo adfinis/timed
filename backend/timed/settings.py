@@ -53,7 +53,6 @@ HOST_DOMAIN = env.str("DJANGO_HOST_DOMAIN", default=default("localhost:4200"))
 INSTALLED_APPS = [
     "timed.apps.TimedAdminConfig",
     "django.contrib.humanize",
-    "multiselectfield.apps.MultiSelectFieldConfig",
     "django.forms",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -75,6 +74,7 @@ INSTALLED_APPS = [
     "timed.redmine",
     "timed.subscription",
     "timed.notifications",
+    "django.contrib.postgres",
 ]
 
 if ENV == "dev":
@@ -222,7 +222,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 OIDC_DEFAULT_BASE_URL = env.str(
     "DJANGO_OIDC_DEFAULT_BASE_URL",
-    default="http://timed.local/auth/realms/timed/protocol/openid-connect",
+    default="http://timed.localhost/auth/realms/timed/protocol/openid-connect",
 )
 OIDC_OP_AUTHORIZATION_ENDPOINT = env.str(
     "DJANGO_OIDC_OP_AUTHORIZATION_ENDPOINT", default=f"{OIDC_DEFAULT_BASE_URL}/auth"
@@ -273,7 +273,8 @@ OIDC_RP_INTROSPECT_CLIENT_SECRET = env.str(
 
 # admin page after completing server-side authentication flow
 LOGIN_REDIRECT_URL = env.str(
-    "DJANGO_OIDC_ADMIN_LOGIN_REDIRECT_URL", default=default("http://timed.local/admin/")
+    "DJANGO_OIDC_ADMIN_LOGIN_REDIRECT_URL",
+    default=default("http://timed.localhost/admin/"),
 )
 
 # allow / disallow login with local user / password

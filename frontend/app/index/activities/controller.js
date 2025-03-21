@@ -5,7 +5,7 @@
  */
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import moment from "moment";
 import { resolve } from "rsvp";
@@ -67,7 +67,7 @@ export default class ActivitiesIndexController extends Controller {
   }
 
   get sortedActivities() {
-    return this.activities.sort((a, b) => {
+    return this.activities.toSorted((a, b) => {
       return b.get("from").toDate() - a.get("from").toDate();
     });
   }
@@ -106,7 +106,8 @@ export default class ActivitiesIndexController extends Controller {
 
     if (!activity.get("date").isSame(moment(), "day")) {
       activity = this.store.createRecord("activity", {
-        ...activity.getProperties("task", "comment"),
+        task: await activity.task,
+        comment: await activity.comment,
       });
     }
 
@@ -145,7 +146,7 @@ export default class ActivitiesIndexController extends Controller {
    */
   @action
   generateReportsCheck() {
-    const hasUnknown = !!this.activities.findBy("task.id", undefined);
+    const hasUnknown = !!this.activities.find((a) => !a.task.get("id"));
     const hasOverlapping = !!this.sortedActivities.find((a) => {
       return a.get("active") && !a.get("from").isSame(moment(), "day");
     });
@@ -176,7 +177,7 @@ export default class ActivitiesIndexController extends Controller {
           (a) =>
             a.get("task.id") &&
             !(a.get("active") && !a.get("from").isSame(moment(), "day")) &&
-            !a.get("transferred")
+            !a.get("transferred"),
         )
         .reduce(async (reducer, activity) => {
           if (activity.get("active")) {
@@ -188,7 +189,7 @@ export default class ActivitiesIndexController extends Controller {
           const data = {
             duration: activity.get("duration"),
             date: activity.get("date"),
-            task: activity.get("task"),
+            task: await activity.get("task"),
             review: activity.get("review"),
             notBillable: activity.get("notBillable"),
             comment: activity.get("comment").trim(),
@@ -212,7 +213,7 @@ export default class ActivitiesIndexController extends Controller {
             data.duration.add(report.get("duration"));
             report.set("duration", data.duration);
           } else {
-            report = this.store.createRecord("report", data);
+            report = await this.store.createRecord("report", data);
           }
 
           activity.set("transferred", true);
@@ -223,8 +224,7 @@ export default class ActivitiesIndexController extends Controller {
         }, resolve());
 
       this.router.transitionTo("index.reports");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while generating reports");
     } finally {
       this.tracking.generatingReports = false;

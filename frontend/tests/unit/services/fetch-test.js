@@ -1,5 +1,6 @@
 import { setupTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import setupSession from "timed/tests/helpers/session-mock";
 
 module("Unit | Service | fetch", function (hooks) {
@@ -17,7 +18,7 @@ module("Unit | Service | fetch", function (hooks) {
 
     assert.strictEqual(
       service.get("headers.authorization"),
-      session.headers.authorization
+      session.headers.authorization,
     );
   });
 

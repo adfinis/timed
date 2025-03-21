@@ -4,6 +4,7 @@
  * @public
  */
 import { helper } from "@ember/component/helper";
+
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 
 /**

@@ -1,0 +1,17 @@
+<div
+  ...attributes
+  class="toggle
+    {{if @value 'active text-primary-light' 'inactive text-secondary'}}
+    mx-0.5 grid place-self-center stroke-slate-600 p-1 text-xl"
+  title={{concat @hint (if @disabled " (disabled)")}}
+  tabindex="0"
+  role="link"
+  {{on "click" (optional (unless @disabled @onToggle))}}
+  {{on "keyup" this.handleKeyUp}}
+>
+  {{#if (has-block)}}
+    {{yield}}
+  {{else}}
+    <FaIcon @icon={{@icon}} @fixedWidth={{true}} @size={{or @size "1x"}} />
+  {{/if}}
+</div>

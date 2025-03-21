@@ -7,7 +7,7 @@ module("Integration | Component | customer visible icon", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(hbs`{{customer-visible-icon}}`);
+    await render(hbs`<CustomerVisibleIcon />`);
 
     assert.dom(".fa-eye").exists();
   });
