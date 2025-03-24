@@ -22,14 +22,14 @@ module("Acceptance | docs", function (hooks) {
 
     assert.strictEqual(
       document.querySelector("[data-test-docs-link]").href,
-      `${config.docsBaseUrl}tracking/activities`,
+      `${config.docsBaseUrl}/tracking/activities`,
     );
 
     await visit("/analysis");
 
     assert.strictEqual(
       document.querySelector("[data-test-docs-link]").href,
-      `${config.docsBaseUrl}analysis`,
+      `${config.docsBaseUrl}/analysis`,
     );
   });
 });

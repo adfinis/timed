@@ -60,7 +60,7 @@ module.exports = function (environment) {
       userinfoEndpoint: "/userinfo",
       afterLogoutUri: "/sso-login",
     },
-    docsBaseUrl: process.env.DOCS_BASE_URL || "https://timed.dev/docs/",
+    docsBaseUrl: process.env.DOCS_BASE_URL || "https://timed.dev/docs",
   };
 
   if (process.env.SENTRY_DSN) {
