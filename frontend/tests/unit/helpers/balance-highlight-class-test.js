@@ -1,5 +1,6 @@
 import moment from "moment";
 import { module, test } from "qunit";
+
 import { balanceHighlightClass } from "timed/helpers/balance-highlight-class";
 
 module("Unit | Helper | balance highlight class", function () {
@@ -15,15 +16,15 @@ module("Unit | Helper | balance highlight class", function () {
     assert.strictEqual(result, "");
   });
 
-  test("returns `color-success` on positive durations", function (assert) {
+  test("returns `text-success` on positive durations", function (assert) {
     const result = balanceHighlightClass([moment.duration({ h: 1, m: 30 })]);
 
-    assert.strictEqual(result, "color-success");
+    assert.strictEqual(result, "text-success");
   });
 
-  test("returns `color-danger` on negative durations", function (assert) {
+  test("returns `text-danger` on negative durations", function (assert) {
     const result = balanceHighlightClass([moment.duration({ h: -1, m: 30 })]);
 
-    assert.strictEqual(result, "color-danger");
+    assert.strictEqual(result, "text-danger");
   });
 });

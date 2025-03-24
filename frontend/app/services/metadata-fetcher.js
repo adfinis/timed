@@ -1,6 +1,7 @@
-import Service, { inject as service } from "@ember/service";
+import Service, { service } from "@ember/service";
 import { camelize, capitalize, dasherize } from "@ember/string";
 import { restartableTask } from "ember-concurrency";
+
 import DjangoDurationTransform from "timed/transforms/django-duration";
 
 const DJANGO_DURATION_TRANSFORM = DjangoDurationTransform.create();
@@ -56,8 +57,7 @@ export default class MetadataFetcherService extends Service {
    * @return {Object} An object with the parsed metadata
    * @public
    */
-  @restartableTask
-  *fetchSingleRecordMetadata(type, id) {
+  fetchSingleRecordMetadata = restartableTask(async (type, id) => {
     if (!id) {
       throw new Error(`${capitalize(type)} ID is missing`);
     }
@@ -65,7 +65,7 @@ export default class MetadataFetcherService extends Service {
     const {
       data: { attributes = {} },
       meta = {},
-    } = yield this.fetch.fetch(`/api/v1/${dasherize(type)}s/${id}`);
+    } = await this.fetch.fetch(`/api/v1/${dasherize(type)}s/${id}`);
 
     const metaValues = Object.keys(META_MODELS[camelize(type)]).reduce(
       (parsedMeta, key) => {
@@ -77,11 +77,11 @@ export default class MetadataFetcherService extends Service {
           [key]: value ? transform.deserialize(value) : defaultValue,
         };
       },
-      {}
+      {},
     );
 
     const attributesValues = Object.keys(
-      ATTRIBUTE_MODELS[camelize(type)]
+      ATTRIBUTE_MODELS[camelize(type)],
     ).reduce((parsedAttribute, key) => {
       const { defaultValue, transform } = ATTRIBUTE_MODELS[camelize(type)][key];
       const value = attributes[dasherize(key)];
@@ -93,5 +93,5 @@ export default class MetadataFetcherService extends Service {
     }, {});
 
     return { ...attributesValues, ...metaValues };
-  }
+  });
 }

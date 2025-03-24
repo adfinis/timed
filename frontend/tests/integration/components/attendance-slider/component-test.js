@@ -16,9 +16,7 @@ module("Integration | Component | attendance slider", function (hooks) {
   test("renders", async function (assert) {
     this.set("attendance", ATTENDANCE);
 
-    await render(hbs`
-      <AttendanceSlider @attendance={{this.attendance}} />
-    `);
+    await render(hbs`<AttendanceSlider @attendance={{this.attendance}} />`);
 
     assert.dom(".noUi-connect").exists();
   });
@@ -31,12 +29,10 @@ module("Integration | Component | attendance slider", function (hooks) {
       assert.ok(attendance);
     });
 
-    await render(hbs`
-      <AttendanceSlider
-        @attendance = {{this.attendance}}
-        @onDelete  = {{this.deleteAction}}
-      />
-    `);
+    await render(hbs`<AttendanceSlider
+  @attendance={{this.attendance}}
+  @onDelete={{this.deleteAction}}
+/>`);
 
     await click(".fa-trash-can");
   });
@@ -47,12 +43,10 @@ module("Integration | Component | attendance slider", function (hooks) {
       EmberObject.create({
         from: moment({ h: 0, m: 0, s: 0 }),
         to: moment({ h: 0, m: 0, s: 0 }),
-      })
+      }),
     );
 
-    await render(hbs`
-      <AttendanceSlider @attendance={{this.attendance}} />
-    `);
+    await render(hbs`<AttendanceSlider @attendance={{this.attendance}} />`);
 
     assert.dom("span").hasText("24:00");
   });

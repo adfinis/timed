@@ -1,123 +1,127 @@
 <TrackingBar data-test-tracking-bar />
-<div>
-  <div class="grid grid--12of12">
-    <div class="grid-cell grid-cell-sm--6of12">
-      <h1 class="no-margin">{{moment-format @model "dddd, DD.MM.YYYY"}}</h1>
-    </div>
-    <div class="grid-cell grid-cell-sm--6of12 grid-cell--align-center">
-      <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
-    </div>
-    <div class="grid-cell visible-md">
-      <WeeklyOverview @expected={{this.expectedWorktime}}>
-        {{#each this.weeklyOverviewData.value as |d|}}
-          <WeeklyOverviewDay
-            @day={{d.day}}
-            @active={{d.active}}
-            @worktime={{d.worktime}}
-            @workday={{d.workday}}
-            @absence={{d.absence}}
-            @holiday={{d.holiday}}
-            @prefix={{d.prefix}}
-            @onClick={{(fn (mut this.date))}}
-            data-test-weekly-overview-day={{moment-format d.day "DD"}}
-          />
-        {{/each}}
-      </WeeklyOverview>
-    </div>
-    <div class="grid-cell hidden-sm">
-      <div class="btn-group btn-group--vertical">
-        <LinkTo @route="index.activities" class="btn">
-          Activities
-          <span class="badge">{{humanize-duration this.activitySum true}}</span>
-        </LinkTo>
-        <LinkTo @route="index.attendances" class="btn">
-          Attendances
-          <span class="badge">{{humanize-duration this.attendanceSum}}</span>
-        </LinkTo>
-        <LinkTo @route="index.reports" class="btn">
+<div class="grid--12of12 grid">
+  <div class="grid md:grid-cols-[minmax(0,1fr),auto]">
+    <h1 class="block max-md:mb-2">{{moment-format
+        @model
+        "dddd, DD.MM.YYYY"
+      }}</h1>
+    <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
+  </div>
+  <div>
+    <WeeklyOverview
+      @expected={{this.expectedWorktime}}
+      data-test-weekly-overview
+    >
+      {{#each
+        (if
+          (media "isXl")
+          this.weeklyOverviewData.value
+          (slice
+            this.weeklyOverviewSliceValue
+            (this.negate this.weeklyOverviewSliceValue)
+            this.weeklyOverviewData.value
+          )
+        )
+        as |d|
+      }}
+        <WeeklyOverviewDay
+          @day={{d.day}}
+          @active={{d.active}}
+          @worktime={{d.worktime}}
+          @workday={{d.workday}}
+          @absence={{d.absence}}
+          @holiday={{d.holiday}}
+          @prefix={{d.prefix}}
+          @onClick={{fn (mut this.date)}}
+          data-test-weekly-overview-day={{moment-format d.day "DD"}}
+        />
+      {{/each}}
+    </WeeklyOverview>
+  </div>
+  <div class="grid-cell visible-sm grid-rows-1">
+    <NavTabs
+      class="grid grid-rows-1 max-sm:my-2 sm:grid-cols-[repeat(3,minmax(0,auto)),50fr]"
+    >
+      <NavTabs::Item>
+        <NavTabs::A @route="index.activities">
+          Activity
+          <NavTabs::Badge>
+            {{humanize-duration this.activitySum true}}
+          </NavTabs::Badge>
+        </NavTabs::A>
+      </NavTabs::Item>
+      <NavTabs::Item>
+        <NavTabs::A @route="index.attendances">
+          Attendance
+          <NavTabs::Badge>
+            {{humanize-duration this.attendanceSum}}
+          </NavTabs::Badge>
+        </NavTabs::A>
+      </NavTabs::Item>
+      <NavTabs::Item>
+        <NavTabs::A @route="index.reports">
           Timesheet
-          <span class="badge">{{humanize-duration this.reportSum}}</span>
-        </LinkTo>
-        {{#if this.absence}}
+          <NavTabs::Badge>
+            {{humanize-duration this.reportSum}}
+          </NavTabs::Badge>
+        </NavTabs::A>
+      </NavTabs::Item>
+      {{#if this.absence}}
+        <li
+          class="border-warning grid border first:rounded-t-sm last:rounded-b-sm sm:hidden"
+        >
           <button
             type="button"
             data-test-edit-absence
-            class="btn btn-warning"
-            disabled={{cannot "access page"}}
+            class="btn bg-warning hover:bg-warning-accent border-warning text-foreground-primary rounded-none border-none"
             {{on "click" (toggle "showEditModal" this)}}
           >
             {{this.absence.absenceType.name}}
           </button>
-        {{/if}}
+        </li>
+      {{/if}}
+      <li class="grid rounded-b-sm border first:rounded-t-sm sm:hidden">
         <button
           type="button"
           data-test-add-absence
-          class="btn btn-default"
+          class="btn sm:btn-default rounded-none border-none"
           disabled={{cannot "access page"}}
           {{on "click" (toggle "showAddModal" this)}}
         >
           Add absence
         </button>
-      </div>
-    </div>
-    <div class="grid-cell visible-sm">
-      <ul class="nav-tabs">
-        <li>
-          <LinkTo @route="index.activities">
-            Activities
-            <span class="badge">{{humanize-duration
-                this.activitySum
-                true
-              }}</span>
-          </LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="index.attendances">
-            Attendances
-            <span class="badge">{{humanize-duration this.attendanceSum}}</span>
-          </LinkTo>
-        </li>
-        <li>
-          <LinkTo @route="index.reports">
-            Timesheet
-            <span class="badge">{{humanize-duration this.reportSum}}</span>
-          </LinkTo>
-        </li>
-        <li class="nav-tab--buttons">
-          {{#if this.absence}}
-            <button
-              type="button"
-              data-test-edit-absence
-              class="btn btn-warning"
-              {{on "click" (toggle "showEditModal" this)}}
-            >
-              {{this.absence.absenceType.name}}
-            </button>
-          {{/if}}
-          <button
+      </li>
+      <li
+        class="mt-px flex w-full gap-x-1 max-sm:hidden sm:justify-end sm:pt-px md:gap-x-2"
+      >
+        {{#if this.absence}}
+          <NavTabs::Button
             type="button"
-            data-test-add-absence
-            class="btn btn-default"
-            disabled={{cannot "access page"}}
-            {{on "click" (toggle "showAddModal" this)}}
+            data-test-edit-absence
+            class="bg-warning-light border-warning hover:bg-warning hover:border-warning-accent text-foreground-primary"
+            {{on "click" (toggle "showEditModal" this)}}
           >
-            Add absence
-          </button>
-        </li>
-      </ul>
-    </div>
-    <div class="grid-cell">
-      <div class="tab-content">
-        {{outlet}}
-      </div>
-    </div>
+            {{this.absence.absenceType.name}}
+          </NavTabs::Button>
+        {{/if}}
+        <NavTabs::Button
+          class="hover:text-primary hover:border-primary whitespace-nowrap"
+          data-test-add-absence
+          disabled={{cannot "access page"}}
+          {{on "click" (toggle "showAddModal" this)}}
+        >
+          Add absence
+        </NavTabs::Button>
+      </li>
+    </NavTabs>
   </div>
 </div>
+{{outlet}}
 
 {{#if this.absence}}
   {{#let (changeset this.absence this.AbsenceValidations) as |cs|}}
-    <SyModal
-      @size="auto"
+    <Modal
+      class="!w-fit md:w-auto"
       @visible={{this.showEditModal}}
       @onClose={{queue (toggle "showEditModal" this) (fn this.rollback cs)}}
       as |modal|
@@ -129,18 +133,20 @@
           as |f|
         >
           <modal.header>
-            Edit absence
+            <h3>Edit absence</h3>
           </modal.header>
-          <modal.body>
+          <modal.body class="grid gap-2">
             <f.input @name="absenceType" as |fi|>
-              <div class="btn-group btn-group--auto">
+              <div class="btn-group grid grid-cols-3">
                 {{#each this.absenceTypes as |at|}}
                   <button
                     type="button"
-                    class={{concat
-                      "btn btn-default"
-                      (if (eq at.id cs.absenceType.id) " active")
-                    }}
+                    class="btn
+                      {{if
+                        (eq at.id cs.absenceType.id)
+                        'btn-primary'
+                        'btn-default'
+                      }}"
                     {{on "click" (fn fi.update at)}}
                   >{{at.name}}</button>
                 {{/each}}
@@ -148,9 +154,9 @@
             </f.input>
             <f.input @name="date">
               <PowerCalendar
-                class="calendar"
+                class="calendar [--size:2.5rem] sm:[--size:2.75rem] md:[--size:3rem] lg:[--size:3.25rem]"
                 @selected={{cs.date}}
-                @center={{(or this.center this.date)}}
+                @center={{or this.center this.date}}
                 @onCenterChange={{perform this.setCenter}}
                 @onSelect={{pick "moment" (changeset-set cs "date")}}
                 as |calendar|
@@ -170,7 +176,7 @@
               @name="comment"
             />
           </modal.body>
-          <modal.footer>
+          <modal.footer class="flex justify-between">
             <button
               type="button"
               class="btn btn-danger"
@@ -181,65 +187,84 @@
           </modal.footer>
         </ValidatedForm>
       </div>
-    </SyModal>
+    </Modal>
   {{/let}}
 {{/if}}
 
 {{#let (changeset this.newAbsence this.MultipleAbsenceValidations) as |cs|}}
-  <SyModal
-    @size="auto"
-    @visible={{this.showAddModal}}
-    @onClose={{queue (toggle "showAddModal" this) (fn this.rollback cs)}}
-    as |modal|
-  >
-    <div data-test-add-absence-form>
-      <ValidatedForm @model={{cs}} @on-submit={{fn this.addAbsence cs}} as |f|>
-        <modal.header>
-          New absence
-        </modal.header>
-        <modal.body>
-          <f.input @name="absenceType" as |fi|>
-            <div class="btn-group btn-group--auto">
-              {{#each this.absenceTypes as |at|}}
-                <button
-                  type="button"
-                  class={{concat
-                    "btn btn-default"
-                    (if (eq at.id cs.absenceType.id) " active")
-                  }}
-                  {{on "click" (fn fi.update at)}}
-                >{{at.name}}</button>
-              {{/each}}
-            </div>
-          </f.input>
-          <f.input @name="dates">
-            <PowerCalendarMultiple
-              class="calendar"
-              @selected={{cs.dates}}
-              @center={{this.center}}
-              @onCenterChange={{perform this.setCenter}}
-              @onSelect={{fn this.updateSelection cs "dates"}}
-              as |calendar|
-            >
-              <div class={{if calendar.loading "loading-mask"}}>
-                <calendar.Nav />
-                <calendar.Days
-                  @disabledDates={{this.disabledDates}}
-                  @startOfWeek={{1}}
-                />
+  {{#let
+    (queue (toggle "showAddModal" this) (fn this.rollback cs))
+    as |onClose|
+  }}
+    <Modal
+      class="!w-fit md:w-auto"
+      @visible={{this.showAddModal}}
+      @onClose={{onClose}}
+      as |modal|
+    >
+      <div data-test-add-absence-form>
+        <ValidatedForm
+          @model={{cs}}
+          @on-submit={{fn this.addAbsence cs}}
+          as |f|
+        >
+          <modal.header>
+            <h3>New absence</h3>
+          </modal.header>
+          <modal.body class="grid gap-2">
+            <f.input @name="absenceType" as |fi|>
+              <div class="btn-group grid grid-cols-3">
+                {{#each this.absenceTypes as |at|}}
+                  <button
+                    type="button"
+                    class="btn
+                      {{if
+                        (eq at.id cs.absenceType.id)
+                        'btn-primary'
+                        'btn-default'
+                      }}"
+                    {{on "click" (fn fi.update at)}}
+                  >{{at.name}}</button>
+                {{/each}}
               </div>
-            </PowerCalendarMultiple>
-          </f.input>
-          <f.input
-            @type="textarea"
-            @placeholder="Enter comment..."
-            @name="comment"
-          />
-        </modal.body>
-        <modal.footer>
-          <f.submit @label="Save" data-test-add-absence-save />
-        </modal.footer>
-      </ValidatedForm>
-    </div>
-  </SyModal>
+            </f.input>
+
+            <f.input @name="dates">
+              <PowerCalendarMultiple
+                class="calendar [--size:2.5rem] sm:[--size:2.75rem] md:[--size:3rem] lg:[--size:3.25rem]"
+                @selected={{cs.dates}}
+                @center={{this.center}}
+                @onCenterChange={{perform this.setCenter}}
+                @onSelect={{fn this.updateSelection cs "dates"}}
+                as |calendar|
+              >
+                <div class={{if calendar.loading "loading-mask"}}>
+                  <calendar.Nav />
+                  <calendar.Days
+                    @disabledDates={{this.disabledDates}}
+                    @startOfWeek={{1}}
+                  />
+                </div>
+              </PowerCalendarMultiple>
+            </f.input>
+            <f.input
+              class="rounded"
+              @type="textarea"
+              @placeholder="Enter comment..."
+              @name="comment"
+            />
+          </modal.body>
+          <modal.footer class="flex justify-between">
+            <button
+              type="button"
+              class="btn btn-default"
+              {{on "click" onClose}}
+              data-test-edit-absence-cancel
+            >Cancel</button>
+            <f.submit @label="Save" data-test-add-absence-save />
+          </modal.footer>
+        </ValidatedForm>
+      </div>
+    </Modal>
+  {{/let}}
 {{/let}}

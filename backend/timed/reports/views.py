@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from zipfile import ZipFile
 
 from django.conf import settings
-from django.db.models import F, Q, QuerySet, Sum
+from django.db.models import Exists, F, OuterRef, Q, QuerySet, Sum
 from django.db.models.functions import ExtractMonth, ExtractYear
 from django.http import HttpResponse
 from django.utils.http import content_disposition_header
@@ -28,7 +28,7 @@ from timed.tracking.views import ReportViewSet
 from . import filters
 
 if TYPE_CHECKING:
-    from typing import Iterable
+    from collections.abc import Iterable
 
     from ezodf.document import FlatXMLDocument, PackagedDocument
 
@@ -100,6 +100,9 @@ class StatisticQueryset(QuerySet):
         self._catch_prefixes = catch_prefixes
 
     def filter(self, /, **kwargs):
+        # TODO: we might need a more intelligent method to decide which
+        # filter to apply where. Some may need to be applied in both "main" QS
+        # and the SUM call (applied later)
         my_filters = {
             k: v for k, v in kwargs.items() if not k.startswith(self._catch_prefixes)
         }
@@ -117,9 +120,14 @@ class StatisticQueryset(QuerySet):
         return new_qs
 
     def filter_base(self, *args, **kwargs):
+        filtered = (
+            self.model.objects.filter(*args, **kwargs)
+            .values("pk")
+            .filter(pk=OuterRef("pk"))
+        )
         return StatisticQueryset(
             model=self.model,
-            base_qs=self._base.filter(*args, **kwargs),
+            base_qs=self._base.filter(Exists(filtered)),
             catch_prefixes=self._catch_prefixes,
             agg_filters=self._agg_filters,
         )
@@ -218,7 +226,7 @@ class TaskStatisticViewSet(AggregateQuerysetMixin, ReadOnlyModelViewSet):
     )
 
     def get_queryset(self):
-        return StatisticQueryset(model=Task, catch_prefixes="tasks__")
+        return StatisticQueryset(model=Task, catch_prefixes="reports__")
 
 
 class UserStatisticViewSet(AggregateQuerysetMixin, ReadOnlyModelViewSet):
@@ -302,7 +310,7 @@ class WorkReportViewSet(GenericViewSet):
         """
         return f"{from_date:%y%m}-{date.today():%Y%m%d}-{self._clean_filename(project.customer.name)}-{self._clean_filename(project.name)}.ods"
 
-    def _create_workreport(  # noqa: PLR0913
+    def _create_workreport(
         self,
         from_date: date,
         to_date: date,
@@ -382,16 +390,17 @@ class WorkReportViewSet(GenericViewSet):
             )
 
         # calculate location of total hours as insert rows moved it
-        table[
-            13 + len(reports) + len(tasks), 2
-        ].formula = f"of:=SUM(C13:C{13 + len(reports) - 1!s})"
+        table[pos + len(tasks), 2].formula = f"of:=SUM(C13:C{pos - 1!s})"
 
         # calculate location of total not billable hours as insert rows moved it
         table[
-            13 + len(reports) + len(tasks) + 1, 2
-        ].formula = 'of:=SUMIF(F13:F{0};"no";C13:C{0})'.format(
-            str(13 + len(reports) - 1)
-        )
+            pos + len(tasks) + 1, 2
+        ].formula = f"of:=C{pos + len(tasks) + 1!s}-C{pos + len(tasks) + 3!s}"
+
+        # calculate location of total billable hours as insert rows moved it
+        table[
+            pos + len(tasks) + 2, 2
+        ].formula = f'of:=SUMIF(F13:F{pos - 1!s};"yes";C13:C{pos - 1!s})'
 
         name = self._generate_workreport_name(from_date, project)
         return (name, doc)

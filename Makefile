@@ -8,7 +8,7 @@ ORCHESTRATOR = docker
 
 .PHONY: help
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort -k 1,1 | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort -k 1,1 | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: start
 start: ## Start the application
@@ -32,7 +32,7 @@ backend-test: ## Test the backend
 
 .PHONY: backend-dbshell
 backend-dbshell: ## Start a psql shell
-	@$(ORCHESTRATOR) compose run -it --rm db psql -Utimed timed
+	@$(ORCHESTRATOR) compose exec -it db psql -Utimed timed
 
 .PHONY: shellplus
 shellplus: ## Run shell_plus

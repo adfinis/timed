@@ -4,7 +4,7 @@ from datetime import timedelta
 import redminelib
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from django.db.models import Count, Sum
+from django.db.models import Count, Q, Sum
 from django.template.loader import get_template
 from django.utils import timezone
 
@@ -53,6 +53,12 @@ class Command(BaseCommand):
             Project.objects.filter(id__in=affected_projects)
             .order_by("name")
             .annotate(total_hours=Sum("tasks__reports__duration"))
+            .annotate(
+                billable_hours=Sum(
+                    "tasks__reports__duration",
+                    filter=Q(tasks__reports__not_billable=False),
+                )
+            )
         )
 
         for project in projects:
@@ -62,6 +68,11 @@ class Command(BaseCommand):
                 else 0.0
             )
             total_hours = project.total_hours.total_seconds() / 3600
+            billable_hours = (
+                (project.billable_hours.total_seconds() / 3600)
+                if project.billable_hours
+                else 0
+            )
             try:
                 issue = redmine.issue.get(project.redmine_project.issue_id)
                 reports = Report.objects.filter(
@@ -75,6 +86,7 @@ class Command(BaseCommand):
                         "hours": hours.total_seconds() / 3600,
                         "last_days": last_days,
                         "total_hours": total_hours,
+                        "billable_hours": billable_hours,
                         "estimated_hours": estimated_hours,
                         "reports": reports,
                     }

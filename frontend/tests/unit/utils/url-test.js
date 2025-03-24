@@ -1,4 +1,5 @@
 import { module, test } from "qunit";
+
 import { cleanParams, toQueryString } from "timed/utils/url";
 
 module("Unit | Utility | url", function () {

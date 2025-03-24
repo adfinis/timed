@@ -21,7 +21,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
         constructor: EmberObject.create({
           modelName: "project",
         }),
-      })
+      }),
     );
 
     this.set(
@@ -34,15 +34,13 @@ module("Integration | Component | progress tooltip", function (hooks) {
         }),
         totalRemainingEffort: moment.duration({ h: 2 }),
         remainingEffortTracking: true,
-      })
+      }),
     );
   });
 
   test("renders", async function (assert) {
-    await render(hbs`
-      <span id='target'></span>
-      <ProgressTooltip @target='#target' @model={{this.project}} @visible={{true}} />
-    `);
+    await render(hbs`<span id="target"></span>
+<ProgressTooltip @target="#target" @model={{this.project}} @visible={{true}} />`);
 
     assert.dom(".progress-tooltip").exists();
 
@@ -60,10 +58,12 @@ module("Integration | Component | progress tooltip", function (hooks) {
   });
 
   test("renders on project with remaining effort", async function (assert) {
-    await render(hbs`
-      <span id='target'></span>
-      <ProgressTooltip @target='#target' @model={{this.project_with_remaining_effort}} @visible={{true}} />
-    `);
+    await render(hbs`<span id="target"></span>
+<ProgressTooltip
+  @target="#target"
+  @model={{this.project_with_remaining_effort}}
+  @visible={{true}}
+/>`);
 
     assert
       .dom(".progress-tooltip .time-info [data-test-remaining-effort]")
@@ -79,13 +79,11 @@ module("Integration | Component | progress tooltip", function (hooks) {
         constructor: EmberObject.create({
           modelName: "task",
         }),
-      })
+      }),
     );
 
-    await render(hbs`
-      <span id='target'></span>
-      <ProgressTooltip @target='#target' @model={{this.model}} @visible={{true}} />
-    `);
+    await render(hbs`<span id="target"></span>
+<ProgressTooltip @target="#target" @model={{this.model}} @visible={{true}} />`);
 
     assert.dom(".progress-tooltip").exists();
 
@@ -113,13 +111,11 @@ module("Integration | Component | progress tooltip", function (hooks) {
           modelName: "task",
         }),
         project: this.project_with_remaining_effort,
-      })
+      }),
     );
 
-    await render(hbs`
-      <span id='target'></span>
-      <ProgressTooltip @target='#target' @model={{this.model}} @visible={{true}} />
-    `);
+    await render(hbs`<span id="target"></span>
+<ProgressTooltip @target="#target" @model={{this.model}} @visible={{true}} />`);
 
     assert
       .dom(".progress-tooltip .time-info [data-test-remaining-effort]")
@@ -135,15 +131,17 @@ module("Integration | Component | progress tooltip", function (hooks) {
         constructor: EmberObject.create({
           modelName: "task",
         }),
-      })
+      }),
     );
 
     this.set("visible", false);
 
-    await render(hbs`
-      <span id='target'></span>
-      <ProgressTooltip @target='#target' @model={{this.model}} @visible={{this.visible}} />
-    `);
+    await render(hbs`<span id="target"></span>
+<ProgressTooltip
+  @target="#target"
+  @model={{this.model}}
+  @visible={{this.visible}}
+/>`);
 
     assert.dom(".progress-tooltip").doesNotExist();
 
@@ -166,12 +164,10 @@ module("Integration | Component | progress tooltip", function (hooks) {
       };
     });
 
-    await render(hbs`
-      <span id='target'></span>
-      <ProgressTooltip @target='#target' @model={{this.project}} @visible={{true}} />
-    `);
+    await render(hbs`<span id="target"></span>
+<ProgressTooltip @target="#target" @model={{this.project}} @visible={{true}} />`);
 
-    assert.dom(".progress-tooltip .badge--danger").exists();
+    assert.dom(".progress-tooltip .badge.bg-danger").exists();
   });
 
   test("uses warning color when the factor is 0.9 or more", async function (assert) {
@@ -186,11 +182,9 @@ module("Integration | Component | progress tooltip", function (hooks) {
       };
     });
 
-    await render(hbs`
-      <span id='target'></span>
-      <ProgressTooltip @target='#target' @model={{this.project}} @visible={{true}} />
-    `);
+    await render(hbs`<span id="target"></span>
+<ProgressTooltip @target="#target" @model={{this.project}} @visible={{true}} />`);
 
-    assert.dom(".progress-tooltip .badge--warning").exists();
+    assert.dom(".progress-tooltip .badge.bg-warning").exists();
   });
 });

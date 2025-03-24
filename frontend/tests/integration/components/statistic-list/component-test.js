@@ -23,11 +23,11 @@ module("Integration | Component | statistic list", function (hooks) {
     this.set("data", { last: { isError: true } });
 
     await render(hbs`<StatisticList
-      @data={{this.data}}
-      @type='year'
-      @ordering='year'
-      @onOrderingChange={{this.noop}}
-    />`);
+  @data={{this.data}}
+  @type="year"
+  @ordering="year"
+  @onOrderingChange={{this.noop}}
+/>`);
 
     assert.dom(".empty").includesText("Oops");
   });
@@ -36,11 +36,11 @@ module("Integration | Component | statistic list", function (hooks) {
     this.set("data", { last: { value: [] } });
 
     await render(hbs`<StatisticList
-      @data={{this.data}}
-      @type='year'
-      @ordering='year'
-      @onOrderingChange={{this.noop}}
-    />`);
+  @data={{this.data}}
+  @type="year"
+  @ordering="year"
+  @onOrderingChange={{this.noop}}
+/>`);
 
     assert.dom(".empty").includesText("No statistics to display");
   });
@@ -49,11 +49,11 @@ module("Integration | Component | statistic list", function (hooks) {
     this.set("data", { isRunning: true });
 
     await render(hbs`<StatisticList
-      @data={{this.data}}
-      @type='year'
-      @ordering='year'
-      @onOrderingChange={{this.noop}}
-    />`);
+  @data={{this.data}}
+  @type="year"
+  @ordering="year"
+  @onOrderingChange={{this.noop}}
+/>`);
 
     assert.dom(".loading-icon").exists();
   });
@@ -63,12 +63,12 @@ module("Integration | Component | statistic list", function (hooks) {
     this.set("missingParams", ["foo", "bar"]);
 
     await render(hbs`<StatisticList
-      @data={{this.data}}
-      @type='year'
-      @ordering='year'
-      @onOrderingChange={{this.noop}}
-      @missingParams={{this.missingParams}}
-    />`);
+  @data={{this.data}}
+  @type="year"
+  @ordering="year"
+  @onOrderingChange={{this.noop}}
+  @missingParams={{this.missingParams}}
+/>`);
 
     assert.dom(".empty").includesText("Foo and bar are required parameters");
   });
@@ -88,16 +88,14 @@ module("Integration | Component | statistic list", function (hooks) {
       },
     });
 
-    await render(hbs`
-      <div class="page-content--scroll">
-        <StatisticList
-          @data={{this.data}}
-          @type='year'
-          @ordering='year'
-          @onOrderingChange={{this.noop}}
-        />
-      </div>
-    `);
+    await render(hbs`<div class="page-content--scroll">
+  <StatisticList
+    @data={{this.data}}
+    @type="year"
+    @ordering="year"
+    @onOrderingChange={{this.noop}}
+  />
+</div>`);
 
     await waitFor("table tbody tr");
 

@@ -1,7 +1,8 @@
 import { action, get, set } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, hash } from "ember-concurrency";
+
 import QPController from "timed/controllers/qpcontroller";
 import {
   underscoreQueryParams,
@@ -17,16 +18,21 @@ const TYPES = {
   project: {
     include: "customer",
     requiredParams: ["customer"],
+    mobile: false,
   },
   task: {
     include: "project,project.customer",
     requiredParams: ["customer", "project"],
+    mobile: false,
   },
   user: { include: "user", requiredParams: [] },
 };
 
 export default class StatisticsController extends QPController {
   types = Object.keys(TYPES);
+  mobileTypes = Object.entries(TYPES)
+    .filter(([, v]) => v.mobile !== false)
+    .map(([k]) => k);
 
   queryParams = [
     "customer",
@@ -73,11 +79,11 @@ export default class StatisticsController extends QPController {
   }
 
   get billingTypes() {
-    return this.store.findAll("billing-type");
+    return this.store.peekAll("billing-type");
   }
 
   get costCenters() {
-    return this.store.findAll("cost-center");
+    return this.store.peekAll("cost-center");
   }
 
   get selectedCustomer() {
@@ -122,7 +128,7 @@ export default class StatisticsController extends QPController {
 
   get missingParams() {
     return this.requiredParams.filter(
-      (param) => !queryParamsState(this)[param].changed
+      (param) => !queryParamsState(this)[param].changed,
     );
   }
 
@@ -139,8 +145,7 @@ export default class StatisticsController extends QPController {
     return TYPES[this.type].requiredParams;
   }
 
-  @restartableTask
-  *prefetchData() {
+  prefetchData = restartableTask(async () => {
     const {
       customer: customerId,
       project: projectId,
@@ -149,7 +154,7 @@ export default class StatisticsController extends QPController {
       reviewer: reviewerId,
     } = this.allQueryParams;
 
-    return yield hash({
+    return await hash({
       customer: customerId && this.store.findRecord("customer", customerId),
       project: projectId && this.store.findRecord("project", projectId),
       task: taskId && this.store.findRecord("task", taskId),
@@ -158,10 +163,9 @@ export default class StatisticsController extends QPController {
       billingTypes: this.store.findAll("billing-type"),
       costCenters: this.store.findAll("cost-center"),
     });
-  }
+  });
 
-  @restartableTask
-  *data() {
+  data = restartableTask(async () => {
     if (this.missingParams.length) {
       return null;
     }
@@ -169,18 +173,18 @@ export default class StatisticsController extends QPController {
     const type = this.type;
 
     let params = underscoreQueryParams(
-      serializeQueryParams(this.allQueryParams, queryParamsState(this))
+      serializeQueryParams(this.allQueryParams, queryParamsState(this)),
     );
 
     params = Object.keys(params).reduce((obj, key) => {
       return key !== "type" ? { ...obj, [key]: get(params, key) } : obj;
     }, {});
 
-    return yield this.store.query(`${type}-statistic`, {
+    return await this.store.query(`${type}-statistic`, {
       include: TYPES[type].include,
       ...params,
     });
-  }
+  });
 
   @action
   setModelFilter(key, value) {

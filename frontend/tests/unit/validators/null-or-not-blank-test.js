@@ -1,4 +1,5 @@
 import { module, test } from "qunit";
+
 import validateNullOrNotBlank from "timed/validators/null-or-not-blank";
 
 module("Unit | Validator | null or not blank", function () {

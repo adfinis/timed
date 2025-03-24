@@ -4,9 +4,10 @@
  * @public
  */
 import Route from "@ember/routing/route";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import Changeset from "ember-changeset";
 import lookupValidator from "ember-changeset-validations";
+
 import ActivityValidator from "timed/validations/activity";
 
 /**
@@ -52,7 +53,7 @@ export default class IndexActivityEditController extends Route {
     const changeset = new Changeset(
       model,
       lookupValidator(ActivityValidator),
-      ActivityValidator
+      ActivityValidator,
     );
     changeset.validate();
 

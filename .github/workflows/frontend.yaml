@@ -28,15 +28,15 @@ jobs:
 
     strategy:
       matrix:
-        target: [js, hbs]
+        target: [js, hbs, css]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4.0.0
+        uses: pnpm/action-setup@v4.1.0
         with:
-          version: 8
+          version: 9
 
       - uses: actions/setup-node@v4
         with:
@@ -59,9 +59,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4.0.0
+        uses: pnpm/action-setup@v4.1.0
         with:
-          version: ^7.17.1
+          version: 9
 
       - uses: actions/setup-node@v4
         with:
@@ -73,11 +73,11 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Run tests
-        run: pnpm test
+        run: pnpm test:ember
         env:
           COVERAGE: true
 
       - name: upload coverage report to codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           file: ./coverage/lcov.info

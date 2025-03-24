@@ -1,6 +1,6 @@
 import { action } from "@ember/object";
 import Route from "@ember/routing/route";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 
 /**
  * The protected route
@@ -38,7 +38,7 @@ export default class ProtectedRoute extends Route {
     const visible =
       !this.autostartTour.allDone &&
       !this.currentUser.user.tourDone &&
-      (this.media.isMd || this.media.isLg || this.media.isXl);
+      this.media.isMd;
 
     controller.set("visible", visible);
   }

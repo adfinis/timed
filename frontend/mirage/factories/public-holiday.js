@@ -9,7 +9,7 @@ export default Factory.extend({
   date() {
     const random = faker.date.between(
       moment.startOf("year").format("YYYY-MM-DD"),
-      moment.endOf("year").format("YYYY-MM-DD")
+      moment.endOf("year").format("YYYY-MM-DD"),
     );
 
     return moment(random).startOf("day");

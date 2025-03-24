@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import date, time, timedelta
 from typing import TYPE_CHECKING
 
 from django.contrib.auth import get_user_model
 from django.db.models import BooleanField, Case, Q, When
 from django.utils.duration import duration_string
+from django.utils.timezone import datetime
 from django.utils.translation import gettext_lazy as _
 from rest_framework_json_api import relations, serializers
 from rest_framework_json_api.relations import ResourceRelatedField
@@ -23,6 +24,7 @@ from timed.employment.relations import CurrentUserResourceRelatedField
 from timed.projects.models import Customer, Project, Task
 from timed.serializers import TotalTimeRootMetaMixin
 from timed.tracking import models
+from timed.utils import round_time
 
 if TYPE_CHECKING:
     from typing import ClassVar
@@ -47,7 +49,7 @@ class ActivitySerializer(ModelSerializer):
         instance = self.instance
         from_time = data.get("from_time", instance and instance.from_time)
         to_time = data.get("to_time", instance and instance.to_time)
-        user = instance and instance.user or data["user"]
+        user = (instance and instance.user) or data["user"]
 
         def validate_running_activity():
             if activity.filter(to_time__isnull=True).exists():
@@ -68,6 +70,20 @@ class ActivitySerializer(ModelSerializer):
 
         return data
 
+    def update(
+        self, instance: models.Activity, validated_data: dict
+    ) -> models.Activity:
+        """Update an activity.
+
+        Ensure that transferring an activity ends it.
+        """
+        to_time = validated_data.get("to_time", instance.to_time)
+
+        if validated_data.get("transferred", instance.transferred) and not to_time:
+            validated_data["to_time"] = datetime.now().time()
+
+        return super().update(instance, validated_data)
+
     class Meta:
         """Meta information for the activity serializer."""
 
@@ -83,6 +99,21 @@ class AttendanceSerializer(ModelSerializer):
     included_serializers: ClassVar[dict[str, str]] = {
         "user": "timed.employment.serializers.UserSerializer"
     }
+
+    def validate(self, data):
+        """Validate the attendance.
+
+        Ensure that attendances end after they start.
+        """
+        instance = self.instance
+        from_time = round_time(data.get("from_time", instance and instance.from_time))
+        to_time = round_time(data.get("to_time", instance and instance.to_time))
+
+        # allow attendances to end at midnight (00:00)
+        if to_time < from_time and to_time != time(0, 0):
+            raise ValidationError(_("An attendance may not end before it starts."))
+
+        return data
 
     class Meta:
         """Meta information for the attendance serializer."""
@@ -453,8 +484,7 @@ class AbsenceSerializer(ModelSerializer):
         ).exists():
             raise ValidationError(_("You can't create an absence on a public holiday"))
 
-        workdays = [int(day) for day in location.workdays]
-        if data.get("date").isoweekday() not in workdays:
+        if data.get("date").isoweekday() not in location.workdays:
             raise ValidationError(_("You can't create an absence on a weekend"))
 
         return data

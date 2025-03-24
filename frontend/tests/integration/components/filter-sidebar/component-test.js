@@ -10,10 +10,8 @@ module("Integration | Component | filter sidebar", function (hooks) {
     assert.expect(1);
     this.set("didReset", false);
 
-    await render(hbs`
-      <div id="filter-sidebar-target"></div>
-      <FilterSidebar @onReset={{fn (mut this.didReset) true}} />
-    `);
+    await render(hbs`<div id="filter-sidebar-target"></div>
+<FilterSidebar @onReset={{fn (mut this.didReset) true}} />`);
 
     await click(".filter-sidebar-reset");
 
@@ -23,10 +21,8 @@ module("Integration | Component | filter sidebar", function (hooks) {
   test("shows applied filter count", async function (assert) {
     this.set("count", 0);
 
-    await render(hbs`
-      <div id="filter-sidebar-target"></div>
-      <FilterSidebar @appliedCount={{this.count}} />
-    `);
+    await render(hbs`<div id="filter-sidebar-target"></div>
+<FilterSidebar @appliedCount={{this.count}} />`);
 
     assert.dom(".filter-sidebar-title").includesText("Filters");
 

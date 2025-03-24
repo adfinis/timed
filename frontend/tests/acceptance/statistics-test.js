@@ -12,7 +12,6 @@ module("Acceptance | statistics", function (hooks) {
   hooks.beforeEach(async function () {
     const user = this.server.create("user");
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     this.server.createList("year-statistic", 5);
@@ -79,7 +78,7 @@ module("Acceptance | statistics", function (hooks) {
 
     await fillIn(
       "[data-test-filter-from-date] input",
-      from.format("DD.MM.YYYY")
+      from.format("DD.MM.YYYY"),
     );
     await fillIn("[data-test-filter-to-date] input", to.format("DD.MM.YYYY"));
 
@@ -96,7 +95,7 @@ module("Acceptance | statistics", function (hooks) {
     await visit("/statistics?type=task");
 
     assert
-      .dom(".empty")
+      .dom(".empty[data-test-missing-filter-params]")
       .includesText("Customer and project are required parameters");
   });
 
@@ -106,7 +105,7 @@ module("Acceptance | statistics", function (hooks) {
     await click(".nav-tabs li a:first-child");
 
     assert.notOk(
-      currentURL().includes("Customer and project are required parameters")
+      currentURL().includes("Customer and project are required parameters"),
     );
   });
 
@@ -130,7 +129,7 @@ module("Acceptance | statistics", function (hooks) {
     await visit(
       `/statistics?${Object.keys(params)
         .map((k) => `${k}=${params[k]}`)
-        .join("&")}`
+        .join("&")}`,
     );
 
     assert
@@ -155,7 +154,7 @@ module("Acceptance | statistics", function (hooks) {
 
     assert.strictEqual(
       find("[data-test-filter-billing-type] select").options.selectedIndex,
-      1
+      1,
     );
 
     assert.dom("[data-test-filter-from-date] input").exists();

@@ -29,8 +29,8 @@ export default Factory.extend({
     activity.update({
       duration: moment.duration(
         (activity.toTime ? moment(activity.toTime, "HH:mm:ss") : moment()).diff(
-          moment(activity.fromTime, "HH:mm:ss")
-        )
+          moment(activity.fromTime, "HH:mm:ss"),
+        ),
       ),
     });
   },

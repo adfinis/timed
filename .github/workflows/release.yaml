@@ -100,7 +100,7 @@ jobs:
             org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
 
       - name: Build and Push ${{ matrix.config.name }} Docker Image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         id: docker
         with:
           context: ./${{ matrix.config.name }}/
@@ -110,7 +110,7 @@ jobs:
             ${{ steps.meta.outputs.labels }}
 
       - name: Sign ${{ matrix.config.name }} image and attach SBOM attestation
-        uses: adfinis/container-scanning-action@v0.2.7
+        uses: adfinis/container-scanning-action@v0.2.11
         with:
           image-ref: ghcr.io/${{ github.repository }}/${{ matrix.config.name }}
           token: ${{ secrets.GITHUB_TOKEN }}

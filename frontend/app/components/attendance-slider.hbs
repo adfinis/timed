@@ -1,0 +1,36 @@
+<div class="attendance-slider relative pt-4" ...attributes>
+  <RangeSlider
+    @start={{this.start}}
+    @step={{15}}
+    @min={{0}}
+    @max={{1440}}
+    @connect={{true}}
+    @animate={{true}}
+    @behaviour="drag"
+    @tooltips={{this.tooltips}}
+    @on-slide={{fn (mut this.values)}}
+    @on-change={{perform this.save}}
+  />
+
+  <div class="slider-labels text-foreground-muted relative h-12 font-mono">
+    {{#each this.labels as |label|}}
+      <div
+        style={{label.style}}
+        class="slider-label absolute top-4 flex -translate-x-3/4"
+      >
+        <div class="slider-label-text -rotate-45 {{label.size}}">
+          {{label.value}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+
+  <div class="slider-title absolute left-0 top-0 text-xs">
+    <span>{{this.duration}}</span>
+    <FaIcon
+      @icon="trash-can"
+      data-test-delete-attendance="true"
+      {{on "click" (perform this.delete)}}
+    />
+  </div>
+</div>

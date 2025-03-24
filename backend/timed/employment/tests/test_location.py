@@ -5,7 +5,7 @@ from rest_framework import status
 from timed.employment.factories import EmploymentFactory, LocationFactory
 
 
-@pytest.mark.django_db()
+@pytest.mark.django_db
 @pytest.mark.usefixtures("location")
 @pytest.mark.parametrize(
     ("is_employed", "is_customer_assignee", "is_customer", "expected"),
@@ -40,7 +40,7 @@ def test_location_list(
     data = response.json()["data"]
     assert len(data) == expected
     if expected:
-        assert data[0]["attributes"]["workdays"] == ([str(day) for day in range(1, 6)])
+        assert data[0]["attributes"]["workdays"] == ",".join(map(str, range(1, 6)))
 
 
 @pytest.mark.parametrize(
