@@ -138,7 +138,7 @@ export default class ProjectsController extends Controller {
   updateRemainingEffort(changeset) {
     if (
       changeset.get("project.remainingEffortTracking") &&
-      !changeset.get("mostRecentRemainingEffort")
+      this.selectedTask.isNew
     ) {
       changeset.set(
         "mostRecentRemainingEffort",
