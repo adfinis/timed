@@ -56,7 +56,7 @@ export default class UnverifiedReportsService extends Service {
       });
 
       this.amountReports = reports.meta.pagination.count;
-    } catch (e) {
+    } catch {
       this.notify.error("Error while polling reports");
     }
   }

@@ -1,5 +1,6 @@
 import faker from "faker";
 import moment from "moment";
+
 import DjangoDurationTransform from "timed/transforms/django-duration";
 
 export function randomDuration(precision = 15, seconds = false, maxHours = 2) {

@@ -1,11 +1,12 @@
 import { getOwner } from "@ember/application";
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { later } from "@ember/runloop";
 import { service } from "@ember/service";
 import { dasherize } from "@ember/string";
 import { tracked } from "@glimmer/tracking";
 import { task } from "ember-concurrency";
+import { runTask } from "ember-lifeline";
+
 import {
   underscoreQueryParams,
   serializeQueryParams,
@@ -93,9 +94,8 @@ export default class AnalysisEditController extends Controller {
     return this.currentUser.user.isSuperuser;
   }
 
-  @task
-  *intersection() {
-    const res = yield this.fetch.fetch(
+  intersection = task(async () => {
+    const res = await this.fetch.fetch(
       `/api/v1/reports/intersection?${new URLSearchParams({
         ...this.prepareParams(allQueryParams(this)),
         editable: 1,
@@ -106,23 +106,23 @@ export default class AnalysisEditController extends Controller {
       },
     );
 
-    yield this.store.pushPayload("report-intersection", res);
+    await this.store.pushPayload("report-intersection", res);
 
     const model = this.store.peekRecord("report-intersection", res.data.id);
 
     if (model.customer) {
-      this.store.query("project", { customer: model.customer.id });
+      await this.store.query("project", { customer: model.customer.id });
     }
 
     if (model.project) {
-      this.store.query("task", { project: model.project.id });
+      await this.store.query("task", { project: model.project.id });
     }
 
     return {
       model,
       meta: res.meta,
     };
-  }
+  });
 
   get _customer() {
     const id = this.intersectionModel.customer.get("id");
@@ -177,25 +177,54 @@ export default class AnalysisEditController extends Controller {
     return result;
   }
 
-  @task
-  *save(changeset) {
+  save = task(async (changeset) => {
     try {
       const params = this.prepareParams(allQueryParams(this));
 
       const queryString = toQueryString(params);
 
-      yield changeset.execute();
+      // this is an ugly mess, to get around the changeset using a PromiseProxy
+      const changes = changeset.get("changes");
+
+      const { comment, notBillable, rejected, review, billed, verified } =
+        changeset;
+      const _attributes = {
+        comment,
+        notBillable,
+        rejected,
+        review,
+        billed,
+        verified,
+      };
+
+      const [user, customer, project, task] = [
+        changeset.get("user.id") &&
+          this.store.peekRecord("user", changeset.get("user.id")),
+        changeset.get("customer.id") &&
+          this.store.peekRecord("customer", changeset.get("customer.id")),
+        changeset.get("project.id") &&
+          this.store.peekRecord("project", changeset.get("project.id")),
+        changeset.get("task.id") &&
+          this.store.peekRecord("task", changeset.get("task.id")),
+      ];
+      const _relationships = { user, customer, project, task };
+
       const {
         data: { attributes, relationships },
-      } = this.intersectionModel.serialize();
+      } = this.store
+        .createRecord("report-intersection", {
+          ..._attributes,
+          ..._relationships,
+        })
+        .serialize();
 
       const data = {
         type: "report-bulks",
-        attributes: filterUnchanged(attributes, changeset.get("changes")),
-        relationships: filterUnchanged(relationships, changeset.get("changes")),
+        attributes: filterUnchanged(attributes, changes),
+        relationships: filterUnchanged(relationships, changes),
       };
 
-      yield this.fetch.fetch(`/api/v1/reports/bulk?editable=1&${queryString}`, {
+      await this.fetch.fetch(`/api/v1/reports/bulk?editable=1&${queryString}`, {
         method: "POST",
         data,
       });
@@ -207,12 +236,12 @@ export default class AnalysisEditController extends Controller {
       });
 
       this.notify.success("Reports were saved");
-    } catch (e) {
+    } catch {
       this.notify.error("Error while saving the reports");
     }
 
     this.unverifiedReports.pollReports();
-  }
+  });
 
   @action
   validate(changeset) {
@@ -242,7 +271,7 @@ export default class AnalysisEditController extends Controller {
     // We have to defer the rollback for some milliseconds since the combobox
     // reset action triggers mutation of customer, task, and project which
     // would be run after this rollback and therefore trigger changes
-    later(() => {
+    runTask(this, () => {
       changeset.rollback();
     });
   }

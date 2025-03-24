@@ -1,6 +1,7 @@
 import Controller, { inject as controller } from "@ember/controller";
 import { service } from "@ember/service";
 import { task, dropTask } from "ember-concurrency";
+
 import AbsenceCreditValidations from "timed/validations/absence-credit";
 
 export default class UsersEditAbsenceCreditsController extends Controller {
@@ -12,30 +13,27 @@ export default class UsersEditAbsenceCreditsController extends Controller {
   @controller("users.edit") userController;
   @controller("users.edit.credits.index") userCreditsController;
 
-  @task
-  *absenceTypes() {
-    return yield this.store.query("absence-type", {
-      fill_worktime: 0, // eslint-disable-line camelcase
+  absenceTypes = task(async () => {
+    return await this.store.query("absence-type", {
+      fill_worktime: 0,
     });
-  }
+  });
 
-  @task
-  *credit() {
+  credit = task(async () => {
     const id = this.model;
 
     return id
-      ? yield this.store.findRecord("absence-credit", id, {
+      ? await this.store.findRecord("absence-credit", id, {
           include: "absence_type",
         })
-      : yield this.store.createRecord("absence-credit", {
+      : await this.store.createRecord("absence-credit", {
           user: this.user,
         });
-  }
+  });
 
-  @dropTask
-  *save(changeset) {
+  save = dropTask(async (changeset) => {
     try {
-      yield changeset.save();
+      await changeset.save();
 
       this.notify.success("Absence credit was saved");
 
@@ -44,34 +42,31 @@ export default class UsersEditAbsenceCreditsController extends Controller {
       let allYears = this.userCreditsController.years.lastSuccessful?.value;
 
       if (!allYears) {
-        allYears = yield this.userCreditsController.years.perform(this.user.id);
+        allYears = await this.userCreditsController.years.perform(this.user.id);
       }
 
       const year =
         allYears.find((y) => y === String(changeset.get("date").year())) || "";
 
-      yield this.router.transitionTo("users.edit.credits", this.user.id, {
+      await this.router.transitionTo("users.edit.credits", this.user.id, {
         queryParams: { year },
       });
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the absence credit");
     }
-  }
+  });
 
-  @dropTask
-  *delete(credit) {
+  delete = dropTask(async (credit) => {
     try {
-      yield credit.destroyRecord();
+      await credit.destroyRecord();
 
       this.notify.success("Absence credit was deleted");
 
       this.userController.data.perform(this.user.id);
 
       this.router.transitionTo("users.edit.credits");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while deleting the absence credit");
     }
-  }
+  });
 }

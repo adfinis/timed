@@ -3,8 +3,8 @@ import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout } from "ember-concurrency";
-import { trackedTask } from "ember-resources/util/ember-concurrency";
 import moment from "moment";
+import { trackedTask } from "reactiveweb/ember-concurrency";
 
 /**
  * Component for a tooltip showing the progress of a task or project
@@ -123,16 +123,11 @@ export default class ProgressTooltipComponent extends Component {
     return this._toolTipVisible.value ?? false;
   }
 
-  _toolTipVisible = trackedTask(this, this._computeTooltipVisible, () => [
-    this.args.visible,
-  ]);
-
-  @restartableTask
-  *_computeTooltipVisible(visible) {
+  _computeTooltipVisible = restartableTask(async (visible) => {
     if (visible) {
-      yield timeout(this.delay);
+      await timeout(this.delay);
 
-      const response = yield this.metadata.fetchSingleRecordMetadata
+      const response = await this.metadata.fetchSingleRecordMetadata
         .linked()
         .perform(this.args.model.constructor.modelName, this.args.model.id);
       const {
@@ -149,5 +144,9 @@ export default class ProgressTooltipComponent extends Component {
     }
 
     return visible;
-  }
+  });
+
+  _toolTipVisible = trackedTask(this, this._computeTooltipVisible, () => [
+    this.args.visible,
+  ]);
 }

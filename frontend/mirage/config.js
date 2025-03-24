@@ -1,10 +1,11 @@
 import { discoverEmberDataModels } from "ember-cli-mirage";
 import { createServer, Response } from "miragejs";
 import moment from "moment";
-import formatDuration from "timed/utils/format-duration";
-import parseDjangoDuration from "timed/utils/parse-django-duration";
 
 import { randomDuration } from "./helpers/duration";
+
+import formatDuration from "timed/utils/format-duration";
+import parseDjangoDuration from "timed/utils/parse-django-duration";
 
 const { parse } = JSON;
 

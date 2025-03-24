@@ -2,7 +2,8 @@ import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask } from "ember-concurrency";
-import { trackedTask } from "ember-resources/util/ember-concurrency";
+import { trackedTask } from "reactiveweb/ember-concurrency";
+
 import customOptionTemplate from "timed/components/optimized-power-select/custom-options/user-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/user-selection";
 
@@ -20,17 +21,16 @@ export default class UserSelection extends Component {
     this.tracking.users.perform();
   }
 
-  @restartableTask
-  *usersTask() {
-    // this yield is here 'cause we are modifying the store
-    yield Promise.resolve();
-    yield this.tracking.users.last;
+  usersTask = restartableTask(async () => {
+    // this await is here 'cause we are modifying the store
+    await Promise.resolve();
+    await this.tracking.users.last;
 
     const queryOptions = this.queryOptions || {};
 
     queryOptions.ordering = "username";
-    return yield this.store.query("user", queryOptions);
-  }
+    return await this.store.query("user", queryOptions);
+  });
 
   _users = trackedTask(this, this.usersTask, () => [
     this.tracking.users,

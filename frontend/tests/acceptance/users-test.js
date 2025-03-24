@@ -17,7 +17,6 @@ module("Acceptance | users", function (hooks) {
     this.server.createList("user", 5, { supervisorIds: [user.id] });
     this.server.createList("user", 5);
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
   });
 
@@ -36,7 +35,6 @@ module("Acceptance | users", function (hooks) {
       return user;
     });
 
-    // eslint-disable-next-line camelcase
     await authenticateSession();
 
     await visit("/users");
@@ -53,7 +51,6 @@ module("Acceptance | users", function (hooks) {
       return user;
     });
 
-    // eslint-disable-next-line camelcase
     await authenticateSession();
 
     await visit("/users");

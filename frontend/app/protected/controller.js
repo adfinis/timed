@@ -45,8 +45,7 @@ export default class ProtectedController extends Controller {
       user.tourDone = true;
       await user.save();
       this.visible = false;
-    } catch (error) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error("Error while saving the user");
     }
   }

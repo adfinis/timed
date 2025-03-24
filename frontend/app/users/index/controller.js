@@ -2,8 +2,9 @@ import { action, set } from "@ember/object";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout, hash } from "ember-concurrency";
-import { task as trackedTask } from "ember-resources/util/ember-concurrency";
 import moment from "moment";
+import { trackedTask } from "reactiveweb/ember-concurrency";
+
 import QPController from "timed/controllers/qpcontroller";
 
 export default class UsersIndexController extends QPController {
@@ -24,13 +25,6 @@ export default class UsersIndexController extends QPController {
     this.prefetchData.perform();
   }
 
-  _fetchData = trackedTask(this, this.data, () => [
-    this.supervisor,
-    this.search,
-    this.ordering,
-    this.active,
-  ]);
-
   get selectedSupervisor() {
     return this.supervisor && this.store.peekRecord("user", this.supervisor);
   }
@@ -39,34 +33,31 @@ export default class UsersIndexController extends QPController {
     return this._fetchData ?? {};
   }
 
-  @restartableTask
-  *resetFilter() {
-    yield this.resetQueryParams();
-  }
+  resetFilter = restartableTask(async () => {
+    await this.resetQueryParams();
+  });
 
   @action
   viewUserProfile(userId) {
     return this.router.transitionTo("users.edit", userId);
   }
 
-  @restartableTask
-  *prefetchData() {
+  prefetchData = restartableTask(async () => {
     const supervisorId = this.supervisor;
 
-    return yield hash({
+    return await hash({
       supervisor: supervisorId && this.store.findRecord("user", supervisorId),
     });
-  }
+  });
 
-  @restartableTask
-  *data() {
-    yield Promise.resolve();
+  data = restartableTask(async () => {
+    await Promise.resolve();
     const date = moment().format("YYYY-MM-DD");
 
-    yield this.store.query("employment", { date });
-    yield this.store.query("worktime-balance", { date });
+    await this.store.query("employment", { date });
+    await this.store.query("worktime-balance", { date });
 
-    return yield this.store.query("user", {
+    return await this.store.query("user", {
       ...this.allQueryParams,
       ...(this.currentUser.user.isSuperuser
         ? {}
@@ -74,17 +65,22 @@ export default class UsersIndexController extends QPController {
             supervisor: this.currentUser.user.id,
           }),
     });
-  }
+  });
 
-  @restartableTask
-  *setSearchFilter(value) {
-    yield timeout(500);
+  setSearchFilter = restartableTask(async (value) => {
+    await timeout(500);
 
     this.search = value;
-  }
+  });
 
-  @restartableTask
-  *setModelFilter(key, value) {
-    yield set(this, key, value && value.id);
-  }
+  setModelFilter = restartableTask(async (key, value) => {
+    await set(this, key, value && value.id);
+  });
+
+  _fetchData = trackedTask(this, this.data, () => [
+    this.supervisor,
+    this.search,
+    this.ordering,
+    this.active,
+  ]);
 }

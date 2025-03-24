@@ -1,8 +1,10 @@
-FROM node:18-slim as build
+FROM node:20-slim as build
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN apt-get -y update && apt-get -y install git && \
+  corepack enable && \
+  corepack prepare pnpm@9.15.4 --activate
 
 WORKDIR /ember
 

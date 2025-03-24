@@ -1,5 +1,6 @@
 import moment from "moment";
 import { module, test } from "qunit";
+
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 
 module("Unit | Utility | parse django duration", function () {

@@ -191,6 +191,7 @@ def test_task_detail_no_reports(internal_employee_client, task):
 
     json = res.json()
     assert json["meta"]["spent-time"] == "00:00:00"
+    assert json["meta"]["spent-billable"] == "00:00:00"
 
 
 def test_task_detail_with_reports(internal_employee_client, task, report_factory):
@@ -204,6 +205,7 @@ def test_task_detail_with_reports(internal_employee_client, task, report_factory
 
     json = res.json()
     assert json["meta"]["spent-time"] == "02:30:00"
+    assert json["meta"]["spent-billable"] == "02:30:00"
 
 
 @pytest.mark.parametrize(("is_assigned", "expected"), [(True, 1), (False, 0)])
@@ -263,3 +265,17 @@ def test_task_multi_number_value_filter(internal_employee_client):
 
     json = response.json()
     assert len(json["data"]) == 2
+
+
+def test_task_detail_spent_billable(internal_employee_client, task, report_factory):
+    report_factory.create(task=task, duration=timedelta(minutes=30), not_billable=True)
+
+    url = reverse("task-detail", args=[task.id])
+
+    res = internal_employee_client.get(url)
+
+    assert res.status_code == status.HTTP_200_OK
+
+    json = res.json()
+    assert json["meta"]["spent-time"] == "00:30:00"
+    assert json["meta"]["spent-billable"] == "00:00:00"

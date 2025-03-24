@@ -1,6 +1,5 @@
 "use strict";
 
-// eslint-disable-next-line n/no-missing-require
 const EmberApp = require("ember-cli/lib/broccoli/ember-app");
 
 module.exports = function (defaults) {
@@ -35,6 +34,11 @@ module.exports = function (defaults) {
     },
     "ember-validated-form": {
       theme: "bootstrap",
+    },
+    autoImport: {
+      alias: {
+        "ember-composable-helpers": "@nullvoxpopuli/ember-composable-helpers",
+      },
     },
   });
 

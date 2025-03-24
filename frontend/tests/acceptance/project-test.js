@@ -15,7 +15,7 @@ module("Acceptance | projects", function (hooks) {
     this.server.create("project-assignee", {
       user,
     });
-    // eslint-disable-next-line camelcase
+
     await authenticateSession({ user_id: user.id });
   });
 
@@ -152,7 +152,6 @@ module("Acceptance | projects", function (hooks) {
       return user;
     });
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     await visit("/projects");

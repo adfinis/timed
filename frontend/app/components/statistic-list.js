@@ -2,6 +2,7 @@ import { get } from "@ember/object";
 import { capitalize } from "@ember/string";
 import Component from "@glimmer/component";
 import moment from "moment";
+
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 
 const PLAIN_LAYOUT = "PLAIN";

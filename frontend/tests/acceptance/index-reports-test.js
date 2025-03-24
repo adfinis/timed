@@ -22,7 +22,6 @@ module("Acceptance | index reports", function (hooks) {
   hooks.beforeEach(async function () {
     const user = this.server.create("user");
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: user.id });
 
     this.server.createList("report", 5, { userId: user.id });

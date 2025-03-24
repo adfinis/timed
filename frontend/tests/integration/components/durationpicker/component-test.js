@@ -10,6 +10,7 @@ import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
 import moment from "moment";
 import { module, test } from "qunit";
+
 import formatDuration from "timed/utils/format-duration";
 
 module("Integration | Component | durationpicker", function (hooks) {

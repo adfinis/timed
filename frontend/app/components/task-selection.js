@@ -1,15 +1,17 @@
 import { action } from "@ember/object";
-import { later } from "@ember/runloop";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
-import { trackedTask } from "ember-resources/util/ember-concurrency";
+import { runTask } from "ember-lifeline";
+import { trackedTask } from "reactiveweb/ember-concurrency";
+import { trackedFunction } from "reactiveweb/function";
 import { resolve } from "rsvp";
+import { localCopy } from "tracked-toolbox";
+
 import customerOptionTemplate from "timed/components/optimized-power-select/custom-options/customer-option";
 import projectOptionTemplate from "timed/components/optimized-power-select/custom-options/project-option";
 import taskOptionTemplate from "timed/components/optimized-power-select/custom-options/task-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/task-selection";
-import { localCopy } from "tracked-toolbox";
 /**
  * Component for selecting a task, which consists of selecting a customer and
  * project first.
@@ -78,15 +80,14 @@ export default class TaskSelectionComponent extends Component {
     super.willDestroy(...args);
   }
 
-  @restartableTask
-  *handleTrackingActiveActivityChanged() {
+  handleTrackingActiveActivityChanged = restartableTask(async () => {
     // wait a little to catch multiple updates to the prop.
-    yield timeout(50);
+    await timeout(50);
 
     if (this.args.liveTracking && !this.tracking.hasActiveActivity) {
       this.clear();
     }
-  }
+  });
 
   async _setInitial() {
     await this.tracking.fetchActiveActivity?.last;
@@ -182,7 +183,7 @@ export default class TaskSelectionComponent extends Component {
   get customer() {
     // Without unwrapping of the proxy ember-power-select will stick to wrong reference after clearing
     return this.args.liveTracking
-      ? this.tracking.activeCustomer?.content ?? this._customer
+      ? (this.tracking.activeCustomer?.content ?? this._customer)
       : this._customer;
   }
 
@@ -198,7 +199,7 @@ export default class TaskSelectionComponent extends Component {
   get project() {
     // Without unwrapping of the proxy ember-power-select will stick to wrong reference after clearing
     return this.args.liveTracking
-      ? this.tracking.activeProject?.content ?? this._project
+      ? (this.tracking.activeProject?.content ?? this._project)
       : this._project;
   }
 
@@ -210,7 +211,7 @@ export default class TaskSelectionComponent extends Component {
    */
   get task() {
     return this.args.liveTracking
-      ? this.tracking.activeTask?.content ?? this._task
+      ? (this.tracking.activeTask?.content ?? this._task)
       : this._task;
   }
 
@@ -220,17 +221,16 @@ export default class TaskSelectionComponent extends Component {
    * @property {Array} customersAndRecentTasks
    * @public
    */
-  @dropTask
-  *customersAndRecentTasksTask() {
-    yield Promise.resolve();
+  customersAndRecentTasksTask = dropTask(async () => {
+    await Promise.resolve();
 
     /* istanbul ignore if*/
     if (
       !this.tracking.customers?.length ||
       !this.tracking.recentTasks?.length
     ) {
-      yield this.tracking.fetchRecentTasks.last;
-      yield this.tracking.fetchCustomers.last;
+      await this.tracking.fetchRecentTasks.last;
+      await this.tracking.fetchCustomers.last;
     }
 
     let ids = [];
@@ -251,28 +251,30 @@ export default class TaskSelectionComponent extends Component {
     });
 
     return [...tasks, ...customers];
-  }
-
-  _customersAndRecentTasks = trackedTask(
-    this,
-    this.customersAndRecentTasksTask,
-    () => [this.history, this.tracking.recentTasks, this.archived],
-  );
+  });
 
   get customersAndRecentTasks() {
     return this._customersAndRecentTasks.value ?? [];
   }
 
-  get projects() {
-    return this.customer?.projects
+  #projects = trackedFunction(this, async () => {
+    return (await this.customer?.projects)
       ?.filter(this.filterByArchived)
       .toSorted((p) => p.name);
+  });
+
+  get projects() {
+    return this.#projects.value ?? [];
   }
 
-  get tasks() {
-    return this.project?.tasks
+  #tasks = trackedFunction(this, async () => {
+    return (await this.project?.tasks)
       ?.filter(this.filterByArchived)
       .toSorted((t) => t.name);
+  });
+
+  get tasks() {
+    return this.#tasks.value ?? [];
   }
 
   @action
@@ -325,7 +327,7 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!options.preventAction) {
-      later(this, () => {
+      runTask(this, () => {
         (this.args["on-set-customer"] === undefined
           ? () => {}
           : this.args["on-set-customer"])(value);
@@ -357,7 +359,7 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!options.preventAction) {
-      later(this, () => {
+      runTask(this, () => {
         (this.args["on-set-project"] === undefined
           ? () => {}
           : this.args["on-set-project"])(value);
@@ -382,11 +384,17 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!options.preventAction) {
-      later(this, async () => {
+      runTask(this, async () => {
         (this.args["on-set-task"] === undefined
           ? () => {}
           : this.args["on-set-task"])(value);
       });
     }
   }
+
+  _customersAndRecentTasks = trackedTask(
+    this,
+    this.customersAndRecentTasksTask,
+    () => [this.history, this.tracking.recentTasks, this.archived],
+  );
 }

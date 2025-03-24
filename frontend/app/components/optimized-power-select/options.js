@@ -1,8 +1,8 @@
 import { action } from "@ember/object";
-import { scheduleOnce } from "@ember/runloop";
 import { macroCondition, isTesting } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import { scheduleTask } from "ember-lifeline";
 
 const isTouchDevice = !!window && "ontouchstart" in window;
 
@@ -21,9 +21,9 @@ export default class OptimizedPowerSelectOptionsComponent extends Component {
 
   constructor(...args) {
     super(...args);
-    scheduleOnce(
-      "actions",
+    scheduleTask(
       this.args.select.actions,
+      "actions",
       "scrollTo",
       this.args.select.highlighted,
     );

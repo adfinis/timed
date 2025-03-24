@@ -13,7 +13,6 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
     this.user = this.server.create("user", { isSuperuser: true });
     this.types = this.server.loadFixtures("absence-types");
 
-    // eslint-disable-next-line camelcase
     await authenticateSession({ user_id: this.user.id });
   });
 

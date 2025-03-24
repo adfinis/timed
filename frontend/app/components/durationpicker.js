@@ -2,9 +2,10 @@ import { action } from "@ember/object";
 import { guidFor } from "@ember/object/internals";
 import { tracked } from "@glimmer/tracking";
 import moment from "moment";
+import { localCopy } from "tracked-toolbox";
+
 import TimepickerComponent from "timed/components/timepicker";
 import formatDuration from "timed/utils/format-duration";
-import { localCopy } from "tracked-toolbox";
 
 const { MIN_SAFE_INTEGER, MAX_SAFE_INTEGER } = Number;
 const { abs } = Math;

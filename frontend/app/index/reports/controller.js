@@ -5,13 +5,14 @@
  */
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { scheduleOnce } from "@ember/runloop";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 import { all } from "rsvp";
-import ReportValidations from "timed/validations/report";
 import { cached } from "tracked-toolbox";
+
+import ReportValidations from "timed/validations/report";
 /**
  * The index reports controller
  *
@@ -75,7 +76,7 @@ export default class IndexReportController extends Controller {
     });
 
     if (!reportsToday.find((r) => r.isNew)) {
-      scheduleOnce("actions", this, "createEmptyReport");
+      scheduleTask(this, "actions", "createEmptyReport");
     }
 
     return reportsToday.toSorted((r) => r.isNew);
@@ -121,7 +122,7 @@ export default class IndexReportController extends Controller {
       if (this.absence) {
         await this.absence.reload();
       }
-    } catch (e) {
+    } catch {
       this.notify.error("Error while saving the report");
     } finally {
       this.send("finished");
@@ -147,7 +148,7 @@ export default class IndexReportController extends Controller {
           await this.absence.reload();
         }
       }
-    } catch (e) {
+    } catch {
       this.notify.error("Error while deleting the report");
     } finally {
       this.send("finished");
@@ -180,7 +181,7 @@ export default class IndexReportController extends Controller {
       this.router.transitionTo({
         queryParams: { day: date.format("YYYY-MM-DD") },
       });
-    } catch (e) {
+    } catch {
       this.notify.error("Error while rescheduling the timesheet");
     }
   }

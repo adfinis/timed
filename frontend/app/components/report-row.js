@@ -2,6 +2,7 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { dropTask } from "ember-concurrency";
+
 import ReportValidations from "timed/validations/report";
 
 export default class ReportRowComponent extends Component {
@@ -9,30 +10,17 @@ export default class ReportRowComponent extends Component {
 
   ReportValidations = ReportValidations;
 
-  get editable() {
-    return this.abilities.can("edit report", this.args.report);
-  }
-
-  get title() {
-    return this.editable
-      ? ""
-      : `This entry was already verified by ${this.args.report.get(
-          "verifiedBy.fullName",
-        )} and therefore not editable anymore`;
-  }
-
   /**
    * Save the row
    *
    * @method save
    * @public
    */
-  @dropTask
-  *save(changeset) {
+  save = dropTask(async (changeset) => {
     if (this.args.onSave) {
-      yield this.args.onSave(changeset);
+      await this.args.onSave(changeset);
     }
-  }
+  });
   /**
    * Delete the row
    *

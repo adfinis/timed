@@ -1,5 +1,6 @@
 import Component from "@glimmer/component";
 import moment from "moment";
+
 import humanizeDuration from "timed/utils/humanize-duration";
 
 // TODO: take this from tailwind.config.js

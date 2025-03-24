@@ -9,6 +9,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { dropTask } from "ember-concurrency";
 import moment from "moment";
+
 import formatDuration from "timed/utils/format-duration";
 import { pad2joincolon } from "timed/utils/pad";
 
@@ -125,8 +126,7 @@ export default class AttendanceSlider extends Component {
    * @param {Number[]} values The time in minutes
    * @public
    */
-  @dropTask
-  *save([fromMin, toMin]) {
+  save = dropTask(async ([fromMin, toMin]) => {
     const attendance = this.args.attendance;
 
     attendance.set(
@@ -135,8 +135,8 @@ export default class AttendanceSlider extends Component {
     );
     attendance.set("to", moment(attendance.get("to")).hour(0).minute(toMin));
 
-    yield this.args.onSave(attendance);
-  }
+    await this.args.onSave(attendance);
+  });
 
   /**
    * Delete the attendance
@@ -144,8 +144,7 @@ export default class AttendanceSlider extends Component {
    * @method delete
    * @public
    */
-  @dropTask
-  *delete() {
-    yield this.args.onDelete(this.args.attendance);
-  }
+  delete = dropTask(async () => {
+    await this.args.onDelete(this.args.attendance);
+  });
 }

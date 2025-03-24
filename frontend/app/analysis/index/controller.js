@@ -13,6 +13,9 @@ import {
 } from "ember-concurrency";
 import fetch from "fetch";
 import moment from "moment";
+
+import config from "../../config/environment";
+
 import QPController from "timed/controllers/qpcontroller";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 import parseFileName from "timed/utils/parse-filename";
@@ -23,8 +26,6 @@ import {
 } from "timed/utils/query-params";
 import { serializeMoment } from "timed/utils/serialize-moment";
 import { cleanParams, toQueryString } from "timed/utils/url";
-
-import config from "../../config/environment";
 
 export default class AnalysisController extends QPController {
   queryParams = [
@@ -56,7 +57,7 @@ export default class AnalysisController extends QPController {
   @service store;
   @service router;
   @service notify;
-  @service can;
+  @service abilities;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -121,10 +122,8 @@ export default class AnalysisController extends QPController {
     return `The export limit is ${this.exportLimit}. Please use filters to reduce the amount of reports.`;
   }
 
-  get canBill() {
-    return (
-      this.currentUser.user.isAccountant || this.currentUser.user.isSuperuser
-    );
+  get isAccountant() {
+    return this.currentUser.user.isAccountant;
   }
 
   get appliedFilters() {
@@ -255,8 +254,7 @@ export default class AnalysisController extends QPController {
     return this._dataCache;
   });
 
-  @task
-  *fetchAssignees(data) {
+  fetchAssignees = task(async (data) => {
     const projectIds = [
       ...new Set(data.map((report) => report.get("task.project.id"))),
     ].join(",");
@@ -268,21 +266,21 @@ export default class AnalysisController extends QPController {
     ].join(",");
 
     const projectAssignees = projectIds.length
-      ? yield this.store.query("project-assignee", {
+      ? await this.store.query("project-assignee", {
           is_reviewer: 1,
           projects: projectIds,
           include: "project,user",
         })
       : [];
     const taskAssignees = taskIds.length
-      ? yield this.store.query("task-assignee", {
+      ? await this.store.query("task-assignee", {
           is_reviewer: 1,
           tasks: taskIds,
           include: "task,user",
         })
       : [];
     const customerAssignees = customerIds.length
-      ? yield this.store.query("customer-assignee", {
+      ? await this.store.query("customer-assignee", {
           is_reviewer: 1,
           customers: customerIds,
           include: "customer,user",
@@ -290,21 +288,21 @@ export default class AnalysisController extends QPController {
       : [];
 
     return { projectAssignees, taskAssignees, customerAssignees };
-  }
+  });
 
-  @dropTask
-  *loadNext() {
+  loadNext = dropTask(async () => {
     this._shouldLoadMore = true;
 
     while (this._shouldLoadMore && this._canLoadMore) {
-      yield this.data.perform();
+      // eslint-disable-next-line no-await-in-loop
+      await this.data.perform();
 
-      yield animationFrame();
+      // eslint-disable-next-line no-await-in-loop
+      await animationFrame();
     }
-  }
+  });
 
-  @task
-  *download({ url = null, params = {} }) {
+  download = task(async ({ url = null, params = {} }) => {
     try {
       this.url = url;
       this.params = params;
@@ -321,7 +319,7 @@ export default class AnalysisController extends QPController {
         ),
       );
 
-      const res = yield fetch(`${url}?${queryString}`, {
+      const res = await fetch(`${url}?${queryString}`, {
         headers: {
           Authorization: `Bearer ${this.jwt}`,
         },
@@ -331,7 +329,7 @@ export default class AnalysisController extends QPController {
         throw new Error(res.statusText);
       }
 
-      const file = yield res.blob();
+      const file = await res.blob();
 
       const filename = parseFileName(res.headers.get("content-disposition"));
 
@@ -342,13 +340,12 @@ export default class AnalysisController extends QPController {
       download(file, filename, file.type);
 
       this.notify.success("File was downloaded");
-    } catch (e) {
-      /* istanbul ignore next */
+    } catch {
       this.notify.error(
         "Error while downloading, try again or try reducing results",
       );
     }
-  }
+  });
 
   @action
   edit(selectedIds = [], event) {
@@ -363,16 +360,14 @@ export default class AnalysisController extends QPController {
 
   @action
   selectRow(report) {
-    if (this.can.can("edit report", report) || this.canBill) {
-      const selected = this.selectedReportIds;
+    const selected = this.selectedReportIds;
 
-      if (selected.includes(report.id)) {
-        this.selectedReportIds = A([
-          ...selected.filter((id) => id !== report.id),
-        ]);
-      } else {
-        this.selectedReportIds = A([...selected, report.id]);
-      }
+    if (selected.includes(report.id)) {
+      this.selectedReportIds = A([
+        ...selected.filter((id) => id !== report.id),
+      ]);
+    } else {
+      this.selectedReportIds = A([...selected, report.id]);
     }
   }
 }
