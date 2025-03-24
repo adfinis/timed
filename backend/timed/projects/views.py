@@ -13,6 +13,7 @@ from timed.permissions import (
     IsCustomer,
     IsInternal,
     IsManager,
+    IsProjectActive,
     IsReadOnly,
     IsSuperUser,
     IsUpdateOnly,
@@ -177,6 +178,8 @@ class TaskViewSet(ModelViewSet):
         (
             # superuser may edit all tasks
             IsSuperUser
+            # only superuser can update tasks of archived projects
+            | (IsUpdateOnly & IsProjectActive)
             # managers may edit all tasks
             | IsManager
             # all authenticated users may read all tasks

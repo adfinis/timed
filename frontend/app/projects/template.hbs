@@ -201,6 +201,7 @@
                 class="rounded"
                 data-test-name
                 @required={{true}}
+                @disabled={{this.selectedProject.archived}}
               />
 
               <f.input @labelComponent="void" @name="estimatedTime" as |fi|>
@@ -211,6 +212,7 @@
                   <Durationpicker
                     data-test-estimated-time={{true}}
                     @value={{fi.value}}
+                    @disabled={{this.selectedProject.archived}}
                     @onChange={{if
                       remainingEffortTracking
                       (queue fi.update (fn this.updateRemainingEffort f.model))
@@ -226,6 +228,7 @@
                 class="rounded"
                 data-test-reference
                 @required={{false}}
+                @disabled={{this.selectedProject.archived}}
               />
 
               {{#if remainingEffortTracking}}
@@ -244,6 +247,7 @@
                       @value={{fi.value}}
                       @min={{0}}
                       @onChange={{fi.update}}
+                      @disabled={{this.selectedProject.archived}}
                     />
                   </div>
                 </f.input>
@@ -257,6 +261,7 @@
                   @checked={{this.selectedTask.archived}}
                   @value={{fi.value}}
                   @onChange={{fi.update}}
+                  @disabled={{this.selectedProject.archived}}
                 />
               </f.input>
 
@@ -267,7 +272,17 @@
                   type="button"
                   {{on "click" (fn (mut this.selectedTask) null)}}
                 >Cancel</button>
-                <f.submit data-test-save @disabled={{f.model.isInvalid}} />
+                <f.submit
+                  data-test-save
+                  title={{if
+                    this.selectedProject.archived
+                    "You can not update or add tasks to an archived project"
+                  }}
+                  @disabled={{or
+                    f.model.isInvalid
+                    this.selectedProject.archived
+                  }}
+                />
               </div>
             </ValidatedForm>
           </div>
