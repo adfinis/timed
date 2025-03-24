@@ -82,7 +82,15 @@ module("Acceptance | projects", function (hooks) {
 
     await click("[data-test-save]");
 
+    await click("[data-test-task-table-row]");
+    assert.dom("[data-test-name]").hasValue("FooBar Task 1");
+    assert.dom("[data-test-reference]").hasValue("Reference of FooBar Task 1");
+    assert.dom("[data-test-estimated-time]").hasValue("02:15");
+
     assert.dom("[data-test-task-table-row]").exists({ count: 1 });
+
+    await click("[data-test-cancel]");
+    assert.dom("[data-test-task-form]").doesNotExist();
   });
 
   test("can edit task", async function (assert) {
@@ -139,34 +147,6 @@ module("Acceptance | projects", function (hooks) {
     assert.dom("[data-test-table-reference]").hasText("-");
     assert.dom("[data-test-table-estimated-time]").hasText("-");
     assert.dom("[data-test-table-archived]").hasClass("fa-square-check");
-  });
-
-  test("The cancel button will hide the form", async function (assert) {
-    await visit("/projects");
-    assert.strictEqual(currentURL(), "/projects");
-
-    await selectChoose(
-      "[data-test-customer-selection]",
-      ".ember-power-select-option",
-      0,
-    );
-
-    await selectChoose(
-      "[data-test-project-selection]",
-      ".ember-power-select-option",
-      0,
-    );
-
-    assert.dom("[data-test-add-task]").exists();
-    assert.dom("[data-test-task-table-row]").doesNotExist();
-
-    await click("[data-test-add-task]");
-    assert.dom("[data-test-task-form]").exists();
-    assert.dom("[data-test-save]").isDisabled();
-
-    await click("[data-test-cancel]");
-
-    assert.dom("[data-test-task-form]").doesNotExist();
   });
 
   test("shows all customers to superuser", async function (assert) {
