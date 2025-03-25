@@ -66,7 +66,7 @@ class IsUpdateOnly(BasePermission):
 
 
 class IsProjectActive(BasePermission):
-    """Allow Only the project that is not archived."""
+    """Allows access to object only if a project is not archived."""
 
     def has_object_permission(self, _request, _view, task):
         return not task.project.archived
