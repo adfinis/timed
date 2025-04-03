@@ -22,8 +22,8 @@ export default [
     title: "Edit attendance",
     content: `
     <p>
-      Now you can just adjust the time block by grabing and moving it or
-      grabing it on one of the ends and adjusting the start or end time. The
+      Now you can just adjust the time block by grabbing and moving it or
+      grabbing it on one of the ends and adjusting the start or end time. The
       attendance saves automatically after every change.
     </p>
     <p>
