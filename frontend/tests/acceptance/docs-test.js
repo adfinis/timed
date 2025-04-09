@@ -16,20 +16,27 @@ module("Acceptance | docs", function (hooks) {
     await authenticateSession({ user_id: user.id });
   });
 
-  test("Each route render link to the documentation of the open page", async function (assert) {
-    await visit("/");
-    assert.dom("[data-test-docs-link]").exists();
+  test("Each route renders a link to the corresponding documentation page", async function (assert) {
+    const routes = {
+      "/attendances": "tracking/attendances",
+      "/reports": "tracking/timesheet",
+      "/analysis": "analysis",
+      "/statistics": "statistics",
+      "/projects": "projects",
+      "/users": "users",
+      "/": "tracking/activities",
+    };
+    const routesKey = Object.keys(routes);
 
-    assert.strictEqual(
-      document.querySelector("[data-test-docs-link]").href,
-      `${config.docsBaseUrl}/tracking/activities`,
-    );
+    for (const routeKey of routesKey) {
+      // eslint-disable-next-line no-await-in-loop
+      await visit(routeKey);
+      assert.dom("[data-test-docs-link]").exists();
 
-    await visit("/analysis");
-
-    assert.strictEqual(
-      document.querySelector("[data-test-docs-link]").href,
-      `${config.docsBaseUrl}/analysis`,
-    );
+      assert.strictEqual(
+        document.querySelector("[data-test-docs-link]").href,
+        `${config.docsBaseUrl}/${routes[routeKey]}`,
+      );
+    }
   });
 });

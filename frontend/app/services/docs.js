@@ -3,7 +3,6 @@ import Service, { service } from "@ember/service";
 import config from "timed/config/environment";
 
 const ROUTE_DOCS_MAPPING = {
-  // index.name: DocsUrl
   "index.attendances": "/tracking/attendances",
   "index.reports": "/tracking/timesheet",
   "analysis.index": "/analysis",

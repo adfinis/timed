@@ -72,8 +72,7 @@ export default [
     title: "Timed Documentation",
     content: `
     <p>
-      You can access Timed documentation by clicking this link, and each time it will route you
-      to the content of the current opened page (ex: now it will route you to <strong>Time Sheet</strong> docs)
+      You can access the Timed documentation with this link, which will redirect you to the corresponding page.
     </p>
     `,
   },
