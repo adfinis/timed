@@ -44,7 +44,7 @@ RUN apk update --no-cache && \
  apk add gcc python3-dev musl-dev libffi-dev linux-headers wait4ports && \
  poetry config virtualenvs.create false && poetry install && \
  apk del gcc python3-dev musl-dev libffi-dev linux-headers --no-cache && \
- chmod 777 /var/www/static
+ chmod 777 /var/www/static /home/timed
 
 USER 1001
 
