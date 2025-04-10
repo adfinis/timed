@@ -184,7 +184,9 @@ class TaskSerializer(ModelSerializer):
                 .exists()
             ):
                 return data
-            msg = "You don't have the permission to update this task" # pragma: no cover
+            msg = (
+                "You don't have the permission to update this task"  # pragma: no cover
+            )
             raise exceptions.ValidationError(msg)  # pragma: no cover
         # check if user is manager when creating a task
         if (
