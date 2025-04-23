@@ -2,7 +2,7 @@ import Service, { service } from "@ember/service";
 
 import config from "timed/config/environment";
 
-const ROUTE_DOCS_MAPPING = {
+export const ROUTE_DOCS_MAPPING = {
   "index.attendances": "/tracking/attendances",
   "index.reports": "/tracking/timesheet",
   "analysis.index": "/analysis",
@@ -16,11 +16,11 @@ const ROUTE_DOCS_MAPPING = {
 export default class DocsService extends Service {
   @service router;
 
-  get docsEndpoint() {
+  get endpoint() {
     return config.docsBaseUrl + this.docsURL;
   }
 
   get docsURL() {
-    return ROUTE_DOCS_MAPPING[this.router.currentRouteName] || "";
+    return ROUTE_DOCS_MAPPING[this.router.currentRouteName] ?? "";
   }
 }
