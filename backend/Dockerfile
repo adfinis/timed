@@ -30,13 +30,13 @@ RUN pip install -U poetry
 
 COPY . ./
 
-FROM build as build-prod
+FROM build AS build-prod
 
 WORKDIR /app
 
 RUN poetry build -f wheel && mv ./dist/*.whl /tmp/
 
-FROM build as dev
+FROM build AS dev
 
 WORKDIR /app
 
@@ -50,7 +50,7 @@ USER 1001
 
 CMD ["sh", "-c", "wait4ports -s 15 tcp://${DJANGO_DATABASE_HOST:-db}:${DJANGO_DATABASE_PORT:-5432}; manage.py migrate --no-input && ./cmd.sh --autoreload --static"]
 
-FROM base as prod
+FROM base AS prod
 
 COPY --from=build-prod /tmp/*.whl /tmp/
 
