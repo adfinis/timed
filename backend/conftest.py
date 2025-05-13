@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import inspect
 from typing import TYPE_CHECKING
 
 import pytest
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from factory.base import FactoryMetaClass
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
@@ -19,16 +17,31 @@ if TYPE_CHECKING:
     from timed.employment.models import CustomerAssignee, Employment, User
 
 
-def register_module(module):
-    for _name, obj in inspect.getmembers(module):
-        if isinstance(obj, FactoryMetaClass) and not obj._meta.abstract:  # noqa: SLF001
-            register(obj)
+register(employment_factories.AbsenceCreditFactory)
+register(employment_factories.AbsenceTypeFactory)
+register(employment_factories.EmploymentFactory)
+register(employment_factories.LocationFactory)
+register(employment_factories.OvertimeCreditFactory)
+register(employment_factories.PublicHolidayFactory)
+register(employment_factories.UserFactory)
 
+register(projects_factories.BillingTypeFactory)
+register(projects_factories.CostCenterFactory)
+register(projects_factories.CustomerAssigneeFactory)
+register(projects_factories.CustomerFactory)
+register(projects_factories.ProjectAssigneeFactory)
+register(projects_factories.ProjectFactory)
+register(projects_factories.TaskAssigneeFactory)
+register(projects_factories.TaskFactory)
+register(projects_factories.TaskTemplateFactory)
 
-register_module(employment_factories)
-register_module(projects_factories)
-register_module(subscription_factories)
-register_module(tracking_factories)
+register(subscription_factories.OrderFactory)
+register(subscription_factories.PackageFactory)
+
+register(tracking_factories.AbsenceFactory)
+register(tracking_factories.ActivityFactory)
+register(tracking_factories.AttendanceFactory)
+register(tracking_factories.ReportFactory)
 
 
 @pytest.fixture
