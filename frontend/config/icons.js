@@ -49,6 +49,7 @@ module.exports = function () {
       "users",
       "question",
       "magic",
+      "circle-question",
     ],
   };
 };
