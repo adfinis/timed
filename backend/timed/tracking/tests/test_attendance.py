@@ -73,7 +73,9 @@ def test_attendance_create(
 
 def test_attendance_update(internal_employee_client):
     user = internal_employee_client.user
-    attendance = AttendanceFactory.create(user=user)
+    attendance = AttendanceFactory.create(
+        user=user, from_time=time(10, 0, 0), to_time=time(12, 0, 0)
+    )
 
     data = {
         "data": {

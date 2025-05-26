@@ -1,6 +1,6 @@
 """Tests for the reports endpoint."""
 
-from datetime import timedelta
+from datetime import date, timedelta
 
 import pyexcel
 import pytest
@@ -1386,14 +1386,28 @@ def test_report_notify_rendering(
     task1, task2, task3 = task_factory.create_batch(3, project=project)
 
     report1 = report_factory(
-        user=user, task=task1, comment="original comment", not_billable=False
+        user=user,
+        task=task1,
+        comment="original comment",
+        not_billable=False,
+        date=date(2022, 1, 1),
     )
     report2 = report_factory(
-        user=user, task=task2, comment="some other comment", not_billable=False
+        user=user,
+        task=task2,
+        comment="some other comment",
+        not_billable=False,
+        date=date(2022, 2, 1),
     )
-    report3 = report_factory(user=user, task=task3, comment="foo", not_billable=False)
+    report3 = report_factory(
+        user=user, task=task3, comment="foo", not_billable=False, date=date(2022, 3, 1)
+    )
     report4 = report_factory(
-        user=user, task=task1, comment=report2.comment, not_billable=True
+        user=user,
+        task=task1,
+        comment=report2.comment,
+        not_billable=True,
+        date=date(2022, 3, 1),
     )
 
     data = {

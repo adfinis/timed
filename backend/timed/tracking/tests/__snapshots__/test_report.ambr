@@ -40,7 +40,29 @@
   Reviewer: Test User
   
   
-  Date: 02 March 1975
+  Date: 01 January 2022
+  Duration: 1:00 (h:mm)
+  Task: Brown LLC > Synchronized impactful attitude > LLC
+  
+  
+  * Comment
+    [old] original comment
+    [new] some other comment
+  
+  ---
+  
+  Date: 01 February 2022
+  Duration: 2:30 (h:mm)
+  
+  Comment: some other comment
+  
+  * Task
+    [old] Brown LLC > Synchronized impactful attitude > and Sons
+    [new] Brown LLC > Synchronized impactful attitude > LLC
+  
+  ---
+  
+  Date: 01 March 2022
   Duration: 3:15 (h:mm)
   
   
@@ -55,18 +77,7 @@
   
   ---
   
-  Date: 30 April 1993
-  Duration: 1:00 (h:mm)
-  Task: Brown LLC > Synchronized impactful attitude > LLC
-  
-  
-  * Comment
-    [old] original comment
-    [new] some other comment
-  
-  ---
-  
-  Date: 16 August 1996
+  Date: 01 March 2022
   Duration: 0:15 (h:mm)
   Task: Brown LLC > Synchronized impactful attitude > LLC
   Comment: some other comment
@@ -74,17 +85,6 @@
   * Not_Billable
     [old] True
     [new] False
-  
-  ---
-  
-  Date: 22 August 1998
-  Duration: 2:30 (h:mm)
-  
-  Comment: some other comment
-  
-  * Task
-    [old] Brown LLC > Synchronized impactful attitude > and Sons
-    [new] Brown LLC > Synchronized impactful attitude > LLC
   
   ---
   

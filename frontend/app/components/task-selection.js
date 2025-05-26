@@ -1,12 +1,10 @@
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
 import { runTask } from "ember-lifeline";
 import { trackedTask } from "reactiveweb/ember-concurrency";
-import { trackedFunction } from "reactiveweb/function";
-import { resolve } from "rsvp";
-import { localCopy } from "tracked-toolbox";
 
 import customerOptionTemplate from "timed/components/optimized-power-select/custom-options/customer-option";
 import projectOptionTemplate from "timed/components/optimized-power-select/custom-options/project-option";
@@ -30,7 +28,7 @@ export default class TaskSelectionComponent extends Component {
    * @property {Customer} _customer
    * @private
    */
-  @localCopy("args.initial.customer")
+  @tracked
   _customer;
 
   /**
@@ -39,7 +37,7 @@ export default class TaskSelectionComponent extends Component {
    * @property {Project} _project
    * @private
    */
-  @localCopy("args.initial.project")
+  @tracked
   _project;
 
   /**
@@ -48,7 +46,7 @@ export default class TaskSelectionComponent extends Component {
    * @property {Task} _task
    * @private
    */
-  @localCopy("args.initial.task")
+  @tracked
   _task;
 
   constructor(...args) {
@@ -108,12 +106,20 @@ export default class TaskSelectionComponent extends Component {
       initial.task,
     ]);
 
-    if (task) {
-      this.onTaskChange(task, options);
-    } else if (project) {
-      this.onProjectChange(project, options);
-    } else if (customer) {
-      this.onCustomerChange(customer, options);
+    this._task = task ?? this.args.task;
+    this._project = this._task
+      ? await this._task.customer
+      : (project ?? this.args.project);
+    this._customer = this._project
+      ? await this._project.customer
+      : (customer ?? this.args.customer);
+
+    if (this._task) {
+      this.onTaskChange(this._task, options);
+    } else if (this._project) {
+      this.onProjectChange(this._project, options);
+    } else if (this._customer) {
+      this.onCustomerChange(this._customer, options);
     } else {
       this.tracking.fetchCustomers.perform();
     }
@@ -257,24 +263,28 @@ export default class TaskSelectionComponent extends Component {
     return this._customersAndRecentTasks.value ?? [];
   }
 
-  #projects = trackedFunction(this, async () => {
+  _projects = dropTask(this, async () => {
     return (await this.customer?.projects)
       ?.filter(this.filterByArchived)
       .toSorted((p) => p.name);
   });
 
+  _projectsTask = trackedTask(this, this._projects, () => [this._customer?.id]);
+
   get projects() {
-    return this.#projects.value ?? [];
+    return this._projectsTask.value ?? [];
   }
 
-  #tasks = trackedFunction(this, async () => {
+  _tasks = dropTask(this, async () => {
     return (await this.project?.tasks)
       ?.filter(this.filterByArchived)
       .toSorted((t) => t.name);
   });
 
+  _tasksTask = trackedTask(this, this._tasks, () => [this._project?.id]);
+
   get tasks() {
-    return this.#tasks.value ?? [];
+    return this._tasksTask.value ?? [];
   }
 
   @action
@@ -351,7 +361,7 @@ export default class TaskSelectionComponent extends Component {
     }
 
     if (!this.customer && value?.get("customer.id")) {
-      resolve(value.get("customer")).then((c) => {
+      Promise.resolve(value.get("customer")).then((c) => {
         this.onCustomerChange(c, {
           preventAction: true,
         });
@@ -376,7 +386,7 @@ export default class TaskSelectionComponent extends Component {
       (!this.project && projectId) ||
       (projectId && this.project?.id !== projectId)
     ) {
-      resolve(value.get("project")).then((p) => {
+      Promise.resolve(value.get("project")).then((p) => {
         this.onProjectChange(p, {
           preventAction: true,
         });

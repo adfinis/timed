@@ -51,6 +51,7 @@
             "This project's comments are visible to the customer"
           }}
           spellcheck="true"
+          autocomplete="true"
           {{on "change" (pick "target.value" (fn (mut cs.comment)))}}
           data-test-report-comment
         />
