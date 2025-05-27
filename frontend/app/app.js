@@ -25,9 +25,8 @@ const redact = fastRedact({
 
 /* istanbul ignore if */
 if (config["@sentry/ember"]) {
-  const sentryConfig = config["@sentry/ember"].sentry;
   Sentry.init({
-    ...sentryConfig,
+    ...config["@sentry/ember"],
     transport: Sentry.makeBrowserOfflineTransport(Sentry.makeFetchTransport),
     beforeSend(_event, hint) {
       const event = redact(_event);

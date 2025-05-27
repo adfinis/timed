@@ -8,3 +8,8 @@ metadata:
 data:
   TIMED_SSO_CLIENT_HOST: {{ .Values.auth.oidc.url | quote }}
   TIMED_SSO_CLIENT_ID: {{ .Values.auth.oidc.client.id | quote }}
+{{- if .Values.frontend.settings.sentry.enabled }}
+  SENTRY_DSN: {{ .Values.frontend.settings.sentry.dsn | quote }}
+  TRACES_SAMPLE_RATE: {{ .Values.frontend.settings.sentry.tracesSampleRate | quote }}
+  SEND_DEFAULT_PII: {{ .Values.frontend.settings.sentry.sendDefaultPii | quote }}
+{{- end }}

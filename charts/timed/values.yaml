@@ -251,6 +251,16 @@ frontend:
     failureThreshold: 6
     # -- Minimum consecutive successes for the probe to be considered successful after having failed
     successThreshold: 1
+  settings:
+    sentry:
+      # -- Enable Sentry integration
+      enabled: false
+      # -- Sentry DSN for error reporting. Set to enable Sentry integration
+      dsn: ~
+      # -- Sentry trace sample rate, Set 1.0 to capture 100% of transactions
+      tracesSampleRate: 1.0
+      # -- Associate users to errors in Sentry
+      sendDefaultPii: false
 
 ingress:
   # -- Enable ingress for timed
