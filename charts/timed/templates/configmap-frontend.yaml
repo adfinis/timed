@@ -8,3 +8,6 @@ metadata:
 data:
   TIMED_SSO_CLIENT_HOST: {{ .Values.auth.oidc.url | quote }}
   TIMED_SSO_CLIENT_ID: {{ .Values.auth.oidc.client.id | quote }}
+{{- if .Values.frontend.settings.sentry.enabled }}
+  SENTRY_DSN: {{ .Values.frontend.settings.sentry.dsn | quote }}
+{{- end }}

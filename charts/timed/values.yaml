@@ -251,6 +251,12 @@ frontend:
     failureThreshold: 6
     # -- Minimum consecutive successes for the probe to be considered successful after having failed
     successThreshold: 1
+  settings:
+    sentry:
+      # -- Enable Sentry integration
+      enabled: false
+      # -- Sentry DSN for error reporting. Set to enable Sentry integration
+      dsn: ~
 
 ingress:
   # -- Enable ingress for timed
