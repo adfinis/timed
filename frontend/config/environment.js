@@ -64,6 +64,10 @@ module.exports = function (environment) {
 
   if (process.env.SENTRY_DSN) {
     ENV["@sentry/ember"] = {
+      dsn: process.env.SENTRY_DSN,
+      debug: environment !== "production",
+      tracesSampleRate: process.env.TRACES_SAMPLE_RATE || 0.01,
+      maxBreadcrumbs: 20,
       // Will silence Ember.onError warning without the need of using Ember debugging tools.
       ignoreEmberOnErrorWarning: false,
 
@@ -78,13 +82,7 @@ module.exports = function (environment) {
 
       // All component definitions will be added as spans.
       enableComponentDefinition: true,
-      sentry: {
-        environment,
-        dsn: process.env.SENTRY_DSN,
-        debug: environment !== "production",
-        tracesSampleRate: 0.01,
-        maxBreadcrumbs: 20,
-      },
+      sendDefaultPii: process.env.SEND_DEFAULT_PII === "true",
     };
     ENV.SENTRY_IGNORE = ["TransitionAborted"];
   }
