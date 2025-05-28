@@ -1,4 +1,5 @@
 import Service, { service } from "@ember/service";
+import { task } from "ember-concurrency";
 import moment from "moment";
 
 export default class CurrentUserService extends Service {
@@ -37,4 +38,14 @@ export default class CurrentUserService extends Service {
 
     this.user = usermodel;
   }
+
+  worktimeBalance = task(async (user) => {
+    const worktimeBalance = await this.store.query("worktime-balance", {
+      user,
+      last_reported_date: 1,
+    });
+
+    const entry = worktimeBalance[0];
+    return entry?.balance?.asHours();
+  });
 }
