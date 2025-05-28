@@ -5,13 +5,30 @@
   height="100%"
   {{style --clock-size=(concat (or @clockSize 50) "px")}}
   ...attributes
+  data-test-timed-clock
 >
+  <defs>
+    <radialGradient
+      id="clockGradient"
+      cx="50%"
+      cy="50%"
+      r="50%"
+      fx="50%"
+      fy="50%"
+    >
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0)" />
+      <stop offset="60%" stop-color="rgba(255, 255, 255, 0)" />
+      <stop offset="100%" stop-color={{this.overtimeColor}} />
+    </radialGradient>
+  </defs>
+  <title>Your overtime: {{this.overtime}}h</title>
   <circle
-    class="circle fill-transparent"
+    class="circle"
     r="240"
     cx="256"
     cy="256"
     stroke-width="20"
+    fill="url(#clockGradient)"
   />
   <line
     class="hour"
