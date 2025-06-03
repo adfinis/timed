@@ -1,4 +1,4 @@
-import { setProperties } from "@ember/object";
+import { action, setProperties } from "@ember/object";
 import { service } from "@ember/service";
 import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
@@ -7,6 +7,11 @@ import { task, timeout } from "ember-concurrency";
 import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 
+import { COLOR_SCHEME_LIGHT } from "timed/services/appearance";
+
+// local storage key
+export const OVERTIME_FEEDBACK_KEY = "timed-clock-overtime-feedback";
+// color constants
 const MAX_GREEN = 150;
 const MAX_RED = 150;
 const MAX_OVERTIME = 20;
@@ -28,10 +33,13 @@ const overtimeToColor = (overtime) => {
 
 export default class TimedClock extends Component {
   @service currentUser;
+  @service appearance;
+  @service notify;
 
   @tracked hour = 0;
   @tracked minute = 0;
   @tracked second = 0;
+  @tracked _overtimeFeedback;
 
   _update() {
     const now = moment();
@@ -82,5 +90,31 @@ export default class TimedClock extends Component {
 
   get overtimeColor() {
     return overtimeToColor(this.overtime);
+  }
+
+  get backgroundColor() {
+    return this.appearance.colorScheme === COLOR_SCHEME_LIGHT
+      ? "rgba(255,255,255,0)"
+      : "rgba(0,0,0,0)";
+  }
+
+  get overtimeFeedback() {
+    return (
+      this._overtimeFeedback ??
+      JSON.parse(localStorage.getItem(OVERTIME_FEEDBACK_KEY))
+    );
+  }
+
+  set overtimeFeedback(value) {
+    this._overtimeFeedback = value;
+    localStorage.setItem(OVERTIME_FEEDBACK_KEY, value);
+  }
+
+  @action
+  toggleOvertimeFeedback() {
+    this.overtimeFeedback = !this.overtimeFeedback;
+    this.notify.info(
+      `${this.overtimeFeedback ? "Enabled" : "Disabled"} visual overtime feedback`,
+    );
   }
 }

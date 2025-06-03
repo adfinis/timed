@@ -1,63 +1,66 @@
-<svg
-  class="timed-clock h-[var(--clock-size)] w-[--clock-size] stroke-[--clock]"
-  viewBox="0 0 512 512"
-  width="100%"
-  height="100%"
-  {{style --clock-size=(concat (or @clockSize 50) "px")}}
-  ...attributes
-  data-test-timed-clock
->
-  <defs>
-    <radialGradient
-      id="clockGradient"
-      cx="50%"
-      cy="50%"
-      r="50%"
-      fx="50%"
-      fy="50%"
-    >
-      <stop offset="0%" stop-color="rgba(255, 255, 255, 0)" />
-      <stop offset="60%" stop-color="rgba(255, 255, 255, 0)" />
-      <stop offset="100%" stop-color={{this.overtimeColor}} />
-    </radialGradient>
-  </defs>
-  <title>Your overtime: {{this.overtime}}h</title>
-  <circle
-    class="circle"
-    r="240"
-    cx="256"
-    cy="256"
-    stroke-width="20"
-    fill="url(#clockGradient)"
-  />
-  <line
-    class="hour"
-    x1="256"
-    y1="144"
-    x2="256"
-    y2="288"
-    stroke-width="30"
-    stroke-linecap="round"
-    transform="rotate({{this.hour}} 256 256)"
-  />
-  <line
-    class="minute"
-    x1="256"
-    y1="80"
-    x2="256"
-    y2="288"
-    stroke-width="20"
-    stroke-linecap="round"
-    transform="rotate({{this.minute}} 256 256)"
-  />
-  <line
-    class="second stroke-[--clock-accent]"
-    x1="256"
-    y1="64"
-    x2="256"
-    y2="288"
-    stroke-width="20"
-    stroke-linecap="round"
-    transform="rotate({{this.second}} 256 256)"
-  />
-</svg>
+<a href="#" {{on "click" this.toggleOvertimeFeedback}}>
+  <svg
+    class="timed-clock h-[var(--clock-size)] w-[--clock-size] stroke-[--clock]"
+    viewBox="0 0 512 512"
+    width="100%"
+    height="100%"
+    {{style --clock-size=(concat (or @clockSize 50) "px")}}
+    ...attributes
+    data-test-timed-clock
+  >
+    <defs>
+      <radialGradient
+        id="clockGradient"
+        cx="50%"
+        cy="50%"
+        r="50%"
+        fx="50%"
+        fy="50%"
+      >
+        <stop offset="60%" stop-color={{this.backgroundColor}} />
+        {{#if this.overtimeFeedback}}
+          <stop offset="100%" stop-color={{this.overtimeColor}} />
+        {{/if}}
+      </radialGradient>
+    </defs>
+    <title>Your overtime: {{this.overtime}}h</title>
+    <circle
+      class="circle"
+      r="240"
+      cx="256"
+      cy="256"
+      stroke-width="20"
+      fill={{if this.overtimeFeedback "url(#clockGradient)" "transparent"}}
+    />
+    <line
+      class="hour"
+      x1="256"
+      y1="144"
+      x2="256"
+      y2="288"
+      stroke-width="30"
+      stroke-linecap="round"
+      transform="rotate({{this.hour}} 256 256)"
+    />
+    <line
+      class="minute"
+      x1="256"
+      y1="80"
+      x2="256"
+      y2="288"
+      stroke-width="20"
+      stroke-linecap="round"
+      transform="rotate({{this.minute}} 256 256)"
+    />
+    <line
+      class="second stroke-[--clock-accent]"
+      x1="256"
+      y1="64"
+      x2="256"
+      y2="288"
+      stroke-width="20"
+      stroke-linecap="round"
+      transform="rotate({{this.second}} 256 256)"
+    />
+  </svg>
+</a>
