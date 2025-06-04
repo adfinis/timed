@@ -9,17 +9,19 @@
     data-test-timed-clock
   >
     <defs>
-      <radialGradient
-        id="clockGradient"
-        cx="50%"
-        cy="50%"
-        r="50%"
-        fx="50%"
-        fy="50%"
-      >
-        <stop offset="60%" stop-color={{this.backgroundColor}} />
+      <radialGradient id="clockGradient" r="50%">
+        <stop offset="0%" stop-color="var(--background-muted)" />
         {{#if this.overtimeFeedback}}
-          <stop offset="100%" stop-color={{this.overtimeColor}} />
+          <stop
+            offset="60%"
+            stop-color="var(--background-muted)"
+            stop-opacity="0%"
+          />
+          <stop
+            offset="100%"
+            stop-color="var(--{{if (gte this.overtime 0) 'success' 'danger'}})"
+            stop-opacity={{this.overtimeOpacity}}
+          />
         {{/if}}
       </radialGradient>
     </defs>

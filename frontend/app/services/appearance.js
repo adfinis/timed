@@ -8,8 +8,8 @@ const COLOR_SCHEME_KEY = "color-scheme";
 const THEME_KEY = "theme";
 
 const THEMES = /** @type {const} */ (["old", "regular"]);
-export const COLOR_SCHEME_LIGHT = "light";
-export const COLOR_SCHEME_DARK = "dark";
+const COLOR_SCHEME_LIGHT = "light";
+const COLOR_SCHEME_DARK = "dark";
 
 export default class AppearanceService extends Service {
   @tracked _colorScheme;

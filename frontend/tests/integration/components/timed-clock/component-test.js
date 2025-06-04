@@ -25,6 +25,6 @@ module("Integration | Component | timed clock", function (hooks) {
 
     assert
       .dom("[data-test-timed-clock]>defs>radialGradient>stop:last-child")
-      .hasAttribute("stop-color", "rgba(0,75,0,0.5)");
+      .hasAttribute("stop-opacity", "0.5");
   });
 });

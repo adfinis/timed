@@ -7,28 +7,22 @@ import { task, timeout } from "ember-concurrency";
 import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 
-import { COLOR_SCHEME_LIGHT } from "timed/services/appearance";
-
 // local storage key
 export const OVERTIME_FEEDBACK_KEY = "timed-clock-overtime-feedback";
-// color constants
-const MAX_GREEN = 150;
-const MAX_RED = 150;
+
 const MAX_OVERTIME = 20;
 const MIN_OVERTIME = -20;
 
-const overtimeToColor = (overtime) => {
+const overtimeToOpacity = (overtime) => {
   if (isNaN(overtime)) {
-    return "rgba(255,255,255,0)";
+    return 0;
   }
   if (overtime < 0) {
     const opacity = Math.max(0, Math.min(1, overtime / MIN_OVERTIME));
-    const redValue = Math.round(MAX_RED * opacity);
-    return `rgba(${redValue},0,0,${opacity})`;
+    return opacity;
   }
   const opacity = Math.max(0, Math.min(1, overtime / MAX_OVERTIME));
-  const greenValue = Math.round(MAX_GREEN * opacity);
-  return `rgba(0,${greenValue},0,${opacity})`;
+  return opacity;
 };
 
 export default class TimedClock extends Component {
@@ -88,14 +82,8 @@ export default class TimedClock extends Component {
     return this.currentUser.worktimeBalance.lastSuccessful?.value;
   }
 
-  get overtimeColor() {
-    return overtimeToColor(this.overtime);
-  }
-
-  get backgroundColor() {
-    return this.appearance.colorScheme === COLOR_SCHEME_LIGHT
-      ? "rgba(255,255,255,0)"
-      : "rgba(0,0,0,0)";
+  get overtimeOpacity() {
+    return overtimeToOpacity(this.overtime);
   }
 
   get overtimeFeedback() {
