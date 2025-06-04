@@ -5,6 +5,7 @@ import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
 
 import { OVERTIME_FEEDBACK_KEY } from "timed/components/timed-clock";
+import config from "timed/config/environment";
 
 module("Integration | Component | timed clock", function (hooks) {
   setupRenderingTest(hooks);
@@ -12,7 +13,7 @@ module("Integration | Component | timed clock", function (hooks) {
   test("renders", async function (assert) {
     localStorage.setItem(OVERTIME_FEEDBACK_KEY, true);
 
-    this.value = 10;
+    this.value = config.APP.OVERTIME_SOFT_LIMIT * 0.5;
     const currentUser = getOwner(this).lookup("service:current-user");
     currentUser.worktimeBalance = {
       perform: () => {},

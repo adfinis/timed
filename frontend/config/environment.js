@@ -49,6 +49,7 @@ module.exports = function (environment) {
         },
       ],
       EXPORT_LIMIT: 100000,
+      OVERTIME_SOFT_LIMIT: process.env.OVERTIME_SOFT_LIMIT || 20,
     },
 
     "ember-simple-auth-oidc": {

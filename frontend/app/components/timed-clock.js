@@ -7,11 +7,13 @@ import { task, timeout } from "ember-concurrency";
 import { scheduleTask } from "ember-lifeline";
 import moment from "moment";
 
+import config from "timed/config/environment";
+
 // local storage key
 export const OVERTIME_FEEDBACK_KEY = "timed-clock-overtime-feedback";
 
-const MAX_OVERTIME = 20;
-const MIN_OVERTIME = -20;
+const MAX_OVERTIME = config.APP.OVERTIME_SOFT_LIMIT;
+const MIN_OVERTIME = config.APP.OVERTIME_SOFT_LIMIT * -1;
 
 const overtimeToOpacity = (overtime) => {
   if (isNaN(overtime)) {
