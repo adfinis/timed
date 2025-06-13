@@ -10,7 +10,7 @@ import { localCopy } from "tracked-toolbox";
 import Datepicker from "timed/components/datepicker";
 
 /**
- * The datepicker buttn component
+ * The datepicker button component
  *
  * @class DatepickerButton
  * @extends Datepicker
