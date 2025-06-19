@@ -25,7 +25,7 @@ django = "^4.2.23"
 # might remove this once we find out how the jsonapi extras_require work
 django-cors-headers = "^4.7.0"
 django-filter = "^25.1"
-django-prometheus = "^2.3.1"
+django-prometheus = "^2.4.0"
 djangorestframework = "^3.16.0"
 djangorestframework-jsonapi = "^7.1.0"
 mozilla-django-oidc = "^4.0.1"
