@@ -11,4 +11,4 @@ class TrackingConfig(AppConfig):
 
     def ready(self):
         # Implicitly connect signal handlers decorated with @receiver.
-        from . import signals  # noqa: F401
+        from . import signals  # noqa: F401, PLC0415
