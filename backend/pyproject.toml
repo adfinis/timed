@@ -46,7 +46,7 @@ django-hurricane = "^1.6.0"
 psycopg = {extras = ["binary"], version = "^3.2.9"}
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.12.1"
+ruff = "^0.12.2"
 coverage = "7.9.1"
 django-extensions = "4.1"
 factory-boy = "3.3.3"
