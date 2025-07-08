@@ -251,10 +251,23 @@ class ReportViewSet(ModelViewSet):
 
             fields["verified_by"] = (verified and user) or None
 
-            if fields.get("review") or any(queryset.values_list("review", flat=True)):
+            if (
+                any(queryset.values_list("review", flat=True))
+                and verified
+                and fields.get("review")
+            ) or (verified and fields.get("review")):
                 raise exceptions.ParseError(
                     _("Reports can't both be set as `review` and `verified`.")
                 )
+
+        if (
+            verified is None
+            and fields.get("review")
+            and any(queryset.values_list("verified_by", flat=True))
+        ):
+            raise exceptions.ParseError(
+                _("Reports can't both be set as `review` and `verified`.")
+            )
 
         if serializer.validated_data.get("billed", None) is not None and not (
             user.is_superuser or user.is_accountant
