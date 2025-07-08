@@ -158,11 +158,27 @@ export default class AnalysisEditController extends Controller {
     return this.isAccountant || this.isSuperuser;
   }
 
-  get needsReview() {
+  @action
+  needsReview(form) {
     return (
-      this.intersectionModel?.review === null ||
-      this.intersectionModel?.review === true
+      (this.intersectionModel?.review === null ||
+        this.intersectionModel?.review === true) &&
+      form.model.change?.review !== false
     );
+  }
+
+  @action
+  showVerifiedWarning(form) {
+    const review =
+      form.model.change?.review !== undefined
+        ? form.model.change?.review
+        : form.model.data.review;
+    const verified =
+      form.model.change?.verified !== undefined
+        ? form.model.change?.verified
+        : form.model.data.verified;
+
+    return verified && review;
   }
 
   get toolTipText() {
