@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  tracked-built-ins: ~4.0.0
+
 importers:
 
   .:
@@ -333,8 +336,8 @@ importers:
         specifier: ~3.4.17
         version: 3.4.17
       tracked-built-ins:
-        specifier: 3.3.0
-        version: 3.3.0
+        specifier: ~4.0.0
+        version: 4.0.0(@babel/core@7.26.0)
       tracked-toolbox:
         specifier: 2.0.0
         version: 2.0.0(@babel/core@7.26.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))
@@ -7935,8 +7938,8 @@ packages:
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
-  tracked-built-ins@3.3.0:
-    resolution: {integrity: sha512-ewKFrW/AQs05oLPM5isOUb/1aOwBRfHfmF408CCzTk21FLAhKrKVOP5Q5ebX+zCT4kvg81PGBGwrBiEGND1nWA==}
+  tracked-built-ins@4.0.0:
+    resolution: {integrity: sha512-0Jl43A1SDZd+yYCJvXfgDSn4Wk/zcawkyFTBPqOETU5UJRngnVEnQ8oOjawqPRg6qja3sKjIQ8z6X9xJzcUTUA==}
 
   tracked-toolbox@2.0.0:
     resolution: {integrity: sha512-adZtX+RGN6F+pWs/5JqVuDxLhuia4uhqmQp+UlUaxpykWjDFETtAdQR+LdDJiFPXFAXnS6FBqn/tnSLJQCm3Yw==}
@@ -14023,7 +14026,7 @@ snapshots:
       ember-simple-auth: 6.0.0(@ember/test-helpers@4.0.5(@babel/core@7.26.0)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)))(@glint/template@1.4.0)
       ember-source: 5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)
       js-sha256: 0.11.0
-      tracked-built-ins: 3.3.0
+      tracked-built-ins: 4.0.0(@babel/core@7.26.0)
       uuid: 11.1.0
     transitivePeerDependencies:
       - '@ember/test-helpers'
@@ -18210,11 +18213,13 @@ snapshots:
 
   tr46@0.0.3: {}
 
-  tracked-built-ins@3.3.0:
+  tracked-built-ins@4.0.0(@babel/core@7.26.0):
     dependencies:
       '@embroider/addon-shim': 1.9.0
+      decorator-transforms: 2.3.0(@babel/core@7.26.0)
       ember-tracked-storage-polyfill: 1.0.0
     transitivePeerDependencies:
+      - '@babel/core'
       - supports-color
 
   tracked-toolbox@2.0.0(@babel/core@7.26.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)):
