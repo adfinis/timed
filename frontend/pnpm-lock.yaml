@@ -66,8 +66,8 @@ importers:
         specifier: 4.0.2
         version: 4.0.2
       '@nullvoxpopuli/ember-composable-helpers':
-        specifier: ^5.2.8
-        version: 5.2.8(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))
+        specifier: ^5.2.11
+        version: 5.2.11(@babel/core@7.28.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))
       '@sentry/ember':
         specifier: ^7.98.0
         version: 7.118.0(@glint/template@1.4.0)(webpack@5.99.9)
@@ -2092,8 +2092,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@nullvoxpopuli/ember-composable-helpers@5.2.8':
-    resolution: {integrity: sha512-k8p18uukBtlB2WZdCQln93zJB8JYbBaDaQFCVK6X2zpQjgvrokxTNYHRx2ckBiv0SI0MaJlTEW5CLSkZVHiuwA==}
+  '@nullvoxpopuli/ember-composable-helpers@5.2.11':
+    resolution: {integrity: sha512-hdDDhYru0TelepDbh1WpxJlyFYy9bIqdKx3u6Y8FkEjgNnF5RFV7gIUk4u8XB28/3llHAILepCMvRmze9176OA==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -10671,11 +10671,13 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
-  '@nullvoxpopuli/ember-composable-helpers@5.2.8(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))':
+  '@nullvoxpopuli/ember-composable-helpers@5.2.11(@babel/core@7.28.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))':
     dependencies:
       '@embroider/addon-shim': 1.9.0
+      decorator-transforms: 2.3.0(@babel/core@7.28.0)
       ember-functions-as-helper-polyfill: 2.1.2(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))
     transitivePeerDependencies:
+      - '@babel/core'
       - ember-source
       - supports-color
 
