@@ -26,9 +26,9 @@
   "devDependencies": {
     "@adfinis/eslint-config": "3.0.2",
     "@apollo/client": "3.8.6",
-    "@babel/core": "^7.25.2",
-    "@babel/eslint-parser": "7.25.1",
-    "@babel/plugin-proposal-decorators": "^7.24.7",
+    "@babel/core": "^7.27.4",
+    "@babel/eslint-parser": "^7.27.5",
+    "@babel/plugin-proposal-decorators": "^7.27.1",
     "@ember/optional-features": "2.1.0",
     "@ember/render-modifiers": "2.0.5",
     "@ember/string": "^4.0.0",
