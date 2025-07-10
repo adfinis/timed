@@ -125,7 +125,7 @@
     "prettier-plugin-tailwindcss": "^0.6.12",
     "qunit": "2.22.0",
     "qunit-dom": "3.2.1",
-    "reactiveweb": "^1.4.0",
+    "reactiveweb": "^1.6.0",
     "shepherd.js": "^11.2.0",
     "simplebar": "^6.2.5",
     "stylelint": "16.20.0",
