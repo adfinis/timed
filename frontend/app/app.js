@@ -8,6 +8,7 @@ import fastRedact from "fast-redact";
 
 import config from "timed/config/environment";
 
+import "./font-awesome";
 import "simplebar";
 import "simplebar/dist/simplebar.css";
 
