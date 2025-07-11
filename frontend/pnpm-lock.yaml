@@ -45,8 +45,8 @@ importers:
         specifier: ^1.13.3
         version: 1.13.3(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))
       '@fortawesome/ember-fontawesome':
-        specifier: ^0.4.3
-        version: 0.4.3(@glint/template@1.4.0)(rollup@2.79.1)
+        specifier: ^3.0.1
+        version: 3.0.1(@fortawesome/fontawesome-svg-core@6.7.2)(@glimmer/component@1.1.2(@babel/core@7.28.0))
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.7.2
         version: 6.7.2
@@ -97,7 +97,7 @@ importers:
         version: 8.2.0(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.0)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)))(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))
       ember-can:
         specifier: git+https://github.com/anehx/ember-can#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can
-        version: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))
+        version: git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))
       ember-changeset:
         specifier: 4.1.2
         version: 4.1.2(@glint/template@1.4.0)(ember-data@5.3.13(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.0)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)))(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glint/template@1.4.0)(ember-inflector@4.0.2)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9))(qunit@2.24.1))(webpack@5.99.9)
@@ -139,7 +139,7 @@ importers:
         version: 3.0.3(ekcuey7fykwh44zaiz2gj6bqyi)
       ember-cli-nouislider:
         specifier: git+https://github.com/derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
-        version: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872
+        version: git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
       ember-cli-postcss:
         specifier: ^8.2.0
         version: 8.2.0
@@ -1808,9 +1808,11 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-  '@fortawesome/ember-fontawesome@0.4.3':
-    resolution: {integrity: sha512-1qAYrpEH29JO74yGGyUYMHnrA9VBFD9QO/g8xDZov3YxcjIiHN9L2liu0X3YNkrNUXgySgx/xa4t1dGINN9WVg==}
-    engines: {node: 12.* || 14.* || >= 16}
+  '@fortawesome/ember-fontawesome@3.0.1':
+    resolution: {integrity: sha512-TaCrlNjide9HMrZqpzX6A0KFF4FIoi0YpDZw/WhC9Usv8znmMrOQxswhiJAGn8aVuKup7BtNwK18C9Bw3tQHBA==}
+    peerDependencies:
+      '@fortawesome/fontawesome-svg-core': ^6.6.0
+      '@glimmer/component': '>= 1.1.2'
 
   '@fortawesome/fontawesome-common-types@6.7.2':
     resolution: {integrity: sha512-Zs+YeHUC5fkt7Mg1l6XTniei3k4bwG/yo3iFUtZWd/pMx9g3fdvkSK9E0FOC+++phXOka78uJcYb8JaFkW52Xg==}
@@ -1827,9 +1829,6 @@ packages:
   '@fortawesome/free-solid-svg-icons@6.7.2':
     resolution: {integrity: sha512-GsBrnOzU8uj0LECDfD5zomZJIjrPhIlWU82AHwa2s40FKH+kcxQaBvBo3Z4TxyZHIyX8XTDxsyA33/Vx9eFuQA==}
     engines: {node: '>=6'}
-
-  '@glimmer/compiler@0.27.0':
-    resolution: {integrity: sha512-SJUUEpkFCL+GTpEK6c2EhZQJant67ahGLF6M1xRmIsq6E+AtbHgu+y8mWvFbtpb7lx4gqNKpXSEwlHUTTuxVGw==}
 
   '@glimmer/compiler@0.92.4':
     resolution: {integrity: sha512-xoR8F6fsgFqWbPbCfSgJuJ95vaLnXw0SgDCwyl/KMeeaSxpHwJbr8+BfiUl+7ko2A+HzrY5dPXXnGr4ZM+CUXw==}
@@ -1856,9 +1855,6 @@ packages:
 
   '@glimmer/global-context@0.92.3':
     resolution: {integrity: sha512-tvlK5pt6oSe3furJ1KsO9vG/KmF9S98HLrcR48XbfwXlkuxvUeS94cdQId4GCN5naeX4OC4xm6eEjZWdc2s+jw==}
-
-  '@glimmer/interfaces@0.27.0':
-    resolution: {integrity: sha512-Uz9txXB0Agnac6vUOAk6uZIB7SeS/fFrdjyNsNJnge5XeojvOQs1YyIFqOhky3G7NHO/mcx3Tdt8PXggFakVtQ==}
 
   '@glimmer/interfaces@0.84.3':
     resolution: {integrity: sha512-dk32ykoNojt0mvEaIW6Vli5MGTbQo58uy3Epj7ahCgTHmWOKuw/0G83f2UmFprRwFx689YTXG38I/vbpltEjzg==}
@@ -1887,9 +1883,6 @@ packages:
   '@glimmer/runtime@0.92.4':
     resolution: {integrity: sha512-ISqM/8hVh+fY/gnLAAPKfts4CvnJBOyCYAXgGccIlzzQrSVLaz0NoRiWTLGj5B/3xyPbqLwYPDvlTsOjYtvPoA==}
 
-  '@glimmer/syntax@0.27.0':
-    resolution: {integrity: sha512-IC+JaGkfF+J3e5jUXrW4SkVAAgI6WyN4kzfJKqWEnjMAa6pB8XGEDkaaMhoMrxjfK+R0Us2PO45CWhGB3FqsKg==}
-
   '@glimmer/syntax@0.84.3':
     resolution: {integrity: sha512-ioVbTic6ZisLxqTgRBL2PCjYZTFIwobifCustrozRU2xGDiYvVIL0vt25h2c1ioDsX59UgVlDkIK4YTAQQSd2A==}
 
@@ -1898,9 +1891,6 @@ packages:
 
   '@glimmer/tracking@1.1.2':
     resolution: {integrity: sha512-cyV32zsHh+CnftuRX84ALZpd2rpbDrhLhJnTXn9W//QpqdRZ5rdMsxSY9fOsj0CKEc706tmEU299oNnDc0d7tA==}
-
-  '@glimmer/util@0.27.0':
-    resolution: {integrity: sha512-GxER83ZuyEyZ5Phn86VkHcjjN/3MagK0MMr91S5t62IVSW/zyFevpaVV26YKmisDqOe4918nvwGqn543O5gGXw==}
 
   '@glimmer/util@0.44.0':
     resolution: {integrity: sha512-duAsm30uVK9jSysElCbLyU6QQYO2X9iLDLBIBUcCqck9qN1o3tK2qWiHbGK5d6g8E2AJ4H88UrfElkyaJlGrwg==}
@@ -1923,9 +1913,6 @@ packages:
 
   '@glimmer/vm@0.92.3':
     resolution: {integrity: sha512-DNMQz7nn2zRwKO1irVZ4alg1lH+VInwR3vkWVgobUs0yh7OoHVGXKMd5uxzIksqJEUw1XOX9Qgu/GYZB1PiH3w==}
-
-  '@glimmer/wire-format@0.27.0':
-    resolution: {integrity: sha512-gNhityUr9HODYH9GydHVk7C6NZ57MqSbdGzC5TM8VdPibtd72N3+3Zggrm12Faw4E4zTvTM1692Sz/bNwMxLNw==}
 
   '@glimmer/wire-format@0.92.3':
     resolution: {integrity: sha512-gFz81Q9+V7Xs0X8mSq6y8qacHm0dPaGJo2/Bfcsdow1hLOKNgTCLr4XeDBhRML8f6I6Gk9ugH4QDxyIOXOpC4w==}
@@ -2060,24 +2047,6 @@ packages:
     resolution: {integrity: sha512-7ls1R6//+GPYD9vof1XaL5psViv83CwpdwlS8oUkWldYgbPhzZ3WgxIQMWqGyBmWPmoBfQg8C7jj7KI/ZuDHhQ==}
     peerDependencies:
       prettier: ^3.0.0
-
-  '@rollup/plugin-node-resolve@15.2.3':
-    resolution: {integrity: sha512-j/lym8nf5E21LwBT4Df1VD6hRO2L2iwUeUmP7litikRsVp1H6NWx20NEp0Y7su+7XGc476GnXXc4kFeZNGmaSQ==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^2.78.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-
-  '@rollup/pluginutils@5.1.0':
-    resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -2243,9 +2212,6 @@ packages:
 
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
-
-  '@types/resolve@1.20.2':
-    resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
 
   '@types/rimraf@2.0.5':
     resolution: {integrity: sha512-YyP+VfeaqAyFmXoTh3HChxOQMyjByRMsHU7kc5KOJkSlXudhMhQIALbYV7rHh/l8d2lX3VUQzprrcAgWdRuU8g==}
@@ -3078,10 +3044,6 @@ packages:
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
-  builtin-modules@3.3.0:
-    resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
-    engines: {node: '>=6'}
-
   bytes@1.0.0:
     resolution: {integrity: sha512-/x68VkHLeTl3/Ll8IvxdwzhrT+IyKc52e/oyHhA2RwqPqswSnjVbSddfPRwAsJtbilMAPSRWwAlpxdYsSWOTKQ==}
 
@@ -3127,9 +3089,6 @@ packages:
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
     engines: {node: '>=6'}
-
-  camel-case@4.1.2:
-    resolution: {integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==}
 
   camelcase-css@2.0.1:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
@@ -3727,10 +3686,6 @@ packages:
     resolution: {integrity: sha512-HOJkrhaYsweh+W+e74Yn7YStZOilkoPb6fycpwNLKzSPtruFs48nYis0zy5yJz1+ktUhHxoRDJ27RQAWLIJVJw==}
     engines: {node: '>=16.0.0'}
 
-  deepmerge@4.3.1:
-    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
-    engines: {node: '>=0.10.0'}
-
   defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
 
@@ -3849,10 +3804,6 @@ packages:
     peerDependencies:
       ember-source: ^3.28.0 || ^4.0.0 || >=5.0.0
 
-  ember-ast-helpers@0.3.5:
-    resolution: {integrity: sha512-ZtaGAUDvRX13G9D4t4WbTMhcUzqsw6KqhcHreIiZi3ZhRFlSZ3BumgyJ6buDZj+tCBLiQsxRv7l5AY6imqNR6Q==}
-    engines: {node: '>= 6'}
-
   ember-async-data@2.0.1:
     resolution: {integrity: sha512-yCQlVR3NLgjGA09LMc1NYX0XiAd0tHTM4/AmIHD0wq87QpHGmWcpMxyKGEe/TBczyCwBEJifaZNtAjMDsW1YdA==}
 
@@ -3872,8 +3823,8 @@ packages:
     resolution: {integrity: sha512-hSPcvIKarA8wad2/b6jDd/eU+OtKmi6uP+iYQbzi5TQpjsqV6b4QdRqrLk7ClSRRKBAtdTuutx+m+X+WlEd2lw==}
     engines: {node: 10.* || >= 12}
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can:
-    resolution: {path: /ember-can, tarball: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935}
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can:
+    resolution: {commit: 1755f0fb2c1026b57f2984d065f1c8f10835e935, path: /ember-can, repo: git@github.com:anehx/ember-can.git, type: git}
     version: 5.0.4
     peerDependencies:
       '@ember/string': ^3.1.1
@@ -3986,8 +3937,8 @@ packages:
   ember-cli-normalize-entity-name@1.0.0:
     resolution: {integrity: sha512-rF4P1rW2P1gVX1ynZYPmuIf7TnAFDiJmIUFI1Xz16VYykUAyiOCme0Y22LeZq8rTzwBMiwBwoE3RO4GYWehXZA==}
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
-    resolution: {tarball: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872}
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+    resolution: {commit: cf0d87986cf25d5795e1edd6c8b9f008c5b39872, repo: git@github.com:derrabauke/ember-cli-nouislider.git, type: git}
     version: 1.2.1
     engines: {node: 10.* || >= 12}
 
@@ -4670,9 +4621,6 @@ packages:
 
   estree-walker@0.6.1:
     resolution: {integrity: sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==}
-
-  estree-walker@2.0.2:
-    resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
   esutils@2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
@@ -5479,10 +5427,6 @@ packages:
   is-buffer@1.1.6:
     resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
 
-  is-builtin-module@3.2.1:
-    resolution: {integrity: sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==}
-    engines: {node: '>=6'}
-
   is-callable@1.2.7:
     resolution: {integrity: sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==}
     engines: {node: '>= 0.4'}
@@ -5574,9 +5518,6 @@ packages:
   is-map@2.0.3:
     resolution: {integrity: sha512-1Qed0/Hr2m+YqxnM09CjA2d/i6YZNfF6R2oRAOj36eUdS6qIV/huPJNSEpKbupewFs+ZsJlxsjjPbc0/afW6Lw==}
     engines: {node: '>= 0.4'}
-
-  is-module@1.0.0:
-    resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
 
   is-negative-zero@2.0.3:
     resolution: {integrity: sha512-5KoIu2Ngpyek75jXodFvnafB6DJgr3u8uuK0LEZJjrU19DrMD3EVERaR8sjz8CCGgpZvxPl9SuE1GMVPFHx1mw==}
@@ -6632,9 +6573,6 @@ packages:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
 
-  pascal-case@3.1.2:
-    resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
-
   pascalcase@0.1.1:
     resolution: {integrity: sha512-XHXfu/yOQRy9vYOtUDVMN60OEJjW013GoObG1o+xwQTpB9eYJX/BjXMsdW13ZDPruFhYYn0AG22w0xgQMwl3Nw==}
     engines: {node: '>=0.10.0'}
@@ -7424,9 +7362,6 @@ packages:
 
   silent-error@1.1.1:
     resolution: {integrity: sha512-n4iEKyNcg4v6/jpb3c0/iyH2G1nzUNl7Gpqtn/mHIJK9S/q/7MCfoO4rwVOoO59qPFIc0hVHvMbiOJ0NdtxKKw==}
-
-  simple-html-tokenizer@0.3.0:
-    resolution: {integrity: sha512-cuUWLyKJbCExtBmxJWhmIk/KIbMF1yOuNaansJiPEdxqitM7r7So3a1M4Sw2uqfNYWjBTiVVdJjb7vtYIaEjhw==}
 
   simple-html-tokenizer@0.5.11:
     resolution: {integrity: sha512-C2WEK/Z3HoSFbYq8tI7ni3eOo/NneSPRoPpcM7WdLjFOArFuyXEjAoCdOC3DgMfRyziZQ1hCNR4mrNdWEvD0og==}
@@ -10213,25 +10148,12 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fortawesome/ember-fontawesome@0.4.3(@glint/template@1.4.0)(rollup@2.79.1)':
+  '@fortawesome/ember-fontawesome@3.0.1(@fortawesome/fontawesome-svg-core@6.7.2)(@glimmer/component@1.1.2(@babel/core@7.28.0))':
     dependencies:
+      '@embroider/addon-shim': 1.10.0
       '@fortawesome/fontawesome-svg-core': 6.7.2
-      '@rollup/plugin-node-resolve': 15.2.3(rollup@2.79.1)
-      broccoli-file-creator: 2.1.1
-      broccoli-merge-trees: 4.2.0
-      broccoli-plugin: 4.0.7
-      broccoli-rollup: 5.0.0
-      broccoli-source: 3.0.1
-      camel-case: 4.1.2
-      ember-ast-helpers: 0.3.5
-      ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 5.7.2
-      ember-get-config: 2.1.1(@glint/template@1.4.0)
-      find-yarn-workspace-root: 2.0.0
-      glob: 7.2.3
+      '@glimmer/component': 1.1.2(@babel/core@7.28.0)
     transitivePeerDependencies:
-      - '@glint/template'
-      - rollup
       - supports-color
 
   '@fortawesome/fontawesome-common-types@6.7.2': {}
@@ -10247,14 +10169,6 @@ snapshots:
   '@fortawesome/free-solid-svg-icons@6.7.2':
     dependencies:
       '@fortawesome/fontawesome-common-types': 6.7.2
-
-  '@glimmer/compiler@0.27.0':
-    dependencies:
-      '@glimmer/interfaces': 0.27.0
-      '@glimmer/syntax': 0.27.0
-      '@glimmer/util': 0.27.0
-      '@glimmer/wire-format': 0.27.0
-      simple-html-tokenizer: 0.3.0
 
   '@glimmer/compiler@0.92.4':
     dependencies:
@@ -10307,10 +10221,6 @@ snapshots:
   '@glimmer/env@0.1.7': {}
 
   '@glimmer/global-context@0.92.3': {}
-
-  '@glimmer/interfaces@0.27.0':
-    dependencies:
-      '@glimmer/wire-format': 0.27.0
 
   '@glimmer/interfaces@0.84.3':
     dependencies:
@@ -10390,13 +10300,6 @@ snapshots:
       '@glimmer/vm': 0.92.3
       '@glimmer/wire-format': 0.92.3
 
-  '@glimmer/syntax@0.27.0':
-    dependencies:
-      '@glimmer/interfaces': 0.27.0
-      '@glimmer/util': 0.27.0
-      handlebars: 4.7.8
-      simple-html-tokenizer: 0.3.0
-
   '@glimmer/syntax@0.84.3':
     dependencies:
       '@glimmer/interfaces': 0.84.3
@@ -10416,8 +10319,6 @@ snapshots:
     dependencies:
       '@glimmer/env': 0.1.7
       '@glimmer/validator': 0.44.0
-
-  '@glimmer/util@0.27.0': {}
 
   '@glimmer/util@0.44.0': {}
 
@@ -10451,10 +10352,6 @@ snapshots:
     dependencies:
       '@glimmer/interfaces': 0.92.3
       '@glimmer/util': 0.92.3
-
-  '@glimmer/wire-format@0.27.0':
-    dependencies:
-      '@glimmer/util': 0.27.0
 
   '@glimmer/wire-format@0.92.3':
     dependencies:
@@ -10609,25 +10506,6 @@ snapshots:
   '@prettier/sync@0.2.1(prettier@3.5.3)':
     dependencies:
       prettier: 3.5.3
-
-  '@rollup/plugin-node-resolve@15.2.3(rollup@2.79.1)':
-    dependencies:
-      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
-      '@types/resolve': 1.20.2
-      deepmerge: 4.3.1
-      is-builtin-module: 3.2.1
-      is-module: 1.0.0
-      resolve: 1.22.10
-    optionalDependencies:
-      rollup: 2.79.1
-
-  '@rollup/pluginutils@5.1.0(rollup@2.79.1)':
-    dependencies:
-      '@types/estree': 1.0.7
-      estree-walker: 2.0.2
-      picomatch: 2.3.1
-    optionalDependencies:
-      rollup: 2.79.1
 
   '@rtsao/scc@1.1.0': {}
 
@@ -10822,8 +10700,6 @@ snapshots:
   '@types/qs@6.9.15': {}
 
   '@types/range-parser@1.2.7': {}
-
-  '@types/resolve@1.20.2': {}
 
   '@types/rimraf@2.0.5':
     dependencies:
@@ -12215,8 +12091,6 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  builtin-modules@3.3.0: {}
-
   bytes@1.0.0: {}
 
   bytes@3.0.0: {}
@@ -12275,11 +12149,6 @@ snapshots:
       get-intrinsic: 1.3.0
 
   callsites@3.1.0: {}
-
-  camel-case@4.1.2:
-    dependencies:
-      pascal-case: 3.1.2
-      tslib: 2.6.3
 
   camelcase-css@2.0.1: {}
 
@@ -12717,8 +12586,6 @@ snapshots:
 
   deepmerge-ts@7.1.5: {}
 
-  deepmerge@4.3.1: {}
-
   defaults@1.0.4:
     dependencies:
       clone: 1.0.4
@@ -12824,11 +12691,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-ast-helpers@0.3.5:
-    dependencies:
-      '@glimmer/compiler': 0.27.0
-      '@glimmer/syntax': 0.27.0
-
   ember-async-data@2.0.1(@babel/core@7.28.0)(@glint/template@1.4.0):
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.4.0)
@@ -12914,7 +12776,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)):
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.99.9)):
     dependencies:
       '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.10.0
@@ -13188,7 +13050,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
     dependencies:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
@@ -14516,8 +14378,6 @@ snapshots:
 
   estree-walker@0.6.1: {}
 
-  estree-walker@2.0.2: {}
-
   esutils@2.0.3: {}
 
   etag@1.8.1: {}
@@ -15558,10 +15418,6 @@ snapshots:
 
   is-buffer@1.1.6: {}
 
-  is-builtin-module@3.2.1:
-    dependencies:
-      builtin-modules: 3.3.0
-
   is-callable@1.2.7: {}
 
   is-core-module@2.16.1:
@@ -15642,8 +15498,6 @@ snapshots:
       '@babel/runtime': 7.26.9
 
   is-map@2.0.3: {}
-
-  is-module@1.0.0: {}
 
   is-negative-zero@2.0.3: {}
 
@@ -16617,11 +16471,6 @@ snapshots:
 
   parseurl@1.3.3: {}
 
-  pascal-case@3.1.2:
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.6.3
-
   pascalcase@0.1.1: {}
 
   path-exists@3.0.0: {}
@@ -17393,8 +17242,6 @@ snapshots:
       debug: 2.6.9
     transitivePeerDependencies:
       - supports-color
-
-  simple-html-tokenizer@0.3.0: {}
 
   simple-html-tokenizer@0.5.11: {}
 
