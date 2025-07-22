@@ -13,7 +13,7 @@ importers:
     devDependencies:
       '@adfinis/eslint-config':
         specifier: 3.0.2
-        version: 3.0.2(@babel/core@7.28.0)(@babel/eslint-parser@7.28.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6)))(@babel/plugin-proposal-decorators@7.28.0(@babel/core@7.28.0))(eslint-config-prettier@10.1.5(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-ember@12.6.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-import@2.32.0(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-n@17.21.0(eslint@9.20.1(jiti@1.21.6))(typescript@5.5.2))(eslint-plugin-prettier@5.5.1(@types/eslint@9.6.1)(eslint-config-prettier@10.1.5(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2))(eslint-plugin-qunit@8.2.4(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)
+        version: 3.0.2(@babel/core@7.28.0)(@babel/eslint-parser@7.28.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6)))(@babel/plugin-proposal-decorators@7.28.0(@babel/core@7.28.0))(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-ember@12.6.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-import@2.32.0(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-n@17.21.0(eslint@9.20.1(jiti@1.21.6))(typescript@5.5.2))(eslint-plugin-prettier@5.5.3(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2))(eslint-plugin-qunit@8.2.4(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)
       '@apollo/client':
         specifier: ^3.13.8
         version: 3.13.8(graphql@16.11.0)
@@ -97,7 +97,7 @@ importers:
         version: 8.2.0(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.0)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))
       ember-can:
         specifier: git+https://github.com/anehx/ember-can#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can
-        version: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))
+        version: git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))
       ember-changeset:
         specifier: 4.1.2
         version: 4.1.2(@glint/template@1.4.0)(ember-data@5.3.13(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.0)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glint/template@1.4.0)(ember-inflector@4.0.2)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))(qunit@2.24.1))(webpack@5.100.2)
@@ -139,7 +139,7 @@ importers:
         version: 3.0.3(uncztmqhba2z7zacuzatbqwmvm)
       ember-cli-nouislider:
         specifier: git+https://github.com/derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
-        version: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872
+        version: git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
       ember-cli-postcss:
         specifier: ^8.2.0
         version: 8.2.0
@@ -258,8 +258,8 @@ importers:
         specifier: 9.20.1
         version: 9.20.1(jiti@1.21.6)
       eslint-config-prettier:
-        specifier: 10.1.5
-        version: 10.1.5(eslint@9.20.1(jiti@1.21.6))
+        specifier: 10.1.8
+        version: 10.1.8(eslint@9.20.1(jiti@1.21.6))
       eslint-plugin-ember:
         specifier: 12.6.0
         version: 12.6.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6))
@@ -270,8 +270,8 @@ importers:
         specifier: 17.21.0
         version: 17.21.0(eslint@9.20.1(jiti@1.21.6))(typescript@5.5.2)
       eslint-plugin-prettier:
-        specifier: 5.5.1
-        version: 5.5.1(@types/eslint@9.6.1)(eslint-config-prettier@10.1.5(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)
+        specifier: 5.5.3
+        version: 5.5.3(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)
       eslint-plugin-qunit:
         specifier: 8.2.4
         version: 8.2.4(eslint@9.20.1(jiti@1.21.6))
@@ -2029,8 +2029,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@pkgr/core@0.2.7':
-    resolution: {integrity: sha512-YLT9Zo3oNPJoBjBc4q8G2mjU4tqIbf5CEOORbUUr48dCD9q3umJ3IPlVqOqDakPfd2HuwccBaqlGhN4Gmr5OWg==}
+  '@pkgr/core@0.2.9':
+    resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
   '@pnpm/constants@7.1.1':
@@ -3764,8 +3764,8 @@ packages:
     resolution: {integrity: sha512-hSPcvIKarA8wad2/b6jDd/eU+OtKmi6uP+iYQbzi5TQpjsqV6b4QdRqrLk7ClSRRKBAtdTuutx+m+X+WlEd2lw==}
     engines: {node: 10.* || >= 12}
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can:
-    resolution: {path: /ember-can, tarball: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935}
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can:
+    resolution: {commit: 1755f0fb2c1026b57f2984d065f1c8f10835e935, path: /ember-can, repo: git@github.com:anehx/ember-can.git, type: git}
     version: 5.0.4
     peerDependencies:
       '@ember/string': ^3.1.1
@@ -3878,8 +3878,8 @@ packages:
   ember-cli-normalize-entity-name@1.0.0:
     resolution: {integrity: sha512-rF4P1rW2P1gVX1ynZYPmuIf7TnAFDiJmIUFI1Xz16VYykUAyiOCme0Y22LeZq8rTzwBMiwBwoE3RO4GYWehXZA==}
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
-    resolution: {tarball: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872}
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+    resolution: {commit: cf0d87986cf25d5795e1edd6c8b9f008c5b39872, repo: git@github.com:derrabauke/ember-cli-nouislider.git, type: git}
     version: 1.2.1
     engines: {node: 10.* || >= 12}
 
@@ -4387,8 +4387,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  eslint-config-prettier@10.1.5:
-    resolution: {integrity: sha512-zc1UmCpNltmVY34vuLRV61r1K27sWuX39E+uyUnY8xS2Bex88VV9cugG+UZbRSRGtGyFboj+D8JODyme1plMpw==}
+  eslint-config-prettier@10.1.8:
+    resolution: {integrity: sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -4449,8 +4449,8 @@ packages:
     peerDependencies:
       eslint: '>=8.23.0'
 
-  eslint-plugin-prettier@5.5.1:
-    resolution: {integrity: sha512-dobTkHT6XaEVOo8IO90Q4DOSxnm3Y151QxPJlM/vKC0bVy+d6cVWQZLlFiuZPP0wS6vZwSKeJgKkcS+KfMBlRw==}
+  eslint-plugin-prettier@5.5.3:
+    resolution: {integrity: sha512-NAdMYww51ehKfDyDhv59/eIItUVzU0Io9H2E8nHNGKEeeqlnci+1gCvrHib6EmZdf6GxF+LCV5K7UC65Ezvw7w==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       '@types/eslint': '>=8.0.0'
@@ -7477,8 +7477,8 @@ packages:
     resolution: {integrity: sha512-vngT2JmkSapgq0z7uIoYtB9kWOOzMihAAYq/D3Pjm/ODOGMgS4r++B+OZ09U4hWR6EaOdy9eqQ7/8ygbH3wehA==}
     engines: {node: 8.* || >= 10.*}
 
-  synckit@0.11.8:
-    resolution: {integrity: sha512-+XZ+r1XGIJGeQk3VvXhT6xx/VpbHsRzsTkGgF6E5RX9TTXD0118l87puaEBZ566FhqblC6U0d4XnubznJDm30A==}
+  synckit@0.11.11:
+    resolution: {integrity: sha512-MeQTA1r0litLUf0Rp/iisCaL8761lKAZHaimlbGK4j0HysC4PLfqygQj9srcs0m2RdtDYnF8UuYyKpbjHYp7Jw==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
   tabbable@5.3.3:
@@ -8003,15 +8003,15 @@ packages:
 
 snapshots:
 
-  '@adfinis/eslint-config@3.0.2(@babel/core@7.28.0)(@babel/eslint-parser@7.28.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6)))(@babel/plugin-proposal-decorators@7.28.0(@babel/core@7.28.0))(eslint-config-prettier@10.1.5(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-ember@12.6.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-import@2.32.0(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-n@17.21.0(eslint@9.20.1(jiti@1.21.6))(typescript@5.5.2))(eslint-plugin-prettier@5.5.1(@types/eslint@9.6.1)(eslint-config-prettier@10.1.5(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2))(eslint-plugin-qunit@8.2.4(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)':
+  '@adfinis/eslint-config@3.0.2(@babel/core@7.28.0)(@babel/eslint-parser@7.28.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6)))(@babel/plugin-proposal-decorators@7.28.0(@babel/core@7.28.0))(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-ember@12.6.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-import@2.32.0(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-n@17.21.0(eslint@9.20.1(jiti@1.21.6))(typescript@5.5.2))(eslint-plugin-prettier@5.5.3(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2))(eslint-plugin-qunit@8.2.4(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/eslint-parser': 7.28.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6))
       '@babel/plugin-proposal-decorators': 7.28.0(@babel/core@7.28.0)
       eslint: 9.20.1(jiti@1.21.6)
-      eslint-config-prettier: 10.1.5(eslint@9.20.1(jiti@1.21.6))
+      eslint-config-prettier: 10.1.8(eslint@9.20.1(jiti@1.21.6))
       eslint-plugin-import: 2.32.0(eslint@9.20.1(jiti@1.21.6))
-      eslint-plugin-prettier: 5.5.1(@types/eslint@9.6.1)(eslint-config-prettier@10.1.5(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)
+      eslint-plugin-prettier: 5.5.3(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)
       prettier: 3.6.2
     optionalDependencies:
       eslint-plugin-ember: 12.6.0(@babel/core@7.28.0)(eslint@9.20.1(jiti@1.21.6))
@@ -10275,7 +10275,7 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@pkgr/core@0.2.7': {}
+  '@pkgr/core@0.2.9': {}
 
   '@pnpm/constants@7.1.1': {}
 
@@ -12471,7 +12471,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)):
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)):
     dependencies:
       '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.10.0
@@ -12745,7 +12745,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
     dependencies:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
@@ -13811,7 +13811,7 @@ snapshots:
       eslint: 9.20.1(jiti@1.21.6)
       semver: 7.7.2
 
-  eslint-config-prettier@10.1.5(eslint@9.20.1(jiti@1.21.6)):
+  eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)):
     dependencies:
       eslint: 9.20.1(jiti@1.21.6)
 
@@ -13897,15 +13897,15 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  eslint-plugin-prettier@5.5.1(@types/eslint@9.6.1)(eslint-config-prettier@10.1.5(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2):
+  eslint-plugin-prettier@5.5.3(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2):
     dependencies:
       eslint: 9.20.1(jiti@1.21.6)
       prettier: 3.6.2
       prettier-linter-helpers: 1.0.0
-      synckit: 0.11.8
+      synckit: 0.11.11
     optionalDependencies:
       '@types/eslint': 9.6.1
-      eslint-config-prettier: 10.1.5(eslint@9.20.1(jiti@1.21.6))
+      eslint-config-prettier: 10.1.8(eslint@9.20.1(jiti@1.21.6))
 
   eslint-plugin-qunit@8.2.4(eslint@9.20.1(jiti@1.21.6)):
     dependencies:
@@ -17138,9 +17138,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  synckit@0.11.8:
+  synckit@0.11.11:
     dependencies:
-      '@pkgr/core': 0.2.7
+      '@pkgr/core': 0.2.9
 
   tabbable@5.3.3: {}
 
