@@ -46,16 +46,16 @@ importers:
         version: 1.13.3(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))
       '@fortawesome/ember-fontawesome':
         specifier: ^3.0.1
-        version: 3.0.1(@fortawesome/fontawesome-svg-core@6.7.2)(@glimmer/component@1.1.2(@babel/core@7.28.0))
+        version: 3.0.1(@fortawesome/fontawesome-svg-core@7.0.0)(@glimmer/component@1.1.2(@babel/core@7.28.0))
       '@fortawesome/fontawesome-svg-core':
-        specifier: ^6.7.2
-        version: 6.7.2
+        specifier: ^7.0.0
+        version: 7.0.0
       '@fortawesome/free-regular-svg-icons':
-        specifier: ^6.7.2
-        version: 6.7.2
+        specifier: ^7.0.0
+        version: 7.0.0
       '@fortawesome/free-solid-svg-icons':
-        specifier: ^6.7.2
-        version: 6.7.2
+        specifier: ^7.0.0
+        version: 7.0.0
       '@glimmer/component':
         specifier: 1.1.2
         version: 1.1.2(@babel/core@7.28.0)
@@ -97,7 +97,7 @@ importers:
         version: 8.2.0(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.0)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))
       ember-can:
         specifier: git+https://github.com/anehx/ember-can#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can
-        version: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))
+        version: git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))
       ember-changeset:
         specifier: 4.1.2
         version: 4.1.2(@glint/template@1.4.0)(ember-data@5.3.13(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.0)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glint/template@1.4.0)(ember-inflector@4.0.2)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))(qunit@2.24.1))(webpack@5.100.2)
@@ -139,7 +139,7 @@ importers:
         version: 3.0.3(uncztmqhba2z7zacuzatbqwmvm)
       ember-cli-nouislider:
         specifier: git+https://github.com/derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
-        version: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872
+        version: git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
       ember-cli-postcss:
         specifier: ^8.2.0
         version: 8.2.0
@@ -315,11 +315,11 @@ importers:
         specifier: 3.4.0
         version: 3.4.0
       reactiveweb:
-        specifier: ^1.7.0
-        version: 1.7.0(@babel/core@7.28.0)(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))
+        specifier: ^1.8.0
+        version: 1.8.0(@babel/core@7.28.0)(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2))
       shepherd.js:
-        specifier: ^14.5.0
-        version: 14.5.0
+        specifier: ^14.5.1
+        version: 14.5.1
       simplebar:
         specifier: ^6.2.5
         version: 6.2.7
@@ -1810,20 +1810,20 @@ packages:
       '@fortawesome/fontawesome-svg-core': ^6.6.0
       '@glimmer/component': '>= 1.1.2'
 
-  '@fortawesome/fontawesome-common-types@6.7.2':
-    resolution: {integrity: sha512-Zs+YeHUC5fkt7Mg1l6XTniei3k4bwG/yo3iFUtZWd/pMx9g3fdvkSK9E0FOC+++phXOka78uJcYb8JaFkW52Xg==}
+  '@fortawesome/fontawesome-common-types@7.0.0':
+    resolution: {integrity: sha512-PGMrIYXLGA5K8RWy8zwBkd4vFi4z7ubxtet6Yn13Plf6krRTwPbdlCwlcfmoX0R7B4Z643QvrtHmdQ5fNtfFCg==}
     engines: {node: '>=6'}
 
-  '@fortawesome/fontawesome-svg-core@6.7.2':
-    resolution: {integrity: sha512-yxtOBWDrdi5DD5o1pmVdq3WMCvnobT0LU6R8RyyVXPvFRd2o79/0NCuQoCjNTeZz9EzA9xS3JxNWfv54RIHFEA==}
+  '@fortawesome/fontawesome-svg-core@7.0.0':
+    resolution: {integrity: sha512-obBEF+zd98r/KtKVW6A+8UGWeaOoyMpl6Q9P3FzHsOnsg742aXsl8v+H/zp09qSSu/a/Hxe9LNKzbBaQq1CEbA==}
     engines: {node: '>=6'}
 
-  '@fortawesome/free-regular-svg-icons@6.7.2':
-    resolution: {integrity: sha512-7Z/ur0gvCMW8G93dXIQOkQqHo2M5HLhYrRVC0//fakJXxcF1VmMPsxnG6Ee8qEylA8b8Q3peQXWMNZ62lYF28g==}
+  '@fortawesome/free-regular-svg-icons@7.0.0':
+    resolution: {integrity: sha512-qAh0mTaCY22sQzMK2lKBrtn/aR4keUu5XmtdYR7d702laMe0h+Ab4Kj2pExR9HZkKhjKoq8pbwt8Td+mjW/ipQ==}
     engines: {node: '>=6'}
 
-  '@fortawesome/free-solid-svg-icons@6.7.2':
-    resolution: {integrity: sha512-GsBrnOzU8uj0LECDfD5zomZJIjrPhIlWU82AHwa2s40FKH+kcxQaBvBo3Z4TxyZHIyX8XTDxsyA33/Vx9eFuQA==}
+  '@fortawesome/free-solid-svg-icons@7.0.0':
+    resolution: {integrity: sha512-njSLAllkOddYDCXgTFboXn54Oe5FcvpkWq+FoetOHR64PbN0608kM02Lze0xtISGpXgP+i26VyXRQA0Irh3Obw==}
     engines: {node: '>=6'}
 
   '@glimmer/compiler@0.92.4':
@@ -3764,8 +3764,8 @@ packages:
     resolution: {integrity: sha512-hSPcvIKarA8wad2/b6jDd/eU+OtKmi6uP+iYQbzi5TQpjsqV6b4QdRqrLk7ClSRRKBAtdTuutx+m+X+WlEd2lw==}
     engines: {node: 10.* || >= 12}
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can:
-    resolution: {path: /ember-can, tarball: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935}
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can:
+    resolution: {commit: 1755f0fb2c1026b57f2984d065f1c8f10835e935, path: /ember-can, repo: git@github.com:anehx/ember-can.git, type: git}
     version: 5.0.4
     peerDependencies:
       '@ember/string': ^3.1.1
@@ -3878,8 +3878,8 @@ packages:
   ember-cli-normalize-entity-name@1.0.0:
     resolution: {integrity: sha512-rF4P1rW2P1gVX1ynZYPmuIf7TnAFDiJmIUFI1Xz16VYykUAyiOCme0Y22LeZq8rTzwBMiwBwoE3RO4GYWehXZA==}
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
-    resolution: {tarball: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872}
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+    resolution: {commit: cf0d87986cf25d5795e1edd6c8b9f008c5b39872, repo: git@github.com:derrabauke/ember-cli-nouislider.git, type: git}
     version: 1.2.1
     engines: {node: 10.* || >= 12}
 
@@ -6765,8 +6765,8 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  reactiveweb@1.7.0:
-    resolution: {integrity: sha512-z02Hfd3bxkOhBjsv5MxZnUkigpwZxOtpTBb0IkCojdEeVM8SCHUO6TcG0kkb70HdmPMKmjMDzoe5d7hIa7MJlQ==}
+  reactiveweb@1.8.0:
+    resolution: {integrity: sha512-cj2vQhS3a4/5swQXgCO79BdtxqJkhUmgu+BqOSt3O6vFzsNHLJf8oCoODxSJHLRZ5mnie2+OxoqGTx/LfhSFYA==}
     peerDependencies:
       '@ember/test-waiters': '>= 3.1.0'
 
@@ -7154,8 +7154,8 @@ packages:
   shellwords@0.1.1:
     resolution: {integrity: sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==}
 
-  shepherd.js@14.5.0:
-    resolution: {integrity: sha512-23yBjWnrEeaCHFVUukPNol/K0pdvq6NgyqxDeq1qfJuNhxTHpiAvqTB9ULUogndBcGxfkyTRud95PpUyZwGAGQ==}
+  shepherd.js@14.5.1:
+    resolution: {integrity: sha512-VuvPvLG1QjNOLP7AIm2HGyfmxEIz8QdskvWOHwUcxLDibYWjLRBmCWd8LSL5FlwhBW7D/GU+3gNVC/ASxAWdxg==}
     engines: {node: 18.* || >= 20}
 
   side-channel-list@1.0.0:
@@ -9926,27 +9926,27 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fortawesome/ember-fontawesome@3.0.1(@fortawesome/fontawesome-svg-core@6.7.2)(@glimmer/component@1.1.2(@babel/core@7.28.0))':
+  '@fortawesome/ember-fontawesome@3.0.1(@fortawesome/fontawesome-svg-core@7.0.0)(@glimmer/component@1.1.2(@babel/core@7.28.0))':
     dependencies:
       '@embroider/addon-shim': 1.10.0
-      '@fortawesome/fontawesome-svg-core': 6.7.2
+      '@fortawesome/fontawesome-svg-core': 7.0.0
       '@glimmer/component': 1.1.2(@babel/core@7.28.0)
     transitivePeerDependencies:
       - supports-color
 
-  '@fortawesome/fontawesome-common-types@6.7.2': {}
+  '@fortawesome/fontawesome-common-types@7.0.0': {}
 
-  '@fortawesome/fontawesome-svg-core@6.7.2':
+  '@fortawesome/fontawesome-svg-core@7.0.0':
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.7.2
+      '@fortawesome/fontawesome-common-types': 7.0.0
 
-  '@fortawesome/free-regular-svg-icons@6.7.2':
+  '@fortawesome/free-regular-svg-icons@7.0.0':
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.7.2
+      '@fortawesome/fontawesome-common-types': 7.0.0
 
-  '@fortawesome/free-solid-svg-icons@6.7.2':
+  '@fortawesome/free-solid-svg-icons@7.0.0':
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.7.2
+      '@fortawesome/fontawesome-common-types': 7.0.0
 
   '@glimmer/compiler@0.92.4':
     dependencies:
@@ -12471,7 +12471,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)):
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.0)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)))(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)):
     dependencies:
       '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.10.0
@@ -12745,7 +12745,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
     dependencies:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
@@ -13428,7 +13428,7 @@ snapshots:
       '@embroider/addon-shim': 1.8.9
       decorator-transforms: 2.0.0(@babel/core@7.28.0)
       ember-source: 5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)
-      shepherd.js: 14.5.0
+      shepherd.js: 14.5.1
     transitivePeerDependencies:
       - supports-color
 
@@ -16263,7 +16263,7 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  reactiveweb@1.7.0(@babel/core@7.28.0)(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)):
+  reactiveweb@1.8.0(@babel/core@7.28.0)(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.12.0(@glimmer/component@1.1.2(@babel/core@7.28.0))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.100.2)):
     dependencies:
       '@ember/test-waiters': 4.1.1(@glint/template@1.4.0)
       '@embroider/addon-shim': 1.10.0
@@ -16699,7 +16699,7 @@ snapshots:
 
   shellwords@0.1.1: {}
 
-  shepherd.js@14.5.0:
+  shepherd.js@14.5.1:
     dependencies:
       '@floating-ui/dom': 1.7.2
       '@scarf/scarf': 1.4.0
