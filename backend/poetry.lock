@@ -598,25 +598,24 @@ django = ">=4.2"
 
 [[package]]
 name = "djangorestframework-jsonapi"
-version = "7.1.0"
+version = "8.0.0"
 description = "A Django REST framework API adapter for the JSON:API spec."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "djangorestframework_jsonapi-7.1.0-py2.py3-none-any.whl", hash = "sha256:506d7179b6c2d29c4b7879afb4cadf8b0bb468accd40787491875ad680b4993a"},
-    {file = "djangorestframework_jsonapi-7.1.0.tar.gz", hash = "sha256:487e4fe5a0590e655cb3af947c8cee7b54be8ced14a81aac53056f2c43a92343"},
+    {file = "djangorestframework_jsonapi-8.0.0-py2.py3-none-any.whl", hash = "sha256:d27f2e4acde7a4ed31503299e4d50659e85550f8c082f832eca9b1c2a0fc97e7"},
+    {file = "djangorestframework_jsonapi-8.0.0.tar.gz", hash = "sha256:c114c8be86ba0af35e2b15f50943a0d2581c8ae452ef478c11468b9973b97763"},
 ]
 
 [package.dependencies]
 django = ">=4.2"
-djangorestframework = ">=3.14"
+djangorestframework = ">=3.15"
 inflection = ">=0.5.0"
 
 [package.extras]
 django-filter = ["django-filter (>=2.4)"]
-django-polymorphic = ["django-polymorphic (>=3.0)"]
-openapi = ["pyyaml (>=5.4)", "uritemplate (>=3.0.1)"]
+django-polymorphic = ["django-polymorphic (>=4.0.0)"]
 
 [[package]]
 name = "et-xmlfile"
@@ -2015,4 +2014,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "55b4bdb3b8c9ca47c9d5301eaa8b150bbf295c9aa7272f52ff97afa20d98899e"
+content-hash = "968fc559fb89995d52f8d425ce7ce308f7974185007d34efe056e76b11660617"
