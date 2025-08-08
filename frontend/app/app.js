@@ -1,4 +1,5 @@
 import Application from "@ember/application";
+import { importSync, isDevelopingApp, macroCondition } from "@embroider/macros";
 import * as Sentry from "@sentry/ember";
 import loadInitializers from "ember-load-initializers";
 import { registerDateLibrary } from "ember-power-calendar";
@@ -59,6 +60,10 @@ if (config["@sentry/ember"]) {
 }
 
 // simplebar setup end
+
+if (macroCondition(isDevelopingApp())) {
+  importSync("./deprecation-workflow");
+}
 
 registerDateLibrary(DateUtils);
 
