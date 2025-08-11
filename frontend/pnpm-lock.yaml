@@ -218,9 +218,6 @@ importers:
       ember-resources:
         specifier: 7.0.3
         version: 7.0.3(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5))
-      ember-responsive:
-        specifier: 5.0.0
-        version: 5.0.0
       ember-shepherd:
         specifier: ^17.0.0
         version: 17.0.8(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5))
@@ -3710,10 +3707,6 @@ packages:
     peerDependenciesMeta:
       '@glimmer/component':
         optional: true
-
-  ember-responsive@5.0.0:
-    resolution: {integrity: sha512-JDwNIKHNcHrILGkpLqLqZ1idO7hxxt6f4M2wmiktOuzhBm2/JxUjkK+yec+tzIzXaD7rrl2/S7STa/Uj5s6TEw==}
-    engines: {node: 10.* || >= 12}
 
   ember-rfc176-data@0.3.18:
     resolution: {integrity: sha512-JtuLoYGSjay1W3MQAxt3eINWXNYYQliK90tLwtb8aeCuQK8zKGCRbBodVIrkcTqshULMnRuTOS6t1P7oQk3g6Q==}
@@ -12385,19 +12378,13 @@ snapshots:
 
   ember-resources@7.0.3(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)):
     dependencies:
-      '@embroider/addon-shim': 1.8.9
+      '@embroider/addon-shim': 1.10.0
       '@embroider/macros': 1.16.13(@glint/template@1.4.0)
       '@glimmer/tracking': 1.1.2
       '@glint/template': 1.4.0
       ember-source: 6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)
     optionalDependencies:
       '@glimmer/component': 1.1.2(@babel/core@7.28.5)
-    transitivePeerDependencies:
-      - supports-color
-
-  ember-responsive@5.0.0:
-    dependencies:
-      ember-cli-babel: 7.26.11
     transitivePeerDependencies:
       - supports-color
 

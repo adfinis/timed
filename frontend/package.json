@@ -95,7 +95,6 @@
     "ember-qunit": "9.0.2",
     "ember-resolver": "13.1.0",
     "ember-resources": "7.0.3",
-    "ember-responsive": "5.0.0",
     "ember-shepherd": "^17.0.0",
     "ember-simple-auth": "6.0.0",
     "ember-simple-auth-oidc": "7.0.4",
