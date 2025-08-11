@@ -67,10 +67,22 @@ if (macroCondition(isDevelopingApp())) {
 
 registerDateLibrary(DateUtils);
 
+const extendResolver = (resolver) => {
+  return class EmberCanResolver extends resolver {
+    /**
+     * @type {Record<string, string>}
+     **/
+    pluralizedTypes = {
+      ...this.pluralizedTypes,
+      ability: "abilities",
+    };
+  };
+};
+
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver;
+  Resolver = extendResolver(Resolver);
 }
 
 loadInitializers(App, config.modulePrefix);
