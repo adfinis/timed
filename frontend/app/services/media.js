@@ -213,13 +213,13 @@ export default class Media extends Service {
       let changed = false;
 
       if (matcher.matches) {
-        if (!this.matches.has(name)) {
-          this.matches.add(name);
+        if (!this._matches.has(name)) {
+          this._matches.add(name);
           changed = true;
         }
       } else {
-        changed = this.matches.has(name);
-        this.matches.delete(name);
+        changed = this._matches.has(name);
+        this._matches.delete(name);
       }
 
       if (changed) {
