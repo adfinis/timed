@@ -215,7 +215,10 @@
                         @checked={{fi.value}}
                         @onChange={{fi.update}}
                         @title={{this.toolTipText}}
-                        @disabled={{or (not this.canVerify) this.needsReview}}
+                        @disabled={{or
+                          (not this.canVerify)
+                          (this.needsReview f)
+                        }}
                       >
                         Verified
                         {{#if (eq model.verified null)}}
@@ -223,6 +226,16 @@
                         {{/if}}
                         {{#if (not-eq f.model.verified model.verified)}}
                           <ChangedWarning />
+                        {{/if}}
+                        {{#if (this.showVerifiedWarning f)}}
+                          <span class="text-warning ml-2">
+                            <FaIcon
+                              @icon="exclamation-triangle"
+                              @prefix="fas"
+                            />
+                            Reports can't be "needs review" and "verified" at
+                            the same time.
+                          </span>
                         {{/if}}
                       </Checkbox>
                     </f.input>
