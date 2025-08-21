@@ -97,7 +97,7 @@ importers:
         version: 8.2.0(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.3)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
       ember-can:
         specifier: git+https://github.com/anehx/ember-can#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can
-        version: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.3)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
+        version: git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.3)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
       ember-changeset:
         specifier: 4.1.2
         version: 4.1.2(@glint/template@1.4.0)(ember-data@5.3.13(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.3)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glint/template@1.4.0)(ember-inflector@4.0.2)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))(qunit@2.24.1))(webpack@5.101.3)
@@ -139,7 +139,7 @@ importers:
         version: 3.0.3(pgr7bdbtyrdmyowiupmkfj4pcu)
       ember-cli-nouislider:
         specifier: git+https://github.com/derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
-        version: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872
+        version: git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
       ember-cli-postcss:
         specifier: ^8.2.0
         version: 8.2.0
@@ -1670,12 +1670,12 @@ packages:
     resolution: {integrity: sha512-GNKqxfHG2ySmJOBSHg7LxeUx4xpuCoFjacmlCoYWEbaPXLwvfIjixRI12xCQZeULksQb23uiA8F40w5TojpV7w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/core@0.10.0':
-    resolution: {integrity: sha512-gFHJ+xBOo4G3WRlR1e/3G8A6/KZAH6zcE/hkLRCZTi/B9avAG365QhFA8uOGzTMqgTghpn7/fSnscW++dpMSAw==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@eslint/core@0.11.0':
     resolution: {integrity: sha512-DWUB2pksgNEb6Bz2fggIy1wh6fGgZP4Xyy/Mt0QZPiloKKXerbqq9D3SBQTlCRYOrcRPu4vuz+CGjwdfqxnoWA==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/core@0.13.0':
+    resolution: {integrity: sha512-yfkgDw1KR66rkT5A8ci4irzDysN7FRpq3ttJolR88OqQikAWqwA8j5VZyas+vjyBNFIJ7MfybJ9plMILI2UrCw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/eslintrc@3.2.0':
@@ -1690,8 +1690,8 @@ packages:
     resolution: {integrity: sha512-RBMg5FRL0I0gs51M/guSAj5/e14VQ4tpZnQNWwuDT66P14I43ItmPfIZRhO9fUVIPOAQXU47atlywZ/czoqFPA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/plugin-kit@0.2.5':
-    resolution: {integrity: sha512-lB05FkqEdUg2AA0xEbUz0SnkXT1LcCTa438W4IWTUh4hdOnVbQyOJ81OrDXsJk/LSiJHubgGEFoR5EHq1NsH1A==}
+  '@eslint/plugin-kit@0.2.8':
+    resolution: {integrity: sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@floating-ui/core@1.7.2':
@@ -2674,10 +2674,6 @@ packages:
   bluebird@3.7.2:
     resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
 
-  body-parser@1.20.2:
-    resolution: {integrity: sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA==}
-    engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
-
   body-parser@1.20.3:
     resolution: {integrity: sha512-7rAxByjUMqQ3/bHJy7D6OGXvx/MMc4IqBn/X0fcM1QUcAItpZrBEYhWGem+tzXH90c+G01ypMcYJBO9Y30203g==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
@@ -3399,13 +3395,9 @@ packages:
       typescript:
         optional: true
 
-  cross-spawn@6.0.5:
-    resolution: {integrity: sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ==}
+  cross-spawn@6.0.6:
+    resolution: {integrity: sha512-VqCUuhcd1iB+dsv8gxPttb5iZh/D0iubSP21g36KXdEuf6I5JiioesUVjpCdHV9MZRUfVFlvwtIUyPfxo5trtw==}
     engines: {node: '>=4.8'}
-
-  cross-spawn@7.0.3:
-    resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
-    engines: {node: '>= 8'}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -3665,8 +3657,8 @@ packages:
     resolution: {integrity: sha512-hSPcvIKarA8wad2/b6jDd/eU+OtKmi6uP+iYQbzi5TQpjsqV6b4QdRqrLk7ClSRRKBAtdTuutx+m+X+WlEd2lw==}
     engines: {node: 10.* || >= 12}
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can:
-    resolution: {path: /ember-can, tarball: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935}
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can:
+    resolution: {commit: 1755f0fb2c1026b57f2984d065f1c8f10835e935, path: /ember-can, repo: git@github.com:anehx/ember-can.git, type: git}
     version: 5.0.4
     peerDependencies:
       '@ember/string': ^3.1.1
@@ -3779,8 +3771,8 @@ packages:
   ember-cli-normalize-entity-name@1.0.0:
     resolution: {integrity: sha512-rF4P1rW2P1gVX1ynZYPmuIf7TnAFDiJmIUFI1Xz16VYykUAyiOCme0Y22LeZq8rTzwBMiwBwoE3RO4GYWehXZA==}
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
-    resolution: {tarball: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872}
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+    resolution: {commit: cf0d87986cf25d5795e1edd6c8b9f008c5b39872, repo: git@github.com:derrabauke/ember-cli-nouislider.git, type: git}
     version: 1.2.1
     engines: {node: 10.* || >= 12}
 
@@ -6630,10 +6622,6 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  qs@6.11.0:
-    resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
-    engines: {node: '>=0.6'}
-
   qs@6.12.1:
     resolution: {integrity: sha512-zWmv4RSuB9r2mYQw3zxQuHWeU+42aKi1wWig/j4ele4ygELZ7PEO6MM7rim9oAQH2A5MWfsAVf/jPvTPgCbvUQ==}
     engines: {node: '>=0.6'}
@@ -7080,10 +7068,6 @@ packages:
 
   side-channel-weakmap@1.0.2:
     resolution: {integrity: sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==}
-    engines: {node: '>= 0.4'}
-
-  side-channel@1.0.6:
-    resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
     engines: {node: '>= 0.4'}
 
   side-channel@1.1.0:
@@ -9654,11 +9638,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@eslint/core@0.10.0':
+  '@eslint/core@0.11.0':
     dependencies:
       '@types/json-schema': 7.0.15
 
-  '@eslint/core@0.11.0':
+  '@eslint/core@0.13.0':
     dependencies:
       '@types/json-schema': 7.0.15
 
@@ -9680,9 +9664,9 @@ snapshots:
 
   '@eslint/object-schema@2.1.6': {}
 
-  '@eslint/plugin-kit@0.2.5':
+  '@eslint/plugin-kit@0.2.8':
     dependencies:
-      '@eslint/core': 0.10.0
+      '@eslint/core': 0.13.0
       levn: 0.4.1
 
   '@floating-ui/core@1.7.2':
@@ -10984,23 +10968,6 @@ snapshots:
 
   bluebird@3.7.2: {}
 
-  body-parser@1.20.2:
-    dependencies:
-      bytes: 3.1.2
-      content-type: 1.0.5
-      debug: 2.6.9
-      depd: 2.0.0
-      destroy: 1.2.0
-      http-errors: 2.0.0
-      iconv-lite: 0.4.24
-      on-finished: 2.4.1
-      qs: 6.11.0
-      raw-body: 2.5.2
-      type-is: 1.6.18
-      unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
-
   body-parser@1.20.3:
     dependencies:
       bytes: 3.1.2
@@ -11956,19 +11923,13 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.2
 
-  cross-spawn@6.0.5:
+  cross-spawn@6.0.6:
     dependencies:
       nice-try: 1.0.5
       path-key: 2.0.1
       semver: 5.7.2
       shebang-command: 1.2.0
       which: 1.3.1
-
-  cross-spawn@7.0.3:
-    dependencies:
-      path-key: 3.1.1
-      shebang-command: 2.0.0
-      which: 2.0.2
 
   cross-spawn@7.0.6:
     dependencies:
@@ -12268,7 +12229,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.3)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)):
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.3)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)):
     dependencies:
       '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.10.0
@@ -12405,7 +12366,7 @@ snapshots:
   ember-cli-code-coverage@1.0.3:
     dependencies:
       babel-plugin-istanbul: 6.1.1
-      body-parser: 1.20.2
+      body-parser: 1.20.3
       ember-cli-version-checker: 5.1.2
       fs-extra: 9.1.0
       istanbul-lib-coverage: 3.2.2
@@ -12542,7 +12503,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
     dependencies:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
@@ -13754,7 +13715,7 @@ snapshots:
       '@eslint/core': 0.11.0
       '@eslint/eslintrc': 3.2.0
       '@eslint/js': 9.20.0
-      '@eslint/plugin-kit': 0.2.5
+      '@eslint/plugin-kit': 0.2.8
       '@humanfs/node': 0.16.6
       '@humanwhocodes/module-importer': 1.0.1
       '@humanwhocodes/retry': 0.4.1
@@ -13827,7 +13788,7 @@ snapshots:
 
   execa@1.0.0:
     dependencies:
-      cross-spawn: 6.0.5
+      cross-spawn: 6.0.6
       get-stream: 4.1.0
       is-stream: 1.1.0
       npm-run-path: 2.0.2
@@ -13837,7 +13798,7 @@ snapshots:
 
   execa@2.1.0:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.6
       get-stream: 5.2.0
       is-stream: 2.0.1
       merge-stream: 2.0.0
@@ -16019,10 +15980,6 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  qs@6.11.0:
-    dependencies:
-      side-channel: 1.0.6
-
   qs@6.12.1:
     dependencies:
       side-channel: 1.1.0
@@ -16532,13 +16489,6 @@ snapshots:
       get-intrinsic: 1.3.0
       object-inspect: 1.13.4
       side-channel-map: 1.0.1
-
-  side-channel@1.0.6:
-    dependencies:
-      call-bind: 1.0.8
-      es-errors: 1.3.0
-      get-intrinsic: 1.3.0
-      object-inspect: 1.13.4
 
   side-channel@1.1.0:
     dependencies:
