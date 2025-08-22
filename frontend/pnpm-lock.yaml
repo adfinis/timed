@@ -15,8 +15,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2(@babel/core@7.28.3)(@babel/eslint-parser@7.28.0(@babel/core@7.28.3)(eslint@9.20.1(jiti@1.21.6)))(@babel/plugin-proposal-decorators@7.28.0(@babel/core@7.28.3))(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-ember@12.7.0(@babel/core@7.28.3)(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-import@2.32.0(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-n@17.21.3(eslint@9.20.1(jiti@1.21.6))(typescript@5.5.2))(eslint-plugin-prettier@5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2))(eslint-plugin-qunit@8.2.5(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)
       '@apollo/client':
-        specifier: ^3.13.9
-        version: 3.13.9(graphql@16.11.0)
+        specifier: ^4.0.0
+        version: 4.0.0(graphql@16.11.0)(rxjs@7.8.1)
       '@babel/core':
         specifier: ^7.28.3
         version: 7.28.3
@@ -97,7 +97,7 @@ importers:
         version: 8.2.0(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.3)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
       ember-can:
         specifier: git+https://github.com/anehx/ember-can#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can
-        version: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.3)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
+        version: git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.3)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
       ember-changeset:
         specifier: 4.1.2
         version: 4.1.2(@glint/template@1.4.0)(ember-data@5.3.13(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.3)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glint/template@1.4.0)(ember-inflector@4.0.2)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))(qunit@2.24.1))(webpack@5.101.3)
@@ -139,7 +139,7 @@ importers:
         version: 3.0.3(pgr7bdbtyrdmyowiupmkfj4pcu)
       ember-cli-nouislider:
         specifier: git+https://github.com/derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
-        version: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872
+        version: git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
       ember-cli-postcss:
         specifier: ^8.2.0
         version: 8.2.0
@@ -380,13 +380,32 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@apollo/client@3.13.9':
-    resolution: {integrity: sha512-RStSzQfL1XwL6/NWd7W8avhGQYTgPCtJ+qHkkTTSj9Upp3VVm6Oppv81YWdXG1FgEpDPW4hvCrTUELdcC4inCQ==}
+  '@apollo/client@3.14.0':
+    resolution: {integrity: sha512-0YQKKRIxiMlIou+SekQqdCo0ZTHxOcES+K8vKB53cIDpwABNR0P0yRzPgsbgcj3zRJniD93S/ontsnZsCLZrxQ==}
     peerDependencies:
       graphql: ^15.0.0 || ^16.0.0
       graphql-ws: ^5.5.5 || ^6.0.3
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc
+      subscriptions-transport-ws: ^0.9.0 || ^0.11.0
+    peerDependenciesMeta:
+      graphql-ws:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      subscriptions-transport-ws:
+        optional: true
+
+  '@apollo/client@4.0.0':
+    resolution: {integrity: sha512-VMJXFLAro7ZF8ckEyeP8Wvtez7G+7LAq/SHfk3JpyZbuODtBujaqFwMFlFOdXKC8eejzuS6DfvoaiUquAFWUZw==}
+    peerDependencies:
+      graphql: ^16.0.0
+      graphql-ws: ^5.5.5 || ^6.0.3
+      react: ^17.0.0 || ^18.0.0 || >=19.0.0-rc
+      react-dom: ^17.0.0 || ^18.0.0 || >=19.0.0-rc
+      rxjs: ^7.3.0
       subscriptions-transport-ws: ^0.9.0 || ^0.11.0
     peerDependenciesMeta:
       graphql-ws:
@@ -3657,8 +3676,8 @@ packages:
     resolution: {integrity: sha512-hSPcvIKarA8wad2/b6jDd/eU+OtKmi6uP+iYQbzi5TQpjsqV6b4QdRqrLk7ClSRRKBAtdTuutx+m+X+WlEd2lw==}
     engines: {node: 10.* || >= 12}
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can:
-    resolution: {path: /ember-can, tarball: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935}
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can:
+    resolution: {commit: 1755f0fb2c1026b57f2984d065f1c8f10835e935, path: /ember-can, repo: git@github.com:anehx/ember-can.git, type: git}
     version: 5.0.4
     peerDependencies:
       '@ember/string': ^3.1.1
@@ -3771,8 +3790,8 @@ packages:
   ember-cli-normalize-entity-name@1.0.0:
     resolution: {integrity: sha512-rF4P1rW2P1gVX1ynZYPmuIf7TnAFDiJmIUFI1Xz16VYykUAyiOCme0Y22LeZq8rTzwBMiwBwoE3RO4GYWehXZA==}
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
-    resolution: {tarball: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872}
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+    resolution: {commit: cf0d87986cf25d5795e1edd6c8b9f008c5b39872, repo: git@github.com:derrabauke/ember-cli-nouislider.git, type: git}
     version: 1.2.1
     engines: {node: 10.* || >= 12}
 
@@ -7925,7 +7944,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.30
 
-  '@apollo/client@3.13.9(graphql@16.11.0)':
+  '@apollo/client@3.14.0(graphql@16.11.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
       '@wry/caches': 1.0.1
@@ -7943,6 +7962,18 @@ snapshots:
       zen-observable-ts: 1.2.5
     transitivePeerDependencies:
       - '@types/react'
+
+  '@apollo/client@4.0.0(graphql@16.11.0)(rxjs@7.8.1)':
+    dependencies:
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
+      '@wry/caches': 1.0.1
+      '@wry/equality': 0.5.7
+      '@wry/trie': 0.5.0
+      graphql: 16.11.0
+      graphql-tag: 2.12.6(graphql@16.11.0)
+      optimism: 0.18.1
+      rxjs: 7.8.1
+      tslib: 2.8.1
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -12229,7 +12260,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.3)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)):
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.3)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)):
     dependencies:
       '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.10.0
@@ -12503,7 +12534,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
     dependencies:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
@@ -13194,7 +13225,7 @@ snapshots:
 
   ember-simple-auth-oidc@7.0.4(@ember-data/adapter@5.3.13(qcfyjujqemim6qn45iev4btyxy))(@ember/test-helpers@4.0.5(@babel/core@7.28.3)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-data@5.3.13(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.3)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glint/template@1.4.0)(ember-inflector@4.0.2)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))(qunit@2.24.1))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))(encoding@0.1.13)(graphql@16.11.0)(webpack@5.101.3):
     dependencies:
-      '@apollo/client': 3.13.9(graphql@16.11.0)
+      '@apollo/client': 3.14.0(graphql@16.11.0)
       '@babel/core': 7.28.3
       '@ember-data/adapter': 5.3.13(qcfyjujqemim6qn45iev4btyxy)
       '@embroider/macros': 1.16.13(@glint/template@1.4.0)
