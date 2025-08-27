@@ -15,8 +15,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2(@babel/core@7.28.3)(@babel/eslint-parser@7.28.0(@babel/core@7.28.3)(eslint@9.20.1(jiti@1.21.6)))(@babel/plugin-proposal-decorators@7.28.0(@babel/core@7.28.3))(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-ember@12.7.3(@babel/core@7.28.3)(eslint@9.20.1(jiti@1.21.6))(typescript@5.5.2))(eslint-plugin-import@2.32.0(eslint@9.20.1(jiti@1.21.6)))(eslint-plugin-n@17.21.3(eslint@9.20.1(jiti@1.21.6))(typescript@5.5.2))(eslint-plugin-prettier@5.5.4(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2))(eslint-plugin-qunit@8.2.5(eslint@9.20.1(jiti@1.21.6)))(eslint@9.20.1(jiti@1.21.6))(prettier@3.6.2)
       '@apollo/client':
-        specifier: ^3.13.9
-        version: 3.13.9(graphql@16.11.0)
+        specifier: ^4.0.1
+        version: 4.0.1(graphql@16.11.0)(rxjs@7.8.2)
       '@babel/core':
         specifier: ^7.28.3
         version: 7.28.3
@@ -66,11 +66,11 @@ importers:
         specifier: 4.0.2
         version: 4.0.2
       '@nullvoxpopuli/ember-composable-helpers':
-        specifier: ^5.2.11
-        version: 5.2.11(@babel/core@7.28.3)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
+        specifier: ^5.3.0
+        version: 5.3.0(@babel/core@7.28.3)
       '@sentry/ember':
-        specifier: ^10.5.0
-        version: 10.5.0(@glint/template@1.4.0)(ember-cli@6.0.1(babel-core@6.26.3)(handlebars@4.7.8)(underscore@1.13.6))(webpack@5.101.3)
+        specifier: ^10.6.0
+        version: 10.6.0(@glint/template@1.4.0)(ember-cli@6.0.1(babel-core@6.26.3)(handlebars@4.7.8)(underscore@1.13.6))(webpack@5.101.3)
       '@tailwindcss/forms':
         specifier: ~0.5.10
         version: 0.5.10(tailwindcss@3.4.17)
@@ -84,8 +84,8 @@ importers:
         specifier: ^3.0.8
         version: 3.0.8
       concurrently:
-        specifier: ^9.2.0
-        version: 9.2.0
+        specifier: ^9.2.1
+        version: 9.2.1
       downloadjs:
         specifier: 1.4.7
         version: 1.4.7
@@ -380,13 +380,32 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@apollo/client@3.13.9':
-    resolution: {integrity: sha512-RStSzQfL1XwL6/NWd7W8avhGQYTgPCtJ+qHkkTTSj9Upp3VVm6Oppv81YWdXG1FgEpDPW4hvCrTUELdcC4inCQ==}
+  '@apollo/client@3.14.0':
+    resolution: {integrity: sha512-0YQKKRIxiMlIou+SekQqdCo0ZTHxOcES+K8vKB53cIDpwABNR0P0yRzPgsbgcj3zRJniD93S/ontsnZsCLZrxQ==}
     peerDependencies:
       graphql: ^15.0.0 || ^16.0.0
       graphql-ws: ^5.5.5 || ^6.0.3
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc
+      subscriptions-transport-ws: ^0.9.0 || ^0.11.0
+    peerDependenciesMeta:
+      graphql-ws:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      subscriptions-transport-ws:
+        optional: true
+
+  '@apollo/client@4.0.1':
+    resolution: {integrity: sha512-qBW2d6++wmNeVkYuCfcw9vQi2kG007wdwdohLc+NXs2Ojz3XPiTb4r9gPTAjwAF9JXN9i7WSQ45fdcN9JAom8Q==}
+    peerDependencies:
+      graphql: ^16.0.0
+      graphql-ws: ^5.5.5 || ^6.0.3
+      react: ^17.0.0 || ^18.0.0 || >=19.0.0-rc
+      react-dom: ^17.0.0 || ^18.0.0 || >=19.0.0-rc
+      rxjs: ^7.3.0
       subscriptions-transport-ws: ^0.9.0 || ^0.11.0
     peerDependenciesMeta:
       graphql-ws:
@@ -1934,8 +1953,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@nullvoxpopuli/ember-composable-helpers@5.2.11':
-    resolution: {integrity: sha512-hdDDhYru0TelepDbh1WpxJlyFYy9bIqdKx3u6Y8FkEjgNnF5RFV7gIUk4u8XB28/3llHAILepCMvRmze9176OA==}
+  '@nullvoxpopuli/ember-composable-helpers@5.3.0':
+    resolution: {integrity: sha512-pjuYVAxJJETaFFmDME9sPH++kSNcTJjxHqHUSJOwoYvxSRBHIysJbCFD/CHQjJtbI5D4pVouYU80ugmyGrZoFA==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -1968,32 +1987,32 @@ packages:
   '@scarf/scarf@1.4.0':
     resolution: {integrity: sha512-xxeapPiUXdZAE3che6f3xogoJPeZgig6omHEy1rIY5WVsB3H2BHNnZH+gHG6x91SCWyQCzWGsuL2Hh3ClO5/qQ==}
 
-  '@sentry-internal/browser-utils@10.5.0':
-    resolution: {integrity: sha512-4KIJdEj/8Ip9yqJleVSFe68r/U5bn5o/lYUwnFNEnDNxmpUbOlr7x3DXYuRFi1sfoMUxK9K1DrjnBkR7YYF00g==}
+  '@sentry-internal/browser-utils@10.6.0':
+    resolution: {integrity: sha512-pU0aUW1+wBQF4N4cd4aKX61GkiT2wKynsmNOUPR3vhhruuo4WG+GE8mSItO5+5ZyYCevzJ0aPl2QApQlfpnLvw==}
     engines: {node: '>=18'}
 
-  '@sentry-internal/feedback@10.5.0':
-    resolution: {integrity: sha512-x79P4VZwUxb1EGZb9OQ5EEgrDWFCUlrbzHBwV/oocQA5Ss1SFz5u6cP5Ak7yJtILiJtdGzAyAoQOy4GKD13D4Q==}
+  '@sentry-internal/feedback@10.6.0':
+    resolution: {integrity: sha512-oz5oG0R8/vaCImhLFA9jlSZFNlCwtpfyIUXuFW/pzR7OBQ8bnfxoZoM9U+vLpNNcChKojIPbs1/Vugg7MMxFzg==}
     engines: {node: '>=18'}
 
-  '@sentry-internal/replay-canvas@10.5.0':
-    resolution: {integrity: sha512-5nrRKd5swefd9+sFXFZ/NeL3bz/VxBls3ubAQ3afak15FikkSyHq3oKRKpMOtDsiYKXE3Bc0y3rF5A+y3OXjIA==}
+  '@sentry-internal/replay-canvas@10.6.0':
+    resolution: {integrity: sha512-ekRRvpKWW88vefQEx7EqBLnX+uSfHc6ovDLHdbYtYcT7sc4oWoDqwUN9FrDZxqzwdO0CBgC+iktKKewE5OFOzg==}
     engines: {node: '>=18'}
 
-  '@sentry-internal/replay@10.5.0':
-    resolution: {integrity: sha512-Dp4coE/nPzhFrYH3iVrpVKmhNJ1m/jGXMEDBCNg3wJZRszI41Hrj0jCAM0Y2S3Q4IxYOmFYaFbGtVpAznRyOHg==}
+  '@sentry-internal/replay@10.6.0':
+    resolution: {integrity: sha512-w5M+11k0WKT22h5M+Mio+H2sl3WYhRQkntlBrxt0SeevnNVbRODkmZOqTIUhvbGtBg3/yj1otqnsVEKanb0fSA==}
     engines: {node: '>=18'}
 
-  '@sentry/browser@10.5.0':
-    resolution: {integrity: sha512-o5pEJeZ/iZ7Fmaz2sIirThfnmSVNiP5ZYhacvcDi0qc288TmBbikCX3fXxq3xiSkhXfe1o5QIbNyovzfutyuVw==}
+  '@sentry/browser@10.6.0':
+    resolution: {integrity: sha512-Nc50U5Zoyrw/Miz1gwvlyJsIYEdHWwperilM52cPvhYzPdeY31g5XPO/tCpcsgpfYdCjNYWcSwIrD/DCYn6YSA==}
     engines: {node: '>=18'}
 
-  '@sentry/core@10.5.0':
-    resolution: {integrity: sha512-jTJ8NhZSKB2yj3QTVRXfCCngQzAOLThQUxCl9A7Mv+XF10tP7xbH/88MVQ5WiOr2IzcmrB9r2nmUe36BnMlLjA==}
+  '@sentry/core@10.6.0':
+    resolution: {integrity: sha512-9i0Yf0Px8sScUpGg5KPnn0PwrsO6zoPgp5W5dPp8j+dTmYAxPApoADP4IDF547lsXrm3oKEwEeqQ675xStOiwA==}
     engines: {node: '>=18'}
 
-  '@sentry/ember@10.5.0':
-    resolution: {integrity: sha512-w4pG+/0gtZ0XTREJeuMVtriaHEoyw7x5MRn+o2bEc83Eq2Lp3L4O1LSXY9PzEQKKyenGkbVajaHSLlGLpuzbkg==}
+  '@sentry/ember@10.6.0':
+    resolution: {integrity: sha512-SDvHCq8BJ8mfgIXwpxzy6HU79RN9Khb7fmGMVvzZEvQ05awE0CS37ZYuTMZ9jsZxq1ECQNFwwYsFRazXX51CDw==}
     engines: {node: '>=18'}
     peerDependencies:
       ember-cli: '>=4'
@@ -3148,8 +3167,8 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  concurrently@9.2.0:
-    resolution: {integrity: sha512-IsB/fiXTupmagMW4MNp2lx2cdSN2FfZq78vF90LBB+zZHArbIQZjQtzXCiXnvTxCZSvXanTqFLWBjw2UkLx1SQ==}
+  concurrently@9.2.1:
+    resolution: {integrity: sha512-fsfrO0MxV64Znoy8/l1vVIjjHa29SZyyqPgQBwhiDcaW8wJc2W3XWVOGx4M3oJBnv/zdUZIIp1gDeS98GzP8Ng==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -6926,8 +6945,8 @@ packages:
     resolution: {integrity: sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==}
     engines: {npm: '>=2.0.0'}
 
-  rxjs@7.8.1:
-    resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
+  rxjs@7.8.2:
+    resolution: {integrity: sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==}
 
   safe-array-concat@1.1.3:
     resolution: {integrity: sha512-AURm5f0jYEOydBj7VQlVvDrjeFgthDdEF5H1dP+6mNpoXOMo1quQqJ4wvJDyRZ9+pO3kGWoOdmV08cSv2aJV6Q==}
@@ -7058,8 +7077,9 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shell-quote@1.8.1:
-    resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
+  shell-quote@1.8.3:
+    resolution: {integrity: sha512-ObmnIF4hXNg1BqhnHmgbDETF8dLPCggZWBjkQfhZpbszZnYur5DUljTcCHii5LC3J5E0yeO/1LIMyH+UvHQgyw==}
+    engines: {node: '>= 0.4'}
 
   shellwords@0.1.1:
     resolution: {integrity: sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==}
@@ -7935,7 +7955,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.30
 
-  '@apollo/client@3.13.9(graphql@16.11.0)':
+  '@apollo/client@3.14.0(graphql@16.11.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
       '@wry/caches': 1.0.1
@@ -7953,6 +7973,18 @@ snapshots:
       zen-observable-ts: 1.2.5
     transitivePeerDependencies:
       - '@types/react'
+
+  '@apollo/client@4.0.1(graphql@16.11.0)(rxjs@7.8.2)':
+    dependencies:
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
+      '@wry/caches': 1.0.1
+      '@wry/equality': 0.5.7
+      '@wry/trie': 0.5.0
+      graphql: 16.11.0
+      graphql-tag: 2.12.6(graphql@16.11.0)
+      optimism: 0.18.1
+      rxjs: 7.8.2
+      tslib: 2.8.1
 
   '@babel/code-frame@7.27.1':
     dependencies:
@@ -8071,7 +8103,7 @@ snapshots:
       '@babel/core': 7.28.3
       '@babel/helper-compilation-targets': 7.27.2
       '@babel/helper-plugin-utils': 7.27.1
-      debug: 4.4.1
+      debug: 4.4.0
       lodash.debounce: 4.0.8
       resolve: 1.22.10
     transitivePeerDependencies:
@@ -10044,14 +10076,12 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
-  '@nullvoxpopuli/ember-composable-helpers@5.2.11(@babel/core@7.28.3)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))':
+  '@nullvoxpopuli/ember-composable-helpers@5.3.0(@babel/core@7.28.3)':
     dependencies:
-      '@embroider/addon-shim': 1.9.0
+      '@embroider/addon-shim': 1.10.0
       decorator-transforms: 2.3.0(@babel/core@7.28.3)
-      ember-functions-as-helper-polyfill: 2.1.2(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
     transitivePeerDependencies:
       - '@babel/core'
-      - ember-source
       - supports-color
 
   '@pkgjs/parseargs@0.11.0':
@@ -10078,40 +10108,40 @@ snapshots:
 
   '@scarf/scarf@1.4.0': {}
 
-  '@sentry-internal/browser-utils@10.5.0':
+  '@sentry-internal/browser-utils@10.6.0':
     dependencies:
-      '@sentry/core': 10.5.0
+      '@sentry/core': 10.6.0
 
-  '@sentry-internal/feedback@10.5.0':
+  '@sentry-internal/feedback@10.6.0':
     dependencies:
-      '@sentry/core': 10.5.0
+      '@sentry/core': 10.6.0
 
-  '@sentry-internal/replay-canvas@10.5.0':
+  '@sentry-internal/replay-canvas@10.6.0':
     dependencies:
-      '@sentry-internal/replay': 10.5.0
-      '@sentry/core': 10.5.0
+      '@sentry-internal/replay': 10.6.0
+      '@sentry/core': 10.6.0
 
-  '@sentry-internal/replay@10.5.0':
+  '@sentry-internal/replay@10.6.0':
     dependencies:
-      '@sentry-internal/browser-utils': 10.5.0
-      '@sentry/core': 10.5.0
+      '@sentry-internal/browser-utils': 10.6.0
+      '@sentry/core': 10.6.0
 
-  '@sentry/browser@10.5.0':
+  '@sentry/browser@10.6.0':
     dependencies:
-      '@sentry-internal/browser-utils': 10.5.0
-      '@sentry-internal/feedback': 10.5.0
-      '@sentry-internal/replay': 10.5.0
-      '@sentry-internal/replay-canvas': 10.5.0
-      '@sentry/core': 10.5.0
+      '@sentry-internal/browser-utils': 10.6.0
+      '@sentry-internal/feedback': 10.6.0
+      '@sentry-internal/replay': 10.6.0
+      '@sentry-internal/replay-canvas': 10.6.0
+      '@sentry/core': 10.6.0
 
-  '@sentry/core@10.5.0': {}
+  '@sentry/core@10.6.0': {}
 
-  '@sentry/ember@10.5.0(@glint/template@1.4.0)(ember-cli@6.0.1(babel-core@6.26.3)(handlebars@4.7.8)(underscore@1.13.6))(webpack@5.101.3)':
+  '@sentry/ember@10.6.0(@glint/template@1.4.0)(ember-cli@6.0.1(babel-core@6.26.3)(handlebars@4.7.8)(underscore@1.13.6))(webpack@5.101.3)':
     dependencies:
       '@babel/core': 7.28.3
       '@embroider/macros': 1.16.13(@glint/template@1.4.0)
-      '@sentry/browser': 10.5.0
-      '@sentry/core': 10.5.0
+      '@sentry/browser': 10.6.0
+      '@sentry/core': 10.6.0
       ember-auto-import: 2.10.0(@glint/template@1.4.0)(webpack@5.101.3)
       ember-cli-babel: 8.2.0(@babel/core@7.28.3)
       ember-cli-htmlbars: 6.3.0
@@ -11835,12 +11865,11 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  concurrently@9.2.0:
+  concurrently@9.2.1:
     dependencies:
       chalk: 4.1.2
-      lodash: 4.17.21
-      rxjs: 7.8.1
-      shell-quote: 1.8.1
+      rxjs: 7.8.2
+      shell-quote: 1.8.3
       supports-color: 8.1.1
       tree-kill: 1.2.2
       yargs: 17.7.2
@@ -12840,7 +12869,7 @@ snapshots:
 
   ember-cookies@1.1.2:
     dependencies:
-      '@embroider/addon-shim': 1.10.0
+      '@embroider/addon-shim': 1.8.9
     transitivePeerDependencies:
       - supports-color
 
@@ -13212,7 +13241,7 @@ snapshots:
 
   ember-simple-auth-oidc@7.0.4(@ember-data/adapter@5.3.13(qcfyjujqemim6qn45iev4btyxy))(@ember/test-helpers@4.0.5(@babel/core@7.28.3)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-data@5.3.13(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.3)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glint/template@1.4.0)(ember-inflector@4.0.2)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))(qunit@2.24.1))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.3))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))(encoding@0.1.13)(graphql@16.11.0)(webpack@5.101.3):
     dependencies:
-      '@apollo/client': 3.13.9(graphql@16.11.0)
+      '@apollo/client': 3.14.0(graphql@16.11.0)
       '@babel/core': 7.28.3
       '@ember-data/adapter': 5.3.13(qcfyjujqemim6qn45iev4btyxy)
       '@embroider/macros': 1.16.13(@glint/template@1.4.0)
@@ -14720,7 +14749,7 @@ snapshots:
       mute-stream: 1.0.0
       ora: 5.4.1
       run-async: 3.0.0
-      rxjs: 7.8.1
+      rxjs: 7.8.2
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 6.2.0
@@ -16309,7 +16338,7 @@ snapshots:
     dependencies:
       tslib: 1.14.1
 
-  rxjs@7.8.1:
+  rxjs@7.8.2:
     dependencies:
       tslib: 2.8.1
 
@@ -16479,7 +16508,7 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  shell-quote@1.8.1: {}
+  shell-quote@1.8.3: {}
 
   shellwords@0.1.1: {}
 
