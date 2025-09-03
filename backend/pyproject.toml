@@ -48,7 +48,7 @@ tornado = "~6.4.2" # https://github.com/django-hurricane/django-hurricane/issues
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.12.11"
-coverage = "7.10.5"
+coverage = "7.10.6"
 django-extensions = "4.1"
 factory-boy = "3.3.3"
 ipdb = "0.13.13"
