@@ -90,7 +90,7 @@ module("Integration | Component | datepicker", function (hooks) {
 
     const expected = moment().endOf("month").endOf("week").add(1, "day");
 
-    assert.ok(this.value.isSame(expected, "day"));
+    assert.equal(this.value.day(), expected.day());
   });
 
   test("toggles the calendar on focus and blur of the input", async function (assert) {

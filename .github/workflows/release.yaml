@@ -26,7 +26,7 @@ jobs:
       version: ${{ steps.semrel.outputs.version }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Semantic Release
         uses: go-semantic-release/action@v1
@@ -64,7 +64,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Adjust Version
         run: |
@@ -110,7 +110,7 @@ jobs:
             ${{ steps.meta.outputs.labels }}
 
       - name: Sign ${{ matrix.config.name }} image and attach SBOM attestation
-        uses: adfinis/container-scanning-action@v0.2.13
+        uses: adfinis/container-scanning-action@v0.3.0
         with:
           image-ref: ghcr.io/${{ github.repository }}/${{ matrix.config.name }}
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -139,7 +139,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Adjust Version
         run: |
