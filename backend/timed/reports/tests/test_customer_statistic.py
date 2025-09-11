@@ -31,7 +31,7 @@ def test_customer_statistic_list(
 ):
     user = auth_client.user
 
-    assignee, employment = setup_customer_and_employment_status(
+    assignee, _employment = setup_customer_and_employment_status(
         user=user,
         is_assignee=is_customer_assignee,
         is_customer=is_customer,

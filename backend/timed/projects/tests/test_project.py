@@ -137,7 +137,7 @@ def test_project_list_external_employee(
 
 def test_project_filter(internal_employee_client):
     user = internal_employee_client.user
-    proj1, proj2, *_ = ProjectFactory.create_batch(4)
+    proj1, _proj2, *_ = ProjectFactory.create_batch(4)
     ProjectAssigneeFactory.create(project=proj1, user=user, is_reviewer=True)
     ProjectAssigneeFactory.create(project=proj1, user=user, is_manager=True)
 

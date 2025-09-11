@@ -55,7 +55,7 @@ def test_authentication(
     else:
         if result:
             key = "userinfo" if is_id_token else "introspection"
-            user, auth = result
+            user, _auth = result
             assert user.is_authenticated
             assert (
                 cache.get(f"auth.{key}.{hashlib.sha256(b'Token').hexdigest()}")

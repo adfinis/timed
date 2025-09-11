@@ -151,7 +151,7 @@ class UserViewSet(ModelViewSet):
         # transfer overtime
         overtime_credit = user.overtime_credits.filter(date=start_year, transfer=True)
         if not overtime_credit.exists():
-            reported, expected, delta = user.calculate_worktime(start, end)
+            _reported, _expected, delta = user.calculate_worktime(start, end)
             models.OvertimeCredit.objects.create(
                 user=user,
                 comment=_("Transfer %(year)s") % {"year": year - 1},
