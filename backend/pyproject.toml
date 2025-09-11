@@ -44,7 +44,7 @@ sentry-sdk = "^2.37.1"
 whitenoise = "^6.10.0"
 django-hurricane = "^1.6.0"
 psycopg = {extras = ["binary"], version = "^3.2.10"}
-tornado = "~6.4.2" # https://github.com/django-hurricane/django-hurricane/issues/140
+tornado = "~6.5" # https://github.com/django-hurricane/django-hurricane/issues/140
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.13.0"
