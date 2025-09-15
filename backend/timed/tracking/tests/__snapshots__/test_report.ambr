@@ -41,8 +41,8 @@
   
   
   Date: 01 January 2022
-  Duration: 1:00 (h:mm)
-  Task: Brown LLC > Synchronized impactful attitude > LLC
+  Duration: 1:45 (h:mm)
+  Task: Adams, Johnson and Harris > Synergistic web-enabled challenge > Ltd
   
   
   * Comment
@@ -52,24 +52,24 @@
   ---
   
   Date: 01 February 2022
-  Duration: 2:30 (h:mm)
+  Duration: 3:30 (h:mm)
   
   Comment: some other comment
   
   * Task
-    [old] Brown LLC > Synchronized impactful attitude > and Sons
-    [new] Brown LLC > Synchronized impactful attitude > LLC
+    [old] Adams, Johnson and Harris > Synergistic web-enabled challenge > Ltd
+    [new] Adams, Johnson and Harris > Synergistic web-enabled challenge > Ltd
   
   ---
   
   Date: 01 March 2022
-  Duration: 3:15 (h:mm)
+  Duration: 0:15 (h:mm)
   
   
   
   * Task
-    [old] Brown LLC > Synchronized impactful attitude > LLC
-    [new] Brown LLC > Synchronized impactful attitude > LLC
+    [old] Adams, Johnson and Harris > Synergistic web-enabled challenge > Ltd
+    [new] Adams, Johnson and Harris > Synergistic web-enabled challenge > Ltd
   
   * Comment
     [old] foo
@@ -79,7 +79,7 @@
   
   Date: 01 March 2022
   Duration: 0:15 (h:mm)
-  Task: Brown LLC > Synchronized impactful attitude > LLC
+  Task: Adams, Johnson and Harris > Synergistic web-enabled challenge > Ltd
   Comment: some other comment
   
   * Not_Billable
