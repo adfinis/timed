@@ -110,11 +110,11 @@ export default class AnalysisEditController extends Controller {
 
     const model = this.store.peekRecord("report-intersection", res.data.id);
 
-    if (model.customer) {
+    if (model.customer?.id) {
       await this.store.query("project", { customer: model.customer.id });
     }
 
-    if (model.project) {
+    if (model.project?.id) {
       await this.store.query("task", { project: model.project.id });
     }
 
