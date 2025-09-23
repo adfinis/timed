@@ -1,5 +1,5 @@
 .btn {
-  @apply border-border block rounded border px-4 py-1.5 transition-all;
+  @apply border-border block rounded border px-[0.7rem] py-1.5 transition-all;
 }
 
 .btn:disabled,
