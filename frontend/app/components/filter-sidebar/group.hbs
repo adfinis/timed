@@ -1,7 +1,7 @@
 <div
   class="filter-sidebar-group
     {{if this.expanded 'expanded filter-sidebar-group--expanded'}}
-    group flex flex-col border-t p-2.5"
+    group flex flex-col p-2.5 [&:not(:first-child)]:border-t"
 >
   <button
     type="button"
@@ -10,15 +10,19 @@
   >
     {{@label}}
     <FaIcon
+      class="-mr-[0.2rem]"
       @icon="angle-right"
       @prefix="fas"
       @transform="{{if this.expanded 'rotate-90'}}"
+      @size="sm"
     />
   </button>
   <div
     class="filter-sidebar-group-body max-h-0 overflow-hidden transition-[max-height] group-[.expanded]:max-h-[32rem]"
   >
-    <div class="filter-sidebar-group-content py-2 [&>*]:mt-1">
+    <div
+      class="filter-sidebar-group-content py-2 text-sm [&>*]:mt-1 [&_label]:text-base"
+    >
       {{yield}}
     </div>
   </div>

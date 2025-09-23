@@ -1,6 +1,6 @@
 {{#in-element this.destination}}
   <aside
-    class="filter-sidebar min-w-72 max-w-96
+    class="filter-sidebar min-w-96 max-w-[30rem]
       {{if
         this.visible
         'filter-sidebar--visible translate-x-0'
@@ -10,7 +10,7 @@
     ...attributes
   >
     <div
-      class="filter-sidebar-title flex justify-between px-2.5 py-3 text-lg font-semibold"
+      class="filter-sidebar-title flex justify-between border-b px-2.5 py-3 text-lg font-semibold shadow-sm"
     >
       {{#if @appliedCount}}
         {{@appliedCount}}
