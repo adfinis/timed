@@ -445,18 +445,18 @@ files = [
 
 [[package]]
 name = "django"
-version = "5.2.4"
+version = "4.2.23"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.8"
 groups = ["main", "dev"]
 files = [
-    {file = "django-5.2.4-py3-none-any.whl", hash = "sha256:60c35bd96201b10c6e7a78121bd0da51084733efa303cc19ead021ab179cef5e"},
-    {file = "django-5.2.4.tar.gz", hash = "sha256:a1228c384f8fa13eebc015196db7b3e08722c5058d4758d20cb287503a540d8f"},
+    {file = "django-4.2.23-py3-none-any.whl", hash = "sha256:dafbfaf52c2f289bd65f4ab935791cb4fb9a198f2a5ba9faf35d7338a77e9803"},
+    {file = "django-4.2.23.tar.gz", hash = "sha256:42fdeaba6e6449d88d4f66de47871015097dc6f1b87910db00a91946295cfae4"},
 ]
 
 [package.dependencies]
-asgiref = ">=3.8.1"
+asgiref = ">=3.6.0,<4"
 sqlparse = ">=0.3.1"
 tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 
@@ -2096,4 +2096,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "785e0313eac8fbc665b00a633afc454b4536e1d9ae64a702a27d6ccd46afce66"
+content-hash = "9eb7ed22660149faba50ea45079d16387ad2768f3ac42f17793f6922744ac07f"
