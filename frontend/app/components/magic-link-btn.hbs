@@ -6,7 +6,7 @@
   {{on "click" (toggle "isModalVisible" this)}}
   ...attributes
 >
-  <FaIcon @icon="bolt" @prefix="fas" />
+  <FaIcon @icon="bolt" @prefix="fas" @size="sm" />
   {{#if this.isModalVisible}}
     <MagicLinkModal
       @isVisible={{this.isModalVisible}}
