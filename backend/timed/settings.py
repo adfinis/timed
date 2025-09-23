@@ -142,6 +142,7 @@ LANGUAGE_CODE = "en-US"
 TIME_ZONE = env.str("DJANGO_TIME_ZONE", "Europe/Zurich")
 
 USE_I18N = True
+USE_L10N = True
 
 DATETIME_FORMAT = env.str("DJANGO_DATETIME_FORMAT", "d.m.Y H:i:s")
 DATE_FORMAT = env.str("DJANGO_DATE_FORMAT", "d.m.Y")
