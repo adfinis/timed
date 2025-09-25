@@ -69,8 +69,8 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0(@babel/core@7.28.4)
       '@sentry/ember':
-        specifier: ^10.14.0
-        version: 10.14.0(@glint/template@1.4.0)(ember-cli@6.0.1(babel-core@6.26.3)(handlebars@4.7.8)(underscore@1.13.6))(webpack@5.101.3)
+        specifier: ^10.15.0
+        version: 10.15.0(@glint/template@1.4.0)(ember-cli@6.0.1(babel-core@6.26.3)(handlebars@4.7.8)(underscore@1.13.6))(webpack@5.101.3)
       '@tailwindcss/forms':
         specifier: ~0.5.10
         version: 0.5.10(tailwindcss@3.4.17)
@@ -97,7 +97,7 @@ importers:
         version: 8.2.0(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.4)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
       ember-can:
         specifier: git+https://github.com/anehx/ember-can#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can
-        version: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.4)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
+        version: git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.4)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))
       ember-changeset:
         specifier: 4.1.2
         version: 4.1.2(@glint/template@1.4.0)(ember-data@5.3.13(@ember/string@4.0.1)(@ember/test-helpers@4.0.5(@babel/core@7.28.4)(@glint/template@1.4.0)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glint/template@1.4.0)(ember-inflector@4.0.2)(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3))(qunit@2.24.1))(webpack@5.101.3)
@@ -139,7 +139,7 @@ importers:
         version: 3.0.3(g3izipvqxi3ka6zk7jbv66z3ki)
       ember-cli-nouislider:
         specifier: git+https://github.com/derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
-        version: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872
+        version: git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872
       ember-cli-postcss:
         specifier: ^8.2.0
         version: 8.2.0
@@ -1649,32 +1649,32 @@ packages:
   '@scarf/scarf@1.4.0':
     resolution: {integrity: sha512-xxeapPiUXdZAE3che6f3xogoJPeZgig6omHEy1rIY5WVsB3H2BHNnZH+gHG6x91SCWyQCzWGsuL2Hh3ClO5/qQ==}
 
-  '@sentry-internal/browser-utils@10.14.0':
-    resolution: {integrity: sha512-32kM7Fs9x6d2GGiE3YaaKq2+qWwSaV2h0XhaIdvs/Ewkh9bJq81xlgEor7gjmJ6UpfxjPpU8rGST6hI1I5lcVg==}
+  '@sentry-internal/browser-utils@10.15.0':
+    resolution: {integrity: sha512-hJxo6rj3cMqiYlZd6PC8o/i2FG6hRnZdHcJkfm1HXgWCRgdCPilKghL6WU+B2H5dLyRKJ17nWjDAVQPRdCxO9w==}
     engines: {node: '>=18'}
 
-  '@sentry-internal/feedback@10.14.0':
-    resolution: {integrity: sha512-Lj8VGq+VSdwfEu6/Oo7hhcLKQRaRmOs30CAvbcPFSYRKfoi/0xT+dsOm2/C7vgIM9tmXJJ3hMHjgTgnJ3PIZfw==}
+  '@sentry-internal/feedback@10.15.0':
+    resolution: {integrity: sha512-EP+NvdU9yfmepGzQwz0jnqhd0DBxHzrP16TsJIVXJe93QJ+gumdN3XQ0lvYtEC9zHuU08DghRLjfI1kLRfGzdQ==}
     engines: {node: '>=18'}
 
-  '@sentry-internal/replay-canvas@10.14.0':
-    resolution: {integrity: sha512-z0DrutMZtxnCf8ZUxYttdbaFeUlnG6CQuDPJ9DQkQVTE2BOiVegZTMMRkj0cUDmIiRQ42Agf1hPbxVmqh2AUuQ==}
+  '@sentry-internal/replay-canvas@10.15.0':
+    resolution: {integrity: sha512-SXgUWArk+haUJ24W6pIm9IiwmIk3WxeQyFUxFfMUetSRb06CVAoNjPb0YuzKIeuFYJb6hDPGQ9UWhShnQpTmkw==}
     engines: {node: '>=18'}
 
-  '@sentry-internal/replay@10.14.0':
-    resolution: {integrity: sha512-C/DYUVTTlIxTLdgVlrPbilk2fYw/EPw4SfQgLC7tZXx/X7+Hh/Yi4ESrTlaKBsEUPhK/b82vdbS04+J1dZRyxA==}
+  '@sentry-internal/replay@10.15.0':
+    resolution: {integrity: sha512-vHBAFVdDfa51oqPWyRCK4fOIFhFeE2mVlqBWrBb+S3vCNcmtpvqJUq6o4sjSYcQzdZQpMSp5/Lj8Y3a8x/ed7w==}
     engines: {node: '>=18'}
 
-  '@sentry/browser@10.14.0':
-    resolution: {integrity: sha512-bDtsrHX+wtyOK0J1CcZoSgSJm2U1ITHVceAQfnQeEwWNP9y9xPRsEZDHfE3DnVNl/jB8iA/IOl5I8p4cCQdtpQ==}
+  '@sentry/browser@10.15.0':
+    resolution: {integrity: sha512-YV42VgW7xdmY23u7+nQLNJXDVilNTP0d5WWkHDxeI/uD6AAvn3GyKjx1YMG/KCulxva3dPDPEUunzDm3al26Sw==}
     engines: {node: '>=18'}
 
-  '@sentry/core@10.14.0':
-    resolution: {integrity: sha512-gyJB7/mW0OteM+vwEsAWaPcLd3fTaKRAc4LZM1aXRbl7juPRmhgwFftjqGg7AMMGNDE0JMs1Fb2W4xSVxH1ItQ==}
+  '@sentry/core@10.15.0':
+    resolution: {integrity: sha512-J7WsQvb9G6nsVgWkTHwyX7wR2djtEACYCx19hAnRbSGIg+ysVG+7Ti3RL4bz9/VXfcxsz346cleKc7ljhynYlQ==}
     engines: {node: '>=18'}
 
-  '@sentry/ember@10.14.0':
-    resolution: {integrity: sha512-RAE9TamxdAbz09TcT4HnLYqy3aht9uTDod+afiX18pmgeJTomdKr6PEH2U5yDs/Ama85TvA4MwUU5xz+lhJy4g==}
+  '@sentry/ember@10.15.0':
+    resolution: {integrity: sha512-mtdIhRuWAEEu5BZeAwvtPGoVjOHlGJqrL5/rNfFsA0L3p04NV+p71IFkA9WgEa1ZAOCPc81n8o2zSPza3Dk94A==}
     engines: {node: '>=18'}
     peerDependencies:
       ember-cli: '>=4'
@@ -3347,8 +3347,8 @@ packages:
     resolution: {integrity: sha512-hSPcvIKarA8wad2/b6jDd/eU+OtKmi6uP+iYQbzi5TQpjsqV6b4QdRqrLk7ClSRRKBAtdTuutx+m+X+WlEd2lw==}
     engines: {node: 10.* || >= 12}
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can:
-    resolution: {path: /ember-can, tarball: https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935}
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can:
+    resolution: {commit: 1755f0fb2c1026b57f2984d065f1c8f10835e935, path: /ember-can, repo: git@github.com:anehx/ember-can.git, type: git}
     version: 5.0.4
     peerDependencies:
       '@ember/string': ^3.1.1
@@ -3461,8 +3461,8 @@ packages:
   ember-cli-normalize-entity-name@1.0.0:
     resolution: {integrity: sha512-rF4P1rW2P1gVX1ynZYPmuIf7TnAFDiJmIUFI1Xz16VYykUAyiOCme0Y22LeZq8rTzwBMiwBwoE3RO4GYWehXZA==}
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
-    resolution: {tarball: https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872}
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+    resolution: {commit: cf0d87986cf25d5795e1edd6c8b9f008c5b39872, repo: git@github.com:derrabauke/ember-cli-nouislider.git, type: git}
     version: 1.2.1
     engines: {node: 10.* || >= 12}
 
@@ -9419,40 +9419,40 @@ snapshots:
 
   '@scarf/scarf@1.4.0': {}
 
-  '@sentry-internal/browser-utils@10.14.0':
+  '@sentry-internal/browser-utils@10.15.0':
     dependencies:
-      '@sentry/core': 10.14.0
+      '@sentry/core': 10.15.0
 
-  '@sentry-internal/feedback@10.14.0':
+  '@sentry-internal/feedback@10.15.0':
     dependencies:
-      '@sentry/core': 10.14.0
+      '@sentry/core': 10.15.0
 
-  '@sentry-internal/replay-canvas@10.14.0':
+  '@sentry-internal/replay-canvas@10.15.0':
     dependencies:
-      '@sentry-internal/replay': 10.14.0
-      '@sentry/core': 10.14.0
+      '@sentry-internal/replay': 10.15.0
+      '@sentry/core': 10.15.0
 
-  '@sentry-internal/replay@10.14.0':
+  '@sentry-internal/replay@10.15.0':
     dependencies:
-      '@sentry-internal/browser-utils': 10.14.0
-      '@sentry/core': 10.14.0
+      '@sentry-internal/browser-utils': 10.15.0
+      '@sentry/core': 10.15.0
 
-  '@sentry/browser@10.14.0':
+  '@sentry/browser@10.15.0':
     dependencies:
-      '@sentry-internal/browser-utils': 10.14.0
-      '@sentry-internal/feedback': 10.14.0
-      '@sentry-internal/replay': 10.14.0
-      '@sentry-internal/replay-canvas': 10.14.0
-      '@sentry/core': 10.14.0
+      '@sentry-internal/browser-utils': 10.15.0
+      '@sentry-internal/feedback': 10.15.0
+      '@sentry-internal/replay': 10.15.0
+      '@sentry-internal/replay-canvas': 10.15.0
+      '@sentry/core': 10.15.0
 
-  '@sentry/core@10.14.0': {}
+  '@sentry/core@10.15.0': {}
 
-  '@sentry/ember@10.14.0(@glint/template@1.4.0)(ember-cli@6.0.1(babel-core@6.26.3)(handlebars@4.7.8)(underscore@1.13.6))(webpack@5.101.3)':
+  '@sentry/ember@10.15.0(@glint/template@1.4.0)(ember-cli@6.0.1(babel-core@6.26.3)(handlebars@4.7.8)(underscore@1.13.6))(webpack@5.101.3)':
     dependencies:
       '@babel/core': 7.28.4
       '@embroider/macros': 1.16.13(@glint/template@1.4.0)
-      '@sentry/browser': 10.14.0
-      '@sentry/core': 10.14.0
+      '@sentry/browser': 10.15.0
+      '@sentry/core': 10.15.0
       ember-auto-import: 2.10.1(@glint/template@1.4.0)(webpack@5.101.3)
       ember-cli-babel: 8.2.0(@babel/core@7.28.4)
       ember-cli-htmlbars: 6.3.0
@@ -11571,7 +11571,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-can@https://codeload.github.com/anehx/ember-can/tar.gz/1755f0fb2c1026b57f2984d065f1c8f10835e935#path:/ember-can(@babel/core@7.28.4)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)):
+  ember-can@git+https://git@github.com:anehx/ember-can.git#1755f0fb2c1026b57f2984d065f1c8f10835e935&path:/ember-can(@babel/core@7.28.4)(@ember/string@4.0.1)(ember-resolver@12.0.1(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)))(ember-source@6.0.1(@glimmer/component@1.1.2(@babel/core@7.28.4))(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.101.3)):
     dependencies:
       '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.10.0
@@ -11845,7 +11845,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-nouislider@https://codeload.github.com/derrabauke/ember-cli-nouislider/tar.gz/cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
+  ember-cli-nouislider@git+https://git@github.com:derrabauke/ember-cli-nouislider.git#cf0d87986cf25d5795e1edd6c8b9f008c5b39872:
     dependencies:
       broccoli-funnel: 3.0.8
       broccoli-merge-trees: 4.2.0
