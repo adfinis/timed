@@ -68,6 +68,12 @@ jobs:
       - name: Load dev images into k8s
         run: kind load docker-image ghcr.io/${{ github.repository }}/backend ghcr.io/${{ github.repository }}/frontend --name chart-testing
 
+      - name: Load bitnami image into k8s
+        run: |
+          docker pull bitnamilegacy/postgresql:17.6.0-debian-12-r4
+          docker tag docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r4 docker.io/bitnami/postgresql:17.6.0-debian-12-r4
+          kind load docker-image docker.io/bitnami/postgresql:17.6.0-debian-12-r4 --name chart-testing
+
       - name: Install kube-prometheus stack CRDs
         run: |
           export KUBE_PROMETHEUS_STACK_VERSION=58.4.0
