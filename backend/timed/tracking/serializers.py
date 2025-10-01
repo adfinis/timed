@@ -223,8 +223,7 @@ class ReportSerializer(TotalTimeRootMetaMixin, ModelSerializer):
 
         # check if remaining effort tracking is active on the corresponding project
         if not task.project.remaining_effort_tracking and data.get("remaining_effort"):
-            msg = "Remaining effort tracking is not active on this project!"
-            raise ValidationError(msg)
+            del data["remaining_effort"]
 
         if new_verified_by != current_verified_by:
             if not is_reviewer:
