@@ -1879,8 +1879,8 @@ def test_report_bulk_automatic_unreject(
         (True, True, False, status.HTTP_403_FORBIDDEN),
         (True, False, False, status.HTTP_403_FORBIDDEN),
         (False, True, False, status.HTTP_200_OK),
-        (False, False, False, status.HTTP_400_BAD_REQUEST),
-        (False, False, True, status.HTTP_400_BAD_REQUEST),
+        (False, False, False, status.HTTP_200_OK),
+        (False, False, True, status.HTTP_200_OK),
         (False, True, True, status.HTTP_200_OK),
     ],
 )
@@ -1921,19 +1921,12 @@ def test_report_set_remaining_effort(
     assert response.status_code == expected
 
 
-@pytest.mark.parametrize(
-    ("remaining_effort_active", "expected"),
-    [
-        (True, status.HTTP_201_CREATED),
-        (False, status.HTTP_400_BAD_REQUEST),
-    ],
-)
+@pytest.mark.parametrize(("remaining_effort_active"), [True, False])
 def test_report_create_remaining_effort(
     internal_employee_client,
     project_factory,
     task_factory,
     remaining_effort_active,
-    expected,
 ):
     user = internal_employee_client.user
     project = project_factory.create(
@@ -1960,16 +1953,20 @@ def test_report_create_remaining_effort(
     url = reverse("report-list")
 
     response = internal_employee_client.post(url, data)
-    assert response.status_code == expected
+    assert response.status_code == status.HTTP_201_CREATED
 
-    if expected == status.HTTP_201_CREATED:
-        json = response.json()
-        assert json["data"]["relationships"]["user"]["data"]["id"] == str(user.id)
-        assert json["data"]["relationships"]["task"]["data"]["id"] == str(task.id)
+    json = response.json()
+    assert json["data"]["relationships"]["user"]["data"]["id"] == str(user.id)
+    assert json["data"]["relationships"]["task"]["data"]["id"] == str(task.id)
 
-        task.refresh_from_db()
+    task.refresh_from_db()
+
+    if remaining_effort_active:
         assert task.most_recent_remaining_effort == timedelta(hours=1)
         assert task.project.total_remaining_effort == timedelta(hours=1)
+    else:
+        assert task.most_recent_remaining_effort is None
+        assert task.project.total_remaining_effort == timedelta(0)
 
 
 def test_report_remaining_effort_total(
