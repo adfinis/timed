@@ -22,7 +22,8 @@ from timed.projects.models import CustomerAssignee, ProjectAssignee, TaskAssigne
 from timed.tracking import models
 
 if TYPE_CHECKING:
-    from typing import Callable, TypeVar
+    from collections.abc import Callable
+    from typing import TypeVar
 
     from django.db.models import QuerySet
 
