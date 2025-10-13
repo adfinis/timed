@@ -14,7 +14,8 @@ from mozilla_django_oidc.auth import LOGGER, OIDCAuthenticationBackend
 from rest_framework.exceptions import AuthenticationFailed
 
 if TYPE_CHECKING:
-    from typing import Callable, Self
+    from collections.abc import Callable
+    from typing import Self
 
     from django.db.models import QuerySet
 
