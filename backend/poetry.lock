@@ -623,14 +623,14 @@ django = ">=4.2"
 
 [[package]]
 name = "djangorestframework-jsonapi"
-version = "8.0.0"
+version = "8.1.0"
 description = "A Django REST framework API adapter for the JSON:API spec."
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "djangorestframework_jsonapi-8.0.0-py2.py3-none-any.whl", hash = "sha256:d27f2e4acde7a4ed31503299e4d50659e85550f8c082f832eca9b1c2a0fc97e7"},
-    {file = "djangorestframework_jsonapi-8.0.0.tar.gz", hash = "sha256:c114c8be86ba0af35e2b15f50943a0d2581c8ae452ef478c11468b9973b97763"},
+    {file = "djangorestframework_jsonapi-8.1.0-py2.py3-none-any.whl", hash = "sha256:179a1fc6ea6215062864f2b20b6126e96521434915620f87475b20f701184f13"},
+    {file = "djangorestframework_jsonapi-8.1.0.tar.gz", hash = "sha256:d02defa331c240cef136dc522f670e5535a2f1fad182dc04bd4abf4c4a747340"},
 ]
 
 [package.dependencies]
@@ -2087,4 +2087,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "0dc16e9a5ea08efb315d8b380328cda577087fe2b374994080678f420441a114"
+content-hash = "9fdd876aa20543fbf8ca9e9a4b9710335b96b07cf826b88a15beb6d7e09282a4"
