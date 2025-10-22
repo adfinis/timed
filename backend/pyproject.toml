@@ -43,7 +43,7 @@ python-redmine = "^2.5.0"
 sentry-sdk = "^2.42.1"
 whitenoise = "^6.11.0"
 django-hurricane = "^1.6.1"
-psycopg = {extras = ["binary"], version = "^3.2.10"}
+psycopg = {extras = ["binary"], version = "^3.2.11"}
 tornado = "~6.5" # https://github.com/django-hurricane/django-hurricane/issues/140
 
 [tool.poetry.group.dev.dependencies]
