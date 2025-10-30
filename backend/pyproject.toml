@@ -42,7 +42,7 @@ django-money = "^3.5.4"
 python-redmine = "^2.5.0"
 sentry-sdk = "^2.43.0"
 whitenoise = "^6.11.0"
-django-hurricane = "^1.6.1"
+django-hurricane = "^1.6.2"
 psycopg = {extras = ["binary"], version = "^3.2.12"}
 tornado = "~6.5" # https://github.com/django-hurricane/django-hurricane/issues/140
 
