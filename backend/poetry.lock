@@ -539,14 +539,14 @@ Django = ">=4.2"
 
 [[package]]
 name = "django-hurricane"
-version = "1.6.1"
+version = "1.6.2"
 description = "A Kubernetes Native Stack Specifically Created For Django"
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
 files = [
-    {file = "django_hurricane-1.6.1-py3-none-any.whl", hash = "sha256:1877163bc3408326c1d646e2fb210ae38b3e68efbebf3fad4dc20efe7d6f0521"},
-    {file = "django_hurricane-1.6.1.tar.gz", hash = "sha256:3acb4d7de02757c6b2f1567e38884a4403dcef20e22a17c516eb689e37c99063"},
+    {file = "django_hurricane-1.6.2-py3-none-any.whl", hash = "sha256:3878b5759f14d7f8a9e1a99baa6c540968f3b205993f362becba23b3545cb441"},
+    {file = "django_hurricane-1.6.2.tar.gz", hash = "sha256:633c08200dbd5bafd27aaf9485bf1ae2d571ca03e60d7a71ca82a6bdd06b8447"},
 ]
 
 [package.dependencies]
@@ -2089,4 +2089,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "93affeda2c3f9528f3fc3175522d8176aaf79eafc7834cbacc0f5618b9a82504"
+content-hash = "6c2217c74d04f1cc5faca176dd071975133ac8b14925efaa702cfe7386aefdd3"
