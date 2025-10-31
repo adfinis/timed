@@ -47,7 +47,7 @@ psycopg = {extras = ["binary"], version = "^3.2.12"}
 tornado = "~6.5" # https://github.com/django-hurricane/django-hurricane/issues/140
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.14.2"
+ruff = "^0.14.3"
 coverage = "7.11.0"
 django-extensions = "4.1"
 factory-boy = "3.3.3"
