@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@adfinis/eslint-config": "3.0.2",
-    "@apollo/client": "^4.0.8",
+    "@apollo/client": "^4.0.9",
     "@babel/core": "^7.28.5",
     "@babel/eslint-parser": "^7.28.5",
     "@babel/plugin-proposal-decorators": "^7.27.1",
@@ -114,7 +114,7 @@
     "eslint-plugin-qunit": "8.2.5",
     "faker": "4.1.0",
     "fast-redact": "3.5.0",
-    "graphql": "^16.11.0",
+    "graphql": "^16.12.0",
     "loader.js": "4.7.0",
     "lodash.uniqby": "^4.7.0",
     "miragejs": "^0.1.48",
