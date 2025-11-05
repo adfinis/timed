@@ -28,6 +28,8 @@ jobs:
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2
+        with:
+          yamale_version: "6.0.0" # https://github.com/helm/chart-testing-action/issues/177#issuecomment-3386841674
 
       - name: Run chart-testing (lint)
         run: ct lint --config ct.yaml
