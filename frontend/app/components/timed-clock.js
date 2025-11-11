@@ -51,7 +51,8 @@ export default class TimedClock extends Component {
     super(...args);
 
     scheduleTask(this.timer, "actions", "perform");
-    scheduleTask(this.worktimeTimer, "actions", "perform");
+    //TODO: fix this feature
+    // scheduleTask(this.worktimeTimer, "actions", "perform");
   }
 
   timer = task(async () => {
@@ -69,14 +70,16 @@ export default class TimedClock extends Component {
 
   worktimeTimer = task(async () => {
     while (true) {
-      this.currentUser.worktimeBalance.perform();
+      if (this._overtimeFeedback) {
+        this.currentUser.worktimeBalance.perform();
+      }
 
       if (macroCondition(isTesting())) {
         return;
       }
 
       // eslint-disable-next-line no-await-in-loop
-      await timeout(60000);
+      await timeout(120000);
     }
   });
 
@@ -89,10 +92,12 @@ export default class TimedClock extends Component {
   }
 
   get overtimeFeedback() {
-    return (
-      this._overtimeFeedback ??
-      JSON.parse(localStorage.getItem(OVERTIME_FEEDBACK_KEY))
-    );
+    return false;
+    // TODO: fix this feature -> don't refresh to often and improve backend query
+    // return (
+    //   this._overtimeFeedback ??
+    //   JSON.parse(localStorage.getItem(OVERTIME_FEEDBACK_KEY))
+    // );
   }
 
   set overtimeFeedback(value) {
@@ -102,9 +107,11 @@ export default class TimedClock extends Component {
 
   @action
   toggleOvertimeFeedback() {
-    this.overtimeFeedback = !this.overtimeFeedback;
-    this.notify.info(
-      `${this.overtimeFeedback ? "Enabled" : "Disabled"} visual overtime feedback`,
-    );
+    return;
+    // TODO: fix this feature
+    // this.overtimeFeedback = !this.overtimeFeedback;
+    // this.notify.info(
+    //   `${this.overtimeFeedback ? "Enabled" : "Disabled"} visual overtime feedback`,
+    // );
   }
 }

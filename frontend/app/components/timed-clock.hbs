@@ -25,7 +25,9 @@
         {{/if}}
       </radialGradient>
     </defs>
-    <title>Your overtime: {{this.overtime}}h</title>
+    {{#if this.overtimeFeedback}}
+      <title>Your overtime: {{this.overtime}}h</title>
+    {{/if}}
     <circle
       class="circle"
       r="240"
