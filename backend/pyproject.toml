@@ -21,7 +21,7 @@ include = ["CHANGELOG.md"]
 [tool.poetry.dependencies]
 python = "^3.12"
 python-dateutil = "^2.9.0"
-django = "^4.2.26"
+django = "~5.2.4"
 # might remove this once we find out how the jsonapi extras_require work
 django-cors-headers = "^4.9.0"
 django-filter = "^25.1"
@@ -75,7 +75,6 @@ env = [
 filterwarnings = [
     "error::DeprecationWarning",
     "error::PendingDeprecationWarning",
-    "ignore: The USE_L10N setting is deprecated. Starting with Django 5.0, localized formatting of data will always be enabled.:django.utils.deprecation.RemovedInDjango50Warning",
     # following is needed beceause of https://github.com/mozilla/mozilla-django-oidc/pull/371
     "ignore:distutils Version classes are deprecated:DeprecationWarning", # deprecation in pytest-freezegun
     "ignore:.*is deprecated in favour of new moneyed.l10n.format_money.*",
