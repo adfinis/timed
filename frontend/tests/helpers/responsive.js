@@ -1,59 +1,45 @@
-import { getOwner } from "@ember/application";
-import { A } from "@ember/array";
-import { computed } from "@ember/object";
-import { classify } from "@ember/string";
-import { registerAsyncHelper } from "@ember/test";
-import MediaService from "ember-responsive/services/media";
+/**
+ * @description Modified version of https://github.com/knoxville-utilities-board/nrg-ui/blob/579fc700d173d7a2bc717fb7c7a7a9305d38d245/packages/ember-core/src/test-support/index.ts
+ */
 
-MediaService.reopen({
-  // Change this if you want a different default breakpoint in tests.
-  _defaultBreakpoint: "xl",
+import { getContext, settled } from "@ember/test-helpers";
 
-  _breakpointArr: computed("breakpoints", function () {
-    return Object.keys(this.breakpoints) || A([]);
-  }),
+/**
+ * @async
+ * @param {string | string[]} breakpoint The name of the breakpoint to set (e.g., 'md'),
+ *   or an array of names for matching multiple breakpoints. Provide the string 'auto'
+ *   to disable mocking and revert to using the real browser environment's `matchMedia`.
+ * @returns {Promise<void>} A promise that resolves after the breakpoint has been set
+ *   and all resulting async behavior has settled.
+ * @throws {Error} If a provided breakpoint name (other than 'auto') is not
+ *   defined in the media service's `breakpoints` object.
+ */
+export async function setBreakpoint(breakpoint) {
+  const breakpointArray = Array.isArray(breakpoint) ? breakpoint : [breakpoint];
+  const { owner } = /** @type {{ owner: import('@ember/owner').default }} */ (
+    getContext()
+  );
 
-  _forceSetBreakpoint(breakpoint) {
-    let found = false;
+  /** @type {import('../../app/services/media').default} */
+  const media = owner.lookup("service:media");
 
-    const props = {};
-    this._breakpointArr.forEach(function (bp) {
-      const val = bp === breakpoint;
-      if (val) {
-        found = true;
-      }
+  for (let i = 0; i < breakpointArray.length; i++) {
+    const breakpointName = breakpointArray[i];
 
-      props[`is${classify(bp)}`] = val;
-    });
+    if (breakpointName === "auto") {
+      media.mocked = false;
+      return;
+    }
 
-    if (found) {
-      this.setProperties(props);
-    } else {
+    if (Object.keys(media.breakpoints).indexOf(breakpointName) === -1) {
       throw new Error(
-        `You tried to set the breakpoint to ${breakpoint}, which is not in your app/breakpoint.js file.`,
+        `[setBreakpoint] Breakpoint "${breakpointName}" is not defined in the media service's breakpoints.`,
       );
     }
-  },
+  }
 
-  match() {}, // do not set up listeners in test
+  media.matches = breakpointArray;
+  media.trigger("mediaChanged");
 
-  init(...args) {
-    this._super(...args);
-
-    this._forceSetBreakpoint(this._defaultBreakpoint);
-  },
-});
-
-export default registerAsyncHelper("setBreakpoint", function (app, breakpoint) {
-  // this should use getOwner once that's supported
-  const mediaService = app.__deprecatedInstance__.lookup("service:media");
-  mediaService._forceSetBreakpoint(breakpoint);
-});
-
-export function setBreakpointForIntegrationTest(container, breakpoint) {
-  const mediaService = getOwner(container).lookup("service:media");
-  mediaService._forceSetBreakpoint(breakpoint);
-  container.set("media", mediaService);
-
-  return mediaService;
+  await settled();
 }

@@ -1,8 +1,7 @@
 "use strict";
 
 module.exports = {
-  plugins: ["stylelint-prettier"],
-  extends: ["stylelint-prettier/recommended", "stylelint-config-standard"],
+  extends: ["stylelint-config-standard"],
   rules: {
     "custom-property-empty-line-before": null, // we use empty lines to group/order properties
     "at-rule-empty-line-before": ["never", { ignoreAtRules: ["import"] }], // we use empty lines to group/order imports (su)
