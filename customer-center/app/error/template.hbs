@@ -1,0 +1,23 @@
+<section class="page-header">
+  <div class="page-header__inner">
+
+    <NavBreadcrumbs @crumbs={{this.breadcrumbs}} />
+
+    <h1 class="page-header__title">
+      {{~t "page.error.title"~}}
+    </h1>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__inner">
+
+    <p>{{this.model.message}}</p>
+
+    {{#if this.showStack}}
+      <pre>{{this.model.stack}}</pre>
+    {{/if}}
+
+  </div>
+</section>

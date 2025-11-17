@@ -1,0 +1,75 @@
+<header class="site-header" uk-navbar uk-sticky>
+  <div class="site-header__inner">
+
+    <div class="site-header__navbar">
+      <div class="site-header__brand">
+        <span>{{t "page.application.title"}}</span>
+      </div>
+
+      <nav class="site-header__nav">
+        <ul class="site-header__nav__list">
+          {{#if this.session.isAuthenticated}}
+            <li class="site-header__nav__item">
+              <LinkTo @route="subscriptions">
+                {{~t "page.application.nav.index"~}}
+              </LinkTo>
+            </li>
+
+            {{#if this.showConfirmInMenu}}
+              <li class="site-header__nav__item">
+                <LinkTo @route="subscriptions.confirm">
+                  {{~t "page.application.nav.subscriptions-confirm"~}}
+                </LinkTo>
+              </li>
+            {{/if}}
+
+            <li class="site-header__nav__item">
+              <a
+                href="{{if this.isEnglishSelected "https://www.adfinis.com/en/contact" "https://www.adfinis.com/kontakt"}}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{t "page.application.nav.contact"}}
+              </a>
+            </li>
+
+            <li class="site-header__nav__item">
+              <a
+                href="#"
+                title={{t "page.application.nav.account-logout"}}
+                uk-icon="sign-out"
+                {{on "click" this.invalidateSession}}
+              ></a>
+            </li>
+          {{/if}}
+
+          <li class="site-header__nav__item">
+            <a href="#" uk-icon="world"></a>
+
+            <div class="uk-navbar-dropdown">
+              <ul class="uk-nav uk-navbar-dropdown-nav">
+                {{#each this.languages as |language|}}
+                  <li>
+                    <a
+                      {{on "click" (fn this.changeLanguage language.key)}}
+                      href="#"
+                    >
+                      {{~language.label~}}
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+</header>
+
+<main class="main" id="scroll-container">
+  {{outlet}}
+</main>
+
+<EmberNotify @closeAfter={{5000}} />

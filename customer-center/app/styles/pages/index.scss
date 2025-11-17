@@ -1,0 +1,69 @@
+.projects {
+  &__list {
+    @extend .uk-grid;
+  }
+
+  &__item > a {
+    @extend .uk-card;
+    @extend .uk-card-default;
+    @extend .uk-card-body;
+    @extend .uk-link-toggle;
+
+    border: 1px solid #eee;
+
+    & > div {
+      @extend .uk-flex;
+      @extend .uk-flex-between;
+    }
+  }
+
+  &__title {
+    @extend .uk-card-title;
+  }
+}
+
+.support {
+  &__list {
+    @extend .uk-margin-medium;
+    @extend .uk-child-width-expand;
+    @extend .uk-text-center;
+  }
+
+  &__callout {
+    @extend .uk-text-large;
+  }
+
+  &__opening-hours {
+    @extend .uk-text-small;
+  }
+}
+
+.profiles {
+  &__list {
+    @extend .uk-grid;
+    @extend .uk-child-width-expand;
+    @extend .uk-text-center;
+  }
+
+  &__item > a {
+    @extend .uk-icon-button;
+  }
+}
+
+.locations {
+  &__list {
+    @extend .uk-grid;
+  }
+
+  &__item > div {
+    @extend .uk-card;
+    @extend .uk-card-default;
+    @extend .uk-card-body;
+
+    border: 1px solid #eee;
+  }
+
+  &__title {
+    @extend .uk-card-title;
+  }
+}

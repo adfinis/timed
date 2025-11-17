@@ -1,0 +1,118 @@
+{
+  "name": "customer-center",
+  "description": "Adfinis customer support portal with Timed integration.",
+  "repository": "https://github.com/adfinis/customer-center",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "author": {
+    "name": "Adfinis AG",
+    "email": "info@adfinis.com",
+    "url": "https://adfinis.com/"
+  },
+  "maintainers": [
+    "Jonas Cosandey <jonas.cosandey@adfinis.com>"
+  ],
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "release": {
+    "extends": "@adfinis/semantic-release-config"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "scripts": {
+    "start": "ember serve",
+    "start-proxy": "ember server --proxy http://localhost:8000",
+    "lint": "yarn lint:hbs && yarn lint:js",
+    "lint:hbs": "ember-template-lint .",
+    "lint:js": "eslint .",
+    "test": "ember test",
+    "build": "ember build --environment=production",
+    "prepare": "cd .. && husky install frontend/.husky"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.hbs": "ember-template-lint --fix",
+    "*.{scss,graphql,json,md,yml}": "prettier --write"
+  },
+  "devDependencies": {
+    "@adfinis/eslint-config": "^2.0.0",
+    "@adfinis/semantic-release-config": "^4.0.0",
+    "@babel/core": "7.21.4",
+    "@babel/eslint-parser": "7.21.3",
+    "@babel/plugin-proposal-decorators": "7.21.0",
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@ember/optional-features": "^2.0.0",
+    "@ember/render-modifiers": "^2.0.4",
+    "@ember/test-helpers": "^2.8.1",
+    "@glimmer/component": "^1.0.4",
+    "@glimmer/tracking": "^1.0.4",
+    "@sentry/ember": "^5.26.0",
+    "babel-eslint": "^10.1.0",
+    "broccoli-asset-rev": "^3.0.0",
+    "ember-api-actions": "^0.2.9",
+    "ember-auto-import": "^2.7",
+    "ember-changeset": "3.15.0",
+    "ember-changeset-validations": "3.16.0",
+    "ember-cli": "3.28.6",
+    "ember-cli-app-version": "^5.0.0",
+    "ember-cli-babel": "^7.26.6",
+    "ember-cli-dependency-checker": "^3.3.2",
+    "ember-cli-htmlbars": "^6.0.1",
+    "ember-cli-inject-live-reload": "^2.1.0",
+    "ember-cli-moment-shim": "^3.8.0",
+    "ember-cli-sass": "^10.0.1",
+    "ember-cli-sri": "^2.1.1",
+    "ember-cli-terser": "^4.0.2",
+    "ember-cli-update": "^1.0.1",
+    "ember-concurrency": "2.2.1",
+    "ember-data": "3.28.0",
+    "ember-export-application-global": "^2.0.1",
+    "ember-fetch": "^8.1.2",
+    "ember-intl": "aziiee/ember-intl#fix-computed-readonly",
+    "ember-load-initializers": "^2.1.2",
+    "ember-maybe-import-regenerator": "^1.0.0",
+    "ember-modifier": "^3.1.0",
+    "ember-moment": "9.0.1",
+    "ember-notify": "^6.0.0",
+    "ember-page-title": "^7.0.0",
+    "ember-qunit": "^5.1.4",
+    "ember-resolver": "^8.0.2",
+    "ember-simple-auth": "4.2.2",
+    "ember-simple-auth-oidc": "^3.0.1",
+    "ember-source": "3.28.11",
+    "ember-template-lint": "^5.11.0",
+    "ember-truth-helpers": "^3.0.0",
+    "ember-uikit": "4.0.0",
+    "eslint": "8.44.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-ember": "11.5.2",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-n": "15.7.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-qunit": "7.3.4",
+    "file-saver": "^2.0.5",
+    "husky": "^8.0.3",
+    "lint-staged": "^12.1.2",
+    "loader.js": "^4.7.0",
+    "moment": "^2.29.1",
+    "prettier": "2.8.8",
+    "qunit": "2.20.0",
+    "qunit-dom": "2.0.0",
+    "sass": "1.51.0",
+    "webpack": "5"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "ember": {
+    "edition": "octane"
+  }
+}

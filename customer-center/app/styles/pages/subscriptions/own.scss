@@ -1,0 +1,39 @@
+.own-projects {
+  &__list {
+    @extend .uk-grid;
+  }
+
+  &__card {
+    @extend .uk-card;
+    @extend .uk-card-default;
+
+    border: 1px solid #eee;
+  }
+
+  &__header {
+    @extend .uk-card-header;
+  }
+
+  &__body {
+    @extend .uk-card-body;
+  }
+
+  &__footer {
+    @extend .uk-card-footer;
+
+    @extend .uk-flex;
+    @extend .uk-flex-between;
+  }
+
+  &__title {
+    @extend .uk-card-title;
+  }
+
+  &__info {
+    @extend .uk-description-list;
+  }
+
+  &--danger h2 {
+    @extend .uk-text-danger;
+  }
+}

@@ -1,0 +1,62 @@
+.page-account-login {
+  $color-login-text: #f1f4fb;
+  $color-login-background1: #2e987b;
+  $color-login-background2: #258263;
+
+  body {
+    background-color: $color-login-background1;
+    background-image:
+      url("/assets/page-deco-green.svg"),
+      radial-gradient(at left top, $color-login-background1 0%, $color-login-background2 100%);
+    background-size: 100% 35px, auto;
+    background-position: right bottom, 0 0;
+    background-repeat: no-repeat;
+  }
+
+  a {
+    color: $color-login-text !important;
+    text-decoration: underline;
+  }
+
+  .site-header {
+    background-color: transparent;
+
+    &__brand {
+      span {
+        color: $color-login-text;
+      }
+
+      &::before {
+        background-image: url("/assets/adfinis-logo-white.svg");
+      }
+    }
+  }
+
+  .uk-navbar-dropdown {
+    background: $color-login-background1;
+  }
+
+  .page-header__title,
+  .breadcrumbs__list li::before,
+  .breadcrumbs__list span {
+    color: $color-login-text !important;
+  }
+
+  .form {
+    &__label,
+    &__cancel {
+      color: $color-login-text;
+    }
+
+    &__cancel,
+    &__submit {
+      border-color: $color-login-text;
+      font-weight: bold;
+    }
+
+    &__submit {
+      color: $color-login-background1;
+      background-color: $color-login-text;
+    }
+  }
+}

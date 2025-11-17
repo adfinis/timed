@@ -1,0 +1,25 @@
+.data-table {
+  @extend .table;
+
+  &__search {
+    @extend .uk-flex;
+
+    &__open {
+      @extend .uk-margin-left;
+
+      svg {
+        max-width: none;
+      }
+    }
+
+    &__close {
+      @extend .uk-margin-right;
+    }
+
+    &__input {
+      @extend .uk-search-input;
+      @extend .uk-width-auto;
+      @extend .uk-padding-remove;
+    }
+  }
+}

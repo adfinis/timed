@@ -1,0 +1,63 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+body {
+  min-height: 100%;
+  overflow-y: scroll;
+}
+
+.site-header {
+  @extend .uk-navbar-container;
+
+  &__inner {
+    @extend .uk-container;
+    @extend .uk-width-expand;
+  }
+
+  &__navbar {
+    @extend .uk-navbar;
+  }
+
+  &__brand {
+    @extend .uk-navbar-left;
+    padding-left: 15px;
+
+    span {
+      @extend .uk-navbar-item;
+      @extend .uk-logo;
+    }
+
+    &::before {
+      width: 27px;
+      height: 24px;
+      background-image: url("/assets/adfinis-logo-blue.svg");
+      background-size: 50px 50px;
+      background-position: -11px -12px;
+      content: "";
+    }
+  }
+
+  &__nav {
+    @extend .uk-navbar-right;
+
+    &__list {
+      @extend .uk-navbar-nav;
+    }
+
+    .uk-navbar-dropdown {
+      width: 5em;
+    }
+
+    &__item:hover .uk-navbar-dropdown {
+      display: block !important;
+    }
+  }
+}

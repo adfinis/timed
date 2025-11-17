@@ -1,0 +1,25 @@
+<nav class="breadcrumbs">
+  <ol class="breadcrumbs__list">
+    <li class="breadcrumbs__home">
+      <LinkTo @route="protected" uk-icon="home"></LinkTo>
+    </li>
+
+    {{#each @crumbs as |crumb|}}
+      <li class="breadcrumbs__item">
+        {{#if crumb.route}}
+          {{#if crumb.model}}
+            <LinkTo @route={{crumb.route}} @model={{crumb.model}}>
+              {{~crumb.label~}}
+            </LinkTo>
+          {{else}}
+            <LinkTo @route={{crumb.route}}>
+              {{~crumb.label~}}
+            </LinkTo>
+          {{/if}}
+        {{else}}
+          <span>{{crumb.label}}</span>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ol>
+</nav>

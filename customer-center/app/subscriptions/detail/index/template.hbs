@@ -1,0 +1,50 @@
+<section class="section">
+  <div class="section__inner">
+    <div>
+      {{#if this.reports.length}}
+        <div class="table">
+          <table>
+            <thead>
+              <th>{{t "page.subscriptions.detail.reports.table.date"}}</th>
+              <th title={{"HH:mm"}}>{{t "page.subscriptions.detail.reports.table.duration"}}</th>
+              <th>{{t "page.subscriptions.detail.reports.table.user"}}</th>
+              <th>{{t "page.subscriptions.detail.reports.table.comment"}}</th>
+            </thead>
+            <tbody>
+              {{#each this.reports as |report|}}
+                <tr>
+                  <td>{{moment-format report.date "DD.MM.YYYY"}}</td>
+                  <td>{{format-duration-short report.duration}}</td>
+                  <td>{{report.user.fullName}}</td>
+                  <td>{{report.comment}}</td>
+                </tr>
+              {{/each}}
+
+              {{#if this.reportsNext}}
+                <tr class="table__fetch-more">
+                  {{#if this.fetchNextReports.isRunning}}
+                    <td
+                      colspan="4"
+                      class="uk-text-center"
+                    >
+                      {{~t "page.subscriptions.detail.reports.loading"}}
+                    </td>
+                  {{else}}
+                    <td
+                      colspan="4"
+                      class="uk-text-center"
+                      {{in-viewport onEnter=(perform this.fetchNextReports)}}
+                    >
+                    </td>
+                  {{/if}}
+                </tr>
+              {{/if}}
+            </tbody>
+          </table>
+        </div>
+      {{else}}
+        <p>{{t "page.subscriptions.detail.reports.empty"}}</p>
+      {{/if}}
+    </div>
+  </div>
+</section>

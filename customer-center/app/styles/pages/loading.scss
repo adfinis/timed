@@ -1,0 +1,9 @@
+.loading-section {
+  .section__inner {
+    @extend .uk-flex;
+    @extend .uk-flex-center;
+    @extend .uk-flex-middle;
+
+    @extend .uk-height-large;
+  }
+}

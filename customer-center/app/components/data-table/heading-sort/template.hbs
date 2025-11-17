@@ -1,0 +1,11 @@
+<button
+  {{on "click" this.sort}}
+  class="text-button"
+  type="button"
+>
+  {{yield}}
+</button>
+
+{{#if this.icon}}
+  <span uk-icon="icon:{{this.icon}}"></span>
+{{/if}}
