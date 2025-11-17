@@ -1,4 +1,4 @@
-{$DOMAIN_NAME} {
+timed.localhost {
     reverse_proxy /api* http://backend:8080
     reverse_proxy /admin* http://backend:8080
     reverse_proxy /oidc* http://backend:8080
@@ -10,6 +10,17 @@
     reverse_proxy /mailpit* http://mailpit:8025
 
     reverse_proxy /* http://frontend:80
+
+    log {
+        output stdout
+    }
+    encode gzip
+
+    header / Strict-Transport-Security "max-age=63072000"
+}
+
+customer-center.localhost {
+    reverse_proxy /* http://customer-center:80
 
     log {
         output stdout
