@@ -1,0 +1,12 @@
+.subscription-export {
+  &__button {
+    @extend .uk-button;
+    @extend .uk-button-default;
+    @extend .uk-align-right;
+  }
+
+  &__hint {
+    @extend .uk-text-muted;
+    @extend .uk-display-inline-block;
+  }
+}

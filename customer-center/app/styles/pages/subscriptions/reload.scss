@@ -1,0 +1,34 @@
+.packages {
+  &__list {
+    @extend .uk-grid;
+  }
+
+  &__item > div {
+    @extend .uk-card;
+    @extend .uk-card-default;
+    @extend .uk-text-center;
+
+    border: 1px solid #eee;
+  }
+
+  &__header {
+    @extend .uk-card-header;
+  }
+
+  &__title {
+    @extend .uk-card-title;
+  }
+
+  &__body {
+    @extend .uk-card-body;
+  }
+
+  &__footer {
+    @extend .uk-card-footer;
+  }
+
+  &__cta {
+    @extend .icon-button;
+    @extend .uk-button-primary;
+  }
+}

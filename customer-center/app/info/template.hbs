@@ -1,0 +1,74 @@
+<section class="section">
+  <div class="section__inner">
+
+    <h2 class="section__title">
+      {{t "page.info.title"}}
+    </h2>
+
+    <div class="uk-margin">
+      <p>{{t "page.info.salutation"}}</p>
+      <p>{{t "page.info.text" htmlSafe=true}}</p>
+      <p>{{t "page.info.textEnd"}}</p>
+    </div>
+
+    <LinkTo class="uk-button uk-button-primary" @route="login">
+      {{t "page.info.login"}}
+    </LinkTo>
+  </div>
+</section>
+
+<section class="section uk-section-primary">
+  <div class="section__inner">
+
+    <h2 class="section__title">
+      {{t "page.index.support.title"}}
+    </h2>
+
+    <ul class="support__list" uk-grid>
+      <li class="support__item">
+        <p class="support__callout">
+          {{t "page.index.support.callout"}}
+        </p>
+
+        <p class="support__opening-hours">
+          {{t "page.index.support.opening-hours"}}
+        </p>
+      </li>
+
+      <li class="support__item">
+        <a
+          href="mailto:{{@model.support.email}}"
+          title={{@model.support.email}}
+          uk-icon="icon: mail; ratio: 3"
+        ></a>
+      </li>
+
+      <li class="support__item">
+        <a
+          href="tel:{{@model.support.phone}}"
+          title={{@model.support.phone}}
+          uk-icon="icon: receiver; ratio: 3"
+        ></a>
+      </li>
+    </ul>
+
+    <hr />
+
+    {{#if @model.profiles.length}}
+      <ul class="profiles__list">
+        {{#each @model.profiles as |profile|}}
+          <li class="profiles__item">
+            <a
+              href={{profile.address}}
+              title={{profile.title}}
+              target="_blank"
+              rel="noopener noreferrer"
+              uk-icon={{profile.icon}}
+            ></a>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+
+  </div>
+</section>

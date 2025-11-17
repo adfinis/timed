@@ -1,0 +1,172 @@
+page:
+  application:
+    title: Customer Center
+    nav:
+      index: Dashboard
+      subscriptions: Projekte
+      subscriptions-confirm: Bestellungen bestätigen
+      account-logout: Logout
+      contact: Kontakt
+
+
+  error:
+    title: Error
+
+
+  index:
+    title: Dashboard
+
+    projects:
+      title: Projekte
+      empty: Dieser Account hat keine Projekte.
+
+    support:
+      title: Support
+      callout: |
+        Sie brauchen Support?
+        Kontaktieren Sie uns per Mail oder Telefonisch.
+      opening-hours: |
+        Wir sind von Montag bis Freitag zu Bürozeiten für Sie da.
+        (08:00 bis 17:30)
+
+    locations:
+      title: Standorte
+
+
+  notfound:
+    title: Seite nicht gefunden
+    message: Die Seite "/{path}" konnte nicht gefunden werden.
+
+
+  subscriptions:
+    title: Projekte
+
+
+    own:
+      title: Eigene Projekte
+      empty: Keine eigenen Projekte vorhanden.
+
+      projects:
+        time-purchased: Bestellte Zeit
+        time-spent: Gebuchtes Guthaben
+        time-remaining: Restguthaben
+        details: Details
+        reload: Aufladen
+
+
+    list:
+      title: Alle Projekte
+      empty: Keine Projekte entsprechen dem Filter.
+      filter: Zeit fast verbraucht
+      export:
+        label: Als CSV exportieren
+        hint: |
+          Exportiert die aktuelle Ansicht (Sortierung, Filterung)
+          als CSV um in Excel oder ähnliches zu importieren.
+
+      table:
+        project: Projekt
+        customer: Kunde
+        billing: Verrechnungsart
+        cost-center-name: Kostenstelle
+        cost-center-number: Kostenstelle Nr.
+        time-purchased: Bestellte Zeit
+        time-spent: Gebuchtes Guthaben
+        time-remaining: Restguthaben
+        time-unconfirmed: Ausstehende Zeit
+
+
+    confirm:
+      title: Bestellungen bestätigen
+      empty: Keine Bestellungen zu bestätigen.
+      accept: Akzeptieren
+      deny: Ablehnen
+      accepted: Die Bestellung für {project} von {customer} wurde angenommen.
+      denied: Die Bestellung für {project} von {customer} wurde abgelehnt.
+      no-access: Ihr Account ist nicht berechtigt Bestellungen zu bestätigen.
+
+      prompt:
+        accept: Akzeptieren von {duration} für {project} von {customer}.
+        deny: Ablehnen von {duration} für {project} von {customer}.
+
+      table:
+        customer: Kunde
+        project: Projekt
+        duration: Stunden
+        date: Datum
+
+
+    detail:
+      title: Projektdetails
+      reload: Aufladen
+      info: Um Stunden zu kaufen, melden Sie sich bitte über ihren zuständigen Verkäufer.
+
+      orders:
+        title: Bestellungen
+        empty: Keine Bestellungen verbucht.
+        loading: Laden...
+
+        table:
+          date: Datum
+          duration: Bestellte Zeit
+          acknowledged: Bestätigt
+
+      reports:
+        title: Aufwände
+        empty: Keine verbuchten Aufwände.
+        loading: Laden...
+
+        table:
+          date: Datum
+          duration: Aufwand
+          user: Mitarbeiter
+          comment: Beschreibung
+
+
+    reload:
+      title: Aufladen
+      no-access: Sie haben keine Berechtigung das Abo aufzuladen.
+
+      form:
+        hours: Stunden
+        minutes: Minuten
+        date: Datum
+        submit: Aufladen
+        success: Aufladen erfolgreich
+
+      packages:
+        title: Pakete
+        empty: Es sind keine Pakete vorhanden.
+        success: Bestellung erfolgreich
+        cta: Bestellen
+        confirm: Sie bestellen {hours} Stunden.
+
+  info:
+    title: Neues Kundenkonto
+    salutation: Sehr geehrte Kundin, sehr geehrter Kunde
+    text: |
+      Sie wurden via E-Mail über ein neues Login für das aktualisierte Kundenportal informiert.<br>
+      Bitte kontaktieren Sie unseren Support für Ihre neuen Zugangsdaten: support@adfinis.com
+    textEnd: Im Anschluss können Sie das Kundenportal wie gewohnt nutzen.
+    login: Login
+
+
+component:
+  nav-breadcrumbs:
+    home: Home
+  data-table:
+    search: "Suchen..."
+
+
+  project-info:
+    name: Projekt
+    customer: Kunde
+    billing: Verrechnungsart
+    time-remaining: Restguthaben
+    time-unconfirmed: Ausstehende Zeit
+
+
+helper:
+  format-duration:
+    hours: "{count, plural, =0 {} =1 {1 Stunde} other {# Stunden}}"
+    minutes: "{count, plural, =0 {} =1 {1 Minute} other {# Minuten}}"

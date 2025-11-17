@@ -1,0 +1,17 @@
+.page-subscriptions-detail {
+  .page-header__inner > div {
+    @extend .uk-flex;
+    @extend .uk-flex-between;
+    @extend .uk-flex-bottom;
+  }
+}
+
+.order-list {
+  &--acknowledged {
+    @extend .uk-text-success;
+  }
+
+  &--pending {
+    @extend .uk-text-warning;
+  }
+}

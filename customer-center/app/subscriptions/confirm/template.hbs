@@ -1,0 +1,69 @@
+<section class="page-header">
+  <div class="page-header__inner">
+
+    <NavBreadcrumbs @crumbs={{this.breadcrumbs}} />
+
+    <h1 class="page-header__title">
+      {{~t "page.subscriptions.confirm.title"~}}
+    </h1>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__inner">
+
+    {{#if this.orders.length}}
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>{{t "page.subscriptions.confirm.table.customer"}}</th>
+              <th>{{t "page.subscriptions.confirm.table.project"}}</th>
+              <th>{{t "page.subscriptions.confirm.table.duration"}}</th>
+              <th>{{t "page.subscriptions.confirm.table.date"}}</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {{#each this.orders as |order|}}
+              <tr>
+                <td>{{order.project.customer.name}}</td>
+                <td>
+                  <LinkTo @route="subscriptions.detail" @model={{order.project.id}}>
+                    {{order.project.name}}
+                  </LinkTo>
+                </td>
+                <td>{{format-duration order.duration}}</td>
+                <td>{{moment-format order.ordered "DD.MM.YYYY"}}</td>
+                <td>
+                  <button
+                    {{on "click" (fn this.accept order)}}
+                    type="button"
+                    class="button uk-button-small"
+                    uk-icon="check"
+                    title={{t "page.subscriptions.confirm.accept"}}
+                  >
+                  </button>
+
+                  <button
+                    {{on "click" (fn this.deny order)}}
+                    type="button"
+                    class="button uk-button-small"
+                    uk-icon="close"
+                    title={{t "page.subscriptions.confirm.deny"}}
+                  >
+                  </button>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    {{else}}
+      <p>{{t "page.subscriptions.confirm.empty"}}</p>
+    {{/if}}
+
+  </div>
+</section>

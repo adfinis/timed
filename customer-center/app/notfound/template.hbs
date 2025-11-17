@@ -1,0 +1,23 @@
+<section class="page-header">
+  <div class="page-header__inner">
+
+    <NavBreadcrumbs @crumbs={{array
+      (hash label=(t "page.notfound.title"))
+    }} />
+
+    <h1 class="page-header__title">
+      {{~t "page.notfound.title"~}}
+    </h1>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__inner">
+
+    <p>
+      {{~t "page.notfound.message" path=this.model.path~}}
+    </p>
+
+  </div>
+</section>

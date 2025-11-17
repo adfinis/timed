@@ -1,0 +1,105 @@
+<section class="page-header">
+  <div class="page-header__inner">
+
+    <NavBreadcrumbs />
+
+    <h1 class="page-header__title">
+      {{~t "page.subscriptions.list.title"~}}
+    </h1>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__inner">
+
+    <p class="form__field">
+      <Input
+        {{on "change" this.limitCritical}}
+        @type="checkbox"
+        class="form__input__checkbox"
+        id="form-filter"
+      />
+
+      <label class="form__label" for="form-filter">
+        {{~t "page.subscriptions.list.filter"~}}
+      </label>
+      <span class="subscription-export">
+        <button
+          {{on "click" this.export}}
+          class="subscription-export__button"
+          type="button"
+          title={{~t "page.subscriptions.list.export.hint"~}}
+        >
+          {{~t "page.subscriptions.list.export.label"~}}
+        </button>
+      </span>
+    </p>
+
+    <div class="data-table">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <DataTable::HeadingSearch @onSearch={{fn this.searchFor "customer.name"}}>
+                {{t "page.subscriptions.list.table.customer"}}
+              </DataTable::HeadingSearch>
+            </th>
+            <th>
+              <DataTable::HeadingSearch @onSearch={{fn this.searchFor "name"}}>
+                {{t "page.subscriptions.list.table.project"}}<br>
+              </DataTable::HeadingSearch>
+            </th>
+            <th>
+              <DataTable::HeadingSearch @onSearch={{fn this.searchFor "billingType.name"}}>
+                {{t "page.subscriptions.list.table.billing"}}
+              </DataTable::HeadingSearch>
+            </th>
+            <th>
+              <DataTable::HeadingSort @onSort={{fn this.sortDuration "purchasedTime"}}>
+                {{t "page.subscriptions.list.table.time-purchased"}}
+              </DataTable::HeadingSort>
+            </th>
+            <th>
+              <DataTable::HeadingSort @onSort={{fn this.sortDuration "spentTime"}}>
+                {{t "page.subscriptions.list.table.time-spent"}}
+              </DataTable::HeadingSort>
+            </th>
+            <th>
+              <DataTable::HeadingSort @onSort={{fn this.sortDuration "totalTime"}}>
+                {{t "page.subscriptions.list.table.time-remaining"}}
+              </DataTable::HeadingSort>
+            </th>
+            <th>
+              <DataTable::HeadingSort @onSort={{fn this.sortDuration "unconfirmedTime"}}>
+                {{t "page.subscriptions.list.table.time-unconfirmed"}}
+              </DataTable::HeadingSort>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{#each this.projects as |project|}}
+            <tr class={{if project.isTimeAlmostConsumed "uk-alert-danger"}}>
+              <td>{{project.customer.name}}</td>
+              <td>
+                <LinkTo @route="subscriptions.detail" @model={{project.id}}>
+                  {{project.name}}
+                </LinkTo>
+              </td>
+              <td>{{project.billingType.name}}</td>
+              <td>{{format-duration-short project.purchasedTime}}</td>
+              <td>{{format-duration-short project.spentTime}}</td>
+              <td>{{format-duration-short project.totalTime}}</td>
+              <td>{{format-duration-short project.unconfirmedTime}}</td>
+            </tr>
+          {{else}}
+            <tr>
+              <td colspan="7">{{t "page.subscriptions.list.empty"}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

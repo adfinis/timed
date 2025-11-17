@@ -1,0 +1,35 @@
+<div class="data-table__search" data-toggle-search="{{this.id}}">
+  {{yield}}
+
+  <button
+    class="data-table__search__open"
+    type="button"
+    uk-icon="search"
+    uk-toggle="
+      target: [data-toggle-search='{{this.id}}'];
+      animation: uk-animation-slide-left-small uk-animation-fast
+    "
+  ></button>
+</div>
+
+<div data-toggle-search={{this.id}} hidden>
+  <button
+    {{on "click" this.clear}}
+    class="data-table__search__close"
+    type="button"
+    uk-close
+    uk-toggle="
+      target: [data-toggle-search='{{this.id}}'];
+      animation: uk-animation-slide-right-small uk-animation-fast
+    "
+  ></button>
+
+  <Input
+    {{on "input" this.search}}
+    @value={{this.query}}
+    class="data-table__search__input"
+    @type="search"
+    placeholder={{t "component.data-table.search"}}
+    autofocus={{true}}
+  />
+</div>

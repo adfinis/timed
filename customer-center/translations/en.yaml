@@ -1,0 +1,172 @@
+page:
+  application:
+    title: Customer Center
+    nav:
+      index: Dashboard
+      subscriptions: Subscriptions
+      subscriptions-confirm: Confirm subscriptions
+      account-logout: Logout
+      contact: Contact
+
+
+  error:
+    title: Error
+
+
+  index:
+    title: Dashboard
+
+    projects:
+      title: Projects
+      empty: No projects associated with this account.
+
+    support:
+      title: Support
+      callout: |
+        Do you need support?<br>
+        Contact us by mail or by phone.
+      opening-hours: |
+        We are available from Monday through Friday<br>
+        from 08:00 to 17:30.
+
+    locations:
+      title: Locations
+
+
+  notfound:
+    title: Page not found
+    message: The page for "/{path}" could not be found.
+
+
+  subscriptions:
+    title: Subscriptions
+
+
+    own:
+      title: Own projects
+      empty: No own projects exist.
+
+      projects:
+        time-purchased: Timed ordered
+        time-spent: Time used
+        time-remaining: Time remaining
+        details: Details
+        reload: Recharge
+
+
+    list:
+      title: All projects
+      empty: No project match the filters.
+      filter: Only show projects where time is almost up.
+      export:
+        label: Export as CSV
+        hint: |
+          Exports the current view (sorting, filtering)
+          as CSV to be imported in Excel or similar.
+
+      table:
+        project: Project
+        customer: Customer
+        billing: Billing type
+        cost-center-name: Cost center
+        cost-center-number: Cost center no.
+        time-purchased: Timed ordered
+        time-spent: Time used
+        time-remaining: Time remaining
+        time-unconfirmed: Needs confirmation
+
+
+    confirm:
+      title: Confirm subscriptions
+      empty: No orders to confirm.
+      accept: Accept
+      deny: Deny
+      accepted: The order for project {project} of {customer} has been accepted.
+      denied: The order for project {project} of {customer} has been denied.
+      no-access: Your account is not permitted to confirm orders.
+
+      prompt:
+        accept: Accepting {duration} for {project} of {customer}.
+        deny: Rejecting {duration} for {project} of {customer}.
+
+      table:
+        customer: Customer
+        project: Project
+        duration: Hours
+        date: Date
+
+
+    detail:
+      title: Project details
+      reload: Recharge
+      info: To purchase hours, please contact us through your salesperson.
+
+      orders:
+        title: Past charges
+        empty: No orders for this project.
+        loading: Loading...
+
+        table:
+          date: Date
+          duration: Amount
+          acknowledged: Acknowledged
+
+      reports:
+        title: Expense
+        empty: No reports for this project.
+        loading: Loading...
+
+        table:
+          date: Date
+          duration: Effort
+          user: Employee
+          comment: Description
+
+
+    reload:
+      title: Recharge subscription
+      no-access: Your account is not permitted to place orders.
+
+      form:
+        hours: Hours
+        minutes: Minutes
+        date: Date
+        submit: Submit
+        success: Charge successful
+
+      packages:
+        title: Packages
+        empty: No packages available.
+        success: Charge successful
+        cta: Order
+        confirm: You are ordering {hours} hours.
+
+  info:
+    title: New Account
+    salutation: Dear Customer,
+    text: |
+      You have been informed via e-mail about a new login for the updated Customer Center.<br>
+      Please contact our support for your new login: support@adfinis.com
+    textEnd: Following that, you can use the Customer Center as usual.
+    login: Login
+
+
+component:
+  nav-breadcrumbs:
+    home: Home
+  data-table:
+    search: "Search..."
+
+
+  project-info:
+    name: Project
+    customer: Customer
+    billing: Billing type
+    time-remaining: Time remaining
+    time-unconfirmed: Needs confirmation
+
+
+helper:
+  format-duration:
+    hours: "{count, plural, =0 {} =1 {1 hour} other {# hours}}"
+    minutes: "{count, plural, =0 {} =1 {1 minute} other {# minutes}}"

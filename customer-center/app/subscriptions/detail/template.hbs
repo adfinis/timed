@@ -1,0 +1,57 @@
+<section class="page-header">
+  <div class="page-header__inner">
+
+    <NavBreadcrumbs @crumbs={{this.breadcrumbs}} />
+
+    <div class="uk-flex uk-flex-between uk-flex-bottom">
+      <h1 class="page-header__title">
+        {{~t "page.subscriptions.detail.title"~}}
+      </h1>
+
+      {{#if this.showReloadButton}}
+        <LinkTo
+          @route="subscriptions.reload"
+          @model={{this.project.id}}
+          class="page-header__action"
+          uk-icon="refresh"
+        >
+          {{t "page.subscriptions.detail.reload"}}
+        </LinkTo>
+      {{/if}}
+    </div>
+    {{#if this.showInfoBanner}}
+      <div uk-alert class="uk-flex uk-flex-bottom">
+        <span uk-icon="info" class="uk-margin-right"></span>
+          {{t "page.subscriptions.detail.info"}}
+      </div>
+    {{/if}}
+
+  </div>
+</section>
+
+<section class="
+  section
+  info-section
+  info-section--{{this.project.percentageGroup}}
+">
+  <div class="section__inner">
+
+    <ProjectInfo @project={{this.project}} />
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__inner">
+    <SubNav @children={{2}}>
+      <SubNav::Item @route="subscriptions.detail.index">
+        {{t "page.subscriptions.detail.reports.title"}}
+      </SubNav::Item>
+      <SubNav::Item @route="subscriptions.detail.orders">
+        {{t "page.subscriptions.detail.orders.title"}}
+      </SubNav::Item>
+    </SubNav>
+  </div>
+</section>
+
+{{outlet}}
