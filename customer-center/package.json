@@ -1,29 +1,14 @@
 {
   "name": "customer-center",
   "description": "Adfinis customer support portal with Timed integration.",
-  "repository": "https://github.com/adfinis/customer-center",
+  "repository": "https://github.com/adfinis/timed",
   "version": "0.0.0",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "private": true,
-  "author": {
-    "name": "Adfinis AG",
-    "email": "info@adfinis.com",
-    "url": "https://adfinis.com/"
-  },
-  "maintainers": [
-    "Jonas Cosandey <jonas.cosandey@adfinis.com>"
-  ],
+  "author": "Adfinis AG <info@adfinis.com>",
   "directories": {
     "doc": "doc",
     "test": "tests"
-  },
-  "release": {
-    "extends": "@adfinis/semantic-release-config"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   },
   "scripts": {
     "start": "ember serve",
@@ -32,8 +17,7 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "test": "ember test",
-    "build": "ember build --environment=production",
-    "prepare": "cd .. && husky install frontend/.husky"
+    "build": "ember build --environment=production"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
@@ -42,12 +26,9 @@
   },
   "devDependencies": {
     "@adfinis/eslint-config": "^2.0.0",
-    "@adfinis/semantic-release-config": "^4.0.0",
     "@babel/core": "7.21.4",
     "@babel/eslint-parser": "7.21.3",
     "@babel/plugin-proposal-decorators": "7.21.0",
-    "@commitlint/cli": "^15.0.0",
-    "@commitlint/config-conventional": "^15.0.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/render-modifiers": "^2.0.4",
     "@ember/test-helpers": "^2.8.1",
@@ -99,7 +80,6 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-qunit": "7.3.4",
     "file-saver": "^2.0.5",
-    "husky": "^8.0.3",
     "lint-staged": "^12.1.2",
     "loader.js": "^4.7.0",
     "moment": "^2.29.1",
@@ -114,5 +94,6 @@
   },
   "ember": {
     "edition": "octane"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
