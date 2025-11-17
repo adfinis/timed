@@ -1,0 +1,70 @@
+---
+name: Customer Center CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "customer-center/**"
+  pull_request:
+    paths:
+      - "customer-center/**"
+
+env:
+  NODE_VERSION: 18
+
+defaults:
+  run:
+    working-directory: ./customer-center
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build the prod image
+        run: |
+          docker build .
+
+  lint:
+    runs-on: [ubuntu-latest]
+    timeout-minutes: 5
+
+    strategy:
+      matrix:
+        target: [js, hbs]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+          cache-dependency-path: customer-center/yarn.lock
+
+      - name: Install dependencies
+        run: yarn install --no-frozen-lockfile
+
+      - name: Lint ${{ matrix.target }}
+        run: yarn lint:${{ matrix.target }}
+
+  test:
+    needs: [lint]
+    runs-on: [ubuntu-latest]
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+          cache-dependency-path: customer-center/yarn.lock
+
+      - name: Install dependencies
+        run: yarn install --no-frozen-lockfile
+
+      - name: Run tests
+        run: yarn test

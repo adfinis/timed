@@ -48,6 +48,8 @@ jobs:
             version-file: pyproject.toml
           - name: frontend
             version-file: package.json
+          - name: customer-center
+            version-file: package.json
 
     permissions:
       actions: none
@@ -66,7 +68,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v5
 
-      - name: Adjust Version
+      - name: Adjust Versions
         run: |
           sed 's/"0.0.0"/"${{ needs.semrel.outputs.version }}"/g' -i ./${{ matrix.config.name }}/${{ matrix.config.version-file }}
 
@@ -118,7 +120,7 @@ jobs:
           attest: true
 
   chart:
-    name: Release Helm Chart
+    name: Release Helm Charts
     runs-on: ubuntu-latest
     if: needs.semrel.outputs.version != ''
     needs:
@@ -143,7 +145,7 @@ jobs:
 
       - name: Adjust Version
         run: |
-          sed -r 's/"(0.0.0|latest)"/"${{ needs.semrel.outputs.version }}"/g' -i ./charts/timed/Chart.yaml
+          sed -r 's/"(0.0.0|latest)"/"${{ needs.semrel.outputs.version }}"/g' -i ./charts/*/Chart.yaml
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -157,11 +159,11 @@ jobs:
         with:
           version: v3.14.0
 
-      - name: Package Chart
+      - name: Package Charts
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm dependency build charts/timed
-          helm package --destination=dist charts/timed
+          helm dependency build charts/timed charts/customer-center
+          helm package --destination=dist charts/timed charts/customer-center
 
       - name: Push Chart
         run: helm push dist/*.tgz oci://ghcr.io/${{ github.repository }}/helm

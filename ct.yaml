@@ -3,4 +3,5 @@ chart-repos:
   - bitnami=https://charts.bitnami.com/bitnami
 charts:
   - charts/timed
+  - charts/customer-center
 

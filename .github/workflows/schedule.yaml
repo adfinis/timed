@@ -10,7 +10,7 @@ jobs:
   scan:
     strategy:
       matrix:
-        image: [backend, frontend]
+        image: [backend, customer-center, frontend]
 
     name: Scan ${{ matrix.image }} image
     runs-on: ubuntu-latest

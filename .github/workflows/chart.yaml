@@ -64,11 +64,18 @@ jobs:
           load: true
           tags: ghcr.io/${{ github.repository }}/frontend:latest
 
+      - name: Build customer-center image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./customer-center/
+          load: true
+          tags: ghcr.io/${{ github.repository }}/customer-center:latest
+
       - name: Create kind cluster
         uses: helm/kind-action@v1
 
       - name: Load dev images into k8s
-        run: kind load docker-image ghcr.io/${{ github.repository }}/backend ghcr.io/${{ github.repository }}/frontend --name chart-testing
+        run: kind load docker-image ghcr.io/${{ github.repository }}/backend ghcr.io/${{ github.repository }}/frontend ghcr.io/${{ github.repository }}/customer-center --name chart-testing
 
       - name: Load bitnami image into k8s
         run: |
