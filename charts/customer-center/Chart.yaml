@@ -1,9 +1,9 @@
 apiVersion: v2
 name: customer-center
-description: Chart for Customer-Center application
+description: Chart for Customer-Center frontend
 type: application
-version: 0.2.35
-appVersion: 3.3.5
+version: "0.0.0"
+appVersion: "latest"
 keywords:
   - customer-center
 home: https://github.com/adfinis/customer-center

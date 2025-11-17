@@ -6,5 +6,9 @@ metadata:
     {{- include "customerCenter.labels" . | nindent 4 }}
     app.kubernetes.io/component: frontend
 data:
+  AUTH_ADMIN_ROLE: {{ .Values.auth.groups.admin | quote }}
+  AUTH_EMPLOYEE_ROLE: {{ .Values.auth.groups.employee | quote }}
+  AUTH_CUSTOMER_ROLE: {{ .Values.auth.groups.customer | quote }}
   OIDC_CLIENT_HOST: {{ .Values.auth.oidcUrl | quote }}
-  OIDC_CLIENT: {{ .Values.auth.oidcClient | quote }}
+  OIDC_CLIENT_ID: {{ .Values.auth.oidcClientId | quote }}
+  TIMED_API_HOST: {{ .Values.timed.apiHost | quote }}
