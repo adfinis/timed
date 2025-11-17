@@ -99,8 +99,8 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0(@ember/string@4.0.1)(@ember/test-helpers@5.2.1(@babel/core@7.28.5)(@glint/template@1.4.0)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)))(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5))
       ember-can:
-        specifier: git+https://github.com/c0rydoras/ember-can#c95e863484a6c4c202e734553054597d7db9d5a1&path:/ember-can
-        version: https://codeload.github.com/c0rydoras/ember-can/tar.gz/c95e863484a6c4c202e734553054597d7db9d5a1#path:/ember-can(@babel/core@7.28.5)(@ember/string@4.0.1)(ember-resolver@13.1.0(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)))(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5))
+        specifier: git+https://github.com/adfinis/ember-can#c95e863484a6c4c202e734553054597d7db9d5a1&path:/ember-can
+        version: https://codeload.github.com/adfinis/ember-can/tar.gz/c95e863484a6c4c202e734553054597d7db9d5a1#path:/ember-can(@babel/core@7.28.5)(@ember/string@4.0.1)(ember-resolver@13.1.0(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)))(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5))
       ember-changeset:
         specifier: 4.1.2
         version: 4.1.2(@glint/template@1.4.0)(ember-data@5.3.13(@ember/string@4.0.1)(@ember/test-helpers@5.2.1(@babel/core@7.28.5)(@glint/template@1.4.0)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)))(@ember/test-waiters@4.1.1(@glint/template@1.4.0))(@glint/template@1.4.0)(ember-inflector@4.0.2)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5))(qunit@2.24.2))(webpack@5.102.1)
@@ -3307,8 +3307,8 @@ packages:
     resolution: {integrity: sha512-hSPcvIKarA8wad2/b6jDd/eU+OtKmi6uP+iYQbzi5TQpjsqV6b4QdRqrLk7ClSRRKBAtdTuutx+m+X+WlEd2lw==}
     engines: {node: 10.* || >= 12}
 
-  ember-can@https://codeload.github.com/c0rydoras/ember-can/tar.gz/c95e863484a6c4c202e734553054597d7db9d5a1#path:/ember-can:
-    resolution: {path: /ember-can, tarball: https://codeload.github.com/c0rydoras/ember-can/tar.gz/c95e863484a6c4c202e734553054597d7db9d5a1}
+  ember-can@https://codeload.github.com/adfinis/ember-can/tar.gz/c95e863484a6c4c202e734553054597d7db9d5a1#path:/ember-can:
+    resolution: {path: /ember-can, tarball: https://codeload.github.com/adfinis/ember-can/tar.gz/c95e863484a6c4c202e734553054597d7db9d5a1}
     version: 5.0.4
     peerDependencies:
       '@ember/string': ^3.1.1
@@ -11483,7 +11483,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-can@https://codeload.github.com/c0rydoras/ember-can/tar.gz/c95e863484a6c4c202e734553054597d7db9d5a1#path:/ember-can(@babel/core@7.28.5)(@ember/string@4.0.1)(ember-resolver@13.1.0(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)))(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)):
+  ember-can@https://codeload.github.com/adfinis/ember-can/tar.gz/c95e863484a6c4c202e734553054597d7db9d5a1#path:/ember-can(@babel/core@7.28.5)(@ember/string@4.0.1)(ember-resolver@13.1.0(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)))(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)):
     dependencies:
       '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.10.0

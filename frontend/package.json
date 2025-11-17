@@ -55,7 +55,7 @@
     "downloadjs": "1.4.7",
     "ember-auto-import": "~2.11.2",
     "ember-basic-dropdown": "^8.2.0",
-    "ember-can": "git+https://github.com/c0rydoras/ember-can#c95e863484a6c4c202e734553054597d7db9d5a1&path:/ember-can",
+    "ember-can": "git+https://github.com/adfinis/ember-can#c95e863484a6c4c202e734553054597d7db9d5a1&path:/ember-can",
     "ember-changeset": "4.1.2",
     "ember-changeset-validations": "4.1.1",
     "ember-cli": "~6.4.0",
