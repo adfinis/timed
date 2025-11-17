@@ -17,8 +17,12 @@ urlencode() {
 }
 
 sed -i \
-  -e "s/sso-client-id/$(urlencode ${OIDC_CLIENT})/g" \
-  -e "s/sso-client-host/$(urlencode ${OIDC_CLIENT_HOST})/g" \
+  -e "s/timed-api-host/$(urlencode "$TIMED_API_HOST")/g" \
+  -e "s/oidc-client-id/$(urlencode "$OIDC_CLIENT_ID")/g" \
+  -e "s/oidc-client-host/$(urlencode "$OIDC_CLIENT_HOST")/g" \
+  -e "s/auth-admin-role/$(urlencode "$AUTH_ADMIN_ROLE")/g" \
+  -e "s/auth-employee-role/$(urlencode "$AUTH_EMPLOYEE_ROLE")/g" \
+  -e "s/auth-customer-role/$(urlencode "$AUTH_CUSTOMER_ROLE")/g" \
   /usr/share/nginx/html/index.html
 
 exec "$@"

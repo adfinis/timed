@@ -2,10 +2,6 @@
 
 const { name } = require("../package");
 
-function env(key, fallback) {
-  return process.env[key] ?? fallback;
-}
-
 module.exports = function (environment) {
   const ENV = {
     environment,
@@ -15,9 +11,11 @@ module.exports = function (environment) {
     locationType: "auto",
 
     auth: {
-      adminRole: env("AUTH_ROLE_ADMIN", "/sg-cc-admin"),
-      employeeRole: env("AUTH_ROLE_EMPLOYEE", "/adfinis-users"),
-      customerRole: env("AUTH_ROLE_CUSTOMER", "/access-cc"),
+      roles: {
+        admin: "/cc-admin",
+        employee: "/employee",
+        customer: "/customer",
+      },
     },
 
     EmberENV: {
@@ -38,11 +36,10 @@ module.exports = function (environment) {
     },
 
     APP: {
-      hostStaging: env("TIMED_STAGING_HOST", "http://localhost:8000"),
-      hostProd: env("TIMED_PROD_HOST", "http://localhost:8000"),
+      API_HOST: "https://timed.localhost",
       // Define alertTime in hours.
       // When total time comes close to alertTime, text color changes.
-      alertTime: 5,
+      ALERT_TIME: 5,
     },
 
     "ember-simple-auth-oidc": {
@@ -86,9 +83,14 @@ module.exports = function (environment) {
   }
 
   if (environment === "production") {
-    // Whether Stage or Prod, the OIDC host and client will stay the same
-    ENV["ember-simple-auth-oidc"].host = "sso-client-host";
-    ENV["ember-simple-auth-oidc"].clientId = "sso-client-id";
+    ENV["ember-simple-auth-oidc"].host = "oidc-client-host";
+    ENV["ember-simple-auth-oidc"].clientId = "oidc-client-id";
+
+    ENV.auth.roles.admin = "auth-admin-role";
+    ENV.auth.roles.employee = "auth-employee-role";
+    ENV.auth.roles.customer = "auth-customer-role";
+
+    ENV.APP.API_HOST = "timed-api-host";
   }
 
   return ENV;

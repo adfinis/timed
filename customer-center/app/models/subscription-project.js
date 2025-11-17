@@ -28,7 +28,7 @@ export default class TimedSubscriptionProjectModel extends Model {
   }
 
   get isTimeAlmostConsumed() {
-    return this.totalTime.asHours() <= ENV.APP.alertTime;
+    return this.totalTime.asHours() <= ENV.APP.ALERT_TIME;
   }
 
   get percentage() {

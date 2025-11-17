@@ -10,7 +10,7 @@ export default class ApplicationController extends Controller {
   @service intl;
 
   get showConfirmInMenu() {
-    return this.account.isInGroup(ENV.auth.adminRole);
+    return this.account.isInGroup(ENV.auth.roles.admin);
   }
 
   get languages() {

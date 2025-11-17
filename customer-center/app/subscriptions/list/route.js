@@ -13,8 +13,8 @@ export default class SubscriptionsListRoute extends Route {
     // Customers/users don't have access to the full list.
     if (
       !this.account.isInGroups("one", [
-        ENV.auth.employeeRole,
-        ENV.auth.adminRole,
+        ENV.auth.roles.employee,
+        ENV.auth.roles.admin,
       ])
     ) {
       this.transitionTo("subscriptions.own");
