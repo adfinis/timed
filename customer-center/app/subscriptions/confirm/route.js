@@ -12,7 +12,7 @@ export default class SubscriptionsConfirmRoute extends Route {
   beforeModel(transition) {
     super.beforeModel(transition);
 
-    if (!this.account.isInGroup(ENV.auth.adminRole)) {
+    if (!this.account.isInGroup(ENV.auth.roles.admin)) {
       this.notify.error(this.intl.t("page.subscriptions.confirm.no-access"));
       this.transitionTo("subscriptions.index");
     }

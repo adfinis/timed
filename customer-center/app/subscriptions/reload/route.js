@@ -13,7 +13,7 @@ export default class SubscriptionsReloadRoute extends Route {
     super.beforeModel(transition);
 
     // Employees and customers cannot recharge the subscription.
-    if (!this.account.isInGroups("one", [ENV.auth.adminRole])) {
+    if (!this.account.isInGroups("one", [ENV.auth.roles.admin])) {
       this.notify.error(this.intl.t("page.subscriptions.reload.no-access"));
       this.transitionTo(
         "subscriptions.detail",

@@ -7628,7 +7628,7 @@ ember-inflector@^4.0.1:
   dependencies:
     ember-cli-babel "^7.26.5"
 
-ember-intl@aziiee/ember-intl#fix-computed-readonly:
+ember-intl@aziiee/ember-intl#3c97462b1d46041e70af9f075b0f8dd66b182c73:
   version "5.7.0"
   resolved "https://codeload.github.com/aziiee/ember-intl/tar.gz/3c97462b1d46041e70af9f075b0f8dd66b182c73"
   dependencies:

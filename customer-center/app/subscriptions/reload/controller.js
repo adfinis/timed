@@ -30,11 +30,11 @@ export default class SubscriptionsReloadController extends Controller {
   @tracked changeset;
 
   get showForm() {
-    return this.account.isInGroup(ENV.auth.adminRole);
+    return this.account.isInGroup(ENV.auth.roles.admin);
   }
 
   get showPackages() {
-    return this.account.isInGroup(ENV.auth.customerRole);
+    return this.account.isInGroup(ENV.auth.roles.customer);
   }
 
   get breadcrumbs() {

@@ -46,7 +46,7 @@ module("Unit | Model | timed subscription project", function (hooks) {
 
     const model_warn = store.createRecord("subscription-project", {
       name: "Project #1",
-      purchasedTime: moment.duration(ENV.APP.alertTime, "hours"),
+      purchasedTime: moment.duration(ENV.APP.ALERT_TIME, "hours"),
       spentTime: moment.duration(0, "hours"),
     });
 
@@ -54,7 +54,7 @@ module("Unit | Model | timed subscription project", function (hooks) {
 
     const model_ok = store.createRecord("subscription-project", {
       name: "Project #2",
-      purchasedTime: moment.duration(ENV.APP.alertTime + 1, "hours"),
+      purchasedTime: moment.duration(ENV.APP.ALERT_TIME + 1, "hours"),
       spentTime: moment.duration(0, "hours"),
     });
 

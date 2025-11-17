@@ -12,11 +12,11 @@ export default class SubscriptionsDetailController extends Controller {
   @tracked project;
 
   get showReloadButton() {
-    return this.account.isInGroups("one", [ENV.auth.adminRole]);
+    return this.account.isInGroups("one", [ENV.auth.roles.admin]);
   }
 
   get showInfoBanner() {
-    return this.account.isInGroups("one", [ENV.auth.customerRole]);
+    return this.account.isInGroups("one", [ENV.auth.roles.customer]);
   }
 
   get breadcrumbs() {

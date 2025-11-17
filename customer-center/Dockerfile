@@ -1,46 +1,27 @@
-FROM node:18-alpine AS builder
+FROM node:20-slim AS build
 
-ARG AUTH_ROLE_ADMIN
-ARG AUTH_ROLE_EMPLOYEE
-ARG AUTH_ROLE_CUSTOMER
-ARG TIMED_STAGING_HOST
-ARG TIMED_PROD_HOST
-# Install dependencies.
-RUN apk update && \
-  apk add --no-cache \
-  --virtual build-dependencies \
-  build-base \
-  gcc \
-  wget \
-  git
+RUN corepack enable && corepack prepare yarn@v1
 
-# Create unprivileged account.
-RUN adduser -D project
+WORKDIR /ember
 
-# Switch working directory.
-WORKDIR /tmp/project
+COPY package.json yarn.lock ./
 
-# Copy source code.
-COPY . ./
+RUN yarn install --frozen-lockfile
 
-# Install dependencies and build application.
-RUN yarn install && yarn build
+COPY . .
 
-FROM nginx:1.18-alpine AS server
+RUN yarn build --environment=production
 
-# Copy the built application to the new image.
-COPY --from=builder /tmp/project/dist /usr/share/nginx/html
-# Copy the NGINX configuration with proper location handling.
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM nginx:alpine
 
-
-WORKDIR /usr/share/nginx/html
-
-COPY ./docker-entrypoint.sh /
-ENV OIDC_CLIENT_HOST https://sso.example.com/auth/realms/example/protocol/openid-connect
-ENV OIDC_CLIENT cc
+RUN apk update --no-cache && \
+  apk upgrade --no-cache && \
+  apk add shadow --no-cache && \
+  rm -rf /var/cache/apk/*
 
 EXPOSE 80
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["nginx", "-g", "daemon off;"]
+COPY 99-configure.sh /docker-entrypoint.d/
+
+COPY --from=build /ember/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
