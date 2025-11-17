@@ -1,5 +1,5 @@
 /**
- * @description Modified version of https://github.com/knoxville-utilities-board/nrg-ui/blob/579fc700d173d7a2bc717fb7c7a7a9305d38d245/packages/ember-core/src/services/media.ts
+ * @description Modified version of https://github.com/knoxville-utilities-board/nrg-ui/blob/579fc700d173d7a2bc717fb7c7a7a9305d38d245/packages/ember-core/src/services/media.ts, which is a modified version of https://github.com/freshbooks/ember-responsive/blob/cae0ad271637954c2d207fa508928e1b001d6a11/addon/services/media.js (which is unmaintained, see https://github.com/freshbooks/ember-responsive/issues/795)
  */
 
 import { assert } from "@ember/debug";
