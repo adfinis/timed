@@ -75,7 +75,7 @@ ingress:
         - my.example.com
 auth:
   # -- Configure oidc client for customer-center frontend
-  oidcClient: cc
+  oidcClientId: cc
   # -- Configure oidc host url for customer-center frontend
   oidcUrl: https://example.com/auth/realms/timed/protocol/openid-connect
   # -- Configure auth groups for customer-center frontend
