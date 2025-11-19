@@ -167,4 +167,7 @@ jobs:
           helm package --destination=dist charts/timed charts/customer-center
 
       - name: Push Chart
-        run: helm push dist/*.tgz oci://ghcr.io/${{ github.repository }}/helm
+        run: |
+          for f in dist/*.tgz; do
+            echo helm push "$f" oci://ghcr.io/${{ github.repository }}/helm
+          done
