@@ -82,7 +82,7 @@
     "file-saver": "^2.0.5",
     "lint-staged": "^12.1.2",
     "loader.js": "^4.7.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "prettier": "2.8.8",
     "qunit": "2.20.0",
     "qunit-dom": "2.0.0",
