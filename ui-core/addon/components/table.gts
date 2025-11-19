@@ -15,7 +15,7 @@ export interface TdSignature {
 }
 
 export interface ThSignature {
-  Args: { light: boolean };
+  Args: { light?: boolean };
   Blocks: {
     default: [];
   };
@@ -24,9 +24,9 @@ export interface ThSignature {
 
 export interface TrSignature {
   Args: {
-    striped: boolean;
-    hover: boolean;
-    last: boolean;
+    striped?: boolean;
+    hover?: boolean;
+    last?: boolean;
   };
   Blocks: {
     default: [];
