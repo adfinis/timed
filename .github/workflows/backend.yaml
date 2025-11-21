@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Build the prod image
         working-directory: ./backend
         run: |
@@ -24,7 +24,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Lint the code
         run: |
           echo "UID=$UID" > .env
@@ -34,7 +34,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Set ENV vars
         run: echo "UID=$UID" > .env
       - name: Check for missing migrations
