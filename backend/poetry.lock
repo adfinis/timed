@@ -487,14 +487,14 @@ testing = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)", "setuptools (>=71.0.
 
 [[package]]
 name = "django-excel"
-version = "0.0.10"
+version = "0.0.13"
 description = "A django middleware that provides one application programminginterface to read and write data in different excel file formats"
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "django-excel-0.0.10.tar.gz", hash = "sha256:81cd3bce8007009c30205f7085a97f2908557014900775577cab0b9a770c2bad"},
-    {file = "django_excel-0.0.10-py2.py3-none-any.whl", hash = "sha256:f0297202fc460eb74657f8a9d4473921050fbe2e297765c174be9cf33d1195c7"},
+    {file = "django_excel-0.0.13-py2.py3-none-any.whl", hash = "sha256:6494129f7964c68df695fb39371f4219c3f51721c0eecbed66fedd55404b8a6f"},
+    {file = "django_excel-0.0.13.tar.gz", hash = "sha256:a90f48329d61982e0bdac34bac5da041fbd86444610602cd3479de760ad7d0ae"},
 ]
 
 [package.dependencies]
@@ -2090,4 +2090,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "3563383d8002ac10e5f52729b7ac73fa3da4a17eedbc820e33fc53d7be9c8207"
+content-hash = "625d4f2ca79f1adf1186b3ea455928ddc7df25a73ceea4cc47d13ebeef2112be"
