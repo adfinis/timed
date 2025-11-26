@@ -1,9 +1,11 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
+import EmberNotify from "ember-notify/components/ember-notify";
+import pageTitle from "ember-page-title/helpers/page-title";
 
 <template>
-  {{pageTitle "Dummy"}}
+  {{pageTitle "ui-core"}}
 
-  <h2 id="title">Welcome to Ember</h2>
-
-  {{outlet}}
+  <EmberNotify @messageStyle="bootstrap" />
+  <main class="p-2 grid">
+    {{outlet}}
+  </main>
 </template>
