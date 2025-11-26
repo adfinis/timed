@@ -1,0 +1,11 @@
+.striped {
+  @apply [&:nth-child(even)]:bg-secondary-light/5 [&:nth-child(odd)]:bg-secondary-light/15;
+}
+
+.total {
+  @apply border-b-4 border-double border-current font-medium;
+}
+
+.pointer-events-all {
+  pointer-events: all;
+}

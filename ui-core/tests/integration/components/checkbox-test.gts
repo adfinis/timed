@@ -1,9 +1,9 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "dummy/tests/helpers";
 import { render } from "@ember/test-helpers";
-import Table from "ui-core/components/table";
+import Checkbox from "ui-core/components/checkbox";
 
-module("Integration | Component | table", function (hooks) {
+module("Integration | Component | checkbox", function (hooks) {
   setupRenderingTest(hooks);
 
   test("it renders", async function (assert) {
@@ -12,16 +12,16 @@ module("Integration | Component | table", function (hooks) {
     // and update using state.myProperty = 1; await rerender();
     // Handle any actions with function myAction(val) { ... };
 
-    await render(<template><Table /></template>);
+    await render(<template><Checkbox /></template>);
 
     assert.dom().hasText("");
 
     // Template block usage:
     await render(
       <template>
-        <Table>
+        <Checkbox>
           template block text
-        </Table>
+        </Checkbox>
       </template>,
     );
 

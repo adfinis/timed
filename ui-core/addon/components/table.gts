@@ -1,4 +1,4 @@
-import type { TOC } from '@ember/component/template-only';
+import type { TOC } from "@ember/component/template-only";
 
 export interface TableSignature {
   Blocks: {
@@ -84,7 +84,7 @@ const Th = <template>
 </template> satisfies TOC<ThSignature>;
 
 const Table = <template>
-  <table class="w-full" ...attributes>
+  <table class="w-full table" ...attributes>
     {{yield}}
   </table>
 </template> satisfies TOC<TableSignature>;
