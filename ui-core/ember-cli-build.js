@@ -1,12 +1,25 @@
-'use strict';
+"use strict";
 
-const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const EmberAddon = require("ember-cli/lib/broccoli/ember-addon");
 
 module.exports = function (defaults) {
   const app = new EmberAddon(defaults, {
-    'ember-cli-babel': { enableTypeScriptTransform: true },
-
+    "ember-cli-babel": { enableTypeScriptTransform: true },
     // Add options here
+    postcssOptions: {
+      compile: {
+        plugins: [
+          {
+            module: require("postcss-import"),
+            options: {
+              path: ["node_modules"],
+            },
+          },
+          require("tailwindcss")("./tailwind.config.js"),
+          { module: require("autoprefixer"), options: {} },
+        ],
+      },
+    },
   });
 
   /*
@@ -16,11 +29,11 @@ module.exports = function (defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
-  const { maybeEmbroider } = require('@embroider/test-setup');
+  const { maybeEmbroider } = require("@embroider/test-setup");
   return maybeEmbroider(app, {
     skipBabel: [
       {
-        package: 'qunit',
+        package: "qunit",
       },
     ],
   });

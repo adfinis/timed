@@ -1,1 +1,1 @@
-export { default } from 'ui-core/components/table';
+export { default } from "ui-core/components/table";
