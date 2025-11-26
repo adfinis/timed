@@ -10,7 +10,7 @@ export interface CheckboxSignature {
     disabled?: boolean;
     title?: string;
     label?: string;
-    onChange?: (value: boolean) => void;
+    onChange: (value: boolean) => void; // value never changes to null when clicked
     checked: boolean | null;
   };
   // Any blocks yielded by the component
@@ -39,8 +39,6 @@ const Checkbox = <template>
         {{else}}
           {{#if @label}}
             {{@label}}
-          {{else}}
-            &nbsp;
           {{/if}}
         {{/if}}
       </label>
