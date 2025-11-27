@@ -38,9 +38,9 @@ export default class ButtonTemplate extends Component {
 
   <template>
     {{pageTitle "Button"}}
-    <h1>Button</h1>
+    <h2>Button</h2>
 
-    <div class="flex gap-2 place-self-center">
+    <div class="flex gap-2 place-self-start">
       {{#each BTNS as |btnClass|}}
         <button
           {{on "click" (fn this.alert btnClass)}}
