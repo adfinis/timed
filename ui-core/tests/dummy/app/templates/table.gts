@@ -20,7 +20,7 @@ export default class TableTemplate extends Component {
   <template>
     {{pageTitle "Table"}}
 
-    <h1>Table</h1>
+    <h2>Table</h2>
 
     <Table>
       <Thead>
