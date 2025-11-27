@@ -88,6 +88,8 @@
     "ember-cli-postcss": "^8.2.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
+    "ember-keyboard": "^9.0.4",
+    "ember-lifeline": "^7.0.0",
     "ember-load-initializers": "^3.0.1",
     "ember-notify": "adopted-ember-addons/ember-notify#cb3da3a416ffcb49850126782aef0392c898ae05",
     "ember-page-title": "^9.0.3",
