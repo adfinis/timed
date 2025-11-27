@@ -123,6 +123,12 @@ importers:
       ember-cli-terser:
         specifier: ^4.0.2
         version: 4.0.2
+      ember-keyboard:
+        specifier: ^9.0.4
+        version: 9.0.4(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+      ember-lifeline:
+        specifier: ^7.0.0
+        version: 7.0.0(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))
       ember-load-initializers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -2737,6 +2743,23 @@ packages:
       '@typescript-eslint/parser': '*'
     peerDependenciesMeta:
       '@typescript-eslint/parser':
+        optional: true
+
+  ember-keyboard@9.0.4:
+    resolution: {integrity: sha512-lReOVCwvPt8aTLynuyh1rVoZx9LITqcwdCiUltGMkoJNyuE8snuGMIEpEj3RtiPLWm0UCnTfod8bjEqOoEEFtA==}
+    peerDependencies:
+      '@ember/test-helpers': ^2.6.0 || ^3.0.0 || >= 4.0.0
+    peerDependenciesMeta:
+      '@ember/test-helpers':
+        optional: true
+
+  ember-lifeline@7.0.0:
+    resolution: {integrity: sha512-2l51NzgH5vjN972zgbs+32rnXnnEFKB7qsSpJF+lBI4V5TG6DMy4SfowC72ZEuAtS58OVfwITbOO+RnM21EdpA==}
+    engines: {node: 16.* || >= 18}
+    peerDependencies:
+      '@ember/test-helpers': '>= 1.0.0'
+    peerDependenciesMeta:
+      '@ember/test-helpers':
         optional: true
 
   ember-load-initializers@3.0.1:
@@ -9453,6 +9476,24 @@ snapshots:
       - eslint
       - typescript
 
+  ember-keyboard@9.0.4(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5)):
+    dependencies:
+      '@embroider/addon-shim': 1.10.2
+      ember-modifier: 4.1.0(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+    optionalDependencies:
+      '@ember/test-helpers': 5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3)
+    transitivePeerDependencies:
+      - ember-source
+      - supports-color
+
+  ember-lifeline@7.0.0(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3)):
+    dependencies:
+      '@embroider/addon-shim': 1.10.2
+    optionalDependencies:
+      '@ember/test-helpers': 5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3)
+    transitivePeerDependencies:
+      - supports-color
+
   ember-load-initializers@3.0.1(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5)):
     dependencies:
       ember-source: 6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
@@ -9466,7 +9507,6 @@ snapshots:
       ember-source: 6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
     transitivePeerDependencies:
       - supports-color
-    optional: true
 
   ember-notify@https://codeload.github.com/adopted-ember-addons/ember-notify/tar.gz/cb3da3a416ffcb49850126782aef0392c898ae05(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5)):
     dependencies:

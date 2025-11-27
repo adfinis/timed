@@ -8,42 +8,75 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
+import Component from "@glimmer/component";
+import type AppearanceService from "ui-core/services/appearance";
+import { service } from "@ember/service";
+import { keyResponder, onKey } from "ember-keyboard";
+import { runTask } from "ember-lifeline";
 
-<template>
-  {{pageTitle "ui-core"}}
+@keyResponder
+export default class Application extends Component {
+  @service declare appearance: AppearanceService;
 
-  <EmberNotify @messageStyle="bootstrap" />
-  <Topnav as |t|>
-    <t:header class="mr-2 grid place-self-center">
-      <LinkTo @route="index" class="grid">
-        <h1 class="text-4xl py-1 text-primary-dark">ui-core</h1>
-      </LinkTo>
-    </t:header>
-    <t.list />
+  @onKey("ctrl+,")
+  _toggleColorScheme(e: KeyboardEvent) {
+    e.preventDefault();
+    this.appearance.toggleColorScheme();
+  }
 
-    <t.list class="ml-auto" as |l|>
-      <l.item>
-        <t.link @route="index">
-          <FaIcon class="text-lg" @icon={{faClock}} />
-          Tracking
-        </t.link>
-      </l.item>
+  @onKey("ctrl+.")
+  _cycleTheme(e: KeyboardEvent) {
+    e.preventDefault();
+    this.appearance.cycleTheme();
+  }
 
-      <l.item>
-        <t.link @route="button">
-          <FaIcon class="text-lg" @icon={{faMagnifyingGlass}} />
-          Analysis
-        </t.link>
-      </l.item>
-      <l.item>
-        <t.link @route="table">
-          <FaIcon class="text-lg" @icon={{faChartBar}} />Statistics
-        </t.link>
-      </l.item>
-    </t.list>
-  </Topnav>
-  <div class="mt-16" />
-  <main class="p-2 grid">
-    {{outlet}}
-  </main>
-</template>
+  constructor(...args) {
+    super(...args);
+    runTask(
+      this,
+      () => {
+        this.appearance.loadConfiguration();
+      },
+      1,
+    );
+  }
+
+  <template>
+    {{pageTitle "ui-core"}}
+
+    <EmberNotify @messageStyle="bootstrap" />
+    <Topnav as |t|>
+      <t:header class="mr-2 grid place-self-center">
+        <LinkTo @route="index" class="grid">
+          <h1 class="text-4xl py-1 text-primary-dark">ui-core</h1>
+        </LinkTo>
+      </t:header>
+      <t.list />
+
+      <t.list class="ml-auto" as |l|>
+        <l.item>
+          <t.link @route="index">
+            <FaIcon class="text-lg" @icon={{faClock}} />
+            Tracking
+          </t.link>
+        </l.item>
+
+        <l.item>
+          <t.link @route="button">
+            <FaIcon class="text-lg" @icon={{faMagnifyingGlass}} />
+            Analysis
+          </t.link>
+        </l.item>
+        <l.item>
+          <t.link @route="table">
+            <FaIcon class="text-lg" @icon={{faChartBar}} />Statistics
+          </t.link>
+        </l.item>
+      </t.list>
+    </Topnav>
+    <div class="mt-14" />
+    <main class="p-2 grid">
+      {{outlet}}
+    </main>
+  </template>
+}
