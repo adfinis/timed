@@ -48,7 +48,7 @@ export default class Application extends Component {
     <Topnav as |t|>
       <t:header class="mr-2 grid place-self-center">
         <LinkTo @route="index" class="grid">
-          <h1 class="text-4xl py-1 text-primary-dark">ui-core</h1>
+          <h1 class="text-4xl py-1 text-primary-light">ui-core</h1>
         </LinkTo>
       </t:header>
       <t.list />
