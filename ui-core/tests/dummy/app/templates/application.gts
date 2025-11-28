@@ -46,33 +46,36 @@ export default class Application extends Component {
 
     <EmberNotify @messageStyle="bootstrap" />
     <Topnav as |t|>
-      <t:header class="mr-2 grid place-self-center">
+      <t.header class="mr-2 grid place-self-center">
         <LinkTo @route="index" class="grid">
           <h1 class="text-4xl py-1 text-primary-light">ui-core</h1>
         </LinkTo>
-      </t:header>
-      <t.list />
+      </t.header>
 
-      <t.list class="ml-auto" as |l|>
-        <l.item>
-          <t.link @route="index">
-            <FaIcon class="text-lg" @icon={{faClock}} />
-            Tracking
-          </t.link>
-        </l.item>
+      <t.nav>
+        <t.list />
 
-        <l.item>
-          <t.link @route="button">
-            <FaIcon class="text-lg" @icon={{faMagnifyingGlass}} />
-            Analysis
-          </t.link>
-        </l.item>
-        <l.item>
-          <t.link @route="table">
-            <FaIcon class="text-lg" @icon={{faChartBar}} />Statistics
-          </t.link>
-        </l.item>
-      </t.list>
+        <t.list class="ml-auto" as |l|>
+          <l.item>
+            <t.link @route="index">
+              <FaIcon class="text-lg" @icon={{faClock}} />
+              Tracking
+            </t.link>
+          </l.item>
+
+          <l.item>
+            <t.link @route="button">
+              <FaIcon class="text-lg" @icon={{faMagnifyingGlass}} />
+              Analysis
+            </t.link>
+          </l.item>
+          <l.item>
+            <t.link @route="table">
+              <FaIcon class="text-lg" @icon={{faChartBar}} />Statistics
+            </t.link>
+          </l.item>
+        </t.list>
+      </t.nav>
     </Topnav>
     <div class="mt-14" />
     <main class="p-2 grid">
