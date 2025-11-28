@@ -35,15 +35,23 @@ export interface TopnavListSignature {
   Element: HTMLUListElement;
 }
 
+export interface TopnavNavSignature {
+  Blocks: {
+    default: [];
+  };
+  Element: HTMLElement;
+}
+
 export interface TopnavSignature {
   Blocks: {
     default: [
       {
         list: ComponentLike<TopnavListSignature>;
         link: ComponentLike<TopnavLinkSignature>;
+        header: ComponentLike<TopnavHeaderSignature>;
+        nav: ComponentLike<TopnavNavSignature>;
       },
     ];
-    header: [ComponentLike<TopnavHeaderSignature>];
   };
 
   Element: null;
@@ -96,15 +104,20 @@ const TopnavList = <template>
   </ul>
 </template> satisfies TOC<TopnavListSignature>;
 
+const TopnavNav = <template>
+  <section class="flex max-h-full w-auto flex-grow flex-row" ...attributes>
+    {{yield}}
+  </section>
+</template> satisfies TOC<TopnavNavSignature>;
+
 const Topnav = <template>
   <div class="fixed left-0 top-0 z-40 w-full">
     <nav
       class="bg-background dark:bg-background-muted flex w-full flex-col px-2 py-1.5 shadow-md transition-all md:flex-row lg:px-3.5 lg:py-1 xl:px-4 xl:py-0.5"
     >
-      {{yield (component TopnavHeader) to="header"}}
-      <section class="flex max-h-full w-auto flex-grow flex-row">
-        {{yield (hash list=TopnavList link=TopnavLink)}}
-      </section>
+      {{yield
+        (hash list=TopnavList link=TopnavLink header=TopnavHeader nav=TopnavNav)
+      }}
     </nav>
   </div>
 </template> satisfies TOC<TopnavSignature>;
