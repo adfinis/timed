@@ -9,5 +9,6 @@ Router.map(function () {
   this.route("table");
   this.route("button");
   this.route("card");
+  this.route("modal");
   // Add route declarations here
 });
