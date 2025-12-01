@@ -1,11 +1,6 @@
 import type { TOC } from "@ember/component/template-only";
-
-export interface TableSignature {
-  Blocks: {
-    default: [];
-  };
-  Element: HTMLTableElement;
-}
+import { hash } from "@ember/helper";
+import type { ComponentLike, WithBoundArgs } from "@glint/template";
 
 export interface TdSignature {
   Blocks: {
@@ -42,6 +37,26 @@ export interface TfootSignature {
 }
 
 type TheadSignature = TfootSignature;
+
+export interface TableSignature {
+  Args: TrSignature["Args"];
+  Blocks: {
+    default: [
+      {
+        tr: WithBoundArgs<
+          ComponentLike<TrSignature>,
+          keyof TrSignature["Args"]
+        >;
+        trh: ComponentLike<TrSignature>;
+        th: ComponentLike<ThSignature>;
+        td: ComponentLike<ThSignature>;
+        tfoot: ComponentLike<TfootSignature>;
+        thead: ComponentLike<TheadSignature>;
+      },
+    ];
+  };
+  Element: HTMLTableElement;
+}
 
 const Tfoot = <template>
   <tfoot class="border-b-border/50 border-t-2" ...attributes>
@@ -85,7 +100,16 @@ const Th = <template>
 
 const Table = <template>
   <table class="w-full table" ...attributes>
-    {{yield}}
+    {{yield
+      (hash
+        td=Td
+        th=Th
+        thead=Thead
+        tfoot=Tfoot
+        trh=Tr
+        tr=(component Tr striped=@striped hover=@hover last=@last)
+      )
+    }}
   </table>
 </template> satisfies TOC<TableSignature>;
 
