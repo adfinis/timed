@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import Table, { Thead, Th, Td, Tr } from "ui-core/components/table";
+import Table from "ui-core/components/table";
 import pageTitle from "ember-page-title/helpers/page-title";
 import { tracked } from "@glimmer/tracking";
 import Checkbox from "ui-core/components/checkbox";
@@ -22,23 +22,24 @@ export default class TableTemplate extends Component {
 
     <h2>Table</h2>
 
-    <Table>
-      <Thead>
-        <Tr><Th @light={{this.light}}>one</Th><Th
+    <Table
+      @hover={{this.hover}}
+      @last={{this.last}}
+      @striped={{this.striped}}
+      as |t|
+    >
+      <t.thead>
+        <t.trh><t.th @light={{this.light}}>one</t.th><t.th
             @light={{this.light}}
-          >two</Th></Tr>
-      </Thead>
+          >two</t.th></t.trh>
+      </t.thead>
       <tbody>
         {{#each VALUES as |vals|}}
-          <Tr
-            @striped={{this.striped}}
-            @hover={{this.hover}}
-            @last={{this.last}}
-          >
+          <t.tr>
             {{#each vals as |v|}}
-              <Td>{{v}}</Td>
+              <t.td>{{v}}</t.td>
             {{/each}}
-          </Tr>
+          </t.tr>
         {{/each}}
       </tbody>
     </Table>
