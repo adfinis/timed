@@ -56,3 +56,4 @@ const Card = <template>
 </template> satisfies TOC<CardSignature>;
 
 export default Card;
+export { CardFooter, CardHeader, CardBlock };
