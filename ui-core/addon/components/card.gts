@@ -30,7 +30,7 @@ const CardBlock = <template>
 
 const CardFooter = <template>
   <div
-    class="bg-background-muted/60 border-border/50 border-t px-4 py-2 last:rounded-b"
+    class="bg-background dark:bg-background-muted border-border border-t px-4 py-2 last:rounded-b shadow-sm shadow-border/10"
     ...attributes
   >
     {{yield}}
@@ -39,7 +39,7 @@ const CardFooter = <template>
 
 const CardHeader = <template>
   <div
-    class="bg-background-muted/60 border-border/50 border-b px-4 py-2 first:rounded-t"
+    class="bg-background dark:bg-background-muted border-border border-b px-4 py-2 first:rounded-t shadow-sm shadow-border/10"
     ...attributes
   >
     {{yield}}
@@ -47,7 +47,10 @@ const CardHeader = <template>
 </template> satisfies TOC<CardSegmentSignature>;
 
 const Card = <template>
-  <div class="card bg-background rounded border-border/50 border" ...attributes>
+  <div
+    class="card bg-background rounded border-border border shadow-sm"
+    ...attributes
+  >
     {{yield (hash header=CardHeader block=CardBlock footer=CardFooter)}}
   </div>
 </template> satisfies TOC<CardSignature>;
