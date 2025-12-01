@@ -30,7 +30,7 @@ export default class Application extends Component {
     this.appearance.cycleTheme();
   }
 
-  constructor(...args) {
+  constructor(...args: ConstructorParameters<typeof Component>) {
     super(...args);
     runTask(
       this,
@@ -45,6 +45,7 @@ export default class Application extends Component {
     {{pageTitle "ui-core"}}
 
     <EmberNotify @messageStyle="bootstrap" />
+    <div id="modals" class="[&>*]:overflow-x-hidden" />
     <Topnav as |t|>
       <t.header class="mr-2 grid place-self-center">
         <LinkTo @route="index" class="grid">
