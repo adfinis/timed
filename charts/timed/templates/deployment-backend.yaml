@@ -17,6 +17,9 @@ spec:
       labels:
         {{- include "timed.labels" . | nindent 8 }}
         app.kubernetes.io/component: backend
+      annotations:
+        checksum/config-backend: {{ include (print $.Template.BasePath "/configmap-backend.yaml") . | sha256sum }}
+        checksum/config-workreport: {{ include (print $.Template.BasePath "/configmap-workreport.yaml") . | sha256sum }}
     spec:
       containers:
         - name: {{ .Chart.Name }}-backend
