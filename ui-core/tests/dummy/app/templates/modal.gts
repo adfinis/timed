@@ -7,6 +7,7 @@ import Modal from "ui-core/components/modal";
 import { action } from "@ember/object";
 import NotifyService from "ember-notify";
 import { service } from "@ember/service";
+import PageHeading from "../components/page-heading";
 
 export default class ModalTemplate extends Component {
   @service declare notify: NotifyService;
@@ -22,7 +23,7 @@ export default class ModalTemplate extends Component {
   <template>
     {{pageTitle "Modal"}}
 
-    <h2>Modal</h2>
+    <PageHeading>Modal</PageHeading>
     <div>
       <button
         class="btn btn-primary"

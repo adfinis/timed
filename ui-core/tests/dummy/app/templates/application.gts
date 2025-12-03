@@ -78,7 +78,7 @@ export default class Application extends Component {
         </t.list>
       </t.nav>
     </Topnav>
-    <div class="mt-14" />
+    <div class="mt-16" />
     <main class="p-2 grid">
       {{outlet}}
     </main>
