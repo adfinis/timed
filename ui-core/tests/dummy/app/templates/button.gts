@@ -5,6 +5,7 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import NotifyService from "ember-notify";
 import pageTitle from "ember-page-title/helpers/page-title";
+import PageHeading from "../components/page-heading";
 
 // TODO: clean this mess up
 const BTNS = [
@@ -38,7 +39,7 @@ export default class ButtonTemplate extends Component {
 
   <template>
     {{pageTitle "Button"}}
-    <h2>Button</h2>
+    <PageHeading>Button</PageHeading>
 
     <div class="flex gap-2 place-self-start">
       {{#each BTNS as |btnClass|}}
