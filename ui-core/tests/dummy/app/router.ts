@@ -10,5 +10,8 @@ Router.map(function () {
   this.route("button");
   this.route("card");
   this.route("modal");
+  this.route("nav-tabs", function () {
+    this.route("other");
+  });
   // Add route declarations here
 });

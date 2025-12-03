@@ -4,6 +4,7 @@ import pageTitle from "ember-page-title/helpers/page-title";
 import { tracked } from "@glimmer/tracking";
 import Checkbox from "ui-core/components/checkbox";
 import { fn } from "@ember/helper";
+import PageHeading from "../components/page-heading";
 
 const VALUES = [
   ["foo", "bar"],
@@ -20,7 +21,7 @@ export default class TableTemplate extends Component {
   <template>
     {{pageTitle "Table"}}
 
-    <h2>Table</h2>
+    <PageHeading>Table</PageHeading>
 
     <Table
       @hover={{this.hover}}
