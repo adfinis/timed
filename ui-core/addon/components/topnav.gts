@@ -57,32 +57,20 @@ export interface TopnavSignature {
   Element: null;
 }
 
-const linkClass =
-  "gap-1 grid grid-cols-[auto,minmax(0,1fr)] h-full hover:[&:not(.active)]:bg-primary-light hover:text-foreground-primary items-center lg:gap-1.5 md:place-items-center md:self-center [&:not(.active,:hover)]:text-tertiary py-2 px-2.5 transition-[font-size] w-full text-xl rounded";
-const linkActiveClass =
-  "active text-foreground-primary visited:text-foreground-primary bg-primary-dark hover:bg-primary";
-
 const TopnavLink = <template>
-  {{#if @model}}
-    <LinkTo
+  {{#let
+    (if @model (component LinkTo model=@model) (component LinkTo))
+    as |LinkComponent|
+  }}
+    <LinkComponent
       @route={{@route}}
-      @model={{@route}}
-      class={{linkClass}}
-      @activeClass={{linkActiveClass}}
+      class="gap-1 grid grid-cols-[auto,minmax(0,1fr)] h-full hover:[&:not(.active)]:bg-primary-light hover:text-foreground-primary items-center lg:gap-1.5 md:place-items-center md:self-center [&:not(.active,:hover)]:text-tertiary py-2 px-2.5 transition-[font-size] w-full text-xl rounded"
+      @activeClass="active text-foreground-primary visited:text-foreground-primary bg-primary-dark hover:bg-primary"
       ...attributes
     >
       {{yield}}
-    </LinkTo>
-  {{else}}
-    <LinkTo
-      @route={{@route}}
-      class={{linkClass}}
-      @activeClass={{linkActiveClass}}
-      ...attributes
-    >
-      {{yield}}
-    </LinkTo>
-  {{/if}}
+    </LinkComponent>
+  {{/let}}
 </template> satisfies TOC<TopnavLinkSignature>;
 
 const TopnavHeader = <template>
