@@ -1,9 +1,10 @@
 import Card from "ui-core/components/card";
+import PageHeading from "../components/page-heading";
 
 const thing = Array(3).fill(0);
 
 <template>
-  <h2>Card</h2>
+  <PageHeading>Card</PageHeading>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 grid-rows-min">
     {{#each thing}}
       <Card as |c|>
