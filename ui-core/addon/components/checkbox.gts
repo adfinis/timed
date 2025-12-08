@@ -5,7 +5,6 @@ import { eq } from "ember-truth-helpers";
 import { pick, optional } from "@nullvoxpopuli/ember-composable-helpers";
 
 export interface CheckboxSignature {
-  // The arguments accepted by the component
   Args: {
     disabled?: boolean;
     title?: string;
@@ -13,11 +12,9 @@ export interface CheckboxSignature {
     onChange: (value: boolean) => void; // value never changes to null when clicked
     checked: boolean | null;
   };
-  // Any blocks yielded by the component
   Blocks: {
     default: [];
   };
-  // The element to which `...attributes` is applied in the component template
   Element: HTMLElement;
 }
 
@@ -26,7 +23,6 @@ const Checkbox = <template>
     <div ...attributes>
       <input
         type="checkbox"
-        class="rounded"
         id={{id}}
         checked={{@checked}}
         disabled={{@disabled}}

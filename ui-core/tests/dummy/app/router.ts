@@ -10,6 +10,7 @@ Router.map(function () {
   this.route("button");
   this.route("card");
   this.route("modal");
+  this.route("form");
   this.route("nav-tabs", function () {
     this.route("other");
   });

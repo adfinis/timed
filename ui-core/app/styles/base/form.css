@@ -50,3 +50,7 @@ select,
 [type="checkbox"] {
   @apply text-primary;
 }
+
+[type="checkbox"]:indeterminate {
+  @apply text-primary-light/60;
+}
