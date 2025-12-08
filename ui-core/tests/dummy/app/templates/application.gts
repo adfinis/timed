@@ -48,8 +48,12 @@ export default class Application extends Component {
     <div id="modals" class="[&>*]:overflow-x-hidden" />
     <Topnav as |t|>
       <t.header class="mr-2 grid place-self-center">
-        <LinkTo @route="index" class="grid">
-          <h1 class="text-4xl py-1 text-primary-light">ui-core</h1>
+        <LinkTo
+          @route="index"
+          class="text-3xl flex text-center items-center gap-2"
+        >
+          <img src="/logo.png" class="h-[1em]" />
+          <h1 class="text-primary-light">ui-core</h1>
         </LinkTo>
       </t.header>
 
