@@ -52,7 +52,7 @@ export default class Application extends Component {
           @route="index"
           class="text-3xl flex text-center items-center gap-2"
         >
-          <img src="/logo.png" class="h-[1em]" />
+          <img alt="adfinis" src="/logo.png" class="h-[1em]" />
           <h1 class="text-primary-light">ui-core</h1>
         </LinkTo>
       </t.header>
