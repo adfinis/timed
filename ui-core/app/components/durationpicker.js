@@ -1,1 +1,1 @@
-export { default } from 'ui-core/components/durationpicker';
+export { default } from "ui-core/components/durationpicker";

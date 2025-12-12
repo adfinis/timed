@@ -1,1 +1,1 @@
-export { default } from 'ui-core/components/task-selection';
+export { default } from "ui-core/components/task-selection";
