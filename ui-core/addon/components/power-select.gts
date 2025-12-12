@@ -6,7 +6,7 @@ import OriginalPowerSelect, {
 
 type Base = Nullable<unknown[]>;
 type Option<T extends Base> = NonNullable<T>[number];
-type NullableOption<T extends Base> = Nullable<Option<T>>
+type NullableOption<T extends Base> = Nullable<Option<T>>;
 
 type Wrap<F, T> = F extends (first: unknown, ...args: infer Rest) => infer R
   ? (first: T, ...args: Rest) => R
@@ -30,8 +30,6 @@ type PowerSelectSignature<T extends Base> = {
   };
 };
 
-type PowerSelect = new <T extends Base>() => Component<
-  PowerSelectSignature<T>
->;
+type PowerSelect = new <T extends Base>() => Component<PowerSelectSignature<T>>;
 
 export default OriginalPowerSelect as unknown as PowerSelect;

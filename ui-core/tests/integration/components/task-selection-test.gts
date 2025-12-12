@@ -16,10 +16,7 @@ module("Integration | Component | task-selection", function (hooks) {
   test("initial values work", async function (assert) {
     await render(
       <template>
-        <TaskSelection
-          @customer={{get CUSTOMERS 0}}
-          @onChange={{nop}}
-        />
+        <TaskSelection @customer={{get CUSTOMERS 0}} @onChange={{nop}} />
       </template>,
     );
 
@@ -27,25 +24,17 @@ module("Integration | Component | task-selection", function (hooks) {
 
     await render(
       <template>
-        <TaskSelection
-          @project={{get PROJECTS 0}}
-          @onChange={{nop}}
-        />
+        <TaskSelection @project={{get PROJECTS 0}} @onChange={{nop}} />
       </template>,
     );
-
 
     assert.dom("[data-test-project]").hasText(PROJECTS[0]!.name);
 
     await render(
       <template>
-        <TaskSelection
-          @task={{get TASKS 0}}
-          @onChange={{nop}}
-        />
+        <TaskSelection @task={{get TASKS 0}} @onChange={{nop}} />
       </template>,
     );
-
 
     assert.dom("[data-test-task]").hasText(TASKS[0]!.name);
   });

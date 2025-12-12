@@ -1,1 +1,1 @@
-export { default } from 'ui-core/utils/report-duration';
+export { default } from "ui-core/utils/report-duration";
