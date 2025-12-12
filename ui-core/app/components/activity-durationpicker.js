@@ -1,1 +1,1 @@
-export { ActivityDurationpicker as default } from 'ui-core/components/durationpicker';
+export { ActivityDurationpicker as default } from "ui-core/components/durationpicker";

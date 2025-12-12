@@ -1,1 +1,1 @@
-export { ReportDurationpicker as default } from 'ui-core/components/durationpicker';
+export { ReportDurationpicker as default } from "ui-core/components/durationpicker";
