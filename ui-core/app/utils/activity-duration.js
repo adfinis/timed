@@ -1,1 +1,1 @@
-export { default } from "ui-core/utils/activity-duration";
+export * from "ui-core/utils/activity-duration";
