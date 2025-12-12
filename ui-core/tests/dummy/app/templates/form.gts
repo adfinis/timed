@@ -10,6 +10,8 @@ import { tracked } from "@glimmer/tracking";
 import { fn } from "@ember/helper";
 import { Duration } from "luxon";
 import { hash } from "@ember/helper";
+import TaskSelection, { PROJECTS } from "ui-core/components/task-selection";
+import { get } from "@ember/helper";
 
 export default class FormTemplate extends Component {
   @tracked a = false;
@@ -29,9 +31,14 @@ export default class FormTemplate extends Component {
     seconds: 13,
   });
 
+  logChange = (...args: unknown[]) => console.log(...args);
+
   <template>
     <PageHeading>Form</PageHeading>
     <form class="grid gap-1">
+      <TaskSelection @showTasksAsRecent={{true}} @onChange={{this.logChange}} />
+      <TaskSelection @onChange={{this.logChange}} @project={{get PROJECTS 0}} />
+
       <ReportDurationpicker
         @value={{this.duration}}
         @onChange={{fn (mut this.duration)}}
