@@ -2,29 +2,34 @@ import { module, test } from "qunit";
 import { setupRenderingTest } from "dummy/tests/helpers";
 import { render } from "@ember/test-helpers";
 import Durationpicker from "ui-core/components/durationpicker";
+import { Duration } from "luxon";
+import { fn } from "@ember/helper";
+import { tracked } from "@glimmer/tracking";
 
 module("Integration | Component | durationpicker", function (hooks) {
   setupRenderingTest(hooks);
 
   test("it renders", async function (assert) {
-    // Updating values is achieved using autotracking, just like in app code. For example:
-    // class State { @tracked myProperty = 0; }; const state = new State();
-    // and update using state.myProperty = 1; await rerender();
-    // Handle any actions with function myAction(val) { ... };
+    const min = Duration.fromMillis(0);
+    const max = Duration.fromObject({ days: 10 });
 
-    await render(<template><Durationpicker /></template>);
+    class State {
+      @tracked duration = Duration.fromObject({ hours: 2, minutes: 20 });
+    }
 
-    assert.dom().hasText("");
+    const state = new State();
 
-    // Template block usage:
     await render(
       <template>
-        <Durationpicker>
-          template block text
-        </Durationpicker>
+        <Durationpicker
+          @min={{min}}
+          @max={{max}}
+          @value={{state.duration}}
+          @onChange={{fn (mut state.duration)}}
+        />
       </template>,
     );
 
-    assert.dom().hasText("template block text");
+    assert.dom("input").hasValue("02:20");
   });
 });
