@@ -22,7 +22,7 @@ jobs:
 
     strategy:
       matrix:
-        target: [js, hbs, css, types]
+        target: [js, hbs, format, types]
 
     steps:
       - uses: actions/checkout@v6
