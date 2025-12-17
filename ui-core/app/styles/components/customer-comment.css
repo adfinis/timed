@@ -1,8 +1,0 @@
-/* add eye icon into input */
-input.customer-comment {
-  background-image: url("/assets/eye-regular.svg") !important;
-  background-position: right 0.5rem center;
-  print-color-adjust: exact;
-  background-size: 1.5em;
-  @apply bg-no-repeat pr-9;
-}
