@@ -1,3 +1,4 @@
 .env
 *.override.*
 *.local
+node_modules

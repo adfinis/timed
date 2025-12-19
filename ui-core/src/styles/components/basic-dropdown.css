@@ -1,0 +1,3 @@
+.ember-basic-dropdown-content {
+  @apply border-border bg-background absolute z-30 w-auto rounded border p-2;
+}
