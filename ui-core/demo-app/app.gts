@@ -1,11 +1,16 @@
 import EmberApp from 'ember-strict-application-resolver';
 import EmberRouter from '@ember/routing/router';
 import PageTitleService from 'ember-page-title/services/page-title';
+import uiCoreRegistry from '#src/registry.ts';
+import { setConfig } from 'ember-basic-dropdown/config';
+import '#src/styles/app.css';
 
 class Router extends EmberRouter {
   location = 'history';
   rootURL = '/';
 }
+
+setConfig({ rootElement: '#things', destination: '#things-2' });
 
 export class App extends EmberApp {
   /**
@@ -32,6 +37,7 @@ export class App extends EmberApp {
      * See: https://rfcs.emberjs.com/id/1132-default-strict-resolver
      */
     ...import.meta.glob('./templates/**/*', { eager: true }),
+    ...uiCoreRegistry(),
   };
 }
 

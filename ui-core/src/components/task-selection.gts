@@ -1,6 +1,6 @@
 import type { TOC } from '@ember/component/template-only';
 import Component from '@glimmer/component';
-import PowerSelect from './power-select.gts';
+import PowerSelect from 'ember-power-select/components/power-select';
 import { tracked, cached } from '@glimmer/tracking';
 
 type Task = {
