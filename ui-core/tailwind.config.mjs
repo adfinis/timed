@@ -8,12 +8,12 @@ const colorMixOpacity = (color) =>
 const borderColor = colorMixOpacity('var(--border)');
 
 export const content = [
+  'src/styles/*.css',
+  'src/styles/*/*.css',
   'src/components/*.{html,js,ts,hbs,gjs,gts,css}',
-  'src/styles/*.css',
-  'src/styles/*.css',
-  'tests/app/*.{html,js,ts,hbs,gjs,gts,css}',
-  'tests/app/components/*.{html,js,ts,hbs,gjs,gts,css}',
-  'tests/app/templates/*.{html,js,ts,hbs,gjs,gts,css}',
+  'src/components/*/*.{html,js,ts,hbs,gjs,gts,css}',
+  'demo-app/templates/*.{html,js,ts,hbs,gjs,gts,css}',
+  'demo-app/components/*.{html,js,ts,hbs,gjs,gts,css}',
 ];
 export const darkMode = 'class';
 export const theme = {
