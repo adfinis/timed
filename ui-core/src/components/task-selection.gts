@@ -45,7 +45,7 @@ export interface TaskSelectionSignature {
   Element: null;
 }
 
-const N_CUSTOMERS = 200;
+const N_CUSTOMERS = 2000;
 const N_PROJECTS_PER_CUSTOMER = 50;
 const N_TASKS_PER_PROJECT = 20;
 
@@ -251,7 +251,7 @@ export default class TaskSelection extends Component<TaskSelectionSignature> {
         @labelText="Task"
         as |task|
       >
-        <div data-test-task>{{task.customerId}}</div>
+        <div data-test-task>{{task.name}}</div>
       </Select>
     {{/let}}
   </template>

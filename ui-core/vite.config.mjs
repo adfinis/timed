@@ -1,23 +1,26 @@
-import { defineConfig } from 'vite';
-import { extensions, ember, classicEmberSupport } from '@embroider/vite';
-import { babel } from '@rollup/plugin-babel';
+import { defineConfig } from "vite";
+import { extensions, ember, classicEmberSupport } from "@embroider/vite";
+import { babel } from "@rollup/plugin-babel";
 
 // For scenario testing
 const isCompat = Boolean(process.env.ENABLE_COMPAT_BUILD);
 
 export default defineConfig({
+  resolve: {
+    alias: [{ find: "ember-notify", replacement: "ember-notify/addon" }],
+  },
   plugins: [
     ...(isCompat ? [classicEmberSupport()] : []),
     ember(),
     babel({
-      babelHelpers: 'inline',
+      babelHelpers: "inline",
       extensions,
     }),
   ],
   build: {
     rollupOptions: {
       input: {
-        tests: 'tests/index.html',
+        tests: "tests/index.html",
       },
     },
   },
