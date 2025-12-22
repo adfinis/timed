@@ -1048,14 +1048,14 @@ traitlets = "*"
 
 [[package]]
 name = "mozilla-django-oidc"
-version = "5.0.1"
+version = "5.0.2"
 description = "A lightweight authentication and access management library for integration with OpenID Connect enabled authentication services."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "mozilla_django_oidc-5.0.1-py3-none-any.whl", hash = "sha256:4e0499d05be9895b658ba8d95c421cbee64819a3b707fb1beff18834b1b55017"},
-    {file = "mozilla_django_oidc-5.0.1.tar.gz", hash = "sha256:ed9eaba7b0023e984f4859f01504e5006fad6ff132c9741a01318cc045bf2c7f"},
+    {file = "mozilla_django_oidc-5.0.2-py3-none-any.whl", hash = "sha256:965a3533b0e299288cdf38ec2f8b550217c302ffe78ce5bd0b2d2f4bc436878b"},
+    {file = "mozilla_django_oidc-5.0.2.tar.gz", hash = "sha256:4e953dcd963c036daaa2ac42b5bb6ea89a1c6ea7be0387c2022a59aca2f83043"},
 ]
 
 [package.dependencies]
@@ -1067,7 +1067,7 @@ requests = "*"
 [package.extras]
 build = ["build"]
 dev = ["mozilla-django-oidc[build,docs,drf,lint,test]"]
-docs = ["readthedocs-sphinx-search", "sphinx", "sphinx_rtd_theme"]
+docs = ["sphinx", "sphinx_rtd_theme"]
 drf = ["djangorestframework (>=3.14)"]
 lint = ["flake8"]
 test = ["bumpversion", "coverage", "djangorestframework (>=3.14)", "importlib-metadata ; python_version < \"3.10\"", "ipdb", "ipython", "pre-commit", "responses", "splinter[selenium] (>=0.21.0)", "tox"]
@@ -2094,4 +2094,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "8665d4d53435e0e04e50f153f46989368ab8b670b45008b987190e4964a8a7fa"
+content-hash = "f247b9645a91c98f087c21c560514a07d4abce393d46644e35787aef88c9a1d8"
