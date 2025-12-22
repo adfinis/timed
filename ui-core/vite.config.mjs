@@ -9,6 +9,7 @@ export default defineConfig({
   resolve: {
     alias: [{ find: "ember-notify", replacement: "ember-notify/addon" }],
   },
+  publicDir: "./demo-app/public",
   plugins: [
     ...(isCompat ? [classicEmberSupport()] : []),
     ember(),
