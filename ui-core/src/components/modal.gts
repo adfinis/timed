@@ -1,11 +1,12 @@
-import type { TOC } from '@ember/component/template-only';
-import Component from '@glimmer/component';
-import type { ComponentLike, WithBoundArgs } from '@glint/template';
-import Card, { CardBlock, CardFooter, CardHeader } from './card.gts';
-import { on } from '@ember/modifier';
-import { hash } from '@ember/helper';
-import { action } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
+import type { TOC } from "@ember/component/template-only";
+import Component from "@glimmer/component";
+import type { ComponentLike, WithBoundArgs } from "@glint/template";
+import Card, { CardBlock, CardFooter, CardHeader } from "./card.gts";
+import { on } from "@ember/modifier";
+import { hash } from "@ember/helper";
+import { action } from "@ember/object";
+import { guidFor } from "@ember/object/internals";
+import { focusTrap } from "ember-focus-trap";
 
 export interface ModalHeaderSignature {
   Args: {
@@ -43,7 +44,7 @@ export interface ModalSignature {
   Blocks: {
     default: [
       {
-        header: WithBoundArgs<ComponentLike<ModalHeaderSignature>, 'onClose'>;
+        header: WithBoundArgs<ComponentLike<ModalHeaderSignature>, "onClose">;
         body: ComponentLike<ModalSegmentSignature>;
         footer: ComponentLike<ModalSegmentSignature>;
       },
@@ -112,14 +113,14 @@ class ModalOverlay extends Component<ModalOverlaySignature> {
 
 class Modal extends Component<ModalSignature> {
   get target() {
-    return document.getElementById('modals')!;
+    return document.getElementById("modals")!;
   }
 
   <template>
     {{#if @visible}}
       {{#in-element this.target insertBefore=null}}
         <ModalOverlay @visible={{@visible}} @onClose={{@onClose}}>
-          <Card class="z-50 max-h-[100%] w-full" ...attributes>
+          <Card {{focusTrap}} class="z-50 max-h-[100%] w-full" ...attributes>
             {{yield
               (hash
                 footer=CardFooter
