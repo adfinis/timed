@@ -1,0 +1,11 @@
+[language-server.typescript-language-server.config]
+plugins = [
+    { name = "@glint/tsserver-plugin", location = "node_modules/@glint/tsserver-plugin", languages = [
+        "gjs",
+        "gts",
+    ] },
+]
+
+[[language]]
+name = "gts"
+language-servers = ["typescript-language-server", "vscode-eslint-language-server"]
