@@ -15,9 +15,6 @@ class Router extends EmberRouter {
 
 setConfig({ rootElement: "#things", destination: "#things-2" });
 
-console.log(`kb svc: `, KeyboardService)
-console.log(`notify svc: `, NotifyService)
-
 export class App extends EmberApp {
   /**
    * Any services or anything from the addon that needs to be in the app-tree registry
