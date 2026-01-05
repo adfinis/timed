@@ -1,53 +1,53 @@
-'use strict';
+"use strict";
 
-import forms from '@tailwindcss/forms';
+import forms from "@tailwindcss/forms";
 
 const colorMixOpacity = (color) =>
   `color-mix(in srgb, ${color} calc(100% * <alpha-value>), transparent)`;
 
-const borderColor = colorMixOpacity('var(--border)');
+const borderColor = colorMixOpacity("var(--border)");
 
 export const content = [
-  'src/styles/*.css',
-  'src/styles/*/*.css',
-  'src/components/*.{html,js,ts,hbs,gjs,gts,css}',
-  'src/components/*/*.{html,js,ts,hbs,gjs,gts,css}',
-  'demo-app/templates/*.{html,js,ts,hbs,gjs,gts,css}',
-  'demo-app/components/*.{html,js,ts,hbs,gjs,gts,css}',
+  "src/styles/*.css",
+  "src/styles/*/*.css",
+  "src/components/*.{html,js,ts,hbs,gjs,gts,css}",
+  "src/components/*/*.{html,js,ts,hbs,gjs,gts,css}",
+  "demo-app/templates/*.{html,js,ts,hbs,gjs,gts,css}",
+  "demo-app/components/*.{html,js,ts,hbs,gjs,gts,css}",
 ];
-export const darkMode = 'class';
+export const darkMode = "class";
 export const theme = {
   extend: {
     borderRadius: {
-      DEFAULT: 'var(--border-radius)',
+      DEFAULT: "var(--border-radius)",
     },
     fontFamily: {
-      sans: ['"Source Sans 3"', 'sans-serif'],
-      mono: ["'Source Code Pro'", 'monospace'],
+      sans: ['"Source Sans 3"', "sans-serif"],
+      mono: ["'Source Code Pro'", "monospace"],
     },
     keyframes: {
       loading: {
-        '0%, 100%': { transform: 'scale(0.1)', opacity: '1' },
-        '50%': { transform: 'scale(0.9)', opacity: '0' },
+        "0%, 100%": { transform: "scale(0.1)", opacity: "1" },
+        "50%": { transform: "scale(0.9)", opacity: "0" },
       },
     },
     fontSize: {
-      '2xs': [
-        '0.65rem',
+      "2xs": [
+        "0.65rem",
         {
-          lineHeight: '0.9rem',
+          lineHeight: "0.9rem",
         },
       ],
-      '3xs': [
-        '0.6rem',
+      "3xs": [
+        "0.6rem",
         {
-          lineHeight: '0.8rem',
+          lineHeight: "0.8rem",
         },
       ],
-      '4xs': [
-        '0.55rem',
+      "4xs": [
+        "0.55rem",
         {
-          lineHeight: '0.7rem',
+          lineHeight: "0.7rem",
         },
       ],
     },
@@ -56,68 +56,68 @@ export const theme = {
     },
     colors: {
       background: {
-        DEFAULT: 'rgb(var(--background) / <alpha-value>)',
-        muted: colorMixOpacity('var(--background-muted)'),
-        secondary: 'rgb(var(--background-secondary) / <alpha-value>)',
+        DEFAULT: "rgb(var(--background) / <alpha-value>)",
+        muted: colorMixOpacity("var(--background-muted)"),
+        secondary: "rgb(var(--background-secondary) / <alpha-value>)",
       },
       border: borderColor,
       danger: {
-        DEFAULT: colorMixOpacity('var(--danger)'),
-        accent: colorMixOpacity('var(--danger-accent)'),
-        light: colorMixOpacity('var(--danger-light)'),
+        DEFAULT: colorMixOpacity("var(--danger)"),
+        accent: colorMixOpacity("var(--danger-accent)"),
+        light: colorMixOpacity("var(--danger-light)"),
       },
       foreground: {
-        DEFAULT: colorMixOpacity('var(--foreground)'),
-        primary: 'rgb(var(--foreground-primary) / <alpha-value>)',
-        muted: 'rgb(var(--foreground-muted) / <alpha-value>)',
-        secondary: 'rgb(var(--foreground-secondary) / <alpha-value>)',
-        accent: colorMixOpacity('var(--foreground-accent)'),
+        DEFAULT: colorMixOpacity("var(--foreground)"),
+        primary: "rgb(var(--foreground-primary) / <alpha-value>)",
+        muted: "rgb(var(--foreground-muted) / <alpha-value>)",
+        secondary: "rgb(var(--foreground-secondary) / <alpha-value>)",
+        accent: colorMixOpacity("var(--foreground-accent)"),
       },
       primary: {
-        DEFAULT: colorMixOpacity('var(--primary)'),
-        dark: colorMixOpacity('var(--primary-dark)'),
-        light: colorMixOpacity('var(--primary-light)'),
+        DEFAULT: colorMixOpacity("var(--primary)"),
+        dark: colorMixOpacity("var(--primary-dark)"),
+        light: colorMixOpacity("var(--primary-light)"),
       },
       secondary: {
-        DEFAULT: colorMixOpacity('var(--secondary)'),
-        dark: colorMixOpacity('var(--secondary-dark)'),
-        light: colorMixOpacity('var(--secondary-light)'),
+        DEFAULT: colorMixOpacity("var(--secondary)"),
+        dark: colorMixOpacity("var(--secondary-dark)"),
+        light: colorMixOpacity("var(--secondary-light)"),
       },
       tertiary: {
-        DEFAULT: colorMixOpacity('var(--tertiary)'),
-        dark: colorMixOpacity('var(--tertiary-dark)'),
-        light: colorMixOpacity('var(--tertiary-light)'),
+        DEFAULT: colorMixOpacity("var(--tertiary)"),
+        dark: colorMixOpacity("var(--tertiary-dark)"),
+        light: colorMixOpacity("var(--tertiary-light)"),
       },
       success: {
-        DEFAULT: colorMixOpacity('var(--success)'),
-        accent: colorMixOpacity('var(--success-accent)'),
-        light: colorMixOpacity('var(--success-light)'),
+        DEFAULT: colorMixOpacity("var(--success)"),
+        accent: colorMixOpacity("var(--success-accent)"),
+        light: colorMixOpacity("var(--success-light)"),
       },
       warning: {
-        DEFAULT: colorMixOpacity('var(--warning)'),
-        accent: colorMixOpacity('var(--warning-accent)'),
-        light: colorMixOpacity('var(--warning-light)'),
+        DEFAULT: colorMixOpacity("var(--warning)"),
+        accent: colorMixOpacity("var(--warning-accent)"),
+        light: colorMixOpacity("var(--warning-light)"),
       },
-      white: 'rgb(var(--white) / <alpha-value>)',
-      black: 'rgb(var(--black) / <alpha-value>)',
+      white: "rgb(var(--white) / <alpha-value>)",
+      black: "rgb(var(--black) / <alpha-value>)",
       overview: {
         workday: {
-          DEFAULT: colorMixOpacity('var(--overview-workday)'),
-          active: colorMixOpacity('var(--overview-workday-active)'),
-          hf: colorMixOpacity('var(--overview-workday-hf)'),
+          DEFAULT: colorMixOpacity("var(--overview-workday)"),
+          active: colorMixOpacity("var(--overview-workday-active)"),
+          hf: colorMixOpacity("var(--overview-workday-hf)"),
         },
         absence: {
-          DEFAULT: colorMixOpacity('var(--overview-absence)'),
-          active: colorMixOpacity('var(--overview-absence-active)'),
-          hf: colorMixOpacity('var(--overview-absence-hf)'),
+          DEFAULT: colorMixOpacity("var(--overview-absence)"),
+          active: colorMixOpacity("var(--overview-absence-active)"),
+          hf: colorMixOpacity("var(--overview-absence-hf)"),
         },
         weekend: {
-          DEFAULT: colorMixOpacity('var(--overview-weekend)'),
-          active: colorMixOpacity('var(--overview-weekend-active)'),
-          hf: colorMixOpacity('var(--overview-weekend-hf)'),
+          DEFAULT: colorMixOpacity("var(--overview-weekend)"),
+          active: colorMixOpacity("var(--overview-weekend-active)"),
+          hf: colorMixOpacity("var(--overview-weekend-hf)"),
         },
-        active: colorMixOpacity('var(--overview-active)'),
-        hf: colorMixOpacity('var(--overview-hf)'),
+        active: colorMixOpacity("var(--overview-active)"),
+        hf: colorMixOpacity("var(--overview-hf)"),
       },
 
       // override border colour used by @tailwindcss/forms
@@ -133,5 +133,5 @@ export const safelist = [
   { pattern: /ember-/ },
   { pattern: /noUi-/ },
   { pattern: /shepherd-/ },
-  'invalid-feedback',
+  "invalid-feedback",
 ];

@@ -1,21 +1,21 @@
-import { Duration } from 'luxon';
+import { Duration } from "luxon";
 
 const roundDuration = (base: Duration) => (duration: Duration) => {
-  const baseMs = base.as('milliseconds');
+  const baseMs = base.as("milliseconds");
 
   return Duration.fromMillis(
-    Math.round(duration.as('milliseconds') / baseMs) * baseMs,
+    Math.round(duration.as("milliseconds") / baseMs) * baseMs,
   ).rescale();
 };
 
 const clampDuration =
   (min: Duration, max: Duration) => (duration: Duration) => {
-    const ms = duration.as('milliseconds');
+    const ms = duration.as("milliseconds");
 
-    if (ms < min.as('milliseconds')) {
+    if (ms < min.as("milliseconds")) {
       return min;
     }
-    return ms > max.as('milliseconds') ? max : duration;
+    return ms > max.as("milliseconds") ? max : duration;
   };
 
 const durationFromString =
@@ -35,17 +35,17 @@ const durationFromString =
   };
 
 const normalizeStringDayDuration = (duration: string) => {
-  return /(\d?\d?:?\d?\d?)/g.exec(duration)?.at(0) ?? '';
+  return /(\d?\d?:?\d?\d?)/g.exec(duration)?.at(0) ?? "";
 };
 
 const normalizeStringDuration = (duration: string) => {
-  return /(-?\d*:?\d?\d?)/g.exec(duration)?.at(0) ?? '';
+  return /(-?\d*:?\d?\d?)/g.exec(duration)?.at(0) ?? "";
 };
 
 const _durationAsString = (duration: Duration, seconds = false) => {
-  if (!Duration.isDuration(duration)) return seconds ? '--:--:--' : '--:--';
-  const fmt = seconds ? 'hh:mm:ss' : 'hh:mm';
-  return duration.toFormat(fmt, { signMode: 'negativeLargestOnly' });
+  if (!Duration.isDuration(duration)) return seconds ? "--:--:--" : "--:--";
+  const fmt = seconds ? "hh:mm:ss" : "hh:mm";
+  return duration.toFormat(fmt, { signMode: "negativeLargestOnly" });
 };
 
 const durationAsString = (duration: Duration) =>
@@ -74,12 +74,12 @@ const parseDurationFromString = (duration: string) => {
 
   const result = Duration.fromObject(
     {
-      hours: parseInt(hours ?? '0'),
-      minutes: parseInt(minutes ?? '0'),
+      hours: parseInt(hours ?? "0"),
+      minutes: parseInt(minutes ?? "0"),
     },
-    { conversionAccuracy: 'longterm' },
+    { conversionAccuracy: "longterm" },
   );
-  return (sign === '-' ? result.negate() : result).rescale();
+  return (sign === "-" ? result.negate() : result).rescale();
 };
 
 export {

@@ -1,12 +1,12 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from '../../helpers';
-import { render } from '@ember/test-helpers';
-import Table from '#src/components/table.gts';
+import { module, test } from "qunit";
+import { setupRenderingTest } from "../../helpers";
+import { render } from "@ember/test-helpers";
+import Table from "#src/components/table.gts";
 
-module('Integration | Component | table', function (hooks) {
+module("Integration | Component | table", function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
+  test("it renders", async function (assert) {
     // Updating values is achieved using autotracking, just like in app code. For example:
     // class State { @tracked myProperty = 0; }; const state = new State();
     // and update using state.myProperty = 1; await rerender();
@@ -14,7 +14,7 @@ module('Integration | Component | table', function (hooks) {
 
     await render(<template><Table /></template>);
 
-    assert.dom().hasText('');
+    assert.dom().hasText("");
 
     // Template block usage:
     await render(
@@ -25,6 +25,6 @@ module('Integration | Component | table', function (hooks) {
       </template>,
     );
 
-    assert.dom().hasText('template block text');
+    assert.dom().hasText("template block text");
   });
 });

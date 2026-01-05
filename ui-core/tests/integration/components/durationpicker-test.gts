@@ -1,15 +1,15 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from '../../helpers';
-import { render } from '@ember/test-helpers';
-import Durationpicker from '#src/components/durationpicker.gts';
-import { Duration } from 'luxon';
-import { fn } from '@ember/helper';
-import { tracked } from '@glimmer/tracking';
+import { module, test } from "qunit";
+import { setupRenderingTest } from "../../helpers";
+import { render } from "@ember/test-helpers";
+import Durationpicker from "#src/components/durationpicker.gts";
+import { Duration } from "luxon";
+import { fn } from "@ember/helper";
+import { tracked } from "@glimmer/tracking";
 
-module('Integration | Component | durationpicker', function (hooks) {
+module("Integration | Component | durationpicker", function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
+  test("it renders", async function (assert) {
     const min = Duration.fromMillis(0);
     const max = Duration.fromObject({ days: 10 });
 
@@ -30,6 +30,6 @@ module('Integration | Component | durationpicker', function (hooks) {
       </template>,
     );
 
-    assert.dom('input').hasValue('02:20');
+    assert.dom("input").hasValue("02:20");
   });
 });

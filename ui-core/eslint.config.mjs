@@ -12,19 +12,19 @@
  *     npx eslint --inspect-config
  *
  */
-import babelParser from '@babel/eslint-parser';
-import js from '@eslint/js';
-import { defineConfig, globalIgnores } from 'eslint/config';
-import prettier from 'eslint-config-prettier';
-import ember from 'eslint-plugin-ember/recommended';
-import importPlugin from 'eslint-plugin-import';
-import n from 'eslint-plugin-n';
-import globals from 'globals';
-import ts from 'typescript-eslint';
+import babelParser from "@babel/eslint-parser";
+import js from "@eslint/js";
+import { defineConfig, globalIgnores } from "eslint/config";
+import prettier from "eslint-config-prettier";
+import ember from "eslint-plugin-ember/recommended";
+import importPlugin from "eslint-plugin-import";
+import n from "eslint-plugin-n";
+import globals from "globals";
+import ts from "typescript-eslint";
 
 const esmParserOptions = {
   ecmaFeatures: { modules: true },
-  ecmaVersion: 'latest',
+  ecmaVersion: "latest",
 };
 
 const tsParserOptions = {
@@ -33,7 +33,7 @@ const tsParserOptions = {
 };
 
 export default defineConfig([
-  globalIgnores(['dist/', 'dist-*/', 'declarations/', 'coverage/', '!**/.*']),
+  globalIgnores(["dist/", "dist-*/", "declarations/", "coverage/", "!**/.*"]),
   js.configs.recommended,
   prettier,
   ember.configs.base,
@@ -44,17 +44,17 @@ export default defineConfig([
    */
   {
     linterOptions: {
-      reportUnusedDisableDirectives: 'error',
+      reportUnusedDisableDirectives: "error",
     },
   },
   {
-    files: ['**/*.js'],
+    files: ["**/*.js"],
     languageOptions: {
       parser: babelParser,
     },
   },
   {
-    files: ['**/*.{js,gjs}'],
+    files: ["**/*.{js,gjs}"],
     languageOptions: {
       parserOptions: esmParserOptions,
       globals: {
@@ -63,7 +63,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.{ts,gts}'],
+    files: ["**/*.{ts,gts}"],
     languageOptions: {
       parser: ember.parser,
       parserOptions: tsParserOptions,
@@ -82,27 +82,27 @@ export default defineConfig([
     ],
   },
   {
-    files: ['src/**/*'],
+    files: ["src/**/*"],
     plugins: {
       import: importPlugin,
     },
     rules: {
       // require relative imports use full extensions
-      'import/extensions': ['error', 'always', { ignorePackages: true }],
+      "import/extensions": ["error", "always", { ignorePackages: true }],
     },
   },
   /**
    * CJS node files
    */
   {
-    files: ['**/*.cjs'],
+    files: ["**/*.cjs"],
     plugins: {
       n,
     },
 
     languageOptions: {
-      sourceType: 'script',
-      ecmaVersion: 'latest',
+      sourceType: "script",
+      ecmaVersion: "latest",
       globals: {
         ...globals.node,
       },
@@ -112,14 +112,14 @@ export default defineConfig([
    * ESM node files
    */
   {
-    files: ['**/*.mjs'],
+    files: ["**/*.mjs"],
     plugins: {
       n,
     },
 
     languageOptions: {
-      sourceType: 'module',
-      ecmaVersion: 'latest',
+      sourceType: "module",
+      ecmaVersion: "latest",
       parserOptions: esmParserOptions,
       globals: {
         ...globals.node,

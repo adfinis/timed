@@ -1,27 +1,27 @@
-import { on } from '@ember/modifier';
-import Component from '@glimmer/component';
-import { Duration } from 'luxon';
+import { on } from "@ember/modifier";
+import Component from "@glimmer/component";
+import { Duration } from "luxon";
 import {
   clampDuration,
   normalizeStringDuration,
   normalizeStringDayDuration,
   durationAsString,
   parseDurationFromString,
-} from '../utils/duration.ts';
+} from "../utils/duration.ts";
 
 import {
   REPORT_DURATION_MAX,
   REPORT_DURATION_MIN,
   parseStringDuration as parseReportDuration,
-} from '../utils/report-duration.ts';
+} from "../utils/report-duration.ts";
 
 import {
   ACTIVITY_DURATION_MAX,
   ACTIVITY_DURATION_MIN,
   parseStringDuration as parseActivityDuration,
-} from '../utils/activity-duration.ts';
+} from "../utils/activity-duration.ts";
 
-import type { TOC } from '@ember/component/template-only';
+import type { TOC } from "@ember/component/template-only";
 
 export interface BaseDurationpickerSignature {
   Args: {
@@ -43,8 +43,8 @@ export interface BaseDurationpickerSignature {
 
 export interface DurationpickerSignature {
   Args: Omit<
-    BaseDurationpickerSignature['Args'],
-    'fromString' | 'asString' | 'normalize' | 'min' | 'max'
+    BaseDurationpickerSignature["Args"],
+    "fromString" | "asString" | "normalize" | "min" | "max"
   >;
   Blocks: {
     default: [];
@@ -53,7 +53,7 @@ export interface DurationpickerSignature {
 }
 
 export interface ActivityDurationpickerSignature {
-  Args: DurationpickerSignature['Args'] & { seconds?: boolean };
+  Args: DurationpickerSignature["Args"] & { seconds?: boolean };
   Blocks: {
     default: [];
   };
@@ -100,11 +100,11 @@ export default class Durationpicker extends Component<BaseDurationpickerSignatur
   onKeydown = (e: KeyboardEvent) => {
     const { value, onChange } = this.args;
 
-    if (e.shiftKey || !(e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+    if (e.shiftKey || !(e.key === "ArrowUp" || e.key === "ArrowDown")) {
       return;
     }
 
-    const result = value[e.key === 'ArrowUp' ? 'plus' : 'minus'](
+    const result = value[e.key === "ArrowUp" ? "plus" : "minus"](
       e.ctrlKey ? this.bigStep : this.step,
     );
 
@@ -114,7 +114,7 @@ export default class Durationpicker extends Component<BaseDurationpickerSignatur
   onMousewheel = (e: WheelEvent) => {
     const { value, onChange } = this.args;
 
-    const result = value[e.deltaY < 0 ? 'plus' : 'minus'](this.step);
+    const result = value[e.deltaY < 0 ? "plus" : "minus"](this.step);
 
     onChange(this.clamp(result).rescale());
   };

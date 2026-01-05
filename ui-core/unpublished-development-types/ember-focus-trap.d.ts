@@ -1,6 +1,5 @@
-
 declare module "ember-focus-trap" {
-  import Modifier from 'ember-modifier';
+  import Modifier from "ember-modifier";
 
   type FocusTrapOptions = {
     initialFocus?: string;

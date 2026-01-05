@@ -1,6 +1,6 @@
-import type { TOC } from '@ember/component/template-only';
-import { hash } from '@ember/helper';
-import type { ComponentLike } from '@glint/template';
+import type { TOC } from "@ember/component/template-only";
+import { hash } from "@ember/helper";
+import type { ComponentLike } from "@glint/template";
 
 export interface CardSegmentSignature {
   Blocks: {

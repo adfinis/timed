@@ -1,9 +1,9 @@
-import { Duration } from 'luxon';
+import { Duration } from "luxon";
 import {
   clampDuration,
   durationFromString,
   DAY_DURATION_PATTERN,
-} from './duration.ts';
+} from "./duration.ts";
 
 const ACTIVITY_DURATION_MIN = Duration.fromObject({ minutes: 1 });
 const ACTIVITY_DURATION_MAX = Duration.fromObject({ hours: 23, minutes: 49 });
@@ -24,7 +24,7 @@ const parseStringDuration = (duration: string) => {
     // e.g. 60 -> 01:00, 90 -> 01:30
     // otherwise we return the default
     if (!day) {
-      return !duration.includes(':') && mins % 15 === 0
+      return !duration.includes(":") && mins % 15 === 0
         ? Duration.fromObject({ minutes: mins })
         : ACTIVITY_DURATION_MIN;
     }
@@ -37,8 +37,8 @@ const parseStringDuration = (duration: string) => {
       return Duration.fromObject({ minutes: mins });
 
     return Duration.fromObject({
-      hours: parseInt(day.hours ?? '0'),
-      minutes: parseInt(day.minutes ?? '0'),
+      hours: parseInt(day.hours ?? "0"),
+      minutes: parseInt(day.minutes ?? "0"),
     });
   };
   return clampReport(parse().rescale());

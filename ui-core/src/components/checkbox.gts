@@ -1,8 +1,8 @@
-import { on } from '@ember/modifier';
-import type { TOC } from '@ember/component/template-only';
-import { uniqueId } from '@ember/helper';
-import { eq } from 'ember-truth-helpers';
-import { pick, optional } from '@nullvoxpopuli/ember-composable-helpers';
+import { on } from "@ember/modifier";
+import type { TOC } from "@ember/component/template-only";
+import { uniqueId } from "@ember/helper";
+import { eq } from "ember-truth-helpers";
+import { pick, optional } from "@nullvoxpopuli/ember-composable-helpers";
 
 export interface CheckboxSignature {
   Args: {

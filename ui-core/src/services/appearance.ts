@@ -1,17 +1,17 @@
-import { action } from '@ember/object';
-import Service from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { action } from "@ember/object";
+import Service from "@ember/service";
+import { tracked } from "@glimmer/tracking";
 
-const getHtml = () => document.querySelector('html')!;
+const getHtml = () => document.querySelector("html")!;
 
-const COLOR_SCHEME_KEY = 'color-scheme';
-const THEME_KEY = 'theme';
+const COLOR_SCHEME_KEY = "color-scheme";
+const THEME_KEY = "theme";
 
-const THEMES = ['old', 'regular'] as const;
-const COLOR_SCHEME_LIGHT = 'light';
-const COLOR_SCHEME_DARK = 'dark';
+const THEMES = ["old", "regular"] as const;
+const COLOR_SCHEME_LIGHT = "light";
+const COLOR_SCHEME_DARK = "dark";
 
-type ColorScheme = 'light' | 'dark';
+type ColorScheme = "light" | "dark";
 type Theme = (typeof THEMES)[number];
 
 export default class AppearanceService extends Service {
@@ -21,9 +21,9 @@ export default class AppearanceService extends Service {
   loadConfiguration() {
     const colorScheme =
       this.colorScheme ??
-      (window.matchMedia('(prefers-color-scheme:dark)').matches
-        ? 'dark'
-        : 'light');
+      (window.matchMedia("(prefers-color-scheme:dark)").matches
+        ? "dark"
+        : "light");
     const theme = this._theme ?? THEMES[0];
     this.setTheme(theme);
     this.setColorScheme(colorScheme);
@@ -86,7 +86,7 @@ export default class AppearanceService extends Service {
   }
 }
 
-declare module '@ember/service' {
+declare module "@ember/service" {
   interface Registry {
     appearance: AppearanceService;
   }

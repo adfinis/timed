@@ -1,16 +1,16 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from '../../helpers';
-import { render } from '@ember/test-helpers';
-import Modal from '#src/components/modal.gts';
-import { toggle } from '@nullvoxpopuli/ember-composable-helpers';
-import { tracked } from '@glimmer/tracking';
-import { on } from '@ember/modifier';
-import { click } from '@ember/test-helpers';
+import { module, test } from "qunit";
+import { setupRenderingTest } from "../../helpers";
+import { render } from "@ember/test-helpers";
+import Modal from "#src/components/modal.gts";
+import { toggle } from "@nullvoxpopuli/ember-composable-helpers";
+import { tracked } from "@glimmer/tracking";
+import { on } from "@ember/modifier";
+import { click } from "@ember/test-helpers";
 
-module('Integration | Component | modal', function (hooks) {
+module("Integration | Component | modal", function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
+  test("it renders", async function (assert) {
     class State {
       @tracked visible = false;
     }
@@ -33,10 +33,10 @@ module('Integration | Component | modal', function (hooks) {
       </template>,
     );
 
-    assert.dom().hasText('');
-    await click('button');
-    assert.dom().hasText('Modal × body bar');
-    await click('button');
-    assert.dom().hasText('');
+    assert.dom().hasText("");
+    await click("button");
+    assert.dom().hasText("Modal × body bar");
+    await click("button");
+    assert.dom().hasText("");
   });
 });

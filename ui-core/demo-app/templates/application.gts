@@ -13,7 +13,7 @@ import type AppearanceService from "#src/services/appearance.ts";
 import { service } from "@ember/service";
 import { keyResponder, onKey } from "ember-keyboard";
 import { runTask } from "ember-lifeline";
-import "ember-notify/../vendor/ember-notify.css"
+import "ember-notify/../vendor/ember-notify.css";
 
 @keyResponder
 export default class Application extends Component {

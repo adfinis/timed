@@ -1,7 +1,7 @@
-import type { TOC } from '@ember/component/template-only';
-import Component from '@glimmer/component';
-import PowerSelect from 'ember-power-select/components/power-select';
-import { tracked, cached } from '@glimmer/tracking';
+import type { TOC } from "@ember/component/template-only";
+import Component from "@glimmer/component";
+import PowerSelect from "ember-power-select/components/power-select";
+import { tracked, cached } from "@glimmer/tracking";
 
 type Task = {
   id: number;
@@ -10,8 +10,8 @@ type Task = {
   name: string;
 };
 
-type Project = Omit<Task, 'projectId'>;
-type Customer = Omit<Project, 'customerId' | 'tasks'>;
+type Project = Omit<Task, "projectId">;
+type Customer = Omit<Project, "customerId" | "tasks">;
 
 type Mapping = {
   customer: Customer;
@@ -166,9 +166,9 @@ export default class TaskSelection extends Component<TaskSelectionSignature> {
   }
 
   #clear = (scope: keyof Mapping) => {
-    if (scope === 'task') return;
+    if (scope === "task") return;
     this._task = null;
-    if (scope === 'project') return;
+    if (scope === "project") return;
     this._project = null;
   };
 
@@ -181,22 +181,22 @@ export default class TaskSelection extends Component<TaskSelectionSignature> {
   };
 
   isTask = (value: (typeof this.options)[number] | null) =>
-    !!value && 'projectId' in value;
+    !!value && "projectId" in value;
 
   onCustomer = (value: (typeof this.options)[number] | null) => {
     if (this.args.showTasksAsRecent && this.isTask(value)) {
-      this.#update('task', value);
+      this.#update("task", value);
       return;
     }
-    this.#update('customer', value);
+    this.#update("customer", value);
   };
 
   onProject = (value: typeof this._project) => {
-    this.#update('project', value);
+    this.#update("project", value);
   };
 
   onTask = (value: typeof this._task) => {
-    this.#update('task', value);
+    this.#update("task", value);
   };
 
   <template>

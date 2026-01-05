@@ -6,7 +6,7 @@
 module.exports = {
   plugins: [
     [
-      '@babel/plugin-transform-typescript',
+      "@babel/plugin-transform-typescript",
       {
         allExtensions: true,
         allowDeclareFields: true,
@@ -14,17 +14,17 @@ module.exports = {
       },
     ],
     [
-      'babel-plugin-ember-template-compilation',
+      "babel-plugin-ember-template-compilation",
       {
-        targetFormat: 'hbs',
+        targetFormat: "hbs",
         transforms: [],
       },
     ],
     [
-      'module:decorator-transforms',
+      "module:decorator-transforms",
       {
         runtime: {
-          import: 'decorator-transforms/runtime-esm',
+          import: "decorator-transforms/runtime-esm",
         },
       },
     ],

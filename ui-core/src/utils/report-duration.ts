@@ -1,10 +1,10 @@
-import { Duration } from 'luxon';
+import { Duration } from "luxon";
 import {
   clampDuration,
   roundDuration,
   durationFromString,
   DAY_DURATION_PATTERN,
-} from './duration.ts';
+} from "./duration.ts";
 
 const REPORT_DURATION_MIN = Duration.fromObject({ minutes: 15 });
 const REPORT_DURATION_MAX = Duration.fromObject({ hours: 23, minutes: 45 });
@@ -31,7 +31,7 @@ const parseStringDuration = (duration: string) => {
     // e.g. 60 -> 01:00, 90 -> 01:30
     // otherwise we return the default
     if (!day) {
-      return !duration.includes(':') && mins % 15 === 0
+      return !duration.includes(":") && mins % 15 === 0
         ? Duration.fromObject({ minutes: mins })
         : REPORT_DURATION_MIN;
     }
@@ -46,7 +46,7 @@ const parseStringDuration = (duration: string) => {
         return Duration.fromObject({ minutes: mins });
       return roundToReport(
         Duration.fromObject({
-          hours: parseInt(day.hours ?? '0'),
+          hours: parseInt(day.hours ?? "0"),
           minutes: parseInt(day.minutes!),
         }),
       );
@@ -55,12 +55,12 @@ const parseStringDuration = (duration: string) => {
     // case 4, duration is a valid report
     // if there was a colon, we return it as is
     // if there was no colon, and the hours == 15 we return 00:15, because 15 hour reports usually don't exist
-    if (!report!.colon && report!.hours === '15' && !report!.minutes) {
+    if (!report!.colon && report!.hours === "15" && !report!.minutes) {
       return REPORT_DURATION_MIN;
     }
     return Duration.fromObject({
-      hours: parseInt(report!.hours ?? '0'),
-      minutes: parseInt(report!.minutes ?? '0'),
+      hours: parseInt(report!.hours ?? "0"),
+      minutes: parseInt(report!.minutes ?? "0"),
     });
   };
   return clampReport(parse().rescale());
