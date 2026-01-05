@@ -1,6 +1,9 @@
-import type { TOC } from '@ember/component/template-only';
-import { hash } from '@ember/helper';
-import type { ComponentLike, WithBoundArgs } from '@glint/template';
+import type { TOC } from "@ember/component/template-only";
+import { hash } from "@ember/helper";
+import type { ComponentLike, WithBoundArgs } from "@glint/template";
+import Component from "@glimmer/component";
+import { on } from "@ember/modifier";
+import { and, not } from "ember-truth-helpers";
 
 export interface TdSignature {
   Blocks: {
@@ -29,6 +32,21 @@ export interface TrSignature {
   Element: HTMLTableRowElement;
 }
 
+export interface SelectableTrSignature {
+  Args: {
+    active?: boolean;
+    selected?: boolean;
+    selectable?: boolean;
+    disabled?: boolean;
+    last?: boolean;
+    onClick?: (e: MouseEvent) => void;
+  };
+  Blocks: {
+    default: [];
+  };
+  Element: HTMLTableRowElement;
+}
+
 export interface TfootSignature {
   Blocks: {
     default: [];
@@ -39,13 +57,17 @@ export interface TfootSignature {
 type TheadSignature = TfootSignature;
 
 export interface TableSignature {
-  Args: TrSignature['Args'];
+  Args: {
+    striped?: boolean;
+    hover?: boolean;
+    last?: boolean;
+  };
   Blocks: {
     default: [
       {
         tr: WithBoundArgs<
           ComponentLike<TrSignature>,
-          keyof TrSignature['Args']
+          keyof TableSignature["Args"]
         >;
         trh: ComponentLike<TrSignature>;
         th: ComponentLike<ThSignature>;
@@ -57,6 +79,39 @@ export interface TableSignature {
   };
   Element: HTMLTableElement;
 }
+
+export interface TableSignature {
+  Args: {
+    striped?: boolean;
+    hover?: boolean;
+    last?: boolean;
+  };
+  Blocks: {
+    default: [
+      {
+        tr: WithBoundArgs<
+          ComponentLike<TrSignature>,
+          keyof TableSignature["Args"]
+        >;
+        trh: ComponentLike<TrSignature>;
+        th: ComponentLike<ThSignature>;
+        td: ComponentLike<ThSignature>;
+        tfoot: ComponentLike<TfootSignature>;
+        thead: ComponentLike<TheadSignature>;
+      },
+    ];
+  };
+  Element: HTMLTableElement;
+}
+
+export type SelectableTableSignature = Pick<TableSignature, "Element"> & {
+  Args: Pick<TableSignature["Args"], "last">;
+  Blocks: {
+    default: Omit<TableSignature["Blocks"]["default"][0], "tr"> & {
+      tr: ComponentLike<SelectableTrSignature>;
+    };
+  };
+};
 
 const Tfoot = <template>
   <tfoot class="border-b-border/50 border-t-2" ...attributes>
@@ -81,6 +136,39 @@ const Tr = <template>
     ...attributes
   >{{yield}}</tr>
 </template> satisfies TOC<TrSignature>;
+
+class SelectableTr extends Component<SelectableTrSignature> {
+  _onClick = (e: MouseEvent) => {
+    const { onClick, disabled, selectable } = this.args;
+    if (!onClick || disabled || !selectable) {
+      return;
+    }
+    onClick(e);
+  };
+
+  get selectable() {
+    const { disabled, selectable } = this.args;
+    return !disabled && selectable;
+  }
+
+  <template>
+    <tr
+      {{on "click" this._onClick}}
+      role="button"
+      class="{{if
+          @selected
+          'selected bg-primary text-foreground-primary'
+          'striped'
+        }}
+        {{if (and @active (not @selected)) 'active !bg-primary/20'}}
+        {{if @disabled 'transferred text-foreground-muted cursor-not-allowed'}}
+        {{if this.selectable 'text-foreground-accent cursor-pointer'}}
+        shadow-foreground/5 align-top shadow transition-colors
+        {{if @last 'last-of-type:border-b-2'}}"
+      ...attributes
+    >{{yield}}</tr>
+  </template>
+}
 
 const Td = <template>
   <td
@@ -113,5 +201,11 @@ const Table = <template>
   </table>
 </template> satisfies TOC<TableSignature>;
 
-export { Td, Th, Tr, Tfoot, Thead };
+const SelectableTable = <template>
+  <table class="w-full table" ...attributes>
+    {{yield (hash td=Td th=Th thead=Thead tfoot=Tfoot trh=Tr tr=SelectableTr)}}
+  </table>
+</template> satisfies TOC<SelectableTableSignature>;
+
+export { Td, Th, Tr, Tfoot, Thead, SelectableTr, SelectableTable };
 export default Table;
