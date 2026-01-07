@@ -21,7 +21,7 @@ include = ["CHANGELOG.md"]
 [tool.poetry.dependencies]
 python = "^3.12"
 python-dateutil = "^2.9.0"
-django = "~5.2.9"
+django = "~5.2.10"
 # might remove this once we find out how the jsonapi extras_require work
 django-cors-headers = "^4.9.0"
 django-filter = "^25.2"
