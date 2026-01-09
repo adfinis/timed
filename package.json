@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@glint/core": "^1.5.2"
+  }
+}

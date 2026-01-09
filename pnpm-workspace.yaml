@@ -1,0 +1,10 @@
+packages:
+  - ui-core
+
+autoInstallPeers: false
+
+onlyBuiltDependencies:
+  - core-js
+  - esbuild
+  - ember-basic-dropdown
+  - ember-power-select
