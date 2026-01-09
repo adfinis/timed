@@ -47,7 +47,7 @@ psycopg = {extras = ["binary"], version = "^3.3.2"}
 tornado = "^6.5"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.14.10"
+ruff = "^0.14.11"
 coverage = "7.13.1"
 django-extensions = "4.1"
 factory-boy = "3.3.3"
