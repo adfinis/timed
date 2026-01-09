@@ -163,6 +163,7 @@ class SelectableTr extends Component<SelectableTrSignature> {
         {{if (and @active (not @selected)) 'active !bg-primary/20'}}
         {{if @disabled 'transferred text-foreground-muted cursor-not-allowed'}}
         {{if this.selectable 'text-foreground-accent cursor-pointer'}}
+        {{if (and this.selectable (not @selected)) 'hover:bg-secondary-dark/15'}}
         shadow-foreground/5 align-top shadow transition-colors
         {{if @last 'last-of-type:border-b-2'}}"
       ...attributes
