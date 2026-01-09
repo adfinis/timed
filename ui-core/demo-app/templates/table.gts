@@ -7,7 +7,6 @@ import { fn } from "@ember/helper";
 import PageHeading from "../components/page-heading.gts";
 import { eq } from "ember-truth-helpers";
 import { on } from "@ember/modifier";
-import { trackedArray } from "@ember/reactive/collections";
 
 const VALUES = [
   ["foo", "bar"],
@@ -25,7 +24,7 @@ export default class TableTemplate extends Component {
   @tracked active = null as Nullable<number>;
   @tracked selected = null as Nullable<number>;
 
-  selected2 = trackedArray<number>([]);
+  @tracked selected2 = [] as Array<number>;
 
   setSelected = (i: number) => () => {
     this.selected = i;
@@ -40,8 +39,10 @@ export default class TableTemplate extends Component {
       this.selected2 = this.selected2.filter((j) => j !== i);
       return;
     }
-    this.selected2.push(i);
+    this.selected2 = [...this.selected2, i];
   };
+
+  isSelected = (i: number) => this.selected2.includes(i);
 
   <template>
     {{pageTitle "Table"}}
@@ -114,7 +115,7 @@ export default class TableTemplate extends Component {
           {{#each VALUES as |vals i|}}
             <t.tr
               @onClick={{fn (this.toggleSelection i)}}
-              @selected={{this.selected2.includes i}}
+              @selected={{this.isSelected i}}
               @selectable={{true}}
             >
               {{#each vals as |v|}}
