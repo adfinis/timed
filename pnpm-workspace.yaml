@@ -1,0 +1,8 @@
+packages:
+  - ui-core
+
+autoInstallPeers: false
+
+onlyBuiltDependencies:
+  - core-js
+  - esbuild
