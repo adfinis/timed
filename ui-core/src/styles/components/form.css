@@ -1,0 +1,5 @@
+/* style 3rd-party classes that we can't change */
+
+.invalid-feedback {
+  @apply text-danger;
+}

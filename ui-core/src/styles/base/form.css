@@ -1,0 +1,52 @@
+[type="text"],
+[type="email"],
+[type="url"],
+[type="password"],
+[type="number"],
+[type="date"],
+[type="datetime-local"],
+[type="month"],
+[type="search"],
+[type="tel"],
+[type="time"],
+[type="week"],
+[multiple],
+textarea,
+select,
+.form-input,
+.form-textarea,
+.form-select,
+.form-multiselect {
+  @apply focus:border-primary-light focus:ring-primary-light border transition-[border-color];
+  @apply placeholder-foreground-muted bg-background w-full py-1.5 text-sm xl:text-base !important;
+}
+
+:is(
+  [type="text"],
+  [type="email"],
+  [type="url"],
+  [type="password"],
+  [type="number"],
+  [type="date"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="week"],
+  [type="checkbox"],
+  [multiple],
+  textarea,
+  select,
+  .form-input,
+  .form-textarea,
+  .form-select,
+  .form-multiselect
+):is(:disabled, [aria-disabled="true"]) {
+  @apply text-foreground-muted cursor-not-allowed;
+  @apply bg-background-muted !important;
+}
+
+[type="checkbox"] {
+  @apply text-primary;
+}

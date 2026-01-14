@@ -1,0 +1,15 @@
+.ember-notify.alert {
+  @apply rounded;
+}
+
+.ember-notify.alert-danger {
+  @apply bg-danger-light text-foreground-primary border-danger/80;
+}
+
+.ember-notify.alert-info {
+  @apply bg-primary-light text-foreground-primary border-primary/80;
+}
+
+.ember-notify.alert-success {
+  @apply bg-success-light text-foreground-primary border-success/80;
+}

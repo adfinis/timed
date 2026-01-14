@@ -1,0 +1,217 @@
+@import "./base/typography.css";
+@import "./base/form.css";
+
+:root {
+  /* taken from https://adfinis.com/en/about-us/branding/ */
+
+  --dark-blue: 28 46 93;
+  --dark-moderate-blue: 46 75 152;
+  --green: 46 152 123;
+  --black: 15 15 15;
+  --dark-grey: 139 139 140;
+  --light-grey: 245 246 245;
+
+  /* not taken from https://adfinis.com/en/about-us/branding/ */
+  --white: 255 255 255;
+  --red: 239 68 68;
+  --amber: 245 158 11;
+
+  --background: var(--white);
+  --background-muted: rgb(var(--light-grey));
+  --background-secondary: var(--dark-grey);
+  --danger: rgb(var(--red));
+  --danger-accent: color-mix(
+    in srgb,
+    var(--danger) 95%,
+    rgb(var(--foreground-muted))
+  );
+  --danger-light: color-mix(in srgb, var(--danger) 90%, rgb(var(--white)));
+  --foreground-muted: var(--dark-grey);
+  --foreground-primary: var(--white);
+  --foreground-secondary: var(--foreground-primary);
+  --foreground-accent: rgb(var(--black));
+  --foreground: rgb(var(--black));
+  --foreground-light: color-mix(
+    in srgb,
+    var(--background-muted) 80%,
+    rgb(var(--white))
+  );
+
+  --tertiary-dark: rgb(var(--dark-blue));
+  --tertiary: color-mix(in srgb, var(--tertiary-dark) 80%, rgb(var(--white)));
+  --tertiary-light: color-mix(in srgb, var(--tertiary) 80%, rgb(var(--white)));
+
+  --primary-dark: rgb(var(--dark-moderate-blue));
+  --primary: color-mix(in srgb, var(--primary-dark) 80%, rgb(var(--white)));
+  --primary-light: color-mix(in srgb, var(--primary) 80%, rgb(var(--white)));
+
+  --secondary: rgb(var(--dark-grey));
+  --secondary-light: color-mix(
+    in srgb,
+    var(--secondary) 70%,
+    rgb(var(--white))
+  );
+  --secondary-dark: color-mix(in srgb, var(--secondary) 80%, rgb(var(--black)));
+
+  --success: rgb(var(--green));
+
+  --success-accent: color-mix(in srgb, var(--success) 95%, rgb(var(--black)));
+  --success-light: color-mix(in srgb, var(--success) 90%, rgb(var(--white)));
+
+  --warning: rgb(var(--amber));
+
+  --warning-light: color-mix(in srgb, var(--warning) 90%, rgb(var(--white)));
+  --warning-accent: color-mix(in srgb, var(--warning) 95%, var(--danger));
+
+  --border-radius: 4px;
+  --border: color-mix(
+    in srgb,
+    rgb(var(--background)),
+    rgb(var(--foreground-muted))
+  );
+
+  /* give simple ways to override */
+  --overview-workday-active: var(--overview-active);
+  --overview-workday-hf: var(--overview-hf);
+  --overview-absence-active: var(--overview-active);
+  --overview-absence-hf: var(--overview-hf);
+  --overview-weekend-active: var(--overview-active);
+  --overview-weekend-hf: var(--overview-hf);
+
+  --clock: var(--foreground);
+  --clock-accent: var(--success);
+}
+
+.regular {
+  --overview-workday: color-mix(
+    in srgb,
+    var(--primary-light) 80%,
+    rgb(var(--white))
+  );
+
+  --overview-workday-hf: var(--primary);
+
+  --overview-workday-active: var(--primary-dark);
+
+  --overview-absence: color-mix(
+    in srgb,
+    var(--warning-light) 80%,
+    rgb(var(--white))
+  );
+
+  --overview-absence-hf: var(--warning-light);
+
+  --overview-absence-active: var(--warning);
+
+  --overview-weekend: color-mix(in srgb, var(--secondary), rgb(var(--white)));
+  --overview-weekend-hf: color-mix(
+    in srgb,
+    var(--overview-weekend) 90%,
+    rgb(var(--black))
+  );
+  --overview-weekend-active: var(--secondary);
+}
+
+/* experimental dark theme */
+.dark.regular {
+  --background: var(--black);
+  --background-muted: color-mix(
+    in srgb,
+    rgb(var(--background)) 90%,
+    var(--foreground)
+  );
+  --background-secondary: var(--light-grey);
+  --foreground-muted: rgb(var(--dark-grey));
+  --foreground-accent: rgb(var(--white));
+  --foreground: color-mix(
+    in srgb,
+    var(--foreground-accent) 80%,
+    rgb(var(--background))
+  );
+  --primary: color-mix(in srgb, var(--primary-dark) 75%, rgb(var(--white)));
+  --primary-light: color-mix(in srgb, var(--primary) 90%, rgb(var(--white)));
+  --tertiary-dark: rgb(var(--dark-moderate-blue));
+}
+
+/* experimental old theme */
+.old {
+  --old-primary: 91 142 219;
+  --old-tertiary-dark: 38 91 171;
+  --old-foreground: 61 61 61;
+  --old-success: 92 184 92;
+  --old-danger: 217 83 79;
+  --old-warning: 240 173 78;
+  --old-secondary: 150 150 150;
+  --old-background-muted: 238 238 238;
+  --old-background-secondary: 230 230 230;
+  --old-weekend: 220 220 220;
+  --old-overview-hoverorfocus: 121 148 189;
+
+  --primary: rgb(var(--old-primary));
+  --primary-dark: color-mix(
+    in srgb,
+    var(--primary) 90%,
+    rgb(var(--dark-moderate-blue))
+  );
+
+  --secondary: rgb(var(--old-secondary));
+  --tertiary-dark: rgb(var(--old-tertiary-dark));
+
+  --background: var(--white);
+  --background-muted: rgb(var(--old-background-muted));
+  --background-secondary: var(--old-background-secondary);
+  --foreground-secondary: var(--foreground);
+  --foreground-muted: var(--dark-grey);
+  --foreground: rgb(var(--old-foreground));
+  --success: rgb(var(--old-success));
+  --danger: rgb(var(--old-danger));
+  --warning: rgb(var(--old-warning));
+
+  --overview-workday: var(--secondary);
+  --overview-absence: var(--warning);
+  --overview-weekend: rgb(var(--old-weekend));
+  --overview-active: var(--primary);
+  --overview-hf: rgb(var(--old-overview-hoverorfocus));
+
+  --clock-accent: var(--danger);
+}
+
+.dark.old {
+  --background: var(--black);
+  --background-muted: color-mix(
+    in srgb,
+    rgb(var(--background)) 85%,
+    var(--foreground)
+  );
+
+  --primary-dark: rgb(var(--old-tertiary-dark));
+  --primary: color-mix(in srgb, var(--primary-dark) 80%, rgb(var(--white)));
+  --primary-light: color-mix(
+    in srgb,
+    var(--primary) 90%,
+    rgb(var(--old-primary))
+  );
+
+  --tertiary-dark: rgb(var(--old-primary));
+  --foreground: color-mix(
+    in srgb,
+    rgb(var(--white)) 84%,
+    rgb(var(--background))
+  );
+  --foreground-accent: rgb(var(--white));
+
+  --secondary: color-mix(
+    in srgb,
+    rgb(var(--old-secondary)) 80%,
+    rgb(var(--background))
+  );
+
+  --warning: rgb(var(--amber));
+  --success: color-mix(in srgb, rgb(var(--old-success)), rgb(var(--green)));
+  --danger: color-mix(in srgb, rgb(var(--red)), rgb(var(--old-danger)));
+
+  --clock: rgb(var(--foreground-muted));
+
+  --overview-workday: rgb(var(--old-weekend));
+  --overview-weekend: var(--secondary);
+}

@@ -1,0 +1,8 @@
+/* add remaining effort icon into input */
+input.remaining-effort {
+  background-image: url("/assets/remaining-effort.svg") !important;
+  background-position: left 0.5rem center;
+  print-color-adjust: exact;
+  background-size: 1.5em;
+  @apply bg-no-repeat pl-9;
+}
