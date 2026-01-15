@@ -1,8 +1,10 @@
 import EmberApp from "ember-strict-application-resolver";
 import EmberRouter from "@ember/routing/router";
 import PageTitleService from "ember-page-title/services/page-title";
+import KeyboardService from "ember-keyboard/services/keyboard";
 
 import "#src/styles/app.css";
+import AppearanceService from "#src/services/appearance.ts";
 
 class Router extends EmberRouter {
   location = "history";
@@ -21,7 +23,9 @@ export class App extends EmberApp {
    */
   modules = {
     "./router": Router,
+    "./services/appearance": AppearanceService,
     "./services/page-title": PageTitleService,
+    "./services/keyboard": KeyboardService,
     /**
      * NOTE: this glob will import everything matching the glob,
      *     and includes non-services in the services directory.
