@@ -57,4 +57,3 @@ const Card = <template>
 
 export default Card;
 export { CardFooter, CardHeader, CardBlock };
-
