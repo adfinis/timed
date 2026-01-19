@@ -6,6 +6,7 @@ import { babel } from "@rollup/plugin-babel";
 const isCompat = Boolean(process.env.ENABLE_COMPAT_BUILD);
 
 export default defineConfig({
+  publicDir: "./demo-app/public",
   plugins: [
     ...(isCompat ? [classicEmberSupport()] : []),
     ember(),
