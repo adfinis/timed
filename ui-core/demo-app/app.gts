@@ -43,5 +43,12 @@ export class App extends EmberApp {
 
 Router.map(function () {
   this.route("analysis");
-  this.route("statistics");
+  this.route("statistics", function () {
+    this.route("year", { path: "/" });
+    this.route("month");
+    this.route("customer");
+    this.route("project");
+    this.route("task");
+    this.route("user");
+  });
 });
