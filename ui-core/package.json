@@ -47,6 +47,7 @@
   "dependencies": {
     "@embroider/addon-shim": "^1.8.9",
     "decorator-transforms": "^2.2.2",
+    "ember-focus-trap": "^1.1.1",
     "luxon": "^3.7.2"
   },
   "peerDependencies": {
@@ -82,6 +83,7 @@
     "concurrently": "^9.0.1",
     "ember-keyboard": "^9.0.4",
     "ember-lifeline": "^7.0.0",
+    "ember-modifier": "^4.2.2",
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.2",
     "ember-source": "^6.7.0",
