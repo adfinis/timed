@@ -22,5 +22,28 @@ export default class OptimizedPowerSelectComponent extends Component {
       e.stopImmediatePropagation();
       return false;
     }
+    if (!select.isOpen) {
+      return;
+    }
+
+    if (!["ArrowUp", "ArrowDown"].includes(e.key)) {
+      return;
+    }
+
+    const first = select.results.at(0);
+    const last = select.results.at(-1);
+
+    if (
+      (e.key === "ArrowUp" && select.highlighted !== first) ||
+      (e.key === "ArrowDown" && select.highlighted !== last)
+    ) {
+      return;
+    }
+
+    const item = e.key === "ArrowUp" ? last : first;
+    e.preventDefault();
+    select.actions.highlight(item);
+    select.actions.scrollTo(item);
+    return false;
   }
 }
