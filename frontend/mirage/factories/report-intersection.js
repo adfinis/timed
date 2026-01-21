@@ -1,11 +1,11 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory } from "miragejs";
 
 export default Factory.extend({
   comment: () => faker.lorem.sentence(),
-  notBillable: () => faker.random.boolean(),
-  review: () => faker.random.boolean(),
-  verified: () => faker.random.boolean(),
+  notBillable: () => faker.datatype.boolean(),
+  review: () => faker.datatype.boolean(),
+  verified: () => faker.datatype.boolean(),
 
   afterCreate(intersection, server) {
     const task = server.create("task");

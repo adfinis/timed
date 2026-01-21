@@ -1,12 +1,12 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory, trait } from "miragejs";
 import moment from "moment";
 
 export default Factory.extend({
   comment: () => faker.lorem.sentence(),
   transferred: false,
-  review: faker.random.boolean(),
-  notBillable: faker.random.boolean(),
+  review: faker.datatype.boolean(),
+  notBillable: faker.datatype.boolean(),
   // task: association(),
 
   date: () => moment(),
@@ -19,8 +19,8 @@ export default Factory.extend({
     const start = moment(this.fromTime, "HH:mm:ss");
 
     return start
-      .add(faker.random.number({ min: 15, max: 60 }), "minutes")
-      .add(faker.random.number({ min: 0, max: 59 }), "seconds")
+      .add(faker.number.int({ min: 15, max: 60 }), "minutes")
+      .add(faker.number.int({ min: 0, max: 59 }), "seconds")
       .format("HH:mm:ss");
   },
 

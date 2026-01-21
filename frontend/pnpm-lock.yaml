@@ -47,6 +47,9 @@ importers:
       '@eslint/js':
         specifier: ^9.25.1
         version: 9.39.1
+      '@faker-js/faker':
+        specifier: ^10.2.0
+        version: 10.2.0
       '@fortawesome/ember-fontawesome':
         specifier: ^3.1.0
         version: 3.1.0(@fortawesome/fontawesome-svg-core@7.1.0)(@glimmer/component@1.1.2(@babel/core@7.28.5))(@glint/template@1.4.0)
@@ -275,9 +278,6 @@ importers:
       eslint-plugin-qunit:
         specifier: 8.2.5
         version: 8.2.5(eslint@9.25.1(jiti@1.21.7))
-      faker:
-        specifier: 4.1.0
-        version: 4.1.0
       fast-redact:
         specifier: 3.5.0
         version: 3.5.0
@@ -1432,6 +1432,10 @@ packages:
   '@eslint/plugin-kit@0.2.8':
     resolution: {integrity: sha512-ZAoA40rNMPwSm+AeHpCq8STiNAwzWLJuP8Xv4CHIc9wv/PSuExjMrmjfYNj682vW0OOiZ1HKxzvjQr9XZIisQA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@faker-js/faker@10.2.0':
+    resolution: {integrity: sha512-rTXwAsIxpCqzUnZvrxVh3L0QA0NzToqWBLAhV+zDV3MIIwiQhAZHMdPCIaj5n/yADu/tyk12wIPgL6YHGXJP+g==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@floating-ui/core@1.7.2':
     resolution: {integrity: sha512-wNB5ooIKHQc+Kui96jE/n69rHFWAVoxn5CAzL1Xdd8FG03cgY3MLO+GF9U3W737fYDSgPWA6MReKhBQBop6Pcw==}
@@ -4205,9 +4209,6 @@ packages:
 
   fake-xml-http-request@2.1.2:
     resolution: {integrity: sha512-HaFMBi7r+oEC9iJNpc3bvcW7Z7iLmM26hPDmlb0mFwyANSsOQAtJxbdWsXITKOzZUyMYK0zYCv3h5yDj9TsiXg==}
-
-  faker@4.1.0:
-    resolution: {integrity: sha512-ILKg69P6y/D8/wSmDXw35Ly0re8QzQ8pMfBCflsGiZG2ZjMUNLYNexA6lz5pkmJlepVdsiDFUxYAzPQ9/+iGLA==}
 
   fast-deep-equal@2.0.1:
     resolution: {integrity: sha512-bCK/2Z4zLidyB4ReuIsvALH6w31YfAQDmXMqMx6FyfHqvBxtjC0eRumeSu4Bs3XtXwpyIywtSTrVT99BxY1f9w==}
@@ -9135,6 +9136,8 @@ snapshots:
       '@eslint/core': 0.13.0
       levn: 0.4.1
 
+  '@faker-js/faker@10.2.0': {}
+
   '@floating-ui/core@1.7.2':
     dependencies:
       '@floating-ui/utils': 0.2.10
@@ -13258,8 +13261,6 @@ snapshots:
   extract-stack@2.0.0: {}
 
   fake-xml-http-request@2.1.2: {}
-
-  faker@4.1.0: {}
 
   fast-deep-equal@2.0.1: {}
 

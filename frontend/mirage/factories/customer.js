@@ -1,6 +1,6 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory } from "miragejs";
 
 export default Factory.extend({
-  name: () => faker.company.companyName(),
+  name: () => faker.company.name(),
 });

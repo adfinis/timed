@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory, association, trait } from "miragejs";
 
 import { randomDuration } from "../helpers/duration";

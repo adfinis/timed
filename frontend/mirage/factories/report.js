@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory } from "miragejs";
 import moment from "moment";
 
@@ -8,8 +8,8 @@ export default Factory.extend({
   comment: () => faker.lorem.sentence(),
   date: () => moment().format("YYYY-MM-DD"),
   duration: () => randomDuration(),
-  review: () => faker.random.boolean(),
-  notBillable: () => faker.random.boolean(),
+  review: () => faker.datatype.boolean(),
+  notBillable: () => faker.datatype.boolean(),
   verifiedBy: null,
 
   afterCreate(report, server) {

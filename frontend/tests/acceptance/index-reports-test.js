@@ -6,10 +6,10 @@ import {
   visit,
   waitFor,
 } from "@ember/test-helpers";
+import { faker } from "@faker-js/faker";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
-import faker from "faker";
 import moment from "moment";
 import { module, test } from "qunit";
 
