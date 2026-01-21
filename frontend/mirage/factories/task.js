@@ -1,5 +1,5 @@
 import { capitalize } from "@ember/string";
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory } from "miragejs";
 
 import { randomDuration } from "../helpers/duration";

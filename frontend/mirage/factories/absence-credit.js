@@ -1,10 +1,10 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory } from "miragejs";
 import moment from "moment";
 
 export default Factory.extend({
   date: () => moment().format("YYYY-MM-DD"),
-  days: () => faker.random.number({ min: 1, max: 25 }),
+  days: () => faker.number.int({ min: 1, max: 25 }),
   comment: () => faker.lorem.sentence(),
 
   afterCreate(absenceCredit, server) {

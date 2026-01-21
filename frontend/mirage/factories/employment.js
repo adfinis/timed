@@ -1,11 +1,11 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory, trait } from "miragejs";
 import moment from "moment";
 
 import DjangoDurationTransform from "timed/transforms/django-duration";
 
 export default Factory.extend({
-  percentage: faker.random.arrayElement([50, 60, 80, 100]),
+  percentage: faker.helpers.arrayElement([50, 60, 80, 100]),
   // location: association(),
   // user: association(),
 

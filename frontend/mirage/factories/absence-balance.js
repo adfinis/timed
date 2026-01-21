@@ -1,4 +1,4 @@
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { Factory, trait } from "miragejs";
 import moment from "moment";
 
@@ -9,8 +9,8 @@ export default Factory.extend({
   balance: () => randomDuration(),
 
   days: trait({
-    credit: () => faker.random.number({ min: 10, max: 20 }),
-    usedDays: () => faker.random.number({ min: 5, max: 25 }),
+    credit: () => faker.number.int({ min: 10, max: 20 }),
+    usedDays: () => faker.number.int({ min: 5, max: 25 }),
   }),
 
   duration: trait({
