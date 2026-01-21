@@ -89,7 +89,7 @@ const TopnavNav = <template>
 </template> satisfies TOC<TopnavNavSignature>;
 
 const Topnav = <template>
-  <div class="fixed left-0 top-0 z-40 w-full">
+  <div class="left-0 top-0 z-40 w-full">
     <nav
       class="bg-background dark:bg-background-muted flex w-full flex-col px-2 py-1.5 shadow-md transition-all md:flex-row lg:px-3.5 lg:py-1 xl:px-4 xl:py-0.5"
     >
