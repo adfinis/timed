@@ -102,4 +102,51 @@ module("Integration | Component | optimized power select", function (hooks) {
 
     assert.strictEqual(this.selected.id, 2);
   });
+
+  test("wraparound works", async function (assert) {
+    assert.expect(1);
+    this.set("options", OPTIONS);
+    this.set("selected", OPTIONS[0]);
+
+    this.set("selectedTemplate", customSelectedTemplate);
+    this.set("optionTemplate", taskOptionTemplate);
+
+    await render(hbs`{{component
+  (ensure-safe-component "optimized-power-select")
+  options=this.options
+  selected=this.selected
+  onChange=(fn (mut this.selected))
+  tagName="div"
+  renderInPlace=true
+  searchField="name"
+  extra=(hash
+    optionTemplate=this.optionTemplate selectedTemplate=this.selectedTemplate
+  )
+}}`);
+
+    await clickTrigger();
+
+    await triggerKeyEvent(
+      ".ember-power-select-search-input",
+      "keydown",
+      "ArrowDown",
+    );
+    await triggerKeyEvent(
+      ".ember-power-select-search-input",
+      "keydown",
+      "ArrowDown",
+    );
+    await triggerKeyEvent(
+      ".ember-power-select-search-input",
+      "keydown",
+      "ArrowDown",
+    );
+    await triggerKeyEvent(
+      ".ember-power-select-search-input",
+      "keydown",
+      "Enter",
+    );
+
+    assert.strictEqual(this.selected.id, 1);
+  });
 });
