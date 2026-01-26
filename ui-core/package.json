@@ -1,7 +1,7 @@
 {
   "name": "ui-core",
   "version": "0.0.0",
-  "description": "The default blueprint for Embroider v2 addons.",
+  "description": "Core UI library for timed related frontends.",
   "keywords": [
     "ember-addon"
   ],
