@@ -1,86 +1,100 @@
-[tool.poetry]
+[project]
 name = "timed"
 version = "0.0.0"
 description = "Timetracking software"
-repository = "https://github.com/adfinis/timed-backend"
-authors = ["Adfinis AG"]
-license = "AGPL-3.0"
+authors = [{ name = "Adfinis AG" }]
+requires-python = ">=3.12,<4"
 readme = "README.md"
+license = "AGPL-3.0-or-later"
 classifiers = [
-	"Development Status :: 5 - Production/Stable",
-	"Environment :: Console",
-	"Intended Audience :: Developers",
-	"Intended Audience :: Information Technology",
-	"License :: OSI Approved :: GNU Affero General Public License v3",
-	"Natural Language :: English",
-	"Operating System :: OS Independent",
-	"Programming Language :: Python :: 3.8",
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
-include = ["CHANGELOG.md"]
+dependencies = [
+    "python-dateutil>=2.9.0,<3",
+    "django~=5.2.10",
+    "django-cors-headers>=4.9.0,<5",
+    "django-filter>=25.2,<26",
+    "django-prometheus>=2.4.1,<3",
+    "djangorestframework>=3.16.1,<4",
+    "djangorestframework-jsonapi>=8.1.0,<9",
+    "mozilla-django-oidc>=5.0.2,<6",
+    "pytz>=2025.2,<2026",
+    "pyexcel-webio>=0.1.4,<0.2",
+    "pyexcel-io>=0.6.7,<0.7",
+    "django-excel>=0.0.10,<0.0.11",
+    "django-nested-inline>=0.4.5,<0.5",
+    "pyexcel-ods3>=0.6.1,<0.7",
+    "pyexcel-xlsx>=0.6.1,<0.7",
+    "pyexcel-ezodf>=0.3.4,<0.4",
+    "django-environ>=0.12.0,<0.13",
+    "django-money>=3.5.4,<4",
+    "python-redmine>=2.5.0,<3",
+    "sentry-sdk>=2.50.0,<3",
+    "whitenoise>=6.11.0,<7",
+    "django-hurricane>=1.6.2,<2",
+    "psycopg[binary]>=3.3.2,<4",
+    "tornado>=6.5,<7",
+]
 
-[tool.poetry.dependencies]
-python = "^3.12"
-python-dateutil = "^2.9.0"
-django = "~5.2.10"
-# might remove this once we find out how the jsonapi extras_require work
-django-cors-headers = "^4.9.0"
-django-filter = "^25.2"
-django-prometheus = "^2.4.1"
-djangorestframework = "^3.16.1"
-djangorestframework-jsonapi = "^8.1.0"
-mozilla-django-oidc = "^5.0.2"
-pytz = "^2025.2"
-pyexcel-webio = "^0.1.4"
-pyexcel-io = "^0.6.7"
-django-excel = "^0.0.10"
-django-nested-inline = "^0.4.5"
-pyexcel-ods3 = "^0.6.1"
-pyexcel-xlsx = "^0.6.1"
-pyexcel-ezodf = "^0.3.4"
-django-environ = "^0.12.0"
-django-money = "^3.5.4"
-python-redmine = "^2.5.0"
-sentry-sdk = "^2.50.0"
-whitenoise = "^6.11.0"
-django-hurricane = "^1.6.2"
-psycopg = {extras = ["binary"], version = "^3.3.2"}
-tornado = "^6.5"
+[project.urls]
+Repository = "https://github.com/adfinis/timed-backend"
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.14.14"
-coverage = "7.13.1"
-django-extensions = "4.1"
-factory-boy = "3.3.3"
-ipdb = "0.13.13"
-pdbpp = "0.12.0.post1"
-pytest = "9.0.2"
-pytest-cov = "7.0.0"
-pytest-django = "4.11.1"
-pytest-env = "1.2.0"
-pytest-factoryboy = "2.8.1"
-pytest-mock = "3.15.1"
-pytest-randomly = "3.16.0"
-requests-mock = "1.12.1"
-lxml = "6.0.2"
-syrupy = "^5.0.0"
-pytest-freezer = "^0.4.9"
+[dependency-groups]
+dev = [
+    "ruff>=0.14.13,<0.15",
+    "coverage==7.13.1",
+    "django-extensions==4.1",
+    "factory-boy==3.3.3",
+    "ipdb==0.13.13",
+    "pdbpp==0.12.0.post1",
+    "pytest==9.0.2",
+    "pytest-cov==7.0.0",
+    "pytest-django==4.11.1",
+    "pytest-env==1.2.0",
+    "pytest-factoryboy==2.8.1",
+    "pytest-mock==3.15.1",
+    "pytest-randomly==3.16.0",
+    "requests-mock==1.12.1",
+    "lxml==6.0.2",
+    "syrupy>=5.0.0,<6",
+    "pytest-freezer>=0.4.9,<0.5",
+]
+
+[tool.uv]
+
+[tool.uv.build-backend]
+module-root = ""
+source-include = ["CHANGELOG.md/**"]
+
+[build-system]
+requires = ["uv_build>=0.9.26,<0.10.0"]
+build-backend = "uv_build"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "timed.settings"
 cache_dir = "/home/timed/.cache/pytest"
 addopts = "--reuse-db --randomly-seed=1521188767 --randomly-dont-reorganize"
-env = [
-    "DJANGO_OIDC_USERNAME_CLAIM=sub"
-]
+env = ["DJANGO_OIDC_USERNAME_CLAIM=sub"]
 filterwarnings = [
     "error::DeprecationWarning",
     "error::PendingDeprecationWarning",
     # following is needed beceause of https://github.com/mozilla/mozilla-django-oidc/pull/371
-    "ignore:distutils Version classes are deprecated:DeprecationWarning", # deprecation in pytest-freezegun
+    "ignore:distutils Version classes are deprecated:DeprecationWarning",  # deprecation in pytest-freezegun
     "ignore:.*is deprecated in favour of new moneyed.l10n.format_money.*",
     "ignore:.*invalid escape sequence.*",
     "ignore:pkg_resources is deprecated as an API:DeprecationWarning",
-    "ignore:.*datetime.datetime.utcnow.*" # https://foss.heptapod.net/openpyxl/openpyxl/-/merge_requests/435 isn't included in a release of openpyxl yet and we are stuck on 3.0.10 because of https://github.com/pyexcel/pyexcel-xlsx/issues/52
+    "ignore:.*datetime.datetime.utcnow.*",                                 # https://foss.heptapod.net/openpyxl/openpyxl/-/merge_requests/435 isn't included in a release of openpyxl yet and we are stuck on 3.0.10 because of https://github.com/pyexcel/pyexcel-xlsx/issues/52
 ]
 
 [tool.coverage.run]
@@ -108,7 +122,3 @@ omit = [
     "setup.py",
 ]
 show_missing = true
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
