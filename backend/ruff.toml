@@ -1,7 +1,9 @@
 line-length = 88
 exclude = [
     "migrations",
-    "snapshots"
+    "snapshots",
+    ".container-venv",
+    ".venv",
 ]
 
 [format]

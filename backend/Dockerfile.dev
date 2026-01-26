@@ -1,0 +1,24 @@
+FROM ghcr.io/astral-sh/uv:python3.12-alpine
+
+RUN apk add shadow wait4ports gcc musl-dev linux-headers --no-cache && \
+    useradd -m -r -u 1001 timed && \
+    mkdir -p /var/www/static && \
+    chmod 777 /var/www/static && \
+    ln -s /app/manage.py /usr/local/bin
+
+ENV UV_PYTHON_DOWNLOADS=0 \
+    UV_LINK_MODE=copy
+
+WORKDIR /app
+
+ENV DJANGO_SETTINGS_MODULE=timed.settings \
+    PYTHONUNBUFFERED=1 \
+    STATIC_ROOT=/var/www/static \
+    HURRICANE_REQ_QUEUE_LEN=200 \
+    UV_PROJECT_ENVIRONMENT=/app/.container-venv
+
+USER timed
+
+ENTRYPOINT [ "./entrypoint-dev.sh" ]
+
+CMD ["sh", "-c", "uv sync --all-groups && . $UV_PROJECT_ENVIRONMENT/bin/activate && ./manage.py migrate --no-input && ./cmd.sh --autoreload --static"]

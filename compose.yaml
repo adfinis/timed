@@ -4,7 +4,7 @@ services:
     user: "${UID:?Set UID env variable to your user id}"
     build:
       context: ./backend
-      target: dev
+      dockerfile: Dockerfile.dev
     depends_on:
       - mailpit
       - db

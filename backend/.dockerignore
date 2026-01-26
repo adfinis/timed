@@ -16,4 +16,5 @@ __pycache__
 .python-version
 *.swp
 .venv
+.container-venv
 .ruff_cache
