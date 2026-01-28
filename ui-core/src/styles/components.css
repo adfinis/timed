@@ -1,10 +1,3 @@
-@import "./components/alert.css";
-@import "./components/basic-dropdown.css";
-@import "./components/button.css";
-@import "./components/customer-comment.css";
 @import "./components/form.css";
-@import "./components/power-calendar.css";
-@import "./components/power-select.css";
-@import "./components/remaining-effort.css";
-@import "./components/slider.css";
-@import "./components/shepherd.css";
+@import "./components/alert.css";
+@import "./components/button.css";
