@@ -562,24 +562,22 @@ tornado = ">=6.3.3,<7.0.0"
 
 [[package]]
 name = "django-money"
-version = "3.5.4"
+version = "3.6.0"
 description = "Adds support for using money and currency fields in django models and forms. Uses py-moneyed as the money implementation."
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "django_money-3.5.4-py3-none-any.whl", hash = "sha256:628b3afb6671edc2cbd26743d858c31d3b99a735357f7acb6a399ab3ab008d2b"},
-    {file = "django_money-3.5.4.tar.gz", hash = "sha256:25933ed6177f8dc981114db813c7c5d36c7c89bc4017f2b1b2bb0209b5f68876"},
+    {file = "django_money-3.6.0-py3-none-any.whl", hash = "sha256:a8d249bf3ce6ad7fb953530c920cc85ea7f1137c0fde747a74204ea24ec97ab1"},
+    {file = "django_money-3.6.0.tar.gz", hash = "sha256:94402f2831f2726b94ef2da35b4059441b4c0aedfc47b312472200d4ffdf8d73"},
 ]
 
 [package.dependencies]
-Django = ">=2.2"
+Django = ">=4.2"
 py-moneyed = ">=2.0,<3.1"
-setuptools = "*"
 
 [package.extras]
 exchange = ["certifi"]
-test = ["django-stubs", "mixer", "mypy", "pytest (>=8.2,<8.3)", "pytest-cov", "pytest-django"]
 
 [[package]]
 name = "django-nested-inline"
@@ -2094,4 +2092,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "ee89fdac0a916f6a80653566adc3174a4dcb9e8932ef068c16a9d6f65a21751b"
+content-hash = "7cf29fbe682dce12a83a8250b9f7a5d8414ae27a01caabd934a588986efe52c6"
