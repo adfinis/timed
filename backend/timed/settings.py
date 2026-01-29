@@ -1,10 +1,10 @@
 import os
 import re
+from importlib import resources
 from pathlib import Path
 
 import environ
 import sentry_sdk
-from pkg_resources import resource_filename
 from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env()
@@ -339,10 +339,11 @@ REDMINE_BUILD_PROJECT = env.str("DJANGO_REDMINE_BUILD_PROJECT", default="build")
 
 # Work report definition
 
-WORK_REPORT_PATH = env.str(
-    "DJANGO_WORK_REPORT_PATH",
-    default=resource_filename("timed.reports", "templates/workreport.ots"),
-)
+with resources.path("timed.reports.templates", "workreport.ots") as f:
+    WORK_REPORT_PATH = env.str(
+        "DJANGO_WORK_REPORT_PATH",
+        default=str(f),
+    )
 
 WORK_REPORTS_EXPORT_MAX_COUNT = env.int(
     "DJANGO_WORK_REPORTS_EXPORT_MAX_COUNT", default=0
