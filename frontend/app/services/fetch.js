@@ -1,8 +1,6 @@
 import Service, { service } from "@ember/service";
 import { isEmpty } from "@ember/utils";
-import { isUnauthorizedResponse } from "ember-fetch/errors";
 import { handleUnauthorized } from "ember-simple-auth-oidc";
-import fetch from "fetch";
 
 const CONTENT_TYPE = "application/vnd.api+json";
 
@@ -53,10 +51,10 @@ export default class FetchService extends Service {
       init.body = stringifyBodyData(init);
     }
 
-    const response = await fetch(resource, init);
+    const response = await window.fetch(resource, init);
 
     if (!response.ok) {
-      if (isUnauthorizedResponse(response)) {
+      if (response.status === 401) {
         /* istanbul ignore next */
         return handleUnauthorized(this.session);
       }
