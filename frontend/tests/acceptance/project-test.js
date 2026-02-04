@@ -72,6 +72,8 @@ module("Acceptance | projects", function (hooks) {
     assert.dom("[data-test-task-form]").exists();
     assert.dom("[data-test-save]").isDisabled();
 
+    assert.dom("[data-test-name]").exists();
+    assert.dom("[data-test-name]").isVisible();
     await fillIn("[data-test-name]", "FooBar Task 1");
     assert.dom("[data-test-save]").isNotDisabled();
 
@@ -80,10 +82,15 @@ module("Acceptance | projects", function (hooks) {
 
     await click("[data-test-save]");
 
+    await click("[data-test-task-table-row]");
     assert.dom("[data-test-name]").hasValue("FooBar Task 1");
     assert.dom("[data-test-reference]").hasValue("Reference of FooBar Task 1");
     assert.dom("[data-test-estimated-time]").hasValue("02:15");
+
     assert.dom("[data-test-task-table-row]").exists({ count: 1 });
+
+    await click("[data-test-cancel]");
+    assert.dom("[data-test-task-form]").doesNotExist();
   });
 
   test("can edit task", async function (assert) {
@@ -116,7 +123,6 @@ module("Acceptance | projects", function (hooks) {
     await fillIn("[data-test-estimated-time]", "02:15");
 
     await click("[data-test-save]");
-    await click("[data-test-cancel]");
 
     assert.dom("[data-test-task-form]").doesNotExist();
     assert.dom("[data-test-table-name]").hasText("FooBar Task 1");
@@ -135,7 +141,6 @@ module("Acceptance | projects", function (hooks) {
     await click("[data-test-archived] input");
 
     await click("[data-test-save]");
-    await click("[data-test-cancel]");
 
     assert.dom("[data-test-task-form]").doesNotExist();
     assert.dom("[data-test-table-name]").hasText("FooBar Task 1 updated");
