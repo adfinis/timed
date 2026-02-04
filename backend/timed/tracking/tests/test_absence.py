@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from typing import TYPE_CHECKING
 
 import pytest
 from django.urls import reverse
@@ -11,6 +14,10 @@ from timed.employment.factories import (
     UserFactory,
 )
 from timed.tracking.factories import AbsenceFactory, ReportFactory
+
+if TYPE_CHECKING:
+    from timed.employment.models import AbsenceType
+    from timed.tracking.models import Absence
 
 
 @pytest.mark.parametrize(
@@ -410,3 +417,98 @@ def test_absence_detail_unemployed(internal_employee_client):
 
     json = res.json()
     assert json["data"]["attributes"]["duration"] == "00:00:00"
+
+
+@pytest.mark.parametrize(
+    ("allow_comments", "comment", "expected"),
+    [(True, "foo", "foo"), (False, "bar", "")],
+)
+def test_absence_create_comments(
+    internal_employee_client,
+    absence_type: AbsenceType,
+    allow_comments: bool,  # noqa: FBT001
+    comment: str,
+    expected: str,
+):
+
+    absence_type.allow_comments = allow_comments
+    absence_type.save()
+
+    date = datetime.date.today()
+
+    data = {
+        "data": {
+            "type": "absences",
+            "id": None,
+            "attributes": {"date": date.strftime("%Y-%m-%d"), "comment": comment},
+            "relationships": {
+                "absence_type": {
+                    "data": {"type": "absence-types", "id": absence_type.id}
+                }
+            },
+        }
+    }
+
+    url = reverse("absence-list")
+
+    response = internal_employee_client.post(url, data)
+
+    assert response.status_code == status.HTTP_201_CREATED
+
+    json = response.json()
+    assert json["data"]["attributes"]["comment"] == expected
+
+
+@pytest.mark.parametrize(
+    ("allow_comments", "prev_comment", "comment", "expected"),
+    [
+        (True, "abc", "foo", "foo"),
+        (True, "x", "bar", "bar"),
+        (True, "y", None, "y"),
+        (False, "", "bar", ""),
+        (False, "baz", None, ""),
+    ],
+)
+def test_absence_edit_comments(
+    internal_employee_client,
+    absence_type: AbsenceType,
+    absence: Absence,
+    allow_comments: bool,  # noqa: FBT001
+    prev_comment: str,
+    comment: str,
+    expected: str,
+):
+
+    absence_type.allow_comments = allow_comments
+    absence_type.save()
+
+    absence.absence_type = absence_type
+    absence.user = internal_employee_client.user
+    absence.comment = prev_comment
+
+    absence.save()
+
+    data = {
+        "data": {
+            "type": "absences",
+            "id": absence.id,
+            "attributes": {},
+            "relationships": {
+                "absence_type": {
+                    "data": {"type": "absence-types", "id": absence_type.id}
+                }
+            },
+        }
+    }
+
+    if comment is not None:
+        data["data"]["attributes"]["comment"] = comment
+
+    url = reverse("absence-detail", args=[absence.id])
+
+    response = internal_employee_client.patch(url, data)
+
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+    assert json["data"]["attributes"]["comment"] == expected

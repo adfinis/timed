@@ -75,6 +75,7 @@ class AbsenceTypeFactory(DjangoModelFactory):
 
     name = Faker("word")
     fill_worktime = False
+    allow_comments = True
 
     class Meta:
         """Meta informations for the absence type factory."""
