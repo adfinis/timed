@@ -322,6 +322,7 @@ class AbsenceTypeSerializer(ModelSerializer):
         fields = (
             "name",
             "fill_worktime",
+            "allow_comments",
         )
 
 

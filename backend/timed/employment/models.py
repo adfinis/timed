@@ -74,6 +74,7 @@ class AbsenceType(models.Model):
 
     name = models.CharField(max_length=50)
     fill_worktime = models.BooleanField(default=False)
+    allow_comments = models.BooleanField(default=True)
 
     class Meta:
         ordering = ("name",)
