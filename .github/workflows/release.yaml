@@ -112,7 +112,7 @@ jobs:
             ${{ steps.meta.outputs.labels }}
 
       - name: Sign ${{ matrix.config.name }} image and attach SBOM attestation
-        uses: adfinis/container-scanning-action@v0.3.0
+        uses: adfinis/container-scanning-action@v0.4.0
         with:
           image-ref: ghcr.io/${{ github.repository }}/${{ matrix.config.name }}
           token: ${{ secrets.GITHUB_TOKEN }}
