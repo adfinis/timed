@@ -513,14 +513,14 @@ django = ">=4.2"
 
 [[package]]
 name = "django-environ"
-version = "0.12.0"
+version = "0.12.1"
 description = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
 optional = false
 python-versions = "<4,>=3.9"
 groups = ["main"]
 files = [
-    {file = "django_environ-0.12.0-py2.py3-none-any.whl", hash = "sha256:92fb346a158abda07ffe6eb23135ce92843af06ecf8753f43adf9d2366dcc0ca"},
-    {file = "django_environ-0.12.0.tar.gz", hash = "sha256:227dc891453dd5bde769c3449cf4a74b6f2ee8f7ab2361c93a07068f4179041a"},
+    {file = "django_environ-0.12.1-py2.py3-none-any.whl", hash = "sha256:064ba2d5082f833e6d7fe4def4928bde1eedc0248a417575da7db147aeec1c20"},
+    {file = "django_environ-0.12.1.tar.gz", hash = "sha256:22859c6e905ab7637fa3348d1787543bb4492f38d761104a3ce0519b7b752845"},
 ]
 
 [package.extras]
@@ -2150,4 +2150,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "b3fdd67d97acc745398af6fe443c5d3706203906403258a2e9e1bb30c1365bf4"
+content-hash = "571fd16f8a2bc6bec4feb5fa1bc622461bf4885d709aead94275daf01d43ebf2"
