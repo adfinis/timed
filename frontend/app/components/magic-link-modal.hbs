@@ -79,7 +79,16 @@
         data-test-magic-link-string
       />
     </modal.body>
-    <modal.footer class="flex justify-end">
+    <modal.footer class="flex justify-end gap-2">
+      <button
+        class="btn btn-success"
+        {{on "click" this.createReport}}
+        disabled={{not this.task}}
+        type="button"
+        data-test-create-magic-link-report
+      >
+        Create report
+      </button>
       <button
         class="btn btn-primary"
         {{on "click" this.copyToClipboard}}

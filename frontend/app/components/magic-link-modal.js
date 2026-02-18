@@ -2,6 +2,7 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import moment from "moment";
 
 export default class MagicLinkModal extends Component {
   @tracked task;
@@ -29,15 +30,33 @@ export default class MagicLinkModal extends Component {
     this.task = task;
   }
 
+  get durationParam() {
+    if (!this.duration) {
+      return null;
+    }
+    if (typeof this.duration === "string") {
+      return this.duration;
+    }
+    if (typeof this.duration?.toISOString === "function") {
+      return this.duration.toISOString();
+    }
+    return String(this.duration);
+  }
+
+  get reportQueryParams() {
+    return {
+      task: this.task?.id,
+      comment: this.comment,
+      duration: this.durationParam,
+      review: this.review,
+      notBillable: this.notBillable,
+      day: moment().format("YYYY-MM-DD"),
+    };
+  }
+
   get magicLinkString() {
     const url = this.router.urlFor("index.reports", {
-      queryParams: {
-        task: this.task?.id,
-        comment: this.comment,
-        duration: this.duration,
-        review: this.review,
-        notBillable: this.notBillable,
-      },
+      queryParams: this.reportQueryParams,
     });
 
     return `${window.location.origin}${url}`;
@@ -53,5 +72,14 @@ export default class MagicLinkModal extends Component {
     } catch {
       this.notify.error("Could not copy to clipboard");
     }
+  }
+
+  @action
+  createReport() {
+    this.router.transitionTo("index.reports", {
+      queryParams: this.reportQueryParams,
+    });
+
+    this.args.onClose?.();
   }
 }
