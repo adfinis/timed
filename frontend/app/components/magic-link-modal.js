@@ -15,6 +15,15 @@ export default class MagicLinkModal extends Component {
   @service router;
   @service notify;
 
+  constructor(...args) {
+    super(...args);
+    this.task = this.args.task ?? null;
+    this.duration = this.args.duration ?? null;
+    this.comment = this.args.comment ?? "";
+    this.review = this.args.review ?? false;
+    this.notBillable = this.args.notBillable ?? false;
+  }
+
   @action
   onSetTask(task) {
     this.task = task;
