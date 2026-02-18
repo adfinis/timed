@@ -77,9 +77,9 @@ jobs:
 
       - name: Load bitnami image into k8s
         run: |
-          docker pull bitnamilegacy/postgresql:17.6.0-debian-12-r4
-          docker tag docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r4 docker.io/bitnami/postgresql:17.6.0-debian-12-r4
-          kind load docker-image docker.io/bitnami/postgresql:17.6.0-debian-12-r4 --name chart-testing
+          docker pull --platform linux/amd64 bitnamilegacy/postgresql:17.6.0-debian-12-r4
+          docker tag bitnamilegacy/postgresql:17.6.0-debian-12-r4 bitnami/postgresql:17.6.0-debian-12-r4
+          docker save bitnami/postgresql:17.6.0-debian-12-r4 | kind load image-archive /dev/stdin --name chart-testing
 
       - name: Install kube-prometheus stack CRDs
         run: |
