@@ -92,6 +92,18 @@
                     {{format-duration activity.duration}}
                   {{/if}}
                 </Table::Td>
+                <Table::Td class="px-2">
+                  <div class="grid h-full w-full place-items-end">
+                    <MagicLinkBtn
+                      @task={{activity.task}}
+                      @duration={{if activity.active null activity.duration}}
+                      @comment={{activity.comment}}
+                      @review={{activity.review}}
+                      @notBillable={{activity.notBillable}}
+                      data-test-activity-magic-link
+                    />
+                  </div>
+                </Table::Td>
                 <Table::Td class="px-4">
                   <div class="grid h-full w-full place-items-end">
                     {{#if activity.active}}
