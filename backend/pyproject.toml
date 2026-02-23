@@ -45,7 +45,7 @@ whitenoise = "^6.11.0"
 django-hurricane = "^1.6.2"
 psycopg = {extras = ["binary"], version = "^3.3.2"}
 tornado = "^6.5"
-setuptools = "^80.10.2"
+setuptools = "^82.0.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.15.2"
