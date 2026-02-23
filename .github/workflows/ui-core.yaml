@@ -4,16 +4,16 @@ name: ui-core CI
 on:
   push:
     branches: [main]
-    paths: ["ui-core/**"]
+    paths: ["ember/ui-core/**"]
   pull_request:
-    paths: ["ui-core/**"]
+    paths: ["ember/ui-core/**"]
 
 env:
   NODE_VERSION: 20
 
 defaults:
   run:
-    working-directory: ./ui-core
+    working-directory: ./ember/ui-core
 
 jobs:
   lint:
@@ -29,6 +29,8 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4.2.0
+        with:
+          package_json_file: "ember/package.json"
 
       - run: |
           mkdir -p ~/.local/share/pnpm/store/v10
@@ -38,7 +40,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          cache-dependency-path: ember/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -56,6 +58,8 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4.2.0
+        with:
+          package_json_file: "ember/package.json"
 
       - run: |
           mkdir -p ~/.local/share/pnpm/store/v10
@@ -65,7 +69,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          cache-dependency-path: ember/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
