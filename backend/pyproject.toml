@@ -43,7 +43,7 @@ python-redmine = "^2.5.0"
 sentry-sdk = "^2.52.0"
 whitenoise = "^6.11.0"
 django-hurricane = "^1.6.2"
-psycopg = {extras = ["binary"], version = "^3.3.2"}
+psycopg = {extras = ["binary"], version = "^3.3.3"}
 tornado = "^6.5"
 setuptools = "^80.10.2"
 
