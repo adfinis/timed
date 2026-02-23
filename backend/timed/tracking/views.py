@@ -350,7 +350,7 @@ class ReportViewSet(ModelViewSet):
         if file_type not in ["csv", "xlsx", "ods"]:
             return HttpResponseBadRequest()
 
-        sheet = django_excel.pe.Sheet(content, name="Report", colnames=colnames)
+        sheet = django_excel.p.Sheet(content, name="Report", colnames=colnames)
         return django_excel.make_response(
             sheet, file_type=file_type, file_name=f"report.{file_type}"
         )
