@@ -1456,6 +1456,40 @@ def test_report_update_bulk_review_and_verified(
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
+@pytest.mark.parametrize(
+    ("review", "verified"), [(True, True), (True, False), (False, True), (False, False)]
+)
+def test_report_update_bulk_allows_right_review_and_verified_combinations(
+    superadmin_client, report, verified, review
+):
+    EmploymentFactory.create(user=superadmin_client.user)
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"verified": verified, "review": review},
+        }
+    }
+    url = reverse("report-bulk")
+    query_params = f"?id={report.id}"
+    response = superadmin_client.post(url + query_params, data)
+    report.refresh_from_db()
+
+    if review and verified:
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    if review and not verified:
+        assert report.verified_by is None
+
+    if not review and verified:
+        assert not report.review
+        assert report.verified_by is not None
+
+    if not review and not verified:
+        assert not report.review
+        assert report.verified_by is None
+
+
 def test_report_update_bulk_bill_non_reviewer(
     internal_employee_client,
     report_factory,
