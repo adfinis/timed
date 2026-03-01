@@ -7,17 +7,17 @@
   {
     "model": "employment.absencetype",
     "pk": 1,
-    "fields": { "name": "EO", "fill_worktime": false }
+    "fields": { "name": "EO", "fill_worktime": false, "allow_comments": true  }
   },
   {
     "model": "employment.absencetype",
     "pk": 2,
-    "fields": { "name": "Ferien", "fill_worktime": false }
+    "fields": { "name": "Ferien", "fill_worktime": false, "allow_comments": true }
   },
   {
     "model": "employment.absencetype",
     "pk": 3,
-    "fields": { "name": "Krankheit", "fill_worktime": true }
+    "fields": { "name": "Krankheit", "fill_worktime": true, "allow_comments": false }
   },
   {
     "model": "projects.customer",

@@ -32,6 +32,14 @@ export default class AbsenceType extends Model {
   @attr("boolean") fillWorktime;
 
   /**
+   * Whether the absence type allows comments
+   *
+   * @property {Boolean} allowComments
+   * @public
+   */
+  @attr("boolean") allowComments;
+
+  /**
    * The balances for this type
    *
    * @property {AbsenceBalance[]} absenceBalances

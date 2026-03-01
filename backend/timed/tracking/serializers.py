@@ -485,6 +485,8 @@ class AbsenceSerializer(ModelSerializer):
 
         if data.get("date").isoweekday() not in location.workdays:
             raise ValidationError(_("You can't create an absence on a weekend"))
+        if not data["absence_type"].allow_comments:
+            data["comment"] = ""
 
         return data
 

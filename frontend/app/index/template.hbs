@@ -249,6 +249,7 @@
             </f.input>
             <f.input
               class="rounded"
+              disabled={{not cs.absenceType.allowComments}}
               @type="textarea"
               @placeholder="Enter comment..."
               @name="comment"
