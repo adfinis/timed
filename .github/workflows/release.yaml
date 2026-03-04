@@ -73,7 +73,7 @@ jobs:
           sed 's/"0.0.0"/"${{ needs.semrel.outputs.version }}"/g' -i ./${{ matrix.config.name }}/${{ matrix.config.version-file }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -148,7 +148,7 @@ jobs:
           sed -r 's/"(0.0.0|latest)"/"${{ needs.semrel.outputs.version }}"/g' -i ./charts/*/Chart.yaml
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
