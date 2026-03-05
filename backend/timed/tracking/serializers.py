@@ -469,22 +469,25 @@ class AbsenceSerializer(ModelSerializer):
 
         An absence should not be created on a public holiday or a weekend.
         """
-        instance = self.instance
-        user = data.get("user", instance and instance.user)
+        user = data.get("user") or self.instance.user
+        date = data.get("date") or self.instance.date
+
         try:
-            location = Employment.objects.get_at(user, data.get("date")).location
+            location = Employment.objects.get_at(user, date).location
         except Employment.DoesNotExist as exc:  # pragma: no cover
             raise ValidationError(
                 _("You can't create an absence on an unemployed day.")
             ) from exc
 
-        if PublicHoliday.objects.filter(
-            location_id=location.id, date=data.get("date")
-        ).exists():
+        if PublicHoliday.objects.filter(location_id=location.id, date=date).exists():
             raise ValidationError(_("You can't create an absence on a public holiday"))
 
-        if data.get("date").isoweekday() not in location.workdays:
+        if date.isoweekday() not in location.workdays:
             raise ValidationError(_("You can't create an absence on a weekend"))
+
+        absence_type = data.get("absence_type") or self.instance.absence_type
+        if not absence_type.allow_comments:
+            data["comment"] = ""
 
         return data
 

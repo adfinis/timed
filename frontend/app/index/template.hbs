@@ -137,9 +137,11 @@
           </modal.header>
           <modal.body class="grid gap-2">
             <f.input @name="absenceType" as |fi|>
-              <div class="btn-group grid grid-cols-3">
+              <div class="btn-group grid grid-cols-3" data-test-absence-types>
                 {{#each this.absenceTypes as |at|}}
                   <button
+                    data-test-absence-type
+                    data-test-absence-type-id={{at.id}}
                     type="button"
                     class="btn
                       {{if
@@ -170,11 +172,15 @@
                 </div>
               </PowerCalendar>
             </f.input>
-            <f.input
-              @type="textarea"
-              @placeholder="Enter comment..."
-              @name="comment"
-            />
+            {{#if cs.absenceType.allowComments}}
+              <f.input
+                data-test-absence-comment
+                class="rounded"
+                @type="textarea"
+                @placeholder="Optional comment..."
+                @name="comment"
+              />
+            {{/if}}
           </modal.body>
           <modal.footer class="flex justify-between">
             <button
@@ -213,9 +219,11 @@
           </modal.header>
           <modal.body class="grid gap-2">
             <f.input @name="absenceType" as |fi|>
-              <div class="btn-group grid grid-cols-3">
+              <div class="btn-group grid grid-cols-3" data-test-absence-types>
                 {{#each this.absenceTypes as |at|}}
                   <button
+                    data-test-absence-type
+                    data-test-absence-type-id={{at.id}}
                     type="button"
                     class="btn
                       {{if
@@ -247,12 +255,16 @@
                 </div>
               </PowerCalendarMultiple>
             </f.input>
-            <f.input
-              class="rounded"
-              @type="textarea"
-              @placeholder="Enter comment..."
-              @name="comment"
-            />
+            {{#if cs.absenceType.allowComments}}
+              <f.input
+                data-test-absence-comment
+                class="rounded"
+                @type="textarea"
+                @placeholder="Optional comment..."
+                @name="comment"
+              />
+            {{/if}}
+
           </modal.body>
           <modal.footer class="flex justify-between">
             <button

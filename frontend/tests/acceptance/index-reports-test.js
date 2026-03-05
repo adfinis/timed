@@ -180,4 +180,37 @@ module("Acceptance | index reports", function (hooks) {
     assert.ok(currentURL().includes(`/reports?day=${tomorrow}`));
     assert.dom("[data-test-report-row]").exists({ count: 6 });
   });
+
+  test("absences ", async function (assert) {
+    const noComment = this.server.create("absenceType", {
+      allowComments: false,
+      name: "foo",
+    });
+    const withComment = this.server.create("absenceType", {
+      allowComments: true,
+      name: "bar",
+    });
+
+    await visit("/reports");
+    await click("[data-test-add-absence]");
+
+    const commentSelector = "[data-test-absence-comment]";
+
+    // comment is hidden per default
+    assert.dom(commentSelector).doesNotExist();
+    await click(`[data-test-absence-type-id='${withComment.id}']`);
+    assert.dom(commentSelector).exists();
+    await click(`[data-test-absence-type-id='${noComment.id}']`);
+    assert.dom(commentSelector).doesNotExist();
+    await click(`[data-test-absence-type-id='${withComment.id}']`);
+    assert.dom(commentSelector).exists();
+    await fillIn(commentSelector, "foo bar baz");
+    await click("[data-test-add-absence-save]");
+
+    // should also work when editing an absence
+    await click("[data-test-edit-absence]");
+    assert.dom(commentSelector).hasValue("foo bar baz");
+    await click(`[data-test-absence-type-id='${noComment.id}']`);
+    assert.dom(commentSelector).doesNotExist();
+  });
 });
