@@ -49,21 +49,21 @@ jobs:
         uses: docker/setup-buildx-action@v4
 
       - name: Build backend image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./backend/
           load: true
           tags: ghcr.io/${{ github.repository }}/backend:latest
 
       - name: Build frontend image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./frontend/
           load: true
           tags: ghcr.io/${{ github.repository }}/frontend:latest
 
       - name: Build customer-center image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./customer-center/
           load: true
