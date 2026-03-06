@@ -46,7 +46,7 @@ jobs:
         uses: helm/chart-testing-action@v2
 
       - name: Set up buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Build backend image
         uses: docker/build-push-action@v6
