@@ -10,6 +10,12 @@ import customerOptionTemplate from "timed/components/optimized-power-select/cust
 import projectOptionTemplate from "timed/components/optimized-power-select/custom-options/project-option";
 import taskOptionTemplate from "timed/components/optimized-power-select/custom-options/task-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/task-selection";
+import sortArchivedLast from "timed/utils/sort-archived-last";
+
+const sortByArchivedAndName = sortArchivedLast((a, b) => {
+  return a.name > b.name ? 1 : -1;
+});
+
 /**
  * Component for selecting a task, which consists of selecting a customer and
  * project first.
@@ -250,7 +256,7 @@ export default class TaskSelectionComponent extends Component {
     const customers = this.store
       .peekAll("customer")
       ?.filter(this.filterByArchived)
-      .toSorted((c) => c.name);
+      .toSorted(sortByArchivedAndName);
 
     const tasks = this.store.peekAll("task").filter((task) => {
       return ids.includes(task.id) && this.filterByArchived(task);
@@ -266,7 +272,7 @@ export default class TaskSelectionComponent extends Component {
   _projects = dropTask(this, async () => {
     return (await this.customer?.projects)
       ?.filter(this.filterByArchived)
-      .toSorted((p) => p.name);
+      .toSorted(sortByArchivedAndName);
   });
 
   _projectsTask = trackedTask(this, this._projects, () => [this._customer?.id]);
@@ -278,7 +284,7 @@ export default class TaskSelectionComponent extends Component {
   _tasks = dropTask(this, async () => {
     return (await this.project?.tasks)
       ?.filter(this.filterByArchived)
-      .toSorted((t) => t.name);
+      .toSorted(sortByArchivedAndName);
   });
 
   _tasksTask = trackedTask(this, this._tasks, () => [this._project?.id]);

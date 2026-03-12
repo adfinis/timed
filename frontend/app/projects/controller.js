@@ -5,6 +5,7 @@ import { tracked } from "@glimmer/tracking";
 import { dropTask, lastValue, task } from "ember-concurrency";
 import uniqBy from "lodash.uniqby";
 
+import sortArchivedLast from "timed/utils/sort-archived-last";
 import ProjectValidations from "timed/validations/project";
 import TaskValidations from "timed/validations/task";
 
@@ -39,7 +40,12 @@ export default class ProjectsController extends Controller {
     return uniqBy(
       this.projects?.map((p) => p?.get("customer")).filter(Boolean) ?? [],
       (c) => c.get("id"),
-    ).toSorted((c) => c.get("name"));
+    ).toSorted(
+      sortArchivedLast(
+        (c) => c.get("name"),
+        (c) => c.get("archived"),
+      ),
+    );
   }
 
   fetchProjectsByUser = task(async () => {
@@ -57,7 +63,9 @@ export default class ProjectsController extends Controller {
         });
       }
 
-      return projects.toSorted((p) => p.name);
+      return projects.toSorted(
+        sortArchivedLast((a, b) => (a.name > b.name ? 1 : -1)),
+      );
     } catch {
       this.notify.error("Error while fetching projects");
     }
