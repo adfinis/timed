@@ -1,8 +1,8 @@
 /**
- * Wrap a sorting function to use with e.g. `Array.prototype.toSorted`, so that archvied elements are last
+ * Wrap a compare function to use with e.g. `Array.prototype.toSorted`, so that archvied elements are last
  */
 export default function sortArchivedLast(
-  sortFn,
+  compareFn,
   getter = (obj) => obj.archived,
 ) {
   return (a, b) => {
@@ -10,6 +10,6 @@ export default function sortArchivedLast(
       return getter(a) ? 1 : -1;
     }
 
-    return sortFn(a, b);
+    return compareFn(a, b);
   };
 }
