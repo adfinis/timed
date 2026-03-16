@@ -9,24 +9,28 @@ class TotalTimeRootMetaMixin:
 
     def get_root_meta(self, _resource, many):
         """Add total hours over whole result (not just page) to meta."""
-        aggregate_list = {
-            "total_time": Sum(self.duration_field)
-        }
+        aggregate_list = {"total_time": Sum(self.duration_field)}
         if "estimated_time" in self.fields:
             aggregate_list["total_estimated_time"] = Sum("estimated_time")
         if "total_remaining_effort" in self.fields:
             aggregate_list["total_remaining_effort"] = Sum("total_remaining_effort")
         if "most_recent_remaining_effort" in self.fields:
-            aggregate_list["total_remaining_effort"] = Sum("most_recent_remaining_effort")
+            aggregate_list["total_remaining_effort"] = Sum(
+                "most_recent_remaining_effort"
+            )
         if many:
             view = self.context["view"]
             queryset = view.filter_queryset(view.get_queryset())
             data = queryset.aggregate(**aggregate_list)
             data["total_time"] = duration_string(data["total_time"] or timedelta(0))
             if "total_estimated_time" in aggregate_list:
-                data["total_estimated_time"] = duration_string(data["total_estimated_time"] or timedelta(0))
+                data["total_estimated_time"] = duration_string(
+                    data["total_estimated_time"] or timedelta(0)
+                )
             if "total_remaining_effort" in aggregate_list:
-                data["total_remaining_effort"] = duration_string(data["total_remaining_effort"] or timedelta(0))
+                data["total_remaining_effort"] = duration_string(
+                    data["total_remaining_effort"] or timedelta(0)
+                )
             return data
         return {}
 
