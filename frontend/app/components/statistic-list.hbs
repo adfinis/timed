@@ -97,7 +97,17 @@
                   Total:
                 {{else if (eq column.title "Duration")}}
                   <span class="total">{{humanize-duration
-                      this.total
+                      this.totalDuration
+                      false
+                    }}</span>
+                {{else if (eq column.title "Estimated")}}
+                  <span class="total">{{humanize-duration
+                      this.totalEstimatedTime
+                      false
+                    }}</span>
+                {{else if (eq column.title "Remaining Effort")}}
+                  <span class="total">{{humanize-duration
+                      this.totalRemainingEfforts
                       false
                     }}</span>
                 {{/if}}
