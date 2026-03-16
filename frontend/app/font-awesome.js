@@ -48,6 +48,7 @@ import {
   faUsers,
   faQuestion,
   faMagic,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -98,4 +99,5 @@ library.add(
   faUsers,
   faQuestion,
   faMagic,
+  faGear,
 );

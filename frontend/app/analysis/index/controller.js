@@ -58,6 +58,7 @@ export default class AnalysisController extends QPController {
   @service router;
   @service notify;
   @service abilities;
+  @service analysisTableColumns;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
