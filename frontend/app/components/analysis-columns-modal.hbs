@@ -1,0 +1,27 @@
+<Modal
+  @visible={{@isVisible}}
+  @onClose={{@onClose}}
+  class="md:w-auto"
+  as |modal|
+>
+  <div class="sm:min-w-[32rem]">
+    <modal.header>
+      <h3>Analysis Table Columns Modal</h3>
+    </modal.header>
+    <modal.body class="grid gap-2">
+      {{#each this.analysisTableColumns.allTableColumns as |column|}}
+        <Checkbox
+          @checked={{not (includes column.label this.localhidden)}}
+          @onChange={{fn this.toggleColumn column.label}}
+        >
+          {{column.label}}
+        </Checkbox>
+      {{/each}}
+    </modal.body>
+    <modal.footer class="flex justify-end">
+      <button class="btn btn-primary" {{on "click" this.save}} type="button">
+        Save
+      </button>
+    </modal.footer>
+  </div>
+</Modal>
