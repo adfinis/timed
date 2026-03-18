@@ -486,10 +486,6 @@ def test_absence_edit_comments(
     absence.user = internal_employee_client.user
     absence.comment = prev_comment
 
-    # no absences in weekends
-    date_obj = datetime.datetime.strptime(absence.date, "%Y-%m-%d").date()
-    if date_obj.weekday() >= 5:
-        absence.date = (date_obj + datetime.timedelta(days=3)).strftime("%Y-%m-%d")
     absence.save()
 
     data = {

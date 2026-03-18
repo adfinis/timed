@@ -3,6 +3,7 @@
 import datetime
 from random import randint
 
+from django.utils import timezone
 from factory import Faker, SubFactory, lazy_attribute
 from factory.django import DjangoModelFactory
 
@@ -77,7 +78,15 @@ class AbsenceFactory(DjangoModelFactory):
 
     user = SubFactory("timed.employment.factories.UserFactory")
     absence_type = SubFactory("timed.employment.factories.AbsenceTypeFactory")
-    date = Faker("date")
+
+    @lazy_attribute
+    def date(self):
+        # no absences in weekends
+        date_obj = timezone.now().date()
+        first_weekend_day = 5
+        if date_obj.weekday() >= first_weekend_day:
+            date_obj += datetime.timedelta(days=2)
+        return date_obj.strftime("%Y-%m-%d")
 
     class Meta:
         """Meta informations for the absence factory."""
