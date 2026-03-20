@@ -1270,7 +1270,7 @@ def test_report_update_bulk_verify_reviewer_multiple_notify(
     report2 = report_factory(user=user2, task=task)
     report3 = report_factory(user=user3, task=task)
 
-    other_task = task_factory()
+    other_task = task_factory(project=project)
 
     url = reverse("report-bulk")
 
@@ -1278,7 +1278,7 @@ def test_report_update_bulk_verify_reviewer_multiple_notify(
         "data": {
             "type": "report-bulks",
             "id": None,
-            "attributes": {"verified": True, "comment": "some comment"},
+            "attributes": {"comment": "some comment"},
             "relationships": {"task": {"data": {"type": "tasks", "id": other_task.id}}},
         }
     }
@@ -1286,6 +1286,12 @@ def test_report_update_bulk_verify_reviewer_multiple_notify(
     query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
         str(r.id) for r in [report1_1, report1_2, report2, report3]
     )
+    response = internal_employee_client.post(url + query_params, data)
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    data["data"]["relationships"] = {}
+    data["data"]["attributes"] = {"verified": True}
+
     response = internal_employee_client.post(url + query_params, data)
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
