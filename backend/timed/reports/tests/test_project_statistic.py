@@ -37,10 +37,10 @@ def test_project_statistic_list(
         is_employed=is_employed,
         is_external=False,
     )
-    report = ReportFactory.create(duration=timedelta(hours=1))
+    report = ReportFactory.create(duration=timedelta(hours=1), task__project__total_remaining_effort=timedelta(hours=3), task__project__estimated_time=timedelta(hours=7))
     project = report.task.project
     ReportFactory.create(duration=timedelta(hours=2), task=report.task)
-    report2 = ReportFactory.create(duration=timedelta(hours=4))
+    report2 = ReportFactory.create(duration=timedelta(hours=4), task__project__total_remaining_effort=timedelta(hours=5), task__project__estimated_time=timedelta(hours=2))
     project_2 = report2.task.project
     task = TaskFactory(project=report.task.project)
     ReportFactory.create(duration=timedelta(hours=2), task=task)
@@ -65,8 +65,8 @@ def test_project_statistic_list(
                     "amount-offered-currency": project_2.amount_offered_currency,
                     "amount-invoiced": str(project_2.amount_invoiced.amount),
                     "amount-invoiced-currency": project_2.amount_invoiced_currency,
-                    "estimated-time": "00:00:00",
-                    "total-remaining-effort": "00:00:00",
+                    "estimated-time": "02:00:00",
+                    "total-remaining-effort": "05:00:00",
                 },
                 "relationships": {
                     "customer": {
@@ -87,8 +87,8 @@ def test_project_statistic_list(
                     "amount-offered-currency": project.amount_offered_currency,
                     "amount-invoiced": str(project.amount_invoiced.amount),
                     "amount-invoiced-currency": project.amount_invoiced_currency,
-                    "estimated-time": "00:00:00",
-                    "total-remaining-effort": "00:00:00",
+                    "estimated-time": "07:00:00",
+                    "total-remaining-effort": "03:00:00",
                 },
                 "relationships": {
                     "customer": {
@@ -102,6 +102,8 @@ def test_project_statistic_list(
         ]
         assert json["data"] == expected_json
         assert json["meta"]["total-time"] == "09:00:00"
+        assert json["meta"]["total-estimated-time"] == "09:00:00"
+        assert json["meta"]["total-remaining-effort"] == "08:00:00"
 
 
 @pytest.mark.parametrize(

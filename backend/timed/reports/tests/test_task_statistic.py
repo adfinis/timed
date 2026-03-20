@@ -37,8 +37,8 @@ def test_task_statistic_list(
         is_employed=is_employed,
         is_external=False,
     )
-    task_z = TaskFactory.create(name="Z")
-    task_test = TaskFactory.create(name="Test")
+    task_z = TaskFactory.create(name="Z", most_recent_remaining_effort=timedelta(hours=3), estimated_time=timedelta(hours=5))
+    task_test = TaskFactory.create(name="Test", most_recent_remaining_effort=timedelta(hours=7), estimated_time=timedelta(hours=2))
     ReportFactory.create(duration=timedelta(hours=1), task=task_test)
     ReportFactory.create(duration=timedelta(hours=2), task=task_test)
     ReportFactory.create(duration=timedelta(hours=2), task=task_z)
@@ -63,8 +63,8 @@ def test_task_statistic_list(
                 "attributes": {
                     "duration": "03:00:00",
                     "name": str(task_test.name),
-                    "most-recent-remaining-effort": None,
-                    "estimated-time": "00:00:00",
+                    "most-recent-remaining-effort": "07:00:00",
+                    "estimated-time": "02:00:00",
                 },
                 "relationships": {
                     "project": {
@@ -78,8 +78,8 @@ def test_task_statistic_list(
                 "attributes": {
                     "duration": "02:00:00",
                     "name": str(task_z.name),
-                    "most-recent-remaining-effort": None,
-                    "estimated-time": "00:00:00",
+                    "most-recent-remaining-effort": "03:00:00",
+                    "estimated-time": "05:00:00",
                 },
                 "relationships": {
                     "project": {
@@ -90,6 +90,8 @@ def test_task_statistic_list(
         ]
         assert json["data"] == expected_json
         assert json["meta"]["total-time"] == "05:00:00"
+        assert json["meta"]["total-remaining-effort"] == "10:00:00"
+        assert json["meta"]["total-estimated-time"] == "07:00:00"
 
 
 @pytest.mark.parametrize(
