@@ -37,8 +37,16 @@ def test_task_statistic_list(
         is_employed=is_employed,
         is_external=False,
     )
-    task_z = TaskFactory.create(name="Z", most_recent_remaining_effort=timedelta(hours=3), estimated_time=timedelta(hours=5))
-    task_test = TaskFactory.create(name="Test", most_recent_remaining_effort=timedelta(hours=7), estimated_time=timedelta(hours=2))
+    task_z = TaskFactory.create(
+        name="Z",
+        most_recent_remaining_effort=timedelta(hours=3),
+        estimated_time=timedelta(hours=5),
+    )
+    task_test = TaskFactory.create(
+        name="Test",
+        most_recent_remaining_effort=timedelta(hours=7),
+        estimated_time=timedelta(hours=2),
+    )
     ReportFactory.create(duration=timedelta(hours=1), task=task_test)
     ReportFactory.create(duration=timedelta(hours=2), task=task_test)
     ReportFactory.create(duration=timedelta(hours=2), task=task_z)

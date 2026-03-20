@@ -37,10 +37,18 @@ def test_project_statistic_list(
         is_employed=is_employed,
         is_external=False,
     )
-    report = ReportFactory.create(duration=timedelta(hours=1), task__project__total_remaining_effort=timedelta(hours=3), task__project__estimated_time=timedelta(hours=7))
+    report = ReportFactory.create(
+        duration=timedelta(hours=1),
+        task__project__total_remaining_effort=timedelta(hours=3),
+        task__project__estimated_time=timedelta(hours=7),
+    )
     project = report.task.project
     ReportFactory.create(duration=timedelta(hours=2), task=report.task)
-    report2 = ReportFactory.create(duration=timedelta(hours=4), task__project__total_remaining_effort=timedelta(hours=5), task__project__estimated_time=timedelta(hours=2))
+    report2 = ReportFactory.create(
+        duration=timedelta(hours=4),
+        task__project__total_remaining_effort=timedelta(hours=5),
+        task__project__estimated_time=timedelta(hours=2),
+    )
     project_2 = report2.task.project
     task = TaskFactory(project=report.task.project)
     ReportFactory.create(duration=timedelta(hours=2), task=task)
