@@ -218,7 +218,7 @@ class ReportViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated],
         serializer_class=serializers.ReportBulkSerializer,
     )
-    def bulk(self, request):
+    def bulk(self, request):  # noqa: C901
         user = request.user
         queryset = self.get_queryset()
         queryset = self.filter_queryset(queryset)
@@ -240,16 +240,22 @@ class ReportViewSet(ModelViewSet):
                 _("Editable filter needs to be set for bulk update")
             )
 
+        if serializer.validated_data.get("billed", None) is not None and not (
+            user.is_superuser or user.is_accountant
+        ):
+            raise exceptions.ValidationError(
+                _("Only superuser and accountants may bill reports")
+            )
+
         if verified is not None:
             # only reviewer or superuser may verify reports
             # this is enforced when reviewer filter is set to current user
             reviewer_id = request.query_params.get("reviewer")
+
             if not user.is_superuser and str(reviewer_id) != str(user.id):
                 raise exceptions.ValidationError(
                     _("Reviewer filter needs to be set to verifying user")
                 )
-
-            fields["verified_by"] = (verified and user) or None
 
             if fields.get("review") or any(queryset.values_list("review", flat=True)):
                 raise exceptions.ValidationError(
@@ -261,12 +267,7 @@ class ReportViewSet(ModelViewSet):
                     _("Reports can't be moved and verified at the same time.")
                 )
 
-        if serializer.validated_data.get("billed", None) is not None and not (
-            user.is_superuser or user.is_accountant
-        ):
-            raise exceptions.ValidationError(
-                _("Only superuser and accountants may bill reports")
-            )
+            fields["verified_by"] = (verified and user) or None
 
         review_comment = fields.pop("review_comment", "")
 

@@ -1,8 +1,6 @@
 """Tests for the reports endpoint."""
 
 from __future__ import annotations
-from timed.employment.models import User
-from timed.projects.models import Customer
 
 from datetime import date, timedelta
 from typing import TYPE_CHECKING
@@ -22,7 +20,8 @@ from timed.projects.factories import (
 )
 
 if TYPE_CHECKING:
-    from timed.projects.models import Project, Task
+    from timed.employment.models import User
+    from timed.projects.models import Customer, Project, Task
     from timed.tracking.models import Report
 
 
@@ -1632,7 +1631,6 @@ def test_report_update_bulk_billed(
     report_factory,
     customer: Customer,
     task_factory,
-    project_factory,
     project_assignee_factory,
 ):
     """Test that reports are marked get marked as billed when moved into a billed Project."""
