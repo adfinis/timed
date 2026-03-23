@@ -271,6 +271,17 @@ class ReportViewSet(ModelViewSet):
         reason = fields.pop("reason", "")
 
         if "task" in fields:
+            # if no reason was given, we validate that the customer of all the reports (that are being updated/attempted to be updated)
+            # is the same, if it isn't, we throw an error
+            if (
+                not reason
+                and queryset.exclude(
+                    task__project__customer=fields["task"].project.customer
+                ).exists()
+            ):
+                raise exceptions.ValidationError(
+                    _("Reason is required when changing/moving customer."), "required"
+                )
             # unreject report if task has changed
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
