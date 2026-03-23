@@ -1,6 +1,8 @@
 """Tests for the reports endpoint."""
 
 from __future__ import annotations
+from timed.employment.models import User
+from timed.projects.models import Customer
 
 from datetime import date, timedelta
 from typing import TYPE_CHECKING
@@ -562,8 +564,8 @@ def test_report_update_bulk(
     report_factory,
     task_factory,
 ):
-    task = task_factory.create()
     report = report_factory.create(user=internal_employee_client.user)
+    task = task_factory.create(project=report.task.project)
 
     url = reverse("report-bulk")
 
@@ -1625,15 +1627,23 @@ def test_report_update_billed(internal_employee_client, report_factory, task):
     assert not report.billed
 
 
-def test_report_update_bulk_billed(internal_employee_client, report_factory, task):
+def test_report_update_bulk_billed(
+    internal_employee_client,
+    report_factory,
+    customer: Customer,
+    task_factory,
+    project_factory,
+    project_assignee_factory,
+):
+    """Test that reports are marked get marked as billed when moved into a billed Project."""
     user = internal_employee_client.user
-    report = report_factory.create(user=user)
-    ProjectAssigneeFactory.create(
-        user=user, project=report.task.project, is_reviewer=True
-    )
-    task.project.billed = True
-    task.project.save()
 
+    unbilled_task = task_factory(project__customer=customer, project__billed=False)
+    billed_task = task_factory(project__customer=customer, project__billed=True)
+
+    report: Report = report_factory(user=user, task=unbilled_task, billed=False)
+
+    project_assignee_factory(user=user, project=unbilled_task.project, is_reviewer=True)
     url = reverse("report-bulk")
 
     data = {
@@ -1641,14 +1651,13 @@ def test_report_update_bulk_billed(internal_employee_client, report_factory, tas
             "type": "report-bulks",
             "id": None,
             "relationships": {
-                "project": {"data": {"type": "projects", "id": task.project.id}},
-                "task": {"data": {"type": "tasks", "id": task.id}},
+                "task": {"data": {"type": "tasks", "id": billed_task.pk}},
             },
         }
     }
 
     response = internal_employee_client.post(
-        url + f"?editable=1&reviewer={user.id}", data
+        url, data, query_params={"editable": 1, "reviewer": user.id}
     )
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
@@ -1784,14 +1793,16 @@ def test_report_update_rejected_owner(
 
 def test_report_reject_multiple_notify(
     internal_employee_client,
-    task,
-    project,
+    task: Task,
+    project: Project,
     report_factory,
     user_factory,
+    project_assignee_factory,
     mailoutbox,
 ):
     reviewer = internal_employee_client.user
-    ProjectAssigneeFactory.create(user=reviewer, project=project, is_reviewer=True)
+
+    project_assignee_factory(user=reviewer, project=project, is_reviewer=True)
 
     user1, user2, user3 = user_factory.create_batch(3)
     report1_1 = report_factory(user=user1, task=task)
@@ -1805,14 +1816,16 @@ def test_report_reject_multiple_notify(
         "data": {
             "type": "report-bulks",
             "id": None,
-            "attributes": {"rejected": True},
+            "attributes": {"rejected": True, "review_comment": "why?"},
         }
     }
 
-    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
-        str(r.id) for r in [report1_1, report1_2, report2, report3]
-    )
-    response = internal_employee_client.post(url + query_params, data)
+    params = {
+        "editable": 1,
+        "reviewer": reviewer.id,
+        "id": ",".join(str(r.id) for r in [report1_1, report1_2, report2, report3]),
+    }
+    response = internal_employee_client.post(url, data, query_params=params)
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
     for report in [report1_1, report1_2, report2, report3]:
@@ -1852,14 +1865,13 @@ def test_report_automatic_unreject(internal_employee_client, report_factory, tas
 
 
 def test_report_bulk_automatic_unreject(
-    internal_employee_client, user_factory, report_factory, task
+    internal_employee_client, user, report_factory, task: Task, project_assignee_factory
 ):
     reviewer = internal_employee_client.user
 
-    user = user_factory.create()
+    report = report_factory.create(user=user, rejected=True, task__project=task.project)
 
-    report = report_factory.create(user=user, rejected=True)
-    ProjectAssigneeFactory.create(
+    project_assignee_factory(
         user=reviewer, project=report.task.project, is_reviewer=True
     )
 
@@ -1870,13 +1882,13 @@ def test_report_bulk_automatic_unreject(
             "type": "report-bulks",
             "id": None,
             "relationships": {
-                "task": {"data": {"type": "tasks", "id": task.id}},
+                "task": {"data": {"type": "tasks", "id": task.pk}},
             },
         }
     }
 
-    query_params = f"?editable=1&reviewer={reviewer.id}&id={report.id}"
-    response = internal_employee_client.post(url + query_params, data)
+    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
+    response = internal_employee_client.post(url, data, query_params=params)
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
     report.refresh_from_db()
@@ -2165,3 +2177,69 @@ def test_report_bulk_edit_move_and_verify(
         response.json()["errors"][0]["detail"]
         == "Reports can't be moved and verified at the same time."
     )
+
+
+def test_report_bulk_reject_requires_review_comment(
+    internal_employee_client, user, report_factory, project_assignee_factory
+):
+    reviewer = internal_employee_client.user
+
+    report = report_factory(user=user, rejected=False)
+
+    project_assignee_factory(
+        user=reviewer, project=report.task.project, is_reviewer=True
+    )
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"rejected": True},
+        }
+    }
+
+    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
+    response = internal_employee_client.post(url, data, query_params=params)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    report.refresh_from_db()
+    assert not report.rejected
+
+
+def test_report_bulk_customer_change_requires_review_comment(
+    internal_employee_client,
+    user: User,
+    report_factory,
+    task: Task,
+    project_assignee_factory,
+):
+    reviewer = internal_employee_client.user
+
+    report = report_factory(user=user)
+
+    assert report.task.project.customer != task.project.customer
+
+    project_assignee_factory(
+        user=reviewer, project=report.task.project, is_reviewer=True
+    )
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "relationships": {
+                "task": {"data": {"type": "tasks", "id": task.pk}},
+            },
+        }
+    }
+
+    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
+    response = internal_employee_client.post(url, data, query_params=params)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    report.refresh_from_db()
+    assert report.task != task
