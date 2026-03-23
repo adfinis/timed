@@ -151,7 +151,9 @@ module("Acceptance | analysis edit", function (hooks) {
       );
   });
   test("cannot verify report and move it at the same time", async function (assert) {
-    const task = this.server.create("task");
+    // we set the name of the task to something that faker will not produce
+    // otherwise this is flaky as tasks with the same name could exist (and we select them in the dropdown by name)
+    const task = this.server.create("task", { name: "the task" });
     const otherTasks = this.server.createList("task", 10);
 
     // giving `project`/`projectId` as an argument to `createList` does not work
