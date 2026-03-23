@@ -1,9 +1,25 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from django.conf import settings
 from django.core.mail import EmailMessage, get_connection
 from django.template.loader import get_template
 
+if TYPE_CHECKING:
+    from django.db.models.query import QuerySet
 
-def _send_notification_emails(changes, reviewer, rejected=False):  # noqa: FBT002
+    from timed.employment.models import User
+    from timed.tracking.models import Report
+
+
+def _send_notification_emails(
+    changes: list[dict],
+    reviewer: User,
+    comment: str = "",
+    *,
+    rejected: bool = False,
+) -> None:
     """Send email for each user."""
     if rejected:
         subject = "[Timed] Your reports have been rejected"
@@ -24,6 +40,7 @@ def _send_notification_emails(changes, reviewer, rejected=False):  # noqa: FBT00
                 # we need start and end date in system format
                 "reviewer": reviewer,
                 "user_changes": user_changes["changes"],
+                "comment": comment,
             }
         )
 
@@ -42,7 +59,7 @@ def _send_notification_emails(changes, reviewer, rejected=False):  # noqa: FBT00
         connection.send_messages(messages)
 
 
-def _get_report_changeset(report, fields):
+def _get_report_changeset(report: Report, fields: dict) -> dict | None:
     changeset = {
         "report": report,
         "changes": {
@@ -54,21 +71,25 @@ def _get_report_changeset(report, fields):
         },
     }
     if not changeset["changes"]:
-        return False
+        return None
     return changeset
 
 
-def notify_user_changed_report(report, fields, reviewer):
+def notify_user_changed_report(
+    report: Report, fields: dict, reviewer: User, comment: str = ""
+) -> None:
     changeset = _get_report_changeset(report, fields)
 
     if not changeset:
         return
 
     user_changes = {"user": report.user, "changes": [changeset]}
-    _send_notification_emails([user_changes], reviewer)
+    _send_notification_emails([user_changes], reviewer, comment)
 
 
-def notify_user_changed_reports(queryset, fields, reviewer):
+def notify_user_changed_reports(
+    queryset: QuerySet[Report], fields: dict, reviewer: User, comment: str = ""
+) -> None:
     users = [report.user for report in queryset.order_by("user").distinct("user")]
     user_changes = []
 
@@ -88,15 +109,19 @@ def notify_user_changed_reports(queryset, fields, reviewer):
 
         user_changes.append({"user": user, "changes": changes})
 
-    _send_notification_emails(user_changes, reviewer)
+    _send_notification_emails(user_changes, reviewer, comment)
 
 
-def notify_user_rejected_report(report, reviewer):
+def notify_user_rejected_report(
+    report: Report, reviewer: User, comment: str = ""
+) -> None:
     user_changes = {"user": report.user, "changes": [{"report": report}]}
-    _send_notification_emails([user_changes], reviewer, rejected=True)
+    _send_notification_emails([user_changes], reviewer, comment, rejected=True)
 
 
-def notify_user_rejected_reports(queryset, _fields, reviewer):
+def notify_user_rejected_reports(
+    queryset: QuerySet[Report], _fields: dict, reviewer: User, comment: str = ""
+) -> None:
     users = [report.user for report in queryset.order_by("user").distinct("user")]
     user_changes = []
 
@@ -107,4 +132,4 @@ def notify_user_rejected_reports(queryset, _fields, reviewer):
             changes.append(changeset)
         user_changes.append({"user": user, "changes": changes})
 
-    _send_notification_emails(user_changes, reviewer, rejected=True)
+    _send_notification_emails(user_changes, reviewer, comment, rejected=True)
