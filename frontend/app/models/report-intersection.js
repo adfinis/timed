@@ -2,7 +2,7 @@ import Model, { attr, belongsTo } from "@ember-data/model";
 
 export default class ReportIntersection extends Model {
   @attr("string") comment;
-  @attr("string") reason;
+  @attr("string") reviewComment;
 
   @attr("boolean", { allowNull: true, defaultValue: null }) notBillable;
   @attr("boolean", { allowNull: true, defaultValue: false }) rejected;

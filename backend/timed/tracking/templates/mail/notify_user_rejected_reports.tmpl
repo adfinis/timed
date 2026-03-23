@@ -4,7 +4,7 @@ with them to clarify the reports. Most likely, you will just need to move
 the reports to the correct project / task.
 
 Reviewer: {{reviewer.first_name }} {{ reviewer.last_name }}
-{% if reason %}Reason: {{reason}}{% endif %}{% for changeset in user_changes %}
+{% if comment %}Review Comment: {{comment}}{% endif %}{% for changeset in user_changes %}
 
 Date: {{ changeset.report.date|date:"d F Y" }}
 Duration: {{ changeset.report.duration|duration }}

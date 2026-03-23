@@ -268,27 +268,28 @@ class ReportViewSet(ModelViewSet):
                 _("Only superuser and accountants may bill reports")
             )
 
-        reason = fields.pop("reason", "")
+        review_comment = fields.pop("review_comment", "")
 
         if "task" in fields:
-            # if no reason was given, we validate that the customer of all the reports (that are being updated/attempted to be updated)
+            # if no review comment was given, we validate that the customer of all the reports (that are being updated/attempted to be updated)
             # is the same, if it isn't, we throw an error
             if (
-                not reason
+                not review_comment
                 and queryset.exclude(
                     task__project__customer=fields["task"].project.customer
                 ).exists()
             ):
                 raise exceptions.ValidationError(
-                    _("Reason is required when changing/moving customer."), "required"
+                    _("Review Comment is required when changing/moving customer."),
+                    "required",
                 )
             # unreject report if task has changed
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
 
-        if fields.get("rejected") and not reason:
+        if fields.get("rejected") and not review_comment:
             raise exceptions.ValidationError(
-                _("`reason` is requirement when rejecting report(s).")
+                _("Review Comment is required when rejecting report(s).")
             )
 
         if fields:
@@ -297,7 +298,7 @@ class ReportViewSet(ModelViewSet):
                 if fields.get("rejected")
                 else tasks.notify_user_changed_reports
             )
-            notify_fn(queryset, fields, user, reason)
+            notify_fn(queryset, fields, user, review_comment)
             queryset.update(**fields)
 
         return Response(status=status.HTTP_204_NO_CONTENT)

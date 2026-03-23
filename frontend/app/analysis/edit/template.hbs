@@ -233,13 +233,13 @@
                     </f.input>
                   </div>
 
-                  <f.input @name="reason" @labelComponent="void" as |fi|>
+                  <f.input @name="reviewComment" @labelComponent="void" as |fi|>
                     <label>
-                      Reason
+                      Review Comment
                       <input
-                        data-test-reason
+                        data-test-review-comment
                         type="text"
-                        placeholder="Reason for change/rejection..."
+                        placeholder="Comment/Reason for change/rejection..."
                         class="form-control comment-field rounded"
                         {{on "change" (pick "target.value" fi.update)}}
                         value={{fi.value}}

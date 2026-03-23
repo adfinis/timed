@@ -2,7 +2,7 @@
 Some of your reports have been changed.
 
 Reviewer: {{reviewer.first_name }} {{ reviewer.last_name }}
-{% if reason %}Reason: {{reason}}{% endif %}{% for changeset in user_changes %}
+{% if comment %}Review Comment: {{comment}}{% endif %}{% for changeset in user_changes %}
 
 Date: {{ changeset.report.date|date:"d F Y" }}
 Duration: {{ changeset.report.duration|duration }}

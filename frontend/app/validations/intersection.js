@@ -13,7 +13,7 @@ const relationChanged = (relation) => (changes, content) =>
 const customerChanged = relationChanged("customer");
 const projectChanged = relationChanged("project");
 
-const validateReasonDifferentCustomer = (
+const validateReviewCommentDifferentCustomer = (
   key,
   newValue,
   oldValue,
@@ -25,18 +25,24 @@ const validateReasonDifferentCustomer = (
       presence: true,
       ignoreBlank: true,
       message:
-        "Reason is required when moving report(s) to a different customer.",
+        "Review Comment is required when moving report(s) to a different customer.",
     })(key, newValue, oldValue, changes, content);
   }
   return true;
 };
 
-const validateReasonRejected = (key, newValue, oldValue, changes, content) => {
+const validateReviewCommentRejected = (
+  key,
+  newValue,
+  oldValue,
+  changes,
+  content,
+) => {
   if (changes.rejected) {
     return validatePresence({
       presence: true,
       ignoreBlank: true,
-      message: "Reason is required when rejecting reports.",
+      message: "Review Comment is required when rejecting reports.",
     })(key, newValue, oldValue, changes, content);
   }
   return true;
@@ -79,5 +85,8 @@ const validateTask = (key, newValue, oldValue, changes, content) => {
 export default {
   verified: validateVerified,
   task: validateTask,
-  reason: [validateReasonRejected, validateReasonDifferentCustomer],
+  reviewComment: [
+    validateReviewCommentRejected,
+    validateReviewCommentDifferentCustomer,
+  ],
 };

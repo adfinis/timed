@@ -188,7 +188,7 @@ export default class AnalysisEditController extends Controller {
 
       const {
         comment,
-        reason,
+        reviewComment,
         notBillable,
         rejected,
         review,
@@ -197,7 +197,7 @@ export default class AnalysisEditController extends Controller {
       } = changeset;
       const _attributes = {
         comment,
-        reason,
+        reviewComment,
         notBillable,
         rejected,
         review,

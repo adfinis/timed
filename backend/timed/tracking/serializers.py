@@ -318,7 +318,7 @@ class ReportBulkSerializer(Serializer):
     billed = serializers.BooleanField(required=False, allow_null=True)
     verified = serializers.BooleanField(required=False, allow_null=True)
     rejected = serializers.BooleanField(required=False)
-    reason = serializers.CharField(allow_null=True, required=False)
+    review_comment = serializers.CharField(allow_null=True, required=False)
 
     class Meta:
         resource_name = "report-bulks"
