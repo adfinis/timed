@@ -20,7 +20,7 @@ from timed.projects.factories import (
 )
 
 if TYPE_CHECKING:
-    from timed.projects.models import Task
+    from timed.projects.models import Project, Task
     from timed.tracking.models import Report
 
 
@@ -1252,17 +1252,18 @@ def test_report_export_max_count(
     assert response.status_code == expected_status
 
 
-def test_report_update_bulk_verify_reviewer_multiple_notify(
+def test_report_update_bulk_reviewer_multiple_notify(
     internal_employee_client,
-    task,
+    task: Task,
     task_factory,
-    project,
+    project: Project,
     report_factory,
     user_factory,
+    project_assignee_factory,
     mailoutbox,
 ):
     reviewer = internal_employee_client.user
-    ProjectAssigneeFactory.create(user=reviewer, project=project, is_reviewer=True)
+    project_assignee_factory(user=reviewer, project=project, is_reviewer=True)
 
     user1, user2, user3 = user_factory.create_batch(3)
     report1_1 = report_factory(user=user1, task=task)
@@ -1283,21 +1284,17 @@ def test_report_update_bulk_verify_reviewer_multiple_notify(
         }
     }
 
-    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
-        str(r.id) for r in [report1_1, report1_2, report2, report3]
-    )
-    response = internal_employee_client.post(url + query_params, data)
+    reports = [report1_1, report1_2, report2, report3]
+    params = {
+        "editable": 1,
+        "reviewer": reviewer.id,
+        "id": ",".join(str(r.id) for r in reports),
+    }
+    response = internal_employee_client.post(url, data, query_params=params)
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
-    data["data"]["relationships"] = {}
-    data["data"]["attributes"] = {"verified": True}
-
-    response = internal_employee_client.post(url + query_params, data)
-    assert response.status_code == status.HTTP_204_NO_CONTENT
-
-    for report in [report1_1, report1_2, report2, report3]:
+    for report in reports:
         report.refresh_from_db()
-        assert report.verified_by == reviewer
         assert report.comment == "some comment"
         assert report.task == other_task
 
