@@ -59,7 +59,7 @@ def _send_notification_emails(
         connection.send_messages(messages)
 
 
-def _get_report_changeset(report: Report, fields: dict) -> bool | dict:
+def _get_report_changeset(report: Report, fields: dict) -> dict | None:
     changeset = {
         "report": report,
         "changes": {
@@ -71,7 +71,7 @@ def _get_report_changeset(report: Report, fields: dict) -> bool | dict:
         },
     }
     if not changeset["changes"]:
-        return False
+        return None
     return changeset
 
 

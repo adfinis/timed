@@ -234,15 +234,16 @@ class ReportViewSet(ModelViewSet):
             if value is not None
         }
 
-        editable = request.query_params.get("editable")
-        if not user.is_superuser and not editable:
+        qp = request.query_params
+        if not user.is_superuser and not qp.get("editable"):
             raise exceptions.ValidationError(
                 _("Editable filter needs to be set for bulk update")
             )
 
-        if serializer.validated_data.get("billed", None) is not None and not (
-            user.is_superuser or user.is_accountant
-        ):
+        is_superuser_or_accountant = user.is_superuser or user.is_accountant
+        has_billed_flag = fields.get("billed") is not None
+
+        if has_billed_flag and not is_superuser_or_accountant:
             raise exceptions.ValidationError(
                 _("Only superuser and accountants may bill reports")
             )
@@ -250,9 +251,7 @@ class ReportViewSet(ModelViewSet):
         if verified is not None:
             # only reviewer or superuser may verify reports
             # this is enforced when reviewer filter is set to current user
-            reviewer_id = request.query_params.get("reviewer")
-
-            if not user.is_superuser and str(reviewer_id) != str(user.id):
+            if not user.is_superuser and str(qp.get("reviewer")) != str(user.id):
                 raise exceptions.ValidationError(
                     _("Reviewer filter needs to be set to verifying user")
                 )
@@ -272,8 +271,9 @@ class ReportViewSet(ModelViewSet):
         review_comment = fields.pop("review_comment", "")
 
         if "task" in fields:
-            # if no review comment was given, we validate that the customer of all the reports (that are being updated/attempted to be updated)
-            # is the same, if it isn't, we throw an error
+            # if no review comment was given, we validate that the customer of all the
+            # reports (that are being updated/attempted to be updated) is the same, if
+            # it isn't, we throw an error
             if (
                 not review_comment
                 and queryset.exclude(
