@@ -209,7 +209,12 @@
                       </Checkbox>
                     </f.input>
 
-                    <f.input @name="verified" @labelComponent="void" as |fi|>
+                    <f.input
+                      @name="verified"
+                      @labelComponent="void"
+                      @dirty={{true}}
+                      as |fi|
+                    >
                       <Checkbox
                         data-test-verified
                         @checked={{fi.value}}

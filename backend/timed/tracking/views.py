@@ -256,6 +256,11 @@ class ReportViewSet(ModelViewSet):
                     _("Reports can't both be set as `review` and `verified`.")
                 )
 
+            if fields.get("task"):
+                raise exceptions.ParseError(
+                    _("Reports can't be moved and verified at the same time.")
+                )
+
         if serializer.validated_data.get("billed", None) is not None and not (
             user.is_superuser or user.is_accountant
         ):

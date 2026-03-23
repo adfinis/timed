@@ -1,6 +1,9 @@
 """Tests for the reports endpoint."""
 
+from __future__ import annotations
+
 from datetime import date, timedelta
+from typing import TYPE_CHECKING
 
 import pyexcel
 import pytest
@@ -15,6 +18,10 @@ from timed.projects.factories import (
     TaskAssigneeFactory,
     TaskFactory,
 )
+
+if TYPE_CHECKING:
+    from timed.projects.models import Project, Task
+    from timed.tracking.models import Report
 
 
 def test_report_list(
@@ -1245,17 +1252,18 @@ def test_report_export_max_count(
     assert response.status_code == expected_status
 
 
-def test_report_update_bulk_verify_reviewer_multiple_notify(
+def test_report_update_bulk_reviewer_multiple_notify(
     internal_employee_client,
-    task,
+    task: Task,
     task_factory,
-    project,
+    project: Project,
     report_factory,
     user_factory,
+    project_assignee_factory,
     mailoutbox,
 ):
     reviewer = internal_employee_client.user
-    ProjectAssigneeFactory.create(user=reviewer, project=project, is_reviewer=True)
+    project_assignee_factory(user=reviewer, project=project, is_reviewer=True)
 
     user1, user2, user3 = user_factory.create_batch(3)
     report1_1 = report_factory(user=user1, task=task)
@@ -1263,7 +1271,7 @@ def test_report_update_bulk_verify_reviewer_multiple_notify(
     report2 = report_factory(user=user2, task=task)
     report3 = report_factory(user=user3, task=task)
 
-    other_task = task_factory()
+    other_task = task_factory(project=project)
 
     url = reverse("report-bulk")
 
@@ -1271,20 +1279,22 @@ def test_report_update_bulk_verify_reviewer_multiple_notify(
         "data": {
             "type": "report-bulks",
             "id": None,
-            "attributes": {"verified": True, "comment": "some comment"},
+            "attributes": {"comment": "some comment"},
             "relationships": {"task": {"data": {"type": "tasks", "id": other_task.id}}},
         }
     }
 
-    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
-        str(r.id) for r in [report1_1, report1_2, report2, report3]
-    )
-    response = internal_employee_client.post(url + query_params, data)
+    reports = [report1_1, report1_2, report2, report3]
+    params = {
+        "editable": 1,
+        "reviewer": reviewer.id,
+        "id": ",".join(str(r.id) for r in reports),
+    }
+    response = internal_employee_client.post(url, data, query_params=params)
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
-    for report in [report1_1, report1_2, report2, report3]:
+    for report in reports:
         report.refresh_from_db()
-        assert report.verified_by == reviewer
         assert report.comment == "some comment"
         assert report.task == other_task
 
@@ -2111,3 +2121,47 @@ def test_report_list_filter_comment(
     assert json["data"][0]["id"] == str(report_1.id)
     assert json["data"][1]["id"] == str(report_2.id)
     assert json["data"][2]["id"] == str(report_3.id)
+
+
+def test_report_bulk_edit_move_and_verify(
+    internal_employee_client, user, report_factory, project_assignee_factory, task: Task
+):
+    reviewer = internal_employee_client.user
+
+    assert reviewer != user
+
+    # create a report owned by another user
+    report: Report = report_factory(user=user)
+
+    # assign the test employee as reviewer to the project of the report
+    project_assignee_factory(
+        user=reviewer, project=report.task.project, is_reviewer=True
+    )
+
+    url = reverse("report-bulk")
+
+    # raw request body for verifying and moving a report at the same time
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"verified": True},
+            "relationships": {
+                "task": {"data": {"type": "tasks", "id": task.pk}},
+            },
+        }
+    }
+
+    # query params as required by the action
+    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
+
+    response = internal_employee_client.post(
+        url,
+        data=data,
+        query_params=params,
+    )
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert (
+        response.json()["errors"][0]["detail"]
+        == "Reports can't be moved and verified at the same time."
+    )
