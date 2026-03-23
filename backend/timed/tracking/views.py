@@ -236,7 +236,7 @@ class ReportViewSet(ModelViewSet):
 
         editable = request.query_params.get("editable")
         if not user.is_superuser and not editable:
-            raise exceptions.ParseError(
+            raise exceptions.ValidationError(
                 _("Editable filter needs to be set for bulk update")
             )
 
@@ -245,40 +245,48 @@ class ReportViewSet(ModelViewSet):
             # this is enforced when reviewer filter is set to current user
             reviewer_id = request.query_params.get("reviewer")
             if not user.is_superuser and str(reviewer_id) != str(user.id):
-                raise exceptions.ParseError(
+                raise exceptions.ValidationError(
                     _("Reviewer filter needs to be set to verifying user")
                 )
 
             fields["verified_by"] = (verified and user) or None
 
             if fields.get("review") or any(queryset.values_list("review", flat=True)):
-                raise exceptions.ParseError(
+                raise exceptions.ValidationError(
                     _("Reports can't both be set as `review` and `verified`.")
                 )
 
             if fields.get("task"):
-                raise exceptions.ParseError(
+                raise exceptions.ValidationError(
                     _("Reports can't be moved and verified at the same time.")
                 )
 
         if serializer.validated_data.get("billed", None) is not None and not (
             user.is_superuser or user.is_accountant
         ):
-            raise exceptions.ParseError(
+            raise exceptions.ValidationError(
                 _("Only superuser and accountants may bill reports")
             )
+
+        reason = fields.pop("reason", "")
 
         if "task" in fields:
             # unreject report if task has changed
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
 
+        if fields.get("rejected") and not reason:
+            raise exceptions.ValidationError(
+                _("`reason` is requirement when rejecting report(s).")
+            )
+
         if fields:
-            # send notification if report was rejected
-            if fields.get("rejected"):
-                tasks.notify_user_rejected_reports(queryset, fields, user)
-            else:
-                tasks.notify_user_changed_reports(queryset, fields, user)
+            notify_fn = (
+                tasks.notify_user_rejected_reports
+                if fields.get("rejected")
+                else tasks.notify_user_changed_reports
+            )
+            notify_fn(queryset, fields, user, reason)
             queryset.update(**fields)
 
         return Response(status=status.HTTP_204_NO_CONTENT)

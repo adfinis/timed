@@ -186,10 +186,18 @@ export default class AnalysisEditController extends Controller {
       // this is an ugly mess, to get around the changeset using a PromiseProxy
       const changes = changeset.get("changes");
 
-      const { comment, notBillable, rejected, review, billed, verified } =
-        changeset;
+      const {
+        comment,
+        reason,
+        notBillable,
+        rejected,
+        review,
+        billed,
+        verified,
+      } = changeset;
       const _attributes = {
         comment,
+        reason,
         notBillable,
         rejected,
         review,
