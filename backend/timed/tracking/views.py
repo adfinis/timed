@@ -218,7 +218,7 @@ class ReportViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated],
         serializer_class=serializers.ReportBulkSerializer,
     )
-    def bulk(self, request):
+    def bulk(self, request):  # noqa: C901
         user = request.user
         queryset = self.get_queryset()
         queryset = self.filter_queryset(queryset)
@@ -234,51 +234,72 @@ class ReportViewSet(ModelViewSet):
             if value is not None
         }
 
-        editable = request.query_params.get("editable")
-        if not user.is_superuser and not editable:
-            raise exceptions.ParseError(
+        qp = request.query_params
+        if not user.is_superuser and not qp.get("editable"):
+            raise exceptions.ValidationError(
                 _("Editable filter needs to be set for bulk update")
+            )
+
+        is_superuser_or_accountant = user.is_superuser or user.is_accountant
+        has_billed_flag = fields.get("billed") is not None
+
+        if has_billed_flag and not is_superuser_or_accountant:
+            raise exceptions.ValidationError(
+                _("Only superuser and accountants may bill reports")
             )
 
         if verified is not None:
             # only reviewer or superuser may verify reports
             # this is enforced when reviewer filter is set to current user
-            reviewer_id = request.query_params.get("reviewer")
-            if not user.is_superuser and str(reviewer_id) != str(user.id):
-                raise exceptions.ParseError(
+            if not user.is_superuser and str(qp.get("reviewer")) != str(user.id):
+                raise exceptions.ValidationError(
                     _("Reviewer filter needs to be set to verifying user")
                 )
 
-            fields["verified_by"] = (verified and user) or None
-
             if fields.get("review") or any(queryset.values_list("review", flat=True)):
-                raise exceptions.ParseError(
+                raise exceptions.ValidationError(
                     _("Reports can't both be set as `review` and `verified`.")
                 )
 
             if fields.get("task"):
-                raise exceptions.ParseError(
+                raise exceptions.ValidationError(
                     _("Reports can't be moved and verified at the same time.")
                 )
 
-        if serializer.validated_data.get("billed", None) is not None and not (
-            user.is_superuser or user.is_accountant
-        ):
-            raise exceptions.ParseError(
-                _("Only superuser and accountants may bill reports")
-            )
+            fields["verified_by"] = (verified and user) or None
+
+        review_comment = fields.pop("review_comment", "")
 
         if "task" in fields:
+            # if no review comment was given, we validate that the customer of all the
+            # reports (that are being updated/attempted to be updated) is the same, if
+            # it isn't, we throw an error
+            if (
+                not review_comment
+                and queryset.exclude(
+                    task__project__customer=fields["task"].project.customer
+                ).exists()
+            ):
+                raise exceptions.ValidationError(
+                    _("Review Comment is required when changing/moving customer."),
+                    "required",
+                )
             # unreject report if task has changed
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
 
+        if fields.get("rejected") and not review_comment:
+            raise exceptions.ValidationError(
+                _("Review Comment is required when rejecting report(s).")
+            )
+
         if fields:
-            # send notification if report was rejected
-            if fields.get("rejected"):
-                tasks.notify_user_rejected_reports(queryset, fields, user)
-            else:
-                tasks.notify_user_changed_reports(queryset, fields, user)
+            notify_fn = (
+                tasks.notify_user_rejected_reports
+                if fields.get("rejected")
+                else tasks.notify_user_changed_reports
+            )
+            notify_fn(queryset, fields, user, review_comment)
             queryset.update(**fields)
 
         return Response(status=status.HTTP_204_NO_CONTENT)

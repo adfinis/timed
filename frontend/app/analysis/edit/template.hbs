@@ -233,6 +233,20 @@
                     </f.input>
                   </div>
 
+                  <f.input @name="reviewComment" @labelComponent="void" as |fi|>
+                    <label>
+                      Review Comment
+                      <input
+                        data-test-review-comment
+                        type="text"
+                        placeholder="Comment/Reason for change/rejection..."
+                        class="form-control comment-field rounded"
+                        {{on "change" (pick "target.value" fi.update)}}
+                        value={{fi.value}}
+                      />
+                    </label>
+                  </f.input>
+
                 </Card::Block>
                 <Card::Footer class="flex justify-between">
                   <div class="flex gap-2">
