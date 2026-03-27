@@ -49,7 +49,7 @@ const COLUMN_MAP = {
     { title: "Estimated", path: "estimatedTime", layout: DURATION_LAYOUT },
     { title: "Duration", path: "duration", layout: DURATION_LAYOUT },
     {
-      title: "Remaining effort",
+      title: "Remaining Effort",
       path: "mostRecentRemainingEffort",
       layout: DURATION_LAYOUT,
     },
@@ -91,8 +91,20 @@ export default class StatisticList extends Component {
     return Math.max(maxEstimated, maxDurationWithRemainingEffort);
   }
 
-  get total() {
+  get totalDuration() {
     return parseDjangoDuration(this.value.meta?.["total-time"] ?? null);
+  }
+
+  get totalEstimatedTime() {
+    return parseDjangoDuration(
+      this.value.meta?.["total-estimated-time"] ?? null,
+    );
+  }
+
+  get totalRemainingEfforts() {
+    return parseDjangoDuration(
+      this.value.meta?.["total-remaining-effort"] ?? null,
+    );
   }
 
   get columns() {
