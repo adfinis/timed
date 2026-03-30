@@ -83,3 +83,19 @@ class AbsenceFactory(DjangoModelFactory):
         """Meta informations for the absence factory."""
 
         model = models.Absence
+
+
+class ReportHistoryFactory(DjangoModelFactory):
+    """ReportHistory factory."""
+
+    comment = Faker("sentence")
+    report = SubFactory("timed.tracking.factories.ReportFactory")
+    previous = SubFactory("timed.projects.factories.TaskFactory")
+    next = SubFactory("timed.projects.factories.TaskFactory")
+    actor = SubFactory("timed.employment.factories.UserFactory")
+    created_at = Faker("past_datetime")
+
+    class Meta:
+        """Meta informations for the absence factory."""
+
+        model = models.ReportHistory
