@@ -116,12 +116,12 @@
                       {{#if (not-eq f.model.comment model.comment)}}
                         <ChangedWarning />
                       {{/if}}
-                      <input
+                      <textarea
                         data-test-comment
                         id="comment"
                         type="text"
                         placeholder="Enter comment..."
-                        class="form-control comment-field rounded
+                        class="form-textarea comment-field rounded
                           {{if
                             model.task.project.customerVisible
                             'customer-comment'
@@ -130,7 +130,7 @@
                           model.task.project.customerVisible
                           "This project's comments are visible to the customer"
                         }}
-                        {{on "change" (pick "target.value" fi.update)}}
+                        {{on "input" (pick "target.value" fi.update)}}
                         value={{fi.value}}
                       />
                     </label>

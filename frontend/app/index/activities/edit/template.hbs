@@ -25,9 +25,9 @@
     <Card::Footer class="text-right">
       <div class="form-group">
         <label hidden for="comment">Comment</label>
-        <input
+        <textarea
           type="text"
-          class="form-control comment-field rounded
+          class="form-textarea comment-field rounded
             {{if
               this.changeset.task.project.customerVisible
               'customer-comment'
@@ -41,10 +41,7 @@
           id="comment"
           spellcheck="true"
           value={{this.changeset.comment}}
-          {{on
-            "change"
-            (pick "target.value" (fn (mut this.changeset.comment)))
-          }}
+          {{on "input" (pick "target.value" (fn (mut this.changeset.comment)))}}
         />
       </div>
       <div

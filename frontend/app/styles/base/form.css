@@ -50,3 +50,20 @@ select,
 [type="checkbox"] {
   @apply text-primary;
 }
+
+textarea.form-textarea {
+  height: 2.5em;
+  transition: height 0.3s ease;
+  resize: none;
+  overflow: hidden;
+
+  &:focus {
+    height: 7em;
+    overflow-y: auto;
+  }
+}
+
+.report-row .ember-basic-dropdown-trigger,
+.report-row .form-list-cell {
+  align-self: start;
+}

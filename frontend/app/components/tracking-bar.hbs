@@ -22,10 +22,10 @@
         <t.task />
       </div>
       <div data-test-tracking-comment>
-        <input
+        <textarea
           type="text"
           id="task-comment"
-          class="form-control rounded
+          class="form-textarea rounded
             {{if
               this.tracking.activity.task.project.customerVisible
               'customer-comment'
@@ -46,7 +46,7 @@
           disabled={{this.tracking.activity.active}}
         />
       </div>
-      <div class="grid h-full place-self-center">
+      <div class="grid h-[2.5rem] place-self-start">
         <RecordButton
           @activity={{this.tracking.activity}}
           @recording={{this.tracking.activity.active}}
