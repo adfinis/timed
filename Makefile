@@ -58,6 +58,10 @@ flush: ## Flush database contents
 loaddata: flush ## Loads test data into the database
 	@$(ORCHESTRATOR) compose run --rm backend ./manage.py loaddata timed/fixtures/test_data.json
 
+.PHONY: dumpdata
+dumpdata: ## Dumps the current database
+	@$(ORCHESTRATOR) compose run --rm backend ./manage.py dumpdata -o timed/fixtures/test_data.json --exclude=auth --exclude=contenttypes
+
 .PHONY: frontend-lint
 frontend-lint: ## Lint the frontend
 	@cd frontend && pnpm run lint

@@ -2,328 +2,36 @@
   {
     "model": "employment.location",
     "pk": 1,
-    "fields": { "name": "Location 1", "workdays": "1,2,3,4,5" }
+    "fields": {
+      "name": "The Location",
+      "workdays": "1,2,3,4,5"
+    }
   },
   {
     "model": "employment.absencetype",
     "pk": 1,
-    "fields": { "name": "EO", "fill_worktime": false, "allow_comments": true  }
+    "fields": {
+      "name": "EO",
+      "fill_worktime": false,
+      "allow_comments": true
+    }
   },
   {
     "model": "employment.absencetype",
     "pk": 2,
-    "fields": { "name": "Ferien", "fill_worktime": false, "allow_comments": true }
+    "fields": {
+      "name": "Holidays",
+      "fill_worktime": false,
+      "allow_comments": true
+    }
   },
   {
     "model": "employment.absencetype",
     "pk": 3,
-    "fields": { "name": "Krankheit", "fill_worktime": true, "allow_comments": false }
-  },
-  {
-    "model": "projects.customer",
-    "pk": 1,
     "fields": {
-      "name": "Customer",
-      "reference": null,
-      "email": "customer@customer.customer",
-      "website": "",
-      "comment": "",
-      "archived": false
-    }
-  },
-  {
-    "model": "projects.customer",
-    "pk": 2,
-    "fields": {
-      "name": "Bob",
-      "reference": null,
-      "email": "",
-      "website": "",
-      "comment": "",
-      "archived": false
-    }
-  },
-  {
-    "model": "projects.costcenter",
-    "pk": 1,
-    "fields": { "name": "Cash", "reference": null }
-  },
-  {
-    "model": "projects.billingtype",
-    "pk": 1,
-    "fields": { "name": "Cash", "reference": null }
-  },
-  {
-    "model": "projects.task",
-    "pk": 1,
-    "fields": {
-      "name": "Work",
-      "reference": null,
-      "estimated_time": "2 02:00:00",
-      "archived": false,
-      "project": 1,
-      "cost_center": 1
-    }
-  },
-  {
-    "model": "projects.task",
-    "pk": 2,
-    "fields": {
-      "name": "Special Work",
-      "reference": null,
-      "estimated_time": "4 04:00:00",
-      "archived": false,
-      "project": 1,
-      "cost_center": null
-    }
-  },
-  {
-    "model": "projects.task",
-    "pk": 3,
-    "fields": {
-      "name": "No Work",
-      "reference": null,
-      "estimated_time": null,
-      "archived": false,
-      "project": 1,
-      "cost_center": null
-    }
-  },
-  {
-    "model": "projects.task",
-    "pk": 4,
-    "fields": {
-      "name": "Some Work",
-      "reference": null,
-      "estimated_time": "05:00:00",
-      "archived": false,
-      "project": 2,
-      "cost_center": 1
-    }
-  },
-  {
-    "model": "projects.task",
-    "pk": 5,
-    "fields": {
-      "name": "Build",
-      "reference": null,
-      "estimated_time": null,
-      "archived": false,
-      "project": 3,
-      "cost_center": null
-    }
-  },
-  {
-    "model": "employment.user",
-    "pk": 1,
-    "fields": {
-      "password": "pbkdf2_sha256$150000$lgPMtNRsmi6E$l+HWaKslNGUOpRniI2AqeMxJpn8nDBCIfK4cMO/WcRo=",
-      "last_login": "2020-03-12T09:24:33.471Z",
-      "is_superuser": true,
-      "username": "admin",
-      "first_name": "Admin",
-      "email": "admin@example.com",
-      "is_staff": true,
-      "is_active": true,
-      "date_joined": "2020-03-12T09:24:27.469Z",
-      "tour_done": false,
-      "last_name": "Strator",
-      "groups": [],
-      "user_permissions": [],
-      "supervisors": []
-    }
-  },
-  {
-    "model": "employment.user",
-    "pk": 2,
-    "fields": {
-      "password": "pbkdf2_sha256$150000$pK2Jl6xl4iYO$NvhTs+T85I5Z9RTzTm/QNXbk20iM384gst9Nj0nWWrI=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "axels",
-      "first_name": "Axel",
-      "email": "axel@example.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2020-03-12T09:27:21Z",
-      "tour_done": true,
-      "last_name": "Schöni",
-      "groups": [],
-      "user_permissions": [],
-      "supervisors": [3]
-    }
-  },
-  {
-    "model": "employment.user",
-    "pk": 3,
-    "fields": {
-      "password": "pbkdf2_sha256$150000$R6spIXkVyNm7$Qg2vsL0klTpgTqRwXm9bu0efHtYM8aAVYsgcXqVJsF0=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "fritzm",
-      "first_name": "Fritz",
-      "email": "fritz@example.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2020-03-12T09:28:55Z",
-      "tour_done": true,
-      "last_name": "Muster",
-      "groups": [],
-      "user_permissions": [],
-      "supervisors": []
-    }
-  },
-  {
-    "model": "employment.user",
-    "pk": 4,
-    "fields": {
-      "password": "",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "jasminem",
-      "first_name": "Jasmine",
-      "email": "jasmine@example.com",
-      "is_accountant": true,
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2020-03-12T09:28:55Z",
-      "tour_done": true,
-      "last_name": "Meier",
-      "groups": [],
-      "user_permissions": [],
-      "supervisors": []
-    }
-  },
-  {
-    "model": "employment.user",
-    "pk": 5,
-    "fields": {
-      "password": "pbkdf2_sha256$150000$R6spIXkVyNm7$Qg2vsL0klTpgTqRwXm9bu0efHtYM8aAVYsgcXqVJsF0=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "wladimirc",
-      "first_name": "Wladimir",
-      "email": "wladimir@example.com",
-      "is_staff": false,
-      "is_active": true,
-      "date_joined": "2020-03-12T09:28:55Z",
-      "tour_done": true,
-      "last_name": "Customer",
-      "groups": [],
-      "user_permissions": [],
-      "supervisors": []
-    }
-  },
-  {
-    "model": "projects.project",
-    "pk": 1,
-    "fields": {
-      "name": "Big Project",
-      "reference": null,
-      "comment": "A very big project",
-      "archived": false,
-      "estimated_time": "20 20:00:00",
-      "customer": 1,
-      "billing_type": 1,
-      "cost_center": 1,
-      "customer_visible": false
-    }
-  },
-  {
-    "model": "projects.project",
-    "pk": 2,
-    "fields": {
-      "name": "Small Project",
-      "reference": null,
-      "comment": "A small project",
-      "archived": false,
-      "estimated_time": "1 06:00:00",
-      "customer": 1,
-      "billing_type": 1,
-      "cost_center": 1,
-      "customer_visible": false
-    }
-  },
-  {
-    "model": "projects.project",
-    "pk": 3,
-    "fields": {
-      "name": "Building",
-      "reference": null,
-      "comment": "",
-      "archived": false,
-      "estimated_time": "4 04:00:00",
-      "customer": 2,
-      "billing_type": null,
-      "cost_center": null,
-      "customer_visible": false
-    }
-  },
-  {
-    "model": "employment.employment",
-    "pk": 1,
-    "fields": {
-      "user": 2,
-      "location": 1,
-      "percentage": 100,
-      "worktime_per_day": "08:00:00",
-      "start_date": "2020-01-01",
-      "end_date": null,
-      "added": "2020-03-12T09:27:21.761Z",
-      "updated": "2020-03-12T09:27:21.761Z"
-    }
-  },
-  {
-    "model": "employment.employment",
-    "pk": 2,
-    "fields": {
-      "user": 3,
-      "location": 1,
-      "percentage": 80,
-      "worktime_per_day": "06:00:00",
-      "start_date": "2020-01-01",
-      "end_date": null,
-      "added": "2020-03-12T09:28:55.640Z",
-      "updated": "2020-03-12T09:28:55.640Z"
-    }
-  },
-  {
-    "model": "employment.employment",
-    "pk": 3,
-    "fields": {
-      "user": 1,
-      "location": 1,
-      "percentage": 100,
-      "worktime_per_day": "08:00:00",
-      "start_date": "2020-01-01",
-      "end_date": null,
-      "added": "2020-03-19T09:27:21.761Z",
-      "updated": "2020-03-19T09:27:21.761Z"
-    }
-  },
-  {
-    "model": "employment.employment",
-    "pk": 4,
-    "fields": {
-      "user": 4,
-      "location": 1,
-      "percentage": 100,
-      "worktime_per_day": "08:00:00",
-      "start_date": "2020-01-01",
-      "end_date": null,
-      "added": "2020-03-19T09:27:21.761Z",
-      "updated": "2020-03-19T09:27:21.761Z"
-    }
-  },
-  {
-    "model": "employment.overtimecredit",
-    "pk": 1,
-    "fields": {
-      "user": 2,
-      "comment": "Overtime",
-      "date": "2020-01-01",
-      "duration": "20:00:00",
-      "transfer": false
+      "name": "Sick Leave",
+      "fill_worktime": true,
+      "allow_comments": false
     }
   },
   {
@@ -351,6 +59,685 @@
     }
   },
   {
+    "model": "employment.overtimecredit",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "comment": "Overtime",
+      "date": "2020-01-01",
+      "duration": "20:00:00",
+      "transfer": false
+    }
+  },
+  {
+    "model": "employment.employment",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "location": 1,
+      "percentage": 100,
+      "worktime_per_day": "08:00:00",
+      "start_date": "2020-01-01",
+      "end_date": null,
+      "added": "2020-03-12T09:27:21.761Z",
+      "updated": "2020-03-12T09:27:21.761Z",
+      "is_external": false
+    }
+  },
+  {
+    "model": "employment.employment",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "location": 1,
+      "percentage": 80,
+      "worktime_per_day": "06:00:00",
+      "start_date": "2020-01-01",
+      "end_date": null,
+      "added": "2020-03-12T09:28:55.640Z",
+      "updated": "2020-03-12T09:28:55.640Z",
+      "is_external": false
+    }
+  },
+  {
+    "model": "employment.employment",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "location": 1,
+      "percentage": 100,
+      "worktime_per_day": "08:00:00",
+      "start_date": "2020-01-01",
+      "end_date": null,
+      "added": "2020-03-19T09:27:21.761Z",
+      "updated": "2020-03-19T09:27:21.761Z",
+      "is_external": false
+    }
+  },
+  {
+    "model": "employment.employment",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "location": 1,
+      "percentage": 100,
+      "worktime_per_day": "08:00:00",
+      "start_date": "2020-01-01",
+      "end_date": null,
+      "added": "2020-03-19T09:27:21.761Z",
+      "updated": "2020-03-19T09:27:21.761Z",
+      "is_external": false
+    }
+  },
+  {
+    "model": "employment.employment",
+    "pk": 5,
+    "fields": {
+      "user": 7,
+      "location": 1,
+      "percentage": 100,
+      "worktime_per_day": "08:00:00",
+      "start_date": "2025-09-02",
+      "end_date": null,
+      "added": "2026-03-16T12:51:01.270Z",
+      "updated": "2026-03-16T12:51:01.270Z",
+      "is_external": false
+    }
+  },
+  {
+    "model": "employment.employment",
+    "pk": 6,
+    "fields": {
+      "user": 8,
+      "location": 1,
+      "percentage": 100,
+      "worktime_per_day": "08:00:00",
+      "start_date": "2024-09-02",
+      "end_date": null,
+      "added": "2026-03-16T12:51:01.275Z",
+      "updated": "2026-03-16T12:51:01.275Z",
+      "is_external": false
+    }
+  },
+  {
+    "model": "employment.employment",
+    "pk": 7,
+    "fields": {
+      "user": 6,
+      "location": 1,
+      "percentage": 80,
+      "worktime_per_day": "06:00:00",
+      "start_date": "2023-01-01",
+      "end_date": null,
+      "added": "2026-03-16T12:51:01.278Z",
+      "updated": "2026-03-16T12:51:01.278Z",
+      "is_external": false
+    }
+  },
+  {
+    "model": "employment.employment",
+    "pk": 8,
+    "fields": {
+      "user": 9,
+      "location": 1,
+      "percentage": 80,
+      "worktime_per_day": "08:00:00",
+      "start_date": "2023-01-01",
+      "end_date": null,
+      "added": "2026-03-16T12:51:01.298Z",
+      "updated": "2026-03-16T12:51:01.298Z",
+      "is_external": false
+    }
+  },
+  {
+    "model": "employment.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$lgPMtNRsmi6E$l+HWaKslNGUOpRniI2AqeMxJpn8nDBCIfK4cMO/WcRo=",
+      "last_login": "2020-03-12T09:24:33.471Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "Admin",
+      "email": "admin@example.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2020-03-12T09:24:27.469Z",
+      "tour_done": false,
+      "last_name": "Strator",
+      "is_accountant": false,
+      "groups": [],
+      "user_permissions": [],
+      "supervisors": []
+    }
+  },
+  {
+    "model": "employment.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$pK2Jl6xl4iYO$NvhTs+T85I5Z9RTzTm/QNXbk20iM384gst9Nj0nWWrI=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "axels",
+      "first_name": "Axel",
+      "email": "axel@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-03-12T09:27:21Z",
+      "tour_done": true,
+      "last_name": "Schöni",
+      "is_accountant": false,
+      "groups": [],
+      "user_permissions": [],
+      "supervisors": [
+        3
+      ]
+    }
+  },
+  {
+    "model": "employment.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$R6spIXkVyNm7$Qg2vsL0klTpgTqRwXm9bu0efHtYM8aAVYsgcXqVJsF0=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "fritzm",
+      "first_name": "Fritz",
+      "email": "fritz@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-03-12T09:28:55Z",
+      "tour_done": true,
+      "last_name": "Muster",
+      "is_accountant": false,
+      "groups": [],
+      "user_permissions": [],
+      "supervisors": []
+    }
+  },
+  {
+    "model": "employment.user",
+    "pk": 4,
+    "fields": {
+      "password": "",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "jasminem",
+      "first_name": "Jasmine",
+      "email": "jasmine@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-03-12T09:28:55Z",
+      "tour_done": true,
+      "last_name": "Meier",
+      "is_accountant": true,
+      "groups": [],
+      "user_permissions": [],
+      "supervisors": []
+    }
+  },
+  {
+    "model": "employment.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$R6spIXkVyNm7$Qg2vsL0klTpgTqRwXm9bu0efHtYM8aAVYsgcXqVJsF0=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "wladimirc",
+      "first_name": "Wladimir",
+      "email": "wladimir@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-03-12T09:28:55Z",
+      "tour_done": true,
+      "last_name": "Customer",
+      "is_accountant": false,
+      "groups": [],
+      "user_permissions": [],
+      "supervisors": []
+    }
+  },
+  {
+    "model": "employment.user",
+    "pk": 6,
+    "fields": {
+      "password": "",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "maxm",
+      "first_name": "Max",
+      "email": "max.muster@timed.localhost",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-03-16T12:51:01.255Z",
+      "tour_done": false,
+      "last_name": "Muster",
+      "is_accountant": false,
+      "groups": [],
+      "user_permissions": [],
+      "supervisors": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "employment.user",
+    "pk": 7,
+    "fields": {
+      "password": "",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "tims",
+      "first_name": "Tim",
+      "email": "tim.schueler@timed.localhost",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-03-16T12:51:01.261Z",
+      "tour_done": false,
+      "last_name": "Schüler",
+      "is_accountant": false,
+      "groups": [],
+      "user_permissions": [],
+      "supervisors": [
+        6,
+        9
+      ]
+    }
+  },
+  {
+    "model": "employment.user",
+    "pk": 8,
+    "fields": {
+      "password": "",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "janas",
+      "first_name": "Jana",
+      "email": "jana.schueler@timed.localhost",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-03-16T12:51:01.267Z",
+      "tour_done": false,
+      "last_name": "Schüler",
+      "is_accountant": false,
+      "groups": [],
+      "user_permissions": [],
+      "supervisors": [
+        6,
+        9
+      ]
+    }
+  },
+  {
+    "model": "employment.user",
+    "pk": 9,
+    "fields": {
+      "password": "",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "lead",
+      "first_name": "Lea",
+      "email": "lea.deam@timed.locahost",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-03-16T12:51:01.288Z",
+      "tour_done": false,
+      "last_name": "Deam",
+      "is_accountant": false,
+      "groups": [],
+      "user_permissions": [],
+      "supervisors": []
+    }
+  },
+  {
+    "model": "projects.customer",
+    "pk": 1,
+    "fields": {
+      "name": "Customer",
+      "reference": null,
+      "email": "customer@customer.customer",
+      "website": "",
+      "comment": "",
+      "archived": false
+    }
+  },
+  {
+    "model": "projects.customer",
+    "pk": 2,
+    "fields": {
+      "name": "Bob",
+      "reference": null,
+      "email": "",
+      "website": "",
+      "comment": "",
+      "archived": false
+    }
+  },
+  {
+    "model": "projects.customer",
+    "pk": 3,
+    "fields": {
+      "name": "Company AG",
+      "reference": null,
+      "email": "",
+      "website": "",
+      "comment": "",
+      "archived": false
+    }
+  },
+  {
+    "model": "projects.costcenter",
+    "pk": 1,
+    "fields": {
+      "name": "Cash",
+      "reference": null
+    }
+  },
+  {
+    "model": "projects.billingtype",
+    "pk": 1,
+    "fields": {
+      "name": "Cash",
+      "reference": null
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+      "name": "Big Project",
+      "reference": null,
+      "comment": "A very big project",
+      "archived": false,
+      "billed": false,
+      "estimated_time": "20 20:00:00",
+      "customer": 1,
+      "billing_type": 1,
+      "cost_center": 1,
+      "customer_visible": false,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "remaining_effort_tracking": false,
+      "total_remaining_effort": "00:00:00"
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 2,
+    "fields": {
+      "name": "Small Project",
+      "reference": null,
+      "comment": "A small project",
+      "archived": false,
+      "billed": false,
+      "estimated_time": "1 06:00:00",
+      "customer": 1,
+      "billing_type": 1,
+      "cost_center": 1,
+      "customer_visible": false,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "remaining_effort_tracking": false,
+      "total_remaining_effort": "00:00:00"
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 3,
+    "fields": {
+      "name": "Building",
+      "reference": null,
+      "comment": "",
+      "archived": false,
+      "billed": false,
+      "estimated_time": "4 04:00:00",
+      "customer": 2,
+      "billing_type": null,
+      "cost_center": null,
+      "customer_visible": false,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "remaining_effort_tracking": false,
+      "total_remaining_effort": "00:00:00"
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 4,
+    "fields": {
+      "name": "Vocational Training",
+      "reference": null,
+      "comment": "",
+      "archived": false,
+      "billed": false,
+      "estimated_time": null,
+      "customer": 3,
+      "billing_type": null,
+      "cost_center": null,
+      "customer_visible": false,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "remaining_effort_tracking": false,
+      "total_remaining_effort": "00:00:00"
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 5,
+    "fields": {
+      "name": "Development",
+      "reference": null,
+      "comment": "",
+      "archived": false,
+      "billed": false,
+      "estimated_time": null,
+      "customer": 3,
+      "billing_type": null,
+      "cost_center": null,
+      "customer_visible": false,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "remaining_effort_tracking": false,
+      "total_remaining_effort": "00:00:00"
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 1,
+    "fields": {
+      "name": "Work",
+      "reference": null,
+      "estimated_time": "2 02:00:00",
+      "archived": false,
+      "project": 1,
+      "cost_center": 1,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 2,
+    "fields": {
+      "name": "Special Work",
+      "reference": null,
+      "estimated_time": "4 04:00:00",
+      "archived": false,
+      "project": 1,
+      "cost_center": null,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 3,
+    "fields": {
+      "name": "No Work",
+      "reference": null,
+      "estimated_time": null,
+      "archived": false,
+      "project": 1,
+      "cost_center": null,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 4,
+    "fields": {
+      "name": "Some Work",
+      "reference": null,
+      "estimated_time": "05:00:00",
+      "archived": false,
+      "project": 2,
+      "cost_center": 1,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 5,
+    "fields": {
+      "name": "Build",
+      "reference": null,
+      "estimated_time": null,
+      "archived": false,
+      "project": 3,
+      "cost_center": null,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 6,
+    "fields": {
+      "name": "School",
+      "reference": null,
+      "estimated_time": null,
+      "archived": false,
+      "project": 4,
+      "cost_center": null,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 7,
+    "fields": {
+      "name": "Training",
+      "reference": null,
+      "estimated_time": null,
+      "archived": false,
+      "project": 4,
+      "cost_center": null,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 8,
+    "fields": {
+      "name": "Supervision",
+      "reference": null,
+      "estimated_time": null,
+      "archived": false,
+      "project": 4,
+      "cost_center": null,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 9,
+    "fields": {
+      "name": "Admin & Meetings",
+      "reference": null,
+      "estimated_time": null,
+      "archived": false,
+      "project": 5,
+      "cost_center": null,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 10,
+    "fields": {
+      "name": "Apps & Workplace",
+      "reference": null,
+      "estimated_time": null,
+      "archived": false,
+      "project": 5,
+      "cost_center": null,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
+    "model": "projects.task",
+    "pk": 11,
+    "fields": {
+      "name": "Travel Time",
+      "reference": null,
+      "estimated_time": null,
+      "archived": false,
+      "project": 5,
+      "cost_center": null,
+      "amount_offered_currency": "CHF",
+      "amount_offered": null,
+      "amount_invoiced_currency": "CHF",
+      "amount_invoiced": null,
+      "most_recent_remaining_effort": null
+    }
+  },
+  {
     "model": "projects.customerassignee",
     "pk": 1,
     "fields": {
@@ -358,7 +745,8 @@
       "customer": 1,
       "is_resource": false,
       "is_reviewer": true,
-      "is_manager": false
+      "is_manager": false,
+      "is_customer": false
     }
   },
   {
@@ -374,6 +762,30 @@
     }
   },
   {
+    "model": "projects.projectassignee",
+    "pk": 1,
+    "fields": {
+      "user": 9,
+      "project": 5,
+      "is_resource": false,
+      "is_reviewer": true,
+      "is_manager": false,
+      "is_customer": false
+    }
+  },
+  {
+    "model": "projects.projectassignee",
+    "pk": 2,
+    "fields": {
+      "user": 6,
+      "project": 4,
+      "is_resource": false,
+      "is_reviewer": true,
+      "is_manager": false,
+      "is_customer": false
+    }
+  },
+  {
     "model": "projects.taskassignee",
     "pk": 1,
     "fields": {
@@ -381,7 +793,8 @@
       "task": 5,
       "is_resource": false,
       "is_reviewer": true,
-      "is_manager": true
+      "is_manager": true,
+      "is_customer": false
     }
   }
 ]

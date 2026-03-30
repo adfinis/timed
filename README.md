@@ -62,20 +62,19 @@ Import some development fixtures to get started:
 make loaddata
 ```
 
-The test data includes 3 users: `admin`, `fritzm` and `axels` with which you can log into [https://timed.localhost](https://timed.localhost). Their passwords are identical to the username.
+The test data includes various users:
 
-To access the Django admin interface you will have to change the admin password in Django directly:
+- `admin` (Administrator Account)
+- `fritzm`
+- `axels`
+- `lead` (Reviewer for `Company AG > Developement`, supervises `maxm`, `tims` and `janas`)
+- `maxm` (Reviewer for `Company AG > Vocational Training`)
+- `tims` (Supervised by `maxm`)
+- `janas` (Supervised by `maxm`)
 
-```console
-$ podman compose run --rm -it sh
-/app $ ./manage.py changepassword admin
-Changing password for user 'admin'
-Password:
-Password (again):
-Password changed successfully for user 'admin'
-```
+With which you can log into [https://timed.localhost](https://timed.localhost). Their passwords are identical to the username.
 
-Then you'll be able to login in the Django admin interface [https://timed.localhost/admin/](https://timed.localhost/admin/).
+The django-admin interface is at [https://timed.localhost/admin/](https://timed.localhost/admin/), the same users can be used via the `Login with SSO` option.
 
 ### Frontend
 
