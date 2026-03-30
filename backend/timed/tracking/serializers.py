@@ -511,7 +511,7 @@ class AbsenceSerializer(ModelSerializer):
 
 class ReportHistorySerializer(ModelSerializer):
     included_serializers: ClassVar[dict[str, str]] = {
-        "prev": "timed.projects.serializers.TaskSerializer",
+        "previous": "timed.projects.serializers.TaskSerializer",
         "next": "timed.projects.serializers.TaskSerializer",
         "actor": "timed.employment.serializers.UserSerializer",
     }
