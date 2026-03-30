@@ -40,7 +40,8 @@
         <textarea
           type="text"
           class="form-textarea comment-field rounded
-            {{if cs.task.project.customerVisible 'customer-comment'}}"
+            {{if cs.task.project.customerVisible 'customer-comment'}}
+            {{report-comment-length-class cs.comment}}"
           placeholder="Comment"
           name="comment"
           id="row-comment"

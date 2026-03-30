@@ -125,7 +125,8 @@
                           {{if
                             model.task.project.customerVisible
                             'customer-comment'
-                          }}"
+                          }}
+                          {{report-comment-length-class fi.value}}"
                         title={{if
                           model.task.project.customerVisible
                           "This project's comments are visible to the customer"

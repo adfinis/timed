@@ -52,15 +52,31 @@ select,
 }
 
 textarea.form-textarea {
-  height: 2.5em;
+  height: 2.45em;
   transition: height 0.3s ease;
   resize: none;
   overflow: hidden;
 
   &:focus {
-    height: 7em;
+    height: var(--max-height, 2.45em);
     overflow-y: auto;
   }
+}
+
+.content-line-1 {
+  --max-height: 2.45em;
+}
+
+.content-line-2 {
+  --max-height: 3.6em;
+}
+
+.content-line-3 {
+  --max-height: 5.4em;
+}
+
+.content-line-4 {
+  --max-height: 7em;
 }
 
 .report-row .ember-basic-dropdown-trigger,

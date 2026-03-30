@@ -29,7 +29,8 @@
             {{if
               this.tracking.activity.task.project.customerVisible
               'customer-comment'
-            }}"
+            }}
+            {{report-comment-length-class this.tracking.activity.comment}}"
           placeholder="Comment"
           name="comment"
           spellcheck="true"
@@ -40,7 +41,7 @@
             "This project's comments are visible to the customer"
           }}
           {{on
-            "change"
+            "input"
             (pick "target.value" (fn (mut this.tracking.activity.comment)))
           }}
           disabled={{this.tracking.activity.active}}
