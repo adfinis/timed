@@ -18,8 +18,13 @@ if TYPE_CHECKING:
 
 
 def test_report_detail_include_history(
-    internal_employee_client: Client, report_history: ReportHistory
+    internal_employee_client: Client,
+    report_history: ReportHistory,
+    report_history_factory: ReportHistoryFactory,
 ):
+    # add some history records that should not be included/returned
+    report_history_factory.create_batch(10)
+
     url = reverse("report-detail", args=[report_history.report.pk])
     response = internal_employee_client.get(url, query_params={"include": "history"})
 
