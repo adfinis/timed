@@ -518,4 +518,11 @@ class ReportHistorySerializer(ModelSerializer):
 
     class Meta:
         model = models.ReportHistory
-        fields = "__all__"
+        fields = (
+            "comment",
+            "report",
+            "previous",
+            "next",
+            "actor",
+            "created_at",
+        )
