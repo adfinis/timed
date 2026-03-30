@@ -107,8 +107,8 @@
                     </div>
                   </f.input>
 
-                  <f.input @name="comment" @labelComponent="void" as |fi|>
-                    <label>
+                  <f.input @name="comment" as |fi|>
+                    <label for="comment">
                       Comment
                       {{#if (eq model.comment null)}}
                         <NotIdenticalWarning />
@@ -118,6 +118,7 @@
                       {{/if}}
                       <input
                         data-test-comment
+                        id="comment"
                         type="text"
                         placeholder="Enter comment..."
                         class="form-control comment-field rounded
@@ -232,6 +233,21 @@
                       </Checkbox>
                     </f.input>
                   </div>
+
+                  <f.input @name="reviewComment" @dirty={{true}} as |fi|>
+                    <label for="review-comment" data-test-review-comment-label>
+                      Review Comment
+                      <input
+                        data-test-review-comment
+                        id="review-comment"
+                        type="text"
+                        placeholder="Comment/Reason for change/rejection..."
+                        class="form-control comment-field rounded"
+                        {{on "change" (pick "target.value" fi.update)}}
+                        value={{fi.value}}
+                      />
+                    </label>
+                  </f.input>
 
                 </Card::Block>
                 <Card::Footer class="flex justify-between">

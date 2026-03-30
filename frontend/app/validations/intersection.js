@@ -1,3 +1,5 @@
+import { validatePresence } from "ember-changeset-validations/validators";
+
 /**
  * Given `changes` and `content` from a changeset validator, return wether a given `relation` has been changed.
  * @param {string} relation
@@ -10,6 +12,41 @@ const relationChanged = (relation) => (changes, content) =>
 
 const customerChanged = relationChanged("customer");
 const projectChanged = relationChanged("project");
+
+const validateReviewCommentDifferentCustomer = (
+  key,
+  newValue,
+  oldValue,
+  changes,
+  content,
+) => {
+  if (changes.customer?.id && content.customer?.id !== changes?.customer?.id) {
+    return validatePresence({
+      presence: true,
+      ignoreBlank: true,
+      message:
+        "Review Comment is required when moving report(s) to a different customer.",
+    })(key, newValue, oldValue, changes, content);
+  }
+  return true;
+};
+
+const validateReviewCommentRejected = (
+  key,
+  newValue,
+  oldValue,
+  changes,
+  content,
+) => {
+  if (changes.rejected) {
+    return validatePresence({
+      presence: true,
+      ignoreBlank: true,
+      message: "Review Comment is required when rejecting reports.",
+    })(key, newValue, oldValue, changes, content);
+  }
+  return true;
+};
 
 const validateVerified = (key, newValue, oldValue, changes, content) => {
   if (!newValue) {
@@ -30,13 +67,7 @@ const validateVerified = (key, newValue, oldValue, changes, content) => {
   return true;
 };
 
-const validateIntersectionTask = (
-  key,
-  newValue,
-  oldValue,
-  changes,
-  content,
-) => {
+const validateTask = (key, newValue, oldValue, changes, content) => {
   const hasTask = !!(newValue && newValue.id);
 
   // different customer -> different project -> different task
@@ -53,5 +84,9 @@ const validateIntersectionTask = (
 
 export default {
   verified: validateVerified,
-  task: validateIntersectionTask,
+  task: validateTask,
+  reviewComment: [
+    validateReviewCommentRejected,
+    validateReviewCommentDifferentCustomer,
+  ],
 };

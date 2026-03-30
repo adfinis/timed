@@ -204,4 +204,81 @@ module("Acceptance | analysis edit", function (hooks) {
     // the error message is gone
     assert.dom("[data-test-verified] + .invalid-feedback").doesNotExist();
   });
+
+  test("review comment validation", async function (assert) {
+    const task = this.server.create("task");
+    const otherTask = this.server.create("task");
+
+    // giving this as an argument to `.create` directly doesn't work
+    // this is a workaround
+    otherTask.project.update({ customer: task.project.customer });
+
+    const taskOtherCustomer = this.server.create("task");
+
+    // sanity check
+    assert.deepEqual(task.project.customer.id, otherTask.project.customer.id);
+    assert.notDeepEqual(
+      task.project.customer.id,
+      taskOtherCustomer.project.customer.id,
+    );
+
+    this.reportIntersection.update({
+      review: false,
+      customer: task.project.customer,
+      project: task.project,
+      taskId: task.id,
+    });
+
+    await visit(`/analysis/edit?id=${task.id}`);
+
+    // there is no validation error
+    assert.dom("[data-test-review-comment] + .invalid-feedback").doesNotExist();
+
+    // select another task (same customer, different project)
+    await selectChoose("[data-test-project]", otherTask.project.name);
+    await selectChoose("[data-test-task]", otherTask.name);
+
+    // there is no validation error
+    assert.dom("[data-test-review-comment] + .invalid-feedback").doesNotExist();
+
+    // select another customer
+    await selectChoose(
+      "[data-test-customer]",
+      taskOtherCustomer.project.customer.name,
+    );
+
+    // there now is a validation error
+    assert
+      .dom("[data-test-review-comment-label] + .invalid-feedback")
+      .hasText(
+        "Review Comment is required when moving report(s) to a different customer.",
+      );
+
+    // select a project on the other customer
+    await selectChoose("[data-test-project]", taskOtherCustomer.project.name);
+
+    // the validation error is still here
+    assert
+      .dom("[data-test-review-comment-label] + .invalid-feedback")
+      .hasText(
+        "Review Comment is required when moving report(s) to a different customer.",
+      );
+
+    // select a task on the other customer
+    await selectChoose("[data-test-task]", taskOtherCustomer.name);
+
+    // the validation error is still here
+    assert
+      .dom("[data-test-review-comment-label] + .invalid-feedback")
+      .hasText(
+        "Review Comment is required when moving report(s) to a different customer.",
+      );
+
+    await fillIn("[data-test-review-comment]", "foo bar baz.");
+
+    // no more error
+    assert
+      .dom("[data-test-review-comment-label] + .invalid-feedback")
+      .doesNotExist();
+  });
 });
