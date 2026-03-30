@@ -1,0 +1,28 @@
+{{#in-element this.destination}}
+  <aside
+    class="report-history-sidebar min-w-96 max-w-[30rem]
+      {{if
+        this.visible
+        'report-history-sidebar--visible translate-x-0'
+        'translate-x-full'
+      }}
+      bg-background fixed bottom-0 right-0 top-0 z-[51] flex flex-col transition-transform duration-300"
+    ...attributes
+  >
+    <Modal::Header @close={{this.history.close}}><h3>Report History</h3></Modal::Header>
+
+    <Modal::Body>
+      {{this.report}}
+    </Modal::Body>
+
+  </aside>
+  <div
+    class="report-history-sidebar-overlay fixed z-[50] opacity-0 transition-all duration-300
+      {{if
+        this.visible
+        'report-history-sidebar-overlay--visible pointer-events-all bg-foreground-muted/30 inset-0 top-0 opacity-100'
+      }}"
+    {{! template-lint-disable}}
+    {{on "click" this.history.close}}
+  ></div>
+{{/in-element}}
