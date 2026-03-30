@@ -290,15 +290,18 @@ class ReportViewSet(ModelViewSet):
             fields["billed"] = bool(fields["task"].project.billed)
 
             # create history entries
-            for report in queryset.distinct():
-                rh = ReportHistory(
-                    report=report,
-                    comment=review_comment,
-                    actor=user,
-                    next=fields["task"],
-                    previous=report.task,
-                )
-                rh.save()
+            ReportHistory.objects.bulk_create(
+                [
+                    ReportHistory(
+                        report=report,
+                        comment=review_comment,
+                        actor=user,
+                        next=fields["task"],
+                        previous=report.task,
+                    )
+                    for report in queryset.distinct()
+                ]
+            )
 
         if fields.get("rejected") and not review_comment:
             raise exceptions.ValidationError(
