@@ -52,6 +52,9 @@ export const theme = {
       DEFAULT: borderColor,
     },
     colors: {
+      toggle: {
+        active: "rgb(var(--toggle-active))",
+      },
       background: {
         DEFAULT: "rgb(var(--background) / <alpha-value>)",
         muted: colorMixOpacity("var(--background-muted)"),
