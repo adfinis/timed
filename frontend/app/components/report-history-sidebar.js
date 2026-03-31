@@ -27,8 +27,8 @@ export default class FilterSidebar extends Component {
     this.history.addEventListener("close", this.onClose);
 
     registerDestructor(this, () => {
-      this.messaging.removeEventListener("show", this.onShow);
-      this.messaging.removeEventListener("close", this.onClose);
+      this.messaging?.removeEventListener("show", this.onShow);
+      this.messaging?.removeEventListener("close", this.onClose);
     });
   }
 }
