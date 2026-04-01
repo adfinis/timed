@@ -25,24 +25,10 @@
     <Card::Footer class="text-right">
       <div class="form-group">
         <label hidden for="comment">Comment</label>
-        <textarea
-          type="text"
-          class="form-textarea comment-field rounded
-            {{if
-              this.changeset.task.project.customerVisible
-              'customer-comment'
-            }}
-            {{report-comment-length-class this.changeset.comment}}"
-          title={{if
-            this.changeset.task.project.customerVisible
-            "This project's comments are visible to the customer"
-          }}
-          placeholder="Comment"
-          name="comment"
-          id="comment"
-          spellcheck="true"
-          value={{this.changeset.comment}}
-          {{on "input" (pick "target.value" (fn (mut this.changeset.comment)))}}
+        <ReportComment
+          @value={{this.changeset.comment}}
+          @customerVisible={{this.changeset.task.project.customerVisible}}
+          @onUpdate={{fn (mut this.changeset.comment)}}
         />
       </div>
       <div

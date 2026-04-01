@@ -22,29 +22,11 @@
         <t.task />
       </div>
       <div data-test-tracking-comment>
-        <textarea
-          type="text"
-          id="task-comment"
-          class="form-textarea rounded
-            {{if
-              this.tracking.activity.task.project.customerVisible
-              'customer-comment'
-            }}
-            {{report-comment-length-class this.tracking.activity.comment}}"
-          placeholder="Comment"
-          name="comment"
-          spellcheck="true"
-          autocomplete="true"
-          value={{this.tracking.activity.comment}}
-          title={{if
-            this.tracking.activity.task.project.customerVisible
-            "This project's comments are visible to the customer"
-          }}
-          {{on
-            "input"
-            (pick "target.value" (fn (mut this.tracking.activity.comment)))
-          }}
-          disabled={{this.tracking.activity.active}}
+        <ReportComment
+          @value={{this.tracking.activity.comment}}
+          @disabled={{this.tracking.activity.active}}
+          @customerVisible={{this.tracking.activity.task.project.customerVisible}}
+          @onUpdate={{fn (mut this.tracking.activity.comment)}}
         />
       </div>
       <div class="grid h-[2.5rem] place-self-start">
