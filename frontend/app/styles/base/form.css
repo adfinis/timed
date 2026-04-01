@@ -52,15 +52,8 @@ select,
 }
 
 textarea.form-textarea {
-  height: 2.45em;
-  transition: height 0.3s ease;
-  resize: none;
-  overflow: hidden;
-
-  &:focus {
-    height: var(--max-height, 2.45em);
-    overflow-y: auto;
-  }
+  @apply h-[2.45em] transition-[height] duration-300 ease-in-out resize-none overflow-hidden;
+  @apply focus:h-[var(--max-height,2.45em)] focus:overflow-y-auto;
 }
 
 .content-line-1 {
@@ -81,5 +74,5 @@ textarea.form-textarea {
 
 .report-row .ember-basic-dropdown-trigger,
 .report-row .form-list-cell {
-  align-self: start;
+  @apply self-start;
 }
