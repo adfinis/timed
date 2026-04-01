@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db.models import F
 from django.db import migrations, models
-from datetime import timezone as dt_timezone
+from datetime import UTC
 from zoneinfo import ZoneInfo
 
 
@@ -22,10 +22,10 @@ def migrate_activity_block_time(apps, schema_editor):
     for block in ActivityBlock.objects.all():
         if block.to_datetime is not None:
             block.to_datetime = block.to_datetime.astimezone(current_tz).replace(
-                tzinfo=dt_timezone.utc
+                tzinfo=UTC
             )
         block.from_datetime = block.from_datetime.astimezone(current_tz).replace(
-            tzinfo=dt_timezone.utc
+            tzinfo=UTC
         )
         block.save()
 
