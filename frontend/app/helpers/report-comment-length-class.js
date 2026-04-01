@@ -9,10 +9,12 @@ export function reportCommentLengthClass([commentContent]) {
   const lines = (commentContent || "").split("\n").length;
   if (lines <= 1) {
     return "content-line-1";
-  } else if (lines >= 4) {
-    return "content-line-4";
+  } else if (lines === 2) {
+    return "content-line-2";
+  } else if (lines === 3) {
+    return "content-line-3";
   }
-  return `content-line-${lines}`;
+  return "content-line-4";
 }
 
 export default helper(reportCommentLengthClass);
