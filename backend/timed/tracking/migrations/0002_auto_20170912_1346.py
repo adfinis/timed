@@ -5,7 +5,8 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db.models import F
 from django.db import migrations, models
-from pytz import timezone, utc
+from datetime import UTC
+from zoneinfo import ZoneInfo
 
 
 def migrate_activity_block_time(apps, schema_editor):
@@ -16,15 +17,15 @@ def migrate_activity_block_time(apps, schema_editor):
     to time we actually want time as it would be represented
     in settings.TIME_ZONE
     """
-    current_tz = timezone(settings.TIME_ZONE)
+    current_tz = ZoneInfo(settings.TIME_ZONE)
     ActivityBlock = apps.get_model("tracking", "ActivityBlock")
     for block in ActivityBlock.objects.all():
         if block.to_datetime is not None:
             block.to_datetime = block.to_datetime.astimezone(current_tz).replace(
-                tzinfo=utc
+                tzinfo=UTC
             )
         block.from_datetime = block.from_datetime.astimezone(current_tz).replace(
-            tzinfo=utc
+            tzinfo=UTC
         )
         block.save()
 
