@@ -46,7 +46,10 @@ module("Acceptance | index activities edit", function (hooks) {
       "04:30",
     );
 
-    await fillIn("[data-test-activity-edit-form] input[name=comment]", "Test");
+    await fillIn(
+      "[data-test-activity-edit-form] textarea[name=comment]",
+      "Test",
+    );
 
     await click("[data-test-activity-edit-form-save]");
 

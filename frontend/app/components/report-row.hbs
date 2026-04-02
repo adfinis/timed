@@ -37,10 +37,11 @@
 
       <div class="form-list-cell form-group max-lg:col-span-full">
         <label for="row-comment" hidden>Comment</label>
-        <input
+        <textarea
           type="text"
-          class="form-control comment-field rounded
-            {{if cs.task.project.customerVisible 'customer-comment'}}"
+          class="form-textarea comment-field rounded
+            {{if cs.task.project.customerVisible 'customer-comment'}}
+            {{report-comment-length-class cs.comment}}"
           placeholder="Comment"
           name="comment"
           id="row-comment"
@@ -52,7 +53,7 @@
           }}
           spellcheck="true"
           autocomplete="true"
-          {{on "change" (pick "target.value" (fn (mut cs.comment)))}}
+          {{on "input" (pick "target.value" (fn (mut cs.comment)))}}
           data-test-report-comment
         />
       </div>
