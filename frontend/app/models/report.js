@@ -3,7 +3,7 @@
  * @submodule timed-models
  * @public
  */
-import Model, { attr, belongsTo } from "@ember-data/model";
+import Model, { attr, belongsTo, hasMany } from "@ember-data/model";
 import moment from "moment";
 
 /**
@@ -103,4 +103,10 @@ export default class Report extends Model {
    * @public
    */
   @belongsTo("user", { async: true, inverse: null }) verifiedBy;
+
+  @hasMany("report-history", { async: false, inverse: "report" }) history;
+
+  get hasHistory() {
+    return !!this.history.length;
+  }
 }
