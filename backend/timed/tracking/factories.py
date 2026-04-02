@@ -82,6 +82,18 @@ class AbsenceFactory(DjangoModelFactory):
     absence_type = SubFactory("timed.employment.factories.AbsenceTypeFactory")
     date = Faker("workday")
 
+    class Params:
+        raw_date = Faker("date_object")
+
+    @lazy_attribute
+    def date(self):  # noqa: F811
+        # no absences on weekends
+        date_obj = self.raw_date
+        first_weekend_day = 5
+        if date_obj.weekday() >= first_weekend_day:
+            date_obj += datetime.timedelta(days=2)
+        return date_obj.strftime("%Y-%m-%d")
+
     class Meta:
         """Meta informations for the absence factory."""
 
