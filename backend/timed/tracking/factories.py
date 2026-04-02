@@ -6,7 +6,10 @@ from random import randint
 from factory import Faker, SubFactory, lazy_attribute
 from factory.django import DjangoModelFactory
 
+from timed.factories import load_providers
 from timed.tracking import models
+
+load_providers()
 
 
 class AttendanceFactory(DjangoModelFactory):
@@ -77,7 +80,7 @@ class AbsenceFactory(DjangoModelFactory):
 
     user = SubFactory("timed.employment.factories.UserFactory")
     absence_type = SubFactory("timed.employment.factories.AbsenceTypeFactory")
-    date = Faker("date")
+    date = Faker("workday")
 
     class Meta:
         """Meta informations for the absence factory."""
