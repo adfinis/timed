@@ -5,11 +5,10 @@ on:
   push:
     branches: [main]
     paths:
-      - 'backend/**'
+      - "backend/**"
   pull_request:
     paths:
-      - 'backend/**'
-
+      - "backend/**"
 
 jobs:
   build:
