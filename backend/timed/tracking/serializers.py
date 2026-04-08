@@ -143,6 +143,7 @@ class ReportSerializer(TotalTimeRootMetaMixin, ModelSerializer):
         "task": "timed.projects.serializers.TaskSerializer",
         "user": "timed.employment.serializers.UserSerializer",
         "verified_by": "timed.employment.serializers.UserSerializer",
+        "history": "timed.tracking.serializers.ReportHistorySerializer",
     }
 
     def _validate_owner_only(self, value, field):
@@ -303,7 +304,10 @@ class ReportSerializer(TotalTimeRootMetaMixin, ModelSerializer):
             "verified_by",
             "rejected",
             "remaining_effort",
+            "history",
         )
+
+        read_only_fields = ("history",)
 
 
 class ReportBulkSerializer(Serializer):
@@ -502,4 +506,23 @@ class AbsenceSerializer(ModelSerializer):
             "duration",
             "absence_type",
             "user",
+        )
+
+
+class ReportHistorySerializer(ModelSerializer):
+    included_serializers: ClassVar[dict[str, str]] = {
+        "previous": "timed.projects.serializers.TaskSerializer",
+        "next": "timed.projects.serializers.TaskSerializer",
+        "actor": "timed.employment.serializers.UserSerializer",
+    }
+
+    class Meta:
+        model = models.ReportHistory
+        fields = (
+            "comment",
+            "report",
+            "previous",
+            "next",
+            "actor",
+            "created_at",
         )

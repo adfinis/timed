@@ -42,6 +42,7 @@ register(tracking_factories.AbsenceFactory)
 register(tracking_factories.ActivityFactory)
 register(tracking_factories.AttendanceFactory)
 register(tracking_factories.ReportFactory)
+register(tracking_factories.ReportHistoryFactory)
 
 
 @pytest.fixture

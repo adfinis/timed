@@ -58,6 +58,7 @@ export default class AnalysisController extends QPController {
   @service router;
   @service notify;
   @service abilities;
+  @service history;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -208,7 +209,8 @@ export default class AnalysisController extends QPController {
           size: 20,
         },
         ...params,
-        include: "task,task.project,task.project.customer,user",
+        include:
+          "task,task.project,task.project.customer,user,history,history.actor,history.previous,history.next",
       });
 
       const assignees = await this.fetchAssignees.perform(data);
