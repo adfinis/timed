@@ -1985,7 +1985,7 @@ def test_report_create_remaining_effort(
         assert task.most_recent_remaining_effort == timedelta(hours=1)
         assert task.project.total_remaining_effort == timedelta(hours=1)
     else:
-        assert task.most_recent_remaining_effort is None
+        assert task.most_recent_remaining_effort == timedelta(0)
         assert task.project.total_remaining_effort == timedelta(0)
 
 

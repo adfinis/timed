@@ -44,6 +44,7 @@ class ProjectFactory(DjangoModelFactory):
 
     name = Faker("catch_phrase")
     estimated_time = Faker("time_delta")
+    total_remaining_effort = Faker("time_delta")
     archived = False
     billed = False
     customer_visible = False
@@ -66,6 +67,7 @@ class TaskFactory(DjangoModelFactory):
 
     name = Faker("company_suffix")
     estimated_time = Faker("time_delta")
+    most_recent_remaining_effort = Faker("time_delta")
     archived = False
     project = SubFactory("timed.projects.factories.ProjectFactory")
     cost_center = SubFactory("timed.projects.factories.CostCenterFactory")
