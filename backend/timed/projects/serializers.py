@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 
 from django.db.models import Q, Sum
 from django.utils.duration import duration_string
+from rest_framework import exceptions
 from rest_framework_json_api.relations import ResourceRelatedField
 from rest_framework_json_api.serializers import ModelSerializer, ValidationError
 
@@ -183,7 +184,10 @@ class TaskSerializer(ModelSerializer):
                 .exists()
             ):
                 return data
-            return None  # pragma: no cover
+            msg = (
+                "You don't have the permission to update this task"  # pragma: no cover
+            )
+            raise exceptions.ValidationError(msg)  # pragma: no cover
         # check if user is manager when creating a task
         if (
             user.is_superuser
@@ -201,7 +205,8 @@ class TaskSerializer(ModelSerializer):
             .exists()
         ):
             return data
-        return None  # pragma: no cover
+        msg = "You don't have the permission to create this task"  # pragma: no cover
+        raise exceptions.ValidationError(msg)  # pragma: no cover
 
     class Meta:
         """Meta information for the task serializer."""
