@@ -3,7 +3,7 @@ import { service } from "@ember/service";
 import Component from "@glimmer/component";
 
 export default class AnalysisColumnsModal extends Component {
-  @service analysisTableColumns;
+  @service userSettings;
   @service notify;
 
   /** just to not call the update with each toggle,
@@ -14,7 +14,11 @@ export default class AnalysisColumnsModal extends Component {
 
   constructor(...args) {
     super(...args);
-    this.localhidden = this.analysisTableColumns.hiddenColumns;
+    this.localhidden = this.userSettings.of("analysisTable").hiddenColumns;
+  }
+
+  get allTableColumns() {
+    return this.userSettings.of("analysisTable").allTableColumns;
   }
 
   @action
@@ -30,7 +34,7 @@ export default class AnalysisColumnsModal extends Component {
 
   @action
   save() {
-    this.analysisTableColumns.updateHidden(this.localhidden);
+    this.userSettings.of("analysisTable").updateHidden(this.localhidden);
     this.notify.success("The columns are updated successfully");
     this.args.onClose();
   }

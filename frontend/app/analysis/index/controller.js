@@ -58,7 +58,7 @@ export default class AnalysisController extends QPController {
   @service router;
   @service notify;
   @service abilities;
-  @service analysisTableColumns;
+  @service userSettings;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -135,6 +135,10 @@ export default class AnalysisController extends QPController {
 
   get jwt() {
     return this.session.data.authenticated.access_token;
+  }
+
+  get tableColumns() {
+    return this.userSettings.of("analysisTable").tableColumns;
   }
 
   @action

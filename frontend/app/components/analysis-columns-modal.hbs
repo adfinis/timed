@@ -9,7 +9,7 @@
       <h3>Analysis Table Columns Modal</h3>
     </modal.header>
     <modal.body class="grid gap-2">
-      {{#each this.analysisTableColumns.allTableColumns as |column|}}
+      {{#each this.allTableColumns as |column|}}
         <Checkbox
           @checked={{not (includes column.label this.localhidden)}}
           @onChange={{fn this.toggleColumn column.label}}
