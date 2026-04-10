@@ -116,22 +116,10 @@
                       {{#if (not-eq f.model.comment model.comment)}}
                         <ChangedWarning />
                       {{/if}}
-                      <input
-                        data-test-comment
-                        id="comment"
-                        type="text"
-                        placeholder="Enter comment..."
-                        class="form-control comment-field rounded
-                          {{if
-                            model.task.project.customerVisible
-                            'customer-comment'
-                          }}"
-                        title={{if
-                          model.task.project.customerVisible
-                          "This project's comments are visible to the customer"
-                        }}
-                        {{on "change" (pick "target.value" fi.update)}}
-                        value={{fi.value}}
+                      <ReportComment
+                        @value={{fi.value}}
+                        @customerVisible={{model.task.project.customerVisible}}
+                        @onUpdate={{fi.update}}
                       />
                     </label>
                   </f.input>
