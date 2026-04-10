@@ -249,12 +249,10 @@
 
             {{! template-lint-disable table-groups }}
             <Table class="table--striped table--analysis table">
-              <AnalysisColGroup
-                @columns={{this.analysisTableColumns.tableColumns}}
-              />
+              <AnalysisColGroup @columns={{this.tableColumns}} />
               <Table::Thead>
                 <Table::Tr>
-                  {{#each this.analysisTableColumns.tableColumns as |column|}}
+                  {{#each this.tableColumns as |column|}}
                     {{#if column.sortable}}
                       <SortHeader
                         @update={{fn this.updateParam "ordering"}}
@@ -270,9 +268,7 @@
             </Table>
             <ScrollContainer class="analysis-scrollable-container">
               <Table class="table--striped table--analysis table table-fixed">
-                <AnalysisColGroup
-                  @columns={{this.analysisTableColumns.tableColumns}}
-                />
+                <AnalysisColGroup @columns={{this.tableColumns}} />
                 <tbody>
                   {{#each reports as |report|}}
                     {{! template-lint-disable}}
@@ -297,10 +293,7 @@
                           )
                         }}
                       >
-                        {{#each
-                          this.analysisTableColumns.tableColumns
-                          as |column|
-                        }}
+                        {{#each this.tableColumns as |column|}}
                           {{#if (eq column.label "User")}}
                             <Table::Td>{{report.user.username}}</Table::Td>
                           {{else if (eq column.label "Date")}}
@@ -365,7 +358,7 @@
                       }}
                     >
                       <td
-                        colspan={{this.analysisTableColumns.tableColumns.length}}
+                        colspan={{this.tableColumns.length}}
                         class="text-center"
                       >
                         Loading<span class="loading-dots"><i>.</i><i>.</i><i
@@ -377,9 +370,7 @@
               </Table>
             </ScrollContainer>
             <Table class="table--striped table--analysis table table-fixed">
-              <AnalysisColGroup
-                @columns={{this.analysisTableColumns.tableColumns}}
-              />
+              <AnalysisColGroup @columns={{this.tableColumns}} />
               <Table::Tfoot>
                 <Table::Tr>
                   <Table::Td colspan="2">Total:</Table::Td>
