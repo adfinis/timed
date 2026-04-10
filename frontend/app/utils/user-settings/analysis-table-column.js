@@ -1,5 +1,7 @@
 import TableColumnHelper from "./table-column-helper";
 
+const ANALYSIS_TABLE_STORAGE_KEY = "analysis-table";
+
 export default class AnalysisTableColumn extends TableColumnHelper {
   constructor(userSettings) {
     super();
@@ -73,6 +75,6 @@ export default class AnalysisTableColumn extends TableColumnHelper {
         width: 5,
       },
     ];
-    this.prepare(userSettings, allTableColumns);
+    this.prepare(userSettings, allTableColumns, ANALYSIS_TABLE_STORAGE_KEY);
   }
 }
