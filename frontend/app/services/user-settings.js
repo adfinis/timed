@@ -1,12 +1,13 @@
-import Service, { service } from "@ember/service";
+import { getOwner } from "@ember/application";
+import Service from "@ember/service";
 
 import userSubServiceLoader from "timed/utils/user-settings/loader";
 
 const USER_SETTINGS_KEY = "user-settings";
 
 export default class UserSettingsService extends Service {
-  @service notify;
   #subServices = {};
+
   constructor(...args) {
     super(...args);
     this.#subServices = userSubServiceLoader(this);
@@ -17,7 +18,8 @@ export default class UserSettingsService extends Service {
     if (!instance) {
       const errorMessage = `${subService} service is not exisits`;
       console.error(errorMessage);
-      this.notify.danger(errorMessage);
+      this.nativeService("notify")?.error(errorMessage);
+      return;
     }
     return instance;
   }
@@ -41,5 +43,10 @@ export default class UserSettingsService extends Service {
   clean(subServiceKey) {
     const fullKey = `${USER_SETTINGS_KEY}.${subServiceKey}`;
     localStorage.removeItem(fullKey);
+  }
+
+  nativeService(serviceName) {
+    const owner = getOwner(this);
+    return owner?.lookup(`service:${serviceName}`);
   }
 }
