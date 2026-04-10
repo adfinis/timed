@@ -1,13 +1,12 @@
 import { tracked } from "@glimmer/tracking";
 
-const ANALYSIS_TABLE_STORAGE_KEY = "analysis-table";
-
 export default class TableColumnHelper {
+  storageKey;
   userSettings;
   @tracked hiddenColumns = [];
   allTableColumns = [];
 
-  prepare(userSettings, allTableColumns) {
+  prepare(userSettings, allTableColumns, storageKey) {
     if (!Array.isArray(allTableColumns) || !allTableColumns.length) {
       console.error(
         `${this.constructor.name} class is not configured correctly to use TableColumnHelper`,
@@ -16,6 +15,7 @@ export default class TableColumnHelper {
     }
     this.userSettings = userSettings;
     this.allTableColumns = allTableColumns;
+    this.storageKey = storageKey;
     this.loadHiddenColumns();
   }
 
@@ -26,11 +26,11 @@ export default class TableColumnHelper {
   }
 
   loadHiddenColumns() {
-    this.hiddenColumns = this.userSettings.load(ANALYSIS_TABLE_STORAGE_KEY, []);
+    this.hiddenColumns = this.userSettings.load(this.storageKey, []);
   }
 
   updateHidden(hiddenLabels) {
     this.hiddenColumns = hiddenLabels;
-    this.userSettings.save(ANALYSIS_TABLE_STORAGE_KEY, hiddenLabels);
+    this.userSettings.save(this.storageKey, hiddenLabels);
   }
 }
