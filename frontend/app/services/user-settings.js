@@ -7,7 +7,6 @@ const USER_SETTINGS_KEY = "user-settings";
 export default class UserSettingsService extends Service {
   @service notify;
   #subServices = {};
-
   constructor(...args) {
     super(...args);
     this.#subServices = userSubServiceLoader(this);
@@ -16,7 +15,9 @@ export default class UserSettingsService extends Service {
   of(subService) {
     const instance = this.#subServices[subService];
     if (!instance) {
-      this.notify.danger(`${subService} service is not exisits`);
+      const errorMessage = `${subService} service is not exisits`;
+      console.error(errorMessage);
+      this.notify.danger(errorMessage);
     }
     return instance;
   }
