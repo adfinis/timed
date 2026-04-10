@@ -1,5 +1,5 @@
 <colgroup>
   {{#each @columns as |column|}}
-    <col class={{concat "w-[" column.width "%]"}} />
+    <col class={{column.widthClass}} />
   {{/each}}
 </colgroup>

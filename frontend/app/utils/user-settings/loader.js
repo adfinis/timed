@@ -1,4 +1,5 @@
 import AnalysisTableColumn from "./analysis-table-column";
+import Appearance from "./appearance";
 
 /**
  *
@@ -7,5 +8,6 @@ import AnalysisTableColumn from "./analysis-table-column";
 export default function userSubServiceLoader(userSettingsInstance) {
   return {
     analysisTable: new AnalysisTableColumn(userSettingsInstance),
+    appearance: new Appearance(userSettingsInstance),
   };
 }
