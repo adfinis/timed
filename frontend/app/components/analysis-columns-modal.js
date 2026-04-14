@@ -1,6 +1,7 @@
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
 
 export default class AnalysisColumnsModal extends Component {
   @service userSettings;
@@ -10,15 +11,19 @@ export default class AnalysisColumnsModal extends Component {
    * we are saving a local copy,
    * and updating with save function
    */
-  localhidden = [];
+  @tracked localhidden = [];
+
+  get hiddenColumns() {
+    return this.localhidden;
+  }
 
   constructor(...args) {
     super(...args);
-    this.localhidden = this.userSettings.of("analysisTable").hiddenColumns;
+    this.localhidden = this.userSettings.getHiddenColumns("analysisTable");
   }
 
   get allTableColumns() {
-    return this.userSettings.of("analysisTable").allTableColumns;
+    return this.userSettings.getAllTableColumns("analysisTable");
   }
 
   @action
@@ -34,7 +39,7 @@ export default class AnalysisColumnsModal extends Component {
 
   @action
   save() {
-    this.userSettings.of("analysisTable").updateHidden(this.localhidden);
+    this.userSettings.updateHiddenColumns("analysisTable", this.localhidden);
     this.notify.success("The columns are updated successfully");
     this.args.onClose();
   }

@@ -79,18 +79,18 @@ export default class ProtectedController extends Controller {
 
   constructor(...args) {
     super(...args);
-    this.userSettings.of("appearance").loadConfiguration();
+    // this.userSettings.of("appearance").loadConfiguration();
   }
 
   @onKey("ctrl+,")
   _toggleColorScheme(e) {
     e.preventDefault();
-    this.userSettings.of("appearance").toggleColorScheme();
+    // this.userSettings.of("appearance").toggleColorScheme();
   }
 
   @onKey("ctrl+.")
   _cycleTheme(e) {
     e.preventDefault();
-    this.userSettings.of("appearance").cycleTheme();
+    // this.userSettings.of("appearance").cycleTheme();
   }
 }

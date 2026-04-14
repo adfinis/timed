@@ -49,7 +49,7 @@ export default class TimedClock extends Component {
 
   constructor(...args) {
     super(...args);
-    this.userSettings.of("appearance");
+    // this.userSettings.of("appearance");
     scheduleTask(this.timer, "actions", "perform");
     //TODO: fix this feature
     // scheduleTask(this.worktimeTimer, "actions", "perform");

@@ -11,7 +11,7 @@
     <modal.body class="grid gap-2">
       {{#each this.allTableColumns as |column|}}
         <Checkbox
-          @checked={{not (includes column.label this.localhidden)}}
+          @checked={{not (includes column.label this.hiddenColumns)}}
           @onChange={{fn this.toggleColumn column.label}}
         >
           {{column.label}}

@@ -28,5 +28,6 @@ export default class AnalysisIndexRoute extends Route {
 
   setupController(controller) {
     controller.prefetchData.perform();
+    controller.prepareTableColumns();
   }
 }
