@@ -4,6 +4,7 @@
 :root {
   /* taken from https://adfinis.com/en/about-us/branding/ */
 
+  --toggle-active: 255, 160, 0;
   --dark-blue: 28 46 93;
   --dark-moderate-blue: 46 75 152;
   --green: 46 152 123;
