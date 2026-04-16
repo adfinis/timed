@@ -216,6 +216,7 @@
         {{#if this.data.lastSuccessful.value.length}}
           {{#let this.data.lastSuccessful.value as |reports|}}
             <div class="flex justify-end gap-x-2">
+              <AnalysisColumnsBtn />
               {{#if this.selectedReportIds.length}}
                 <button
                   data-test-edit-selected
@@ -248,85 +249,26 @@
 
             {{! template-lint-disable table-groups }}
             <Table class="table--striped table--analysis table">
-              <colgroup>
-                <col class="w-[7%]" />
-                <col class="w-[7%]" />
-                <col class="w-[7%]" />
-                <col class="w-[10%]" />
-                <col class="w-[10%]" />
-                <col class="w-[10%]" />
-                <col class="w-[21%]" />
-                <col class="w-[8%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-              </colgroup>
+              <AnalysisColGroup @columns={{this.tableColumns}} />
               <Table::Thead>
                 <Table::Tr>
-                  <SortHeader
-                    @update={{fn this.updateParam "ordering"}}
-                    @current={{this.ordering}}
-                    @by="user__username"
-                  >User</SortHeader>
-                  <SortHeader
-                    @update={{fn this.updateParam "ordering"}}
-                    @current={{this.ordering}}
-                    @by="date"
-                  >Date</SortHeader>
-                  <SortHeader
-                    @update={{fn this.updateParam "ordering"}}
-                    @current={{this.ordering}}
-                    @by="duration"
-                  >Duration</SortHeader>
-                  <SortHeader
-                    @update={{fn this.updateParam "ordering"}}
-                    @current={{this.ordering}}
-                    @by="task__project__customer__name"
-                  >Customer</SortHeader>
-                  <SortHeader
-                    @update={{fn this.updateParam "ordering"}}
-                    @current={{this.ordering}}
-                    @by="task__project__name"
-                  >Project</SortHeader>
-                  <SortHeader
-                    @update={{fn this.updateParam "ordering"}}
-                    @current={{this.ordering}}
-                    @by="task__name"
-                  >Task</SortHeader>
-                  <SortHeader
-                    @update={{fn this.updateParam "ordering"}}
-                    @current={{this.ordering}}
-                    @by="comment"
-                  >Comment</SortHeader>
-                  <SortHeader
-                    @update={{fn this.updateParam "ordering"}}
-                    @current={{this.ordering}}
-                    @by="verified_by__username"
-                  >Verified by</SortHeader>
-                  <Table::Th @light={{true}}>Rejected</Table::Th>
-                  <Table::Th @light={{true}}>Review</Table::Th>
-                  <Table::Th @light={{true}}>Not billable</Table::Th>
-                  <Table::Th @light={{true}}>Billed</Table::Th>
+                  {{#each this.tableColumns as |column|}}
+                    {{#if column.sortable}}
+                      <SortHeader
+                        @update={{fn this.updateParam "ordering"}}
+                        @current={{this.ordering}}
+                        @by={{column.by}}
+                      >{{column.label}}</SortHeader>
+                    {{else}}
+                      <Table::Th @light={{true}}>{{column.label}}</Table::Th>
+                    {{/if}}
+                  {{/each}}
                 </Table::Tr>
               </Table::Thead>
             </Table>
             <ScrollContainer class="analysis-scrollable-container">
               <Table class="table--striped table--analysis table table-fixed">
-                <colgroup>
-                  <col class="w-[7%]" />
-                  <col class="w-[7%]" />
-                  <col class="w-[7%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[21%]" />
-                  <col class="w-[8%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                </colgroup>
+                <AnalysisColGroup @columns={{this.tableColumns}} />
                 <tbody>
                   {{#each reports as |report|}}
                     {{! template-lint-disable}}
@@ -351,43 +293,59 @@
                           )
                         }}
                       >
-                        <Table::Td>{{report.user.username}}</Table::Td>
-                        <Table::Td>{{moment-format
-                            report.date
-                            "DD.MM.YYYY"
-                          }}</Table::Td>
-                        <Table::Td>{{format-duration
-                            report.duration
-                            false
-                          }}</Table::Td>
-                        <Table::Td
-                        >{{report.task.project.customer.name}}</Table::Td>
-                        <Table::Td>{{report.task.project.name}}</Table::Td>
-                        <Table::Td>{{report.task.name}}</Table::Td>
-                        <Table::Td><span
-                            class="line-clamp-2 whitespace-pre-line"
-                            title="{{report.comment}}"
-                          >{{report.comment}}</span></Table::Td>
-                        <Table::Td>{{if
-                            report.verifiedBy
-                            report.verifiedBy.username
-                          }}</Table::Td>
-                        <Table::Td><Checkmark
-                            @checked={{report.rejected}}
-                            @highlight={{true}}
-                          /></Table::Td>
-                        <Table::Td><Checkmark
-                            @checked={{report.review}}
-                            @highlight={{true}}
-                          /></Table::Td>
-                        <Table::Td><Checkmark
-                            @checked={{report.notBillable}}
-                            @highlight={{true}}
-                          /></Table::Td>
-                        <Table::Td><Checkmark
-                            @checked={{report.billed}}
-                            @highlight={{true}}
-                          /></Table::Td>
+                        {{#each this.tableColumns as |column|}}
+                          {{#if (eq column.label "User")}}
+                            <Table::Td>{{report.user.username}}</Table::Td>
+                          {{else if (eq column.label "Date")}}
+                            <Table::Td>{{moment-format
+                                report.date
+                                "DD.MM.YYYY"
+                              }}</Table::Td>
+                          {{else if (eq column.label "Duration")}}
+                            <Table::Td>{{format-duration
+                                report.duration
+                                false
+                              }}</Table::Td>
+                          {{else if (eq column.label "Customer")}}
+                            <Table::Td>
+                              {{report.task.project.customer.name}}</Table::Td>
+                          {{else if (eq column.label "Project")}}
+                            <Table::Td>
+                              {{report.task.project.name}}</Table::Td>
+                          {{else if (eq column.label "Task")}}
+                            <Table::Td>
+                              {{report.task.name}}</Table::Td>
+                          {{else if (eq column.label "Comment")}}
+                            <Table::Td><span
+                                title="{{report.comment}}"
+                              >{{report.comment}}</span></Table::Td>
+                          {{else if (eq column.label "Verified by")}}
+                            <Table::Td>{{if
+                                report.verifiedBy
+                                report.verifiedBy.username
+                              }}</Table::Td>
+                          {{else if (eq column.label "Rejected")}}
+                            <Table::Td><Checkmark
+                                @checked={{report.rejected}}
+                                @highlight={{true}}
+                              /></Table::Td>
+                          {{else if (eq column.label "Review")}}
+                            <Table::Td><Checkmark
+                                @checked={{report.review}}
+                                @highlight={{true}}
+                              /></Table::Td>
+                          {{else if (eq column.label "Not billable")}}
+                            <Table::Td><Checkmark
+                                @checked={{report.notBillable}}
+                                @highlight={{true}}
+                              /></Table::Td>
+                          {{else if (eq column.label "Billed")}}
+                            <Table::Td><Checkmark
+                                @checked={{report.billed}}
+                                @highlight={{true}}
+                              /></Table::Td>
+                          {{/if}}
+                        {{/each}}
                       </Table::Tr>
                     </CanEdit>
                   {{/each}}
@@ -399,7 +357,10 @@
                         viewportSpy=true
                       }}
                     >
-                      <td colspan="12" class="text-center">
+                      <td
+                        colspan={{this.tableColumns.length}}
+                        class="text-center"
+                      >
                         Loading<span class="loading-dots"><i>.</i><i>.</i><i
                           >.</i></span>
                       </td>
@@ -409,20 +370,7 @@
               </Table>
             </ScrollContainer>
             <Table class="table--striped table--analysis table table-fixed">
-              <colgroup>
-                <col class="w-[7%]" />
-                <col class="w-[7%]" />
-                <col class="w-[7%]" />
-                <col class="w-[10%]" />
-                <col class="w-[10%]" />
-                <col class="w-[10%]" />
-                <col class="w-[21%]" />
-                <col class="w-[8%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-              </colgroup>
+              <AnalysisColGroup @columns={{this.tableColumns}} />
               <Table::Tfoot>
                 <Table::Tr>
                   <Table::Td colspan="2">Total:</Table::Td>

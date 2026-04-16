@@ -12,7 +12,7 @@ export default class ProtectedController extends Controller {
   @service currentUser;
   @service("autostart-tour") autostartTour;
   @service tour;
-  @service appearance;
+  @service userSettings;
 
   @tracked visible;
   @tracked loading;
@@ -79,18 +79,18 @@ export default class ProtectedController extends Controller {
 
   constructor(...args) {
     super(...args);
-    this.appearance.loadConfiguration();
+    // this.userSettings.of("appearance").loadConfiguration();
   }
 
   @onKey("ctrl+,")
   _toggleColorScheme(e) {
     e.preventDefault();
-    this.appearance.toggleColorScheme();
+    // this.userSettings.of("appearance").toggleColorScheme();
   }
 
   @onKey("ctrl+.")
   _cycleTheme(e) {
     e.preventDefault();
-    this.appearance.cycleTheme();
+    // this.userSettings.of("appearance").cycleTheme();
   }
 }
