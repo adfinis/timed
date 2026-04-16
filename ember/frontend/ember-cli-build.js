@@ -51,8 +51,6 @@ module.exports = function (defaults) {
     },
   });
 
-  app.import("node_modules/simplebar/dist/simplebar.css");
-
   app.import("node_modules/downloadjs/download.min.js", {
     using: [{ transformation: "amd", as: "downloadjs" }],
   });
