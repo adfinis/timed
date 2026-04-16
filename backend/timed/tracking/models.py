@@ -172,3 +172,23 @@ class Absence(models.Model):
             return timedelta()
 
         return employment.worktime_per_day - reported_time
+
+
+class ReportHistory(models.Model):
+    """Report History Model.
+
+    When a report gets moved to another task, one of these will be created.
+    """
+
+    comment = models.TextField(blank=True)
+    report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name="history")
+    previous = models.ForeignKey(
+        "projects.Task", on_delete=models.PROTECT, related_name="prev_reports"
+    )
+    next = models.ForeignKey("projects.Task", on_delete=models.PROTECT)
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        """Represent the model as a string."""
+        return f"{self.report} [{self.created_at}]: {self.previous} -> {self.next} (by {self.actor}, with comment {self.comment})"

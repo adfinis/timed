@@ -1,0 +1,93 @@
+{{#in-element this.destination}}
+  {{#let (component "table/tr" striped=true) as |Tr|}}
+    <aside
+      class="report-history-sidebar first:[&>td]:[&_tr]:text-foreground-accent first:[&>td]:[&_tr]:text-foreground-accent last:[&>td]:[&_tr]:break-words; mowero [&_.card_.card-header]:bg-background [&_tbody]:divide-border/50 [&_tbody]:border-border/50 min-w-96 max-w-[30rem] !text-xs [&_.card-block_.card-block]:flex [&_.card-block_.card-block]:flex-col [&_.card-block_.card-block]:gap-1 [&_.card-block_.card-block]:!p-0 [&_.card]:!rounded-none [&_.card]:text-xs [&_.card_.card-header]:flex [&_.card_.card-header]:justify-between [&_.card_.card-header]:!px-2 [&_.card_.card-header]:!py-0.5 [&_tbody]:divide-y [&_tbody]:border-b [&>td]:[&_tr]:py-0.5 first:[&>td]:[&_tr]:font-medium last:[&>td]:[&_tr]:break-words
+        {{if
+          this.visible
+          'report-history-sidebar--visible translate-x-0'
+          'translate-x-full'
+        }}
+        bg-background overflow-y-none fixed bottom-0 right-0 top-0 z-[51] flex flex-col transition-transform duration-300"
+      ...attributes
+    >
+      <Modal::Header class="sticky top-0" @close={{this.history.close}}><h3
+        >Report History</h3></Modal::Header>
+
+      <Modal::Body class="p-4 text-xs">
+        <Card class="mb-3">
+          <Card::Header>
+            <span class="text-foreground">{{this.report.user.longName}}</span>
+            <span class="text-foreground-muted">{{moment-format
+                (or this.report.date)
+                "DD.MM.YYYY"
+              }}</span>
+          </Card::Header>
+          <Card::Block>
+            <Table>
+              <tbody>
+                <Tr>
+                  <Table::Td>Task</Table::Td>
+                  <Table::Td>{{this.report.task.longName}}</Table::Td>
+                </Tr>
+                <Tr>
+                  <Table::Td>Comment</Table::Td>
+                  <Table::Td>{{this.report.comment}}</Table::Td>
+                </Tr>
+              </tbody>
+            </Table>
+          </Card::Block>
+        </Card>
+        <div class="space-y-3 pb-4">
+          {{#each this.report.history as |entry|}}
+            <Card class="!rounded-none text-xs">
+              <Card::Header>
+                <span class="text-foreground">{{entry.actor.longName}}</span>
+                <span class="text-foreground-muted">{{moment-format
+                    (or entry.createdAt)
+                    "DD.MM.YYYY HH:mm"
+                  }}</span>
+              </Card::Header>
+              <Card::Block>
+                <Table
+                  class="border-border/50 w-full border-t text-left text-xs"
+                >
+                  <tbody
+                    class="divide-border/50 border-border/50 divide-y border-b"
+                  >
+                    <Tr>
+                      <Table::Td>From</Table::Td>
+                      <Table::Td>{{entry.previous.longName}}</Table::Td>
+                    </Tr>
+                    <Tr>
+                      <Table::Td>To</Table::Td>
+                      <Table::Td>{{entry.next.longName}}</Table::Td>
+                    </Tr>
+                    <Tr>
+                      <Table::Td>Comment</Table::Td>
+                      <Table::Td>{{#if
+                          entry.comment
+                        }}{{entry.comment}}{{else}}<span class="italic">no
+                            comment given</span>{{/if}}</Table::Td>
+                    </Tr>
+
+                  </tbody>
+                </Table>
+              </Card::Block>
+            </Card>
+          {{/each}}
+        </div>
+
+      </Modal::Body>
+
+    </aside>
+    <div
+      class="report-history-sidebar-overlay fixed absolute z-[50] opacity-0 transition-all duration-300
+        {{if
+          this.visible
+          'report-history-sidebar-overlay--visible pointer-events-all bg-foreground-muted/30 inset-0 top-0 opacity-100'
+        }}"
+      {{! template-lint-disable}}
+      {{on "click" this.history.close}}
+    ></div>
+  {{/let}}
+{{/in-element}}

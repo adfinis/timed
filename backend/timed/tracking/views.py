@@ -34,6 +34,7 @@ from timed.permissions import (
 from timed.projects.models import CustomerAssignee, Task
 from timed.serializers import AggregateObject
 from timed.tracking import filters, models, serializers
+from timed.tracking.models import ReportHistory
 
 from . import tasks
 
@@ -287,6 +288,20 @@ class ReportViewSet(ModelViewSet):
             # unreject report if task has changed
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
+
+            # create history entries
+            ReportHistory.objects.bulk_create(
+                [
+                    ReportHistory(
+                        report=report,
+                        comment=review_comment,
+                        actor=user,
+                        next=fields["task"],
+                        previous=report.task,
+                    )
+                    for report in queryset.distinct()
+                ]
+            )
 
         if fields.get("rejected") and not review_comment:
             raise exceptions.ValidationError(

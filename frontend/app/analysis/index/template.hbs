@@ -248,20 +248,7 @@
 
             {{! template-lint-disable table-groups }}
             <Table class="table--striped table--analysis table">
-              <colgroup>
-                <col class="w-[7%]" />
-                <col class="w-[7%]" />
-                <col class="w-[7%]" />
-                <col class="w-[10%]" />
-                <col class="w-[10%]" />
-                <col class="w-[10%]" />
-                <col class="w-[21%]" />
-                <col class="w-[8%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-              </colgroup>
+              <AnalysisTableColgroup />
               <Table::Thead>
                 <Table::Tr>
                   <SortHeader
@@ -308,25 +295,13 @@
                   <Table::Th @light={{true}}>Review</Table::Th>
                   <Table::Th @light={{true}}>Not billable</Table::Th>
                   <Table::Th @light={{true}}>Billed</Table::Th>
+                  <Table::Th @light={{true}}>History</Table::Th>
                 </Table::Tr>
               </Table::Thead>
             </Table>
             <ScrollContainer class="analysis-scrollable-container">
               <Table class="table--striped table--analysis table table-fixed">
-                <colgroup>
-                  <col class="w-[7%]" />
-                  <col class="w-[7%]" />
-                  <col class="w-[7%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[21%]" />
-                  <col class="w-[8%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                </colgroup>
+                <AnalysisTableColgroup />
                 <tbody>
                   {{#each reports as |report|}}
                     {{! template-lint-disable}}
@@ -388,6 +363,16 @@
                             @checked={{report.billed}}
                             @highlight={{true}}
                           /></Table::Td>
+                        <Table::Td class="text-center">{{#if
+                            report.hasHistory
+                          }}<button
+                              type="button"
+                              {{on "click" (fn this.history.show report)}}
+                            ><FaIcon
+                                @icon="history"
+                                @prefix="fas"
+                              /></button>{{else}}-{{/if}}</Table::Td>
+
                       </Table::Tr>
                     </CanEdit>
                   {{/each}}
@@ -399,7 +384,7 @@
                         viewportSpy=true
                       }}
                     >
-                      <td colspan="12" class="text-center">
+                      <td colspan="13" class="text-center">
                         Loading<span class="loading-dots"><i>.</i><i>.</i><i
                           >.</i></span>
                       </td>
@@ -409,20 +394,7 @@
               </Table>
             </ScrollContainer>
             <Table class="table--striped table--analysis table table-fixed">
-              <colgroup>
-                <col class="w-[7%]" />
-                <col class="w-[7%]" />
-                <col class="w-[7%]" />
-                <col class="w-[10%]" />
-                <col class="w-[10%]" />
-                <col class="w-[10%]" />
-                <col class="w-[21%]" />
-                <col class="w-[8%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-                <col class="w-[5%]" />
-              </colgroup>
+              <AnalysisTableColgroup />
               <Table::Tfoot>
                 <Table::Tr>
                   <Table::Td colspan="2">Total:</Table::Td>
@@ -431,7 +403,7 @@
                         this.totalTime
                         false
                       }}</strong></Table::Td><Table::Td
-                    colspan="8"
+                    colspan="9"
                     class="text-right"
                   >
                     <em>Displaying
