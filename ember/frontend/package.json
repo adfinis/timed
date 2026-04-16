@@ -131,12 +131,12 @@
     "qunit-dom": "3.5.0",
     "reactiveweb": "^1.8.0",
     "shepherd.js": "^14.5.1",
-    "simplebar": "^6.2.5",
     "stylelint": "16.24.0",
     "stylelint-config-standard": "39.0.0",
     "tailwindcss": "~3.4.19",
     "tracked-built-ins": "~4.0.0",
     "tracked-toolbox": "2.0.0",
+    "ui-core": "workspace:^",
     "webpack": "5.103.0"
   },
   "engines": {
@@ -144,21 +144,6 @@
   },
   "ember": {
     "edition": "octane"
-  },
-  "pnpm": {
-    "overrides": {
-      "tracked-built-ins": "~4.0.0"
-    },
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "@babel/core",
-        "@glint/template",
-        "@types/node"
-      ],
-      "allowAny": [
-        "marked"
-      ]
-    }
   },
   "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 }
