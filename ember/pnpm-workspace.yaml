@@ -1,8 +1,22 @@
 packages:
   - ui-core
+  - frontend
 
 autoInstallPeers: false
 
 onlyBuiltDependencies:
   - core-js
   - esbuild
+  - ember-can
+
+overrides:
+  tracked-built-ins: "~4.0.0"
+  ember-inflector: "6.0.0"
+
+peerDependencyRules:
+  ignoreMissing:
+    - "@babel/core"
+    - "@glint/template"
+    - "@types/node"
+  allowAny:
+    - marked
