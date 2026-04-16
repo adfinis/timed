@@ -1,15 +1,22 @@
+import { action } from "@ember/object";
 import Service from "@ember/service";
-import { TrackedObject } from "tracked-built-ins";
+import { tracked } from "@glimmer/tracking";
+
+import config from "timed/config/environment";
 
 const USER_SETTINGS_KEY = "user-settings";
 
 export default class UserSettingsService extends Service {
-  tableConfigCache = new TrackedObject({
-    // "example-key": {
-    //   all: [],
-    //   hidden: [],
-    // },
-  });
+  @tracked _overrides = {};
+
+  static TABLE_MAP = {
+    analysis: config.APP.analysisTable,
+  };
+
+  constructor(...args) {
+    super(...args);
+    this._loadSettings();
+  }
 
   // helper functions for sub settings
   load(subServiceKey, defaultValue) {
@@ -32,52 +39,51 @@ export default class UserSettingsService extends Service {
     localStorage.removeItem(fullKey);
   }
 
-  ensureConfigCachePrepared(tableKey) {
-    if (this.tableConfigCache[tableKey] === undefined) {
-      this.tableConfigCache[tableKey] = {
-        all: [],
-        hidden: [],
+  getTableColumns(tableId) {
+    const defaults = UserSettingsService.TABLE_MAP[tableId] || [];
+    const tableOverrides = this._overrides[tableId] || {};
+
+    return defaults.map((col) => {
+      const userPreference = tableOverrides[col.id];
+      return {
+        ...col,
+        isVisible:
+          userPreference !== undefined ? userPreference : col.isVisible,
       };
+    });
+  }
+
+  @action
+  updateColumnVisibility(tableId, columnId, isVisible) {
+    // Update the tracked object reference to trigger reactivity
+    this._overrides = {
+      ...this._overrides,
+      [tableId]: {
+        ...(this._overrides[tableId] || {}),
+        [columnId]: isVisible,
+      },
+    };
+    this._persist();
+  }
+
+  _loadSettings() {
+    const keys = Object.keys(UserSettingsService.TABLE_MAP);
+    for (const key of keys) {
+      const data = this.load(key);
+      if (data) {
+        try {
+          this._overrides[key] = data;
+        } catch (e) {
+          console.error("UserSettings: Could not parse localStorage data", e);
+        }
+      }
     }
   }
-  // end helper function
 
-  prepareTableColumns(tableKey, defaultColumns) {
-    if (!Array.isArray(defaultColumns) || !defaultColumns.length) {
-      console.error("No Default Colimns provided");
-      return;
+  _persist() {
+    const keys = Object.keys(UserSettingsService.TABLE_MAP);
+    for (const key of keys) {
+      this.save(key, this._overrides[key]);
     }
-    this.ensureConfigCachePrepared(tableKey);
-    this.tableConfigCache[tableKey].all = defaultColumns;
-    this._loadHiddenColumns(tableKey);
-  }
-
-  getTableColumns(tableKey) {
-    this.ensureConfigCachePrepared(tableKey);
-    return this.tableConfigCache[tableKey].all.filter(
-      (column) =>
-        !this.tableConfigCache[tableKey].hidden.includes(column.label),
-    );
-  }
-
-  getAllTableColumns(tableKey) {
-    this.ensureConfigCachePrepared(tableKey);
-    return this.tableConfigCache[tableKey].all;
-  }
-
-  getHiddenColumns(tableKey) {
-    this.ensureConfigCachePrepared(tableKey);
-    return this.tableConfigCache[tableKey].hidden;
-  }
-
-  _loadHiddenColumns(tableKey) {
-    this.ensureConfigCachePrepared(tableKey);
-    this.tableConfigCache[tableKey].hidden = this.load(tableKey, []);
-  }
-
-  updateHiddenColumns(tableKey, hiddenLabels) {
-    this.ensureConfigCachePrepared(tableKey);
-    this.tableConfigCache[tableKey].hidden = hiddenLabels;
-    this.save(tableKey, hiddenLabels);
   }
 }

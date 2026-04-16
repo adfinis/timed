@@ -19,11 +19,14 @@ export default class AnalysisColumnsModal extends Component {
 
   constructor(...args) {
     super(...args);
-    this.localhidden = this.userSettings.getHiddenColumns("analysisTable");
+    this.localhidden = this.userSettings
+      .getTableColumns("analysis")
+      .filter((col) => !col.isVisible)
+      .map((col) => col.lable);
   }
 
   get allTableColumns() {
-    return this.userSettings.getAllTableColumns("analysisTable");
+    return this.userSettings.getTableColumns("analysis");
   }
 
   @action
@@ -39,8 +42,18 @@ export default class AnalysisColumnsModal extends Component {
 
   @action
   save() {
-    this.userSettings.updateHiddenColumns("analysisTable", this.localhidden);
-    this.notify.success("The columns are updated successfully");
-    this.args.onClose();
+    try {
+      for (const column of this.allTableColumns) {
+        this.userSettings.updateColumnVisibility(
+          "analysis",
+          column.label,
+          this.localhidden.includes(column.label),
+        );
+      }
+      this.args.onClose();
+    } catch (error) {
+      console.log({ error });
+      this.notify.error("An error when updating the columns visibility");
+    }
   }
 }
