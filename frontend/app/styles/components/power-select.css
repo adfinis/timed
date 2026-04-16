@@ -58,3 +58,7 @@
 .ember-power-select-options[role="listbox"] {
   @apply max-h-96 overflow-y-auto lg:max-h-[28rem];
 }
+
+.ember-tether-target-marker {
+  @apply hidden;
+}
