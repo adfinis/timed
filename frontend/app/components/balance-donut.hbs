@@ -5,7 +5,9 @@
     {{this.strokeClass}}
     text-foreground/85 relative translate-y-[calc(var(--max-offset)*var(--offset-multiplicator))] transition-all md:basis-32 lg:[--max-offset:-0.25rem]"
 >
-  <div class="donut-title text-center text-3xl md:text-2xl">{{@title}}</div>
+  <div class="donut-title whitespace-nowrap text-center text-3xl md:text-2xl">
+    {{@title}}
+  </div>
 
   <div class="donut relative">
     <svg width="100%" height="100%" viewBox="0 0 40 40">
