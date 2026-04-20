@@ -39,7 +39,7 @@ module("Acceptance | analysis edit", function (hooks) {
       res = JSON.parse(requestBody);
     });
 
-    await fillIn("[data-test-comment]", "test comment 123");
+    await fillIn("[data-test-report-comment]", "test comment 123");
     await click("[data-test-not-billable] input");
     await click("[data-test-review] input");
 
@@ -75,16 +75,16 @@ module("Acceptance | analysis edit", function (hooks) {
     await visit("/analysis/edit");
 
     const initialValue = this.element.querySelector(
-      "[data-test-comment]",
+      "[data-test-report-comment]",
     ).value;
 
-    await fillIn("[data-test-comment] ", "test");
+    await fillIn("[data-test-report-comment] ", "test");
 
-    assert.dom("[data-test-comment]").hasValue("test");
+    assert.dom("[data-test-report-comment]").hasValue("test");
 
     await click("[data-test-reset]");
 
-    assert.dom("[data-test-comment]").hasValue(initialValue);
+    assert.dom("[data-test-report-comment]").hasValue(initialValue);
   });
 
   test("can not verify", async function (assert) {
