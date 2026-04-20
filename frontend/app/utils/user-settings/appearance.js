@@ -1,5 +1,3 @@
-import { action } from "@ember/object";
-import Service from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 
 const getHtml = () => document.querySelector("html");
@@ -11,12 +9,13 @@ const THEMES = /** @type {const} */ (["old", "regular"]);
 const COLOR_SCHEME_LIGHT = "light";
 const COLOR_SCHEME_DARK = "dark";
 
-export default class AppearanceService extends Service {
+export default class Appearance {
+  userSettings;
   @tracked _colorScheme;
   @tracked _theme;
 
-  constructor(...args) {
-    super(...args);
+  constructor(userSettings) {
+    this.userSettings = userSettings;
     this.loadConfiguration();
   }
 
@@ -36,12 +35,11 @@ export default class AppearanceService extends Service {
    * @param {"light" | "dark"} colorScheme
    * @param {ReturnType<getHtml>} html
    **/
-  @action
   setColorScheme(colorScheme) {
     this._colorScheme = colorScheme;
 
     const html = getHtml();
-    localStorage.setItem(COLOR_SCHEME_KEY, colorScheme);
+    this.userSettings.save(COLOR_SCHEME_KEY, colorScheme);
 
     if (colorScheme === COLOR_SCHEME_LIGHT) {
       html.classList.remove(COLOR_SCHEME_DARK);
@@ -55,12 +53,11 @@ export default class AppearanceService extends Service {
    * @param {typeof THEMES[number]} theme
    * @param {ReturnType<getHtml>} html
    **/
-  @action
   setTheme(theme) {
     this._theme = theme;
 
     const html = getHtml();
-    localStorage.setItem(THEME_KEY, theme);
+    this.userSettings.save(THEME_KEY, theme);
 
     if (html.classList.contains(theme)) {
       return;
@@ -69,7 +66,6 @@ export default class AppearanceService extends Service {
     html.classList.add(theme);
   }
 
-  @action
   toggleColorScheme() {
     this.setColorScheme(
       this.colorScheme === COLOR_SCHEME_DARK
@@ -78,17 +74,16 @@ export default class AppearanceService extends Service {
     );
   }
 
-  @action
   cycleTheme() {
     const newTheme = THEMES[THEMES.indexOf(this.theme) + 1] ?? THEMES[0];
     this.setTheme(newTheme);
   }
 
   get theme() {
-    return this._theme ?? localStorage.getItem(THEME_KEY);
+    return this._theme ?? this.userSettings.load(THEME_KEY);
   }
 
   get colorScheme() {
-    return this._colorScheme ?? localStorage.getItem(COLOR_SCHEME_KEY);
+    return this._colorScheme ?? this.userSettings.load(COLOR_SCHEME_KEY);
   }
 }
