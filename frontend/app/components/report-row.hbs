@@ -37,11 +37,23 @@
 
       <div class="form-list-cell form-group max-lg:col-span-full">
         <label for="row-comment" hidden>Comment</label>
-        <ReportComment
-          @value={{cs.comment}}
-          @disabled={{not editable}}
-          @customerVisible={{cs.task.project.customerVisible}}
-          @onUpdate={{fn (mut cs.comment)}}
+        <input
+          type="text"
+          class="form-control comment-field rounded
+            {{if cs.task.project.customerVisible 'customer-comment'}}"
+          placeholder="Comment"
+          name="comment"
+          id="row-comment"
+          value={{cs.comment}}
+          disabled={{not editable}}
+          title={{if
+            cs.task.project.customerVisible
+            "This project's comments are visible to the customer"
+          }}
+          spellcheck="true"
+          autocomplete="true"
+          {{on "change" (pick "target.value" (fn (mut cs.comment)))}}
+          data-test-report-comment
         />
       </div>
       <div class="form-list-cell form-group cell-duration">
