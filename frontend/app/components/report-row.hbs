@@ -113,8 +113,16 @@
         </Toggle>
       </div>
       <div
-        class="form-list-cell form-group cell-buttons grid grid-cols-2 justify-around gap-2 self-center text-sm [&>*]:px-2"
+        class="form-list-cell form-group cell-buttons grid grid-cols-3 justify-around gap-2 self-center text-sm [&>*]:px-2"
       >
+        <MagicLinkBtn
+          @task={{cs.task}}
+          @duration={{cs.duration}}
+          @comment={{cs.comment}}
+          @review={{cs.review}}
+          @notBillable={{cs.notBillable}}
+          data-test-report-magic-link
+        />
         {{#if editable}}
           <button
             type="button"
