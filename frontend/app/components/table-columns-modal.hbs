@@ -6,13 +6,13 @@
 >
   <div class="sm:min-w-[32rem]">
     <modal.header>
-      <h3>Analysis Table Columns Modal</h3>
+      <h3>Hide / Show Table Columns</h3>
     </modal.header>
     <modal.body class="grid gap-2">
-      {{#each this.allTableColumns as |column|}}
+      {{#each this.columns as |column|}}
         <Checkbox
-          @checked={{not (includes column.label this.hiddenColumns)}}
-          @onChange={{fn this.toggleColumn column.label}}
+          @checked={{column.isVisible}}
+          @onChange={{fn this.toggleColumn column}}
         >
           {{column.label}}
         </Checkbox>

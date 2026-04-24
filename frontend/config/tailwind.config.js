@@ -136,5 +136,10 @@ module.exports = {
     { pattern: /noUi-/ },
     { pattern: /shepherd-/ },
     "invalid-feedback",
+    "w-[7%]",
+    "w-[10%]",
+    "w-[21%]",
+    "w-[8%]",
+    "w-[5%]",
   ],
 };

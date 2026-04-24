@@ -138,7 +138,9 @@ export default class AnalysisController extends QPController {
   }
 
   get tableColumns() {
-    return this.userSettings.getTableColumns("analysis");
+    return this.userSettings
+      .getTableColumns("analysis")
+      .filter((col) => col.isVisible);
   }
 
   @action

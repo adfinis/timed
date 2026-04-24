@@ -216,7 +216,7 @@
         {{#if this.data.lastSuccessful.value.length}}
           {{#let this.data.lastSuccessful.value as |reports|}}
             <div class="flex justify-end gap-x-2">
-              <AnalysisColumnsBtn />
+              <TableColumnsBtn />
               {{#if this.selectedReportIds.length}}
                 <button
                   data-test-edit-selected

@@ -7,7 +7,7 @@
 >
   <FaIcon @icon="gear" @prefix="fas" @size="sm" />
   {{#if this.isModalVisible}}
-    <AnalysisColumnsModal
+    <TableColumnsModal
       @isVisible={{this.isModalVisible}}
       @onClose={{toggle "isModalVisible" this}}
     />
