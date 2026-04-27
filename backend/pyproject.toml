@@ -47,7 +47,7 @@ tornado = "^6.5"
 setuptools = "^82.0.1"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.15.9"
+ruff = "^0.15.11"
 coverage = "7.13.5"
 django-extensions = "4.1"
 factory-boy = "3.3.3"
