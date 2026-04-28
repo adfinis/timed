@@ -1,0 +1,15 @@
+<button
+  type="button"
+  title="Toggle Analysis Table Columns Visibility"
+  class="btn btn-default"
+  {{on "click" (toggle "isModalVisible" this)}}
+  ...attributes
+>
+  <FaIcon @icon="gear" @prefix="fas" @size="sm" />
+  {{#if this.isModalVisible}}
+    <TableColumnsModal
+      @isVisible={{this.isModalVisible}}
+      @onClose={{toggle "isModalVisible" this}}
+    />
+  {{/if}}
+</button>
