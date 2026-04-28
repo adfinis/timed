@@ -56,6 +56,12 @@ Make sure to set your UID in .env
 echo "UID=$UID" >> .env
 ```
 
+In case you get an error regarding the Proxying to https://timed.localhost, when starting Ember outside the container (pnpm start), then you may need to run the following command to add a local hosts entry to resolve the domain
+
+```bash
+echo "127.0.0.1 timed.localhost" | sudo tee -a /etc/hosts
+```
+
 Import some development fixtures to get started:
 
 ```bash
