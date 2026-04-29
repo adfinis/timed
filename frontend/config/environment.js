@@ -1,3 +1,4 @@
+const analysisTable = require("./analysis-table");
 /* jshint node: true */
 module.exports = function (environment) {
   const ENV = {
@@ -50,6 +51,7 @@ module.exports = function (environment) {
       ],
       EXPORT_LIMIT: 100000,
       OVERTIME_SOFT_LIMIT: process.env.OVERTIME_SOFT_LIMIT || 20,
+      analysisTable,
     },
 
     "ember-simple-auth-oidc": {
