@@ -59,8 +59,6 @@ if (config["@sentry/ember"]) {
   });
 }
 
-// simplebar setup end
-
 if (macroCondition(isDevelopingApp())) {
   importSync("./deprecation-workflow");
 }
