@@ -10,8 +10,6 @@ import fastRedact from "fast-redact";
 import config from "timed/config/environment";
 
 import "./font-awesome";
-import "simplebar";
-import "simplebar/dist/simplebar.css";
 
 const redact = fastRedact({
   paths: [
@@ -58,8 +56,6 @@ if (config["@sentry/ember"]) {
     },
   });
 }
-
-// simplebar setup end
 
 if (macroCondition(isDevelopingApp())) {
   importSync("./deprecation-workflow");
