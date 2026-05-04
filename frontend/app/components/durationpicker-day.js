@@ -1,4 +1,5 @@
 import { action } from "@ember/object";
+import { debounceTask } from "ember-lifeline";
 import moment from "moment";
 
 import DurationpickerComponent from "timed/components/durationpicker";
@@ -25,5 +26,16 @@ export default class DurationpickerDayComponent extends DurationpickerComponent 
       const [h, m] = parseDayTime(value);
       this._change(this._set(h, m));
     }
+  }
+
+  @action
+  wheelAction(event) {
+    event.preventDefault();
+    debounceTask(this, "_wheel", event.deltaY, 100);
+  }
+
+  _wheel(deltaY) {
+    const direction = deltaY > 0 ? -1 : 1;
+    this._addMinutes(this.precision * direction);
   }
 }
