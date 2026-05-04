@@ -154,6 +154,11 @@
                           data-test-review
                           @checked={{fi.value}}
                           @onChange={{fi.update}}
+                          @disabled={{and
+                            f.model.verified
+                            (not-eq f.model.review null)
+                            (not f.model.review)
+                          }}
                         >
                           Needs Review
                           {{#if (eq model.review null)}}
@@ -217,7 +222,14 @@
                           @checked={{fi.value}}
                           @onChange={{fi.update}}
                           @title={{this.toolTipText}}
-                          @disabled={{or (not this.canVerify) this.needsReview}}
+                          @disabled={{or
+                            (not this.canVerify)
+                            (and
+                              f.model.review
+                              (not-eq f.model.verified null)
+                              (not f.model.verified)
+                            )
+                          }}
                         >
                           Verified
                           {{#if (eq model.verified null)}}
