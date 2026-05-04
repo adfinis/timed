@@ -29,6 +29,7 @@
           @value={{this.changeset.comment}}
           @customerVisible={{this.changeset.task.project.customerVisible}}
           @onUpdate={{fn (mut this.changeset.comment)}}
+          @onSubmit={{this.save}}
         />
       </div>
       <div
