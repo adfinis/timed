@@ -66,7 +66,11 @@
                   {{/if}}
                 </Table::Td>
                 <Table::Td title={{activity.comment}}>
-                  <div class="comment-field">{{activity.comment}}</div>
+                  <div class="comment-field">
+                    <span
+                      class="line-clamp-2 whitespace-pre-line"
+                    >{{activity.comment}}</span>
+                  </div>
                   {{#if activity.task.project.customerVisible}}
                     <CustomerVisibleIcon
                       class="activity-customer-visible-icon"
