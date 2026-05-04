@@ -58,6 +58,7 @@ export default class AnalysisController extends QPController {
   @service router;
   @service notify;
   @service abilities;
+  @service analysisScroll;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -350,6 +351,8 @@ export default class AnalysisController extends QPController {
   @action
   edit(selectedIds = [], event) {
     const ids = event ? selectedIds : [];
+    let scrollElement = document.getElementsByClassName("analysis-scrollable-container")[0]
+    this.analysisScroll.scrollHeight = scrollElement.scrollHeight;
     this.router.transitionTo("analysis.edit", {
       queryParams: {
         ...(ids && ids.length ? { id: ids } : {}),
@@ -368,6 +371,18 @@ export default class AnalysisController extends QPController {
       ]);
     } else {
       this.selectedReportIds = A([...selected, report.id]);
+    }
+  }
+
+  @action
+  restoreScrollPosition(){
+    if (this.analysisScroll.restoreScroll) {
+      let scrollElement = document.getElementsByClassName("analysis-scrollable-container")[0]
+      scrollElement.scrollTo({
+        top: this.analysisScroll.scrollHeight,
+        left: 0,
+        behavior: "smooth",
+      });
     }
   }
 }
