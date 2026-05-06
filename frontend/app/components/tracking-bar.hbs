@@ -22,14 +22,31 @@
         <t.task />
       </div>
       <div data-test-tracking-comment>
-        <ReportComment
-          @value={{this.tracking.activity.comment}}
-          @disabled={{this.tracking.activity.active}}
-          @customerVisible={{this.tracking.activity.task.project.customerVisible}}
-          @onUpdate={{fn (mut this.tracking.activity.comment)}}
+        <input
+          type="text"
+          id="task-comment"
+          class="form-control rounded
+            {{if
+              this.tracking.activity.task.project.customerVisible
+              'customer-comment'
+            }}"
+          placeholder="Comment"
+          name="comment"
+          spellcheck="true"
+          autocomplete="true"
+          value={{this.tracking.activity.comment}}
+          title={{if
+            this.tracking.activity.task.project.customerVisible
+            "This project's comments are visible to the customer"
+          }}
+          {{on
+            "change"
+            (pick "target.value" (fn (mut this.tracking.activity.comment)))
+          }}
+          disabled={{this.tracking.activity.active}}
         />
       </div>
-      <div class="grid h-[2.5rem] place-self-start">
+      <div class="grid h-full place-self-center">
         <RecordButton
           @activity={{this.tracking.activity}}
           @recording={{this.tracking.activity.active}}

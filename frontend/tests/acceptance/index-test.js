@@ -40,10 +40,7 @@ module("Acceptance | index", function (hooks) {
     await waitFor(".customer-select");
     await taskSelect("[data-test-tracking-bar]");
 
-    await fillIn(
-      "[data-test-tracking-comment] textarea",
-      "Some Random Comment",
-    );
+    await fillIn("[data-test-tracking-comment] input", "Some Random Comment");
 
     assert.dom("[data-test-record-start]").exists({ count: 1 });
 
@@ -66,10 +63,7 @@ module("Acceptance | index", function (hooks) {
     await waitFor(".customer-select");
     await taskSelect("[data-test-tracking-bar]", { fromHistory: true });
 
-    await fillIn(
-      "[data-test-tracking-comment] textarea",
-      "Some Random Comment",
-    );
+    await fillIn("[data-test-tracking-comment] input", "Some Random Comment");
 
     await click("[data-test-record-start]");
 
@@ -94,9 +88,7 @@ module("Acceptance | index", function (hooks) {
       .dom(".record-button-container--recording[data-test-record-stop]")
       .exists();
     assert.dom("[data-test-record-stop]").exists({ count: 1 });
-    assert
-      .dom("[data-test-tracking-comment] textarea")
-      .hasValue(activity.comment);
+    assert.dom("[data-test-tracking-comment] input").hasValue(activity.comment);
 
     await click("[data-test-record-stop]");
 
@@ -105,7 +97,7 @@ module("Acceptance | index", function (hooks) {
     assert
       .dom(".record-button-container--recording[data-test-record-start]")
       .doesNotExist();
-    assert.dom("[data-test-tracking-comment] textarea").hasNoValue();
+    assert.dom("[data-test-tracking-comment] input").hasNoValue();
   });
 
   test("can set the document title", async function (assert) {

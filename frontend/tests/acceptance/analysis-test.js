@@ -268,7 +268,7 @@ module("Acceptance | analysis", function (hooks) {
       .dom("[data-test-task] .ember-power-select-trigger")
       .hasAttribute("aria-disabled", "false");
 
-    assert.dom("[data-test-report-comment]").isNotDisabled();
+    assert.dom("[data-test-comment]").isNotDisabled();
     assert.dom("[data-test-not-billable] input").isNotDisabled();
     assert.dom("[data-test-review] input").isNotDisabled();
     assert.dom("[data-test-billed] input").isNotDisabled();

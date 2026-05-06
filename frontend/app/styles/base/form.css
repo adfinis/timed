@@ -50,34 +50,3 @@ select,
 [type="checkbox"] {
   @apply text-primary;
 }
-
-textarea.form-textarea {
-  @apply h-10 resize-none overflow-hidden transition-[height] duration-300 ease-in-out;
-  @apply focus:overflow-y-auto focus:line-clamp-none;
-
-  &.line-clamp {
-    @apply line-clamp-1 focus:line-clamp-none;
-  }
-}
-
-.content-line-1 {
-  /* remove line clamp on single liners */
-  @apply focus:h-10 line-clamp-none;
-}
-
-.content-line-2 {
-  @apply focus:h-16;
-}
-
-.content-line-3 {
-  @apply focus:h-24;
-}
-
-.content-line-4 {
-  @apply focus:h-32;
-}
-
-.report-row .ember-basic-dropdown-trigger,
-.report-row .form-list-cell {
-  @apply self-start;
-}

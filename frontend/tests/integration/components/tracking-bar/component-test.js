@@ -22,6 +22,6 @@ module("Integration | Component | tracking bar", function (hooks) {
   test("renders", async function (assert) {
     await render(hbs`<TrackingBar />`);
 
-    assert.dom("textarea[type=text]").hasValue("asdf");
+    assert.dom("input[type=text]").hasValue("asdf");
   });
 });
