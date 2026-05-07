@@ -108,7 +108,7 @@
     "ember-test-selectors": "6.0.0",
     "ember-tether": "3.1.0",
     "ember-truth-helpers": "3.1.1",
-    "ember-validated-form": "7.0.1",
+    "ember-validated-form": "git+https://github.com/c0rydoras/ember-validated-form#b30cd8874a2a2927234e09507274249ec95c9936",
     "eslint": "9.25.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-ember": "12.7.4",

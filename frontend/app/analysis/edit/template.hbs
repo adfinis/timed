@@ -122,8 +122,8 @@
                         <ReportComment
                           @value={{fi.value}}
                           @customerVisible={{model.task.project.customerVisible}}
-                          @onUpdate={{fi.update}}
-                          @onSubmit={{perform this.save cs}}
+                          @onChange={{fi.update}}
+                          @onSubmit={{f.submitAction}}
                         />
                       </label>
                     </f.input>

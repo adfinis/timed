@@ -12,7 +12,9 @@
   title={{this.tooltip}}
   spellcheck="true"
   autocomplete="true"
-  {{on "input" (pick "target.value" @onUpdate)}}
+  wrap="soft"
+  rows="1"
+  {{on "input" (pick "target.value" @onChange)}}
   {{on "keydown" this.handleKeydown}}
   data-test-report-comment
 />

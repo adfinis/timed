@@ -28,7 +28,8 @@ export default class ReportCommentTextarea extends Component {
   handleKeydown(event) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
-      this.args.onSubmit?.(event);
+      const { onSubmit } = this.args;
+      onSubmit && onSubmit(event);
     }
   }
 }

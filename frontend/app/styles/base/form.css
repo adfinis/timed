@@ -52,8 +52,8 @@ select,
 }
 
 textarea.form-textarea {
-  @apply h-10 resize-none overflow-hidden transition-[height] duration-300 ease-in-out;
-  @apply focus:overflow-y-auto focus:line-clamp-none;
+  @apply resize-none overflow-hidden transition-[height] duration-300 ease-in-out;
+  @apply focus:line-clamp-none focus:overflow-y-auto;
 
   &.line-clamp {
     @apply line-clamp-1 focus:line-clamp-none;
@@ -62,7 +62,7 @@ textarea.form-textarea {
 
 .content-line-1 {
   /* remove line clamp on single liners */
-  @apply focus:h-10 line-clamp-none;
+  @apply line-clamp-none focus:h-10;
 }
 
 .content-line-2 {
