@@ -23,7 +23,8 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./ember
+      target: frontend
     environment:
       - TIMED_SSO_CLIENT_HOST=https://timed.localhost/auth/realms/timed/protocol/openid-connect
       - TIMED_SSO_CLIENT_ID=timed-public
