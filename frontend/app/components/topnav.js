@@ -7,6 +7,8 @@ export default class Topnav extends Component {
 
   @service media;
 
+  @service docs;
+
   @tracked expand = false;
 
   get navMobile() {
