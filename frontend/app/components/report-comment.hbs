@@ -13,5 +13,6 @@
   spellcheck="true"
   autocomplete="true"
   {{on "input" (pick "target.value" @onUpdate)}}
+  {{on "keydown" this.handleKeydown}}
   data-test-report-comment
 />

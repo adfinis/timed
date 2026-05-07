@@ -1,3 +1,4 @@
+import { action } from "@ember/object";
 import Component from "@glimmer/component";
 
 const HEIGHT_MAP = {
@@ -21,5 +22,13 @@ export default class ReportCommentTextarea extends Component {
   get heightClass() {
     const lines = (this.args.value || "").split("\n").length;
     return HEIGHT_MAP[lines] || "content-line-4";
+  }
+
+  @action
+  handleKeydown(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      this.args.onSubmit?.(event);
+    }
   }
 }

@@ -27,6 +27,7 @@
           @disabled={{this.tracking.activity.active}}
           @customerVisible={{this.tracking.activity.task.project.customerVisible}}
           @onUpdate={{fn (mut this.tracking.activity.comment)}}
+          @onSubmit={{perform this.tracking.startActivity}}
         />
       </div>
       <div class="grid h-[2.5rem] place-self-start">
