@@ -1,8 +1,7 @@
 <textarea
   type="text"
-  class="form-textarea comment-field rounded
+  class="comment-field resize-none overflow-hidden rounded transition-[height] duration-300 ease-in-out
     {{if @customerVisible 'customer-comment'}}
-    {{if @value 'line-clamp'}}
     {{this.heightClass}}"
   placeholder="Comment"
   name="comment"
