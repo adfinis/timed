@@ -51,32 +51,6 @@ select,
   @apply text-primary;
 }
 
-textarea.form-textarea {
-  @apply resize-none overflow-hidden transition-[height] duration-300 ease-in-out;
-  @apply focus:line-clamp-none focus:overflow-y-auto;
-
-  &.line-clamp {
-    @apply line-clamp-1 focus:line-clamp-none;
-  }
-}
-
-.content-line-1 {
-  /* remove line clamp on single liners */
-  @apply line-clamp-none focus:h-10;
-}
-
-.content-line-2 {
-  @apply focus:h-16;
-}
-
-.content-line-3 {
-  @apply focus:h-24;
-}
-
-.content-line-4 {
-  @apply focus:h-32;
-}
-
 .report-row .ember-basic-dropdown-trigger,
 .report-row .form-list-cell {
   @apply self-start;
