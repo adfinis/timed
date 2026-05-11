@@ -75,7 +75,7 @@ env = [
 filterwarnings = [
     "error::DeprecationWarning",
     "error::PendingDeprecationWarning",
-    # following is needed beceause of https://github.com/mozilla/mozilla-django-oidc/pull/371
+    # following is needed because of https://github.com/mozilla/mozilla-django-oidc/pull/371
     "ignore:distutils Version classes are deprecated:DeprecationWarning", # deprecation in pytest-freezegun
     "ignore:.*is deprecated in favour of new moneyed.l10n.format_money.*",
     "ignore:.*invalid escape sequence.*",

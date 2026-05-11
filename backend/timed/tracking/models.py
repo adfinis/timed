@@ -42,7 +42,7 @@ class Activity(models.Model):
     )
 
     class Meta:
-        """Meta informations for the activity model."""
+        """Meta information for the activity model."""
 
         verbose_name_plural = "activities"
         indexes = (models.Index(fields=["date"]),)
@@ -57,7 +57,7 @@ class Attendance(models.Model):
 
     An attendance is a timespan in which a user was present at work.
     Timespan should not be time zone aware hence splitting into date and
-    from resp. to time fields.
+    from/to time fields.
     """
 
     date = models.DateField()
@@ -142,7 +142,7 @@ class Absence(models.Model):
     )
 
     class Meta:
-        """Meta informations for the absence model."""
+        """Meta information for the absence model."""
 
         unique_together = (
             "date",
@@ -157,7 +157,7 @@ class Absence(models.Model):
         """Calculate duration of absence with given employment.
 
         For fullday absences duration is equal worktime per day of employment
-        for absences which need to fill day calcuation needs to check
+        for absences which need to fill day calculation needs to check
         how much time has been reported on that day.
         """
         if not self.absence_type.fill_worktime:

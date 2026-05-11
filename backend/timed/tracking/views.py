@@ -98,7 +98,7 @@ class ReportViewSet(ModelViewSet):
         (
             # superuser and accountants may edit all reports but not delete
             (IsSuperUser | IsAccountant) & IsNotDelete
-            # reviewer and supervisor may change reports which aren't verfied but not delete them
+            # reviewer and supervisor may change reports which aren't verified but not delete them
             | (IsReviewer | IsSupervisor) & IsUnverified & IsNotDelete
             # internal employees may only change its own unverified reports
             # only external employees with resource role may only change its own unverified reports

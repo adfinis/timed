@@ -16,7 +16,7 @@ class CustomerFactory(DjangoModelFactory):
     archived = False
 
     class Meta:
-        """Meta informations for the customer factory."""
+        """Meta information for the customer factory."""
 
         model = models.Customer
 
@@ -57,7 +57,7 @@ class ProjectFactory(DjangoModelFactory):
     amount_invoiced = Faker("pydecimal", positive=True, left_digits=4, right_digits=2)
 
     class Meta:
-        """Meta informations for the project factory."""
+        """Meta information for the project factory."""
 
         model = models.Project
 
@@ -73,7 +73,7 @@ class TaskFactory(DjangoModelFactory):
     cost_center = SubFactory("timed.projects.factories.CostCenterFactory")
 
     class Meta:
-        """Meta informations for the task factory."""
+        """Meta information for the task factory."""
 
         model = models.Task
 
@@ -84,7 +84,7 @@ class TaskTemplateFactory(DjangoModelFactory):
     name = Faker("sentence")
 
     class Meta:
-        """Meta informations for the task template factory."""
+        """Meta information for the task template factory."""
 
         model = models.TaskTemplate
 
@@ -99,7 +99,7 @@ class CustomerAssigneeFactory(DjangoModelFactory):
     is_manager = False
 
     class Meta:
-        """Meta informations for the task template factory."""
+        """Meta information for the task template factory."""
 
         model = models.CustomerAssignee
 
@@ -114,7 +114,7 @@ class ProjectAssigneeFactory(DjangoModelFactory):
     is_manager = False
 
     class Meta:
-        """Meta informations for the task template factory."""
+        """Meta information for the task template factory."""
 
         model = models.ProjectAssignee
 
@@ -129,6 +129,6 @@ class TaskAssigneeFactory(DjangoModelFactory):
     is_manager = False
 
     class Meta:
-        """Meta informations for the task template factory."""
+        """Meta information for the task template factory."""
 
         model = models.TaskAssignee

@@ -43,10 +43,10 @@ module("Acceptance | projects", function (hooks) {
     assert.dom("[data-test-add-task]").exists();
     assert.dom("[data-test-task-table-row]").doesNotExist();
 
-    await click("[data-test-remaing-effort-tracking] input");
+    await click("[data-test-remaining-effort-tracking] input");
     await click("[data-test-project-save]");
 
-    assert.dom("[data-test-remaing-effort-tracking] input").isChecked();
+    assert.dom("[data-test-remaining-effort-tracking] input").isChecked();
   });
 
   test("can add task", async function (assert) {

@@ -204,7 +204,7 @@ export default class ActivitiesIndexController extends Controller {
               r.get("task.id") === data.task.get("id") &&
               r.get("review") === data.review &&
               r.get("notBillable") === data.notBillable &&
-              !r.get("verfiedBy") &&
+              !r.get("verifiedBy.id") &&
               !r.get("isDeleted")
             );
           });

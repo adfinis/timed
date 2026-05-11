@@ -84,7 +84,7 @@ class Command(BaseCommand):
     def _get_unverified_reports(self, start, end):
         """Get unverified reports.
 
-        Unverified reports are reports on project which have a reviewer
+        Unverified reports are reports on projects which have a reviewer
         assigned but are not verified in given time frame.
         """
         return Report.objects.filter(date__range=[start, end], verified_by__isnull=True)
