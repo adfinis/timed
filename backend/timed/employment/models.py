@@ -369,7 +369,7 @@ class User(AbstractUser):
     ) -> tuple[timedelta, timedelta, timedelta]:
         """Calculate reported, expected and balance for user.
 
-        This calculates summarizes worktime for all employments of users which
+        This summarizes worktime for all employments of users which
         are in given time frame.
 
         Return a tuple with 3 timedeltas of reported, expected and balance.

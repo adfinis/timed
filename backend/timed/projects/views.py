@@ -218,7 +218,7 @@ class TaskViewSet(ModelViewSet):
         return queryset.none()
 
 
-class TaskAsssigneeViewSet(ReadOnlyModelViewSet):
+class TaskAssigneeViewSet(ReadOnlyModelViewSet):
     serializer_class = serializers.TaskAssigneeSerializer
     filterset_class = filters.TaskAssigneeFilterSet
 
@@ -234,7 +234,7 @@ class TaskAsssigneeViewSet(ReadOnlyModelViewSet):
         return queryset
 
 
-class ProjectAsssigneeViewSet(ReadOnlyModelViewSet):
+class ProjectAssigneeViewSet(ReadOnlyModelViewSet):
     serializer_class = serializers.ProjectAssigneeSerializer
     filterset_class = filters.ProjectAssigneeFilterSet
 
@@ -250,7 +250,7 @@ class ProjectAsssigneeViewSet(ReadOnlyModelViewSet):
         return queryset
 
 
-class CustomerAsssigneeViewSet(ReadOnlyModelViewSet):
+class CustomerAssigneeViewSet(ReadOnlyModelViewSet):
     serializer_class = serializers.CustomerAssigneeSerializer
     filterset_class = filters.CustomerAssigneeFilterSet
 

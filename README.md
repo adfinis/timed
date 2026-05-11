@@ -3,7 +3,7 @@
 [![Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/adfinis/timed-backend)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-Timed timetracking software.
+Timed time-tracking software.
 
 ## Installation
 
@@ -11,7 +11,7 @@ Timed timetracking software.
 
 - podman or docker
 - podman compose or docker compose
-- pnpm for frontend developement
+- pnpm for frontend development
 
 After installing and configuring those requirements, you should be able to run the following
 commands to complete the installation:

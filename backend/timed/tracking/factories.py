@@ -21,7 +21,7 @@ class AttendanceFactory(DjangoModelFactory):
     user = SubFactory("timed.employment.factories.UserFactory")
 
     class Meta:
-        """Meta informations for the attendance factory."""
+        """Meta information for the attendance factory."""
 
         model = models.Attendance
 
@@ -44,7 +44,7 @@ class ReportFactory(DjangoModelFactory):
         return datetime.timedelta(hours=randint(0, 4), minutes=randint(0, 59))
 
     class Meta:
-        """Meta informations for the report factory."""
+        """Meta information for the report factory."""
 
         model = models.Report
 
@@ -70,7 +70,7 @@ class ActivityFactory(DjangoModelFactory):
         return self.from_time.replace(hour=self.from_time.hour + 1)
 
     class Meta:
-        """Meta informations for the activity block factory."""
+        """Meta information for the activity block factory."""
 
         model = models.Activity
 
@@ -83,6 +83,6 @@ class AbsenceFactory(DjangoModelFactory):
     date = Faker("workday")
 
     class Meta:
-        """Meta informations for the absence factory."""
+        """Meta information for the absence factory."""
 
         model = models.Absence

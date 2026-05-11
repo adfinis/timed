@@ -1,7 +1,7 @@
 import { validatePresence } from "ember-changeset-validations/validators";
 
 /**
- * Given `changes` and `content` from a changeset validator, return wether a given `relation` has been changed.
+ * Given `changes` and `content` from a changeset validator, return whether a given `relation` has been changed.
  * @param {string} relation
  * @returns {(changes: Record<string, unknown>, content: Record<string, unknown>) => boolean}
  */

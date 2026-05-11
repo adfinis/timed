@@ -167,7 +167,7 @@ export default class IndexReportController extends Controller {
       if (reports.length < this.reports.length - 1) {
         /* istanbul ignore next */
         this.notify.warning(
-          "Reports that got verified already can not get transferred.",
+          "Reports that are already verified cannot be transferred.",
         );
       }
 

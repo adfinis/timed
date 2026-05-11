@@ -57,7 +57,7 @@
         >
           <f.input @name="remainingEffortTracking" as |fi|>
             <Checkbox
-              data-test-remaing-effort-tracking
+              data-test-remaining-effort-tracking
               @checked={{remainingEffortTracking}}
               @value={{fi.value}}
               @onChange={{fi.update}}
@@ -68,7 +68,7 @@
               remainingEffortTracking this.selectedProject.totalRemainingEffort
             )
           }}
-            Total remaing effort:
+            Total remaining effort:
             {{humanize-duration this.selectedProject.totalRemainingEffort}}
           {{/if}}
 

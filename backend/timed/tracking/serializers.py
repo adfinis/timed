@@ -192,7 +192,7 @@ class ReportSerializer(TotalTimeRootMetaMixin, ModelSerializer):
 
         External employees with manager or reviewer role may not create reports.
 
-        Check if remaing effort tracking is active on the corresponding project.
+        Check if remaining effort tracking is active on the corresponding project.
         """
         user = self.context["request"].user
         current_verified_by = self.instance and self.instance.verified_by

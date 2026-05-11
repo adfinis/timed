@@ -32,7 +32,7 @@ class Customer(models.Model):
     )
 
     class Meta:
-        """Meta informations for the customer model."""
+        """Meta information for the customer model."""
 
         ordering = ("name",)
 
@@ -56,7 +56,7 @@ class CostCenter(models.Model):
 
 
 class BillingType(models.Model):
-    """Billing type defining how a project, resp. reports are being billed."""
+    """Billing type defining how a project, respectively reports, are being billed."""
 
     name = models.CharField(max_length=255, unique=True)
     reference = models.CharField(max_length=255, blank=True, null=True)
@@ -157,7 +157,7 @@ class Task(models.Model):
     most_recent_remaining_effort = models.DurationField(blank=True, null=True)
 
     class Meta:
-        """Meta informations for the task model."""
+        """Meta information for the task model."""
 
         ordering = ("name",)
 

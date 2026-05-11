@@ -321,7 +321,7 @@ class WorkReportViewSet(GenericViewSet):
         """Create ods workreport.
 
         :rtype: tuple
-        :return: tuple where as first value is name and second ezodf document
+        :return: tuple where the first value is the name and the second is the ezodf document
         """
         customer = project.customer
         verifiers = sorted(
@@ -410,7 +410,7 @@ class WorkReportViewSet(GenericViewSet):
 
         if queryset.count() == 0:
             return Response(
-                "No entries were selected. Make sure to clear unneeded filters.",
+                "No entries were selected. Make sure to clear unnecessary filters.",
                 status=status.HTTP_400_BAD_REQUEST,
             )
 

@@ -36,7 +36,7 @@ def test_notify_reviewers_with_cc_and_message(mailoutbox, cc, message):
     task_work = TaskFactory.create(project=project_work)
     ReportFactory.create(date=date(2017, 7, 1), task=task_work, verified_by=None)
 
-    # a reviewer which doesn't have any unverfied reports
+    # a reviewer which doesn't have any unverified reports
     reviewer_no_work = UserFactory.create()
     project_no_work = ProjectFactory.create()
     ProjectAssigneeFactory.create(

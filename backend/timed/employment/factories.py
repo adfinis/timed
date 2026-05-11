@@ -20,7 +20,7 @@ class UserFactory(DjangoModelFactory):
     username = Faker("user_name")
 
     class Meta:
-        """Meta informations for the user factory."""
+        """Meta information for the user factory."""
 
         model = get_user_model()
 
@@ -31,7 +31,7 @@ class LocationFactory(DjangoModelFactory):
     name = Faker("city")
 
     class Meta:
-        """Meta informations for the location factory."""
+        """Meta information for the location factory."""
 
         model = models.Location
 
@@ -44,7 +44,7 @@ class PublicHolidayFactory(DjangoModelFactory):
     location = SubFactory(LocationFactory)
 
     class Meta:
-        """Meta informations for the public holiday factory."""
+        """Meta information for the public holiday factory."""
 
         model = models.PublicHoliday
 
@@ -65,7 +65,7 @@ class EmploymentFactory(DjangoModelFactory):
         return datetime.timedelta(minutes=60 * 8.5 * self.percentage / 100)
 
     class Meta:
-        """Meta informations for the employment factory."""
+        """Meta information for the employment factory."""
 
         model = models.Employment
 
@@ -78,7 +78,7 @@ class AbsenceTypeFactory(DjangoModelFactory):
     allow_comments = True
 
     class Meta:
-        """Meta informations for the absence type factory."""
+        """Meta information for the absence type factory."""
 
         model = models.AbsenceType
 
@@ -92,7 +92,7 @@ class AbsenceCreditFactory(DjangoModelFactory):
     days = Faker("random_int", min=1, max=25)
 
     class Meta:
-        """Meta informations for the absence credit factory."""
+        """Meta information for the absence credit factory."""
 
         model = models.AbsenceCredit
 
@@ -109,6 +109,6 @@ class OvertimeCreditFactory(DjangoModelFactory):
         return datetime.timedelta(hours=random.randint(5, 40))
 
     class Meta:
-        """Meta informations for the overtime credit factory."""
+        """Meta information for the overtime credit factory."""
 
         model = models.OvertimeCredit
