@@ -1,8 +1,3 @@
-/**
- * This tsconfig is not used for publishing.
- * It's only for the local editing experience
- * (and linting)
- */
 {
   "extends": "@ember/app-tsconfig",
   "include": [
@@ -13,6 +8,13 @@
   ],
   "compilerOptions": {
     "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "ember-source": ["node_modules/ember-source"],
+      "ember-source/*": ["node_modules/ember-source/*"],
+      "@glimmer/component": ["node_modules/@glimmer/component"],
+      "@glimmer/component/*": ["node_modules/@glimmer/component/*"]
+    },
     "types": [
       "ember-source/types",
       "vite/client",

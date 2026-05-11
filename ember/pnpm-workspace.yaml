@@ -10,13 +10,13 @@ onlyBuiltDependencies:
   - ember-can
 
 overrides:
-  tracked-built-ins: "~4.0.0"
-  ember-inflector: "6.0.0"
+  ember-inflector: 6.0.0
+  tracked-built-ins: ~4.0.0
 
 peerDependencyRules:
-  ignoreMissing:
-    - "@babel/core"
-    - "@glint/template"
-    - "@types/node"
   allowAny:
     - marked
+  ignoreMissing:
+    - '@babel/core'
+    - '@glint/template'
+    - '@types/node'
