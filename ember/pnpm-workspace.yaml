@@ -4,6 +4,9 @@ packages:
 
 autoInstallPeers: false
 
+ignoredBuiltDependencies:
+  - '@scarf/scarf'
+
 onlyBuiltDependencies:
   - core-js
   - esbuild

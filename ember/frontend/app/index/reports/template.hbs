@@ -6,6 +6,13 @@
 >Reschedule
 </NavTabs::LowerButton>
 
+<UiCard>A Card</UiCard>
+
+<ReportDurationpicker
+  @value={{this.duration_}}
+  @onChange={{fn (mut this.duration_)}}
+/>
+
 <div class="reports">
   {{#each this.reports as |report|}}
     <ReportRow

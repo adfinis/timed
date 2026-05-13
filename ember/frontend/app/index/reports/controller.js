@@ -8,6 +8,7 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { scheduleTask } from "ember-lifeline";
+import { Duration } from "luxon";
 import moment from "moment";
 import { all } from "rsvp";
 import { cached } from "tracked-toolbox";
@@ -22,6 +23,8 @@ import ReportValidations from "timed/validations/report";
  */
 export default class IndexReportController extends Controller {
   queryParams = ["task", "duration", "comment", "review", "notBillable"];
+
+  @tracked duration_ = Duration.fromObject({ hours: 0, minutes: 0 });
 
   @tracked task;
   @tracked duration;
