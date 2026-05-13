@@ -1,27 +1,19 @@
-/**
- * This tsconfig is only used for publishing.
- *
- * For local dev experience, see the tsconfig.json
- */
 {
   "extends": "@ember/library-tsconfig",
   "include": ["./src/**/*", "./unpublished-development-types/**/*"],
   "compilerOptions": {
     "allowJs": true,
     "declarationDir": "declarations",
-
-    /**
-      https://www.typescriptlang.org/tsconfig#rootDir
-      "Default: The longest common path of all non-declaration input files."
-
-      Because we want our declarations' structure to match our rollup output,
-      we need this "rootDir" to match the "srcDir" in the rollup.config.mjs.
-
-      This way, we can have simpler `package.json#exports` that matches
-      imports to files on disk
-    */
     "rootDir": "./src",
-
+    "baseUrl": ".",
+    "paths": {
+      "ember-source": ["node_modules/ember-source"],
+      "ember-source/*": ["node_modules/ember-source/*"],
+      "@glimmer/component": ["node_modules/@glimmer/component"],
+      "@glimmer/component/*": ["node_modules/@glimmer/component/*"],
+      "@glint/template": ["node_modules/@glint/template"],
+      "@glint/template/*": ["node_modules/@glint/template/*"]
+    },
     "types": ["ember-source/types", "@glint/ember-tsc/types"]
   }
 }

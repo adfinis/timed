@@ -1,8 +1,25 @@
 packages:
   - ui-core
+  - frontend
 
 autoInstallPeers: false
+
+ignoredBuiltDependencies:
+  - '@scarf/scarf'
 
 onlyBuiltDependencies:
   - core-js
   - esbuild
+  - ember-can
+
+overrides:
+  ember-inflector: 6.0.0
+  tracked-built-ins: ~4.0.0
+
+peerDependencyRules:
+  allowAny:
+    - marked
+  ignoreMissing:
+    - '@babel/core'
+    - '@glint/template'
+    - '@types/node'
