@@ -29,7 +29,7 @@ const overtimeToOpacity = (overtime) => {
 
 export default class TimedClock extends Component {
   @service currentUser;
-  @service appearance;
+  @service userSettings;
   @service notify;
 
   @tracked hour = 0;
@@ -49,7 +49,6 @@ export default class TimedClock extends Component {
 
   constructor(...args) {
     super(...args);
-
     scheduleTask(this.timer, "actions", "perform");
     //TODO: fix this feature
     // scheduleTask(this.worktimeTimer, "actions", "perform");
