@@ -13,5 +13,6 @@
   title={{@title}}
   {{on "change" this.change}}
   {{on "keyup" this.handleKeyPress}}
+  {{on "wheel" this.wheelAction}}
   {{on "focusout" (optional @onFocusOut)}}
 />
