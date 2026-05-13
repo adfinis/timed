@@ -11,7 +11,6 @@ import {
   task,
   hash,
 } from "ember-concurrency";
-import fetch from "fetch";
 import moment from "moment";
 
 import config from "../../config/environment";
@@ -319,7 +318,7 @@ export default class AnalysisController extends QPController {
         ),
       );
 
-      const res = await fetch(`${url}?${queryString}`, {
+      const res = await window.fetch(`${url}?${queryString}`, {
         headers: {
           Authorization: `Bearer ${this.jwt}`,
         },
