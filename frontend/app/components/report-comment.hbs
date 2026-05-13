@@ -1,8 +1,7 @@
 <textarea
   type="text"
-  class="form-textarea comment-field rounded
+  class="comment-field resize-none overflow-hidden rounded transition-[height] duration-300 ease-in-out
     {{if @customerVisible 'customer-comment'}}
-    {{if @value 'line-clamp'}}
     {{this.heightClass}}"
   placeholder="Comment"
   name="comment"
@@ -12,7 +11,9 @@
   title={{this.tooltip}}
   spellcheck="true"
   autocomplete="true"
-  {{on "input" (pick "target.value" @onUpdate)}}
+  wrap="soft"
+  rows="1"
+  {{on "input" (pick "target.value" @onChange)}}
   {{on "keydown" this.handleKeydown}}
   data-test-report-comment
 />
