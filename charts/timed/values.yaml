@@ -279,6 +279,49 @@ ingress:
   #    hosts:
   #      - timed-test.example.com
 
+httproute:
+  # -- Configure Gateway API HTTPRoutes for timed
+  routes:
+    main:
+      # -- Enable the main HTTPRoute
+      enabled: false
+      # -- HTTPRoute labels
+      labels: {}
+      # -- HTTPRoute annotations
+      annotations: {}
+      # -- Gateway parentRefs configuration
+      parentRefs: []
+      #  - group: gateway.networking.k8s.io
+      #    kind: Gateway
+      #    name: infra
+      #    namespace: infra-kgateway
+      #    sectionName: https
+      # -- HTTPRoute hostnames
+      hostnames: []
+      #  - timed-test.example.com
+
+    redirect:
+      # -- Enable HTTP to HTTPS redirect HTTPRoute
+      enabled: false
+      # -- Enable HTTPS redirect filters
+      httpsRedirect: true
+      # -- HTTP redirect status code
+      statusCode: 308
+      # -- HTTPRoute labels
+      labels: {}
+      # -- HTTPRoute annotations
+      annotations: {}
+      # -- Gateway parentRefs configuration
+      parentRefs: []
+      #  - group: gateway.networking.k8s.io
+      #    kind: Gateway
+      #    name: infra
+      #    namespace: infra-kgateway
+      #    sectionName: http
+      # -- HTTPRoute hostnames
+      hostnames: []
+      #  - timed-test.example.com
+
 postgresql:
   # -- Enable PostgreSQL Helm Chart (https://bitnami.com/stack/postgresql) for persistence
   enabled: true
