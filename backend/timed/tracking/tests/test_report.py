@@ -814,12 +814,22 @@ def test_report_update_by_user(
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
 
+@pytest.mark.parametrize(
+    ("needs_review", "needs_review_flag", "expected_status"),
+    [
+        (True, False, status.HTTP_200_OK),
+        (False, True, status.HTTP_400_BAD_REQUEST),
+    ],
+)
 def test_report_update_verified_and_review_reviewer(
     internal_employee_client,
     report_factory,
+    needs_review,
+    expected_status,
+    needs_review_flag,
 ):
     user = internal_employee_client.user
-    report = report_factory.create(duration=timedelta(hours=2))
+    report = report_factory.create(duration=timedelta(hours=2), review=needs_review)
     ProjectAssigneeFactory.create(
         user=user, project=report.task.project, is_reviewer=True
     )
@@ -828,7 +838,7 @@ def test_report_update_verified_and_review_reviewer(
         "data": {
             "type": "reports",
             "id": report.id,
-            "attributes": {"review": True},
+            "attributes": {"review": needs_review_flag},
             "relationships": {
                 "verified-by": {"data": {"id": user.pk, "type": "users"}}
             },
@@ -838,7 +848,7 @@ def test_report_update_verified_and_review_reviewer(
     url = reverse("report-detail", args=[report.id])
 
     res = internal_employee_client.patch(url, data)
-    assert res.status_code == status.HTTP_400_BAD_REQUEST
+    assert res.status_code == expected_status
 
 
 def test_report_set_verified_by_user(
