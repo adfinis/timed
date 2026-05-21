@@ -41,8 +41,8 @@
           @value={{cs.comment}}
           @disabled={{not editable}}
           @customerVisible={{cs.task.project.customerVisible}}
-          @onUpdate={{fn (mut cs.comment)}}
-          @onSubmit={{perform this.save cs}}
+          @onChange={{fn (mut cs.comment)}}
+          @onSubmit={{f.submitAction}}
         />
       </div>
       <div class="form-list-cell form-group cell-duration">
