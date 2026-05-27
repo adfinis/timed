@@ -8,6 +8,7 @@ on:
 
 jobs:
   scan:
+    if: github.repository == "adfinis/timed"
     strategy:
       matrix:
         image: [backend, customer-center, frontend]
