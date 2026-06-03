@@ -46,12 +46,13 @@
         />
       </div>
       <div class="form-list-cell form-group cell-duration">
-        <DurationpickerDay
+        <ReportDurationpicker
+          class="rounded"
           data-test-report-duration
-          @disabled={{not editable}}
+          disabled={{not editable}}
+          title="Task duration"
           @value={{cs.duration}}
           @onChange={{fn (mut cs.duration)}}
-          @title="Task duration"
         />
       </div>
       <div class="form-list-cell form-group cell-remaining-effort">
