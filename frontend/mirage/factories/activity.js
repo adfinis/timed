@@ -1,6 +1,8 @@
 import { faker } from "@faker-js/faker";
+import { DateTime } from "luxon";
 import { Factory, trait } from "miragejs";
-import moment from "moment";
+
+const TIME_FORMAT = "HH:mm:ss";
 
 export default Factory.extend({
   comment: () => faker.lorem.sentence(),
@@ -9,29 +11,28 @@ export default Factory.extend({
   notBillable: faker.datatype.boolean(),
   // task: association(),
 
-  date: () => moment(),
+  date: () => DateTime.now(),
 
   fromTime() {
-    return this.date.clone().format("HH:mm:ss");
+    return this.date.toFormat(TIME_FORMAT);
   },
 
   toTime() {
-    const start = moment(this.fromTime, "HH:mm:ss");
+    const start = DateTime.fromFormat(this.fromTime, TIME_FORMAT);
 
     return start
-      .add(faker.number.int({ min: 15, max: 60 }), "minutes")
-      .add(faker.number.int({ min: 0, max: 59 }), "seconds")
-      .format("HH:mm:ss");
+      .plus({ minutes: faker.number.int({ min: 15, max: 60 }) })
+      .plus({ seconds: faker.number.int({ min: 0, max: 59 }) })
+      .toFormat(TIME_FORMAT);
   },
 
   afterCreate(activity, server) {
     activity.update({ taskId: server.create("task").id });
     activity.update({
-      duration: moment.duration(
-        (activity.toTime ? moment(activity.toTime, "HH:mm:ss") : moment()).diff(
-          moment(activity.fromTime, "HH:mm:ss"),
-        ),
-      ),
+      duration: (activity.toTime
+        ? DateTime.fromFormat(activity.toTime, TIME_FORMAT)
+        : DateTime.now()
+      ).diff(DateTime.fromFormat(activity.fromTime, TIME_FORMAT)),
     });
   },
 
