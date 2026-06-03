@@ -1,7 +1,7 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "../../helpers";
 import { render } from "@ember/test-helpers";
-import Topnav from "#src/components/topnav.gts";
+import Topnav from "#src/components/ui-topnav.gts";
 
 module("Integration | Component | topnav", function (hooks) {
   setupRenderingTest(hooks);

@@ -1,7 +1,7 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "../../helpers";
 import { click, render } from "@ember/test-helpers";
-import Table, { SelectableTable } from "#src/components/table.gts";
+import Table, { SelectableTable } from "#src/components/ui-table.gts";
 
 module("Integration | Component | table", function (hooks) {
   setupRenderingTest(hooks);

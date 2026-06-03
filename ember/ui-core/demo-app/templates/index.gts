@@ -4,11 +4,11 @@ import { tracked } from "@glimmer/tracking";
 import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import { not } from "ember-truth-helpers";
-import Modal from "#src/components/modal.gts";
+import Modal from "#src/components/ui-modal.gts";
 import { Duration } from "luxon";
-import Table from "#src/components/table.gts";
-import { ReportDurationpicker } from "#src/components/durationpicker.gts";
-import Checkbox from "#src/components/checkbox.gts";
+import Table from "#src/components/ui-table.gts";
+import { ReportDurationpicker } from "#src/components/ui-durationpicker.gts";
+import Checkbox from "#src/components/ui-checkbox.gts";
 
 type _Report = {
   customer: string;

@@ -1,4 +1,4 @@
-import { SelectableTable } from "#src/components/table.gts";
+import { SelectableTable } from "#src/components/ui-table.gts";
 import {
   durationAsString,
   parseDurationFromString,

@@ -1,7 +1,7 @@
 import type { TOC } from "@ember/component/template-only";
 import Component from "@glimmer/component";
 import type { ComponentLike, WithBoundArgs } from "@glint/template";
-import Card, { CardBlock, CardFooter, CardHeader } from "./card.gts";
+import Card, { CardBlock, CardFooter, CardHeader } from "./ui-card.gts";
 import { on } from "@ember/modifier";
 import { hash } from "@ember/helper";
 import { action } from "@ember/object";

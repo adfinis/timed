@@ -4,7 +4,7 @@ import type AppearanceService from "#src/services/appearance.ts";
 import { service } from "@ember/service";
 import { keyResponder, onKey } from "ember-keyboard";
 import { runTask } from "ember-lifeline";
-import Topnav from "#src/components/topnav.gts";
+import Topnav from "#src/components/ui-topnav.gts";
 import { LinkTo } from "@ember/routing";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import {

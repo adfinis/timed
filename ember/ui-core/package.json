@@ -121,13 +121,13 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
-      "./components/card.js": "./dist/_app_/components/card.js",
-      "./components/checkbox.js": "./dist/_app_/components/checkbox.js",
-      "./components/durationpicker.js": "./dist/_app_/components/durationpicker.js",
-      "./components/modal.js": "./dist/_app_/components/modal.js",
-      "./components/nav-tabs.js": "./dist/_app_/components/nav-tabs.js",
-      "./components/table.js": "./dist/_app_/components/table.js",
-      "./components/topnav.js": "./dist/_app_/components/topnav.js",
+      "./components/ui-card.js": "./dist/_app_/components/ui-card.js",
+      "./components/ui-checkbox.js": "./dist/_app_/components/ui-checkbox.js",
+      "./components/ui-durationpicker.js": "./dist/_app_/components/ui-durationpicker.js",
+      "./components/ui-modal.js": "./dist/_app_/components/ui-modal.js",
+      "./components/ui-nav-tabs.js": "./dist/_app_/components/ui-nav-tabs.js",
+      "./components/ui-table.js": "./dist/_app_/components/ui-table.js",
+      "./components/ui-topnav.js": "./dist/_app_/components/ui-topnav.js",
       "./services/appearance.js": "./dist/_app_/services/appearance.js"
     }
   }
