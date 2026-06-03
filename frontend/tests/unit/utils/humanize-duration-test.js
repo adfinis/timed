@@ -1,11 +1,11 @@
-import moment from "moment";
+import { Duration } from "luxon";
 import { module, test } from "qunit";
 
 import humanizeDuration from "timed/utils/humanize-duration";
 
 module("Unit | Utility | humanize duration", function () {
   test("works", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 11,
       minutes: 12,
       seconds: 13,
@@ -17,7 +17,7 @@ module("Unit | Utility | humanize duration", function () {
   });
 
   test("works with seconds", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 11,
       minutes: 12,
       seconds: 13,
@@ -29,7 +29,7 @@ module("Unit | Utility | humanize duration", function () {
   });
 
   test("renders days as hours", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       days: 2,
       hours: 2,
       minutes: 0,
@@ -55,7 +55,7 @@ module("Unit | Utility | humanize duration", function () {
   test("splits big numbers", function (assert) {
     const hours = 1000000;
 
-    const duration = moment.duration({ hours });
+    const duration = Duration.fromObject({ hours });
 
     const result = humanizeDuration(duration);
 
@@ -64,7 +64,7 @@ module("Unit | Utility | humanize duration", function () {
 
   test("works with negative durations", function (assert) {
     const result = humanizeDuration(
-      moment.duration({ hours: -4, minutes: -30 }),
+      Duration.fromObject({ hours: -4, minutes: -30 }),
     );
 
     assert.strictEqual(result, "-4h 30m");

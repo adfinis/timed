@@ -2,7 +2,7 @@ import { click, fillIn, currentURL, visit } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 module("Acceptance | users edit credits", function (hooks) {
@@ -36,17 +36,19 @@ module("Acceptance | users edit credits", function (hooks) {
 
     assert
       .dom("select option:nth-last-child(2)")
-      .hasText(moment().add(1, "year").year().toString());
+      .hasText(DateTime.now().plus({ years: 1 }).year.toString());
 
     assert.dom("select option:last-child").hasText("All");
 
-    await fillIn("select", moment().add(1, "year").year());
+    await fillIn("select", DateTime.now().plus({ years: 1 }).year);
 
-    assert.ok(currentURL().includes(`year=${moment().add(1, "year").year()}`));
+    assert.ok(
+      currentURL().includes(`year=${DateTime.now().plus({ years: 1 }).year}`),
+    );
   });
 
   test("can transfer", async function (assert) {
-    await visit(`/users/1/credits?year=${moment().year() - 1}`);
+    await visit(`/users/1/credits?year=${DateTime.now().year - 1}`);
 
     await click(".year-select .btn");
 

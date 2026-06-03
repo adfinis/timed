@@ -1,50 +1,50 @@
 import { setupTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
+
+import { MODES } from "timed/transforms/luxon-dt";
 
 module("Unit | Transform | django datetime", function (hooks) {
   setupTest(hooks);
 
   test("serializes", function (assert) {
-    const transform = this.owner.lookup("transform:django-datetime");
+    const transform = this.owner.lookup("transform:luxon-dt");
 
-    const zone = moment().utcOffset();
+    const datetime = DateTime.fromObject({
+      year: 2017,
+      month: 3,
+      day: 11,
+      hour: 15,
+      minute: 30,
+      second: 50,
+      millisecond: 11,
+    });
 
-    const datetime = moment({
-      y: 2017,
-      M: 2, // moments months are zerobased
-      d: 11,
-      h: 15,
-      m: 30,
-      s: 50,
-      ms: 11,
-    }).utcOffset(zone);
+    const result = transform.serialize(datetime, { t: MODES.datetime });
 
-    const result = transform.serialize(datetime);
-
-    assert.strictEqual(result, datetime.format("YYYY-MM-DDTHH:mm:ss.SSSSZ"));
+    assert.strictEqual(result, datetime.toISO());
   });
 
   test("deserializes", function (assert) {
-    const transform = this.owner.lookup("transform:django-datetime");
+    const transform = this.owner.lookup("transform:luxon-dt");
 
-    const datetime = moment({
-      y: 2017,
-      M: 2, // moments months are zerobased
-      d: 11,
-      h: 15,
-      m: 30,
-      s: 50,
-      ms: 11,
-    }).utc();
+    const datetime = DateTime.fromObject({
+      year: 2017,
+      month: 3,
+      day: 11,
+      hour: 15,
+      minute: 30,
+      second: 50,
+      millisecond: 11,
+    }).toUTC();
 
-    assert.notOk(transform.deserialize(""));
-    assert.notOk(transform.deserialize(null));
+    assert.notOk(transform.deserialize("", { t: MODES.datetime }));
+    assert.notOk(transform.deserialize(null, { t: MODES.datetime }));
 
     const result = transform
-      .deserialize(datetime.format("YYYY-MM-DDTHH:mm:ss.SSSSZ"))
-      .utc();
+      .deserialize(datetime.toISO(), { t: MODES.datetime })
+      .toUTC();
 
-    assert.strictEqual(result.toISOString(), datetime.toISOString());
+    assert.strictEqual(result.toISO(), datetime.toISO());
   });
 });

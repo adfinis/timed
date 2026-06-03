@@ -3,7 +3,7 @@ import ArrayProxy from "@ember/array/proxy";
 import { render, waitFor } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { Duration } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | statistic list", function (hooks) {
@@ -78,8 +78,8 @@ module("Integration | Component | statistic list", function (hooks) {
       last: {
         value: ArrayProxy.create({
           content: A([
-            { duration: moment.duration({ h: 3 }) },
-            { duration: moment.duration({ h: 6 }) },
+            { duration: Duration.fromObject({ hours: 3 }) },
+            { duration: Duration.fromObject({ hours: 6 }) },
           ]),
           meta: {
             "total-time": "1 10:30:00",

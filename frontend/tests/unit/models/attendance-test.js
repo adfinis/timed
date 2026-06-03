@@ -1,5 +1,5 @@
 import { setupTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 module("Unit | Model | attendance", function (hooks) {
@@ -15,21 +15,21 @@ module("Unit | Model | attendance", function (hooks) {
     const model = this.owner
       .lookup("service:store")
       .createRecord("attendance", {
-        from: moment({ h: 8, m: 0, s: 0 }),
-        to: moment({ h: 17, m: 0, s: 0 }),
+        from: DateTime.fromObject({ hour: 8, minute: 0, second: 0 }),
+        to: DateTime.fromObject({ hour: 17, minute: 0, second: 0 }),
       });
 
-    assert.strictEqual(model.get("duration").asHours(), 9);
+    assert.strictEqual(model.get("duration").as("hours"), 9);
   });
 
   test("calculates the duration when the end time is 00:00", function (assert) {
     const model = this.owner
       .lookup("service:store")
       .createRecord("attendance", {
-        from: moment({ h: 0, m: 0, s: 0 }),
-        to: moment({ h: 0, m: 0, s: 0 }),
+        from: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }),
+        to: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }),
       });
 
-    assert.strictEqual(model.get("duration").asHours(), 24);
+    assert.strictEqual(model.get("duration").as("hours"), 24);
   });
 });

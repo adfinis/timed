@@ -2,7 +2,7 @@ import { click, fillIn, currentURL, visit, waitFor } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 import taskSelect from "../helpers/task-select";
@@ -24,9 +24,9 @@ module("Acceptance | index", function (hooks) {
 
     await click("[data-test-previous]");
 
-    const lastDay = moment().subtract(1, "day");
+    const lastDay = DateTime.now().minus({ days: 1 });
 
-    assert.strictEqual(currentURL(), `/?day=${lastDay.format("YYYY-MM-DD")}`);
+    assert.strictEqual(currentURL(), `/?day=${lastDay.toISODate()}`);
 
     await click("[data-test-today]");
 
@@ -161,7 +161,7 @@ module("Acceptance | index", function (hooks) {
   test("can edit an absence", async function (assert) {
     this.server.loadFixtures("absence-types");
     this.server.create("absence", {
-      date: moment({ year: 2017, month: 5, day: 29 }).format("YYYY-MM-DD"),
+      date: DateTime.fromObject({ year: 2017, month: 6, day: 29 }).toISODate(),
       userId: this.user.id,
     });
 
@@ -185,7 +185,7 @@ module("Acceptance | index", function (hooks) {
   test("can delete an absence", async function (assert) {
     this.server.loadFixtures("absence-types");
     this.server.create("absence", {
-      date: moment({ year: 2017, month: 5, day: 29 }).format("YYYY-MM-DD"),
+      date: DateTime.fromObject({ year: 2017, month: 6, day: 29 }).toISODate(),
       userId: this.user.id,
     });
 
@@ -201,7 +201,11 @@ module("Acceptance | index", function (hooks) {
   });
 
   test("highlights holidays", async function (assert) {
-    const date = moment({ year: 2017, month: 5, day: 29 }).format("YYYY-MM-DD");
+    const date = DateTime.fromObject({
+      year: 2017,
+      month: 6,
+      day: 29,
+    }).toISODate();
     this.server.create("public-holiday", { date });
     await visit("/?day=2017-06-29");
 

@@ -1,7 +1,7 @@
 import { render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime, Duration } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | duration since", function (hooks) {
@@ -10,7 +10,7 @@ module("Integration | Component | duration since", function (hooks) {
   test("computes the duration correctly", async function (assert) {
     this.set(
       "start",
-      moment().milliseconds(0).subtract({
+      DateTime.now().set({ millisecond: 0 }).minus({
         minutes: 5,
         seconds: 5,
       }),
@@ -25,7 +25,7 @@ module("Integration | Component | duration since", function (hooks) {
   test("computes the duration correctly with elapsed time", async function (assert) {
     this.set(
       "start",
-      moment().subtract({
+      DateTime.now().minus({
         minutes: 5,
         seconds: 5,
       }),
@@ -33,7 +33,7 @@ module("Integration | Component | duration since", function (hooks) {
 
     this.set(
       "elapsed",
-      moment.duration({
+      Duration.fromObject({
         hours: 1,
         minutes: 1,
         seconds: 1,

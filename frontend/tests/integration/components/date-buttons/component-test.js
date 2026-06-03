@@ -1,14 +1,13 @@
 import { click, render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | date buttons", function (hooks) {
   setupRenderingTest(hooks);
 
   test("changes the date", async function (assert) {
-    const format = "YYYY-MM-DD";
     this.set("fromDate", null);
     this.set("toDate", null);
 
@@ -21,45 +20,45 @@ module("Integration | Component | date buttons", function (hooks) {
 
     await click('[data-test-preset-date="0"]');
     assert.strictEqual(
-      this.fromDate.format(format),
-      moment().day(1).format(format),
+      this.fromDate.toISODate(),
+      DateTime.now().startOf("week").toISODate(),
     );
     await click('[data-test-preset-date="1"]');
     assert.strictEqual(
-      this.fromDate.format(format),
-      moment().date(1).format(format),
+      this.fromDate.toISODate(),
+      DateTime.now().startOf("month").toISODate(),
     );
     await click('[data-test-preset-date="2"]');
     assert.strictEqual(
-      this.fromDate.format(format),
-      moment().dayOfYear(1).format(format),
+      this.fromDate.toISODate(),
+      DateTime.now().startOf("year").toISODate(),
     );
     await click('[data-test-preset-date="3"]');
     assert.strictEqual(
-      this.fromDate.format(format),
-      moment().subtract(1, "week").day(1).format(format),
+      this.fromDate.toISODate(),
+      DateTime.now().minus({ weeks: 1 }).startOf("week").toISODate(),
     );
     assert.strictEqual(
-      this.toDate.format(format),
-      moment().subtract(1, "week").day(7).format(format),
+      this.toDate.toISODate(),
+      DateTime.now().minus({ weeks: 1 }).endOf("week").toISODate(),
     );
     await click('[data-test-preset-date="4"]');
     assert.strictEqual(
-      this.fromDate.format(format),
-      moment().subtract(1, "month").startOf("month").format(format),
+      this.fromDate.toISODate(),
+      DateTime.now().minus({ months: 1 }).startOf("month").toISODate(),
     );
     assert.strictEqual(
-      this.toDate.format(format),
-      moment().subtract(1, "month").endOf("month").format(format),
+      this.toDate.toISODate(),
+      DateTime.now().minus({ months: 1 }).endOf("month").toISODate(),
     );
     await click('[data-test-preset-date="5"]');
     assert.strictEqual(
-      this.fromDate.format(format),
-      moment().subtract(1, "year").startOf("year").format(format),
+      this.fromDate.toISODate(),
+      DateTime.now().minus({ years: 1 }).startOf("year").toISODate(),
     );
     assert.strictEqual(
-      this.toDate.format(format),
-      moment().subtract(1, "year").endOf("year").format(format),
+      this.toDate.toISODate(),
+      DateTime.now().minus({ years: 1 }).endOf("year").toISODate(),
     );
   });
 });

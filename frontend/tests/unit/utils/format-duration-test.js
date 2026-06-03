@@ -1,11 +1,11 @@
-import moment from "moment";
+import { Duration } from "luxon";
 import { module, test } from "qunit";
 
 import formatDuration from "timed/utils/format-duration";
 
 module("Unit | Utility | format duration", function () {
   test("works", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 11,
       minutes: 50,
       seconds: 15,
@@ -17,7 +17,7 @@ module("Unit | Utility | format duration", function () {
   });
 
   test("converts days into hours", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 44,
       minutes: 24,
       seconds: 19,
@@ -29,7 +29,7 @@ module("Unit | Utility | format duration", function () {
   });
 
   test("zeropads all numbers", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 1,
       minutes: 1,
       seconds: 1,
@@ -41,7 +41,7 @@ module("Unit | Utility | format duration", function () {
   });
 
   test("can hide seconds", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 22,
       minutes: 12,
     });
@@ -52,7 +52,7 @@ module("Unit | Utility | format duration", function () {
   });
 
   test("can be negative", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: -1,
       minutes: -1,
       seconds: -1,

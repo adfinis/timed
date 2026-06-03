@@ -1,14 +1,14 @@
 import { render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime, Duration } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | weekly overview", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    this.set("expected", moment.duration({ h: 8 }));
+    this.set("expected", Duration.fromObject({ hours: 8 }));
 
     await render(hbs`<WeeklyOverview @expected={{this.expected}} />`);
 
@@ -16,7 +16,7 @@ module("Integration | Component | weekly overview", function (hooks) {
   });
 
   test("renders the benchmarks", async function (assert) {
-    this.set("expected", moment.duration({ h: 8 }));
+    this.set("expected", Duration.fromObject({ hours: 8 }));
 
     await render(hbs`<WeeklyOverview @expected={{this.expected}} />`);
 
@@ -25,9 +25,9 @@ module("Integration | Component | weekly overview", function (hooks) {
   });
 
   test("renders the days", async function (assert) {
-    this.set("day", moment());
-    this.set("expected", moment.duration({ h: 8 }));
-    this.set("worktime", moment.duration({ h: 8 }));
+    this.set("day", DateTime.now());
+    this.set("expected", Duration.fromObject({ hours: 8 }));
+    this.set("worktime", Duration.fromObject({ hours: 8 }));
 
     await render(hbs`<WeeklyOverview @expected={{this.expected}}>
   <WeeklyOverviewDay

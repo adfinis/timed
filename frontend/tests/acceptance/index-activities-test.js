@@ -2,7 +2,7 @@ import { click, currentURL, findAll, visit } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
-import moment from "moment";
+import { DateTime, Duration } from "luxon";
 import { module, skip, test } from "qunit";
 
 import formatDuration from "timed/utils/format-duration";
@@ -44,7 +44,7 @@ module("Acceptance | index activities", function (hooks) {
   });
 
   test("can start an activity of a past day", async function (assert) {
-    const lastDay = moment().subtract(1, "day");
+    const lastDay = DateTime.now().minus({ days: 1 });
 
     const activity = this.server.create("activity", {
       date: lastDay,
@@ -52,7 +52,7 @@ module("Acceptance | index activities", function (hooks) {
       comment: "Test",
     });
 
-    await visit(`/?day=${lastDay.format("YYYY-MM-DD")}`);
+    await visit(`/?day=${lastDay.toISODate()}`);
 
     await click(
       `[data-test-activity-row-id="${activity.id}"] [data-test-start-activity]`,
@@ -149,11 +149,11 @@ module("Acceptance | index activities", function (hooks) {
   });
 
   test("shows a warning when generating reports from day overlapping activities", async function (assert) {
-    const date = moment().subtract(1, "days");
+    const date = DateTime.now().minus({ days: 1 });
 
     this.server.create("activity", "active", { userId: this.user.id, date });
 
-    await visit(`/?day=${date.format("YYYY-MM-DD")}`);
+    await visit(`/?day=${date.toISODate()}`);
 
     await click("[data-test-activity-generate-timesheet]");
     await click("[data-test-overlapping-warning] button.btn-default");
@@ -167,12 +167,12 @@ module("Acceptance | index activities", function (hooks) {
   });
 
   test("can handle both warnings", async function (assert) {
-    const date = moment().subtract(1, "days");
+    const date = DateTime.now().minus({ days: 1 });
 
     this.server.create("activity", "unknown", { userId: this.user.id, date });
     this.server.create("activity", "active", { userId: this.user.id, date });
 
-    await visit(`/?day=${date.format("YYYY-MM-DD")}`);
+    await visit(`/?day=${date.toISODate()}`);
 
     // both close if one clicks cancel
     await click("[data-test-activity-generate-timesheet]");
@@ -210,7 +210,7 @@ module("Acceptance | index activities", function (hooks) {
   test("splits 1 day overlapping activities when stopping", async function (assert) {
     const activity = this.server.create("activity", "active", {
       userId: this.user.id,
-      date: moment().subtract(1, "days"),
+      date: DateTime.now().minus({ days: 1 }),
     });
 
     const nextActivityId = Number(activity.id) + 1;
@@ -244,7 +244,7 @@ module("Acceptance | index activities", function (hooks) {
   test("doesn't split >1 days overlapping activities when stopping", async function (assert) {
     const activity = this.server.create("activity", "active", {
       userId: this.user.id,
-      date: moment().subtract(2, "days"),
+      date: DateTime.now().minus({ days: 2 }),
     });
 
     await visit("/");
@@ -285,9 +285,9 @@ module("Acceptance | index activities", function (hooks) {
     const { id } = activity;
     let { duration } = activity;
 
-    duration = moment
-      .duration(duration, "HH:mm:ss")
-      .add(moment().diff(moment(activity.fromTime, "HH:mm:ss")));
+    duration = duration.plus(
+      DateTime.now().diff(DateTime.fromFormat(activity.fromTime, "HH:mm:ss")),
+    );
 
     await visit("/");
 
@@ -317,8 +317,8 @@ module("Acceptance | index activities", function (hooks) {
     });
 
     const duration = activities.reduce((acc, val) => {
-      return acc.add(val.duration);
-    }, moment.duration());
+      return acc.plus(val.duration);
+    }, Duration.fromMillis(0));
 
     await visit("/");
 

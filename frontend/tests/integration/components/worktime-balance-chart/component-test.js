@@ -1,7 +1,7 @@
 import { render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime, Duration } from "luxon";
 import { module, test } from "qunit";
 
 import WorktimeBalanceChart from "timed/components/worktime-balance-chart";
@@ -24,12 +24,12 @@ module("Integration | Component | worktime balance chart", function (hooks) {
 
   test("computes the data correctly", async function (assert) {
     const dates = [...new Array(3).keys()].map((i) =>
-      moment().subtract(i, "days"),
+      DateTime.now().minus({ days: i }),
     );
     this.set(
       "data",
       dates.map((date) => ({
-        balance: moment.duration({ h: 10 }),
+        balance: Duration.fromObject({ hours: 10 }),
         date,
       })),
     );
@@ -38,8 +38,8 @@ module("Integration | Component | worktime balance chart", function (hooks) {
     assert.ok(this.element);
 
     assert.deepEqual(
-      this.component.data.labels.map((l) => l.format("YYYY-MM-DD")),
-      dates.map((d) => d.format("YYYY-MM-DD")),
+      this.component.data.labels.map((l) => l.toISODate()),
+      dates.map((d) => d.toISODate()),
     );
 
     assert.deepEqual(this.component.data.datasets, [{ data: [10, 10, 10] }]);
@@ -52,8 +52,8 @@ module("Integration | Component | worktime balance chart", function (hooks) {
     const labelFn = this.component.options.tooltips.callbacks.label;
 
     assert.strictEqual(
-      titleFn([{ index: 0 }], { labels: [moment()] }),
-      moment().format("DD.MM.YYYY"),
+      titleFn([{ index: 0 }], { labels: [DateTime.now()] }),
+      DateTime.now().toFormat("dd.MM.yyyy"),
     );
     assert.strictEqual(labelFn({ yLabel: 10.5 }), "10h 30m");
   });

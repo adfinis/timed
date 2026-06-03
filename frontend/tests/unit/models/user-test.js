@@ -1,5 +1,5 @@
 import { setupTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 module("Unit | Model | user", function (hooks) {
@@ -55,7 +55,7 @@ module("Unit | Model | user", function (hooks) {
 
     model.set("employments", [
       this.store.createRecord("employment", { id: 1, to: null }),
-      this.store.createRecord("employment", { id: 2, to: moment() }),
+      this.store.createRecord("employment", { id: 2, to: DateTime.now() }),
     ]);
 
     assert.strictEqual(Number(model.get("activeEmployment.id")), 1);

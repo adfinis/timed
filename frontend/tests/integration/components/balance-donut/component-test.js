@@ -1,7 +1,7 @@
 import { find, render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { Duration } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | balance donut", function (hooks) {
@@ -60,7 +60,7 @@ module("Integration | Component | balance donut", function (hooks) {
 
   test("renders with a duration", async function (assert) {
     this.set("balance", {
-      usedDuration: moment.duration({ h: 10 }),
+      usedDuration: Duration.fromObject({ hours: 10 }),
     });
 
     await render(hbs`<BalanceDonut @balance={{this.balance}} />`);
