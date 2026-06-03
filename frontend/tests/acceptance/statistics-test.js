@@ -2,7 +2,7 @@ import { click, fillIn, currentURL, visit, find } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test, skip } from "qunit";
 
 module("Acceptance | statistics", function (hooks) {
@@ -73,17 +73,17 @@ module("Acceptance | statistics", function (hooks) {
   test("can filter and reset filter", async function (assert) {
     await visit("/statistics");
 
-    const from = moment();
-    const to = moment().subtract(10, "days");
+    const from = DateTime.now();
+    const to = DateTime.now().minus({ days: 10 });
 
     await fillIn(
       "[data-test-filter-from-date] input",
-      from.format("DD.MM.YYYY"),
+      from.toFormat("dd.MM.yyyy"),
     );
-    await fillIn("[data-test-filter-to-date] input", to.format("DD.MM.YYYY"));
+    await fillIn("[data-test-filter-to-date] input", to.toFormat("dd.MM.yyyy"));
 
-    assert.ok(currentURL().includes(`fromDate=${from.format("YYYY-MM-DD")}`));
-    assert.ok(currentURL().includes(`toDate=${to.format("YYYY-MM-DD")}`));
+    assert.ok(currentURL().includes(`fromDate=${from.toISODate()}`));
+    assert.ok(currentURL().includes(`toDate=${to.toISODate()}`));
 
     await click(".filter-sidebar-reset");
 
@@ -119,8 +119,8 @@ module("Acceptance | statistics", function (hooks) {
       user: 1,
       reviewer: 1,
       billingType: 1,
-      fromDate: moment().subtract(10, "days").format("YYYY-MM-DD"),
-      toDate: moment().format("YYYY-MM-DD"),
+      fromDate: DateTime.now().minus({ days: 10 }).toISODate(),
+      toDate: DateTime.now().toISODate(),
       review: 1,
       notBillable: 0,
       verified: 0,

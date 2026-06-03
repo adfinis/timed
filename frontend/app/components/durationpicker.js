@@ -1,7 +1,7 @@
 import { action } from "@ember/object";
 import { guidFor } from "@ember/object/internals";
 import { tracked } from "@glimmer/tracking";
-import moment from "moment";
+import { Duration } from "luxon";
 import { localCopy } from "tracked-toolbox";
 
 import TimepickerComponent from "timed/components/timepicker";
@@ -80,20 +80,20 @@ export default class Durationpicker extends TimepickerComponent {
    * Unwraps the passed value or creates a fresh duration object.
    */
   get value() {
-    return this.optionalUnwrap(this._value) ?? moment.duration();
+    return this._value ?? Duration.fromMillis(0);
   }
 
   /**
    * Set the current value
    *
    * @method _set
-   * @param {Number} h The hours of the new value
-   * @param {Number} m The minutes of the new value
-   * @return {moment.duration} The mutated value
+   * @param {Number} hours The hours of the new value
+   * @param {Number} minutes The minutes of the new value
+   * @return {import('luxon').Duration} The mutated value
    * @private
    */
-  _set(h, m) {
-    return moment.duration({ h, m });
+  _set(hours, minutes) {
+    return Duration.fromObject({ hours, minutes }).rescale();
   }
 
   /**
@@ -102,13 +102,14 @@ export default class Durationpicker extends TimepickerComponent {
    * @method _add
    * @param {Number} h The hours to add
    * @param {Number} m The minutes to add
-   * @return {moment.duration} The mutated value
+   * @return {import('luxon').Duration} The mutated value
    * @private
    */
-  _add(h, m) {
-    return moment.duration(this.value).add({ h, m });
+  _add(hours, minutes) {
+    return this.value.plus({ hours, minutes }).rescale();
   }
 
+  /** @param {Duration} duration */
   _isValid(duration) {
     return duration <= this.max && duration >= this.min;
   }

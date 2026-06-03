@@ -8,9 +8,6 @@ module.exports = function (environment) {
     fontawesome: {
       defaultPrefix: "far", // regular icons
     },
-    moment: {
-      includeTimezone: "all",
-    },
     EmberENV: {
       EXTEND_PROTOTYPES: false,
       FEATURES: {

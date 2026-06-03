@@ -5,7 +5,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { task, timeout } from "ember-concurrency";
 import { scheduleTask } from "ember-lifeline";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 import config from "timed/config/environment";
 
@@ -38,11 +38,11 @@ export default class TimedClock extends Component {
   @tracked _overtimeFeedback;
 
   _update() {
-    const now = moment();
+    const now = DateTime.now();
 
-    const second = now.seconds() * 6;
-    const minute = now.minutes() * 6 + second / 60;
-    const hour = ((now.hours() % 12) / 12) * 360 + minute / 12;
+    const second = now.second * 6;
+    const minute = now.minute * 6 + second / 60;
+    const hour = ((now.hour % 12) / 12) * 360 + minute / 12;
 
     setProperties(this, { second, minute, hour });
   }

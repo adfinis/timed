@@ -1,6 +1,6 @@
 import { discoverEmberDataModels } from "ember-cli-mirage";
+import { DateTime, Duration } from "luxon";
 import { createServer, Response } from "miragejs";
-import moment from "moment";
 
 import { randomDuration } from "./helpers/duration";
 
@@ -18,8 +18,8 @@ const statisticEndpoint = (type) => {
       meta: {
         "total-time": formatDuration(
           stats.models.reduce((total, { duration }) => {
-            return total.add(parseDjangoDuration(duration));
-          }, moment.duration()),
+            return total.plus(parseDjangoDuration(duration));
+          }, Duration.fromMillis(0)),
         ),
       },
     };
@@ -31,8 +31,10 @@ const byUserAndDate = (modelName) => {
     let models = db[modelName].all();
 
     if (date) {
+      const dateTime = DateTime.fromISO(date);
+
       models = models.filter((model) => {
-        return model.date.isSame(date, "day");
+        return model.date.hasSame(dateTime, "day");
       });
     }
 
@@ -222,8 +224,8 @@ function routes() {
     "/public-holidays",
     function ({ publicHolidays }, { queryParams: { date } }) {
       if (date) {
-        publicHolidays.where((l) => {
-          return l.format("YYYY-MM-DD") === date;
+        return publicHolidays.where((publicHoliday) => {
+          return publicHoliday.date.hasSame(DateTime.fromISO(date), "day");
         });
       }
 

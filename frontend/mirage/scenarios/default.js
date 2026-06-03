@@ -1,4 +1,4 @@
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default function (server) {
   server.loadFixtures("absence-types");
@@ -22,7 +22,7 @@ export default function (server) {
   server.createList("report", 5, { userId: user.id });
 
   server.createList("activity", 2, {
-    date: moment().subtract(1, "days"),
+    date: DateTime.now().minus({ days: 1 }),
     userId: user.id,
   });
 

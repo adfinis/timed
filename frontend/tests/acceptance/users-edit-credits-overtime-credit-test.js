@@ -2,7 +2,7 @@ import { click, fillIn, currentURL, visit } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 module("Acceptance | users edit credits overtime credit", function (hooks) {
@@ -18,7 +18,7 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
   test("can create an overtime credit", async function (assert) {
     await visit(`/users/${this.user.id}/credits/overtime-credits/new`);
 
-    await fillIn("input[name=date]", moment().format("DD.MM.YYYY"));
+    await fillIn("input[name=date]", DateTime.now().toFormat("dd.MM.yyyy"));
     await fillIn("input[name=duration]", "20:00");
     await fillIn("input[name=comment]", "Comment");
 
@@ -41,7 +41,7 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
       `/users/${this.user.id}/credits/overtime-credits/${id}`,
     );
 
-    await fillIn("input[name=date]", moment().format("DD.MM.YYYY"));
+    await fillIn("input[name=date]", DateTime.now().toFormat("dd.MM.yyyy"));
     await fillIn("input[name=duration]", "20:00");
     await fillIn("input[name=comment]", "Ding dong");
 
@@ -55,7 +55,7 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
       .dom(
         "[data-test-overtime-credits] tbody > tr:first-child > td:nth-child(1)",
       )
-      .hasText(moment().format("DD.MM.YYYY"));
+      .hasText(DateTime.now().toFormat("dd.MM.yyyy"));
 
     assert
       .dom(
@@ -87,7 +87,7 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
 
     await fillIn(
       "input[name=date]",
-      moment().add(1, "years").format("DD.MM.YYYY"),
+      DateTime.now().plus({ years: 1 }).toFormat("dd.MM.yyyy"),
     );
     await fillIn("input[name=duration]", "20:00");
     await fillIn("input[name=comment]", "Ding dong");
@@ -96,7 +96,7 @@ module("Acceptance | users edit credits overtime credit", function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      `/users/${this.user.id}/credits?year=${moment().year() + 1}`,
+      `/users/${this.user.id}/credits?year=${DateTime.now().year + 1}`,
     );
   });
 });

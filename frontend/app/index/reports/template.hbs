@@ -33,8 +33,8 @@
       class="calendar [--size:2.5rem] sm:[--size:2.75rem] md:[--size:3rem] lg:[--size:3.25rem]"
       @center={{this.center}}
       @selected={{this.rescheduleDate}}
-      @onCenterChange={{pick "moment" (fn (mut this.center))}}
-      @onSelect={{pick "moment" (fn (mut this.rescheduleDate))}}
+      @onCenterChange={{pick "datetime" (fn (mut this.center))}}
+      @onSelect={{pick "datetime" (fn (mut this.rescheduleDate))}}
       as |calendar|
     >
       <div class={{if calendar.loading "loading-mask"}}>

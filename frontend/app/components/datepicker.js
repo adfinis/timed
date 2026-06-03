@@ -4,13 +4,14 @@ import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { scheduleTask } from "ember-lifeline";
-import moment from "moment";
+import { DateTime } from "luxon";
 
-const DISPLAY_FORMAT = "DD.MM.YYYY";
+const DISPLAY_FORMAT = "dd.MM.yyyy";
 
-const PARSE_FORMAT = "D.M.YYYY";
+const PARSE_FORMAT = "d.M.yyyy";
 
-const parse = (value) => (value ? moment(value, PARSE_FORMAT) : null);
+const parse = (value) =>
+  value ? DateTime.fromFormat(value, PARSE_FORMAT) : null;
 
 export default class Datepicker extends Component {
   placeholder = DISPLAY_FORMAT;
@@ -21,12 +22,12 @@ export default class Datepicker extends Component {
     super(...args);
 
     this.uniqueId = this.args.id ?? guidFor(this);
-    this.center = this.args.value ?? moment();
+    this.center = this.args.value ?? DateTime.now();
   }
 
   get displayValue() {
-    return this.args.value && this.args.value.isValid()
-      ? this.args.value.format(DISPLAY_FORMAT)
+    return this.args.value && this.args.value.isValid
+      ? this.args.value.toFormat(DISPLAY_FORMAT)
       : null;
   }
 
@@ -59,7 +60,7 @@ export default class Datepicker extends Component {
 
     const parsed = parse(target.value);
 
-    if (parsed && !parsed.isValid()) {
+    if (parsed && !parsed.isValid) {
       return target.setCustomValidity("Invalid date");
     }
 
@@ -76,19 +77,19 @@ export default class Datepicker extends Component {
     if (valid) {
       const parsed = parse(value);
 
-      return this.args.onChange(parsed && parsed.isValid() ? parsed : null);
+      return this.args.onChange(parsed && parsed.isValid ? parsed : null);
     }
   }
 
   @action
-  updateCenter({ moment }) {
-    this.center = moment;
+  updateCenter({ datetime }) {
+    this.center = datetime;
   }
 
   @action
-  updateSelect(dd, { moment }) {
+  updateSelect(dd, { datetime }) {
     (dd.actions.close ?? (() => {}))();
-    this.args.onChange(moment);
+    this.args.onChange(datetime);
     this.checkValidity();
   }
 

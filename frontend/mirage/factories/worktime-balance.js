@@ -1,9 +1,9 @@
+import { DateTime } from "luxon";
 import { Factory } from "miragejs";
-import moment from "moment";
 
 import { randomDuration } from "../helpers/duration";
 
 export default Factory.extend({
-  date: () => moment(),
+  date: () => DateTime.now(),
   balance: () => randomDuration(),
 });

@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
+import { DateTime } from "luxon";
 import { Factory } from "miragejs";
-import moment from "moment";
 
 export default Factory.extend({
   comment: () => faker.lorem.sentence(),
-  date: () => moment().format("YYYY-MM-DD"),
+  date: () => DateTime.now().toISODate(),
   duration: () => "08:30:00",
 
   afterCreate(absence, server) {

@@ -1,5 +1,5 @@
 import { action } from "@ember/object";
-import moment from "moment";
+import { Duration } from "luxon";
 
 import DurationpickerComponent from "timed/components/durationpicker";
 import parseDayTime from "timed/utils/parse-daytime";
@@ -7,9 +7,9 @@ import parseDayTime from "timed/utils/parse-daytime";
 export default class DurationpickerDayComponent extends DurationpickerComponent {
   maxlength = 5;
 
-  max = moment.duration({ h: 24, m: 0 });
+  max = Duration.fromObject({ hours: 24 });
 
-  min = moment.duration({ h: 0, m: 0 });
+  min = Duration.fromMillis(0);
 
   sanitize(value) {
     return value.replace(/[^\d:]/, "");

@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
+import { DateTime } from "luxon";
 import { Factory } from "miragejs";
-import moment from "moment";
 
 export default Factory.extend({
-  date: () => moment().format("YYYY-MM-DD"),
+  date: () => DateTime.now().toISODate(),
   days: () => faker.number.int({ min: 1, max: 25 }),
   comment: () => faker.lorem.sentence(),
 

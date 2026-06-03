@@ -3,7 +3,7 @@ import { importSync, isDevelopingApp, macroCondition } from "@embroider/macros";
 import * as Sentry from "@sentry/ember";
 import loadInitializers from "ember-load-initializers";
 import { registerDateLibrary } from "ember-power-calendar";
-import DateUtils from "ember-power-calendar-moment";
+import DateUtils from "ember-power-calendar-luxon";
 import Resolver from "ember-resolver";
 import fastRedact from "fast-redact";
 

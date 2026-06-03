@@ -1,11 +1,11 @@
-import moment from "moment";
+import { Duration } from "luxon";
 import { module, test } from "qunit";
 
 import { humanizeDurationFn } from "timed/helpers/humanize-duration";
 
 module("Unit | Helper | humanize duration", function () {
   test("works", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 3,
       minutes: 56,
       seconds: 59,
@@ -17,7 +17,7 @@ module("Unit | Helper | humanize duration", function () {
   });
 
   test("works with seconds", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 3,
       minutes: 56,
       seconds: 59,

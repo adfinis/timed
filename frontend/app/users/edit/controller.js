@@ -1,7 +1,7 @@
 import Controller from "@ember/controller";
 import { service } from "@ember/service";
 import { task, all, hash } from "ember-concurrency";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class UsersEditController extends Controller {
   @service store;
@@ -28,7 +28,7 @@ export default class UsersEditController extends Controller {
   worktimeBalanceToday = task(async (user) => {
     const worktimeBalance = await this.store.query("worktime-balance", {
       user,
-      date: moment().format("YYYY-MM-DD"),
+      date: DateTime.now().toISODate(),
     });
 
     return worktimeBalance[0];
@@ -37,21 +37,21 @@ export default class UsersEditController extends Controller {
   absenceBalances = task(async (user) => {
     return await this.store.query("absence-balance", {
       user,
-      date: moment().format("YYYY-MM-DD"),
+      date: DateTime.now().toISODate(),
       include: "absence_type",
     });
   });
 
   worktimeBalances = task(async (user) => {
     const dates = [...Array(10).keys()]
-      .map((i) => moment().subtract(i, "days"))
+      .map((i) => DateTime.now().minus({ days: i }))
       .reverse();
 
     return await all(
       dates.map(async (date) => {
         const balance = await this.store.query("worktime-balance", {
           user,
-          date: date.format("YYYY-MM-DD"),
+          date: date.toISODate(),
         });
 
         return balance[0];

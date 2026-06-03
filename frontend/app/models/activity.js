@@ -1,13 +1,18 @@
 import { service } from "@ember/service";
 import Model, { attr, belongsTo } from "@ember-data/model";
-import moment from "moment";
-import { all } from "rsvp";
+import { DateTime } from "luxon";
+
+import { MODES as m } from "timed/transforms/luxon-dt";
 
 export default class Activity extends Model {
-  @attr("django-time") fromTime;
-  @attr("django-time") toTime;
+  /** @type {DateTime} */
+  @attr("luxon-dt", { t: m.time }) fromTime;
+  /** @type {DateTime} */
+  @attr("luxon-dt", { t: m.time }) toTime;
+
   @attr("string", { defaultValue: "" }) comment;
-  @attr("django-date") date;
+  /** @type {DateTime} */
+  @attr("luxon-dt", { t: m.date }) date;
   @attr("boolean", { defaultValue: false }) transferred;
   @attr("boolean", { defaultValue: false }) review;
   @attr("boolean", { defaultValue: false }) notBillable;
@@ -22,18 +27,18 @@ export default class Activity extends Model {
   }
 
   get duration() {
-    return moment.duration((this.to ?? moment()).diff(this.from));
+    return (this.to ?? DateTime.now()).diff(this.from);
   }
 
   get from() {
     const time = this.fromTime;
     return (
       time &&
-      moment(this.date).set({
-        h: time.hours(),
-        m: time.minutes(),
-        s: time.seconds(),
-        ms: time.milliseconds(),
+      this.date.set({
+        hour: time.hour,
+        minute: time.minute,
+        second: time.second,
+        millisecond: time.millisecond,
       })
     );
   }
@@ -46,11 +51,11 @@ export default class Activity extends Model {
     const time = this.toTime;
     return (
       time &&
-      moment(this.date).set({
-        h: time.hours(),
-        m: time.minutes(),
-        s: time.seconds(),
-        ms: time.milliseconds(),
+      this.date.set({
+        hour: time.hour,
+        minute: time.minute,
+        second: time.second,
+        millisecond: time.millisecond,
       })
     );
   }
@@ -61,8 +66,8 @@ export default class Activity extends Model {
 
   async start() {
     const activity = await this.store.createRecord("activity", {
-      date: moment(),
-      fromTime: moment(),
+      date: DateTime.now(),
+      fromTime: DateTime.now(),
       task: await this.task,
       comment: this.comment,
       review: await this.review,
@@ -94,42 +99,35 @@ export default class Activity extends Model {
 
     const activities = [this];
 
-    if (moment().diff(this.date, "days") === 1) {
+    if (Math.floor(DateTime.now().diff(this.date, "days").as("days")) === 1) {
       activities.push(
         this.store.createRecord("activity", {
           task: await this.task,
           comment: this.comment,
           user: await this.user,
-          date: moment(this.date).add(1, "days"),
+          date: this.date.plus({ days: 1 }),
           review: this.review,
           notBillable: this.notBillable,
-          fromTime: moment({ h: 0, m: 0, s: 0 }),
+          fromTime: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }),
         }),
       );
     }
 
-    await all(
+    await Promise.all(
       activities.map(async (activity) => {
         if (activity.get("isNew")) {
           await activity.save();
         }
 
-        activity.toTime = moment(
-          Math.min(
-            moment(activity.get("date")).set({
-              h: 23,
-              m: 59,
-              s: 59,
-            }),
-            moment(),
-          ),
+        activity.toTime = DateTime.fromMillis(
+          Math.min(activity.get("date").endOf("day"), DateTime.now()),
         );
 
         await activity.save();
       }),
     );
 
-    if (moment().diff(this.date, "days") > 1) {
+    if (DateTime.now().diff(this.date, "days").as("days") > 1) {
       this.notify.info(
         "The activity overlapped multiple days, which is not possible. The activity was stopped at midnight of the day it was started.",
         { closeAfter: 5000 },

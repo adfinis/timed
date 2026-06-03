@@ -1,13 +1,14 @@
 import { get } from "@ember/object";
 import { capitalize } from "@ember/string";
 import Component from "@glimmer/component";
-import moment from "moment";
+import { Duration } from "luxon";
 
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 
 const PLAIN_LAYOUT = "PLAIN";
 const DURATION_LAYOUT = "DURATION";
 const MONTH_LAYOUT = "MONTH";
+const ZERO_DURATION = Duration.fromMillis(0);
 
 const COLUMN_MAP = {
   year: [
@@ -76,18 +77,19 @@ export default class StatisticList extends Component {
       return null;
     }
 
-    const maxEstimated = moment.duration(
-      Math.max(0, ...this.value.map((v) => v.estimatedTime).filter(Boolean)),
+    const maxEstimated = Math.max(
+      0,
+      ...this.value.map((v) => (v.estimatedTime ?? ZERO_DURATION).toMillis()),
     );
-    const maxDurationWithRemainingEffort = moment.duration(
-      Math.max(
-        ...this.value.map((task) =>
-          moment
-            .duration(task.duration)
-            .add(moment.duration(task.mostRecentRemainingEffort)),
-        ),
+    const maxDurationWithRemainingEffort = Math.max(
+      0,
+      ...this.value.map((row) =>
+        (row.duration ?? ZERO_DURATION)
+          .plus(row.mostRecentRemainingEffort ?? ZERO_DURATION)
+          .toMillis(),
       ),
     );
+
     return Math.max(maxEstimated, maxDurationWithRemainingEffort);
   }
 

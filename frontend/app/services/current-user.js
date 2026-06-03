@@ -1,6 +1,6 @@
 import Service, { service } from "@ember/service";
 import { task } from "ember-concurrency";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class CurrentUserService extends Service {
   @service session;
@@ -28,7 +28,7 @@ export default class CurrentUserService extends Service {
     // Fetch current employment
     const employment = await this.store.query("employment", {
       user: usermodel.id,
-      date: moment().format("YYYY-MM-DD"),
+      date: DateTime.now().toISODate(),
       include: "location",
     });
 
@@ -46,6 +46,6 @@ export default class CurrentUserService extends Service {
     });
 
     const entry = worktimeBalance[0];
-    return entry?.balance?.asHours();
+    return entry?.balance?.as("hours");
   });
 }

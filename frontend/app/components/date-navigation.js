@@ -6,13 +6,11 @@
 
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 /**
  * The date navigation component
  *
- * @class DateNavigationComponent
- * @extends Ember.Component
  * @public
  */
 export default class DateNavigationComponent extends Component {
@@ -24,9 +22,8 @@ export default class DateNavigationComponent extends Component {
    */
   @action
   setToday() {
-    const date = moment();
-
-    this.args.onChange(date);
+    const today = DateTime.now().startOf("day");
+    this.args.onChange(today);
   }
   /**
    * Decrease the current date by one day
@@ -36,7 +33,7 @@ export default class DateNavigationComponent extends Component {
    */
   @action
   setPrevious() {
-    const date = moment(this.args.current).subtract(1, "days");
+    const date = this.args.current.minus({ days: 1 });
 
     this.args.onChange(date);
   }
@@ -49,7 +46,7 @@ export default class DateNavigationComponent extends Component {
    */
   @action
   setNext() {
-    const date = moment(this.args.current).add(1, "days");
+    const date = this.args.current.plus({ days: 1 });
 
     this.args.onChange(date);
   }

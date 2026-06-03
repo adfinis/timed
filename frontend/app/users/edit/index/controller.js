@@ -1,7 +1,7 @@
 import Controller from "@ember/controller";
 import { service } from "@ember/service";
 import { task } from "ember-concurrency";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class EditUser extends Controller {
   @service store;
@@ -11,11 +11,11 @@ export default class EditUser extends Controller {
       user: this.user.id,
       ordering: "-date",
 
-      from_date: moment({
+      from_date: DateTime.fromObject({
         day: 1,
         month: 0,
         year: this.year,
-      }).format("YYYY-MM-DD"),
+      }).toISODate(),
       include: "absence_type",
     });
   });

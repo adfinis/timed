@@ -3,14 +3,14 @@
  * @submodule timed-utils
  * @public
  */
-import moment from "moment";
+import { Duration } from "luxon";
 
 /**
- * Converts a django duration string to a moment duration
+ * Parse a django duration string
  *
  * @function parseDjangoDuration
- * @param {String} str The django duration string representation
- * @return {moment.duration} The parsed duration
+ * @param {string} str The django duration string
+ * @return {import('luxon').Duration} The parsed duration
  * @public
  */
 export default function parseDjangoDuration(str) {
@@ -24,7 +24,7 @@ export default function parseDjangoDuration(str) {
     .match(re)
     .map((m) => Number(m) || 0);
 
-  return moment.duration({
+  return Duration.fromObject({
     days,
     hours,
     minutes,

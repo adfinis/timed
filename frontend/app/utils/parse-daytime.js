@@ -7,7 +7,7 @@
 const DAY_TIME_REGEX = /^(?<hours>[01]?\d|2[0-3])?:?(?<minutes>00|15|30|45)?$/;
 
 /**
- * Converts a django duration string to a moment duration
+ * Converts a django duration string to a luxon duration
  *
  * @function parseDayTime
  * @param {string} str The duration string to parse

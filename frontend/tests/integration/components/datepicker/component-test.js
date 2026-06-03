@@ -2,24 +2,24 @@ import { find, triggerEvent, click, render } from "@ember/test-helpers";
 import { clickTrigger } from "ember-basic-dropdown/test-support/helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | datepicker", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    this.set("value", moment());
+    this.set("value", DateTime.now());
 
     await render(
       hbs`<Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
     );
 
-    assert.dom("input").hasValue(moment().format("DD.MM.YYYY"));
+    assert.dom("input").hasValue(DateTime.now().toFormat("dd.MM.yyyy"));
   });
 
   test("toggles the calendar on click of the input", async function (assert) {
-    this.set("value", moment());
+    this.set("value", DateTime.now());
 
     await render(
       hbs`<Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
@@ -46,14 +46,14 @@ module("Integration | Component | datepicker", function (hooks) {
 
     assert.notOk(find("input").validity.valid);
 
-    find("input").value = "20.12.20";
+    find("input").value = "20.12.2020";
     await triggerEvent("input", "input");
 
     assert.ok(find("input").validity.valid);
   });
 
   test("changes value on change (input)", async function (assert) {
-    this.set("value", moment());
+    this.set("value", DateTime.now());
 
     await render(
       hbs`<Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
@@ -62,7 +62,7 @@ module("Integration | Component | datepicker", function (hooks) {
     find("input").value = "1.2.2018";
     await triggerEvent("input", "change");
 
-    assert.strictEqual(this.value.format("YYYY-MM-DD"), "2018-02-01");
+    assert.strictEqual(this.value.toISODate(), "2018-02-01");
 
     find("input").value = "";
     await triggerEvent("input", "change");
@@ -77,7 +77,7 @@ module("Integration | Component | datepicker", function (hooks) {
   });
 
   test("changes value on selection", async function (assert) {
-    this.set("value", moment());
+    this.set("value", DateTime.now());
 
     await render(
       hbs`<Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
@@ -88,13 +88,13 @@ module("Integration | Component | datepicker", function (hooks) {
       ".ember-power-calendar-day-grid .ember-power-calendar-row:last-child .ember-power-calendar-day:last-child",
     );
 
-    const expected = moment().endOf("month").endOf("week").add(1, "day");
+    const expected = DateTime.now().endOf("month").endOf("week");
 
-    assert.equal(this.value.day(), expected.day());
+    assert.ok(this.value.hasSame(expected, "day"));
   });
 
   test("toggles the calendar on focus and blur of the input", async function (assert) {
-    this.set("value", moment());
+    this.set("value", DateTime.now());
 
     await render(
       hbs`<Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />`,

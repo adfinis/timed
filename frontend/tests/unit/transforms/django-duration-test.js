@@ -1,5 +1,5 @@
 import { setupTest } from "ember-qunit";
-import moment from "moment";
+import { Duration } from "luxon";
 import { module, test } from "qunit";
 
 module("Unit | Transform | django duration", function (hooks) {
@@ -12,7 +12,7 @@ module("Unit | Transform | django duration", function (hooks) {
 
     assert.strictEqual(
       transform.serialize(
-        moment.duration({
+        Duration.fromObject({
           hours: 1,
           minutes: 2,
           seconds: 3,
@@ -23,7 +23,7 @@ module("Unit | Transform | django duration", function (hooks) {
 
     assert.strictEqual(
       transform.serialize(
-        moment.duration({
+        Duration.fromObject({
           days: 1,
           hours: 2,
           minutes: 3,
@@ -35,7 +35,7 @@ module("Unit | Transform | django duration", function (hooks) {
 
     assert.strictEqual(
       transform.serialize(
-        moment.duration({
+        Duration.fromObject({
           hours: 1,
           minutes: 2,
           seconds: 3,
@@ -47,7 +47,7 @@ module("Unit | Transform | django duration", function (hooks) {
 
     assert.strictEqual(
       transform.serialize(
-        moment.duration({
+        Duration.fromObject({
           days: 1,
           hours: 2,
           minutes: 3,
@@ -60,7 +60,7 @@ module("Unit | Transform | django duration", function (hooks) {
 
     assert.strictEqual(
       transform.serialize(
-        moment.duration({
+        Duration.fromObject({
           hours: -1,
           minutes: -2,
           seconds: -3,
@@ -71,7 +71,7 @@ module("Unit | Transform | django duration", function (hooks) {
 
     assert.strictEqual(
       transform.serialize(
-        moment.duration({
+        Duration.fromObject({
           days: -9,
           hours: -1,
           minutes: -2,

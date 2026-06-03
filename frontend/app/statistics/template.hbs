@@ -81,14 +81,14 @@
             data-test-filter-from-date
             @type="date"
             @label="From"
-            @selected={{moment this.fromDate}}
+            @selected={{this.fromDate}}
             @onChange={{fn this.updateParam "fromDate"}}
           />
           <fs.filter
             data-test-filter-to-date
             @type="date"
             @label="To"
-            @selected={{moment this.toDate}}
+            @selected={{this.toDate}}
             @onChange={{fn this.updateParam "toDate"}}
           />
           <DateButtons

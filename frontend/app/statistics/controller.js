@@ -9,7 +9,6 @@ import {
   serializeQueryParams,
   queryParamsState,
 } from "timed/utils/query-params";
-import { serializeMoment } from "timed/utils/serialize-moment";
 
 const TYPES = {
   year: { include: "", requiredParams: [] },
@@ -73,7 +72,7 @@ export default class StatisticsController extends QPController {
   @action
   updateParam(key, value) {
     this[key] = ["toDate", "fromDate"].includes(key)
-      ? serializeMoment(value)
+      ? value.toISODate()
       : value;
     this.data.perform();
   }

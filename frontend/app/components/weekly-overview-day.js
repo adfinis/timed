@@ -13,17 +13,21 @@ export default class WeeklyOverviewDay extends Component {
   get title() {
     const pre = this.args.prefix?.length ? `${this.args.prefix}, ` : "";
 
-    let title = `${this.args.worktime.hours()}h`;
+    let title = `${this.args.worktime.hours}h`;
 
-    if (this.args.worktime.minutes()) {
-      title += ` ${this.args.worktime.minutes()}m`;
+    if (this.args.worktime.minutes) {
+      title += ` ${this.args.worktime.minutes}m`;
     }
     return `${pre}${title}`;
   }
 
+  get formattedWeekday() {
+    return this.args.day.toFormat("EEE").slice(0, 2);
+  }
+
   get style() {
     const height = Math.min(
-      (this.args.worktime.asHours() / this.max) * 100,
+      (this.args.worktime.as("hours") / this.max) * 100,
       100,
     );
     return { height: `${height}%` };

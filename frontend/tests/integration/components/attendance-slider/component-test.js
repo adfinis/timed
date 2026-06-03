@@ -2,12 +2,12 @@ import EmberObject from "@ember/object";
 import { click, render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 const ATTENDANCE = EmberObject.create({
-  from: moment({ h: 8, m: 0, s: 0, ms: 0 }),
-  to: moment({ h: 8, m: 0, s: 0, ms: 0 }),
+  from: DateTime.fromObject({ hour: 8, minute: 0, second: 0, millisecond: 0 }),
+  to: DateTime.fromObject({ hour: 8, minute: 0, second: 0, millisecond: 0 }),
 });
 
 module("Integration | Component | attendance slider", function (hooks) {
@@ -41,8 +41,8 @@ module("Integration | Component | attendance slider", function (hooks) {
     this.set(
       "attendance",
       EmberObject.create({
-        from: moment({ h: 0, m: 0, s: 0 }),
-        to: moment({ h: 0, m: 0, s: 0 }),
+        from: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }),
+        to: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }),
       }),
     );
 

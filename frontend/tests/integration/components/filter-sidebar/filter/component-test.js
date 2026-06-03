@@ -1,7 +1,7 @@
 import { click, findAll, find, fillIn, render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | filter sidebar/filter", function (hooks) {
@@ -76,7 +76,10 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
   });
 
   test("works with type date", async function (assert) {
-    this.set("selected", moment({ year: 2017, month: 10, day: 1 }));
+    this.set(
+      "selected",
+      DateTime.fromObject({ year: 2017, month: 11, day: 1 }),
+    );
 
     await render(hbs`<FilterSidebar::Filter
   @type="date"
@@ -84,13 +87,13 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
   @onChange={{fn (mut this.selected)}}
 />`);
 
-    assert.dom("input").hasValue(this.selected.format("DD.MM.YYYY"));
+    assert.dom("input").hasValue(this.selected.toFormat("dd.MM.yyyy"));
 
     await fillIn("input", "10.10.2010");
 
     assert.strictEqual(
-      this.selected.format(),
-      moment({ year: 2010, month: 9, day: 10 }).format(),
+      this.selected.toISO(),
+      DateTime.fromObject({ year: 2010, month: 10, day: 10 }).toISO(),
     );
   });
 

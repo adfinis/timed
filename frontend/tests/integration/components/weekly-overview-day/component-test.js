@@ -1,16 +1,16 @@
 import { click, find, render } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime, Duration } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | weekly overview day", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    this.set("day", moment({ y: 2017, m: 4, d: 5 }));
-    this.set("expected", moment.duration({ h: 8 }));
-    this.set("worktime", moment.duration({ h: 8 }));
+    this.set("day", DateTime.fromObject({ year: 2017, month: 1, day: 5 }));
+    this.set("expected", Duration.fromObject({ hours: 8 }));
+    this.set("worktime", Duration.fromObject({ hours: 8 }));
 
     await render(
       hbs`<WeeklyOverviewDay
@@ -26,9 +26,9 @@ module("Integration | Component | weekly overview day", function (hooks) {
   });
 
   test("computes a title", async function (assert) {
-    this.set("day", moment({ y: 2017, m: 4, d: 5 }));
-    this.set("expected", moment.duration({ h: 8, m: 30 }));
-    this.set("worktime", moment.duration({ h: 8, m: 30 }));
+    this.set("day", DateTime.fromObject({ year: 2017, month: 1, day: 5 }));
+    this.set("expected", Duration.fromObject({ hours: 8, minutes: 30 }));
+    this.set("worktime", Duration.fromObject({ hours: 8, minutes: 30 }));
 
     await render(
       hbs`<WeeklyOverviewDay
@@ -45,9 +45,9 @@ module("Integration | Component | weekly overview day", function (hooks) {
   });
 
   test("fires on-click action on click", async function (assert) {
-    this.set("day", moment({ y: 2017, m: 4, d: 5 }));
-    this.set("expected", moment.duration({ h: 8, m: 30 }));
-    this.set("worktime", moment.duration({ h: 8, m: 30 }));
+    this.set("day", DateTime.fromObject({ year: 2017, month: 1, day: 5 }));
+    this.set("expected", Duration.fromObject({ hours: 8, minutes: 30 }));
+    this.set("worktime", Duration.fromObject({ hours: 8, minutes: 30 }));
     this.set("clicked", false);
 
     await render(

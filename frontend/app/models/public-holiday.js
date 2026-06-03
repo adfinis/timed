@@ -5,6 +5,8 @@
  */
 import Model, { attr, belongsTo } from "@ember-data/model";
 
+import { MODES as m } from "timed/transforms/luxon-dt";
+
 /**
  * The public holiday model
  *
@@ -24,15 +26,15 @@ export default class PublicHoliday extends Model {
   /**
    * The date
    *
-   * @property {moment} date
+   * @property {import('luxon').DateTime} date
    * @public
    */
-  @attr("django-date") date;
+  @attr("luxon-dt", { t: m.date }) date;
 
   /**
    * The location
    *
-   * @property {Location} location
+   * @property {import('timed/models/location')} location
    * @public
    */
   @belongsTo("location", { async: true, inverse: null }) location;

@@ -1,12 +1,12 @@
 import { faker } from "@faker-js/faker";
+import { DateTime } from "luxon";
 import { Factory } from "miragejs";
-import moment from "moment";
 
 import { randomDuration } from "../helpers/duration";
 
 export default Factory.extend({
   comment: () => faker.lorem.sentence(),
-  date: () => moment().format("YYYY-MM-DD"),
+  date: () => DateTime.now().toISODate(),
   duration: () => randomDuration(),
   review: () => faker.datatype.boolean(),
   notBillable: () => faker.datatype.boolean(),

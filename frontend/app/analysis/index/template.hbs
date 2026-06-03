@@ -101,14 +101,14 @@
               data-test-filter-from-date
               @label="From"
               @type="date"
-              @selected={{if this.fromDate (moment this.fromDate)}}
+              @selected={{if this.fromDate (this.dateFromString this.fromDate)}}
               @onChange={{fn this.updateParam "fromDate"}}
             />
             <fs.filter
               data-test-filter-to-date
               @label="To"
               @type="date"
-              @selected={{if this.toDate (moment this.toDate)}}
+              @selected={{if this.toDate (this.dateFromString this.toDate)}}
               @onChange={{fn this.updateParam "toDate"}}
             />
             <DateButtons
@@ -352,9 +352,9 @@
                         }}
                       >
                         <Table::Td>{{report.user.username}}</Table::Td>
-                        <Table::Td>{{moment-format
+                        <Table::Td>{{luxon-format
                             report.date
-                            "DD.MM.YYYY"
+                            "dd.MM.yyyy"
                           }}</Table::Td>
                         <Table::Td>{{format-duration
                             report.duration

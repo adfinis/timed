@@ -7,7 +7,9 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import Ember from "ember";
 import { task, timeout } from "ember-concurrency";
-import moment from "moment";
+import { Duration, DateTime } from "luxon";
+
+const ZERO_DURATION = Duration.fromMillis(0);
 
 /**
  * The duration since component
@@ -34,30 +36,30 @@ export default class DurationSinceComponent extends Component {
   /**
    * The moment from which the duration is computed
    *
-   * @property {moment} from
+   * @property {import('luxon').DateTime} from
    * @public
    */
   get from() {
-    return this.args.from ?? moment();
+    return this.args.from ?? DateTime.now();
   }
 
   /**
    * The already elapsed time which is added to the computed duration
    *
-   * @property {moment.duration} elapsed
+   * @property {import('Luxon').Duration)} elapsed
    * @public
    */
   get elapsed() {
-    return this.args.elapsed ?? moment.duration();
+    return this.args.elapsed ?? ZERO_DURATION;
   }
 
   /**
    * The total duration since the from moment plus the elapsed time
    *
-   * @property {moment.duration} duration
+   * @property {import('luxon').Duration} duration
    * @public
    */
-  @tracked duration = moment.duration();
+  @tracked duration = ZERO_DURATION;
 
   /**
    * Compute the duration
@@ -66,7 +68,7 @@ export default class DurationSinceComponent extends Component {
    * @private
    */
   _compute() {
-    this.duration = moment.duration(moment().diff(this.from)).add(this.elapsed);
+    this.duration = DateTime.now().diff(this.from).plus(this.elapsed);
   }
 
   /**

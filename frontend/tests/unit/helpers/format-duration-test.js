@@ -1,11 +1,11 @@
-import moment from "moment";
+import { Duration } from "luxon";
 import { module, test } from "qunit";
 
 import { formatDurationFn } from "timed/helpers/format-duration";
 
 module("Unit | Helper | format duration", function () {
   test("works", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 3,
       minutes: 56,
       seconds: 59,
@@ -17,7 +17,7 @@ module("Unit | Helper | format duration", function () {
   });
 
   test("works without seconds", function (assert) {
-    const duration = moment.duration({
+    const duration = Duration.fromObject({
       hours: 3,
       minutes: 56,
       seconds: 59,

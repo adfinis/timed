@@ -8,7 +8,7 @@
       class="{{this.class}}"
       @query={{hash
         fromDate=null
-        toDate=(moment-format this.unverifiedReports.reportsToDate "YYYY-MM-DD")
+        toDate=(luxon-format this.unverifiedReports.reportsToDate "yyyy-MM-dd")
         reviewer=this.currentUser.user.id
         editable=1
         rejected=null

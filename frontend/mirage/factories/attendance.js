@@ -1,8 +1,8 @@
+import { DateTime } from "luxon";
 import { Factory, trait } from "miragejs";
-import moment from "moment";
 
 export default Factory.extend({
-  date: moment().format("YYYY-MM-DD"),
+  date: () => DateTime.now().toISODate(),
 
   morning: trait({
     fromTime: "08:00:00",

@@ -3,7 +3,7 @@ import { render, settled } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { Duration } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | progress tooltip", function (hooks) {
@@ -17,7 +17,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
       "project",
       EmberObject.create({
         id: 1,
-        estimatedTime: moment.duration({ h: 50 }),
+        estimatedTime: Duration.fromObject({ hours: 50 }),
         constructor: EmberObject.create({
           modelName: "project",
         }),
@@ -28,11 +28,11 @@ module("Integration | Component | progress tooltip", function (hooks) {
       "project_with_remaining_effort",
       EmberObject.create({
         id: 1,
-        estimatedTime: moment.duration({ h: 50 }),
+        estimatedTime: Duration.fromObject({ hours: 50 }),
         constructor: EmberObject.create({
           modelName: "project",
         }),
-        totalRemainingEffort: moment.duration({ h: 2 }),
+        totalRemainingEffort: Duration.fromObject({ hours: 2 }),
         remainingEffortTracking: true,
       }),
     );
@@ -75,7 +75,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
       "model",
       EmberObject.create({
         id: 1,
-        estimatedTime: moment.duration({ h: 100, m: 30 }),
+        estimatedTime: Duration.fromObject({ hours: 100, minutes: 30 }),
         constructor: EmberObject.create({
           modelName: "task",
         }),
@@ -105,8 +105,11 @@ module("Integration | Component | progress tooltip", function (hooks) {
       "model",
       EmberObject.create({
         id: 1,
-        estimatedTime: moment.duration({ h: 100, m: 30 }),
-        mostRecentRemainingEffort: moment.duration({ h: 2, m: 15 }),
+        estimatedTime: Duration.fromObject({ hours: 100, minutes: 30 }),
+        mostRecentRemainingEffort: Duration.fromObject({
+          hours: 2,
+          minutes: 15,
+        }),
         constructor: EmberObject.create({
           modelName: "task",
         }),
@@ -127,7 +130,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
       "model",
       EmberObject.create({
         id: 1,
-        estimatedTime: moment.duration({ h: 100, m: 30 }),
+        estimatedTime: Duration.fromObject({ hours: 100, minutes: 30 }),
         constructor: EmberObject.create({
           modelName: "task",
         }),
@@ -153,7 +156,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
   });
 
   test("uses danger color when the factor is more than 1", async function (assert) {
-    this.project.estimatedTime = moment.duration({ h: 100 });
+    this.project.estimatedTime = Duration.fromObject({ hours: 100 });
 
     this.server.get("/projects/:id", function ({ projects }, request) {
       return {
@@ -171,7 +174,7 @@ module("Integration | Component | progress tooltip", function (hooks) {
   });
 
   test("uses warning color when the factor is 0.9 or more", async function (assert) {
-    this.project.estimatedTime = moment.duration({ h: 100 });
+    this.project.estimatedTime = Duration.fromObject({ hours: 100 });
 
     this.server.get("/projects/:id", function ({ projects }, request) {
       return {

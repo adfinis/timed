@@ -2,14 +2,14 @@ import { find, render } from "@ember/test-helpers";
 import { clickTrigger } from "ember-basic-dropdown/test-support/helpers";
 import { hbs } from "ember-cli-htmlbars";
 import { setupRenderingTest } from "ember-qunit";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 module("Integration | Component | datepicker button", function (hooks) {
   setupRenderingTest(hooks);
 
   test("toggles the calendar on click of the button", async function (assert) {
-    this.set("value", moment());
+    this.set("value", DateTime.now());
 
     await render(
       hbs`<DatepickerButton @value={{this.value}} @onChange={{fn (mut this.value)}} />`,
@@ -23,7 +23,7 @@ module("Integration | Component | datepicker button", function (hooks) {
   });
 
   test("changes value on selection", async function (assert) {
-    const INITIAL_VALUE = moment("2024-01-06");
+    const INITIAL_VALUE = DateTime.fromISO("2024-01-06");
     this.set("value", INITIAL_VALUE);
 
     await render(
@@ -38,8 +38,8 @@ module("Integration | Component | datepicker button", function (hooks) {
 
     target.click();
 
-    const expected = INITIAL_VALUE.endOf("month").endOf("week").add(1, "day");
+    const expected = INITIAL_VALUE.endOf("month").endOf("week");
 
-    assert.ok(this.value.isSame(expected, "day"));
+    assert.ok(this.value.hasSame(expected, "day"));
   });
 });

@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
+import { Duration } from "luxon";
 import { Factory, trait } from "miragejs";
-import moment from "moment";
 
 import DjangoDurationTransform from "timed/transforms/django-duration";
 
@@ -12,8 +12,9 @@ export default Factory.extend({
   isExternal: false,
 
   worktimePerDay() {
-    const worktime = moment.duration(
-      (moment.duration({ h: 8, m: 30 }) / 100) * this.percentage,
+    const worktime = Duration.fromMillis(
+      (Duration.fromObject({ hours: 8, minutes: 30 }).toMillis() / 100) *
+        this.percentage,
     );
 
     return DjangoDurationTransform.create().serialize(worktime);

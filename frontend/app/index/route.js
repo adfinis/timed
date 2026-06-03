@@ -5,10 +5,7 @@
  */
 import Route from "@ember/routing/route";
 import { service } from "@ember/service";
-import moment from "moment";
-import { all } from "rsvp";
-
-const DATE_FORMAT = "YYYY-MM-DD";
+import { DateTime } from "luxon";
 
 /**
  * The index route
@@ -38,16 +35,16 @@ export default class IndexRoute extends Route {
   @service store;
 
   /**
-   * Model hook, return the selected day as moment object
+   * Model hook, return the selected day as luxon object
    *
    * @method model
    * @param {Object} params The query params
    * @param {String} params.day The selected day
-   * @return {moment} The selected day as moment object
+   * @return {DateTime} The selected day as luxon object
    * @public
    */
   model({ day }) {
-    return day ? moment(day, DATE_FORMAT) : moment(DATE_FORMAT);
+    return day ? DateTime.fromISO(day) : DateTime.now().startOf("day");
   }
 
   /**
@@ -55,12 +52,12 @@ export default class IndexRoute extends Route {
    * selected day, toghether with necessary data related to them.
    *
    * @method afterModel
-   * @param {moment} model The selected day
-   * @return {RSVP.Promise} A promise which resolves after all data is fetched
+   * @param {DateTime} model The selected day
+   * @return {Promise} A promise which resolves after all data is fetched
    * @public
    */
   afterModel(model) {
-    const formattedDate = model.format();
+    const formattedDate = model.toISODate();
     if (formattedDate === this.lastUpdateDate) {
       return;
     }
@@ -68,14 +65,14 @@ export default class IndexRoute extends Route {
     this.lastUpdateDate = formattedDate;
 
     const userId = this.currentUser.user.id;
-    const day = model.format(DATE_FORMAT);
-    const from = moment(model).subtract(32, "days").format(DATE_FORMAT);
-    const to = moment(model).add(16, "days").format(DATE_FORMAT);
+    const day = formattedDate;
+    const from = model.minus({ days: 32 }).toISODate();
+    const to = model.plus({ days: 16 }).toISODate();
     const location = this.store
       .peekRecord("user", userId)
       .get("activeEmployment.location.id");
 
-    return all([
+    return Promise.all([
       this.store.query("activity", {
         include: "task,task.project,task.project.customer",
         day,
@@ -109,7 +106,7 @@ export default class IndexRoute extends Route {
     super.setupController(controller, model, ...args);
 
     controller.date = model;
-    controller.setCenter.perform({ moment: model });
+    controller.setCenter.perform(model);
 
     controller.set("newAbsence", {
       dates: [model],

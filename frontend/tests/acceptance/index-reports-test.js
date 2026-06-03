@@ -10,7 +10,7 @@ import { faker } from "@faker-js/faker";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 import taskSelect from "../helpers/task-select";
@@ -168,7 +168,7 @@ module("Acceptance | index reports", function (hooks) {
   });
 
   test("can reschedule reports", async function (assert) {
-    const tomorrow = moment().add(1, "days").format("YYYY-MM-DD");
+    const tomorrow = DateTime.now().plus({ days: 1 }).toISODate();
 
     await visit("/reports");
     assert.dom("[data-test-report-row]").exists({ count: 6 });

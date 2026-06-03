@@ -1,57 +1,27 @@
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 /**
  * Timepicker component
  *
- * @class TimepickerComponent
- * @extends Ember.Component
  * @public
  */
 export default class TimepickerComponent extends Component {
-  optionalUnwrap(date) {
-    if (this.isProxiedDate(date)) {
-      return date.unwrap();
-    }
-    if (this.isProxiedDuration(date)) {
-      return moment.duration({ ...date.unwrap()._data });
-    }
-    return date;
-  }
-
-  isProxiedDate(obj) {
-    return obj && obj.unwrap && obj.unwrap()._isAMomentObject;
-  }
-
-  isProxiedDuration(obj) {
-    return (
-      obj && obj.unwrap && obj.unwrap()._data && obj.unwrap()._milliseconds
-    );
-  }
-
   sanitize(value) {
     return value.replace(/[^\d:]/, "");
   }
 
   get value() {
-    return this.optionalUnwrap(this.args.value) ?? moment();
+    return this.args.value ?? DateTime.now();
   }
 
   get max() {
-    // unwrap proxy to get the moment instance
-    // https://github.com/poteto/ember-changeset/pull/636
-    return (
-      this.optionalUnwrap(this.args.max) ??
-      moment(this.value).set({ h: 23, m: 59 })
-    );
+    return this.args.max ?? this.value.endOf("day");
   }
 
   get min() {
-    return (
-      this.optionalUnwrap(this.args.min) ??
-      moment(this.value).set({ h: 0, m: 0 })
-    );
+    return this.args.min ?? this.value.startOf("day");
   }
 
   /**
@@ -110,8 +80,8 @@ export default class TimepickerComponent extends Component {
    * @public
    */
   get displayValue() {
-    return this.args.value && this.args.value.isValid()
-      ? this.args.value.format("HH:mm")
+    return this.args.value && this.args.value.isValid
+      ? this.args.value.toFormat("HH:mm")
       : "";
   }
 
@@ -119,7 +89,7 @@ export default class TimepickerComponent extends Component {
    * Handle input event
    *
    * @event change
-   * @param {jQuery.Event} e The jquery change event
+   * @param {Event} e The change event
    * @public
    */
   @action
@@ -151,61 +121,58 @@ export default class TimepickerComponent extends Component {
   /**
    * Set the current value
    *
-   * @method _set
-   * @param {Number} h The hours of the new value
-   * @param {Number} m The minutes of the new value
-   * @return {moment} The mutated value
+   * @param {number} h The hours of the new value
+   * @param {number} m The minutes of the new value
+   * @return {DateTime} The mutated value
    * @private
    */
-  _set(h, m) {
-    return moment(this.value || this.min).set({ h, m });
+  _set(hours, minutes) {
+    return (this.value || this.min).set({ hours, minutes });
   }
 
   /**
-   * Add hours and minutes to the current value
+   * Add hours and minutes to a value
    *
-   * @method _add
-   * @param {Number} h The hours to add
-   * @param {Number} m The minutes to add
-   * @return {moment} The mutated value
+   * @param {number} hours The hours to add
+   * @param {number} minutes The minutes to add
+   * @return {DateTime} The mutated value
    * @private
    */
-  _add(h, m) {
+  _add(hours, minutes) {
     let base = this.value;
 
     if (!this.args.value) {
-      base = [h, m].filter((n) => n < 0).length
-        ? this.max.add(1, "minute")
+      base = [hours, minutes].filter((n) => n < 0).length
+        ? this.max.plus({ minutes: 1 })
         : this.min;
     }
 
-    return moment(base).add({ h, m });
+    return base.plus({ hours, minutes });
   }
 
   /**
    * Get the validity status of a value
    *
-   * @method _isValid
-   * @param {moment} value The value to check
-   * @return {Boolean} Whether the value is valid
+   * @param {DateTime} value The value to check
+   * @return {boolean} Whether the value is valid
    * @private
    */
-  _isValid(momentOrDuration) {
-    const value = momentOrDuration._isAMomentObject
-      ? momentOrDuration
-      : moment(momentOrDuration);
-    return value.isBefore(moment(this.max)) && value.isAfter(moment(this.min));
+  _isValid(value) {
+    // we compare milliseconds, as some libraries recklessly proxy things in a way that breaks comparing objects
+    return (
+      value.toMillis() < this.max.toMillis() &&
+      value.toMillis() > this.min.toMillis()
+    );
   }
 
   /**
    * Add minutes to the current value
    *
-   * @method _addMinutes
-   * @param {moment} value The amount of minutes to add
+   * @param {number} minutes The amount of minutes to add
    * @private
    */
-  _addMinutes(value) {
-    const newValue = this._add(0, value);
+  _addMinutes(minutes) {
+    const newValue = this._add(0, minutes);
 
     if (this._isValid(newValue)) {
       this._change(newValue);
@@ -215,12 +182,11 @@ export default class TimepickerComponent extends Component {
   /**
    * Add hours to the current value
    *
-   * @method _addHours
-   * @param {import('moment').Moment} value The amount of hours to add
+   * @param {number} hours The amount of hours to add
    * @private
    */
-  _addHours(value) {
-    const newValue = this._add(value, 0);
+  _addHours(hours) {
+    const newValue = this._add(hours, 0);
 
     if (this._isValid(newValue)) {
       this._change(newValue);
@@ -230,8 +196,7 @@ export default class TimepickerComponent extends Component {
   /**
    * Ensure that the new value is valid and trigger a change
    *
-   * @method change
-   * @param {import('moment').Moment} value The new value
+   * @param {DateTime} value The new value
    * @private
    */
   _change(value) {

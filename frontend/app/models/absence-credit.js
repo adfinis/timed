@@ -5,6 +5,8 @@
  */
 import Model, { attr, belongsTo } from "@ember-data/model";
 
+import { MODES as m } from "timed/transforms/luxon-dt";
+
 /**
  * The absence credit model
  *
@@ -16,7 +18,7 @@ export default class AbsenceCredit extends Model {
   /**
    * The days
    *
-   * @property {Number} days
+   * @property {number} days
    * @public
    */
   @attr("number") days;
@@ -24,10 +26,10 @@ export default class AbsenceCredit extends Model {
   /**
    * The date
    *
-   * @property {moment} date
+   * @property {import('luxon').DateTime} date
    * @public
    */
-  @attr("django-date") date;
+  @attr("luxon-dt", { t: m.date }) date;
 
   /**
    * The comment

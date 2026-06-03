@@ -3,12 +3,12 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, restartableTask } from "ember-concurrency";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class UsersEditCredits extends Controller {
   queryParams = ["year"];
 
-  @tracked year = moment().year().toString();
+  @tracked year = DateTime.now().year.toString();
 
   @service notify;
   @service fetch;
@@ -32,15 +32,17 @@ export default class UsersEditCredits extends Controller {
       ordering: "start_date",
     });
 
-    const from = (employments[0].get("start") || moment()).year();
-    const to = moment().add(1, "year").year();
+    const from = (employments[0].get("start") || DateTime.now()).year;
+    const to = DateTime.now().year + 1;
 
-    return [...new Array(to + 1 - from).keys()].map((i) => `${from + i}`);
+    return Array(to + 1 - from)
+      .fill(0)
+      .map((_, i) => `${from + i}`);
   });
 
   get allowTransfer() {
     return (
-      parseInt(this.year) === moment().year() - 1 &&
+      parseInt(this.year) === DateTime.now().year - 1 &&
       this.abilities.can("create overtime-credit") &&
       this.abilities.can("create absence-credit")
     );
@@ -82,7 +84,7 @@ export default class UsersEditCredits extends Controller {
 
       this.userController.data.perform(this.model.id);
 
-      this.fetchData(moment().year().toString());
+      this.fetchData(DateTime.now().year.toString());
     } catch {
       this.notify.error("Error while transfering");
     }
