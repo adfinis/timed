@@ -8,6 +8,7 @@ from django.core.cache import cache
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
+from timed.apitoken import factories as apitoken_factories
 from timed.employment import factories as employment_factories
 from timed.projects import factories as projects_factories
 from timed.subscription import factories as subscription_factories
@@ -42,6 +43,8 @@ register(tracking_factories.AbsenceFactory)
 register(tracking_factories.ActivityFactory)
 register(tracking_factories.AttendanceFactory)
 register(tracking_factories.ReportFactory)
+
+register(apitoken_factories.APITokenFactory)
 
 
 @pytest.fixture

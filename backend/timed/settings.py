@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "timed.redmine",
     "timed.subscription",
     "timed.notifications",
+    "timed.apitoken",
     "django.contrib.postgres",
 ]
 
@@ -180,6 +181,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": ("rest_framework_json_api.parsers.JSONParser",),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "timed.apitoken.authentication.APITokenAuthentication",
         "mozilla_django_oidc.contrib.drf.OIDCAuthentication",
     ),
     "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
