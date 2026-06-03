@@ -5,6 +5,7 @@
     // work with TypeScript.
     "allowJs": true,
     "baseUrl": ".",
+    "strictNullChecks": true,
     "paths": {
       "timed/tests/*": ["tests/*"],
       "timed/mirage/*": ["mirage/*"],
