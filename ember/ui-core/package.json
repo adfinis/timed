@@ -119,6 +119,16 @@
   "ember-addon": {
     "version": 2,
     "type": "addon",
-    "main": "addon-main.cjs"
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/card.js": "./dist/_app_/components/card.js",
+      "./components/checkbox.js": "./dist/_app_/components/checkbox.js",
+      "./components/durationpicker.js": "./dist/_app_/components/durationpicker.js",
+      "./components/modal.js": "./dist/_app_/components/modal.js",
+      "./components/nav-tabs.js": "./dist/_app_/components/nav-tabs.js",
+      "./components/table.js": "./dist/_app_/components/table.js",
+      "./components/topnav.js": "./dist/_app_/components/topnav.js",
+      "./services/appearance.js": "./dist/_app_/services/appearance.js"
+    }
   }
 }
