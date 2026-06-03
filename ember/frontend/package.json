@@ -10,6 +10,7 @@
     "test": "tests"
   },
   "scripts": {
+    "prebuild": "pnpm --filter ui-core build",
     "build": "ember build --environment=production",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
@@ -22,8 +23,8 @@
     "lint:js": "eslint .",
     "lint:js:fix": "eslint . --fix",
     "start": "ember server --proxy https://timed.localhost --secure-proxy=false",
-    "test": "concurrently \"pnpm:lint\" \"pnpm:test:*\" --names \"lint,test:\" --prefixColors auto",
-    "test:ember": "ember test"
+    "pretest": "pnpm --filter ui-core build",
+    "test": "ember test"
   },
   "devDependencies": {
     "@adfinis/eslint-config": "3.0.2",
