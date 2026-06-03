@@ -191,9 +191,6 @@ importers:
       ember-modifier:
         specifier: ^4.2.0
         version: 4.2.0(@babel/core@7.28.5)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5))
-      ember-moment:
-        specifier: 10.0.1
-        version: 10.0.1(moment-timezone@0.5.45)(moment@2.30.1)
       ember-notify:
         specifier: 6.0.5
         version: 6.0.5(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5))
@@ -299,9 +296,6 @@ importers:
       miragejs:
         specifier: ^0.1.48
         version: 0.1.48
-      moment:
-        specifier: ^2.30.1
-        version: 2.30.1
       postcss:
         specifier: ~8.5.6
         version: 8.5.6
@@ -3670,17 +3664,6 @@ packages:
       ember-source:
         optional: true
 
-  ember-moment@10.0.1:
-    resolution: {integrity: sha512-Es5PaFBRF6djyb0zwmcCMqWjLhyKrCWs5Ug6iaZoKxDgEc8incVCTv3ED2Z4oCcNDY2gKTqXY5VTsP1J9hUPcg==}
-    peerDependencies:
-      moment: ^2
-      moment-timezone: ^0.5.34
-    peerDependenciesMeta:
-      moment:
-        optional: true
-      moment-timezone:
-        optional: true
-
   ember-notify@6.0.5:
     resolution: {integrity: sha512-VAocatNeFFg1ZniSJSIpmULL6mD3bpiQAplZpmpx9/txZLecsYt4ZmJe2p/nmBT+41mlLj4O1Jt7+zpjoXJc7w==}
     engines: {node: '>= 18'}
@@ -5603,9 +5586,6 @@ packages:
   mktemp@2.0.2:
     resolution: {integrity: sha512-Q9wJ/xhzeD9Wua1MwDN2v3ah3HENsUVSlzzL9Qw149cL9hHZkXtQGl3Eq36BbdLV+/qUwaP1WtJQ+H/+Oxso8g==}
     engines: {node: 20 || 22 || 24}
-
-  moment-timezone@0.5.45:
-    resolution: {integrity: sha512-HIWmqA86KcmCAhnMAN0wuDOARV/525R2+lOLotuGFzn4HO+FH+/645z2wx0Dt3iDv6/p61SIvKnDstISainhLQ==}
 
   moment@2.30.1:
     resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
@@ -12394,15 +12374,6 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-moment@10.0.1(moment-timezone@0.5.45)(moment@2.30.1):
-    dependencies:
-      '@embroider/addon-shim': 1.8.9
-    optionalDependencies:
-      moment: 2.30.1
-      moment-timezone: 0.5.45
-    transitivePeerDependencies:
-      - supports-color
-
   ember-notify@6.0.5(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.5))(rsvp@4.8.5)):
     dependencies:
       '@babel/core': 7.28.5
@@ -14771,11 +14742,6 @@ snapshots:
   mktemp@0.4.0: {}
 
   mktemp@2.0.2: {}
-
-  moment-timezone@0.5.45:
-    dependencies:
-      moment: 2.30.1
-    optional: true
 
   moment@2.30.1: {}
 
