@@ -17,7 +17,7 @@ export default [
   },
   {
     id: "duration",
-    target: "input[name=duration-day]",
+    target: "input.report-duration",
     placement: "top",
     title: "Duration",
     content: `
