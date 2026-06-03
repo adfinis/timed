@@ -1,9 +1,9 @@
 <TrackingBar data-test-tracking-bar />
 <div class="grid--12of12 grid">
   <div class="grid md:grid-cols-[minmax(0,1fr),auto]">
-    <h1 class="block max-md:mb-2">{{moment-format
+    <h1 class="block max-md:mb-2">{{luxon-format
         @model
-        "dddd, DD.MM.YYYY"
+        "EEEE, dd.MM.yyyy"
       }}</h1>
     <DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} />
   </div>
@@ -33,7 +33,7 @@
           @holiday={{d.holiday}}
           @prefix={{d.prefix}}
           @onClick={{fn (mut this.date)}}
-          data-test-weekly-overview-day={{moment-format d.day "DD"}}
+          data-test-weekly-overview-day={{luxon-format d.day "dd"}}
         />
       {{/each}}
     </WeeklyOverview>
@@ -159,8 +159,8 @@
                 class="calendar [--size:2.5rem] sm:[--size:2.75rem] md:[--size:3rem] lg:[--size:3.25rem]"
                 @selected={{cs.date}}
                 @center={{or this.center this.date}}
-                @onCenterChange={{perform this.setCenter}}
-                @onSelect={{pick "moment" (changeset-set cs "date")}}
+                @onCenterChange={{pick "datetime" (perform this.setCenter)}}
+                @onSelect={{pick "datetime" (changeset-set cs "date")}}
                 as |calendar|
               >
                 <div class={{if calendar.loading "loading-mask"}}>
@@ -242,7 +242,7 @@
                 class="calendar [--size:2.5rem] sm:[--size:2.75rem] md:[--size:3rem] lg:[--size:3.25rem]"
                 @selected={{cs.dates}}
                 @center={{this.center}}
-                @onCenterChange={{perform this.setCenter}}
+                @onCenterChange={{pick "datetime" (perform this.setCenter)}}
                 @onSelect={{fn this.updateSelection cs "dates"}}
                 as |calendar|
               >

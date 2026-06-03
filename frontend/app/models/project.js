@@ -17,7 +17,7 @@ export default class Project extends Model {
    * The name
    *
    * @property name
-   * @type {String}
+   * @type {string}
    * @public
    */
   @attr("string", { defaultValue: "" }) name;
@@ -26,7 +26,7 @@ export default class Project extends Model {
    * Whether the project is archived
    *
    * @property archived
-   * @type {Boolean}
+   * @type {boolean}
    * @public
    */
   @attr("boolean", { defaultValue: false }) archived;
@@ -34,7 +34,7 @@ export default class Project extends Model {
   /**
    * The estimated time for this project
    *
-   * @property {moment.duration} estimatedTime
+   * @property {import('luxon').Duration} estimatedTime
    * @public
    */
   @attr("django-duration") estimatedTime;
@@ -42,14 +42,14 @@ export default class Project extends Model {
   /**
    * Boolean indicating if the remainig effort should be trackable
    * for this project.
-   * @type {Boolean}
+   * @type {boolean}
    * @public
    */
   @attr("boolean", { defaultValue: false }) remainingEffortTracking;
 
   /**
    * Total remainig effort for this project
-   * @property {moment.duration} estimatedtime
+   * @property {import('luxon').Duration)} estimatedtime
    * @public
    */
   @attr("django-duration") totalRemainingEffort;

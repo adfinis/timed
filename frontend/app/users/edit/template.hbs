@@ -32,7 +32,7 @@
                 title="Last day with timesheet entries or absences"
                 class="text-foreground-muted text-base uppercase sm:text-lg md:text-xl lg:text-2xl"
               >
-                {{moment-format balance.date "DD.MM.YYYY"}}
+                {{luxon-format balance.date "dd.MM.yyyy"}}
               </h2>
               <div
                 class="{{balance-highlight-class balance.balance}}

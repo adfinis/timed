@@ -5,7 +5,7 @@ export default class WeeklyOverview extends Component {
   @tracked height = 150;
 
   get hours() {
-    return this.args.expected.asHours();
+    return this.args.expected.as("hours");
   }
 
   get style() {

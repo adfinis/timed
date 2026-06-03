@@ -1,7 +1,7 @@
 import Service, { service } from "@ember/service";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 const INTERVAL_DELAY = 10 * 60000; // 10 Minutes
 
@@ -29,7 +29,7 @@ export default class UnverifiedReportsService extends Service {
   }
 
   get reportsToDate() {
-    return moment().subtract(1, "month").endOf("month");
+    return DateTime.now().minus({ months: 1 }).endOf("month");
   }
 
   constructor(...args) {
@@ -48,7 +48,7 @@ export default class UnverifiedReportsService extends Service {
   async pollReports() {
     try {
       const reports = await this.store.query("report", {
-        to_date: this.reportsToDate.format("YYYY-MM-DD"),
+        to_date: this.reportsToDate.toISODate(),
         reviewer: this.currentUser.user.id,
         editable: 1,
         verified: 0,

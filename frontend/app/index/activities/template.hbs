@@ -44,10 +44,10 @@
                 {{on "click" (fn this.editActivity activity)}}
               >
                 <Table::Td>
-                  {{moment-format activity.from "HH:mm"}}
+                  {{luxon-format activity.from "HH:mm"}}
                   -
                   {{#unless activity.active}}
-                    {{moment-format activity.to "HH:mm"}}
+                    {{luxon-format activity.to "HH:mm"}}
                   {{/unless}}
                 </Table::Td>
                 <Table::Td

@@ -8,7 +8,7 @@ import { htmlSafe } from "@ember/template";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { dropTask } from "ember-concurrency";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 import formatDuration from "timed/utils/format-duration";
 import { pad2joincolon } from "timed/utils/pad";
@@ -30,7 +30,9 @@ const Formatter = {
    * @public
    */
   to(value) {
-    return moment({ hour: 0 }).minute(value).format("HH:mm");
+    return DateTime.fromObject({ hour: 0 })
+      .plus({ minutes: value })
+      .toFormat("HH:mm");
   },
 };
 
@@ -38,7 +40,6 @@ const Formatter = {
  * The attendance slider component
  *
  * @class AttendanceSliderComponent
- * @extends Ember.Component
  * @public
  */
 export default class AttendanceSlider extends Component {
@@ -71,13 +72,13 @@ export default class AttendanceSlider extends Component {
    * @public
    */
   get start() {
+    const { to, from } = this.args.attendance;
+
     return [
-      this.args.attendance.from.hour() * 60 +
-        this.args.attendance.from.minute(),
+      from.hour * 60 + from.minute,
       // If the end time is 00:00 we need to clarify that this would be 00:00
       // of the next day
-      this.args.attendance.to.hour() * 60 + this.args.attendance.to.minute() ||
-        24 * 60,
+      to.hour * 60 + to.minute || 24 * 60,
     ];
   }
 
@@ -88,10 +89,11 @@ export default class AttendanceSlider extends Component {
    * @public
    */
   get duration() {
-    const from = moment({ hour: 0 }).minute(this.values[0]);
-    const to = moment({ hour: 0 }).minute(this.values[1]);
+    const empty = DateTime.fromObject({ hour: 0 });
 
-    return formatDuration(moment.duration(to.diff(from)), false);
+    const from = empty.set({ minute: this.values[0] });
+    const to = empty.set({ minute: this.values[1] });
+    return formatDuration(to.diff(from, ["hours", "minutes"]), false);
   }
 
   /**
@@ -129,11 +131,8 @@ export default class AttendanceSlider extends Component {
   save = dropTask(async ([fromMin, toMin]) => {
     const attendance = this.args.attendance;
 
-    attendance.set(
-      "from",
-      moment(attendance.get("from")).hour(0).minute(fromMin),
-    );
-    attendance.set("to", moment(attendance.get("to")).hour(0).minute(toMin));
+    attendance.from = attendance.from.startOf("day").plus({ minutes: fromMin });
+    attendance.to = attendance.to.startOf("day").plus({ minutes: toMin });
 
     await this.args.onSave(attendance);
   });

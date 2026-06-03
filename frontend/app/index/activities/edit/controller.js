@@ -57,11 +57,6 @@ export default class IndexActivitiesEditController extends Controller {
     }
 
     try {
-      // workaround for "Error: Unable to `mergeDeep` with your data."
-      this.changeset.task = this.store.peekRecord(
-        "task",
-        this.changeset.task.id,
-      );
       await this.changeset.save();
 
       this.notify.success("Activity was saved");

@@ -7,8 +7,7 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import moment from "moment";
-import { resolve } from "rsvp";
+import { DateTime } from "luxon";
 
 /**
  * The index activities controller
@@ -58,7 +57,7 @@ export default class ActivitiesIndexController extends Controller {
     return this._allActivities.filter((activity) => {
       return (
         activity.get("date") &&
-        activity.get("date").isSame(this.model, "day") &&
+        activity.get("date").hasSame(this.model, "day") &&
         activity.get("user.id") === this.currentUser.user.id &&
         !activity.get("isNew") &&
         !activity.get("isDeleted")
@@ -68,7 +67,7 @@ export default class ActivitiesIndexController extends Controller {
 
   get sortedActivities() {
     return this.activities.toSorted((a, b) => {
-      return b.get("from").toDate() - a.get("from").toDate();
+      return b.from - a.from;
     });
   }
 
@@ -104,7 +103,7 @@ export default class ActivitiesIndexController extends Controller {
   async startActivity(activity, event) {
     event.stopPropagation();
 
-    if (!activity.get("date").isSame(moment(), "day")) {
+    if (!activity.get("date").hasSame(DateTime.now(), "day")) {
       activity = this.store.createRecord("activity", {
         task: await activity.task,
         comment: await activity.comment,
@@ -118,7 +117,7 @@ export default class ActivitiesIndexController extends Controller {
     await this.tracking.startActivity.perform();
 
     this.router.transitionTo("index.activities", {
-      queryParams: { day: moment().format("YYYY-MM-DD") },
+      queryParams: { day: DateTime.now().toISODate() },
     });
   }
 
@@ -148,7 +147,7 @@ export default class ActivitiesIndexController extends Controller {
   generateReportsCheck() {
     const hasUnknown = !!this.activities.find((a) => !a.task.get("id"));
     const hasOverlapping = !!this.sortedActivities.find((a) => {
-      return a.get("active") && !a.get("from").isSame(moment(), "day");
+      return a.get("active") && !a.get("from").hasSame(DateTime.now(), "day");
     });
 
     this.showUnknownWarning = hasUnknown;
@@ -176,7 +175,9 @@ export default class ActivitiesIndexController extends Controller {
         .filter(
           (a) =>
             a.get("task.id") &&
-            !(a.get("active") && !a.get("from").isSame(moment(), "day")) &&
+            !(
+              a.get("active") && !a.get("from").hasSame(DateTime.now(), "day")
+            ) &&
             !a.get("transferred"),
         )
         .reduce(async (reducer, activity) => {
@@ -199,7 +200,7 @@ export default class ActivitiesIndexController extends Controller {
             return (
               (!r.get("user.id") ||
                 r.get("user.id") === activity.get("user.id")) &&
-              r.get("date").isSame(data.date, "day") &&
+              r.get("date").hasSame(data.date, "day") &&
               r.get("comment").trim() === data.comment &&
               r.get("task.id") === data.task.get("id") &&
               r.get("review") === data.review &&
@@ -210,7 +211,7 @@ export default class ActivitiesIndexController extends Controller {
           });
 
           if (report) {
-            data.duration.add(report.get("duration"));
+            data.duration = data.duration.plus(report.get("duration"));
             report.set("duration", data.duration);
           } else {
             report = await this.store.createRecord("report", data);
@@ -221,7 +222,7 @@ export default class ActivitiesIndexController extends Controller {
           return reducer
             .then(activity.save.bind(activity))
             .then(report.save.bind(report));
-        }, resolve());
+        }, Promise.resolve());
 
       this.router.transitionTo("index.reports");
     } catch {

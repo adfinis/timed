@@ -12,7 +12,7 @@ import parseDjangoDuration from "timed/utils/parse-django-duration";
  *
  * @function parseDjangoDurationFn
  * @param {Array} args The arguments delivered to the helper
- * @return {moment.duration} The moment duration
+ * @return {import('luxon').Duration} The duration
  * @public
  */
 export const parseDjangoDurationFn = (args) => parseDjangoDuration(...args);

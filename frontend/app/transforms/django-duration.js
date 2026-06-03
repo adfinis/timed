@@ -1,5 +1,4 @@
-import Transform from "@ember-data/serializer/transform";
-import moment from "moment";
+import { Duration } from "luxon";
 
 import { pad2joincolon } from "timed/utils/pad";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
@@ -9,7 +8,7 @@ const { round } = Math;
 /**
  * The django duration transform
  *
- * This transforms a django duration into a moment duration
+ * This transforms a django duration into a `luxon.Duration`
  *
  * Django formats the timedelta like this: `DD HH:MM:ss.uuuuuu`. However,
  * days and microseconds are optional.
@@ -17,17 +16,15 @@ const { round } = Math;
  * @see http://www.django-rest-framework.org/api-guide/fields/#durationfield
  * @see https://github.com/django/django/blob/main/django/utils/duration.py
  *
- * @class DjangoDurationTransform
- * @extends DS.Transform
  * @public
  */
-export default class DjangoDurationTransform extends Transform {
+export default class DjangoDurationTransform {
   /**
-   * Deserialize the django duration into a moment duration
+   * Deserialize the string duration from django into a luxon duration
    *
    * @method deserialize
-   * @param {String} serialized The django duration
-   * @return {moment.duration} The deserialized moment duration
+   * @param {string} serialized The django duration
+   * @return {import('luxon').Duration} The deserialized
    * @public
    */
   deserialize(serialized) {
@@ -42,36 +39,34 @@ export default class DjangoDurationTransform extends Transform {
    * hours, so we never have a negative hour, minute, second or millisecond.
    * ONLY days can be negative!
    *
-   * @method _getDurationComponentsTimedeltaLike
-   * @param {moment.duration} duration The duration to parse
-   * @returns {Object} An object containing all needed components as number
+   * @param {import('luxon').Duration} duration The duration to parse
+   * @returns {object} An object containing all needed components as number
    * @private
    */
   _getDurationComponentsTimedeltaLike(duration) {
-    const days = Math.floor(duration.asDays());
-    const milliseconds = Math.abs(moment.duration({ days }) - duration);
+    const days = Math.floor(duration.as("days"));
+    const milliseconds = Math.abs(Duration.fromObject({ days }) - duration);
 
-    const positiveDuration = moment.duration(milliseconds);
+    const positiveDuration = Duration.fromMillis(milliseconds).rescale();
 
     return {
       days,
-      hours: positiveDuration.hours(),
-      minutes: positiveDuration.minutes(),
-      seconds: positiveDuration.seconds(),
-      microseconds: round(positiveDuration.milliseconds() * 1000),
+      hours: positiveDuration.hours,
+      minutes: positiveDuration.minutes,
+      seconds: positiveDuration.seconds,
+      microseconds: round(positiveDuration.milliseconds * 1000),
     };
   }
 
   /**
-   * Serialize the moment duration into a django duration
+   * Serialize the luxon duration into a string for django
    *
-   * @method serialize
-   * @param {moment.duration} deserialized The moment duration
-   * @return {String} The serialized django duration
+   * @param {import('luxon').Duration} deserialized The duration
+   * @return {string} The serialized django duration
    * @public
    */
   serialize(deserialized) {
-    if (!moment.isDuration(deserialized)) {
+    if (!Duration.isDuration(deserialized)) {
       return null;
     }
 
@@ -89,5 +84,9 @@ export default class DjangoDurationTransform extends Transform {
     }
 
     return string;
+  }
+
+  static create() {
+    return new this();
   }
 }

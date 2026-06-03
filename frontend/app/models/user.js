@@ -5,7 +5,8 @@
  */
 import { service } from "@ember/service";
 import Model, { attr, hasMany } from "@ember-data/model";
-import moment from "moment";
+import { DateTime } from "luxon";
+
 /**
  * The user model
  *
@@ -169,7 +170,8 @@ export default class User extends Model {
       this.store.peekAll("employment").find((e) => {
         return (
           e.get("user.id") === this.id &&
-          (!e.get("end") || e.get("end").isSameOrAfter(moment.now(), "day"))
+          (!e.get("end") ||
+            e.get("end").startOf("day") >= DateTime.now().startOf("day"))
         );
       }) || null
     );
@@ -186,7 +188,7 @@ export default class User extends Model {
       this.store.peekAll("worktime-balance").find((balance) => {
         return (
           balance.get("user.id") === this.id &&
-          balance.get("date").isSame(moment(), "day")
+          balance.get("date").hasSame(DateTime.now(), "day")
         );
       }) || null
     );

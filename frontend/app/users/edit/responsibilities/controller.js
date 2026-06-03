@@ -2,7 +2,7 @@ import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { task } from "ember-concurrency";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 export default class UsersEditResponsibilitiesController extends Controller {
   @service router;
@@ -31,7 +31,7 @@ export default class UsersEditResponsibilitiesController extends Controller {
 
     const balances = await this.store.query("worktime-balance", {
       supervisor,
-      date: moment().format("YYYY-MM-DD"),
+      date: DateTime.now().toISODate(),
       include: "user",
     });
 
@@ -41,7 +41,7 @@ export default class UsersEditResponsibilitiesController extends Controller {
         .filter((u) => u.get("isActive"))
         .map(async (user) => {
           const absenceBalances = await this.store.query("absence-balance", {
-            date: moment().format("YYYY-MM-DD"),
+            date: DateTime.now().toISODate(),
             user: user.get("id"),
             absence_type: 2,
           });

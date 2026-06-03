@@ -1,6 +1,6 @@
 import Route from "@ember/routing/route";
 import { service } from "@ember/service";
-import moment from "moment";
+import { Duration } from "luxon";
 
 export default class IndexReportsRoute extends Route {
   @service store;
@@ -34,8 +34,8 @@ export default class IndexReportsRoute extends Route {
         await this.store.createRecord("report", {
           task,
           duration: controller.duration
-            ? moment.duration(controller.duration)
-            : "",
+            ? Duration.fromISO(controller.duration)
+            : undefined,
           date: model,
           comment: controller.comment ?? "",
           user: this.currentUser.user,

@@ -12,7 +12,7 @@ import {
   hash,
 } from "ember-concurrency";
 import fetch from "fetch";
-import moment from "moment";
+import { DateTime, Duration } from "luxon";
 
 import config from "../../config/environment";
 
@@ -24,7 +24,6 @@ import {
   serializeQueryParams,
   queryParamsState,
 } from "timed/utils/query-params";
-import { serializeMoment } from "timed/utils/serialize-moment";
 import { cleanParams, toQueryString } from "timed/utils/url";
 
 export default class AnalysisController extends QPController {
@@ -63,7 +62,7 @@ export default class AnalysisController extends QPController {
   @tracked _shouldLoadMore = false;
   @tracked _canLoadMore = true;
   @tracked _lastPage = 0;
-  @tracked totalTime = moment.duration();
+  @tracked totalTime = Duration.fromMillis(0);
   @tracked totalItems = A();
   @tracked selectedReportIds = A();
   @tracked _dataCache = A();
@@ -139,7 +138,7 @@ export default class AnalysisController extends QPController {
   @action
   updateParam(key, value) {
     this[key] = ["toDate", "fromDate"].includes(key)
-      ? serializeMoment(value)
+      ? value.toISODate()
       : value;
     this._reset();
   }
@@ -170,7 +169,7 @@ export default class AnalysisController extends QPController {
     this._shouldLoadMore = false;
     this._dataCache = A();
     this.selectedReportIds = A();
-    this.totalTime = moment.duration();
+    this.totalTime = Duration.fromMillis(0);
     this.totalItems = A();
 
     this.data.perform();
@@ -369,5 +368,9 @@ export default class AnalysisController extends QPController {
     } else {
       this.selectedReportIds = A([...selected, report.id]);
     }
+  }
+
+  dateFromString(str) {
+    return DateTime.fromISO(str);
   }
 }

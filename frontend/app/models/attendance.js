@@ -4,7 +4,8 @@
  * @public
  */
 import Model, { attr, belongsTo } from "@ember-data/model";
-import moment from "moment";
+
+import { MODES as m } from "timed/transforms/luxon-dt";
 
 /**
  * The attendance model
@@ -17,26 +18,26 @@ export default class Attendance extends Model {
   /**
    * The date of the attendance
    *
-   * @property {moment} date
+   * @property {import('luxon').DateTime} date
    * @public
    */
-  @attr("django-date") date;
+  @attr("luxon-dt", { t: m.date }) date;
 
   /**
    * The start time
    *
-   * @property {moment} from
+   * @property {import('luxon').DateTime} from
    * @public
    */
-  @attr("django-time") from;
+  @attr("luxon-dt", { t: m.time }) from;
 
   /**
    * The end time
    *
-   * @property {moment} to
+   * @property {import('luxon').DateTime} to
    * @public
    */
-  @attr("django-time") to;
+  @attr("luxon-dt", { t: m.time }) to;
 
   /**
    * The user
@@ -53,15 +54,15 @@ export default class Attendance extends Model {
    * This needs to use 00:00 of the next day if the end time is 00:00 so the
    * difference is correct.
    *
-   * @property {moment.duration} duration
+   * @property {import('luxon').Duration} duration
    * @public
    */
   get duration() {
     const calcTo =
-      this.to.format("HH:mm") === "00:00"
-        ? this.to.clone().add(1, "day")
+      this.to.toFormat("HH:mm") === "00:00"
+        ? this.to.plus({ days: 1 })
         : this.to;
 
-    return moment.duration(calcTo.diff(this.from));
+    return calcTo.diff(this.from);
   }
 }

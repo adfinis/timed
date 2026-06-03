@@ -2,7 +2,7 @@ import { action, set } from "@ember/object";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout, hash } from "ember-concurrency";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 
 import QPController from "timed/controllers/qpcontroller";
@@ -52,7 +52,7 @@ export default class UsersIndexController extends QPController {
 
   data = restartableTask(async () => {
     await Promise.resolve();
-    const date = moment().format("YYYY-MM-DD");
+    const date = DateTime.now().toISODate();
 
     await this.store.query("employment", { date });
     await this.store.query("worktime-balance", { date });

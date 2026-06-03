@@ -8,7 +8,6 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { scheduleTask } from "ember-lifeline";
-import moment from "moment";
 import { all } from "rsvp";
 import { cached } from "tracked-toolbox";
 
@@ -41,7 +40,7 @@ export default class IndexReportController extends Controller {
   ReportValidations = ReportValidations;
 
   get center() {
-    return this._center ?? moment(this.model);
+    return this._center ?? this.model;
   }
 
   set center(date) {
@@ -70,7 +69,7 @@ export default class IndexReportController extends Controller {
     const reportsToday = this._allReports.filter((r) => {
       return (
         (!r.get("user.id") || r.get("user.id") === this.currentUser.user.id) &&
-        r.get("date").isSame(this.model, "day") &&
+        r.get("date").hasSame(this.model, "day") &&
         !r.get("isDeleted")
       );
     });
@@ -86,7 +85,7 @@ export default class IndexReportController extends Controller {
   get absence() {
     const absences = this.store.peekAll("absence").filter((absence) => {
       return (
-        absence.date.isSame(this.model, "day") &&
+        absence.date.hasSame(this.model, "day") &&
         absence.get("user.id") === this.currentUser.user.id &&
         !absence.isNew &&
         !absence.isDeleted
@@ -179,7 +178,7 @@ export default class IndexReportController extends Controller {
       );
       this.showReschedule = false;
       this.router.transitionTo({
-        queryParams: { day: date.format("YYYY-MM-DD") },
+        queryParams: { day: date.toISODate() },
       });
     } catch {
       this.notify.error("Error while rescheduling the timesheet");

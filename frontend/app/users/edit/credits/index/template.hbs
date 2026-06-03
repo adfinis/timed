@@ -60,9 +60,9 @@
                         (perform this.editAbsenceCredit absenceCredit.id)
                       }}
                     >
-                      <Table::Td>{{moment-format
+                      <Table::Td>{{luxon-format
                           absenceCredit.date
-                          "DD.MM.YYYY"
+                          "dd.MM.yyyy"
                         }}</Table::Td>
                       <Table::Td>{{absenceCredit.days}}</Table::Td>
                       <Table::Td>{{absenceCredit.absenceType.name}}</Table::Td>
@@ -130,9 +130,9 @@
                         (perform this.editOvertimeCredit overtimeCredit.id)
                       }}
                     >
-                      <Table::Td>{{moment-format
+                      <Table::Td>{{luxon-format
                           overtimeCredit.date
-                          "DD.MM.YYYY"
+                          "dd.MM.yyyy"
                         }}</Table::Td>
                       <Table::Td>{{humanize-duration
                           overtimeCredit.duration

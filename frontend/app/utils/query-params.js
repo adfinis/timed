@@ -1,10 +1,6 @@
 import { get } from "@ember/object";
 import { underscore } from "@ember/string";
-
-import {
-  serializeMoment,
-  deserializeMoment,
-} from "timed/utils/serialize-moment";
+import { DateTime } from "luxon";
 
 /**
  * Filter params by key
@@ -70,8 +66,9 @@ export function queryParamsState(controller) {
       changed: currentValue !== defaultValue,
     };
     if (["fromDate", "toDate"].includes(param)) {
-      states[param].serialize = serializeMoment;
-      states[param].deserialize = deserializeMoment;
+      states[param].serialize = (v) =>
+        DateTime.isDateTime(v) ? v.toISODate() : v;
+      states[param].deserialize = DateTime.fromISO;
     }
 
     if (param === "id") {

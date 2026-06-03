@@ -4,7 +4,9 @@
  * @public
  */
 import Model, { attr, belongsTo } from "@ember-data/model";
-import moment from "moment";
+import { Duration } from "luxon";
+
+import { MODES as m } from "timed/transforms/luxon-dt";
 
 /**
  * The report model
@@ -25,27 +27,28 @@ export default class Report extends Model {
   /**
    * The date
    *
-   * @property {moment} date
+   * @property {import('luxon').DateTime} date
    * @public
    */
-  @attr("django-date") date;
+  @attr("luxon-dt", { t: m.date }) date;
 
   /**
    * The duration
    *
-   * @property {moment.duration} duration
+   * @property {Duration} duration
    * @public
    */
-  @attr("django-duration", { defaultValue: () => moment.duration() }) duration;
+  @attr("django-duration", { defaultValue: () => Duration.fromMillis(0) })
+  duration;
 
   /**
    * The remaining effort for the underlying task
    *
-   * @property {moment.duration} remainingEffort
+   * @property {Duration} remainingEffort
    * @public
    */
 
-  @attr("django-duration", { defaultValue: () => moment.duration() })
+  @attr("django-duration", { defaultValue: () => Duration.fromMillis(0) })
   remainingEffort;
 
   /**

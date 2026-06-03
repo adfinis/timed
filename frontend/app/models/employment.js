@@ -5,6 +5,8 @@
  */
 import Model, { attr, belongsTo } from "@ember-data/model";
 
+import { MODES as m } from "timed/transforms/luxon-dt";
+
 /**
  * The employment model
  *
@@ -24,7 +26,7 @@ export default class Employment extends Model {
   /**
    * The time the user has to work every day
    *
-   * @property {moment.duration} worktimePerDay
+   * @property {import('luxon').Duration} worktimePerDay
    * @public
    */
   @attr("django-duration") worktimePerDay;
@@ -32,31 +34,31 @@ export default class Employment extends Model {
   /**
    * The start date
    *
-   * @property {moment} start
+   * @property {import('luxon').DateTime} start
    * @public
    */
-  @attr("django-date") start;
+  @attr("luxon-dt", { t: m.date }) start;
+
+  /**
+   * The end date
+   *
+   * @property {import('luxon').DateTime} end
+   * @public
+   */
+  @attr("luxon-dt", { t: m.date }) end;
 
   /**
    * Whether the employment is of an external employee
    *
-   * @property {Boolean} isExternal
+   * @property {boolean} isExternal
    * @public
    */
   @attr("boolean", { defaultValue: false }) isExternal;
 
   /**
-   * The end date
-   *
-   * @property {moment} end
-   * @public
-   */
-  @attr("django-date") end;
-
-  /**
    * The employed user
    *
-   * @property {User} user
+   * @property {import('timed/models/user')} user
    * @public
    */
   @belongsTo("user", { async: true, inverse: "employments" }) user;
@@ -64,7 +66,7 @@ export default class Employment extends Model {
   /**
    * The work location
    *
-   * @property {Location} location
+   * @property {import('timed/models/location')} location
    * @public
    */
   @belongsTo("location", { async: true, inverse: null }) location;

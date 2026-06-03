@@ -20,12 +20,12 @@ export default class DatepickerButtonComponent extends Datepicker {
   @localCopy("args.current") center;
 
   @action
-  updateCenter({ moment }) {
-    this.center = moment;
+  updateCenter({ datetime }) {
+    this.center = datetime;
   }
 
   @action
-  updateSelection({ moment }) {
-    this.args.onChange(moment);
+  updateSelection({ datetime }) {
+    this.args.onChange(datetime);
   }
 }

@@ -68,13 +68,13 @@
                   <Table::Tr @striped={{true}} @last={{true}}>
                     <Table::Td>{{employment.location.name}}</Table::Td>
                     <Table::Td>{{employment.percentage}}%</Table::Td>
-                    <Table::Td>{{moment-format
+                    <Table::Td>{{luxon-format
                         employment.start
-                        "DD.MM.YYYY"
+                        "dd.MM.yyyy"
                       }}</Table::Td>
                     <Table::Td>{{if
                         employment.end
-                        (moment-format employment.end "DD.MM.YYYY")
+                        (luxon-format employment.end "dd.MM.yyyy")
                         "-"
                       }}</Table::Td>
                   </Table::Tr>
@@ -117,9 +117,9 @@
                 {{#each absences as |absence|}}
                   <Table::Tr @striped={{true}} @last={{true}}>
                     <Table::Td>{{absence.absenceType.name}}</Table::Td>
-                    <Table::Td>{{moment-format
+                    <Table::Td>{{luxon-format
                         absence.date
-                        "DD.MM.YYYY"
+                        "dd.MM.yyyy"
                       }}</Table::Td>
                     <Table::Td>{{absence.comment}}</Table::Td>
                   </Table::Tr>

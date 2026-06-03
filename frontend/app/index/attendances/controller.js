@@ -54,7 +54,7 @@ export default class AttendanceController extends Controller {
   get attendances() {
     return this._allAttendances.filter((a) => {
       return (
-        a.get("date").isSame(this.model, "day") &&
+        a.get("date").hasSame(this.model, "day") &&
         a.get("user.id") === this.currentUser.user.id &&
         !a.get("isDeleted")
       );
@@ -106,10 +106,20 @@ export default class AttendanceController extends Controller {
   @action
   async addAttendance() {
     try {
-      const date = this.tracking.date.clone();
+      const date = this.tracking.date;
 
-      const from = date.clone().set({ h: 8, m: 0, s: 0, ms: 0 });
-      const to = date.clone().set({ h: 11, m: 30, s: 0, ms: 0 });
+      const from = date.set({
+        hours: 8,
+        minutes: 0,
+        seconds: 0,
+        milliseconds: 0,
+      });
+      const to = date.set({
+        hours: 11,
+        minutes: 30,
+        seconds: 0,
+        milliseconds: 0,
+      });
 
       const attendance = this.store.createRecord("attendance", {
         date,

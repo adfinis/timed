@@ -3,7 +3,7 @@ import { isTesting, macroCondition } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout } from "ember-concurrency";
-import moment from "moment";
+import { Duration } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 
 /**
@@ -37,7 +37,7 @@ export default class ProgressTooltipComponent extends Component {
       throw new Error("A target for the tooltip must be given");
     }
 
-    this.spent = moment.duration();
+    this.spent = Duration.fromMillis(0);
   }
 
   get estimated() {
@@ -68,17 +68,17 @@ export default class ProgressTooltipComponent extends Component {
 
   // The current billable progress
   get progressBillable() {
-    return this.estimated?.asHours() ? this.billable / this.estimated : 0;
+    return this.estimated?.as("hours") ? this.billable / this.estimated : 0;
   }
 
   get progressTotal() {
-    return this.estimated?.asHours() ? this.spent / this.estimated : 0;
+    return this.estimated?.as("hours") ? this.spent / this.estimated : 0;
   }
 
   get progressRemainingEffort() {
-    return this.estimated && this.remainingEffort?.asMinutes()
-      ? (this.remainingEffort.asMinutes() + this.spent.asMinutes()) /
-          this.estimated.asMinutes()
+    return this.estimated && this.remainingEffort?.as("minutes")
+      ? (this.remainingEffort.as("minutes") + this.spent.as("minutes")) /
+          this.estimated.as("minutes")
       : 0;
   }
 

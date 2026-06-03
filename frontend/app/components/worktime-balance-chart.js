@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import moment from "moment";
+import { Duration } from "luxon";
 
 import humanizeDuration from "timed/utils/humanize-duration";
 
@@ -23,7 +23,7 @@ export default class WorktimeBalanceChart extends Component {
       datasets: [
         {
           data: this.args.worktimeBalances.map(({ balance }) =>
-            Number.parseFloat(balance.asHours().toFixed(2)),
+            Number.parseFloat(balance.as("hours").toFixed(2)),
           ),
         },
       ],
@@ -60,7 +60,10 @@ export default class WorktimeBalanceChart extends Component {
           {
             ticks: {
               callback(value) {
-                return [value.format("DD"), value.format("dd").toUpperCase()];
+                return [
+                  value.toFormat("dd"),
+                  value.toFormat("ccc").toUpperCase().slice(0, 2),
+                ];
               },
               fontFamily: FONT_MONO,
               fontColor: `rgb(${cssvar("--foreground-muted")})`,
@@ -103,10 +106,10 @@ export default class WorktimeBalanceChart extends Component {
         yPadding: 10,
         callbacks: {
           title([{ index }], { labels }) {
-            return labels[index].format("DD.MM.YYYY");
+            return labels[index].toFormat("dd.MM.yyyy");
           },
           label({ yLabel: hours }) {
-            return humanizeDuration(moment.duration({ hours }));
+            return humanizeDuration(Duration.fromObject({ hours }));
           },
         },
       },

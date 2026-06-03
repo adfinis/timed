@@ -5,7 +5,7 @@ import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, task, timeout } from "ember-concurrency";
 import { scheduleTask } from "ember-lifeline";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 
 import formatDuration from "timed/utils/format-duration";
@@ -55,7 +55,7 @@ export default class TrackingService extends Service {
   }
 
   get date() {
-    return this._date ?? moment();
+    return this._date ?? DateTime.now();
   }
 
   set date(date) {
@@ -125,7 +125,7 @@ export default class TrackingService extends Service {
    */
   _computeTitle = task(async () => {
     while (this.activity.active) {
-      const duration = moment.duration(moment().diff(this.activity.from));
+      const duration = DateTime.now().diff(this.activity.from);
 
       let task = "Unknown Task";
 

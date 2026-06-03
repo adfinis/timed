@@ -6,7 +6,7 @@ import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import { dropTask, timeout } from "ember-concurrency";
 import { scheduleTask } from "ember-lifeline";
-import moment from "moment";
+import { Duration, DateTime } from "luxon";
 import { trackedFunction } from "reactiveweb/function";
 import { tracked as trackedWrapper } from "tracked-built-ins";
 import { cached } from "tracked-toolbox";
@@ -28,12 +28,13 @@ export default class IndexController extends Controller {
 
   @tracked showAddModal = false;
   @tracked showEditModal = false;
-  @tracked day = moment().format("YYYY-MM-DD");
-  @tracked _activeActivityDuration = moment.duration();
+  @tracked day = DateTime.now().toISODate();
+  @tracked _activeActivityDuration = Duration.fromMillis(0);
 
   /* istanbul ignore next */
-  @trackedWrapper center = moment();
-  /* istanbul ignore next */
+  @trackedWrapper center = DateTime.now();
+
+  /** @type {DateTime[]} */
   @trackedWrapper disabledDates = [];
 
   @service currentUser;
@@ -59,7 +60,7 @@ export default class IndexController extends Controller {
     return this._allActivities.filter((a) => {
       return (
         a.get("date") &&
-        a.get("date").isSame(this.date, "day") &&
+        a.get("date").hasSame(this.date, "day") &&
         a.get("user.id") === this.currentUser.user?.id &&
         !a.get("isDeleted")
       );
@@ -78,24 +79,21 @@ export default class IndexController extends Controller {
       return this.storedActivitiesDuration;
     }
 
-    return moment
-      .duration()
-      .add(this.storedActivitiesDuration)
-      .add(this._activeActivityDuration);
+    return this.storedActivitiesDuration.plus(this._activeActivityDuration);
   }
 
   /**
    * The duration sum of all stored activities of the selected day
    *
-   * @property {moment.duration} activitySum
+   * @property {Duration} activitySum
    * @public
    */
   get storedActivitiesDuration() {
     return this._activities
       .filter((a) => !a.active)
       .reduce((total, current) => {
-        return total.add(current.get("duration"));
-      }, moment.duration());
+        return total.plus(current.get("duration"));
+      }, Duration.fromMillis(0));
   }
 
   /**
@@ -116,8 +114,8 @@ export default class IndexController extends Controller {
     const duration = this._activities
       .filter((a) => a.active)
       .reduce((total, current) => {
-        return total.add(moment().diff(current.get("from")));
-      }, moment.duration());
+        return total.plus(DateTime.now().diff(current.get("from")));
+      }, Duration.fromMillis(0));
 
     this._activeActivityDuration = duration;
 
@@ -171,7 +169,7 @@ export default class IndexController extends Controller {
     return this._allAttendances.filter((attendance) => {
       return (
         attendance.get("date") &&
-        attendance.get("date").isSame(this.date, "day") &&
+        attendance.get("date").hasSame(this.date, "day") &&
         attendance.get("user.id") === this.currentUser.user?.id &&
         !attendance.get("isDeleted")
       );
@@ -181,13 +179,13 @@ export default class IndexController extends Controller {
   /**
    * The duration sum of all attendances of the selected day
    *
-   * @property {moment.duration} attendanceSum
+   * @property {Duration} attendanceSum
    * @public
    */
   get attendanceSum() {
     return this._attendances.reduce((total, current) => {
-      return total.add(current.duration);
-    }, moment.duration());
+      return total.plus(current.duration);
+    }, Duration.fromMillis(0));
   }
 
   /**
@@ -219,7 +217,7 @@ export default class IndexController extends Controller {
   get _reports() {
     return this.allReports.filter((report) => {
       return (
-        report.date.isSame(this.date, "day") &&
+        report.date.hasSame(this.date, "day") &&
         report.get("user.id") === this.currentUser.user?.id &&
         !report.isNew &&
         !report.isDeleted
@@ -236,7 +234,7 @@ export default class IndexController extends Controller {
   get _absences() {
     return this.allAbsences.filter((absence) => {
       return (
-        absence.date.isSame(this.date, "day") &&
+        absence.date.hasSame(this.date, "day") &&
         absence.get("user.id") === this.currentUser.user?.id &&
         !absence.isNew &&
         !absence.isDeleted
@@ -247,7 +245,7 @@ export default class IndexController extends Controller {
   /**
    * The duration sum of all reports of the selected day
    *
-   * @property {moment.duration} reportSum
+   * @property {Duration} reportSum
    * @public
    */
   get reportSum() {
@@ -255,8 +253,8 @@ export default class IndexController extends Controller {
     const absenceDurations = this._absences.map((a) => a.duration);
 
     return [...reportDurations, ...absenceDurations].reduce(
-      (val, dur) => val.add(dur),
-      moment.duration(),
+      (val, dur) => val.plus(dur),
+      Duration.fromMillis(0),
     );
   }
 
@@ -284,18 +282,18 @@ export default class IndexController extends Controller {
   }
 
   /**
-   * The currently selected day as a moment object
+   * The currently selected day as a luxon object
    *
-   * @property {moment} date
+   * @property {DateTime} date
    * @public
    */
   @cached
   get date() {
-    return moment(this.day, "YYYY-MM-DD");
+    return DateTime.fromISO(this.day);
   }
 
   set date(value) {
-    this.day = value.format("YYYY-MM-DD");
+    this.day = value.toISODate();
     // share the newly selected date
     this.tracking.date = value;
   }
@@ -303,7 +301,7 @@ export default class IndexController extends Controller {
   /**
    * The expected worktime of the user
    *
-   * @property {moment.duration} expectedWorktime
+   * @property {Duration} expectedWorktime
    * @public
    */
   get expectedWorktime() {
@@ -371,7 +369,7 @@ export default class IndexController extends Controller {
     // }
     const container = [...allReports, ...allAbsences, ...allHolidays].reduce(
       (obj, model) => {
-        const d = model.get("date").format("YYYY-MM-DD");
+        const d = model.get("date").toISODate();
 
         obj[d] = obj[d] || { reports: [], absences: [], publicHolidays: [] };
 
@@ -383,13 +381,13 @@ export default class IndexController extends Controller {
     );
 
     return Array.from({ length: 56 }, (value, index) =>
-      moment(this.date).add(index - 28, "days"),
+      this.date.plus({ days: index - 28 }),
     ).map((d) => {
       const {
         reports = [],
         absences = [],
         publicHolidays = [],
-      } = container[d.format("YYYY-MM-DD")] || {};
+      } = container[d.toISODate()] || {};
 
       let prefix = "";
 
@@ -401,13 +399,13 @@ export default class IndexController extends Controller {
 
       return {
         day: d,
-        active: d.isSame(this.date, "day"),
+        active: d.hasSame(this.date, "day"),
         absence: !!absences.length,
-        workday: this.workdays.includes(d.isoWeekday()),
+        workday: this.workdays.includes(d.weekday),
         worktime: [
           ...reports.map((r) => r.duration),
           ...absences.map((r) => r.duration),
-        ].reduce((val, dur) => val.add(dur), moment.duration()),
+        ].reduce((val, dur) => val.plus(dur), Duration.fromMillis(0)),
         holiday: !!publicHolidays.length,
         prefix,
       };
@@ -418,28 +416,27 @@ export default class IndexController extends Controller {
    * Set a new center for the calendar and load all disabled dates
    *
    * @method setCenter
-   * @param {Object} value The value to set center to
-   * @param {moment} value.moment The moment version of the value
-   * @param {Date} value.date The date version of the value
+   * @param {Duration} value The value to set center to
    * @public
    */
-  setCenter = dropTask(async ({ moment: center }) => {
+  setCenter = dropTask(async (center) => {
     await Promise.resolve();
 
-    const from = moment(center)
+    const from = center
       .startOf("month")
       .startOf("week")
       .startOf("day")
-      .add(1, "days");
-    const to = moment(center)
+      .plus(1, { days: 1 });
+
+    const to = center
       .endOf("month")
       .endOf("week")
       .endOf("day")
-      .add(1, "days");
+      .plus(1, { days: 1 });
 
     const params = {
-      from_date: from.format("YYYY-MM-DD"),
-      to_date: to.format("YYYY-MM-DD"),
+      from_date: from.toISODate(),
+      to_date: to.toISODate(),
     };
 
     const absences = await this.store.query("absence", {
@@ -457,14 +454,15 @@ export default class IndexController extends Controller {
       ...absences.map((a) => a.date),
       ...publicHolidays.map((h) => h.date),
     ];
-    const date = moment(from);
+
     const workdays = this.workdays;
+    let date = from;
 
     while (date < to) {
-      if (!workdays.includes(date.isoWeekday())) {
-        disabled.push(moment(date));
+      if (!workdays.includes(date.weekday)) {
+        disabled.push(date);
       }
-      date.add(1, "days");
+      date = date.plus({ days: 1 });
     }
 
     this.disabledDates = disabled;
@@ -474,12 +472,12 @@ export default class IndexController extends Controller {
   /**
    * The disabled dates without the current date
    *
-   * @property {moment[]} disabledDatesForEdit
+   * @property {DateTime[]} disabledDatesForEdit
    * @public
    */
   get disabledDatesForEdit() {
     return this.disabledDates.filter(
-      (date) => !date.isSame(this.absence.date, "day"),
+      (date) => !date.hasSame(this.absence.date, "day"),
     );
   }
 
@@ -492,14 +490,14 @@ export default class IndexController extends Controller {
    */
   @action
   rollback(changeset) {
-    this.setCenter.perform({ moment: this.date });
+    this.setCenter.perform(this.date);
 
     changeset.rollback();
   }
 
   @action
   updateSelection(changeset, key, value, ...args) {
-    changeset.set(key, value.moment);
+    changeset.set(key, value.datetime);
     // prevent pointer event from bubbling
     args.lastObject?.preventDefault();
   }

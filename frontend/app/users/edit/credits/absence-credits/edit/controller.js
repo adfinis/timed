@@ -46,7 +46,7 @@ export default class UsersEditAbsenceCreditsController extends Controller {
       }
 
       const year =
-        allYears.find((y) => y === String(changeset.get("date").year())) || "";
+        allYears.find((y) => y === String(changeset.get("date").year)) || "";
 
       await this.router.transitionTo("users.edit.credits", this.user.id, {
         queryParams: { year },

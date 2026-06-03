@@ -4,7 +4,7 @@
  * @public
  */
 import { helper } from "@ember/component/helper";
-import moment from "moment";
+import { Duration } from "luxon";
 
 /**
  * Helper to determine the color of a balance
@@ -18,7 +18,7 @@ import moment from "moment";
  * @public
  */
 export function balanceHighlightClass([balance]) {
-  const minutes = moment.isDuration(balance) ? balance.asMinutes() : 0;
+  const minutes = Duration.isDuration(balance) ? balance.as("minutes") : 0;
 
   if (minutes > 0) {
     return "text-success";
