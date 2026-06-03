@@ -1,8 +1,17 @@
 packages:
   - ui-core
+  - frontend
 
 autoInstallPeers: false
 
-onlyBuiltDependencies:
+ignoredBuiltDependencies:
+  - "@scarf/scarf"
   - core-js
-  - esbuild
+
+onlyBuiltDependencies:
+  - esbuild # see https://github.com/evanw/esbuild/issues/4085#issuecomment-2696009329, can safely be removed as it's an optimization
+  - ember-can # we depend on https://github.com/adfinis/ember-can/, ideally we move this to a package registry in the future so this can go
+
+overrides:
+  ember-inflector: 6.0.0
+  tracked-built-ins: ~4.0.0
