@@ -9,7 +9,7 @@ import {
 import Durationpicker, {
   ActivityDurationpicker,
   ReportDurationpicker,
-} from "#src/components/durationpicker.gts";
+} from "#src/components/ui-durationpicker.gts";
 import { Duration } from "luxon";
 import { fn } from "@ember/helper";
 import { tracked } from "@glimmer/tracking";

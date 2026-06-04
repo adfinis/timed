@@ -4,9 +4,15 @@ name: ui-core CI
 on:
   push:
     branches: [main]
-    paths: ["ember/ui-core/**"]
+    paths:
+      - ember/package.json
+      - ember/pnpm-workspace.yaml
+      - ember/ui-core/**
   pull_request:
-    paths: ["ember/ui-core/**"]
+    paths:
+      - ember/package.json
+      - ember/pnpm-workspace.yaml
+      - ember/ui-core/**
 
 env:
   NODE_VERSION: 20

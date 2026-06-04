@@ -45,10 +45,13 @@ jobs:
       matrix:
         config:
           - name: backend
+            path: backend
             version-file: pyproject.toml
           - name: frontend
-            version-file: package.json
+            path: ember
+            version-file: frontend/package.json
           - name: customer-center
+            path: customer-center
             version-file: package.json
 
     permissions:
@@ -70,7 +73,7 @@ jobs:
 
       - name: Adjust Versions
         run: |
-          sed 's/"0.0.0"/"${{ needs.semrel.outputs.version }}"/g' -i ./${{ matrix.config.name }}/${{ matrix.config.version-file }}
+          sed 's/"0.0.0"/"${{ needs.semrel.outputs.version }}"/g' -i ./${{ matrix.config.path }}/${{ matrix.config.version-file }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
@@ -105,7 +108,7 @@ jobs:
         uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
         id: docker
         with:
-          context: ./${{ matrix.config.name }}/
+          context: ./${{ matrix.config.path }}/
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: |

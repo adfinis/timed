@@ -1,7 +1,7 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "../helpers";
 import { render } from "@ember/test-helpers";
-import Modal from "#src/components/modal.gts";
+import Modal from "#src/components/ui-modal.gts";
 import { toggle } from "@nullvoxpopuli/ember-composable-helpers";
 import { tracked } from "@glimmer/tracking";
 import { on } from "@ember/modifier";

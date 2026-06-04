@@ -13,6 +13,14 @@
   ],
   "compilerOptions": {
     "rootDir": ".",
+    "paths": {
+      "ember-source": ["./node_modules/ember-source"],
+      "ember-source/*": ["./node_modules/ember-source/*"],
+      "@glimmer/component": ["./node_modules/@glimmer/component"],
+      "@glimmer/component/*": ["./node_modules/@glimmer/component/*"],
+      "@glint/template": ["./node_modules/@glint/template"],
+      "@glint/template/*": ["./node_modules/@glint/template/*"]
+    },
     "types": [
       "ember-source/types",
       "vite/client",

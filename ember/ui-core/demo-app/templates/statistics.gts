@@ -1,4 +1,4 @@
-import NavTabs from "#src/components/nav-tabs.gts";
+import NavTabs from "#src/components/ui-nav-tabs.gts";
 import Layout from "../components/layout.gts";
 
 const OPTIONS = ["year", "month", "customer", "project", "task", "user"];

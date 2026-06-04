@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { module, test } from "qunit";
 import { setupRenderingTest } from "../../helpers";
-import Checkbox from "#src/components/checkbox.gts";
+import Checkbox from "#src/components/ui-checkbox.gts";
 import { tracked } from "@glimmer/tracking";
 import { click, render } from "@ember/test-helpers";
 import { fn } from "@ember/helper";
