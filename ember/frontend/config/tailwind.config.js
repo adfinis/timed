@@ -1,12 +1,15 @@
 "use strict";
-// located in <app root>/config/tailwind/
 
 const path = require("path");
 
 const forms = require("@tailwindcss/forms");
 
 const appRoot = path.join(__dirname, "../");
+const workspaceRoot = path.join(appRoot, "../");
+
 const appEntry = path.join(appRoot, "app");
+const uiCoreEntry = path.join(workspaceRoot, "ui-core", "src");
+
 const relevantFilesGlob = "**/*.{html,js,ts,hbs,gjs,gts}";
 
 // add opacity to any color by using color-mix
@@ -16,7 +19,10 @@ const colorMixOpacity = (color) =>
 const borderColor = colorMixOpacity("var(--border)");
 
 module.exports = {
-  content: [path.join(appEntry, relevantFilesGlob)],
+  content: [
+    path.join(uiCoreEntry, relevantFilesGlob),
+    path.join(appEntry, relevantFilesGlob),
+  ],
   darkMode: "class",
   theme: {
     extend: {
