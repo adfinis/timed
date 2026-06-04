@@ -13,6 +13,10 @@ importers:
   .: {}
 
   frontend:
+    dependencies:
+      '@glimmer/component':
+        specifier: 1.1.2
+        version: 1.1.2(@babel/core@7.28.6)
     devDependencies:
       '@adfinis/eslint-config':
         specifier: 3.0.2
@@ -65,9 +69,6 @@ importers:
       '@fortawesome/free-solid-svg-icons':
         specifier: ^7.1.0
         version: 7.1.0
-      '@glimmer/component':
-        specifier: 1.1.2
-        version: 1.1.2(@babel/core@7.28.6)
       '@glimmer/tracking':
         specifier: 1.1.2
         version: 1.1.2
