@@ -140,7 +140,7 @@
     "tracked-built-ins": "~4.0.0",
     "tracked-toolbox": "2.0.0",
     "ui-core": "workspace:*",
-    "webpack": "5.103.0"
+    "webpack": "5.107.2"
   },
   "engines": {
     "node": ">= 18"
