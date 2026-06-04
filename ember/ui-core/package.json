@@ -84,7 +84,7 @@
     "@types/qunit": "^2.19.12",
     "autoprefixer": "^10.4.23",
     "babel-plugin-ember-template-compilation": "^2.2.5",
-    "concurrently": "^9.0.1",
+    "concurrently": "^10.0.0",
     "ember-keyboard": "^9.0.4",
     "ember-lifeline": "^7.0.0",
     "ember-modifier": "^4.2.2",
