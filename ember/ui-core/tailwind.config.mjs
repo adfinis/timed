@@ -1,5 +1,7 @@
 "use strict";
 
+// tailwind config used in demo-app, consumers should provide their own
+
 import forms from "@tailwindcss/forms";
 
 const colorMixOpacity = (color) =>

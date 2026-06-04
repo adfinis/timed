@@ -2,6 +2,7 @@ import { babel } from "@rollup/plugin-babel";
 import { Addon } from "@embroider/addon-dev/rollup";
 import { fileURLToPath } from "node:url";
 import { resolve, dirname } from "node:path";
+import fs from "node:fs";
 
 const addon = new Addon({
   srcDir: "src",
@@ -11,6 +12,19 @@ const addon = new Addon({
 const rootDirectory = dirname(fileURLToPath(import.meta.url));
 const babelConfig = resolve(rootDirectory, "./babel.publish.config.cjs");
 const tsConfig = resolve(rootDirectory, "./tsconfig.publish.json");
+
+// small plugin to copy files without processing
+const copy = ({ src: srcStr, dest: destStr }) => ({
+  name: "copy-styles-plugin",
+  generateBundle() {
+    const src = resolve(rootDirectory, srcStr);
+    const dest = resolve(rootDirectory, destStr);
+
+    if (fs.existsSync(src)) {
+      fs.cpSync(src, dest, { recursive: true });
+    }
+  },
+});
 
 export default {
   // This provides defaults that work well alongside `publicEntrypoints` below.
@@ -72,5 +86,9 @@ export default {
 
     // Remove leftover build artifacts when starting a new build.
     addon.clean(),
+
+    // copy over raw styles (the consumer does post-processing)
+    // this is after `addon.clean()` because it would delete these
+    copy({ src: "src/styles", dest: "dist/styles" }),
   ],
 };
