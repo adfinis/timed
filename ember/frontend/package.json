@@ -26,6 +26,9 @@
     "pretest": "pnpm --filter ui-core build",
     "test": "ember test"
   },
+  "dependencies": {
+    "@glimmer/component": "1.1.2"
+  },
   "devDependencies": {
     "@adfinis/eslint-config": "3.0.2",
     "@apollo/client": "^4.0.10",
@@ -44,7 +47,6 @@
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/free-regular-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@glimmer/component": "1.1.2",
     "@glimmer/tracking": "1.1.2",
     "@html-next/vertical-collection": "4.0.2",
     "@nullvoxpopuli/ember-composable-helpers": "^5.3.0",
