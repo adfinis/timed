@@ -42,7 +42,7 @@ updates:
       default-days: 7
 
   - package-ecosystem: docker
-    directory: "/frontend"
+    directory: "/ember"
     schedule:
       interval: daily
       time: "12:00"
@@ -54,7 +54,20 @@ updates:
       default-days: 7
 
   - package-ecosystem: npm
-    directory: "/frontend"
+    directory: "/ember/ui-core"
+    schedule:
+      interval: daily
+      time: "12:00"
+      timezone: "Europe/Zurich"
+    open-pull-requests-limit: 20
+    commit-message:
+      prefix: chore
+      include: scope
+    cooldown:
+      default-days: 7
+
+  - package-ecosystem: npm
+    directory: "/ember/frontend"
     schedule:
       interval: daily
       time: "12:00"
