@@ -13,10 +13,10 @@
         as |f|
       >
 
-        <Card>
-          <Card::Header><h4 class="text-center">{{if credit.isNew "New" "Edit"}}
-              absence credit</h4></Card::Header>
-          <Card::Block class="grid gap-2">
+        <Card as |c|>
+          <c.header><h4 class="text-center">{{if credit.isNew "New" "Edit"}}
+              absence credit</h4></c.header>
+          <c.block class="grid gap-2">
             <f.input @label="Type" @name="absenceType" as |fi|>
               <div class="btn-group [&>*]:w-full">
                 {{#each this.absenceTypes.lastSuccessful.value as |type|}}
@@ -51,8 +51,8 @@
               @name="comment"
             />
 
-          </Card::Block>
-          <Card::Footer class="flex justify-between">
+          </c.block>
+          <c.footer class="flex justify-between">
             <LinkTo
               @route="users.edit.credits.index"
               @model={{this.user.id}}
@@ -72,7 +72,7 @@
                 @disabled={{f.model.isInvalid}}
               />
             </div>
-          </Card::Footer>
+          </c.footer>
         </Card>
       </ValidatedForm>
       <div class="grid-cell"></div>

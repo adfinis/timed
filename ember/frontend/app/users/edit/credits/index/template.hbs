@@ -28,10 +28,11 @@
   <Card
     class="grid grid-rows-[min-content,1fr,min-content]"
     data-test-absence-credits
+    as |c|
   >
-    <Card::Header><h4>Absence credits</h4></Card::Header>
+    <c.header><h4>Absence credits</h4></c.header>
     {{#let (can "create absence-credit") as |canCreate|}}
-      <Card::Block>
+      <c.block>
         {{#if this.absenceCredits.isRunning}}
           <Empty>
             <LoadingIcon />
@@ -84,31 +85,32 @@
 
           {{/let}}
         {{/if}}
-      </Card::Block>
-      <Card::Footer>
+      </c.block>
+      <c.footer>
         {{#if canCreate}}
           <LinkTo
             @route="users.edit.credits.absence-credits.new"
             class="btn btn-primary block w-min whitespace-nowrap"
           >Add new credit</LinkTo>
         {{/if}}
-      </Card::Footer>
+      </c.footer>
     {{/let}}
   </Card>
 
   <Card
     class="grid grid-rows-[min-content,1fr,min-content]"
     data-test-overtime-credits
+    as |c|
   >
     {{#let (can "create overtime-credit") as |canCreate|}}
-      <Card::Header><h4>Overtime credits</h4></Card::Header>
+      <c.header><h4>Overtime credits</h4></c.header>
       {{#if this.overtimeCredits.isRunning}}
         <Empty>
           <LoadingIcon />
         </Empty>
       {{else}}
         {{#let this.overtimeCredits.lastSuccessful.value as |overtimeCredits|}}
-          <Card::Block>
+          <c.block>
             {{#if overtimeCredits}}
               <Table class="table--striped table">
                 <Table::Thead>
@@ -155,10 +157,10 @@
                 {{/if}}
               </Empty>
             {{/if}}
-          </Card::Block>
+          </c.block>
         {{/let}}
       {{/if}}
-      <Card::Footer>
+      <c.footer>
         {{#if canCreate}}
           <LinkTo
             @route="users.edit.credits.overtime-credits.new"
@@ -166,7 +168,7 @@
           >Add new credit</LinkTo>
         {{/if}}
 
-      </Card::Footer>
+      </c.footer>
     {{/let}}
   </Card>
 </div>

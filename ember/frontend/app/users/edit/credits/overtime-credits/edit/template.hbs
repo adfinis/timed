@@ -13,12 +13,12 @@
           @on-submit={{perform this.save}}
           as |f|
         >
-          <Card>
-            <Card::Header>
+          <Card as |c|>
+            <c.header>
               <h3 class="text-center">{{if credit.isNew "New" "Edit"}}
                 overtime credit</h3>
-            </Card::Header>
-            <Card::Block class="grid gap-2">
+            </c.header>
+            <c.block class="grid gap-2">
               <div>
                 <f.input @label="Date" @name="date" as |fi|>
                   <Datepicker @value={{fi.value}} @onChange={{fi.update}} />
@@ -36,8 +36,8 @@
                 @name="comment"
                 @placeholder="Comment"
               />
-            </Card::Block>
-            <Card::Footer class="flex justify-between">
+            </c.block>
+            <c.footer class="flex justify-between">
               <LinkTo
                 @route="users.edit.credits.index"
                 @model={{this.user.id}}
@@ -58,7 +58,7 @@
                   @disabled={{f.model.isInvalid}}
                 />
               </div>
-            </Card::Footer>
+            </c.footer>
           </Card>
         </ValidatedForm>
       </div>
