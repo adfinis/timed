@@ -10,22 +10,22 @@
       {{else}}
         {{#let this.projects.lastSuccessful.value as |projects|}}
           {{#if projects}}
-            <Table class="table--striped table">
-              <Table::Thead>
-                <Table::Tr>
-                  <Table::Th>Customer</Table::Th>
-                  <Table::Th>Project</Table::Th>
-                </Table::Tr>
-              </Table::Thead>
+            <UiTable @striped={{true}} as |t|>
+              <t.thead>
+                <t.tr>
+                  <t.th>Customer</t.th>
+                  <t.th>Project</t.th>
+                </t.tr>
+              </t.thead>
               <tbody>
                 {{#each projects as |project|}}
-                  <Table::Tr @striped={{true}} @last={{true}}>
-                    <Table::Td>{{project.customer.name}}</Table::Td>
-                    <Table::Td>{{project.name}}</Table::Td>
-                  </Table::Tr>
+                  <t.tr @striped={{true}} @last={{true}}>
+                    <t.td>{{project.customer.name}}</t.td>
+                    <t.td>{{project.name}}</t.td>
+                  </t.tr>
                 {{/each}}
               </tbody>
-            </Table>
+            </UiTable>
           {{else}}
             <Empty>
               <FaIcon @icon="folder-open" />
