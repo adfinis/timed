@@ -1,5 +1,7 @@
 import { fn, hash, uniqueId, array } from "@ember/helper";
 import { on } from "@ember/modifier";
+// eslint-disable-next-line ember/no-at-ember-render-modifiers
+import didInsert from "@ember/render-modifiers/modifiers/did-insert";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import includes from "@nullvoxpopuli/ember-composable-helpers/helpers/includes";
 import noop from "@nullvoxpopuli/ember-composable-helpers/helpers/noop";
@@ -362,7 +364,10 @@ const AnalysisIndexTemplate = <template>
                   </Tr>
                 </Thead>
               </Table>
-              <ScrollContainer class="analysis-scrollable-container">
+              <ScrollContainer
+                class="analysis-scrollable-container"
+                {{didInsert @controller.restoreScrollPosition}}
+              >
                 <Table class="table--striped table--analysis table table-fixed">
                   <Colgroup />
                   <tbody>
