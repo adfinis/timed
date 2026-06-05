@@ -54,6 +54,10 @@ const validateVerified = (key, newValue, oldValue, changes, content) => {
     return true;
   }
 
+  if ((content.review || changes.review) && newValue) {
+    return "Report can't be set as needs review and verified.";
+  }
+
   // the task can be null when verifying multiple reports, therefore we
   // also validate against a change in customer/project
   if (
@@ -82,8 +86,16 @@ const validateTask = (key, newValue, oldValue, changes, content) => {
   );
 };
 
+const validateReview = (key, newValue, oldValue, changes, content) => {
+  if ((content.verified || changes.verified) && newValue) {
+    return "Report can't be set as needs review and verified.";
+  }
+  return true;
+};
+
 export default {
   verified: validateVerified,
+  review: validateReview,
   task: validateTask,
   reviewComment: [
     validateReviewCommentRejected,
