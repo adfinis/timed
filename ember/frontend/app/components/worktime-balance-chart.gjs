@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import EmberChart from "ember-cli-chart/_app_/components/ember-chart.js";
+import EmberChart from "ember-cli-chart/components/ember-chart";
 import { Duration } from "luxon";
 
 import humanizeDuration from "timed/utils/humanize-duration";
