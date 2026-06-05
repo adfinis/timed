@@ -324,7 +324,10 @@ const AnalysisIndexTemplate = <template>
                   </Tr>
                 </Thead>
               </Table>
-              <ScrollContainer class="analysis-scrollable-container">
+              <ScrollContainer
+                class="analysis-scrollable-container"
+                data-test-reports-table
+              >
                 <Table class="table--striped table--analysis table table-fixed">
                   <Colgroup @columns={{@controller.activeTableColumns}} />
                   <tbody>
