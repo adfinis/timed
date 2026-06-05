@@ -1,7 +1,10 @@
 import Route from "@ember/routing/route";
+import { service } from "@ember/service";
 import { runTask } from "ember-lifeline";
 
 export default class AnalysisIndexRoute extends Route {
+  @service scrollRestorer;
+
   queryParams = {
     rejected: {
       refreshModel: true,
@@ -28,5 +31,8 @@ export default class AnalysisIndexRoute extends Route {
 
   setupController(controller) {
     controller.prefetchData.perform();
+
+    controller.restoreScrollPosition();
+    this.scrollRestorer.storeScrollElement("analysis-scrollable-container");
   }
 }
