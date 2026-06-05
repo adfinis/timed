@@ -5,6 +5,7 @@ import {
   visit,
   find,
   findAll,
+  waitUntil,
 } from "@ember/test-helpers";
 import { selectChoose } from "ember-power-select/test-support";
 import { authenticateSession } from "ember-simple-auth/test-support";
@@ -271,5 +272,44 @@ module("Acceptance | analysis", function (hooks) {
     assert.dom("[data-test-review] input").isNotDisabled();
     assert.dom("[data-test-billed] input").isNotDisabled();
     assert.dom("[data-test-verified] input").isDisabled();
+  });
+
+  test("can restore scroll", async function (assert) {
+    this.server.createList("report", 60, {
+      userId: this.user.id,
+    });
+
+    await visit(`/analysis?user=${this.user.id}`);
+
+    // the following lines imitate a user reviewing some reports
+    // first he clicks some reports
+    await click("tbody > tr:nth-child(1)");
+    await click("tbody > tr:nth-child(2)");
+    await click("tbody > tr:nth-child(3)");
+
+    // here the reviewer scrolls down a little
+    const scrollableContainer = find("[data-test-reports-table]");
+    scrollableContainer.scrollTo({
+      top: 258,
+      left: 0,
+    });
+
+    const originalScrollTop = scrollableContainer.scrollTop;
+
+    // here the reviewer edits the reports, but then cancels it
+    await click("[data-test-edit-selected]");
+    await click("button[data-test-cancel]");
+
+    // this is needed, since it checks the scrollTop too fast and therefore would always compare 0 == originalScrollTop
+    await waitUntil(
+      function () {
+        return find("[data-test-reports-table]").scrollTop === 258;
+      },
+      { timeout: 2000 },
+    );
+
+    // check if the scroll is the same as before the editing of the reports
+    const currentScrollTop = find("[data-test-reports-table]").scrollTop;
+    assert.strictEqual(currentScrollTop, originalScrollTop);
   });
 });
