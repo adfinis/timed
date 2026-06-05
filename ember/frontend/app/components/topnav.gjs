@@ -6,7 +6,6 @@ import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import { LinkTo } from "@ember/routing";
 import TimedClock from "timed/components/timed-clock";
-import appVersion from "ember-cli-app-version/_app_/helpers/app-version.js";
 import List from "timed/components/topnav/list";
 import ListItem from "timed/components/topnav/list-item";
 import LinkTo0 from "timed/components/topnav/link-to";
@@ -14,6 +13,7 @@ import { fn } from "@ember/helper";
 import can from "ember-can/helpers/can";
 import ReportReviewWarning from "timed/components/report-review-warning";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
+import config from "timed/config/environment";
 
 export default class Topnav extends Component {
   @service currentUser;
@@ -38,7 +38,7 @@ export default class Topnav extends Component {
         <div class="leading-4 transition-all max-md:hidden lg:ml-1 lg:text-[1.075rem]">
           Timed
           <div class="text-2xs text-foreground-muted font-mono font-normal">
-            v{{appVersion versionOnly=true showExtended=true}}
+            v{{config.version}}
           </div>
         </div>
       </LinkTo>

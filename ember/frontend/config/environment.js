@@ -1,6 +1,7 @@
 /* jshint node: true */
 module.exports = function (environment) {
   const ENV = {
+    version: "0.0.0",
     modulePrefix: "timed",
     environment,
     rootURL: "/",

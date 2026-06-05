@@ -117,9 +117,6 @@ importers:
       ember-cli:
         specifier: ~6.4.0
         version: 6.4.0(@types/node@25.0.8)
-      ember-cli-app-version:
-        specifier: 7.0.0
-        version: 7.0.0(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5))
       ember-cli-babel:
         specifier: 8.2.0
         version: 8.2.0(@babel/core@7.28.6)
@@ -3859,12 +3856,6 @@ packages:
     peerDependenciesMeta:
       ember-data:
         optional: true
-
-  ember-cli-app-version@7.0.0:
-    resolution: {integrity: sha512-zWIkxvlRrW7w1/vp+bGkmS27QsVum7NKp8N9DgAjhFMWuKewVqGyl/jeYaujMS/I4WSKBzSG9WHwBy2rjbUWxA==}
-    engines: {node: '>= 18'}
-    peerDependencies:
-      ember-source: ^3.28.0 || >= 4.0.0
 
   ember-cli-babel-plugin-helpers@1.1.1:
     resolution: {integrity: sha512-sKvOiPNHr5F/60NLd7SFzMpYPte/nnGkq/tMIfXejfKHIhaiIkYFqX8Z9UFTKWLLn+V7NOaby6niNPZUdvKCRw==}
@@ -12448,14 +12439,6 @@ snapshots:
       - '@glint/template'
       - supports-color
       - webpack
-
-  ember-cli-app-version@7.0.0(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5)):
-    dependencies:
-      ember-cli-babel: 7.26.11
-      ember-source: 6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5)
-      git-repo-info: 2.1.1
-    transitivePeerDependencies:
-      - supports-color
 
   ember-cli-babel-plugin-helpers@1.1.1: {}
 
