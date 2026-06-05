@@ -7,7 +7,6 @@ import { on } from "@ember/modifier";
 import VerticalCollection from "@html-next/vertical-collection/components/vertical-collection/component";
 import emberPowerSelectIsEqual from "ember-power-select/helpers/ember-power-select-is-equal";
 import eq from "ember-truth-helpers/helpers/eq";
-import ensureSafeComponent from "@embroider/util/_app_/helpers/ensure-safe-component.js";
 
 const isTouchDevice = !!window && "ontouchstart" in window;
 
@@ -108,7 +107,7 @@ export default class OptimizedPowerSelectOptionsComponent extends Component {
     {{!--template-lint-disable  require-context-role--}}
     <li class="ember-power-select-option" aria-selected="{{emberPowerSelectIsEqual option @select.selected}}" aria-disabled="{{option.disabled}}" aria-current="{{eq option @select.highlighted}}" data-option-index="{{@groupIndex}}{{index}}" role="option">
       {{#if @extra.optionTemplate}}
-        {{component (ensureSafeComponent @extra.optionTemplate) option=option current=(eq option @select.highlighted)}}
+        {{component @extra.optionTemplate option=option current=(eq option @select.highlighted)}}
       {{else}}
         {{yield option @select}}
       {{/if}}

@@ -6,7 +6,7 @@ import { trackedTask } from "reactiveweb/ember-concurrency";
 import customOptionTemplate from "timed/components/optimized-power-select/custom-options/user-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/user-selection";
 import { hash } from "@ember/helper";
-import ensureSafeComponent from "@embroider/util/_app_/helpers/ensure-safe-component.js";
+import OptimizedPowerSelectComponent from "timed/components/optimized-power-select";
 
 export default class UserSelection extends Component {
   selectedTemplate = customSelectedTemplate;
@@ -41,4 +41,4 @@ export default class UserSelection extends Component {
   get users() {
     return this._users.value ?? [];
   }
-<template>{{yield (hash user=(component (ensureSafeComponent "optimized-power-select") options=this.users disabled=@disabled selected=@user placeholder="Select user..." searchField="longName" tagName="div" class="user-select rounded" allowClear=true onChange=@onChange extra=(hash lazy=true selectedTemplate=this.selectedTemplate optionTemplate=this.optionTemplate)))}}</template>}
+<template>{{yield (hash user=(component OptimizedPowerSelectComponent options=this.users disabled=@disabled selected=@user placeholder="Select user..." searchField="longName" tagName="div" class="user-select rounded" allowClear=true onChange=@onChange extra=(hash lazy=true selectedTemplate=this.selectedTemplate optionTemplate=this.optionTemplate)))}}</template>}

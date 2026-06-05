@@ -11,9 +11,9 @@ import taskOptionTemplate from "timed/components/optimized-power-select/custom-o
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/task-selection";
 import sortArchivedLast from "timed/utils/sort-archived-last";
 import { hash } from "@ember/helper";
-import ensureSafeComponent from "@embroider/util/_app_/helpers/ensure-safe-component.js";
 import or from "ember-truth-helpers/helpers/or";
 import not from "ember-truth-helpers/helpers/not";
+import OptimizedPowerSelectComponent from "timed/components/optimized-power-select";
 
 const sortByArchivedAndName = sortArchivedLast((a, b) => {
   return a.name > b.name ? 1 : -1;
@@ -416,4 +416,4 @@ export default class TaskSelectionComponent extends Component {
     this.customersAndRecentTasksTask,
     () => [this.history, this.tracking.recentTasks, this.archived],
   );
-<template>{{yield (hash customer=(component (ensureSafeComponent "optimized-power-select") options=this.customersAndRecentTasks disabled=@disabled selected=this.customer placeholder="Select customer..." searchField="longName" allowClear=true tagName="div" class="customer-select rounded" onChange=this.onCustomerChange extra=(hash selectedTemplate=this.selectedTemplate optionTemplate=this.customerOptionTemplate)) project=(component (ensureSafeComponent "optimized-power-select") options=this.projects disabled=(or @disabled (not this.customer)) selected=this.project placeholder="Select project..." searchField="name" allowClear=true tagName="div" class="project-select rounded" onChange=this.onProjectChange extra=(hash selectedTemplate=this.selectedTemplate optionTemplate=this.projectOptionTemplate)) task=(component (ensureSafeComponent "optimized-power-select") options=this.tasks disabled=(or @disabled (not this.project)) selected=this.task placeholder="Select task..." searchField="name" allowClear=true tagName="div" class="task-select rounded" onChange=this.onTaskChange extra=(hash selectedTemplate=this.selectedTemplate optionTemplate=this.taskOptionTemplate)) clear=this.clear reset=this.reset)}}</template>}
+<template>{{yield (hash customer=(component OptimizedPowerSelectComponent options=this.customersAndRecentTasks disabled=@disabled selected=this.customer placeholder="Select customer..." searchField="longName" allowClear=true tagName="div" class="customer-select rounded" onChange=this.onCustomerChange extra=(hash selectedTemplate=this.selectedTemplate optionTemplate=this.customerOptionTemplate)) project=(component OptimizedPowerSelectComponent options=this.projects disabled=(or @disabled (not this.customer)) selected=this.project placeholder="Select project..." searchField="name" allowClear=true tagName="div" class="project-select rounded" onChange=this.onProjectChange extra=(hash selectedTemplate=this.selectedTemplate optionTemplate=this.projectOptionTemplate)) task=(component OptimizedPowerSelectComponent options=this.tasks disabled=(or @disabled (not this.project)) selected=this.task placeholder="Select task..." searchField="name" allowClear=true tagName="div" class="task-select rounded" onChange=this.onTaskChange extra=(hash selectedTemplate=this.selectedTemplate optionTemplate=this.taskOptionTemplate)) clear=this.clear reset=this.reset)}}</template>}
