@@ -2,7 +2,6 @@ import Component from "@glimmer/component";
 import { Duration } from "luxon";
 import humanizeDuration from "timed/utils/humanize-duration";
 
-// TODO: take this from tailwind.config.js
 import EmberChart from "ember-cli-chart/_app_/components/ember-chart.js";
 const FONT_SANS = ['"Source Sans 3"', "sans-serif"];
 const FONT_MONO = ['"Source Code Pro"', "monospace"];

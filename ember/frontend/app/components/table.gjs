@@ -1,4 +1,5 @@
-
-<template><table class="w-full" ...attributes>
-  {{yield}}
-</table></template>
+<template>
+  <table class="w-full" ...attributes>
+    {{yield}}
+  </table>
+</template>

@@ -74,7 +74,9 @@ module("Integration | Component | statistic list/bar", function (hooks) {
 
   test("The Chart color is green when spent effort is in the budget and the task is archived", async function (assert) {
     await render(
-      <template><Bar @value={{1}} @archived={{true}} @goal={{1}} @remaining={{0}} /></template>,
+      <template>
+        <Bar @value={{1}} @archived={{true}} @goal={{1}} @remaining={{0}} />
+      </template>,
     );
 
     const element = this.element.querySelector(".statistic-list-bar");
@@ -89,7 +91,9 @@ module("Integration | Component | statistic list/bar", function (hooks) {
 
   test("The Chart color is RED when spent effort is over the budget", async function (assert) {
     await render(
-      <template><Bar @value={{0.5}} @goal={{0.4}} @remaining={{0}} /></template>,
+      <template>
+        <Bar @value={{0.5}} @goal={{0.4}} @remaining={{0}} />
+      </template>,
     );
 
     const element = this.element.querySelector(".statistic-list-bar");
@@ -115,7 +119,9 @@ module("Integration | Component | statistic list/bar", function (hooks) {
 
   test("The Chart color is blue & there is remaining when spent effort is in the budget", async function (assert) {
     await render(
-      <template><Bar @value={{0.25}} @goal={{1}} @remaining={{0.5}} /></template>,
+      <template>
+        <Bar @value={{0.25}} @goal={{1}} @remaining={{0.5}} />
+      </template>,
     );
 
     const element = this.element.querySelector(".statistic-list-bar");

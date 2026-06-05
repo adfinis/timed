@@ -50,8 +50,16 @@ export default class DateButtonsComponent extends Component {
       }
     }
   }
-<template><div class="grid grid-cols-2 gap-2 lg:grid-cols-3" ...attributes>
-  {{#each this.choices as |choice index|}}
-    <button class="btn btn-default date-button px-3" data-test-preset-date={{index}} type="button" {{on "click" (fn this.selectDate choice)}}>{{choice}}</button>
-  {{/each}}
-</div></template>}
+  <template>
+    <div class="grid grid-cols-2 gap-2 lg:grid-cols-3" ...attributes>
+      {{#each this.choices as |choice index|}}
+        <button
+          class="btn btn-default date-button px-3"
+          data-test-preset-date={{index}}
+          type="button"
+          {{on "click" (fn this.selectDate choice)}}
+        >{{choice}}</button>
+      {{/each}}
+    </div>
+  </template>
+}

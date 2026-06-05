@@ -14,9 +14,17 @@ module("Integration | Component | user selection", function (hooks) {
     const user = this.server.create("user");
     this.set("user", user);
 
-    await render(<template><UserSelection @user={{this.user}} @onChange={{fn (mut this.user)}} as |u|>
-  {{u.user}}
-</UserSelection></template>);
+    await render(
+      <template>
+        <UserSelection
+          @user={{this.user}}
+          @onChange={{fn (mut this.user)}}
+          as |u|
+        >
+          {{u.user}}
+        </UserSelection>
+      </template>,
+    );
 
     assert.strictEqual(
       find(".user-select .ember-power-select-selected-item").textContent.trim(),

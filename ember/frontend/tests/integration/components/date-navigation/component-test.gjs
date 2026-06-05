@@ -14,7 +14,12 @@ module("Integration | Component | date navigation", function (hooks) {
     this.set("date", DATE);
 
     await render(
-      <template><DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} /></template>,
+      <template>
+        <DateNavigation
+          @current={{this.date}}
+          @onChange={{fn (mut this.date)}}
+        />
+      </template>,
     );
 
     assert.strictEqual(this.date.toISODate(), "2017-01-10");
@@ -24,7 +29,12 @@ module("Integration | Component | date navigation", function (hooks) {
     this.set("date", DATE);
 
     await render(
-      <template><DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} /></template>,
+      <template>
+        <DateNavigation
+          @current={{this.date}}
+          @onChange={{fn (mut this.date)}}
+        />
+      </template>,
     );
 
     await click("[data-test-next]");
@@ -36,7 +46,12 @@ module("Integration | Component | date navigation", function (hooks) {
     this.set("date", DATE);
 
     await render(
-      <template><DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} /></template>,
+      <template>
+        <DateNavigation
+          @current={{this.date}}
+          @onChange={{fn (mut this.date)}}
+        />
+      </template>,
     );
 
     await click("[data-test-previous]");
@@ -48,7 +63,12 @@ module("Integration | Component | date navigation", function (hooks) {
     this.set("date", DATE);
 
     await render(
-      <template><DateNavigation @current={{this.date}} @onChange={{fn (mut this.date)}} /></template>,
+      <template>
+        <DateNavigation
+          @current={{this.date}}
+          @onChange={{fn (mut this.date)}}
+        />
+      </template>,
     );
 
     await click("[data-test-today]");

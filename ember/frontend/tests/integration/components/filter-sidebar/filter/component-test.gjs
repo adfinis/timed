@@ -18,7 +18,18 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
       selected: 2,
     });
 
-    await render(<template><Filter @type="button" @selected={{this.selected}} @options={{this.options}} @valuePath="id" @labelPath="label" @onChange={{fn (mut this.selected)}} /></template>);
+    await render(
+      <template>
+        <Filter
+          @type="button"
+          @selected={{this.selected}}
+          @options={{this.options}}
+          @valuePath="id"
+          @labelPath="label"
+          @onChange={{fn (mut this.selected)}}
+        />
+      </template>,
+    );
 
     assert.dom("button").exists({ count: 3 });
 
@@ -44,7 +55,18 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
       selected: 2,
     });
 
-    await render(<template><Filter @type="select" @selected={{this.selected}} @options={{this.options}} @valuePath="id" @labelPath="label" @onChange={{fn (mut this.selected)}} /></template>);
+    await render(
+      <template>
+        <Filter
+          @type="select"
+          @selected={{this.selected}}
+          @options={{this.options}}
+          @valuePath="id"
+          @labelPath="label"
+          @onChange={{fn (mut this.selected)}}
+        />
+      </template>,
+    );
 
     assert.dom("option").exists({ count: 3 });
 
@@ -68,7 +90,15 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
       DateTime.fromObject({ year: 2017, month: 11, day: 1 }),
     );
 
-    await render(<template><Filter @type="date" @selected={{this.selected}} @onChange={{fn (mut this.selected)}} /></template>);
+    await render(
+      <template>
+        <Filter
+          @type="date"
+          @selected={{this.selected}}
+          @onChange={{fn (mut this.selected)}}
+        />
+      </template>,
+    );
 
     assert.dom("input").hasValue(this.selected.toFormat("dd.MM.yyyy"));
 
@@ -83,7 +113,15 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
   test("works with type search", async function (assert) {
     this.set("selected", "foobar");
 
-    await render(<template><Filter @type="search" @selected={{this.selected}} @onChange={{fn (mut this.selected)}} /></template>);
+    await render(
+      <template>
+        <Filter
+          @type="search"
+          @selected={{this.selected}}
+          @onChange={{fn (mut this.selected)}}
+        />
+      </template>,
+    );
 
     assert.dom("input").hasValue(this.selected);
 
@@ -93,9 +131,13 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
   });
 
   test("works with block style", async function (assert) {
-    await render(<template><Filter>
-  Works
-</Filter></template>);
+    await render(
+      <template>
+        <Filter>
+          Works
+        </Filter>
+      </template>,
+    );
 
     assert.dom("div").includesText("Works");
   });

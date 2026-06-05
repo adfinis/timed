@@ -1,16 +1,26 @@
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-<template><div class="{{if @option.archived "inactive"}} flex items-center justify-between" title="{{if @option.isTask @option.longName @option.name}}{{if @option.archived " (archived)"}}">
-  {{#if @option.isTask}}
-    <span class="history history-text inline-flex flex-col xl:text-lg">
-      <small class="text-2xs -mb-0.5 mt-0.5 text-[color-mix(in_srgb,currentColor,transparent_10%)] xl:text-xs">{{@option.project.customer.name}}
-        &gt;
-        {{@option.project.name}}</small>
+<template>
+  <div
+    class="{{if @option.archived 'inactive'}} flex items-center justify-between"
+    title="{{if @option.isTask @option.longName @option.name}}{{if
+      @option.archived
+      ' (archived)'
+    }}"
+  >
+    {{#if @option.isTask}}
+      <span class="history history-text inline-flex flex-col xl:text-lg">
+        <small
+          class="text-2xs -mb-0.5 mt-0.5 text-[color-mix(in_srgb,currentColor,transparent_10%)] xl:text-xs"
+        >{{@option.project.customer.name}}
+          &gt;
+          {{@option.project.name}}</small>
+        {{@option.name}}
+      </span>
+    {{else}}
       {{@option.name}}
-    </span>
-  {{else}}
-    {{@option.name}}
-  {{/if}}
-  {{#if @option.archived}}
-    <FaIcon @icon="archive" @prefix="fas" />
-  {{/if}}
-</div></template>
+    {{/if}}
+    {{#if @option.archived}}
+      <FaIcon @icon="archive" @prefix="fas" />
+    {{/if}}
+  </div>
+</template>

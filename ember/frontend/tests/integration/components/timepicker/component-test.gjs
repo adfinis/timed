@@ -1,4 +1,10 @@
-import { fillIn, blur, render, triggerKeyEvent, settled } from "@ember/test-helpers";
+import {
+  fillIn,
+  blur,
+  render,
+  triggerKeyEvent,
+  settled,
+} from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
@@ -26,7 +32,9 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     await fillIn("input", "13:15");
@@ -46,7 +54,9 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     await fillIn("input", "24:15");
@@ -60,7 +70,9 @@ module("Integration | Component | timepicker", function (hooks) {
     this.set("value", null);
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     await fillIn("input", "xx:xx");
@@ -84,7 +96,9 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     this.element
@@ -109,7 +123,9 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     this.element
@@ -134,7 +150,9 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     this.element
@@ -160,7 +178,9 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     this.element
@@ -186,7 +206,9 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     this.element
@@ -212,7 +234,9 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     this.element
@@ -238,7 +262,9 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     this.element
@@ -279,7 +305,14 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @min={{this.min}} @max={{this.max}} @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker
+          @min={{this.min}}
+          @max={{this.max}}
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     this.element
@@ -315,7 +348,13 @@ module("Integration | Component | timepicker", function (hooks) {
     );
 
     await render(
-      <template><Timepicker @precision={{5}} @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker
+          @precision={{5}}
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     this.element
@@ -334,7 +373,9 @@ module("Integration | Component | timepicker", function (hooks) {
     this.set("value", DateTime.fromObject({ hour: 12, minute: 30 }));
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     await fillIn("input", "");
@@ -347,7 +388,9 @@ module("Integration | Component | timepicker", function (hooks) {
     this.set("value", null);
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     this.element
@@ -366,7 +409,9 @@ module("Integration | Component | timepicker", function (hooks) {
     this.set("value", null);
 
     await render(
-      <template><Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Timepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     this.element

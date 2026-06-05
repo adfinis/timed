@@ -7,7 +7,11 @@ module("Integration | Component | Modal::Body", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(<template><Body>Test</Body></template>);
+    await render(
+      <template>
+        <Body>Test</Body>
+      </template>,
+    );
 
     assert.dom(this.element).hasText("Test");
   });

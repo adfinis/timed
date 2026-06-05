@@ -1,9 +1,11 @@
 import cannot from "ember-can/helpers/cannot";
-<template>{{#if (cannot "access page")}}
-  <div class="text-center" data-test-access-forbidden ...attributes>
-    <h1>Access forbidden</h1>
-    <h4>You do not have the permission to access this page</h4>
-  </div>
-{{else}}
-  {{yield}}
-{{/if}}</template>
+<template>
+  {{#if (cannot "access page")}}
+    <div class="text-center" data-test-access-forbidden ...attributes>
+      <h1>Access forbidden</h1>
+      <h4>You do not have the permission to access this page</h4>
+    </div>
+  {{else}}
+    {{yield}}
+  {{/if}}
+</template>

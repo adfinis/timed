@@ -1,4 +1,9 @@
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-<template><div ...attributes title="This project's comments are visible to the customer">
-  <FaIcon @icon="eye" />
-</div></template>
+<template>
+  <div
+    ...attributes
+    title="This project's comments are visible to the customer"
+  >
+    <FaIcon @icon="eye" />
+  </div>
+</template>

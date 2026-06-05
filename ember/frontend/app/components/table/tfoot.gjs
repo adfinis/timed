@@ -1,4 +1,5 @@
-
-<template><tfoot class="border-b-border/50 border-t-2" ...attributes>
-  {{yield}}
-</tfoot></template>
+<template>
+  <tfoot class="border-b-border/50 border-t-2" ...attributes>
+    {{yield}}
+  </tfoot>
+</template>

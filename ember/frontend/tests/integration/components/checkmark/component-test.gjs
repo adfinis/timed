@@ -17,7 +17,9 @@ module("Integration | Component | checkmark", function (hooks) {
   });
 
   test("works highlight", async function (assert) {
-    await render(<template><Checkmark @checked={{true}} @highlight={{true}} /></template>);
+    await render(
+      <template><Checkmark @checked={{true}} @highlight={{true}} /></template>,
+    );
     assert.dom(".fa-square-check").exists({ count: 1 });
     assert.dom(".highlight").exists({ count: 1 });
   });

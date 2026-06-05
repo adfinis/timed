@@ -16,7 +16,9 @@ module("Integration | Component | attendance slider", function (hooks) {
   test("renders", async function (assert) {
     this.set("attendance", ATTENDANCE);
 
-    await render(<template><AttendanceSlider @attendance={{this.attendance}} /></template>);
+    await render(
+      <template><AttendanceSlider @attendance={{this.attendance}} /></template>,
+    );
 
     assert.dom(".noUi-connect").exists();
   });
@@ -29,7 +31,14 @@ module("Integration | Component | attendance slider", function (hooks) {
       assert.ok(attendance);
     });
 
-    await render(<template><AttendanceSlider @attendance={{this.attendance}} @onDelete={{this.deleteAction}} /></template>);
+    await render(
+      <template>
+        <AttendanceSlider
+          @attendance={{this.attendance}}
+          @onDelete={{this.deleteAction}}
+        />
+      </template>,
+    );
 
     await click(".fa-trash-can");
   });
@@ -43,7 +52,9 @@ module("Integration | Component | attendance slider", function (hooks) {
       }),
     );
 
-    await render(<template><AttendanceSlider @attendance={{this.attendance}} /></template>);
+    await render(
+      <template><AttendanceSlider @attendance={{this.attendance}} /></template>,
+    );
 
     assert.dom("span").hasText("24:00");
   });

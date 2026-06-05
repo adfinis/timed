@@ -1,6 +1,10 @@
 import range from "@nullvoxpopuli/ember-composable-helpers/helpers/range";
-<template><div class="loading-icon grid h-40 w-40 grid-cols-3 gap-0.5">
-  {{#each (range 0 9)}}
-    <div class="loading-dot odd:bg-primary even:bg-tertiary-dark rounded-xl odd:animate-[loading_2s_ease-in-out_infinite] even:animate-[loading_1.5s_ease-in-out_infinite]" />
-  {{/each}}
-</div></template>
+<template>
+  <div class="loading-icon grid h-40 w-40 grid-cols-3 gap-0.5">
+    {{#each (range 0 9)}}
+      <div
+        class="loading-dot odd:bg-primary even:bg-tertiary-dark rounded-xl odd:animate-[loading_2s_ease-in-out_infinite] even:animate-[loading_1.5s_ease-in-out_infinite]"
+      />
+    {{/each}}
+  </div>
+</template>

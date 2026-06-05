@@ -14,7 +14,13 @@ module("Integration | Component | weekly overview day", function (hooks) {
     this.set("worktime", Duration.fromObject({ hours: 8 }));
 
     await render(
-      <template><WeeklyOverviewDay @day={{this.day}} @expected={{this.expected}} @worktime={{this.worktime}} /></template>,
+      <template>
+        <WeeklyOverviewDay
+          @day={{this.day}}
+          @expected={{this.expected}}
+          @worktime={{this.worktime}}
+        />
+      </template>,
     );
 
     assert.ok(this.element);
@@ -28,7 +34,14 @@ module("Integration | Component | weekly overview day", function (hooks) {
     this.set("worktime", Duration.fromObject({ hours: 8, minutes: 30 }));
 
     await render(
-      <template><WeeklyOverviewDay @day={{this.day}} @expected={{this.expected}} @worktime={{this.worktime}} @prefix="Ferien" /></template>,
+      <template>
+        <WeeklyOverviewDay
+          @day={{this.day}}
+          @expected={{this.expected}}
+          @worktime={{this.worktime}}
+          @prefix="Ferien"
+        />
+      </template>,
     );
 
     assert
@@ -43,7 +56,13 @@ module("Integration | Component | weekly overview day", function (hooks) {
     this.set("clicked", false);
 
     await render(
-      <template><WeeklyOverviewDay @day={{this.day}} @expected={{this.expected}} @worktime={{this.worktime}} /></template>,
+      <template>
+        <WeeklyOverviewDay
+          @day={{this.day}}
+          @expected={{this.expected}}
+          @worktime={{this.worktime}}
+        />
+      </template>,
     );
 
     assert.notOk(this.clicked);
@@ -52,7 +71,14 @@ module("Integration | Component | weekly overview day", function (hooks) {
     assert.notOk(this.clicked);
 
     await render(
-      <template><WeeklyOverviewDay @day={{this.day}} @expected={{this.expected}} @worktime={{this.worktime}} @onClick={{fn (mut this.clicked) true}} /></template>,
+      <template>
+        <WeeklyOverviewDay
+          @day={{this.day}}
+          @expected={{this.expected}}
+          @worktime={{this.worktime}}
+          @onClick={{fn (mut this.clicked) true}}
+        />
+      </template>,
     );
 
     assert.notOk(this.clicked);

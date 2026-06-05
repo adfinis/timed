@@ -10,8 +10,12 @@ module("Integration | Component | welcome modal", function (hooks) {
   setupMirage(hooks);
 
   test("renders", async function (assert) {
-    await render(<template><ModalTarget />
-<WelcomeModal @visible={{true}} /></template>);
+    await render(
+      <template>
+        <ModalTarget />
+        <WelcomeModal @visible={{true}} />
+      </template>,
+    );
     assert.ok(this.element);
   });
 });

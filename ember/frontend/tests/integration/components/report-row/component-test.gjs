@@ -32,7 +32,12 @@ module("Integration | Component | report row", function (hooks) {
     this.set("didDelete", false);
 
     await render(
-      <template><ReportRow @report={{this.report}} @onDelete={{fn (mut this.didDelete) true}} /></template>,
+      <template>
+        <ReportRow
+          @report={{this.report}}
+          @onDelete={{fn (mut this.didDelete) true}}
+        />
+      </template>,
     );
 
     await click(".btn-danger");

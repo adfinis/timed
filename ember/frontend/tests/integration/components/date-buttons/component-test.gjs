@@ -13,7 +13,12 @@ module("Integration | Component | date buttons", function (hooks) {
     this.set("toDate", null);
 
     await render(
-      <template><DateButtons @onUpdateFromDate={{fn (mut this.fromDate)}} @onUpdateToDate={{fn (mut this.toDate)}} /></template>,
+      <template>
+        <DateButtons
+          @onUpdateFromDate={{fn (mut this.fromDate)}}
+          @onUpdateToDate={{fn (mut this.toDate)}}
+        />
+      </template>,
     );
 
     await click('[data-test-preset-date="0"]');

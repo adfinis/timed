@@ -1,4 +1,5 @@
-
-<template><ul class="flex h-full flex-col md:flex-row" ...attributes>
-  {{yield}}
-</ul></template>
+<template>
+  <ul class="flex h-full flex-col md:flex-row" ...attributes>
+    {{yield}}
+  </ul>
+</template>

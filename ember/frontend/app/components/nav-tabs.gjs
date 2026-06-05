@@ -1,4 +1,5 @@
-
-<template><ul class="nav-tabs -mt-px sm:border-b" ...attributes>
-  {{yield}}
-</ul></template>
+<template>
+  <ul class="nav-tabs -mt-px sm:border-b" ...attributes>
+    {{yield}}
+  </ul>
+</template>

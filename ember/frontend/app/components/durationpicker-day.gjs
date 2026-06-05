@@ -27,4 +27,23 @@ export default class DurationpickerDayComponent extends DurationpickerComponent 
       this._change(this._set(h, m));
     }
   }
-<template><input ...attributes aria-label="day picker" name="duration-day" type="text" class="duration-day form-control rounded" disabled={{@disabled}} pattern={{this.pattern}} value={{this.displayValue}} maxlength={{this.maxlength}} placeholder={{this.placeholder}} autocomplete="off" title={{@title}} {{on "change" this.change}} {{on "keyup" this.handleKeyPress}} {{on "focusout" (optional @onFocusOut)}} /></template>}
+  <template>
+    <input
+      ...attributes
+      aria-label="day picker"
+      name="duration-day"
+      type="text"
+      class="duration-day form-control rounded"
+      disabled={{@disabled}}
+      pattern={{this.pattern}}
+      value={{this.displayValue}}
+      maxlength={{this.maxlength}}
+      placeholder={{this.placeholder}}
+      autocomplete="off"
+      title={{@title}}
+      {{on "change" this.change}}
+      {{on "keyup" this.handleKeyPress}}
+      {{on "focusout" (optional @onFocusOut)}}
+    />
+  </template>
+}

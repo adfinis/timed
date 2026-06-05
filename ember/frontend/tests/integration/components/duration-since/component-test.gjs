@@ -41,7 +41,9 @@ module("Integration | Component | duration since", function (hooks) {
     );
 
     await render(
-      <template><DurationSince @from={{this.start}} @elapsed={{this.elapsed}} /></template>,
+      <template>
+        <DurationSince @from={{this.start}} @elapsed={{this.elapsed}} />
+      </template>,
     );
 
     assert.ok(this.element);

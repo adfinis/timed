@@ -9,16 +9,27 @@ export default class NavTabsAComponent extends Component {
   get activeClass() {
     return "[&.active]:sm:border-border [&.active]:sm:text-foreground-accent [&.active]:sm:border-b-background [&.active]:max-sm:bg-background-muted [&.active]:sm:rounded-t";
   }
-<template>{{#if @route}}
-  {{#if @model}}
-    <LinkTo @route={{@route}} @model={{@model}} class="{{this.class}} {{this.activeClass}}">
-      {{yield}}
-    </LinkTo>
-  {{else}}
-    <LinkTo @route={{@route}} class="{{this.class}} {{this.activeClass}}">
-      {{yield}}
-    </LinkTo>
-  {{/if}}
-{{else}}
-  <a href="#" ...attributes class="{{this.class}} {{this.activeClass}}">{{yield}}</a>
-{{/if}}</template>}
+  <template>
+    {{#if @route}}
+      {{#if @model}}
+        <LinkTo
+          @route={{@route}}
+          @model={{@model}}
+          class="{{this.class}} {{this.activeClass}}"
+        >
+          {{yield}}
+        </LinkTo>
+      {{else}}
+        <LinkTo @route={{@route}} class="{{this.class}} {{this.activeClass}}">
+          {{yield}}
+        </LinkTo>
+      {{/if}}
+    {{else}}
+      <a
+        href="#"
+        ...attributes
+        class="{{this.class}} {{this.activeClass}}"
+      >{{yield}}</a>
+    {{/if}}
+  </template>
+}

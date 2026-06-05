@@ -1,4 +1,8 @@
-
-<template><th class="p-2 text-left align-bottom {{if @light "font-normal" "font-medium"}}" ...attributes>
-  {{yield}}
-</th></template>
+<template>
+  <th
+    class="p-2 text-left align-bottom {{if @light 'font-normal' 'font-medium'}}"
+    ...attributes
+  >
+    {{yield}}
+  </th>
+</template>

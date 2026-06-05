@@ -1,2 +1,6 @@
-
-<template><li class="text-sm max-md:w-full lg:text-[0.9rem]" ...attributes>{{yield}}</li></template>
+<template>
+  <li
+    class="text-sm max-md:w-full lg:text-[0.9rem]"
+    ...attributes
+  >{{yield}}</li>
+</template>

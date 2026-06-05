@@ -1,2 +1,1 @@
-
 <template>{{@selected.name}}</template>

@@ -9,12 +9,15 @@ export default class StatisticListColumn extends Component {
   dateTimeForMonth(month) {
     return DateTime.fromObject({ month });
   }
-<template><Td ...attributes>
-  {{#if (eq @layout "DURATION")}}
-    {{humanizeDuration @value false}}
-  {{else if (eq @layout "MONTH")}}
-    {{luxonFormat (this.dateTimeForMonth @value) "MMMM"}}
-  {{else}}
-    {{@value}}
-  {{/if}}
-</Td></template>}
+  <template>
+    <Td ...attributes>
+      {{#if (eq @layout "DURATION")}}
+        {{humanizeDuration @value false}}
+      {{else if (eq @layout "MONTH")}}
+        {{luxonFormat (this.dateTimeForMonth @value) "MMMM"}}
+      {{else}}
+        {{@value}}
+      {{/if}}
+    </Td>
+  </template>
+}

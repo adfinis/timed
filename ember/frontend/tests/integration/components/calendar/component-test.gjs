@@ -14,7 +14,14 @@ module("Integration | Component | calendar", function (hooks) {
       this.center = value.datetime;
     });
 
-    await render(<template><Calendar @center={{this.center}} @onCenterChange={{this.onCenterChangeHandler}} /></template>);
+    await render(
+      <template>
+        <Calendar
+          @center={{this.center}}
+          @onCenterChange={{this.onCenterChangeHandler}}
+        />
+      </template>,
+    );
 
     await select(".nav-select-year select", "2010");
 
@@ -28,7 +35,14 @@ module("Integration | Component | calendar", function (hooks) {
       this.center = value.datetime;
     });
 
-    await render(<template><Calendar @center={{this.center}} @onCenterChange={{this.onCenterChangeHandler}} /></template>);
+    await render(
+      <template>
+        <Calendar
+          @center={{this.center}}
+          @onCenterChange={{this.onCenterChangeHandler}}
+        />
+      </template>,
+    );
 
     const element = document.querySelector(".nav-select-month select");
 

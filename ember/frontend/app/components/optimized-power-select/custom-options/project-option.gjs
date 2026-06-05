@@ -3,13 +3,23 @@ import media from "timed/helpers/media";
 import ProgressTooltip from "timed/components/progress-tooltip";
 import { concat } from "@ember/helper";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-<template><div title="{{@option.name}}{{if @option.archived " (archived)"}}" class="{{if @option.archived "inactive"}}
-    flex items-center justify-between gap-2" id="project-option-{{@option.id}}">
-  {{#if (and @current (media "isMd"))}}
-    <ProgressTooltip @target={{concat "#project-option-" @option.id}} @visible={{@current}} @model={{@option}} />
-  {{/if}}
-  {{@option.name}}
-  {{#if @option.archived}}
-    <FaIcon @icon="archive" @prefix="fas" />
-  {{/if}}
-</div></template>
+<template>
+  <div
+    title="{{@option.name}}{{if @option.archived ' (archived)'}}"
+    class="{{if @option.archived 'inactive'}}
+      flex items-center justify-between gap-2"
+    id="project-option-{{@option.id}}"
+  >
+    {{#if (and @current (media "isMd"))}}
+      <ProgressTooltip
+        @target={{concat "#project-option-" @option.id}}
+        @visible={{@current}}
+        @model={{@option}}
+      />
+    {{/if}}
+    {{@option.name}}
+    {{#if @option.archived}}
+      <FaIcon @icon="archive" @prefix="fas" />
+    {{/if}}
+  </div>
+</template>

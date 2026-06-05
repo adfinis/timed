@@ -22,7 +22,16 @@ module("Integration | Component | statistic list", function (hooks) {
   test("shows an error message", async function (assert) {
     this.set("data", { last: { isError: true } });
 
-    await render(<template><StatisticList @data={{this.data}} @type="year" @ordering="year" @onOrderingChange={{this.noop}} /></template>);
+    await render(
+      <template>
+        <StatisticList
+          @data={{this.data}}
+          @type="year"
+          @ordering="year"
+          @onOrderingChange={{this.noop}}
+        />
+      </template>,
+    );
 
     assert.dom(".empty").includesText("Oops");
   });
@@ -30,7 +39,16 @@ module("Integration | Component | statistic list", function (hooks) {
   test("shows an empty message", async function (assert) {
     this.set("data", { last: { value: [] } });
 
-    await render(<template><StatisticList @data={{this.data}} @type="year" @ordering="year" @onOrderingChange={{this.noop}} /></template>);
+    await render(
+      <template>
+        <StatisticList
+          @data={{this.data}}
+          @type="year"
+          @ordering="year"
+          @onOrderingChange={{this.noop}}
+        />
+      </template>,
+    );
 
     assert.dom(".empty").includesText("No statistics to display");
   });
@@ -38,7 +56,16 @@ module("Integration | Component | statistic list", function (hooks) {
   test("shows a loading icon", async function (assert) {
     this.set("data", { isRunning: true });
 
-    await render(<template><StatisticList @data={{this.data}} @type="year" @ordering="year" @onOrderingChange={{this.noop}} /></template>);
+    await render(
+      <template>
+        <StatisticList
+          @data={{this.data}}
+          @type="year"
+          @ordering="year"
+          @onOrderingChange={{this.noop}}
+        />
+      </template>,
+    );
 
     assert.dom(".loading-icon").exists();
   });
@@ -47,7 +74,17 @@ module("Integration | Component | statistic list", function (hooks) {
     this.set("data", { last: { value: [] } });
     this.set("missingParams", ["foo", "bar"]);
 
-    await render(<template><StatisticList @data={{this.data}} @type="year" @ordering="year" @onOrderingChange={{this.noop}} @missingParams={{this.missingParams}} /></template>);
+    await render(
+      <template>
+        <StatisticList
+          @data={{this.data}}
+          @type="year"
+          @ordering="year"
+          @onOrderingChange={{this.noop}}
+          @missingParams={{this.missingParams}}
+        />
+      </template>,
+    );
 
     assert.dom(".empty").includesText("Foo and bar are required parameters");
   });
@@ -67,9 +104,18 @@ module("Integration | Component | statistic list", function (hooks) {
       },
     });
 
-    await render(<template><div class="page-content--scroll">
-  <StatisticList @data={{this.data}} @type="year" @ordering="year" @onOrderingChange={{this.noop}} />
-</div></template>);
+    await render(
+      <template>
+        <div class="page-content--scroll">
+          <StatisticList
+            @data={{this.data}}
+            @type="year"
+            @ordering="year"
+            @onOrderingChange={{this.noop}}
+          />
+        </div>
+      </template>,
+    );
 
     await waitFor("table tbody tr");
 

@@ -32,7 +32,11 @@ module("Integration | Component | worktime balance chart", function (hooks) {
       })),
     );
 
-    await render(<template><WorktimeBalanceChart @worktimeBalances={{this.data}} /></template>);
+    await render(
+      <template>
+        <WorktimeBalanceChart @worktimeBalances={{this.data}} />
+      </template>,
+    );
     assert.ok(this.element);
 
     assert.deepEqual(

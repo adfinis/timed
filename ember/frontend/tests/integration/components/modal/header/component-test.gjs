@@ -10,9 +10,13 @@ module("Integration | Component | Modal::Header", function (hooks) {
   test("renders", async function (assert) {
     this.set("visible", true);
 
-    await render(<template><Header @close={{fn (mut this.visible) false}}>
-  Test
-</Header></template>);
+    await render(
+      <template>
+        <Header @close={{fn (mut this.visible) false}}>
+          Test
+        </Header>
+      </template>,
+    );
 
     assert.dom(this.element).hasText("Test ×");
   });
@@ -20,9 +24,13 @@ module("Integration | Component | Modal::Header", function (hooks) {
   test("closes on click of the close icon", async function (assert) {
     this.set("visible", true);
 
-    await render(<template><Header @close={{fn (mut this.visible) false}}>
-  Test
-</Header></template>);
+    await render(
+      <template>
+        <Header @close={{fn (mut this.visible) false}}>
+          Test
+        </Header>
+      </template>,
+    );
 
     assert.ok(this.visible);
 

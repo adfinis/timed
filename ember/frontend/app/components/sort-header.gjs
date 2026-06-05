@@ -26,11 +26,19 @@ export default class SortHeader extends Component {
 
     this.args.update(sort);
   }
-<template><Th @light={{true}} class="sort-header cursor-pointer whitespace-nowrap align-bottom" {{on "click" this.click}} ...attributes>
-  {{yield}}
-  {{#if this.active}}
-    <FaIcon @size="xs" @prefix="fas" @icon="sort-{{this.direction}}" />
-  {{else}}
-    <FaIcon @size="xs" @prefix="fas" @icon="sort" />
-  {{/if}}
-</Th></template>}
+  <template>
+    <Th
+      @light={{true}}
+      class="sort-header cursor-pointer whitespace-nowrap align-bottom"
+      {{on "click" this.click}}
+      ...attributes
+    >
+      {{yield}}
+      {{#if this.active}}
+        <FaIcon @size="xs" @prefix="fas" @icon="sort-{{this.direction}}" />
+      {{else}}
+        <FaIcon @size="xs" @prefix="fas" @icon="sort" />
+      {{/if}}
+    </Th>
+  </template>
+}

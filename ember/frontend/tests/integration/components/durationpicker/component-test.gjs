@@ -1,4 +1,11 @@
-import { click, fillIn, blur, render, triggerKeyEvent, settled } from "@ember/test-helpers";
+import {
+  click,
+  fillIn,
+  blur,
+  render,
+  triggerKeyEvent,
+  settled,
+} from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { Duration } from "luxon";
 import { module, test } from "qunit";
@@ -26,7 +33,11 @@ module("Integration | Component | durationpicker", function (hooks) {
   });
 
   test("focus input on wrapper click", async function (assert) {
-    await render(<template><Durationpicker>Click me</Durationpicker></template>);
+    await render(
+      <template>
+        <Durationpicker>Click me</Durationpicker>
+      </template>,
+    );
     await click(".extendend-durationpicker-day");
 
     assert.dom("input").isFocused();
@@ -42,7 +53,12 @@ module("Integration | Component | durationpicker", function (hooks) {
     );
 
     await render(
-      <template><Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Durationpicker
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     await fillIn("input", "13:15");
@@ -62,7 +78,12 @@ module("Integration | Component | durationpicker", function (hooks) {
     );
 
     await render(
-      <template><Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Durationpicker
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     await fillIn("input", "-13:00");
@@ -81,7 +102,12 @@ module("Integration | Component | durationpicker", function (hooks) {
     );
 
     await render(
-      <template><Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Durationpicker
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     await fillIn("input", "abcdef");
@@ -101,7 +127,12 @@ module("Integration | Component | durationpicker", function (hooks) {
     );
 
     await render(
-      <template><Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Durationpicker
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     this.element
@@ -124,7 +155,12 @@ module("Integration | Component | durationpicker", function (hooks) {
     );
 
     await render(
-      <template><Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Durationpicker
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     this.element
@@ -163,7 +199,14 @@ module("Integration | Component | durationpicker", function (hooks) {
     );
 
     await render(
-      <template><Durationpicker @min={{this.min}} @max={{this.max}} @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Durationpicker
+          @min={{this.min}}
+          @max={{this.max}}
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     this.element
@@ -189,7 +232,12 @@ module("Integration | Component | durationpicker", function (hooks) {
     this.set("value", null);
 
     await render(
-      <template><Durationpicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Durationpicker
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     await fillIn("input", "-04:30");

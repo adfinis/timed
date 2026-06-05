@@ -7,7 +7,9 @@ module("Integration | Component | sort header", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders", async function (assert) {
-    await render(<template><SortHeader @current="-test" @by="foo" /></template>);
+    await render(
+      <template><SortHeader @current="-test" @by="foo" /></template>,
+    );
     assert.dom(".fa-sort").exists({ count: 1 });
   });
 
@@ -18,7 +20,13 @@ module("Integration | Component | sort header", function (hooks) {
     });
 
     await render(
-      <template><SortHeader @current={{this.current}} @by="test" @update={{this.update}} /></template>,
+      <template>
+        <SortHeader
+          @current={{this.current}}
+          @by="test"
+          @update={{this.update}}
+        />
+      </template>,
     );
     assert.dom(".fa-sort-down").exists({ count: 1 });
 

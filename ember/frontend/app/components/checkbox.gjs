@@ -11,17 +11,32 @@ export default class Checkbox extends Component {
 
     this.checkboxElementId = guidFor(this);
   }
-<template><div ...attributes>
-  <input type="checkbox" class="rounded" id={{this.checkboxElementId}} checked={{@checked}} disabled={{@disabled}} indeterminate={{eq @checked null}} {{on "change" (pick "target.checked" (optional @onChange))}} />
-  <label for={{this.checkboxElementId}} title={{@title}} class="text-sm xl:text-base">
-    {{#if (has-block)}}
-      {{yield}}
-    {{else}}
-      {{#if @label}}
-        {{@label}}
-      {{else}}
-        &nbsp;
-      {{/if}}
-    {{/if}}
-  </label>
-</div></template>}
+  <template>
+    <div ...attributes>
+      <input
+        type="checkbox"
+        class="rounded"
+        id={{this.checkboxElementId}}
+        checked={{@checked}}
+        disabled={{@disabled}}
+        indeterminate={{eq @checked null}}
+        {{on "change" (pick "target.checked" (optional @onChange))}}
+      />
+      <label
+        for={{this.checkboxElementId}}
+        title={{@title}}
+        class="text-sm xl:text-base"
+      >
+        {{#if (has-block)}}
+          {{yield}}
+        {{else}}
+          {{#if @label}}
+            {{@label}}
+          {{else}}
+            &nbsp;
+          {{/if}}
+        {{/if}}
+      </label>
+    </div>
+  </template>
+}

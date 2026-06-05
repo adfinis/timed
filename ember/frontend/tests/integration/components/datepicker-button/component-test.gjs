@@ -13,7 +13,12 @@ module("Integration | Component | datepicker button", function (hooks) {
     this.set("value", DateTime.now());
 
     await render(
-      <template><DatepickerButton @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <DatepickerButton
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     assert.dom(".datepicker").doesNotExist();
@@ -28,7 +33,12 @@ module("Integration | Component | datepicker button", function (hooks) {
     this.set("value", INITIAL_VALUE);
 
     await render(
-      <template><DatepickerButton @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <DatepickerButton
+          @value={{this.value}}
+          @onChange={{fn (mut this.value)}}
+        />
+      </template>,
     );
 
     await clickTrigger();

@@ -11,16 +11,37 @@ export default class TopnavLinkToComponent extends Component {
   get activeClass() {
     return "active text-foreground-primary visited:text-foreground-primary bg-primary-dark hover:bg-primary";
   }
-<template>{{#if @route}}
-  {{#if @model}}
-    <LinkTo @route={{@route}} @model={{@model}} class={{this.class}} @activeClass={{this.activeClass}} {{on "click" (optional @onClick)}} ...attributes>
-      {{yield}}
-    </LinkTo>
-  {{else}}
-    <LinkTo @route={{@route}} class={{this.class}} @activeClass={{this.activeClass}} {{on "click" (optional @onClick)}} ...attributes>
-      {{yield}}
-    </LinkTo>
-  {{/if}}
-{{else}}
-  <a {{on "click" (optional @onClick)}} href="#" ...attributes class={{this.class}}>{{yield}}</a>
-{{/if}}</template>}
+  <template>
+    {{#if @route}}
+      {{#if @model}}
+        <LinkTo
+          @route={{@route}}
+          @model={{@model}}
+          class={{this.class}}
+          @activeClass={{this.activeClass}}
+          {{on "click" (optional @onClick)}}
+          ...attributes
+        >
+          {{yield}}
+        </LinkTo>
+      {{else}}
+        <LinkTo
+          @route={{@route}}
+          class={{this.class}}
+          @activeClass={{this.activeClass}}
+          {{on "click" (optional @onClick)}}
+          ...attributes
+        >
+          {{yield}}
+        </LinkTo>
+      {{/if}}
+    {{else}}
+      <a
+        {{on "click" (optional @onClick)}}
+        href="#"
+        ...attributes
+        class={{this.class}}
+      >{{yield}}</a>
+    {{/if}}
+  </template>
+}
