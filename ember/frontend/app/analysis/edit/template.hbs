@@ -14,8 +14,8 @@
               @on-submit={{perform this.save}}
               as |f|
             >
-              <Card>
-                <Card::Header>
+              <Card as |c|>
+                <c.header>
                   <h1 class="text-foreground text-center">
                     {{#if
                       (eq this.intersection.lastSuccessful.value.meta.count 1)
@@ -27,7 +27,7 @@
                       reports
                     {{/if}}
                   </h1>
-                </Card::Header>
+                </c.header>
 
                 <TaskSelection
                   @on-set-customer={{queue
@@ -49,7 +49,7 @@
                   }}
                   as |t|
                 >
-                  <Card::Block class="grid gap-2">
+                  <c.block class="grid gap-2">
                     <f.input @labelComponent="void" @name="task">
                       <div class="form-group" data-test-customer>
                         <label>
@@ -248,8 +248,8 @@
                       </label>
                     </f.input>
 
-                  </Card::Block>
-                  <Card::Footer class="flex justify-between">
+                  </c.block>
+                  <c.footer class="flex justify-between">
                     <div class="flex gap-2">
                       <button
                         data-test-cancel
@@ -268,7 +268,7 @@
                       >Reset</button>
                     </div>
                     <f.submit />
-                  </Card::Footer>
+                  </c.footer>
                 </TaskSelection>
               </Card>
             </ValidatedForm>

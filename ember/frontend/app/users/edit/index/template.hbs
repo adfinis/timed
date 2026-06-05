@@ -1,8 +1,8 @@
 <div class="grid-rows-min grid gap-2 md:grid-cols-2 lg:grid-cols-3 [&>*]:h-min">
 
-  <Card>
-    <Card::Header><h4>General information</h4></Card::Header>
-    <Card::Block>
+  <Card as |c|>
+    <c.header><h4>General information</h4></c.header>
+    <c.block>
       <Table class="user-general-info">
         <tbody class="[&>tr>td:last-child]:text-right [&>tr>td]:py-1">
           <tr>
@@ -40,13 +40,13 @@
           {{/if}}
         </tbody>
       </Table>
-    </Card::Block>
-    <Card::Footer />
+    </c.block>
+    <c.footer />
   </Card>
 
-  <Card>
-    <Card::Header><h4>Employments</h4></Card::Header>
-    <Card::Block>
+  <Card as |c|>
+    <c.header><h4>Employments</h4></c.header>
+    <c.block>
       {{#if this.employments.isRunning}}
         <Empty>
           <LoadingIcon />
@@ -91,13 +91,13 @@
           {{/if}}
         {{/let}}
       {{/if}}
-    </Card::Block>
-    <Card::Footer />
+    </c.block>
+    <c.footer />
   </Card>
 
-  <Card>
-    <Card::Header><h4>Absences</h4></Card::Header>
-    <Card::Block>
+  <Card as |c|>
+    <c.header><h4>Absences</h4></c.header>
+    <c.block>
       {{#if this.absences.isRunning}}
         <Empty>
           <LoadingIcon />
@@ -136,7 +136,7 @@
           {{/if}}
         {{/let}}
       {{/if}}
-    </Card::Block>
-    <Card::Footer />
+    </c.block>
+    <c.footer />
   </Card>
 </div>
