@@ -1,18 +1,19 @@
+import { fn } from "@ember/helper";
+import { on } from "@ember/modifier";
+import { LinkTo } from "@ember/routing";
 import { service } from "@ember/service";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import { on } from "@ember/modifier";
+import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
-import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-import { LinkTo } from "@ember/routing";
+import can from "ember-can/helpers/can";
+
+import ReportReviewWarning from "timed/components/report-review-warning";
 import TimedClock from "timed/components/timed-clock";
+import LinkTo0 from "timed/components/topnav/link-to";
 import List from "timed/components/topnav/list";
 import ListItem from "timed/components/topnav/list-item";
-import LinkTo0 from "timed/components/topnav/link-to";
-import { fn } from "@ember/helper";
-import can from "ember-can/helpers/can";
-import ReportReviewWarning from "timed/components/report-review-warning";
-import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 import config from "timed/config/environment";
 
 export default class Topnav extends Component {

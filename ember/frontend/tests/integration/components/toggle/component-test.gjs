@@ -1,8 +1,9 @@
 import { click, render, triggerKeyEvent } from "@ember/test-helpers";
+import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import Toggle from "timed/components/toggle";
-import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 
 module("Integration | Component | Toggle", function (hooks) {
   setupRenderingTest(hooks);
@@ -12,15 +13,21 @@ module("Integration | Component | Toggle", function (hooks) {
   });
 
   test("it renders", async function (assert) {
-    await render(<template><Toggle @icon="eye" @onToggle={{this.noop}} /></template>);
+    await render(
+      <template><Toggle @icon="eye" @onToggle={{this.noop}} /></template>,
+    );
 
     assert.dom(this.element).hasText("");
     assert.dom(".toggle .fa-eye").exists();
 
     // Template block usage:
-    await render(<template><Toggle @onToggle={{this.noop}}>
-  template block text
-</Toggle></template>);
+    await render(
+      <template>
+        <Toggle @onToggle={{this.noop}}>
+          template block text
+        </Toggle>
+      </template>,
+    );
 
     assert.dom(this.element).hasText("template block text");
     assert.dom(".toggle .fa-eye").doesNotExist();
@@ -30,7 +37,13 @@ module("Integration | Component | Toggle", function (hooks) {
     this.set("value", true);
 
     await render(
-      <template><Toggle @icon="eye" @value={{this.value}} @onToggle={{toggle "value" this}} /></template>,
+      <template>
+        <Toggle
+          @icon="eye"
+          @value={{this.value}}
+          @onToggle={{toggle "value" this}}
+        />
+      </template>,
     );
 
     assert.dom(".toggle").hasClass("active");
@@ -47,7 +60,14 @@ module("Integration | Component | Toggle", function (hooks) {
   test("it includes the hint", async function (assert) {
     this.set("disabled", false);
     await render(
-      <template><Toggle @icon="eye" @hint="test" @disabled={{this.disabled}} @onToggle={{this.noop}} /></template>,
+      <template>
+        <Toggle
+          @icon="eye"
+          @hint="test"
+          @disabled={{this.disabled}}
+          @onToggle={{this.noop}}
+        />
+      </template>,
     );
 
     assert.dom(".toggle").hasAttribute("title", "test");

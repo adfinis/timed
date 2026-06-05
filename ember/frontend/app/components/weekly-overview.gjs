@@ -1,6 +1,7 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import style_ from "ember-style-modifier/modifiers/style";
+
 import WeeklyOverviewBenchmark from "timed/components/weekly-overview-benchmark";
 
 export default class WeeklyOverview extends Component {

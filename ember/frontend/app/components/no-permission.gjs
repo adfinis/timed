@@ -1,5 +1,6 @@
-import Empty from "timed/components/empty";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+
+import Empty from "timed/components/empty";
 <template>
   <Empty>
     <FaIcon @icon="hand" />

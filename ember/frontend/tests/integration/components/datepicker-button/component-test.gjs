@@ -1,10 +1,11 @@
+import { fn } from "@ember/helper";
 import { find, render } from "@ember/test-helpers";
 import { clickTrigger } from "ember-basic-dropdown/test-support/helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+
 import DatepickerButton from "timed/components/datepicker-button";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | datepicker button", function (hooks) {
   setupRenderingTest(hooks);

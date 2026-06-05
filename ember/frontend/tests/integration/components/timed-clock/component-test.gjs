@@ -2,7 +2,10 @@ import { getOwner } from "@ember/application";
 import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, skip } from "qunit";
-import TimedClock, { OVERTIME_FEEDBACK_KEY } from "timed/components/timed-clock";
+
+import TimedClock, {
+  OVERTIME_FEEDBACK_KEY,
+} from "timed/components/timed-clock";
 import config from "timed/config/environment";
 
 module("Integration | Component | timed clock", function (hooks) {

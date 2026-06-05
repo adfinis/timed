@@ -1,30 +1,31 @@
+import { get as get0 } from "@ember/helper";
 import { get } from "@ember/object";
 import { capitalize } from "@ember/string";
-import Component from "@glimmer/component";
-import { Duration } from "luxon";
-import parseDjangoDuration from "timed/utils/parse-django-duration";
-import Empty from "timed/components/empty";
-import LoadingIcon from "timed/components/loading-icon";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-import not from "ember-truth-helpers/helpers/not";
-import Table from "timed/components/table";
-import Thead from "timed/components/table/thead";
-import Tr from "timed/components/table/tr";
-import SortHeader from "timed/components/sort-header";
-import Th from "timed/components/table/th";
+import Component from "@glimmer/component";
 import VerticalCollection from "@html-next/vertical-collection/components/vertical-collection/component";
 import slice from "@nullvoxpopuli/ember-composable-helpers/helpers/slice";
-import Column from "timed/components/statistic-list/column";
-import { get as get0 } from "@ember/helper";
-import Td from "timed/components/table/td";
-import or from "ember-truth-helpers/helpers/or";
-import gt from "ember-truth-helpers/helpers/gt";
 import add from "ember-math-helpers/helpers/add";
-import Bar from "timed/components/statistic-list/bar";
 import div_ from "ember-math-helpers/helpers/div";
-import Tfoot from "timed/components/table/tfoot";
 import eq from "ember-truth-helpers/helpers/eq";
+import gt from "ember-truth-helpers/helpers/gt";
+import not from "ember-truth-helpers/helpers/not";
+import or from "ember-truth-helpers/helpers/or";
+import { Duration } from "luxon";
+
+import Empty from "timed/components/empty";
+import LoadingIcon from "timed/components/loading-icon";
+import SortHeader from "timed/components/sort-header";
+import Bar from "timed/components/statistic-list/bar";
+import Column from "timed/components/statistic-list/column";
+import Table from "timed/components/table";
+import Td from "timed/components/table/td";
+import Tfoot from "timed/components/table/tfoot";
+import Th from "timed/components/table/th";
+import Thead from "timed/components/table/thead";
+import Tr from "timed/components/table/tr";
 import humanizeDuration from "timed/helpers/humanize-duration";
+import parseDjangoDuration from "timed/utils/parse-django-duration";
 
 const PLAIN_LAYOUT = "PLAIN";
 const DURATION_LAYOUT = "DURATION";
@@ -167,85 +168,132 @@ export default class StatisticList extends Component {
 
     return `${text} ${suffix} for this statistic`;
   }
-<template><div ...attributes>
-  {{#if @data.isRunning}}
-    <Empty data-test-loading>
-      <LoadingIcon />
-    </Empty>
-  {{else if @data.last.isError}}
-    <Empty data-test-something-went-wrong>
-      <div>
-        <FaIcon @icon="bolt" @prefix="fas" />
-        <h3>Oops... Something went wrong</h3>
-        <p>
-          Have you tried turning it off and on again?
-          <br />
-          Please try refreshing the page.
-        </p>
-      </div>
-    </Empty>
-  {{else if @missingParams}}
-    <Empty data-test-missing-filter-params>
-      <FaIcon @icon="magnifying-glass" @prefix="fas" />
-      <h3>Missing filter parameters</h3>
-      <p>{{this.missingParamsMessage}}</p>
-    </Empty>
-  {{else if (not @data.last.value)}}
-    <Empty>
-      <FaIcon @icon="chart-bar" />
-      <h3>No statistics to display</h3>
-      <p>Maybe try loosening your filters</p>
-    </Empty>
-  {{else}}
-    <Table class="table-striped table--statistics table">
-      <Thead>
-        <Tr>
-          {{#each this.columns as |column|}}
-            {{#if column.ordering}}
-              <SortHeader @current={{@ordering}} @update={{@onOrderingChange}} @by={{column.ordering}}>
-                {{column.title}}
-              </SortHeader>
-            {{else}}
-              <Th @light={{true}}>{{column.title}}</Th>
-            {{/if}}
-          {{/each}}
-          <th class="max-sm:hidden"></th>
-        </Tr>
-      </Thead>
-      <VerticalCollection @items={{slice @data.last.value}} @tagName="tbody" @estimateHeight={{40}} @staticHeight={{true}} @bufferSize={{10}} @containerSelector=".page-content--scroll" as |row|>
-        <Tr @striped={{true}} data-test-statistic-list-row class="[&>*]:leading-5">
-          {{#each this.columns as |column|}}
-            <Column data-test-statistic-list-column @layout={{column.layout}} @value={{get0 row column.path}} />
-          {{/each}}
-          <Td class="w-1/2 max-sm:hidden">
-            {{#let (or row.totalRemainingEffort row.mostRecentRemainingEffort) as |remainingEffort|}}
-              {{#let (if (gt remainingEffort 0) (add row.duration remainingEffort) 0) as |allotted|}}
-                <Bar @value={{div_ row.duration this.maxDuration}} @remaining={{div_ allotted this.maxDuration}} @goal={{div_ row.estimatedTime this.maxDuration}} @archived={{row.archived}} />
-              {{/let}}
-            {{/let}}
-          </Td>
-        </Tr>
-      </VerticalCollection>
-      <Tfoot>
-        <Tr>
-          {{#each this.columns as |column index|}}
-            <Td>
-              <strong>
-                {{#if (not index)}}
-                  Total:
-                {{else if (eq column.title "Duration")}}
-                  <span class="total">{{humanizeDuration this.totalDuration false}}</span>
-                {{else if (eq column.title "Estimated")}}
-                  <span class="total">{{humanizeDuration this.totalEstimatedTime false}}</span>
-                {{else if (eq column.title "Remaining Effort")}}
-                  <span class="total">{{humanizeDuration this.totalRemainingEfforts false}}</span>
+  <template>
+    <div ...attributes>
+      {{#if @data.isRunning}}
+        <Empty data-test-loading>
+          <LoadingIcon />
+        </Empty>
+      {{else if @data.last.isError}}
+        <Empty data-test-something-went-wrong>
+          <div>
+            <FaIcon @icon="bolt" @prefix="fas" />
+            <h3>Oops... Something went wrong</h3>
+            <p>
+              Have you tried turning it off and on again?
+              <br />
+              Please try refreshing the page.
+            </p>
+          </div>
+        </Empty>
+      {{else if @missingParams}}
+        <Empty data-test-missing-filter-params>
+          <FaIcon @icon="magnifying-glass" @prefix="fas" />
+          <h3>Missing filter parameters</h3>
+          <p>{{this.missingParamsMessage}}</p>
+        </Empty>
+      {{else if (not @data.last.value)}}
+        <Empty>
+          <FaIcon @icon="chart-bar" />
+          <h3>No statistics to display</h3>
+          <p>Maybe try loosening your filters</p>
+        </Empty>
+      {{else}}
+        <Table class="table-striped table--statistics table">
+          <Thead>
+            <Tr>
+              {{#each this.columns as |column|}}
+                {{#if column.ordering}}
+                  <SortHeader
+                    @current={{@ordering}}
+                    @update={{@onOrderingChange}}
+                    @by={{column.ordering}}
+                  >
+                    {{column.title}}
+                  </SortHeader>
+                {{else}}
+                  <Th @light={{true}}>{{column.title}}</Th>
                 {{/if}}
-              </strong>
-            </Td>
-          {{/each}}
-          <Td class="max-sm:hidden" />
-        </Tr>
-      </Tfoot>
-    </Table>
-  {{/if}}
-</div></template>}
+              {{/each}}
+              <th class="max-sm:hidden"></th>
+            </Tr>
+          </Thead>
+          <VerticalCollection
+            @items={{slice @data.last.value}}
+            @tagName="tbody"
+            @estimateHeight={{40}}
+            @staticHeight={{true}}
+            @bufferSize={{10}}
+            @containerSelector=".page-content--scroll"
+            as |row|
+          >
+            <Tr
+              @striped={{true}}
+              data-test-statistic-list-row
+              class="[&>*]:leading-5"
+            >
+              {{#each this.columns as |column|}}
+                <Column
+                  data-test-statistic-list-column
+                  @layout={{column.layout}}
+                  @value={{get0 row column.path}}
+                />
+              {{/each}}
+              <Td class="w-1/2 max-sm:hidden">
+                {{#let
+                  (or row.totalRemainingEffort row.mostRecentRemainingEffort)
+                  as |remainingEffort|
+                }}
+                  {{#let
+                    (if
+                      (gt remainingEffort 0)
+                      (add row.duration remainingEffort)
+                      0
+                    )
+                    as |allotted|
+                  }}
+                    <Bar
+                      @value={{div_ row.duration this.maxDuration}}
+                      @remaining={{div_ allotted this.maxDuration}}
+                      @goal={{div_ row.estimatedTime this.maxDuration}}
+                      @archived={{row.archived}}
+                    />
+                  {{/let}}
+                {{/let}}
+              </Td>
+            </Tr>
+          </VerticalCollection>
+          <Tfoot>
+            <Tr>
+              {{#each this.columns as |column index|}}
+                <Td>
+                  <strong>
+                    {{#if (not index)}}
+                      Total:
+                    {{else if (eq column.title "Duration")}}
+                      <span class="total">{{humanizeDuration
+                          this.totalDuration
+                          false
+                        }}</span>
+                    {{else if (eq column.title "Estimated")}}
+                      <span class="total">{{humanizeDuration
+                          this.totalEstimatedTime
+                          false
+                        }}</span>
+                    {{else if (eq column.title "Remaining Effort")}}
+                      <span class="total">{{humanizeDuration
+                          this.totalRemainingEfforts
+                          false
+                        }}</span>
+                    {{/if}}
+                  </strong>
+                </Td>
+              {{/each}}
+              <Td class="max-sm:hidden" />
+            </Tr>
+          </Tfoot>
+        </Table>
+      {{/if}}
+    </div>
+  </template>
+}

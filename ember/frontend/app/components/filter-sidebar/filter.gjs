@@ -1,11 +1,13 @@
 import { uniqueId, get, fn } from "@ember/helper";
-import not from "ember-truth-helpers/helpers/not";
-import or from "ember-truth-helpers/helpers/or";
-import eq from "ember-truth-helpers/helpers/eq";
 import { on } from "@ember/modifier";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
-import Datepicker from "timed/components/datepicker";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
+import eq from "ember-truth-helpers/helpers/eq";
+import not from "ember-truth-helpers/helpers/not";
+import or from "ember-truth-helpers/helpers/or";
+
+import Datepicker from "timed/components/datepicker";
+
 <template>
   <div ...attributes>
     {{#let (uniqueId) as |id|}}

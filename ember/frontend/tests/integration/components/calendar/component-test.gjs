@@ -2,6 +2,7 @@ import { render, select } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+
 import Calendar from "timed/components/calendar";
 
 module("Integration | Component | calendar", function (hooks) {

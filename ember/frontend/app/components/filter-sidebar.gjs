@@ -1,13 +1,14 @@
+import { hash, fn } from "@ember/helper";
+import { on } from "@ember/modifier";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import notEq from "ember-truth-helpers/helpers/not-eq";
-import { on } from "@ember/modifier";
-import { hash, fn } from "@ember/helper";
+
+import FilterSidebarFilter from "timed/components/filter-sidebar/filter";
 import FilterSidebarGroup from "timed/components/filter-sidebar/group";
 import FilterSidebarLabel from "timed/components/filter-sidebar/label";
-import FilterSidebarFilter from "timed/components/filter-sidebar/filter";
-import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
-import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 
 export default class FilterSidebar extends Component {
   @tracked visible = false;

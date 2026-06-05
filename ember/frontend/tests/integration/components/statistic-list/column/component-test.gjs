@@ -2,8 +2,9 @@ import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { Duration } from "luxon";
 import { module, test } from "qunit";
-import humanizeDuration from "timed/utils/humanize-duration";
+
 import Column from "timed/components/statistic-list/column";
+import humanizeDuration from "timed/utils/humanize-duration";
 
 module("Integration | Component | statistic list/column", function (hooks) {
   setupRenderingTest(hooks);

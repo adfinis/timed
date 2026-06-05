@@ -1,6 +1,7 @@
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
 import PowerSelect from "ember-power-select/components/power-select";
+
 import OptimizedPowerSelectOptions from "timed/components/optimized-power-select/options";
 import OptimizedPowerSelectTrigger from "timed/components/optimized-power-select/trigger";
 
@@ -50,4 +51,26 @@ export default class OptimizedPowerSelectComponent extends Component {
     select.actions.scrollTo(item);
     return false;
   }
-<template><PowerSelect ...attributes class={{@class}} @options={{@options}} @placeholder={{@placeholder}} @selected={{@selected}} @disabled={{@disabled}} @allowClear={{@allowClear}} @searchEnabled={{true}} @searchField={{@searchField}} @name={{@name}} @tagName={{@tagName}} @optionsComponent={{component OptimizedPowerSelectOptions}} @triggerComponent={{component OptimizedPowerSelectTrigger}} @onChange={{@onChange}} @extra={{this.extra}} @onFocus={{this.onFocus}} @onKeydown={{this.onKeydown}} @dropdownClass={{@dropdownClass}} /></template>}
+  <template>
+    <PowerSelect
+      ...attributes
+      class={{@class}}
+      @options={{@options}}
+      @placeholder={{@placeholder}}
+      @selected={{@selected}}
+      @disabled={{@disabled}}
+      @allowClear={{@allowClear}}
+      @searchEnabled={{true}}
+      @searchField={{@searchField}}
+      @name={{@name}}
+      @tagName={{@tagName}}
+      @optionsComponent={{component OptimizedPowerSelectOptions}}
+      @triggerComponent={{component OptimizedPowerSelectTrigger}}
+      @onChange={{@onChange}}
+      @extra={{this.extra}}
+      @onFocus={{this.onFocus}}
+      @onKeydown={{this.onKeydown}}
+      @dropdownClass={{@dropdownClass}}
+    />
+  </template>
+}

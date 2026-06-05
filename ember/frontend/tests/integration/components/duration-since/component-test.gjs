@@ -2,6 +2,7 @@ import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime, Duration } from "luxon";
 import { module, test } from "qunit";
+
 import DurationSince from "timed/components/duration-since";
 
 module("Integration | Component | duration since", function (hooks) {

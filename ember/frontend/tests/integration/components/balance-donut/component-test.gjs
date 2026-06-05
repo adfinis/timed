@@ -2,6 +2,7 @@ import { find, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { Duration } from "luxon";
 import { module, test } from "qunit";
+
 import BalanceDonut from "timed/components/balance-donut";
 
 module("Integration | Component | balance donut", function (hooks) {

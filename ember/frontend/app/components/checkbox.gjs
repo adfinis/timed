@@ -1,9 +1,9 @@
+import { on } from "@ember/modifier";
 import { guidFor } from "@ember/object/internals";
 import Component from "@glimmer/component";
-import eq from "ember-truth-helpers/helpers/eq";
-import { on } from "@ember/modifier";
-import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
+import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
+import eq from "ember-truth-helpers/helpers/eq";
 
 export default class Checkbox extends Component {
   constructor(...args) {

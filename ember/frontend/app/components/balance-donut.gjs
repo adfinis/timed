@@ -1,12 +1,13 @@
 import Component from "@glimmer/component";
-import { cached } from "tracked-toolbox";
-import style_ from "ember-style-modifier/modifiers/style";
-import mult from "ember-math-helpers/helpers/mult";
 import min0 from "ember-math-helpers/helpers/min";
-import sub_ from "ember-math-helpers/helpers/sub";
-import formatDuration from "timed/helpers/format-duration";
-import gte from "ember-truth-helpers/helpers/gte";
+import mult from "ember-math-helpers/helpers/mult";
 import round from "ember-math-helpers/helpers/round";
+import sub_ from "ember-math-helpers/helpers/sub";
+import style_ from "ember-style-modifier/modifiers/style";
+import gte from "ember-truth-helpers/helpers/gte";
+import { cached } from "tracked-toolbox";
+
+import formatDuration from "timed/helpers/format-duration";
 
 const { PI, floor, min, abs } = Math;
 

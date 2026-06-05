@@ -1,6 +1,6 @@
-import Component from "@glimmer/component";
-import { LinkTo } from "@ember/routing";
 import { on } from "@ember/modifier";
+import { LinkTo } from "@ember/routing";
+import Component from "@glimmer/component";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 
 export default class TopnavLinkToComponent extends Component {

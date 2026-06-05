@@ -1,8 +1,9 @@
+import { fn } from "@ember/helper";
 import { click, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import FilterSidebar from "timed/components/filter-sidebar";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | filter sidebar", function (hooks) {
   setupRenderingTest(hooks);

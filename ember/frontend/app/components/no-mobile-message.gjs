@@ -1,6 +1,7 @@
-import Empty from "timed/components/empty";
-import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import { LinkTo } from "@ember/routing";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+
+import Empty from "timed/components/empty";
 <template>
   <Empty data-test-no-mobile-message ...attributes>
     <FaIcon @icon="mobile-screen-button" @prefix="fas" />

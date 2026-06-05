@@ -1,3 +1,5 @@
+import { concat } from "@ember/helper";
+import { on } from "@ember/modifier";
 import { action, setProperties } from "@ember/object";
 import { service } from "@ember/service";
 import { isTesting, macroCondition } from "@embroider/macros";
@@ -5,15 +7,14 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { task, timeout } from "ember-concurrency";
 import { scheduleTask } from "ember-lifeline";
+import style_ from "ember-style-modifier/modifiers/style";
+import gte from "ember-truth-helpers/helpers/gte";
+import or from "ember-truth-helpers/helpers/or";
 import { DateTime } from "luxon";
+
 import config from "timed/config/environment";
 
 // local storage key
-import { on } from "@ember/modifier";
-import style_ from "ember-style-modifier/modifiers/style";
-import { concat } from "@ember/helper";
-import or from "ember-truth-helpers/helpers/or";
-import gte from "ember-truth-helpers/helpers/gte";
 export const OVERTIME_FEEDBACK_KEY = "timed-clock-overtime-feedback";
 
 const MAX_OVERTIME = config.APP.OVERTIME_SOFT_LIMIT;
@@ -118,23 +119,80 @@ export default class TimedClock extends Component {
     //   `${this.overtimeFeedback ? "Enabled" : "Disabled"} visual overtime feedback`,
     // );
   }
-<template><a href="#" {{on "click" this.toggleOvertimeFeedback}}>
-  <svg class="timed-clock h-[var(--clock-size)] w-[--clock-size] stroke-[--clock]" viewBox="0 0 512 512" width="100%" height="100%" {{style_ --clock-size=(concat (or @clockSize 50) "px")}} ...attributes data-test-timed-clock>
-    <defs>
-      <radialGradient id="clockGradient" r="50%">
-        <stop offset="0%" stop-color="var(--background-muted)" />
+  <template>
+    <a href="#" {{on "click" this.toggleOvertimeFeedback}}>
+      <svg
+        class="timed-clock h-[var(--clock-size)] w-[--clock-size] stroke-[--clock]"
+        viewBox="0 0 512 512"
+        width="100%"
+        height="100%"
+        {{style_ --clock-size=(concat (or @clockSize 50) "px")}}
+        ...attributes
+        data-test-timed-clock
+      >
+        <defs>
+          <radialGradient id="clockGradient" r="50%">
+            <stop offset="0%" stop-color="var(--background-muted)" />
+            {{#if this.overtimeFeedback}}
+              <stop
+                offset="60%"
+                stop-color="var(--background-muted)"
+                stop-opacity="0%"
+              />
+              <stop
+                offset="100%"
+                stop-color="var(--{{if
+                  (gte this.overtime 0)
+                  'success'
+                  'danger'
+                }})"
+                stop-opacity={{this.overtimeOpacity}}
+              />
+            {{/if}}
+          </radialGradient>
+        </defs>
         {{#if this.overtimeFeedback}}
-          <stop offset="60%" stop-color="var(--background-muted)" stop-opacity="0%" />
-          <stop offset="100%" stop-color="var(--{{if (gte this.overtime 0) "success" "danger"}})" stop-opacity={{this.overtimeOpacity}} />
+          <title>Your overtime: {{this.overtime}}h</title>
         {{/if}}
-      </radialGradient>
-    </defs>
-    {{#if this.overtimeFeedback}}
-      <title>Your overtime: {{this.overtime}}h</title>
-    {{/if}}
-    <circle class="circle" r="240" cx="256" cy="256" stroke-width="20" fill={{if this.overtimeFeedback "url(#clockGradient)" "transparent"}} />
-    <line class="hour" x1="256" y1="144" x2="256" y2="288" stroke-width="30" stroke-linecap="round" transform="rotate({{this.hour}} 256 256)" />
-    <line class="minute" x1="256" y1="80" x2="256" y2="288" stroke-width="20" stroke-linecap="round" transform="rotate({{this.minute}} 256 256)" />
-    <line class="second stroke-[--clock-accent]" x1="256" y1="64" x2="256" y2="288" stroke-width="20" stroke-linecap="round" transform="rotate({{this.second}} 256 256)" />
-  </svg>
-</a></template>}
+        <circle
+          class="circle"
+          r="240"
+          cx="256"
+          cy="256"
+          stroke-width="20"
+          fill={{if this.overtimeFeedback "url(#clockGradient)" "transparent"}}
+        />
+        <line
+          class="hour"
+          x1="256"
+          y1="144"
+          x2="256"
+          y2="288"
+          stroke-width="30"
+          stroke-linecap="round"
+          transform="rotate({{this.hour}} 256 256)"
+        />
+        <line
+          class="minute"
+          x1="256"
+          y1="80"
+          x2="256"
+          y2="288"
+          stroke-width="20"
+          stroke-linecap="round"
+          transform="rotate({{this.minute}} 256 256)"
+        />
+        <line
+          class="second stroke-[--clock-accent]"
+          x1="256"
+          y1="64"
+          x2="256"
+          y2="288"
+          stroke-width="20"
+          stroke-linecap="round"
+          transform="rotate({{this.second}} 256 256)"
+        />
+      </svg>
+    </a>
+  </template>
+}

@@ -1,8 +1,9 @@
 import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
-import { module, test } from "qunit";
-import AsyncList from "timed/components/async-list";
 import eq from "ember-truth-helpers/helpers/eq";
+import { module, test } from "qunit";
+
+import AsyncList from "timed/components/async-list";
 
 module("Integration | Component | async list", function (hooks) {
   setupRenderingTest(hooks);

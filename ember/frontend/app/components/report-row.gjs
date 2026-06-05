@@ -1,24 +1,25 @@
+import { concat, fn } from "@ember/helper";
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
-import { dropTask } from "ember-concurrency";
-import ReportValidations from "timed/validations/report";
-import CanEdit from "timed/components/can-edit";
+import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
+import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import changeset from "ember-changeset/helpers/changeset";
-import ValidatedForm from "ember-validated-form/components/validated-form";
-import { concat, fn } from "@ember/helper";
+import { dropTask } from "ember-concurrency";
 import perform from "ember-concurrency/helpers/perform";
-import TaskSelection from "timed/components/task-selection";
 import not from "ember-truth-helpers/helpers/not";
+import or from "ember-truth-helpers/helpers/or";
+import ValidatedForm from "ember-validated-form/components/validated-form";
+
+import CanEdit from "timed/components/can-edit";
+import Durationpicker from "timed/components/durationpicker";
 import ReportComment from "timed/components/report-comment";
 import ReportDurationpicker from "timed/components/report-durationpicker";
-import Durationpicker from "timed/components/durationpicker";
+import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
-import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
-import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-import or from "ember-truth-helpers/helpers/or";
-import { on } from "@ember/modifier";
-import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
+import ReportValidations from "timed/validations/report";
 
 export default class ReportRowComponent extends Component {
   @service abilities;
@@ -52,53 +53,133 @@ export default class ReportRowComponent extends Component {
     cs.task = task;
     cs.remainingEffort = task?.mostRecentRemainingEffort;
   }
-<template><CanEdit @report={{@report}} as |editable|>
-  {{#let (changeset @report this.ReportValidations) as |cs|}}
-    <ValidatedForm @model={{cs}} class="report-row grid grid-cols-4 gap-2 p-1 lg:grid-cols-[repeat(3,minmax(0,0.9fr)),minmax(0,1.6fr),minmax(0,0.45fr),minmax(2rem,0.6fr),repeat(2,minmax(2rem,0.6fr))] lg:p-1.5 xl:grid-cols-[repeat(3,minmax(0,1.2fr)),minmax(0,1.8fr),minmax(0,0.4fr),minmax(2rem,0.5fr),repeat(2,minmax(2rem,0.5fr))] xl:p-2.5 max-lg:[&>*]:w-full" title={{unless editable (concat "This entry was already verified by " @report.verifiedBy.fullName)}} @on-submit={{perform this.save}} ...attributes as |f|>
-      <TaskSelection @disabled={{not editable}} @task={{cs.task}} @on-set-task={{fn this.updateTask cs}} as |t|>
-        <t.customer class="form-group max-lg:col-span-full
-            {{if cs.error.task "has-error"}}" />
-        <t.project class="form-group max-lg:col-span-full
-            {{if cs.error.task "has-error"}}" />
-        <f.input @labelComponent="void" @errorComponent="void" @name="task">
-          <t.task class="form-group max-lg:col-span-full
-              {{if cs.error.task "has-error"}}" />
-        </f.input>
-      </TaskSelection>
+  <template>
+    <CanEdit @report={{@report}} as |editable|>
+      {{#let (changeset @report this.ReportValidations) as |cs|}}
+        <ValidatedForm
+          @model={{cs}}
+          class="report-row grid grid-cols-4 gap-2 p-1 lg:grid-cols-[repeat(3,minmax(0,0.9fr)),minmax(0,1.6fr),minmax(0,0.45fr),minmax(2rem,0.6fr),repeat(2,minmax(2rem,0.6fr))] lg:p-1.5 xl:grid-cols-[repeat(3,minmax(0,1.2fr)),minmax(0,1.8fr),minmax(0,0.4fr),minmax(2rem,0.5fr),repeat(2,minmax(2rem,0.5fr))] xl:p-2.5 max-lg:[&>*]:w-full"
+          title={{unless
+            editable
+            (concat
+              "This entry was already verified by " @report.verifiedBy.fullName
+            )
+          }}
+          @on-submit={{perform this.save}}
+          ...attributes
+          as |f|
+        >
+          <TaskSelection
+            @disabled={{not editable}}
+            @task={{cs.task}}
+            @on-set-task={{fn this.updateTask cs}}
+            as |t|
+          >
+            <t.customer
+              class="form-group max-lg:col-span-full
+                {{if cs.error.task 'has-error'}}"
+            />
+            <t.project
+              class="form-group max-lg:col-span-full
+                {{if cs.error.task 'has-error'}}"
+            />
+            <f.input @labelComponent="void" @errorComponent="void" @name="task">
+              <t.task
+                class="form-group max-lg:col-span-full
+                  {{if cs.error.task 'has-error'}}"
+              />
+            </f.input>
+          </TaskSelection>
 
-      <div class="form-list-cell form-group max-lg:col-span-full">
-        <label for="row-comment" hidden>Comment</label>
-        <ReportComment @value={{cs.comment}} @disabled={{not editable}} @customerVisible={{cs.task.project.customerVisible}} @onChange={{fn (mut cs.comment)}} @onSubmit={{f.submitAction}} />
-      </div>
-      <div class="form-list-cell form-group cell-duration">
-        <ReportDurationpicker class="report-duration rounded" data-test-report-duration disabled={{not editable}} title="Task duration" @value={{cs.duration}} @onChange={{fn (mut cs.duration)}} />
-      </div>
-      <div class="form-list-cell form-group cell-remaining-effort">
-        {{#if cs.task.project.remainingEffortTracking}}
-          <Durationpicker data-test-report-remaining-effort class="remaining-effort" @disabled={{not editable}} @value={{cs.remainingEffort}} @onChange={{fn (mut cs.remainingEffort)}} @title="Remaining estimated effort" />
-        {{/if}}
-      </div>
+          <div class="form-list-cell form-group max-lg:col-span-full">
+            <label for="row-comment" hidden>Comment</label>
+            <ReportComment
+              @value={{cs.comment}}
+              @disabled={{not editable}}
+              @customerVisible={{cs.task.project.customerVisible}}
+              @onChange={{fn (mut cs.comment)}}
+              @onSubmit={{f.submitAction}}
+            />
+          </div>
+          <div class="form-list-cell form-group cell-duration">
+            <ReportDurationpicker
+              class="report-duration rounded"
+              data-test-report-duration
+              disabled={{not editable}}
+              title="Task duration"
+              @value={{cs.duration}}
+              @onChange={{fn (mut cs.duration)}}
+            />
+          </div>
+          <div class="form-list-cell form-group cell-remaining-effort">
+            {{#if cs.task.project.remainingEffortTracking}}
+              <Durationpicker
+                data-test-report-remaining-effort
+                class="remaining-effort"
+                @disabled={{not editable}}
+                @value={{cs.remainingEffort}}
+                @onChange={{fn (mut cs.remainingEffort)}}
+                @title="Remaining estimated effort"
+              />
+            {{/if}}
+          </div>
 
-      <div class="form-list-cell form-group cell-review-billable-icons grid grid-cols-2 content-between gap-1 self-center">
-        <Toggle class="margin-small-right form-control" data-test-report-review @disabled={{not editable}} @hint="Needs review" @onToggle={{toggle "review" cs}} @value={{cs.review}}>
-          <span class="fa-layers fa-fw">
-            <FaIcon @icon="user" />
-            <FaIcon @icon="question" @prefix="fas" @transform="shrink-6 up-7 right-8" />
-          </span>
-        </Toggle>
-        <Toggle class="form-control" data-test-report-not-billable @disabled={{not editable}} @hint="Not billable" @onToggle={{toggle "notBillable" cs}} @value={{cs.notBillable}}>
-          <span class="fa-layers fa-fw">
-            <FaIcon @icon="dollar-sign" @prefix="fas" />
-            <FaIcon @icon="slash" @prefix="fas" />
-          </span>
-        </Toggle>
-      </div>
-      <div class="form-list-cell form-group cell-buttons grid grid-cols-2 justify-around gap-2 self-center text-sm [&>*]:px-2">
-        {{#if editable}}
-          <button type="button" data-test-delete-report class="btn btn-danger" disabled={{or this.report.verifiedBy.id cs.isNew}} {{on "click" (fn (optional @onDelete) @report)}}><FaIcon @icon="trash-can" /></button>
-          <f.submit data-test-save-report disabled={{or this.save.isRunning (or (not cs.isValid) (not (or cs.isDirty cs.isNew)))}}><FaIcon @icon="floppy-disk" /></f.submit>
-        {{/if}}
-      </div>
-    </ValidatedForm>
-  {{/let}}
-</CanEdit></template>}
+          <div
+            class="form-list-cell form-group cell-review-billable-icons grid grid-cols-2 content-between gap-1 self-center"
+          >
+            <Toggle
+              class="margin-small-right form-control"
+              data-test-report-review
+              @disabled={{not editable}}
+              @hint="Needs review"
+              @onToggle={{toggle "review" cs}}
+              @value={{cs.review}}
+            >
+              <span class="fa-layers fa-fw">
+                <FaIcon @icon="user" />
+                <FaIcon
+                  @icon="question"
+                  @prefix="fas"
+                  @transform="shrink-6 up-7 right-8"
+                />
+              </span>
+            </Toggle>
+            <Toggle
+              class="form-control"
+              data-test-report-not-billable
+              @disabled={{not editable}}
+              @hint="Not billable"
+              @onToggle={{toggle "notBillable" cs}}
+              @value={{cs.notBillable}}
+            >
+              <span class="fa-layers fa-fw">
+                <FaIcon @icon="dollar-sign" @prefix="fas" />
+                <FaIcon @icon="slash" @prefix="fas" />
+              </span>
+            </Toggle>
+          </div>
+          <div
+            class="form-list-cell form-group cell-buttons grid grid-cols-2 justify-around gap-2 self-center text-sm [&>*]:px-2"
+          >
+            {{#if editable}}
+              <button
+                type="button"
+                data-test-delete-report
+                class="btn btn-danger"
+                disabled={{or this.report.verifiedBy.id cs.isNew}}
+                {{on "click" (fn (optional @onDelete) @report)}}
+              ><FaIcon @icon="trash-can" /></button>
+              <f.submit
+                data-test-save-report
+                disabled={{or
+                  this.save.isRunning
+                  (or (not cs.isValid) (not (or cs.isDirty cs.isNew)))
+                }}
+              ><FaIcon @icon="floppy-disk" /></f.submit>
+            {{/if}}
+          </div>
+        </ValidatedForm>
+      {{/let}}
+    </CanEdit>
+  </template>
+}

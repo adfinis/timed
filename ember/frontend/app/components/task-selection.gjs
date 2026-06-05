@@ -1,19 +1,20 @@
+import { hash } from "@ember/helper";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
 import { runTask } from "ember-lifeline";
+import not from "ember-truth-helpers/helpers/not";
+import or from "ember-truth-helpers/helpers/or";
 import { trackedTask } from "reactiveweb/ember-concurrency";
+
+import OptimizedPowerSelectComponent from "timed/components/optimized-power-select";
 import customerOptionTemplate from "timed/components/optimized-power-select/custom-options/customer-option";
 import projectOptionTemplate from "timed/components/optimized-power-select/custom-options/project-option";
 import taskOptionTemplate from "timed/components/optimized-power-select/custom-options/task-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/task-selection";
 import sortArchivedLast from "timed/utils/sort-archived-last";
-import { hash } from "@ember/helper";
-import or from "ember-truth-helpers/helpers/or";
-import not from "ember-truth-helpers/helpers/not";
-import OptimizedPowerSelectComponent from "timed/components/optimized-power-select";
 
 const sortByArchivedAndName = sortArchivedLast((a, b) => {
   return a.name > b.name ? 1 : -1;
@@ -416,4 +417,60 @@ export default class TaskSelectionComponent extends Component {
     this.customersAndRecentTasksTask,
     () => [this.history, this.tracking.recentTasks, this.archived],
   );
-<template>{{yield (hash customer=(component OptimizedPowerSelectComponent options=this.customersAndRecentTasks disabled=@disabled selected=this.customer placeholder="Select customer..." searchField="longName" allowClear=true tagName="div" class="customer-select rounded" onChange=this.onCustomerChange extra=(hash selectedTemplate=this.selectedTemplate optionTemplate=this.customerOptionTemplate)) project=(component OptimizedPowerSelectComponent options=this.projects disabled=(or @disabled (not this.customer)) selected=this.project placeholder="Select project..." searchField="name" allowClear=true tagName="div" class="project-select rounded" onChange=this.onProjectChange extra=(hash selectedTemplate=this.selectedTemplate optionTemplate=this.projectOptionTemplate)) task=(component OptimizedPowerSelectComponent options=this.tasks disabled=(or @disabled (not this.project)) selected=this.task placeholder="Select task..." searchField="name" allowClear=true tagName="div" class="task-select rounded" onChange=this.onTaskChange extra=(hash selectedTemplate=this.selectedTemplate optionTemplate=this.taskOptionTemplate)) clear=this.clear reset=this.reset)}}</template>}
+  <template>
+    {{yield
+      (hash
+        customer=(component
+          OptimizedPowerSelectComponent
+          options=this.customersAndRecentTasks
+          disabled=@disabled
+          selected=this.customer
+          placeholder="Select customer..."
+          searchField="longName"
+          allowClear=true
+          tagName="div"
+          class="customer-select rounded"
+          onChange=this.onCustomerChange
+          extra=(hash
+            selectedTemplate=this.selectedTemplate
+            optionTemplate=this.customerOptionTemplate
+          )
+        )
+        project=(component
+          OptimizedPowerSelectComponent
+          options=this.projects
+          disabled=(or @disabled (not this.customer))
+          selected=this.project
+          placeholder="Select project..."
+          searchField="name"
+          allowClear=true
+          tagName="div"
+          class="project-select rounded"
+          onChange=this.onProjectChange
+          extra=(hash
+            selectedTemplate=this.selectedTemplate
+            optionTemplate=this.projectOptionTemplate
+          )
+        )
+        task=(component
+          OptimizedPowerSelectComponent
+          options=this.tasks
+          disabled=(or @disabled (not this.project))
+          selected=this.task
+          placeholder="Select task..."
+          searchField="name"
+          allowClear=true
+          tagName="div"
+          class="task-select rounded"
+          onChange=this.onTaskChange
+          extra=(hash
+            selectedTemplate=this.selectedTemplate
+            optionTemplate=this.taskOptionTemplate
+          )
+        )
+        clear=this.clear
+        reset=this.reset
+      )
+    }}
+  </template>
+}

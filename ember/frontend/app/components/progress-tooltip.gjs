@@ -1,8 +1,14 @@
+import { concat } from "@ember/helper";
 import { service } from "@ember/service";
 import { isTesting, macroCondition } from "@embroider/macros";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout } from "ember-concurrency";
+import mult from "ember-math-helpers/helpers/mult";
+import round from "ember-math-helpers/helpers/round";
+import EmberTether from "ember-tether/components/ember-tether";
+import gt from "ember-truth-helpers/helpers/gt";
 import { Duration } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 
@@ -13,13 +19,8 @@ import { trackedTask } from "reactiveweb/ember-concurrency";
  * @extends Ember.Component
  * @public
  */
-import EmberTether from "ember-tether/components/ember-tether";
 import humanizeDuration from "timed/helpers/humanize-duration";
-import gt from "ember-truth-helpers/helpers/gt";
-import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-import round from "ember-math-helpers/helpers/round";
-import mult from "ember-math-helpers/helpers/mult";
-import { concat } from "@ember/helper";
+
 export default class ProgressTooltipComponent extends Component {
   // The delay between becoming 'visible' and fetching the data
   delay = 300;
@@ -156,49 +157,78 @@ export default class ProgressTooltipComponent extends Component {
   _toolTipVisible = trackedTask(this, this._computeTooltipVisible, () => [
     this.args.visible,
   ]);
-<template>{{#if this.tooltipVisible}}
-  <EmberTether class="progress-tooltip bg-secondary-dark text-foreground-primary z-30 px-2 py-1.5" @target={{@target}} @targetAttachment="middle left" @attachment="middle right" @offset="0 20px">
-    <div class="time-info grid grid-cols-[minmax(0,1fr),auto]">
+  <template>
+    {{#if this.tooltipVisible}}
+      <EmberTether
+        class="progress-tooltip bg-secondary-dark text-foreground-primary z-30 px-2 py-1.5"
+        @target={{@target}}
+        @targetAttachment="middle left"
+        @attachment="middle right"
+        @offset="0 20px"
+      >
+        <div class="time-info grid grid-cols-[minmax(0,1fr),auto]">
 
-      <span data-test-spent-total>Spent (Total):
-        {{humanizeDuration this.spent}}</span>
-      <div class="progress-badge">
-        {{#if this.progressTotal}}
-          <span class="badge {{this.colorTotal}} {{this.badgeClass}}">
-            {{#if (gt this.progressTotal 1)}}<FaIcon @icon="exclamation-triangle" @prefix="fas" />
-            {{/if}}{{round (mult 100 this.progressTotal)}}%
-          </span>
-        {{/if}}
-      </div>
-
-      <span data-test-spent-billable>Spent (Billable):
-        {{humanizeDuration this.billable}}</span>
-      <div class="progress-badge">
-        {{#if this.progressBillable}}
-          <span class="badge {{this.colorBillable}} {{this.badgeClass}}">
-            {{#if (gt this.progressBillable 1)}}<FaIcon @icon="exclamation-triangle" @prefix="fas" />
+          <span data-test-spent-total>Spent (Total):
+            {{humanizeDuration this.spent}}</span>
+          <div class="progress-badge">
+            {{#if this.progressTotal}}
+              <span class="badge {{this.colorTotal}} {{this.badgeClass}}">
+                {{#if (gt this.progressTotal 1)}}<FaIcon
+                    @icon="exclamation-triangle"
+                    @prefix="fas"
+                  />
+                {{/if}}{{round (mult 100 this.progressTotal)}}%
+              </span>
             {{/if}}
-            {{round (mult 100 this.progressBillable)}}%
-          </span>
-        {{/if}}
-      </div>
+          </div>
 
-      <span data-test-budget class="col-span-2">Budget:
-        {{if this.estimated (humanizeDuration this.estimated) "None"}}</span>
+          <span data-test-spent-billable>Spent (Billable):
+            {{humanizeDuration this.billable}}</span>
+          <div class="progress-badge">
+            {{#if this.progressBillable}}
+              <span class="badge {{this.colorBillable}} {{this.badgeClass}}">
+                {{#if (gt this.progressBillable 1)}}<FaIcon
+                    @icon="exclamation-triangle"
+                    @prefix="fas"
+                  />
+                {{/if}}
+                {{round (mult 100 this.progressBillable)}}%
+              </span>
+            {{/if}}
+          </div>
 
-      {{#if this.remainingEffort}}
-        <span data-test-remaining-effort>{{concat "Remaining effort: " (humanizeDuration this.remainingEffort)}}</span>
-        <div class="progress-badge">
-          {{#if this.progressRemainingEffort}}
-            <span class="badge {{this.colorRemainingEffort}} {{this.badgeClass}}">
-              {{#if (gt this.progressRemainingEffort 1)}}<FaIcon @icon="exclamation-triangle" @prefix="fas" />
+          <span data-test-budget class="col-span-2">Budget:
+            {{if
+              this.estimated
+              (humanizeDuration this.estimated)
+              "None"
+            }}</span>
+
+          {{#if this.remainingEffort}}
+            <span data-test-remaining-effort>{{concat
+                "Remaining effort: "
+                (humanizeDuration this.remainingEffort)
+              }}</span>
+            <div class="progress-badge">
+              {{#if this.progressRemainingEffort}}
+                <span
+                  class="badge
+                    {{this.colorRemainingEffort}}
+                    {{this.badgeClass}}"
+                >
+                  {{#if (gt this.progressRemainingEffort 1)}}<FaIcon
+                      @icon="exclamation-triangle"
+                      @prefix="fas"
+                    />
+                  {{/if}}
+                  {{round (mult 100 this.progressRemainingEffort)}}%
+                </span>
               {{/if}}
-              {{round (mult 100 this.progressRemainingEffort)}}%
-            </span>
+            </div>
           {{/if}}
-        </div>
-      {{/if}}
 
-    </div>
-  </EmberTether>
-{{/if}}</template>}
+        </div>
+      </EmberTether>
+    {{/if}}
+  </template>
+}

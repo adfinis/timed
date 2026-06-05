@@ -1,7 +1,7 @@
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { guidFor } from "@ember/object/internals";
 import Component from "@glimmer/component";
-import { on } from "@ember/modifier";
 
 export default class ModalOverlay extends Component {
   constructor(...args) {

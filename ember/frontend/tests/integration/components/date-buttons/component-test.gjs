@@ -1,9 +1,10 @@
+import { fn } from "@ember/helper";
 import { click, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+
 import DateButtons from "timed/components/date-buttons";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | date buttons", function (hooks) {
   setupRenderingTest(hooks);

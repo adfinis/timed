@@ -1,5 +1,5 @@
-import Component from "@glimmer/component";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+import Component from "@glimmer/component";
 import and from "ember-truth-helpers/helpers/and";
 
 export default class Checkmark extends Component {

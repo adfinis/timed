@@ -1,6 +1,7 @@
 import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import NotIdenticalWarning from "timed/components/not-identical-warning";
 
 module("Integration | Component | not identical warning", function (hooks) {

@@ -1,9 +1,10 @@
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
+import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 import { Duration } from "luxon";
+
 import DurationpickerComponent from "timed/components/durationpicker";
 import parseDayTime from "timed/utils/parse-daytime";
-import { on } from "@ember/modifier";
-import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 
 export default class DurationpickerDayComponent extends DurationpickerComponent {
   maxlength = 5;

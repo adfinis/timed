@@ -1,10 +1,10 @@
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { macroCondition, isTesting } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import { scheduleTask } from "ember-lifeline";
-import { on } from "@ember/modifier";
 import VerticalCollection from "@html-next/vertical-collection/components/vertical-collection/component";
+import { scheduleTask } from "ember-lifeline";
 import emberPowerSelectIsEqual from "ember-power-select/helpers/ember-power-select-is-equal";
 import eq from "ember-truth-helpers/helpers/eq";
 
@@ -96,21 +96,55 @@ export default class OptimizedPowerSelectOptionsComponent extends Component {
     }
     return option;
   }
-<template><ul role="listbox" class="ember-power-select-options" {{on "touchmove" this.onEvent}} {{on "touchstart" this.onEvent}} {{on "touchend" this.onEvent}} {{!-- template-lint-disable no-invalid-interactive --}} {{on "mouseup" this.onEvent}} {{on "mouseover" this.onEvent}} ...attributes>
-  {{#if @select.loading}}
-    {{#if @loadingMessage}}
-      <li class="ember-power-select-option ember-power-select-option--loading-message" role="option" aria-selected="false">{{@loadingMessage}}</li>
-    {{/if}}
-  {{/if}}
-
-  <VerticalCollection @items={{@options}} @estimateHeight={{30}} @bufferSize={{5}} @renderAll={{this.isTesting}} as |option index|>
-    {{!--template-lint-disable  require-context-role--}}
-    <li class="ember-power-select-option" aria-selected="{{emberPowerSelectIsEqual option @select.selected}}" aria-disabled="{{option.disabled}}" aria-current="{{eq option @select.highlighted}}" data-option-index="{{@groupIndex}}{{index}}" role="option">
-      {{#if @extra.optionTemplate}}
-        {{component @extra.optionTemplate option=option current=(eq option @select.highlighted)}}
-      {{else}}
-        {{yield option @select}}
+  <template>
+    <ul
+      role="listbox"
+      class="ember-power-select-options"
+      {{on "touchmove" this.onEvent}}
+      {{on "touchstart" this.onEvent}}
+      {{on "touchend" this.onEvent}}
+      {{! template-lint-disable no-invalid-interactive }}
+      {{on "mouseup" this.onEvent}}
+      {{on "mouseover" this.onEvent}}
+      ...attributes
+    >
+      {{#if @select.loading}}
+        {{#if @loadingMessage}}
+          <li
+            class="ember-power-select-option ember-power-select-option--loading-message"
+            role="option"
+            aria-selected="false"
+          >{{@loadingMessage}}</li>
+        {{/if}}
       {{/if}}
-    </li>
-  </VerticalCollection>
-</ul></template>}
+
+      <VerticalCollection
+        @items={{@options}}
+        @estimateHeight={{30}}
+        @bufferSize={{5}}
+        @renderAll={{this.isTesting}}
+        as |option index|
+      >
+        {{!template-lint-disable  require-context-role}}
+        <li
+          class="ember-power-select-option"
+          aria-selected="{{emberPowerSelectIsEqual option @select.selected}}"
+          aria-disabled="{{option.disabled}}"
+          aria-current="{{eq option @select.highlighted}}"
+          data-option-index="{{@groupIndex}}{{index}}"
+          role="option"
+        >
+          {{#if @extra.optionTemplate}}
+            {{component
+              @extra.optionTemplate
+              option=option
+              current=(eq option @select.highlighted)
+            }}
+          {{else}}
+            {{yield option @select}}
+          {{/if}}
+        </li>
+      </VerticalCollection>
+    </ul>
+  </template>
+}

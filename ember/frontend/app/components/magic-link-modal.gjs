@@ -1,17 +1,18 @@
+import { fn } from "@ember/helper";
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
+import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
+import not from "ember-truth-helpers/helpers/not";
+
+import DurationpickerDay from "timed/components/durationpicker-day";
 import Modal from "timed/components/modal";
 import TaskSelection from "timed/components/task-selection";
-import { on } from "@ember/modifier";
-import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
-import { fn } from "@ember/helper";
-import DurationpickerDay from "timed/components/durationpicker-day";
 import Toggle from "timed/components/toggle";
-import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
-import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-import not from "ember-truth-helpers/helpers/not";
 
 export default class MagicLinkModal extends Component {
   @tracked task;

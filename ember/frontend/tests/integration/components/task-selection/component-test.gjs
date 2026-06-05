@@ -1,12 +1,13 @@
 import { A } from "@ember/array";
+import { hash } from "@ember/helper";
+import { on } from "@ember/modifier";
 import EmberObject from "@ember/object";
 import { click, render, tab, triggerEvent } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import TaskSelection from "timed/components/task-selection";
-import { hash } from "@ember/helper";
-import { on } from "@ember/modifier";
 
 const CUSTOMER = EmberObject.create({
   id: 1,
@@ -39,11 +40,15 @@ module("Integration | Component | task selection", function (hooks) {
   setupMirage(hooks);
 
   test("renders", async function (assert) {
-    await render(<template><TaskSelection as |t|>
-  {{t.customer}}
-  {{t.project}}
-  {{t.task}}
-</TaskSelection></template>);
+    await render(
+      <template>
+        <TaskSelection as |t|>
+          {{t.customer}}
+          {{t.project}}
+          {{t.task}}
+        </TaskSelection>
+      </template>,
+    );
 
     assert.dom(".customer-select[aria-disabled=true]").doesNotExist();
     assert.dom(".project-select[aria-disabled=true]").exists();
@@ -54,11 +59,15 @@ module("Integration | Component | task selection", function (hooks) {
     assert.expect(4);
     this.set("customer", CUSTOMER);
 
-    await render(<template><TaskSelection @initial={{hash customer=this.customer}} as |t|>
-  {{t.customer}}
-  {{t.project}}
-  {{t.task}}
-</TaskSelection></template>);
+    await render(
+      <template>
+        <TaskSelection @initial={{hash customer=this.customer}} as |t|>
+          {{t.customer}}
+          {{t.project}}
+          {{t.task}}
+        </TaskSelection>
+      </template>,
+    );
 
     assert.dom(".customer-select[aria-disabled=true]").doesNotExist();
     assert.dom(".project-select[aria-disabled=true]").doesNotExist();
@@ -76,11 +85,15 @@ module("Integration | Component | task selection", function (hooks) {
     assert.expect(5);
     this.set("project", PROJECT);
 
-    await render(<template><TaskSelection @initial={{hash project=this.project}} as |t|>
-  {{t.customer}}
-  {{t.project}}
-  {{t.task}}
-</TaskSelection></template>);
+    await render(
+      <template>
+        <TaskSelection @initial={{hash project=this.project}} as |t|>
+          {{t.customer}}
+          {{t.project}}
+          {{t.task}}
+        </TaskSelection>
+      </template>,
+    );
 
     assert.dom(".customer-select[aria-disabled=true]").doesNotExist();
     assert.dom(".project-select[aria-disabled=true]").doesNotExist();
@@ -104,11 +117,15 @@ module("Integration | Component | task selection", function (hooks) {
     assert.expect(6);
     this.set("task", TASK);
 
-    await render(<template><TaskSelection @initial={{hash task=this.task}} as |t|>
-  {{t.customer}}
-  {{t.project}}
-  {{t.task}}
-</TaskSelection></template>);
+    await render(
+      <template>
+        <TaskSelection @initial={{hash task=this.task}} as |t|>
+          {{t.customer}}
+          {{t.project}}
+          {{t.task}}
+        </TaskSelection>
+      </template>,
+    );
 
     assert.dom(".customer-select[aria-disabled=true]").doesNotExist();
     assert.dom(".project-select[aria-disabled=true]").doesNotExist();
@@ -137,11 +154,15 @@ module("Integration | Component | task selection", function (hooks) {
   test("can clear only task", async function (assert) {
     this.set("task", TASK);
 
-    await render(<template><TaskSelection @initial={{hash task=this.task}} as |t|>
-  {{t.customer}}
-  {{t.project}}
-  {{t.task}}
-</TaskSelection></template>);
+    await render(
+      <template>
+        <TaskSelection @initial={{hash task=this.task}} as |t|>
+          {{t.customer}}
+          {{t.project}}
+          {{t.task}}
+        </TaskSelection>
+      </template>,
+    );
 
     await click(".task-select .ember-power-select-clear-btn");
 
@@ -153,11 +174,15 @@ module("Integration | Component | task selection", function (hooks) {
   test("can clear project and task", async function (assert) {
     this.set("task", TASK);
 
-    await render(<template><TaskSelection @initial={{hash task=this.task}} as |t|>
-  {{t.customer}}
-  {{t.project}}
-  {{t.task}}
-</TaskSelection></template>);
+    await render(
+      <template>
+        <TaskSelection @initial={{hash task=this.task}} as |t|>
+          {{t.customer}}
+          {{t.project}}
+          {{t.task}}
+        </TaskSelection>
+      </template>,
+    );
 
     await click(".project-select .ember-power-select-clear-btn");
 
@@ -171,12 +196,16 @@ module("Integration | Component | task selection", function (hooks) {
   test("can clear all filters", async function (assert) {
     this.set("task", TASK);
 
-    await render(<template><TaskSelection @initial={{hash task=this.task}} as |t|>
-  {{t.customer}}
-  {{t.project}}
-  {{t.task}}
-  <button type="button" {{on "click" t.clear}}></button>
-</TaskSelection></template>);
+    await render(
+      <template>
+        <TaskSelection @initial={{hash task=this.task}} as |t|>
+          {{t.customer}}
+          {{t.project}}
+          {{t.task}}
+          <button type="button" {{on "click" t.clear}}></button>
+        </TaskSelection>
+      </template>,
+    );
 
     await click("button");
 
@@ -193,10 +222,17 @@ module("Integration | Component | task selection", function (hooks) {
     this.set("customer", CUSTOMER);
     this.set("project", PROJECT);
 
-    await render(<template><TaskSelection @initial={{hash customer=this.customer project=this.project}} as |t|>
-  {{t.customer}}
-  {{t.project}}
-</TaskSelection></template>);
+    await render(
+      <template>
+        <TaskSelection
+          @initial={{hash customer=this.customer project=this.project}}
+          as |t|
+        >
+          {{t.customer}}
+          {{t.project}}
+        </TaskSelection>
+      </template>,
+    );
 
     await triggerEvent(".customer-select", "focus");
     await tab();
@@ -209,11 +245,19 @@ module("Integration | Component | task selection", function (hooks) {
     this.set("project", PROJECT);
     this.set("archived", false);
 
-    await render(<template><TaskSelection @initial={{hash customer=this.customer project=this.project}} @archived={{this.archived}} as |t|>
-  {{t.customer}}
-  {{t.project}}
-  {{t.task}}
-</TaskSelection></template>);
+    await render(
+      <template>
+        <TaskSelection
+          @initial={{hash customer=this.customer project=this.project}}
+          @archived={{this.archived}}
+          as |t|
+        >
+          {{t.customer}}
+          {{t.project}}
+          {{t.task}}
+        </TaskSelection>
+      </template>,
+    );
 
     await triggerEvent(".task-select", "focus");
     assert.dom(".ember-power-select-option").exists({ count: 1 });

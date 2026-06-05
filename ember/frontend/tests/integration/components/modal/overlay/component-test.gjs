@@ -1,6 +1,7 @@
 import { click, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import Overlay from "timed/components/modal/overlay";
 
 module("Integration | Component | Modal::Overlay", function (hooks) {

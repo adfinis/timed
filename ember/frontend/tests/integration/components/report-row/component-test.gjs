@@ -1,10 +1,11 @@
+import { fn } from "@ember/helper";
 import EmberObject from "@ember/object";
 import { click, render } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import ReportRow from "timed/components/report-row";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | report row", function (hooks) {
   setupRenderingTest(hooks);

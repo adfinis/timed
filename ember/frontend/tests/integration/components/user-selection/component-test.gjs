@@ -1,9 +1,10 @@
+import { fn } from "@ember/helper";
 import { find, render } from "@ember/test-helpers";
 import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import UserSelection from "timed/components/user-selection";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | user selection", function (hooks) {
   setupRenderingTest(hooks);

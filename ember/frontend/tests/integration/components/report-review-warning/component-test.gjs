@@ -1,6 +1,7 @@
 import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import ReportReviewWarning from "timed/components/report-review-warning";
 
 module("Integration | Component | report review warning", function (hooks) {

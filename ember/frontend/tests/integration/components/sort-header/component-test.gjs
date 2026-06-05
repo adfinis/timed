@@ -1,6 +1,7 @@
 import { click, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import SortHeader from "timed/components/sort-header";
 
 module("Integration | Component | sort header", function (hooks) {

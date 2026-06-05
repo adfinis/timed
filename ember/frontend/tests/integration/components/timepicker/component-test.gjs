@@ -1,3 +1,4 @@
+import { fn } from "@ember/helper";
 import {
   fillIn,
   blur,
@@ -8,8 +9,8 @@ import {
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+
 import Timepicker from "timed/components/timepicker";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | timepicker", function (hooks) {
   setupRenderingTest(hooks);

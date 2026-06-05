@@ -1,6 +1,7 @@
 import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import LoadingIcon from "timed/components/loading-icon";
 
 module("Integration | Component | loading icon", function (hooks) {

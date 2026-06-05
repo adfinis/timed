@@ -1,8 +1,9 @@
+import { fn } from "@ember/helper";
 import { click, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import Header from "timed/components/modal/header";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | Modal::Header", function (hooks) {
   setupRenderingTest(hooks);

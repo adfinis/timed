@@ -1,12 +1,13 @@
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { guidFor } from "@ember/object/internals";
 import { tracked } from "@glimmer/tracking";
+import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 import { Duration } from "luxon";
 import { localCopy } from "tracked-toolbox";
+
 import TimepickerComponent from "timed/components/timepicker";
 import formatDuration from "timed/utils/format-duration";
-import { on } from "@ember/modifier";
-import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 
 const { MIN_SAFE_INTEGER, MAX_SAFE_INTEGER } = Number;
 const { abs } = Math;
@@ -137,11 +138,53 @@ export default class Durationpicker extends TimepickerComponent {
   focusInput() {
     document.getElementById(this.elementId)?.focus();
   }
-<template>{{#if (has-block)}}
-  <div class="form-control extendend-durationpicker-day" title={{@title}} {{!--template-lint-disable no-invalid-interactive--}} {{on "click" this.focusInput}}>
-    {{yield}}
-    <input ...attributes aria-label="duration picker" name="duration" type="text" class="rounded" id={{this.elementId}} title={{@title}} disabled={{@disabled}} pattern={{this.pattern}} value={{this.displayValue}} maxlength={{this.maxlength}} placeholder={{this.placeholder}} autocomplete="off" {{on "change" this.change}} {{on "keyup" this.handleKeyPress}} {{on "focusout" (optional @onFocusOut)}} />
-  </div>
-{{else}}
-  <input ...attributes aria-label="duration picker" name="duration" type="text" class="form-control rounded" id={{this.elementId}} disabled={{@disabled}} pattern={{this.pattern}} value={{this.displayValue}} maxlength={{this.maxlength}} placeholder={{this.placeholder}} autocomplete="off" title={{@title}} {{on "change" this.change}} {{on "keyup" this.handleKeyPress}} {{on "focusout" (optional @onFocusOut)}} />
-{{/if}}</template>}
+  <template>
+    {{#if (has-block)}}
+      <div
+        class="form-control extendend-durationpicker-day"
+        title={{@title}}
+        {{!template-lint-disable no-invalid-interactive}}
+        {{on "click" this.focusInput}}
+      >
+        {{yield}}
+        <input
+          ...attributes
+          aria-label="duration picker"
+          name="duration"
+          type="text"
+          class="rounded"
+          id={{this.elementId}}
+          title={{@title}}
+          disabled={{@disabled}}
+          pattern={{this.pattern}}
+          value={{this.displayValue}}
+          maxlength={{this.maxlength}}
+          placeholder={{this.placeholder}}
+          autocomplete="off"
+          {{on "change" this.change}}
+          {{on "keyup" this.handleKeyPress}}
+          {{on "focusout" (optional @onFocusOut)}}
+        />
+      </div>
+    {{else}}
+      <input
+        ...attributes
+        aria-label="duration picker"
+        name="duration"
+        type="text"
+        class="form-control rounded"
+        id={{this.elementId}}
+        disabled={{@disabled}}
+        pattern={{this.pattern}}
+        value={{this.displayValue}}
+        maxlength={{this.maxlength}}
+        placeholder={{this.placeholder}}
+        autocomplete="off"
+        title={{@title}}
+        {{on "change" this.change}}
+        {{on "keyup" this.handleKeyPress}}
+        {{on "focusout" (optional @onFocusOut)}}
+      />
+    {{/if}}
+  </template>
+}

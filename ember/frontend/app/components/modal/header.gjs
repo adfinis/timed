@@ -1,5 +1,6 @@
-import Header from "timed/components/card/header";
 import { on } from "@ember/modifier";
+
+import Header from "timed/components/card/header";
 <template>
   <Header
     ...attributes

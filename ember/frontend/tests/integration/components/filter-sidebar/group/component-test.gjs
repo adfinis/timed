@@ -1,6 +1,7 @@
 import { click, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import Group from "timed/components/filter-sidebar/group";
 
 module("Integration | Component | filter sidebar/group", function (hooks) {

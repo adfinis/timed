@@ -1,9 +1,10 @@
+import { fn } from "@ember/helper";
 import { click, findAll, find, fillIn, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+
 import Filter from "timed/components/filter-sidebar/filter";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | filter sidebar/filter", function (hooks) {
   setupRenderingTest(hooks);

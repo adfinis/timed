@@ -1,14 +1,15 @@
+import { fn } from "@ember/helper";
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
-import { DateTime, Info } from "luxon";
 import PowerCalendar from "ember-power-calendar/components/power-calendar";
-import Header from "timed/components/card/header";
-import luxonFormat from "timed/helpers/luxon-format";
-import { on } from "@ember/modifier";
-import { fn } from "@ember/helper";
 import eq from "ember-truth-helpers/helpers/eq";
+import { DateTime, Info } from "luxon";
+
 import Block from "timed/components/card/block";
 import Footer from "timed/components/card/footer";
+import Header from "timed/components/card/header";
+import luxonFormat from "timed/helpers/luxon-format";
 
 const CURRENT_YEAR = DateTime.now().year;
 

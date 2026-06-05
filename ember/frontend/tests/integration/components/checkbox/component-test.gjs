@@ -1,8 +1,9 @@
+import { fn } from "@ember/helper";
 import { click, find, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import Checkbox from "timed/components/checkbox";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | checkbox", function (hooks) {
   setupRenderingTest(hooks);
@@ -14,7 +15,11 @@ module("Integration | Component | checkbox", function (hooks) {
   });
 
   test("works in block style", async function (assert) {
-    await render(<template><Checkbox>Test Label</Checkbox></template>);
+    await render(
+      <template>
+        <Checkbox>Test Label</Checkbox>
+      </template>,
+    );
 
     assert.dom("label").hasText("Test Label");
   });
@@ -23,7 +28,12 @@ module("Integration | Component | checkbox", function (hooks) {
     this.set("checked", false);
 
     await render(
-      <template><Checkbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} /></template>,
+      <template>
+        <Checkbox
+          @checked={{this.checked}}
+          @onChange={{fn (mut this.checked)}}
+        />
+      </template>,
     );
 
     assert.dom("input").isNotChecked();
@@ -44,7 +54,12 @@ module("Integration | Component | checkbox", function (hooks) {
     this.set("checked", null);
 
     await render(
-      <template><Checkbox @checked={{this.checked}} @onChange={{fn (mut this.checked)}} /></template>,
+      <template>
+        <Checkbox
+          @checked={{this.checked}}
+          @onChange={{fn (mut this.checked)}}
+        />
+      </template>,
     );
 
     assert.ok(find("input").indeterminate);

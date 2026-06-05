@@ -1,8 +1,9 @@
-import and from "ember-truth-helpers/helpers/and";
-import media from "timed/helpers/media";
-import ProgressTooltip from "timed/components/progress-tooltip";
 import { concat } from "@ember/helper";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+import and from "ember-truth-helpers/helpers/and";
+
+import ProgressTooltip from "timed/components/progress-tooltip";
+import media from "timed/helpers/media";
 <template>
   <div
     title="{{@option.name}}{{if @option.archived ' (archived)'}}"

@@ -2,6 +2,7 @@ import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime, Duration } from "luxon";
 import { module, test } from "qunit";
+
 import WorktimeBalanceChart from "timed/components/worktime-balance-chart";
 
 module("Integration | Component | worktime balance chart", function (hooks) {

@@ -3,6 +3,7 @@ import { click, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+
 import AttendanceSlider from "timed/components/attendance-slider";
 
 const ATTENDANCE = EmberObject.create({

@@ -1,8 +1,9 @@
 import Component from "@glimmer/component";
+import EmberChart from "ember-cli-chart/_app_/components/ember-chart.js";
 import { Duration } from "luxon";
+
 import humanizeDuration from "timed/utils/humanize-duration";
 
-import EmberChart from "ember-cli-chart/_app_/components/ember-chart.js";
 const FONT_SANS = ['"Source Sans 3"', "sans-serif"];
 const FONT_MONO = ['"Source Code Pro"', "monospace"];
 
@@ -114,4 +115,11 @@ export default class WorktimeBalanceChart extends Component {
       },
     };
   }
-<template><EmberChart @data={{this.data}} @options={{this.options}} @type={{this.type}} /></template>}
+  <template>
+    <EmberChart
+      @data={{this.data}}
+      @options={{this.options}}
+      @type={{this.type}}
+    />
+  </template>
+}

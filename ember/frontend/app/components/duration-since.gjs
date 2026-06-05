@@ -8,6 +8,7 @@ import { tracked } from "@glimmer/tracking";
 import Ember from "ember";
 import { task, timeout } from "ember-concurrency";
 import { Duration, DateTime } from "luxon";
+
 import formatDuration from "timed/helpers/format-duration";
 
 const ZERO_DURATION = Duration.fromMillis(0);
@@ -92,6 +93,9 @@ export default class DurationSinceComponent extends Component {
       await timeout(1000);
     }
   });
-<template><span>
-  {{formatDuration this.duration}}
-</span></template>}
+  <template>
+    <span>
+      {{formatDuration this.duration}}
+    </span>
+  </template>
+}

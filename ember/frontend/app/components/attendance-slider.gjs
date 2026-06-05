@@ -4,11 +4,17 @@
  * @public
  */
 
+import { fn } from "@ember/helper";
+import { on } from "@ember/modifier";
 import { htmlSafe } from "@ember/template";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import RangeSlider from "ember-cli-nouislider/components/range-slider";
 import { dropTask } from "ember-concurrency";
+import perform from "ember-concurrency/helpers/perform";
 import { DateTime } from "luxon";
+
 import formatDuration from "timed/utils/format-duration";
 import { pad2joincolon } from "timed/utils/pad";
 
@@ -19,11 +25,6 @@ import { pad2joincolon } from "timed/utils/pad";
  * @type {Object}
  * @public
  */
-import RangeSlider from "ember-cli-nouislider/components/range-slider";
-import { fn } from "@ember/helper";
-import perform from "ember-concurrency/helpers/perform";
-import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-import { on } from "@ember/modifier";
 const Formatter = {
   /**
    * Format the minutes to a time string
@@ -150,21 +151,42 @@ export default class AttendanceSlider extends Component {
   delete = dropTask(async () => {
     await this.args.onDelete(this.args.attendance);
   });
-<template><div class="attendance-slider relative pt-4" ...attributes>
-  <RangeSlider @start={{this.start}} @step={{15}} @min={{0}} @max={{1440}} @connect={{true}} @animate={{true}} @behaviour="drag" @tooltips={{this.tooltips}} @on-slide={{fn (mut this.values)}} @on-change={{perform this.save}} />
+  <template>
+    <div class="attendance-slider relative pt-4" ...attributes>
+      <RangeSlider
+        @start={{this.start}}
+        @step={{15}}
+        @min={{0}}
+        @max={{1440}}
+        @connect={{true}}
+        @animate={{true}}
+        @behaviour="drag"
+        @tooltips={{this.tooltips}}
+        @on-slide={{fn (mut this.values)}}
+        @on-change={{perform this.save}}
+      />
 
-  <div class="slider-labels text-foreground-muted relative h-12 font-mono">
-    {{#each this.labels as |label|}}
-      <div style={{label.style}} class="slider-label absolute top-4 flex -translate-x-3/4">
-        <div class="slider-label-text -rotate-45 {{label.size}}">
-          {{label.value}}
-        </div>
+      <div class="slider-labels text-foreground-muted relative h-12 font-mono">
+        {{#each this.labels as |label|}}
+          <div
+            style={{label.style}}
+            class="slider-label absolute top-4 flex -translate-x-3/4"
+          >
+            <div class="slider-label-text -rotate-45 {{label.size}}">
+              {{label.value}}
+            </div>
+          </div>
+        {{/each}}
       </div>
-    {{/each}}
-  </div>
 
-  <div class="slider-title absolute left-0 top-0 text-xs">
-    <span>{{this.duration}}</span>
-    <FaIcon @icon="trash-can" data-test-delete-attendance="true" {{on "click" (perform this.delete)}} />
-  </div>
-</div></template>}
+      <div class="slider-title absolute left-0 top-0 text-xs">
+        <span>{{this.duration}}</span>
+        <FaIcon
+          @icon="trash-can"
+          data-test-delete-attendance="true"
+          {{on "click" (perform this.delete)}}
+        />
+      </div>
+    </div>
+  </template>
+}

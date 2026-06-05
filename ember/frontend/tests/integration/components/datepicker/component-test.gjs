@@ -1,10 +1,11 @@
+import { fn } from "@ember/helper";
 import { find, triggerEvent, click, render } from "@ember/test-helpers";
 import { clickTrigger } from "ember-basic-dropdown/test-support/helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+
 import Datepicker from "timed/components/datepicker";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | datepicker", function (hooks) {
   setupRenderingTest(hooks);
@@ -13,7 +14,9 @@ module("Integration | Component | datepicker", function (hooks) {
     this.set("value", DateTime.now());
 
     await render(
-      <template><Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     assert.dom("input").hasValue(DateTime.now().toFormat("dd.MM.yyyy"));
@@ -23,7 +26,9 @@ module("Integration | Component | datepicker", function (hooks) {
     this.set("value", DateTime.now());
 
     await render(
-      <template><Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     assert.dom(".datepicker").doesNotExist();
@@ -37,7 +42,9 @@ module("Integration | Component | datepicker", function (hooks) {
     this.set("value", null);
 
     await render(
-      <template><Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     assert.ok(find("input").validity.valid);
@@ -57,7 +64,9 @@ module("Integration | Component | datepicker", function (hooks) {
     this.set("value", DateTime.now());
 
     await render(
-      <template><Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     find("input").value = "1.2.2018";
@@ -81,7 +90,9 @@ module("Integration | Component | datepicker", function (hooks) {
     this.set("value", DateTime.now());
 
     await render(
-      <template><Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     await clickTrigger();
@@ -98,7 +109,9 @@ module("Integration | Component | datepicker", function (hooks) {
     this.set("value", DateTime.now());
 
     await render(
-      <template><Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} /></template>,
+      <template>
+        <Datepicker @value={{this.value}} @onChange={{fn (mut this.value)}} />
+      </template>,
     );
 
     assert.dom(".datepicker").doesNotExist();

@@ -1,8 +1,8 @@
+import { on } from "@ember/modifier";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import { on } from "@ember/modifier";
 import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
-import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 
 export default class Group extends Component {
   @tracked expanded = false;

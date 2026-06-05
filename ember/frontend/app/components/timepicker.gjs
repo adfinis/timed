@@ -1,5 +1,7 @@
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
+import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 import { DateTime } from "luxon";
 
 /**
@@ -7,8 +9,6 @@ import { DateTime } from "luxon";
  *
  * @public
  */
-import { on } from "@ember/modifier";
-import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 export default class TimepickerComponent extends Component {
   sanitize(value) {
     return value.replace(/[^\d:]/, "");
@@ -233,4 +233,19 @@ export default class TimepickerComponent extends Component {
         break;
     }
   }
-<template><input aria-label="time picker" type="text" class="form-control rounded" pattern={{this.pattern}} value={{this.displayValue}} maxlength={{this.maxlength}} placeholder={{this.placeholder}} autocomplete="off" {{on "keydown" this.keyDown}} {{on "change" this.change}} {{on "focusout" (optional @onFocusOut)}} /></template>}
+  <template>
+    <input
+      aria-label="time picker"
+      type="text"
+      class="form-control rounded"
+      pattern={{this.pattern}}
+      value={{this.displayValue}}
+      maxlength={{this.maxlength}}
+      placeholder={{this.placeholder}}
+      autocomplete="off"
+      {{on "keydown" this.keyDown}}
+      {{on "change" this.change}}
+      {{on "focusout" (optional @onFocusOut)}}
+    />
+  </template>
+}

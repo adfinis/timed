@@ -1,9 +1,10 @@
+import { fn } from "@ember/helper";
 import { click, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+
 import DateNavigation from "timed/components/date-navigation";
-import { fn } from "@ember/helper";
 
 const DATE = DateTime.fromObject({ year: 2017, month: 1, day: 10 });
 

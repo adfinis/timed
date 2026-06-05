@@ -4,6 +4,7 @@ import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupRenderingTest } from "ember-qunit";
 import { Duration } from "luxon";
 import { module, test } from "qunit";
+
 import ProgressTooltip from "timed/components/progress-tooltip";
 
 module("Integration | Component | progress tooltip", function (hooks) {
@@ -39,8 +40,16 @@ module("Integration | Component | progress tooltip", function (hooks) {
   });
 
   test("renders", async function (assert) {
-    await render(<template><span id="target"></span>
-<ProgressTooltip @target="#target" @model={{this.project}} @visible={{true}} /></template>);
+    await render(
+      <template>
+        <span id="target"></span>
+        <ProgressTooltip
+          @target="#target"
+          @model={{this.project}}
+          @visible={{true}}
+        />
+      </template>,
+    );
 
     assert.dom(".progress-tooltip").exists();
 
@@ -58,8 +67,16 @@ module("Integration | Component | progress tooltip", function (hooks) {
   });
 
   test("renders on project with remaining effort", async function (assert) {
-    await render(<template><span id="target"></span>
-<ProgressTooltip @target="#target" @model={{this.project_with_remaining_effort}} @visible={{true}} /></template>);
+    await render(
+      <template>
+        <span id="target"></span>
+        <ProgressTooltip
+          @target="#target"
+          @model={{this.project_with_remaining_effort}}
+          @visible={{true}}
+        />
+      </template>,
+    );
 
     assert
       .dom(".progress-tooltip .time-info [data-test-remaining-effort]")
@@ -78,8 +95,16 @@ module("Integration | Component | progress tooltip", function (hooks) {
       }),
     );
 
-    await render(<template><span id="target"></span>
-<ProgressTooltip @target="#target" @model={{this.model}} @visible={{true}} /></template>);
+    await render(
+      <template>
+        <span id="target"></span>
+        <ProgressTooltip
+          @target="#target"
+          @model={{this.model}}
+          @visible={{true}}
+        />
+      </template>,
+    );
 
     assert.dom(".progress-tooltip").exists();
 
@@ -113,8 +138,16 @@ module("Integration | Component | progress tooltip", function (hooks) {
       }),
     );
 
-    await render(<template><span id="target"></span>
-<ProgressTooltip @target="#target" @model={{this.model}} @visible={{true}} /></template>);
+    await render(
+      <template>
+        <span id="target"></span>
+        <ProgressTooltip
+          @target="#target"
+          @model={{this.model}}
+          @visible={{true}}
+        />
+      </template>,
+    );
 
     assert
       .dom(".progress-tooltip .time-info [data-test-remaining-effort]")
@@ -135,8 +168,16 @@ module("Integration | Component | progress tooltip", function (hooks) {
 
     this.set("visible", false);
 
-    await render(<template><span id="target"></span>
-<ProgressTooltip @target="#target" @model={{this.model}} @visible={{this.visible}} /></template>);
+    await render(
+      <template>
+        <span id="target"></span>
+        <ProgressTooltip
+          @target="#target"
+          @model={{this.model}}
+          @visible={{this.visible}}
+        />
+      </template>,
+    );
 
     assert.dom(".progress-tooltip").doesNotExist();
 
@@ -159,8 +200,16 @@ module("Integration | Component | progress tooltip", function (hooks) {
       };
     });
 
-    await render(<template><span id="target"></span>
-<ProgressTooltip @target="#target" @model={{this.project}} @visible={{true}} /></template>);
+    await render(
+      <template>
+        <span id="target"></span>
+        <ProgressTooltip
+          @target="#target"
+          @model={{this.project}}
+          @visible={{true}}
+        />
+      </template>,
+    );
 
     assert.dom(".progress-tooltip .badge.bg-danger").exists();
   });
@@ -177,8 +226,16 @@ module("Integration | Component | progress tooltip", function (hooks) {
       };
     });
 
-    await render(<template><span id="target"></span>
-<ProgressTooltip @target="#target" @model={{this.project}} @visible={{true}} /></template>);
+    await render(
+      <template>
+        <span id="target"></span>
+        <ProgressTooltip
+          @target="#target"
+          @model={{this.project}}
+          @visible={{true}}
+        />
+      </template>,
+    );
 
     assert.dom(".progress-tooltip .badge.bg-warning").exists();
   });

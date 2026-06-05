@@ -1,7 +1,8 @@
 import Component from "@glimmer/component";
-import { DateTime } from "luxon";
-import Td from "timed/components/table/td";
 import eq from "ember-truth-helpers/helpers/eq";
+import { DateTime } from "luxon";
+
+import Td from "timed/components/table/td";
 import humanizeDuration from "timed/helpers/humanize-duration";
 import luxonFormat from "timed/helpers/luxon-format";
 

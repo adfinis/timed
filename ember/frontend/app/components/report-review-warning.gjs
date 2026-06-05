@@ -1,10 +1,11 @@
-import { service } from "@ember/service";
-import Component from "@glimmer/component";
-import ListItem from "timed/components/topnav/list-item";
-import { LinkTo } from "@ember/routing";
 import { hash } from "@ember/helper";
-import luxonFormat from "timed/helpers/luxon-format";
+import { LinkTo } from "@ember/routing";
+import { service } from "@ember/service";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+import Component from "@glimmer/component";
+
+import ListItem from "timed/components/topnav/list-item";
+import luxonFormat from "timed/helpers/luxon-format";
 
 export default class ReportReviewWarning extends Component {
   @service currentUser;

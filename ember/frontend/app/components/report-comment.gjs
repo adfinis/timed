@@ -1,6 +1,6 @@
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
-import { on } from "@ember/modifier";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 
 export default class ReportCommentTextarea extends Component {

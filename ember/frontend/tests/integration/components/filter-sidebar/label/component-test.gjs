@@ -1,6 +1,7 @@
 import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import Label from "timed/components/filter-sidebar/label";
 
 module("Integration | Component | filter sidebar/label", function (hooks) {

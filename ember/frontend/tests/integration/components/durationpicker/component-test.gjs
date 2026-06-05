@@ -1,3 +1,4 @@
+import { fn } from "@ember/helper";
 import {
   click,
   fillIn,
@@ -9,9 +10,9 @@ import {
 import { setupRenderingTest } from "ember-qunit";
 import { Duration } from "luxon";
 import { module, test } from "qunit";
-import formatDuration from "timed/utils/format-duration";
+
 import Durationpicker from "timed/components/durationpicker";
-import { fn } from "@ember/helper";
+import formatDuration from "timed/utils/format-duration";
 
 module("Integration | Component | durationpicker", function (hooks) {
   setupRenderingTest(hooks);

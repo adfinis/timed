@@ -1,9 +1,10 @@
-import Component from "@glimmer/component";
-import not from "ember-truth-helpers/helpers/not";
 import { on } from "@ember/modifier";
-import preventDefault from "ember-event-helpers/helpers/prevent-default";
-import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+import Component from "@glimmer/component";
+import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
+import preventDefault from "ember-event-helpers/helpers/prevent-default";
+import not from "ember-truth-helpers/helpers/not";
+
 import DurationSince from "timed/components/duration-since";
 
 export default class RecordButton extends Component {

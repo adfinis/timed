@@ -1,6 +1,7 @@
 import { click, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import RecordButton from "timed/components/record-button";
 
 module("Integration | Component | record button", function (hooks) {

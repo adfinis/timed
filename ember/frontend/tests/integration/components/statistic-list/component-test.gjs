@@ -4,6 +4,7 @@ import { render, waitFor } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { Duration } from "luxon";
 import { module, test } from "qunit";
+
 import StatisticList from "timed/components/statistic-list";
 
 module("Integration | Component | statistic list", function (hooks) {

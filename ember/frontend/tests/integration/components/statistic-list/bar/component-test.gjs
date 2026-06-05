@@ -1,6 +1,7 @@
 import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
+
 import Bar from "timed/components/statistic-list/bar";
 
 module("Integration | Component | statistic list/bar", function (hooks) {

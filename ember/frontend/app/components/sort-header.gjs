@@ -1,8 +1,9 @@
-import { action } from "@ember/object";
-import Component from "@glimmer/component";
-import Th from "timed/components/table/th";
 import { on } from "@ember/modifier";
+import { action } from "@ember/object";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+import Component from "@glimmer/component";
+
+import Th from "timed/components/table/th";
 
 export default class SortHeader extends Component {
   get direction() {

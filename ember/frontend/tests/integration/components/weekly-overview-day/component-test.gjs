@@ -1,9 +1,10 @@
+import { fn } from "@ember/helper";
 import { click, find, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime, Duration } from "luxon";
 import { module, test } from "qunit";
+
 import WeeklyOverviewDay from "timed/components/weekly-overview-day";
-import { fn } from "@ember/helper";
 
 module("Integration | Component | weekly overview day", function (hooks) {
   setupRenderingTest(hooks);

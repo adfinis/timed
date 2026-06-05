@@ -1,8 +1,8 @@
+import { fn } from "@ember/helper";
+import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
 import { DateTime } from "luxon";
-import { on } from "@ember/modifier";
-import { fn } from "@ember/helper";
 
 export default class DateButtonsComponent extends Component {
   choices = [
