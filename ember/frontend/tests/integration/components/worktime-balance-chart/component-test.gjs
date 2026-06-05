@@ -10,15 +10,14 @@ module("Integration | Component | worktime balance chart", function (hooks) {
 
   hooks.beforeEach(function () {
     const testContext = this;
-    this.owner.register(
-      "component:worktime-balance-chart",
-      class extends WorktimeBalanceChart {
-        constructor(owner, args) {
-          super(owner, args);
-          testContext.component = this;
-        }
-      },
-    );
+    class TestChart extends WorktimeBalanceChart {
+      constructor(owner, args) {
+        super(owner, args);
+        testContext.component = this;
+      }
+    }
+
+    this.Chart = TestChart;
   });
 
   test("computes the data correctly", async function (assert) {
@@ -34,10 +33,9 @@ module("Integration | Component | worktime balance chart", function (hooks) {
     );
 
     await render(
-      <template>
-        <WorktimeBalanceChart @worktimeBalances={{this.data}} />
-      </template>,
+      <template><this.Chart @worktimeBalances={{this.data}} /></template>,
     );
+
     assert.ok(this.element);
 
     assert.deepEqual(
@@ -49,7 +47,7 @@ module("Integration | Component | worktime balance chart", function (hooks) {
   });
 
   test("computes tooltip correctly", async function (assert) {
-    await render(<template><WorktimeBalanceChart /></template>);
+    await render(<template><this.Chart /></template>);
 
     const titleFn = this.component.options.tooltips.callbacks.title;
     const labelFn = this.component.options.tooltips.callbacks.label;
