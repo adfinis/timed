@@ -1,0 +1,7 @@
+
+<template><div class="{{unless @option.isActive "inactive"}}" title="{{@option.longName}}{{unless @option.isActive " (inactive)"}}">
+  {{@option.longName}}
+  {{#unless @option.isActive}}
+    <i class="fa fa-ban"></i>
+  {{/unless}}
+</div></template>

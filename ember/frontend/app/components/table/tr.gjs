@@ -1,0 +1,4 @@
+
+<template><tr class="{{if @striped "striped"}}
+    {{if @hover "hover:bg-secondary-dark/15 cursor-pointer transition-colors"}}
+    {{if @last "last-of-type:border-b-2"}}" ...attributes>{{yield}}</tr></template>

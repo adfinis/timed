@@ -1,0 +1,2 @@
+
+<template>{{@selected.longName}}</template>

@@ -1,0 +1,2 @@
+
+<template><div class="scroll-container max-h-full min-h-5 overflow-y-auto" ...attributes>{{yield}}</div></template>

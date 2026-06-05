@@ -147,5 +147,9 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "exports": {
+    "./tests/*": "./tests/*",
+    "./*": "./app/*"
   }
 }

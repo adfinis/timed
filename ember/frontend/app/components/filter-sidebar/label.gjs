@@ -1,0 +1,5 @@
+
+<template>{{!-- using this is not encouraged as it can make :hover behave weirdly --}}
+<label class="filter-sidebar-label" ...attributes>
+  <div>{{yield}}</div>
+</label></template>

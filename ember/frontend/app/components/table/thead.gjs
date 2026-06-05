@@ -1,0 +1,4 @@
+
+<template><thead class="border-b-border/50 border-b-2" ...attributes>
+  {{yield}}
+</thead></template>

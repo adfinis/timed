@@ -1,9 +1,0 @@
-<Table::Td ...attributes>
-  {{#if (eq @layout "DURATION")}}
-    {{humanize-duration @value false}}
-  {{else if (eq @layout "MONTH")}}
-    {{luxon-format (this.dateTimeForMonth @value) "MMMM"}}
-  {{else}}
-    {{@value}}
-  {{/if}}
-</Table::Td>
