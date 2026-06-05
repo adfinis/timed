@@ -49,7 +49,7 @@ jobs:
             version-file: pyproject.toml
           - name: frontend
             path: ember
-            version-file: frontend/package.json
+            version-file: frontend/config/environment.js
           - name: customer-center
             path: customer-center
             version-file: package.json
