@@ -2,10 +2,7 @@ import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
-import and from "ember-truth-helpers/helpers/and";
-import eq from "ember-truth-helpers/helpers/eq";
-import not from "ember-truth-helpers/helpers/not";
-import or from "ember-truth-helpers/helpers/or";
+import { and, eq, not, or } from "ember-truth-helpers";
 
 import Checkmark from "timed/components/checkmark";
 import CustomerVisibleIcon from "timed/components/customer-visible-icon";

@@ -3,9 +3,7 @@ import { LinkTo } from "@ember/routing";
 import can from "ember-can/helpers/can";
 import changeset from "ember-changeset/helpers/changeset";
 import perform from "ember-concurrency/helpers/perform";
-import and from "ember-truth-helpers/helpers/and";
-import not from "ember-truth-helpers/helpers/not";
-import or from "ember-truth-helpers/helpers/or";
+import { and, not, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
 
 import Card from "timed/components/card";

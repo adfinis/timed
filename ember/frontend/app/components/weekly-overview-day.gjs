@@ -3,9 +3,7 @@ import { action } from "@ember/object";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import style_ from "ember-style-modifier/modifiers/style";
-import and from "ember-truth-helpers/helpers/and";
-import not from "ember-truth-helpers/helpers/not";
-import or from "ember-truth-helpers/helpers/or";
+import { and, not, or } from "ember-truth-helpers";
 
 import luxonFormat from "timed/helpers/luxon-format";
 export default class WeeklyOverviewDay extends Component {

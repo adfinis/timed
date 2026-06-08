@@ -1,6 +1,6 @@
 import { concat } from "@ember/helper";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-import and from "ember-truth-helpers/helpers/and";
+import { and } from "ember-truth-helpers";
 
 import ProgressTooltip from "timed/components/progress-tooltip";
 import media from "timed/helpers/media";

@@ -5,8 +5,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout, dropTask } from "ember-concurrency";
 import { runTask } from "ember-lifeline";
-import not from "ember-truth-helpers/helpers/not";
-import or from "ember-truth-helpers/helpers/or";
+import { not, or } from "ember-truth-helpers";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 
 import OptimizedPowerSelectComponent from "timed/components/optimized-power-select";

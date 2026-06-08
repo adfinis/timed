@@ -3,7 +3,7 @@ import { guidFor } from "@ember/object/internals";
 import Component from "@glimmer/component";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
-import eq from "ember-truth-helpers/helpers/eq";
+import { eq } from "ember-truth-helpers";
 
 export default class Checkbox extends Component {
   constructor(...args) {

@@ -9,8 +9,7 @@ import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import changeset from "ember-changeset/helpers/changeset";
 import { dropTask } from "ember-concurrency";
 import perform from "ember-concurrency/helpers/perform";
-import not from "ember-truth-helpers/helpers/not";
-import or from "ember-truth-helpers/helpers/or";
+import { not, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
 
 import CanEdit from "timed/components/can-edit";

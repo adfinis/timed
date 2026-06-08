@@ -2,9 +2,7 @@ import { uniqueId, get, fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
-import eq from "ember-truth-helpers/helpers/eq";
-import not from "ember-truth-helpers/helpers/not";
-import or from "ember-truth-helpers/helpers/or";
+import { eq, not, or } from "ember-truth-helpers";
 
 import Datepicker from "timed/components/datepicker";
 

@@ -3,7 +3,7 @@ import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
 import PowerCalendar from "ember-power-calendar/components/power-calendar";
-import eq from "ember-truth-helpers/helpers/eq";
+import { eq } from "ember-truth-helpers";
 import { DateTime, Info } from "luxon";
 
 import Block from "timed/components/card/block";

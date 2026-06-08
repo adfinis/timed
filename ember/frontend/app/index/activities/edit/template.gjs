@@ -4,7 +4,7 @@ import { on } from "@ember/modifier";
 import didUpdate from "@ember/render-modifiers/modifiers/did-update";
 import { LinkTo } from "@ember/routing";
 import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
-import not from "ember-truth-helpers/helpers/not";
+import { not } from "ember-truth-helpers";
 import UiCheckbox from "ui-core/components/ui-checkbox";
 
 import Card from "timed/components/card";

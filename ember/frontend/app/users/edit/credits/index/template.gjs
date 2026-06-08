@@ -4,8 +4,7 @@ import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import can from "ember-can/helpers/can";
 import perform from "ember-concurrency/helpers/perform";
-import eq from "ember-truth-helpers/helpers/eq";
-import not from "ember-truth-helpers/helpers/not";
+import { eq, not } from "ember-truth-helpers";
 
 import Card from "timed/components/card";
 import Empty from "timed/components/empty";

@@ -4,11 +4,7 @@ import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
 import changeset from "ember-changeset/helpers/changeset";
 import perform from "ember-concurrency/helpers/perform";
-import and from "ember-truth-helpers/helpers/and";
-import eq from "ember-truth-helpers/helpers/eq";
-import not from "ember-truth-helpers/helpers/not";
-import notEq from "ember-truth-helpers/helpers/not-eq";
-import or from "ember-truth-helpers/helpers/or";
+import { and, eq, not, notEq, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
 
 import Card from "timed/components/card";

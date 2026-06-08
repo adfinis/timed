@@ -4,7 +4,7 @@ import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
-import notEq from "ember-truth-helpers/helpers/not-eq";
+import { notEq } from "ember-truth-helpers";
 
 import FilterSidebarFilter from "timed/components/filter-sidebar/filter";
 import FilterSidebarGroup from "timed/components/filter-sidebar/group";

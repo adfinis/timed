@@ -4,7 +4,7 @@ import { action } from "@ember/object";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
-import or from "ember-truth-helpers/helpers/or";
+import { or } from "ember-truth-helpers";
 
 export default class Toggle extends Component {
   @action

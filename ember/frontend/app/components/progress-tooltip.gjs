@@ -6,7 +6,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout } from "ember-concurrency";
 import EmberTether from "ember-tether/components/ember-tether";
-import gt from "ember-truth-helpers/helpers/gt";
+import { gt } from "ember-truth-helpers";
 import { Duration } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 

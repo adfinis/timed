@@ -1,5 +1,5 @@
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-import not from "ember-truth-helpers/helpers/not";
+import { not } from "ember-truth-helpers";
 
 import Empty from "timed/components/empty";
 import LoadingIcon from "timed/components/loading-icon";

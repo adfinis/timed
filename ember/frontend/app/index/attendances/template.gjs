@@ -3,8 +3,7 @@ import { on } from "@ember/modifier";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
 import changeset from "ember-changeset/helpers/changeset";
-import and from "ember-truth-helpers/helpers/and";
-import not from "ember-truth-helpers/helpers/not";
+import { and, not } from "ember-truth-helpers";
 
 import AttendanceSlider from "timed/components/attendance-slider";
 import LowerButton from "timed/components/nav-tabs/lower-button";

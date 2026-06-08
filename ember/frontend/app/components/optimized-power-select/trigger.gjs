@@ -1,8 +1,7 @@
 import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
-import and from "ember-truth-helpers/helpers/and";
-import not from "ember-truth-helpers/helpers/not";
+import { and, not } from "ember-truth-helpers";
 
 export default class OptimizedPowerSelectTriggerComponent extends Component {
   @action
