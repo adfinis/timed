@@ -1,9 +1,7 @@
 import { concat } from "@ember/helper";
 import Component from "@glimmer/component";
 import style_ from "ember-style-modifier/modifiers/style";
-import and from "ember-truth-helpers/helpers/and";
-import gt from "ember-truth-helpers/helpers/gt";
-import lte from "ember-truth-helpers/helpers/lte";
+import { and, gt, lte } from "ember-truth-helpers";
 
 export default class StatisticListBar extends Component {
   get didFinishEffortsInBudget() {

@@ -3,7 +3,7 @@ import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 import preventDefault from "ember-event-helpers/helpers/prevent-default";
-import not from "ember-truth-helpers/helpers/not";
+import { not } from "ember-truth-helpers";
 
 import DurationSince from "timed/components/duration-since";
 

@@ -1,6 +1,6 @@
 import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
-import eq from "ember-truth-helpers/helpers/eq";
+import { eq } from "ember-truth-helpers";
 import { module, test } from "qunit";
 
 import AsyncList from "timed/components/async-list";

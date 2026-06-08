@@ -4,7 +4,7 @@ import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import { VerticalCollection } from "@html-next/vertical-collection";
 import slice from "@nullvoxpopuli/ember-composable-helpers/helpers/slice";
 import perform from "ember-concurrency/helpers/perform";
-import eq from "ember-truth-helpers/helpers/eq";
+import { eq } from "ember-truth-helpers";
 
 import AsyncList from "timed/components/async-list";
 import Empty from "timed/components/empty";

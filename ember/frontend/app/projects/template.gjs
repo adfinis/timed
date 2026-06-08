@@ -5,9 +5,7 @@ import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
 import changeset from "ember-changeset/helpers/changeset";
 import perform from "ember-concurrency/helpers/perform";
 import PowerSelect from "ember-power-select/components/power-select";
-import and from "ember-truth-helpers/helpers/and";
-import eq from "ember-truth-helpers/helpers/eq";
-import not from "ember-truth-helpers/helpers/not";
+import { and, eq, not } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
 
 import Checkbox from "timed/components/checkbox";

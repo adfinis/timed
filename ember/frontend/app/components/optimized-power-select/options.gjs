@@ -6,7 +6,7 @@ import { tracked } from "@glimmer/tracking";
 import { VerticalCollection } from "@html-next/vertical-collection";
 import { scheduleTask } from "ember-lifeline";
 import emberPowerSelectIsEqual from "ember-power-select/helpers/ember-power-select-is-equal";
-import eq from "ember-truth-helpers/helpers/eq";
+import { eq } from "ember-truth-helpers";
 
 const isTouchDevice = !!window && "ontouchstart" in window;
 

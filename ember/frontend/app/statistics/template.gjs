@@ -2,8 +2,7 @@ import { fn, hash, array } from "@ember/helper";
 import { on } from "@ember/modifier";
 import includes from "@nullvoxpopuli/ember-composable-helpers/helpers/includes";
 import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
-import eq from "ember-truth-helpers/helpers/eq";
-import not from "ember-truth-helpers/helpers/not";
+import { eq, not } from "ember-truth-helpers";
 
 import DateButtons from "timed/components/date-buttons";
 import FilterSidebar from "timed/components/filter-sidebar";

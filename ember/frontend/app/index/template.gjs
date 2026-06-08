@@ -10,8 +10,7 @@ import changesetSet from "ember-changeset/helpers/changeset-set";
 import perform from "ember-concurrency/helpers/perform";
 import PowerCalendar from "ember-power-calendar/components/power-calendar";
 import PowerCalendarMultiple from "ember-power-calendar/components/power-calendar-multiple";
-import eq from "ember-truth-helpers/helpers/eq";
-import or from "ember-truth-helpers/helpers/or";
+import { eq, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
 
 import DateNavigation from "timed/components/date-navigation";

@@ -7,7 +7,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
-import not from "ember-truth-helpers/helpers/not";
+import { not } from "ember-truth-helpers";
 
 import DurationpickerDay from "timed/components/durationpicker-day";
 import Modal from "timed/components/modal";

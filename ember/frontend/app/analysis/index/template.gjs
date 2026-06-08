@@ -6,11 +6,7 @@ import noop from "@nullvoxpopuli/ember-composable-helpers/helpers/noop";
 import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
 import perform from "ember-concurrency/helpers/perform";
 import inViewport from "ember-in-viewport/modifiers/in-viewport";
-import and from "ember-truth-helpers/helpers/and";
-import eq from "ember-truth-helpers/helpers/eq";
-import not from "ember-truth-helpers/helpers/not";
-import notEq from "ember-truth-helpers/helpers/not-eq";
-import or from "ember-truth-helpers/helpers/or";
+import { and, eq, not, notEq, or } from "ember-truth-helpers";
 
 import CanEdit from "timed/components/can-edit";
 import Checkmark from "timed/components/checkmark";

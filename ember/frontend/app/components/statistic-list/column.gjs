@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import eq from "ember-truth-helpers/helpers/eq";
+import { eq } from "ember-truth-helpers";
 import { DateTime } from "luxon";
 
 import Td from "timed/components/table/td";

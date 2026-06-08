@@ -8,8 +8,7 @@ import { tracked } from "@glimmer/tracking";
 import { task, timeout } from "ember-concurrency";
 import { scheduleTask } from "ember-lifeline";
 import style_ from "ember-style-modifier/modifiers/style";
-import gte from "ember-truth-helpers/helpers/gte";
-import or from "ember-truth-helpers/helpers/or";
+import { gte, or } from "ember-truth-helpers";
 import { DateTime } from "luxon";
 
 import config from "timed/config/environment";

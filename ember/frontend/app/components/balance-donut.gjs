@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
 import style_ from "ember-style-modifier/modifiers/style";
-import gte from "ember-truth-helpers/helpers/gte";
+import { gte } from "ember-truth-helpers";
 import { cached } from "tracked-toolbox";
 
 import formatDuration from "timed/helpers/format-duration";
