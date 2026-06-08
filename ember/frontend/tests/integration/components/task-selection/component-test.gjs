@@ -3,11 +3,11 @@ import { hash } from "@ember/helper";
 import { on } from "@ember/modifier";
 import EmberObject from "@ember/object";
 import { click, render, tab, triggerEvent } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
 
 import TaskSelection from "timed/components/task-selection";
+import { setupMirage } from "timed/tests/helpers/mirage";
 
 const CUSTOMER = EmberObject.create({
   id: 1,

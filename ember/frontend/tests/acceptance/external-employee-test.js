@@ -1,9 +1,9 @@
 import { visit } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
+import { setupMirage } from "timed/tests/helpers/mirage";
 import { setBreakpoint } from "timed/tests/helpers/responsive";
 
 module("Acceptance | external employee", function (hooks) {

@@ -1,10 +1,11 @@
 import { click, fillIn, visit, currentURL } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
 import { selectChoose } from "ember-power-select/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 import sinon from "sinon";
+
+import { setupMirage } from "timed/tests/helpers/mirage";
 
 module("Acceptance | projects", function (hooks) {
   setupApplicationTest(hooks);

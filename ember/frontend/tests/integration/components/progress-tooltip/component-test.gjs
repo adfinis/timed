@@ -1,11 +1,11 @@
 import EmberObject from "@ember/object";
 import { render, settled } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupRenderingTest } from "ember-qunit";
 import { Duration } from "luxon";
 import { module, test } from "qunit";
 
 import ProgressTooltip from "timed/components/progress-tooltip";
+import { setupMirage } from "timed/tests/helpers/mirage";
 
 module("Integration | Component | progress tooltip", function (hooks) {
   setupRenderingTest(hooks);

@@ -6,12 +6,13 @@ import {
   visit,
   waitFor,
 } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
 import taskSelect from "../helpers/task-select";
+
+import { setupMirage } from "timed/tests/helpers/mirage";
 
 module("Acceptance | index activities edit", function (hooks) {
   setupApplicationTest(hooks);

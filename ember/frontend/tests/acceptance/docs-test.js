@@ -1,11 +1,11 @@
 import { visit } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
 import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
 import config from "timed/config/environment";
 import { ROUTE_DOCS_MAPPING } from "timed/services/docs";
+import { setupMirage } from "timed/tests/helpers/mirage";
 
 module("Acceptance | docs", function (hooks) {
   setupApplicationTest(hooks);
