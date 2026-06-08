@@ -1,13 +1,11 @@
 import { visit } from "@ember/test-helpers";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
-import { setupMirage } from "timed/tests/helpers/mirage";
+import { setupApplicationTest } from "timed/tests/helpers";
 
 module("Acceptance | notfound", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   test("displays a 404 page for undefined routes if logged in", async function (assert) {
     const user = this.server.create("user");

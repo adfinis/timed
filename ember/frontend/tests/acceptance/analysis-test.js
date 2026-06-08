@@ -7,19 +7,17 @@ import {
   findAll,
 } from "@ember/test-helpers";
 import { selectChoose } from "ember-power-select/test-support";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
 import config from "../../config/environment";
 import userSelect from "../helpers/user-select";
 
-import { setupMirage } from "timed/tests/helpers/mirage";
+import { setupApplicationTest } from "timed/tests/helpers";
 import { setBreakpoint } from "timed/tests/helpers/responsive";
 
 module("Acceptance | analysis", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     setBreakpoint("md");

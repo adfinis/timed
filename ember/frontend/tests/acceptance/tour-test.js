@@ -5,17 +5,15 @@ import {
   currentRouteName,
   settled,
 } from "@ember/test-helpers";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
-import { setupMirage } from "timed/tests/helpers/mirage";
+import { setupApplicationTest } from "timed/tests/helpers";
 import { setBreakpoint } from "timed/tests/helpers/responsive";
 import TOURS from "timed/tours";
 
 module("Acceptance | tour", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     const user = this.server.create("user", { tourDone: false });

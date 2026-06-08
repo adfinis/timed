@@ -1,13 +1,11 @@
 import { visit, currentURL, click } from "@ember/test-helpers";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
-import { setupMirage } from "timed/tests/helpers/mirage";
+import { setupApplicationTest } from "timed/tests/helpers";
 
 module("Acceptance | users edit responsibilities", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.admin = this.server.create("user", {

@@ -1,14 +1,12 @@
 import { click, currentURL, visit } from "@ember/test-helpers";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
-import { setupMirage } from "timed/tests/helpers/mirage";
+import { setupApplicationTest } from "timed/tests/helpers";
 import { setBreakpoint } from "timed/tests/helpers/responsive";
 
 module("Acceptance | index attendances", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     setBreakpoint("xl");

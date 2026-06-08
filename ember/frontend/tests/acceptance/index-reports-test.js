@@ -7,18 +7,16 @@ import {
   waitFor,
 } from "@ember/test-helpers";
 import { faker } from "@faker-js/faker";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
 import taskSelect from "../helpers/task-select";
 
-import { setupMirage } from "timed/tests/helpers/mirage";
+import { setupApplicationTest } from "timed/tests/helpers";
 
 module("Acceptance | index reports", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     const user = this.server.create("user");
