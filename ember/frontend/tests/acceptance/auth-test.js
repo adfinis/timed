@@ -1,12 +1,11 @@
 import { click, currentURL, visit } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
+import { setupApplicationTest } from "timed/tests/helpers";
+
 module("Acceptance | auth", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(function () {
     const user = this.server.create("user", {

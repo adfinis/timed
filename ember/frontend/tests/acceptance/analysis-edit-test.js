@@ -1,13 +1,12 @@
 import { click, fillIn, currentURL, visit } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
 import { selectChoose } from "ember-power-select/test-support";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 
+import { setupApplicationTest } from "timed/tests/helpers";
+
 module("Acceptance | analysis edit", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     const user = this.server.create("user", { isSuperuser: true });

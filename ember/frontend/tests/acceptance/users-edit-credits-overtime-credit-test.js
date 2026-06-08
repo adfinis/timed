@@ -1,13 +1,12 @@
 import { click, fillIn, currentURL, visit } from "@ember/test-helpers";
-import { setupMirage } from "ember-cli-mirage/test-support";
-import { setupApplicationTest } from "ember-qunit";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
 
+import { setupApplicationTest } from "timed/tests/helpers";
+
 module("Acceptance | users edit credits overtime credit", function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.user = this.server.create("user", { isSuperuser: true });

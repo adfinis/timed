@@ -1,8 +1,11 @@
-import { discoverEmberDataModels } from "ember-cli-mirage";
 import { DateTime, Duration } from "luxon";
 import { createServer, Response } from "miragejs";
 
+import factories from "./factories";
+import fixtures from "./fixtures";
 import { randomDuration } from "./helpers/duration";
+import models from "./models";
+import serializers from "./serializers";
 
 import formatDuration from "timed/utils/format-duration";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
@@ -48,11 +51,14 @@ const byUserAndDate = (modelName) => {
   };
 };
 
-export default function (config) {
+export default function (config = {}) {
   const finalConfig = {
     ...config,
+    factories: { ...factories, ...config.factories },
+    fixtures: { ...fixtures, ...config.fixtures },
+    models: { ...models, ...config.models },
+    serializers: { ...serializers, ...config.serializers },
     trackRequests: true,
-    models: { ...discoverEmberDataModels(config.store), ...config.models },
     routes,
   };
 

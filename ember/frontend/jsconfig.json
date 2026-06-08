@@ -8,10 +8,10 @@
     "strictNullChecks": true,
     "paths": {
       "timed/tests/*": ["tests/*"],
-      "timed/mirage/*": ["mirage/*"],
+      "timed/mirage/*": ["app/mirage/*"],
       "timed/*": ["app/*"],
       "*": ["types/*"]
     }
   },
-  "include": ["app/**/*", "tests/**/*", "types/**/*", "mirage/**/*"]
+  "include": ["app/**/*", "tests/**/*", "types/**/*"]
 }

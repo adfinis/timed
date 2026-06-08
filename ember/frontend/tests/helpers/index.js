@@ -4,6 +4,8 @@ import {
   setupTest as upstreamSetupTest,
 } from "ember-qunit";
 
+import { setupMirage } from "./mirage";
+
 // This file exists to provide wrappers around ember-qunit's
 // test setup functions. This way, you can easily extend the setup that is
 // needed per test type.
@@ -24,7 +26,7 @@ function setupApplicationTest(hooks, options) {
   // from other addons:
   //
   // setupIntl(hooks, 'en-us'); // ember-intl
-  // setupMirage(hooks); // ember-cli-mirage
+  setupMirage(hooks); // ember-mirage
 }
 
 function setupRenderingTest(hooks, options) {
