@@ -1,6 +1,6 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import style_ from "ember-style-modifier/modifiers/style";
+import style from "ember-style-modifier";
 
 import WeeklyOverviewBenchmark from "timed/components/weekly-overview-benchmark";
 
@@ -16,7 +16,7 @@ export default class WeeklyOverview extends Component {
   }
   <template>
     <div
-      {{style_ this.style}}
+      {{style this.style}}
       class="flex w-full overflow-hidden pb-12 pl-8 pt-5 sm:pl-10 md:pl-12"
       ...attributes
     >

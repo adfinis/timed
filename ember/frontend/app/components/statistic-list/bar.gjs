@@ -1,6 +1,6 @@
 import { concat } from "@ember/helper";
 import Component from "@glimmer/component";
-import style_ from "ember-style-modifier/modifiers/style";
+import style from "ember-style-modifier";
 import { and, gt, lte } from "ember-truth-helpers";
 
 export default class StatisticListBar extends Component {
@@ -34,14 +34,14 @@ export default class StatisticListBar extends Component {
         class="statistic-list-bar
           {{this.spentEffortsBarColor}}
           z-10 before:rounded-r"
-        {{style_ --value=(concat @value)}}
+        {{style --value=(concat @value)}}
       ></div>
       {{#if (and @remaining (lte @remaining 1))}}
         <div
           ...attributes
           class="statistic-list-bar remaining before:rounded-r
             {{if (gt @remaining @goal) 'before:bg-danger' 'before:bg-success'}}"
-          {{style_ --value=(concat @remaining)}}
+          {{style --value=(concat @remaining)}}
         ></div>
       {{/if}}
       {{#if @goal}}
@@ -53,7 +53,7 @@ export default class StatisticListBar extends Component {
               'before:border-foreground-primary'
               'before:border-danger'
             }}"
-          {{style_ --value=(concat (Math.min "0.99" @goal))}}
+          {{style --value=(concat (Math.min "0.99" @goal))}}
         ></div>
       {{/if}}
     </div>

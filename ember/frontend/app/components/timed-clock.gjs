@@ -7,7 +7,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { task, timeout } from "ember-concurrency";
 import { scheduleTask } from "ember-lifeline";
-import style_ from "ember-style-modifier/modifiers/style";
+import style from "ember-style-modifier";
 import { gte, or } from "ember-truth-helpers";
 import { DateTime } from "luxon";
 
@@ -125,7 +125,7 @@ export default class TimedClock extends Component {
         viewBox="0 0 512 512"
         width="100%"
         height="100%"
-        {{style_ --clock-size=(concat (or @clockSize 50) "px")}}
+        {{style --clock-size=(concat (or @clockSize 50) "px")}}
         ...attributes
         data-test-timed-clock
       >
