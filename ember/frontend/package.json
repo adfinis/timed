@@ -99,7 +99,7 @@
     "ember-simple-auth-oidc": "7.0.4",
     "ember-sinon-qunit": "7.5.0",
     "ember-source": "~6.4.0",
-    "ember-style-modifier": "^1.0.0",
+    "ember-style-modifier": "4.6.0",
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "~7.9.3",
     "ember-test-selectors": "6.0.0",

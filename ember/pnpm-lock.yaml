@@ -226,8 +226,8 @@ importers:
         specifier: ~6.4.0
         version: 6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5)
       ember-style-modifier:
-        specifier: ^1.0.0
-        version: 1.0.0(@babel/core@7.28.6)
+        specifier: 4.6.0
+        version: 4.6.0(@babel/core@7.28.6)
       ember-template-imports:
         specifier: ^4.3.0
         version: 4.4.0
@@ -4128,10 +4128,6 @@ packages:
     resolution: {integrity: sha512-bnaKF1LLKMkBNeDoetvIJ4vhwRPKIIumWr6dbVuW6W6p4QV8ZiO+GdF8J7mxDNlog9CeL9Z/7wam4YS86G8BYA==}
     engines: {node: 6.* || 8.* || >= 10.*}
 
-  ember-modifier@3.2.7:
-    resolution: {integrity: sha512-ezcPQhH8jUfcJQbbHji4/ZG/h0yyj1jRDknfYue/ypQS8fM8LrGcCMo0rjDZLzL1Vd11InjNs3BD7BdxFlzGoA==}
-    engines: {node: 12.* || >= 14}
-
   ember-modifier@4.2.2:
     resolution: {integrity: sha512-pPYBAGyczX0hedGWQFQOEiL9s45KS9efKxJxUQkMLjQyh+1Uef1mcmAGsdw2KmvNupITkE/nXxmVO1kZ9tt3ag==}
 
@@ -4260,10 +4256,6 @@ packages:
 
   ember-strict-application-resolver@0.1.1:
     resolution: {integrity: sha512-/49JZ2Yk2ggicAGIoFNWcz05llhe2i+/2dpH5Pv1KlwZOBKkqMMJpTKEB4IMg+FjKBiE0r2yxuZzo9Oly9vc1A==}
-
-  ember-style-modifier@1.0.0:
-    resolution: {integrity: sha512-ANkYpOeI3/tkRxVz750ymb8cQBqfBTKOUOz4RPRsNys8rlaBiaKEa95XLz1JWfCXCzjmqe8i2cIdnAMix+nb3A==}
-    engines: {node: 14.* || >= 16}
 
   ember-style-modifier@4.6.0:
     resolution: {integrity: sha512-ZM1pztpyEdZDfQEgOkWREiiUrsfnYGJGJzEw5QO60Sd2GAZIXLhCHxOTaT3ox5pUGb+ldG4I9Fk3srQreMJlQw==}
@@ -13190,17 +13182,6 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-modifier@3.2.7(@babel/core@7.28.6):
-    dependencies:
-      ember-cli-babel: 7.26.11
-      ember-cli-normalize-entity-name: 1.0.0
-      ember-cli-string-utils: 1.1.0
-      ember-cli-typescript: 5.3.0
-      ember-compatibility-helpers: 1.2.7(@babel/core@7.28.6)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-
   ember-modifier@4.2.2(@babel/core@7.28.6):
     dependencies:
       '@embroider/addon-shim': 1.10.2
@@ -13521,14 +13502,6 @@ snapshots:
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.1(@babel/core@7.28.6)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-
-  ember-style-modifier@1.0.0(@babel/core@7.28.6):
-    dependencies:
-      ember-cli-babel: 7.26.11
-      ember-modifier: 3.2.7(@babel/core@7.28.6)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
