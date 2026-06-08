@@ -1,5 +1,6 @@
-
-<template><div data-test-notfound class="text-center">
-  <h1>404</h1>
-  <h4>The site you requested does not exist</h4>
-</div></template>
+<template>
+  <div data-test-notfound class="text-center">
+    <h1>404</h1>
+    <h4>The site you requested does not exist</h4>
+  </div>
+</template>
