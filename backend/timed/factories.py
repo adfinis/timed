@@ -8,7 +8,7 @@ class WorkdayProvider(BaseProvider):
     def workday(self):
         d = self.generator.date_object()
         while d.weekday() >= 5:  # noqa: PLR2004
-            d += timedelta(days=1)
+            d += timedelta(days=1)  # pragma: no cover
         return d
 
 
