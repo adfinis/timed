@@ -11,7 +11,6 @@ import {
   task,
   hash,
 } from "ember-concurrency";
-import fetch from "fetch";
 import { DateTime, Duration } from "luxon";
 
 import config from "../../config/environment";

@@ -22,6 +22,7 @@ import Td from "timed/components/table/td";
 import Th from "timed/components/table/th";
 import Thead from "timed/components/table/thead";
 import Tr from "timed/components/table/tr";
+import Void from "timed/components/void";
 import humanizeDuration from "timed/helpers/humanize-duration";
 
 <template>
@@ -233,7 +234,7 @@ import humanizeDuration from "timed/helpers/humanize-duration";
                   @required={{true}}
                 />
 
-                <f.input @labelComponent="void" @name="estimatedTime" as |fi|>
+                <f.input @labelComponent={{Void}} @name="estimatedTime" as |fi|>
                   <div class="form-group">
                     <label>
                       Estimated time
@@ -264,7 +265,7 @@ import humanizeDuration from "timed/helpers/humanize-duration";
                 {{#if remainingEffortTracking}}
                   <f.input
                     @name="mostRecentRemainingEffort"
-                    @labelComponent="void"
+                    @labelComponent={{Void}}
                     as |fi|
                   >
                     <div class="form-group">
