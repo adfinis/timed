@@ -5,8 +5,6 @@ import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { restartableTask, timeout } from "ember-concurrency";
-import mult from "ember-math-helpers/helpers/mult";
-import round from "ember-math-helpers/helpers/round";
 import EmberTether from "ember-tether/components/ember-tether";
 import gt from "ember-truth-helpers/helpers/gt";
 import { Duration } from "luxon";
@@ -20,6 +18,8 @@ import { trackedTask } from "reactiveweb/ember-concurrency";
  * @public
  */
 import humanizeDuration from "timed/helpers/humanize-duration";
+
+const mult = (a, b) => a * b;
 
 export default class ProgressTooltipComponent extends Component {
   // The delay between becoming 'visible' and fetching the data
@@ -177,7 +177,7 @@ export default class ProgressTooltipComponent extends Component {
                     @icon="exclamation-triangle"
                     @prefix="fas"
                   />
-                {{/if}}{{round (mult 100 this.progressTotal)}}%
+                {{/if}}{{Math.round (mult 100 this.progressTotal)}}%
               </span>
             {{/if}}
           </div>
@@ -192,7 +192,7 @@ export default class ProgressTooltipComponent extends Component {
                     @prefix="fas"
                   />
                 {{/if}}
-                {{round (mult 100 this.progressBillable)}}%
+                {{Math.round (mult 100 this.progressBillable)}}%
               </span>
             {{/if}}
           </div>
@@ -221,7 +221,7 @@ export default class ProgressTooltipComponent extends Component {
                       @prefix="fas"
                     />
                   {{/if}}
-                  {{round (mult 100 this.progressRemainingEffort)}}%
+                  {{Math.round (mult 100 this.progressRemainingEffort)}}%
                 </span>
               {{/if}}
             </div>

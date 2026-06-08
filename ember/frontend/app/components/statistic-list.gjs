@@ -5,8 +5,6 @@ import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { VerticalCollection } from "@html-next/vertical-collection";
 import slice from "@nullvoxpopuli/ember-composable-helpers/helpers/slice";
-import add from "ember-math-helpers/helpers/add";
-import div_ from "ember-math-helpers/helpers/div";
 import eq from "ember-truth-helpers/helpers/eq";
 import gt from "ember-truth-helpers/helpers/gt";
 import not from "ember-truth-helpers/helpers/not";
@@ -87,6 +85,9 @@ const COLUMN_MAP = {
     { title: "Duration", path: "duration", layout: DURATION_LAYOUT },
   ],
 };
+
+const add = (a, b) => a + b;
+const div_ = (a, b) => a / b;
 
 export default class StatisticList extends Component {
   get value() {

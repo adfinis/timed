@@ -180,9 +180,6 @@ importers:
       ember-load-initializers:
         specifier: 3.0.1
         version: 3.0.1(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5))
-      ember-math-helpers:
-        specifier: 2.18.2
-        version: 2.18.2
       ember-mirage:
         specifier: 0.4.3
         version: 0.4.3(@babel/core@7.28.6)(@glint/template@1.7.3)(ember-qunit@9.0.2(@ember/test-helpers@5.2.1(@babel/core@7.28.6)(@glint/template@1.7.3)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5)))(@glint/template@1.7.3)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5))(qunit@2.24.3))(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5))(miragejs@0.1.48)
@@ -4104,10 +4101,6 @@ packages:
     peerDependencies:
       ember-source: '>= 4.0.0'
 
-  ember-get-config@2.1.1:
-    resolution: {integrity: sha512-uNmv1cPG/4qsac8oIf5txJ2FZ8p88LEpG4P3dNcjsJS98Y8hd0GPMFwVqpnzI78Lz7VYRGQWY4jnE4qm5R3j4g==}
-    engines: {node: 12.* || 14.* || >= 16}
-
   ember-in-viewport@4.1.0:
     resolution: {integrity: sha512-3y6qWXuJPPc6vX2GfxWgtr+sDjb+bdZF9babstr0lTd8t8c1b42gJ13GaJqlylZIyZz2dEXFCimX9WAeudPv9g==}
     engines: {node: 12.* || 14.* || >= 16}
@@ -4137,10 +4130,6 @@ packages:
     engines: {node: '>= 18.*'}
     peerDependencies:
       ember-source: '>= 5'
-
-  ember-math-helpers@2.18.2:
-    resolution: {integrity: sha512-ikAXlIiT0wk8X8uuMtHkrRYt8HnDt9Wk+iNoY9IoBmt6IRZjCD5BmuxrIPj5Eop2/afMfKmNKnc4L1StkXM3wg==}
-    engines: {node: 12.* || 14.* || >= 16}
 
   ember-mirage@0.4.3:
     resolution: {integrity: sha512-48f3MnVuxw1Vc7/i0PRh6nlP/gIT+CbY9obt6hDAlB2p0EnLLAglnnyQ7MgOZZIvhHiYXQZ7jLLkRWF0FyP8IQ==}
@@ -13172,14 +13161,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-get-config@2.1.1(@glint/template@1.7.3):
-    dependencies:
-      '@embroider/macros': 1.16.13(@glint/template@1.7.3)
-      ember-cli-babel: 7.26.11
-    transitivePeerDependencies:
-      - '@glint/template'
-      - supports-color
-
   ember-in-viewport@4.1.0(@babel/core@7.28.6)(@glint/template@1.7.3)(webpack@5.103.0(postcss@8.5.6)):
     dependencies:
       '@embroider/macros': 1.16.13(@glint/template@1.7.3)
@@ -13243,14 +13224,6 @@ snapshots:
   ember-load-initializers@3.0.1(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5)):
     dependencies:
       ember-source: 6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5)
-
-  ember-math-helpers@2.18.2:
-    dependencies:
-      broccoli-funnel: 3.0.8
-      ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 6.3.0
-    transitivePeerDependencies:
-      - supports-color
 
   ember-mirage@0.4.3(@babel/core@7.28.6)(@glint/template@1.7.3)(ember-qunit@9.0.2(@ember/test-helpers@5.2.1(@babel/core@7.28.6)(@glint/template@1.7.3)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5)))(@glint/template@1.7.3)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5))(qunit@2.24.3))(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5))(miragejs@0.1.48):
     dependencies:

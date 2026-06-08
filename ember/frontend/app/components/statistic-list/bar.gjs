@@ -1,6 +1,5 @@
 import { concat } from "@ember/helper";
 import Component from "@glimmer/component";
-import min from "ember-math-helpers/helpers/min";
 import style_ from "ember-style-modifier/modifiers/style";
 import and from "ember-truth-helpers/helpers/and";
 import gt from "ember-truth-helpers/helpers/gt";
@@ -56,7 +55,7 @@ export default class StatisticListBar extends Component {
               'before:border-foreground-primary'
               'before:border-danger'
             }}"
-          {{style_ --value=(concat (min "0.99" @goal))}}
+          {{style_ --value=(concat (Math.min "0.99" @goal))}}
         ></div>
       {{/if}}
     </div>
