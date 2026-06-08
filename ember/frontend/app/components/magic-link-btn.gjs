@@ -2,7 +2,6 @@ import { on } from "@ember/modifier";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 
 import MagicLinkModal from "timed/components/magic-link-modal";
 

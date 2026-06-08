@@ -138,7 +138,7 @@ export default class AnalysisController extends QPController {
   @action
   updateParam(key, value) {
     this[key] = ["toDate", "fromDate"].includes(key)
-      ? value.toISODate()
+      ? value?.toISODate()
       : value;
     this._reset();
   }
