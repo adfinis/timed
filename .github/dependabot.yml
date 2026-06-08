@@ -54,10 +54,7 @@ updates:
       default-days: 7
 
   - package-ecosystem: npm
-    directories:
-      - /ember
-      - /ember/ui-core
-      - /ember/frontend
+    directory: /ember
     schedule:
       interval: daily
       time: "12:00"
