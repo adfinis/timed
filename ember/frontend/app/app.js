@@ -7,9 +7,14 @@ import DateUtils from "ember-power-calendar-luxon";
 import Resolver from "ember-resolver";
 import fastRedact from "fast-redact";
 
-import config from "timed/config/environment";
+import config from "./config/environment";
 
 import "./font-awesome";
+
+import setupInspector from "@embroider/legacy-inspector-support/ember-source-4.12";
+import compatModules from "@embroider/virtual/compat-modules";
+
+import "./styles/index.css";
 
 const redact = fastRedact({
   paths: [
@@ -78,7 +83,8 @@ const extendResolver = (resolver) => {
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
-  Resolver = extendResolver(Resolver);
+  Resolver = extendResolver(Resolver.withModules(compatModules));
+  inspector = setupInspector(this);
 }
 
-loadInitializers(App, config.modulePrefix);
+loadInitializers(App, config.modulePrefix, compatModules);

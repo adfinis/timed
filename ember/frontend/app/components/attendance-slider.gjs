@@ -10,11 +10,11 @@ import { htmlSafe } from "@ember/template";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import RangeSlider from "ember-cli-nouislider/components/range-slider";
 import { dropTask } from "ember-concurrency";
 import perform from "ember-concurrency/helpers/perform";
 import { DateTime } from "luxon";
 
+import RangeSlider from "timed/components/range-slider";
 import formatDuration from "timed/utils/format-duration";
 import { pad2joincolon } from "timed/utils/pad";
 

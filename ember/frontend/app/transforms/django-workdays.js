@@ -1,5 +1,3 @@
-import Transform from "@ember-data/serializer/transform";
-
 /**
  * Django worktime transform
  *
@@ -9,7 +7,7 @@ import Transform from "@ember-data/serializer/transform";
  * @extends DS.Transform
  * @public
  */
-export default class DjangoWorkdaysTransform extends Transform {
+export default class DjangoWorkdaysTransform {
   /**
    * Deserialize the string separated by comma into an array of numbers
    *
@@ -32,5 +30,9 @@ export default class DjangoWorkdaysTransform extends Transform {
    */
   serialize(deserialized) {
     return deserialized.join();
+  }
+
+  static create() {
+    return new this();
   }
 }

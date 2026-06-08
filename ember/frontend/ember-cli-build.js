@@ -1,8 +1,12 @@
 "use strict";
-
 const EmberApp = require("ember-cli/lib/broccoli/ember-app");
+const { setConfig } = require("@warp-drive/build-config");
 
-module.exports = function (defaults) {
+const { compatBuild } = require("@embroider/compat");
+
+module.exports = async function (defaults) {
+  const { buildOnce } = await import("@embroider/vite");
+
   const app = new EmberApp(defaults, {
     emberData: {
       deprecations: {
@@ -11,20 +15,6 @@ module.exports = function (defaults) {
         // https://deprecations.emberjs.com/id/ember-data-deprecate-store-extends-ember-object
         // before upgrading to Ember Data 6.0
         DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
-      },
-    },
-    postcssOptions: {
-      compile: {
-        plugins: [
-          { module: require("postcss-import") },
-          {
-            module: require("tailwindcss"),
-            options: {
-              config: "./config/tailwind.config.js",
-            },
-          },
-          { module: require("autoprefixer"), options: {} },
-        ],
       },
     },
     babel: {
@@ -41,16 +31,18 @@ module.exports = function (defaults) {
     "ember-validated-form": {
       theme: "bootstrap",
     },
-    autoImport: {
-      alias: {
-        "ember-composable-helpers": "@nullvoxpopuli/ember-composable-helpers",
+  });
+
+  setConfig(app, __dirname, { compatWith: "3.12" });
+  return compatBuild(app, buildOnce, {
+    packageRules: [
+      {
+        package: "ui-core",
+        semverRange: "*",
+        // Prevents Embroider from attempting to parse its assets through the Ember engine
+        addonModules: {},
+        components: {},
       },
-    },
+    ],
   });
-
-  app.import("node_modules/downloadjs/download.min.js", {
-    using: [{ transformation: "amd", as: "downloadjs" }],
-  });
-
-  return app.toTree();
 };

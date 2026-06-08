@@ -5,14 +5,14 @@
     <title>Timed</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="{{rootURL}}assets/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="{{rootURL}}assets/favicon-16x16.png" sizes="16x16">
-    <link rel="shortcut icon" href="{{rootURL}}assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" href="/@embroider/virtual/assets/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/@embroider/virtual/assets/favicon-16x16.png" sizes="16x16">
+    <link rel="shortcut icon" href="/@embroider/virtual/assets/favicon.ico" type="image/x-icon">
 
     {{content-for "head"}}
 
-    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link rel="stylesheet" href="{{rootURL}}assets/timed.css">
+    <link rel="stylesheet" href="/@embroider/virtual/vendor.css">
+    <link rel="stylesheet" href="/@embroider/virtual/app.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
@@ -22,8 +22,14 @@
   <body class="text-foreground bg-background">
     {{content-for "body"}}
 
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/timed.js"></script>
+    <script src="/@embroider/virtual/vendor.js"></script>
+    <script type="module">
+      import Application from './app/app';
+      import environment from './app/config/environment';
+
+
+      Application.create(environment.APP);
+    </script>
 
     {{content-for "body-footer"}}
   </body>

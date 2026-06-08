@@ -1,6 +1,5 @@
 import { setApplication } from "@ember/test-helpers";
-import { start, setupEmberOnerrorValidation } from "ember-qunit";
-import { loadTests } from "ember-qunit/test-loader";
+import { start as qunitStart, setupEmberOnerrorValidation } from "ember-qunit";
 import setupSinon from "ember-sinon-qunit";
 import * as QUnit from "qunit";
 import { setup } from "qunit-dom";
@@ -8,12 +7,13 @@ import { setup } from "qunit-dom";
 import Application from "timed/app";
 import config from "timed/config/environment";
 
-setApplication(Application.create(config.APP));
+export function start() {
+  setApplication(Application.create(config.APP));
 
-setup(QUnit.assert);
+  setup(QUnit.assert);
 
-setupSinon();
+  setupSinon();
 
-setupEmberOnerrorValidation();
-loadTests();
-start();
+  setupEmberOnerrorValidation();
+  qunitStart();
+}
