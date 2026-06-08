@@ -3,7 +3,7 @@ import { action } from "@ember/object";
 import { macroCondition, isTesting } from "@embroider/macros";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import VerticalCollection from "@html-next/vertical-collection/components/vertical-collection/component";
+import { VerticalCollection } from "@html-next/vertical-collection";
 import { scheduleTask } from "ember-lifeline";
 import emberPowerSelectIsEqual from "ember-power-select/helpers/ember-power-select-is-equal";
 import eq from "ember-truth-helpers/helpers/eq";
