@@ -1,0 +1,8 @@
+<template>
+  <div
+    class="empty text-foreground-muted flex h-full flex-col items-center justify-center text-center [&>.svg-inline--fa]:mb-5 [&>.svg-inline--fa]:text-[10rem]"
+    ...attributes
+  >
+    {{yield}}
+  </div>
+</template>

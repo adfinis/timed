@@ -1,0 +1,25 @@
+import { concat } from "@ember/helper";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+import and from "ember-truth-helpers/helpers/and";
+
+import ProgressTooltip from "timed/components/progress-tooltip";
+import media from "timed/helpers/media";
+<template>
+  <div
+    title="{{@option.name}}{{if @option.archived ' (archived)'}}"
+    class="{{if @option.archived 'inactive'}} flex items-center justify-between"
+    id="task-option-{{@option.id}}"
+  >
+    {{#if (and @current (media "isMd"))}}
+      <ProgressTooltip
+        @target={{concat "#task-option-" @option.id}}
+        @visible={{@current}}
+        @model={{@option}}
+      />
+    {{/if}}
+    {{@option.name}}
+    {{#if @option.archived}}
+      <FaIcon @icon="archive" @prefix="fas" />
+    {{/if}}
+  </div>
+</template>

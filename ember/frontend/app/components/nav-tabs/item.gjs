@@ -1,0 +1,8 @@
+<template>
+  <li
+    class="grid max-sm:border max-sm:first:rounded-t-sm max-sm:last:rounded-b-sm lg:text-[1.01rem]"
+    ...attributes
+  >
+    {{yield}}
+  </li>
+</template>

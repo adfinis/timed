@@ -1,0 +1,40 @@
+import { on } from "@ember/modifier";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
+import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
+
+export default class Group extends Component {
+  @tracked expanded = false;
+  <template>
+    <div
+      class="filter-sidebar-group
+        {{if this.expanded 'expanded filter-sidebar-group--expanded'}}
+        group flex flex-col p-2.5 [&:not(:first-child)]:border-t"
+    >
+      <button
+        type="button"
+        class="filter-sidebar-group-label hover:text-foreground group-[.expanded]:text-foreground text-foreground-muted flex items-center justify-between text-xl transition-colors"
+        {{on "click" (toggle "expanded" this)}}
+      >
+        {{@label}}
+        <FaIcon
+          class="-mr-[0.2rem]"
+          @icon="angle-right"
+          @prefix="fas"
+          @transform="{{if this.expanded 'rotate-90'}}"
+          @size="sm"
+        />
+      </button>
+      <div
+        class="filter-sidebar-group-body max-h-0 overflow-hidden transition-[max-height] group-[.expanded]:max-h-[32rem]"
+      >
+        <div
+          class="filter-sidebar-group-content py-2 text-sm [&>*]:mt-1 [&_label]:text-base"
+        >
+          {{yield}}
+        </div>
+      </div>
+    </div>
+  </template>
+}
