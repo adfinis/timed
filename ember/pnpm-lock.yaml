@@ -244,11 +244,11 @@ importers:
         specifier: 3.1.0
         version: 3.1.0(@glint/template@1.7.3)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5))(webpack@5.103.0(postcss@8.5.6))
       ember-truth-helpers:
-        specifier: 3.1.1
-        version: 3.1.1
+        specifier: 5.0.0
+        version: 5.0.0
       ember-validated-form:
         specifier: 8.0.1
-        version: 8.0.1(4ddc1f4987933dd7ecd89befd1dd2150)
+        version: 8.0.1(114e062c70614bc3af3097015b2aa3a4)
       eslint:
         specifier: 9.25.1
         version: 9.25.1(jiti@2.4.2)
@@ -4308,10 +4308,6 @@ packages:
   ember-tracked-storage-polyfill@1.0.1:
     resolution: {integrity: sha512-lr66R+1H9qMXIUXxwzpixS/qTwsMEpJXS5s2nOdvQP9U/JYuZT9MexpvLktSUQ1uWEhGQA8DDeeVh4R1CvLDFQ==}
     engines: {node: 12.* || >= 14}
-
-  ember-truth-helpers@3.1.1:
-    resolution: {integrity: sha512-FHwJAx77aA5q27EhdaaiBFuy9No+8yaWNT5A7zs0sIFCmf14GbcLn69vJEp6mW7vkITezizGAWhw7gL0Wbk7DA==}
-    engines: {node: 10.* || >= 12}
 
   ember-truth-helpers@5.0.0:
     resolution: {integrity: sha512-PnQd6D6hvlNC3k6gBu0SC2cvfXX6wH6W0nToomIIoxqyrD5cllk0zBh/j/1H0KsczVCWeuF9PWj5xJgL4jQAGg==}
@@ -13649,19 +13645,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-truth-helpers@3.1.1:
-    dependencies:
-      ember-cli-babel: 7.26.11
-    transitivePeerDependencies:
-      - supports-color
-
   ember-truth-helpers@5.0.0:
     dependencies:
       '@embroider/addon-shim': 1.10.2
     transitivePeerDependencies:
       - supports-color
 
-  ember-validated-form@8.0.1(4ddc1f4987933dd7ecd89befd1dd2150):
+  ember-validated-form@8.0.1(114e062c70614bc3af3097015b2aa3a4):
     dependencies:
       '@babel/core': 7.28.6
       '@embroider/util': 1.13.5(@glint/template@1.7.3)(ember-source@6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5))
@@ -13672,7 +13662,7 @@ snapshots:
       ember-cli-htmlbars: 6.3.0
       ember-source: 6.4.0(@glimmer/component@1.1.2(@babel/core@7.28.6))(rsvp@4.8.5)
       ember-template-imports: 4.4.0
-      ember-truth-helpers: 3.1.1
+      ember-truth-helpers: 5.0.0
     transitivePeerDependencies:
       - '@glint/template'
       - supports-color
