@@ -62,7 +62,13 @@ module("Integration | Component | report row", function (hooks) {
 
     assert.dom("input").isDisabled();
     assert.dom("form").hasAttribute("title", /John Doe/);
-    assert.dom(".btn").doesNotExist();
+
+    // Delete/Save must be disabled in readonly mode, but magic
+    // links can still be created
+    assert.dom(".btn").exists({ count: 1 });
+    assert.dom("[data-test-save-report]").doesNotExist();
+    assert.dom("[data-test-delete-report]").doesNotExist();
+    assert.dom("[data-test-magic-link-btn]").exists();
 
     this.set(
       "report",
@@ -71,6 +77,10 @@ module("Integration | Component | report row", function (hooks) {
 
     assert.dom("input").isNotDisabled();
     assert.dom("form").hasNoAttribute("title");
-    assert.dom(".btn").exists({ count: 2 });
+    assert.dom(".btn").exists({ count: 3 });
+
+    assert.dom("[data-test-save-report]").exists();
+    assert.dom("[data-test-delete-report]").exists();
+    assert.dom("[data-test-magic-link-btn]").exists();
   });
 });

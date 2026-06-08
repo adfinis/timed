@@ -8,6 +8,8 @@ import { tracked } from "@glimmer/tracking";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import { not } from "ember-truth-helpers";
+import { Duration } from "luxon";
+import { localCopy } from "tracked-toolbox";
 
 import DurationpickerDay from "timed/components/durationpicker-day";
 import Modal from "timed/components/modal";
@@ -15,11 +17,12 @@ import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
 
 export default class MagicLinkModal extends Component {
-  @tracked task;
-  @tracked duration;
-  @tracked comment;
-  @tracked review;
-  @tracked notBillable;
+  @localCopy("args.task") task;
+  @localCopy("args.duration") duration;
+  @localCopy("args.comment") comment;
+  @localCopy("args.review") review;
+  @localCopy("args.notBillable") notBillable;
+
   @tracked statusMsg;
   @tracked errorMsg;
 
@@ -33,13 +36,7 @@ export default class MagicLinkModal extends Component {
 
   get magicLinkString() {
     const url = this.router.urlFor("index.reports", {
-      queryParams: {
-        task: this.task?.id,
-        comment: this.comment,
-        duration: this.duration,
-        review: this.review,
-        notBillable: this.notBillable,
-      },
+      queryParams: this.reportQueryParams,
     });
 
     return `${window.location.origin}${url}`;
@@ -56,6 +53,34 @@ export default class MagicLinkModal extends Component {
       this.notify.error("Could not copy to clipboard");
     }
   }
+
+  @action
+  createReport() {
+    this.router.transitionTo("index.reports", {
+      queryParams: this.reportQueryParams,
+    });
+
+    this.args.onClose?.();
+  }
+  get durationParam() {
+    if (!this.duration) {
+      return Duration.fromMillis(0).toISO();
+    } else if (Duration.isDuration(this.duration)) {
+      return this.duration.toISO();
+    }
+    return Duration.fromMillis(0).toISO();
+  }
+
+  get reportQueryParams() {
+    return {
+      task: this.task?.id,
+      comment: this.comment,
+      duration: this.durationParam,
+      review: this.review,
+      notBillable: this.notBillable,
+    };
+  }
+
   <template>
     <Modal
       @visible={{@isVisible}}
@@ -138,7 +163,16 @@ export default class MagicLinkModal extends Component {
             data-test-magic-link-string
           />
         </modal.body>
-        <modal.footer class="flex justify-end">
+        <modal.footer class="flex justify-end gap-2">
+          <button
+            class="btn btn-success"
+            {{on "click" this.createReport}}
+            disabled={{not this.task}}
+            type="button"
+            data-test-create-magic-link-report
+          >
+            Create report
+          </button>
           <button
             class="btn btn-primary"
             {{on "click" this.copyToClipboard}}
