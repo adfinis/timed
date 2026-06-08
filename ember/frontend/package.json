@@ -132,7 +132,7 @@
     "qunit-dom": "3.5.0",
     "reactiveweb": "^1.8.0",
     "shepherd.js": "^14.5.1",
-    "stylelint": "16.24.0",
+    "stylelint": "17.12.0",
     "stylelint-config-standard": "39.0.0",
     "tailwindcss": "~3.4.19",
     "tracked-built-ins": "~4.0.0",
