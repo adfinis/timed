@@ -2,7 +2,7 @@ import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import style_ from "ember-style-modifier/modifiers/style";
+import style from "ember-style-modifier";
 import { and, not, or } from "ember-truth-helpers";
 
 import luxonFormat from "timed/helpers/luxon-format";
@@ -53,7 +53,7 @@ export default class WeeklyOverviewDay extends Component {
       title={{this.title}}
       type="button"
       {{on "click" this.click}}
-      {{style_ this.style}}
+      {{style this.style}}
       class="weekly-overview-day relative z-10 h-0 w-4 cursor-pointer [&>*]:transition-colors
         {{if @active 'active'}}
         {{if @absence 'absence'}}

@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import style_ from "ember-style-modifier/modifiers/style";
+import style from "ember-style-modifier";
 import { gte } from "ember-truth-helpers";
 import { cached } from "tracked-toolbox";
 
@@ -54,7 +54,7 @@ class BalanceDonutComponent extends Component {
   }
   <template>
     <div
-      {{style_ this.style}}
+      {{style this.style}}
       class="{{@class}}
         balance-donut
         {{this.strokeClass}}

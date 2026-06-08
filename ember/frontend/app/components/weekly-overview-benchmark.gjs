@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import style_ from "ember-style-modifier/modifiers/style";
+import style from "ember-style-modifier";
 
 export default class WeeklyOverviewBenchmark extends Component {
   /**
@@ -29,11 +29,11 @@ export default class WeeklyOverviewBenchmark extends Component {
         <span
           class="absolute -left-8 right-0 w-6 translate-y-1/2 text-center text-xs
             {{unless @expected 'text-foreground-muted'}}"
-          {{style_ this.style}}
+          {{style this.style}}
         >{{@hours}}h</span>
       {{/if}}
       <hr
-        {{style_ this.style}}
+        {{style this.style}}
         class="absolute left-0 right-0 m-0 w-full border-none p-0
           {{if @expected 'bg-tertiary/60 h-[1.5px]' 'bg-primary/30 h-px'}}"
       />
