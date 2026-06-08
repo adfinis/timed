@@ -3,7 +3,7 @@ import { get } from "@ember/object";
 import { capitalize } from "@ember/string";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
-import VerticalCollection from "@html-next/vertical-collection/components/vertical-collection/component";
+import { VerticalCollection } from "@html-next/vertical-collection";
 import slice from "@nullvoxpopuli/ember-composable-helpers/helpers/slice";
 import add from "ember-math-helpers/helpers/add";
 import div_ from "ember-math-helpers/helpers/div";

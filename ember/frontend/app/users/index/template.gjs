@@ -1,7 +1,7 @@
 import { hash, array, fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
-import VerticalCollection from "@html-next/vertical-collection/components/vertical-collection/component";
+import { VerticalCollection } from "@html-next/vertical-collection";
 import slice from "@nullvoxpopuli/ember-composable-helpers/helpers/slice";
 import perform from "ember-concurrency/helpers/perform";
 import eq from "ember-truth-helpers/helpers/eq";
