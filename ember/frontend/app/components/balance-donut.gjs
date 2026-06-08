@@ -1,17 +1,17 @@
 import Component from "@glimmer/component";
-import min0 from "ember-math-helpers/helpers/min";
-import mult from "ember-math-helpers/helpers/mult";
-import round from "ember-math-helpers/helpers/round";
-import sub_ from "ember-math-helpers/helpers/sub";
 import style_ from "ember-style-modifier/modifiers/style";
 import gte from "ember-truth-helpers/helpers/gte";
 import { cached } from "tracked-toolbox";
 
 import formatDuration from "timed/helpers/format-duration";
 
-const { PI, floor, min, abs } = Math;
+const { PI, floor, min, abs, round } = Math;
 
 const { isInteger } = Number;
+
+const mult = (a, b) => a * b;
+const sub = (a, b) => a - b;
+
 class BalanceDonutComponent extends Component {
   get value() {
     if (this.args.balance.usedDuration || !this.args.balance.credit) {
@@ -84,8 +84,8 @@ class BalanceDonutComponent extends Component {
             r={{this.radius}}
             fill="transparent"
             stroke-width="2"
-            stroke-dasharray="{{mult (min0 this.value 1) 100}} {{mult
-              (sub_ 1 (min0 this.value 1))
+            stroke-dasharray="{{mult (min this.value 1) 100}} {{mult
+              (sub 1 (min this.value 1))
               100
             }}"
             stroke-dashoffset="25"
