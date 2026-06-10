@@ -9,6 +9,7 @@ from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
 from timed.employment import factories as employment_factories
+from timed.notifications import factories as notifications_factories
 from timed.projects import factories as projects_factories
 from timed.subscription import factories as subscription_factories
 from timed.tracking import factories as tracking_factories
@@ -42,6 +43,8 @@ register(tracking_factories.AbsenceFactory)
 register(tracking_factories.ActivityFactory)
 register(tracking_factories.AttendanceFactory)
 register(tracking_factories.ReportFactory)
+
+register(notifications_factories.NotificationFactory)
 
 
 @pytest.fixture
