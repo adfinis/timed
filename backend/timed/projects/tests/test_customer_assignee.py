@@ -2,8 +2,6 @@ import pytest
 from django.urls import reverse
 from rest_framework.status import HTTP_200_OK
 
-from timed.projects.factories import CustomerAssigneeFactory
-
 
 @pytest.mark.parametrize(
     ("is_employed", "is_external", "is_customer_assignee", "is_customer", "expected"),
@@ -26,8 +24,9 @@ def test_customer_assignee_list(
     is_customer,
     expected,
     setup_customer_and_employment_status,
+    customer_assignee_factory,
 ):
-    customer_assignee = CustomerAssigneeFactory.create()
+    customer_assignee = customer_assignee_factory()
     user = auth_client.user
     setup_customer_and_employment_status(
         user=user,

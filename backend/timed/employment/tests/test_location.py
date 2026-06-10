@@ -2,8 +2,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from timed.employment.factories import EmploymentFactory, LocationFactory
-
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("location")
@@ -50,10 +48,12 @@ def test_location_list(
         (False, status.HTTP_404_NOT_FOUND),
     ],
 )
-def test_location_detail(auth_client, is_employed, expected):
-    location = LocationFactory.create()
+def test_location_detail(
+    auth_client, is_employed, expected, employment_factory, location_factory
+):
+    location = location_factory()
     if is_employed:
-        EmploymentFactory.create(user=auth_client.user)
+        employment_factory(user=auth_client.user)
 
     url = reverse("location-detail", args=[location.id])
 
@@ -68,8 +68,8 @@ def test_location_create(auth_client):
     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
 
-def test_location_update(auth_client):
-    location = LocationFactory.create()
+def test_location_update(auth_client, location_factory):
+    location = location_factory()
 
     url = reverse("location-detail", args=[location.id])
 
@@ -77,8 +77,8 @@ def test_location_update(auth_client):
     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
 
 
-def test_location_delete(auth_client):
-    location = LocationFactory.create()
+def test_location_delete(auth_client, location_factory):
+    location = location_factory()
 
     url = reverse("location-detail", args=[location.id])
 

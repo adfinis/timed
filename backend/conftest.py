@@ -81,7 +81,7 @@ def superadmin_user(db):  # noqa: ARG001
 
 
 @pytest.fixture
-def external_employee(db):  # noqa: ARG001
+def external_employee(db, employment_factory):  # noqa: ARG001
     user = get_user_model().objects.create_user(
         username="user",
         password="123qweasd",
@@ -90,12 +90,12 @@ def external_employee(db):  # noqa: ARG001
         is_superuser=False,
         is_staff=False,
     )
-    employment_factories.EmploymentFactory.create(user=user, is_external=True)
+    employment_factory(user=user, is_external=True)
     return user
 
 
 @pytest.fixture
-def internal_employee(db):  # noqa: ARG001
+def internal_employee(db, employment_factory):  # noqa: ARG001
     user = get_user_model().objects.create_user(
         username="user",
         password="123qweasd",
@@ -105,7 +105,7 @@ def internal_employee(db):  # noqa: ARG001
         is_superuser=False,
         is_staff=False,
     )
-    employment_factories.EmploymentFactory.create(user=user, is_external=False)
+    employment_factory(user=user, is_external=False)
     return user
 
 

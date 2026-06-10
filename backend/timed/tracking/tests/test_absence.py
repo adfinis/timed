@@ -7,14 +7,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from timed.employment.factories import (
-    AbsenceTypeFactory,
-    EmploymentFactory,
-    PublicHolidayFactory,
-    UserFactory,
-)
-from timed.tracking.factories import AbsenceFactory, ReportFactory
-
 if TYPE_CHECKING:
     from timed.employment.models import AbsenceType
     from timed.tracking.models import Absence
@@ -24,21 +16,27 @@ if TYPE_CHECKING:
     "is_external",
     [True, False],
 )
-def test_absence_list_authenticated(auth_client, is_external):
-    absence = AbsenceFactory.create(user=auth_client.user)
+def test_absence_list_authenticated(
+    auth_client,
+    is_external,
+    absence_factory,
+    employment_factory,
+    public_holiday_factory,
+):
+    absence = absence_factory(user=auth_client.user)
 
     # overlapping absence with public holidays need to be hidden
-    overlap_absence = AbsenceFactory.create(
+    overlap_absence = absence_factory(
         user=auth_client.user, date=datetime.date(2018, 1, 1)
     )
-    employment = EmploymentFactory.create(
+    employment = employment_factory(
         user=overlap_absence.user, start_date=datetime.date(2017, 12, 31)
     )
     if is_external:
         employment.is_external = True
         employment.save()
 
-    PublicHolidayFactory.create(date=overlap_absence.date, location=employment.location)
+    public_holiday_factory(date=overlap_absence.date, location=employment.location)
     url = reverse("absence-list")
 
     response = auth_client.get(url)
@@ -51,8 +49,8 @@ def test_absence_list_authenticated(auth_client, is_external):
         assert json["data"][0]["id"] == str(absence.id)
 
 
-def test_absence_list_superuser(superadmin_client):
-    AbsenceFactory.create_batch(2)
+def test_absence_list_superuser(superadmin_client, absence_factory):
+    absence_factory.create_batch(2)
 
     url = reverse("absence-list")
     response = superadmin_client.get(url)
@@ -62,12 +60,14 @@ def test_absence_list_superuser(superadmin_client):
     assert len(json["data"]) == 2
 
 
-def test_absence_list_supervisor(internal_employee_client):
-    user = UserFactory.create()
+def test_absence_list_supervisor(
+    internal_employee_client, absence_factory, user_factory
+):
+    user = user_factory()
     internal_employee_client.user.supervisees.add(user)
 
-    AbsenceFactory.create(user=internal_employee_client.user)
-    AbsenceFactory.create(user=user)
+    absence_factory(user=internal_employee_client.user)
+    absence_factory(user=user)
 
     url = reverse("absence-list")
     response = internal_employee_client.get(url)
@@ -76,13 +76,15 @@ def test_absence_list_supervisor(internal_employee_client):
     assert len(json["data"]) == 2
 
 
-def test_absence_list_supervisee(internal_employee_client):
-    AbsenceFactory.create(user=internal_employee_client.user)
+def test_absence_list_supervisee(
+    internal_employee_client, absence_factory, user_factory
+):
+    absence_factory(user=internal_employee_client.user)
 
-    supervisors = UserFactory.create_batch(2)
+    supervisors = user_factory.create_batch(2)
 
     supervisors[0].supervisees.add(internal_employee_client.user)
-    AbsenceFactory.create(user=supervisors[0])
+    absence_factory(user=supervisors[0])
 
     url = reverse("absence-list")
 
@@ -93,7 +95,7 @@ def test_absence_list_supervisee(internal_employee_client):
 
     # absences of multiple supervisors shouldn't affect supervisee
     supervisors[1].supervisees.add(internal_employee_client.user)
-    AbsenceFactory.create(user=supervisors[1])
+    absence_factory(user=supervisors[1])
 
     response = internal_employee_client.get(url)
     assert response.status_code == status.HTTP_200_OK
@@ -101,8 +103,8 @@ def test_absence_list_supervisee(internal_employee_client):
     assert len(json["data"]) == 1
 
 
-def test_absence_detail(internal_employee_client):
-    absence = AbsenceFactory.create(user=internal_employee_client.user)
+def test_absence_detail(internal_employee_client, absence_factory):
+    absence = absence_factory(user=internal_employee_client.user)
 
     url = reverse("absence-detail", args=[absence.id])
 
@@ -117,13 +119,15 @@ def test_absence_detail(internal_employee_client):
     ("is_external", "expected"),
     [(False, status.HTTP_201_CREATED), (True, status.HTTP_403_FORBIDDEN)],
 )
-def test_absence_create(auth_client, is_external, expected):
+def test_absence_create(
+    auth_client, is_external, expected, absence_type_factory, employment_factory
+):
     user = auth_client.user
     date = datetime.date(2017, 5, 4)
-    employment = EmploymentFactory.create(
+    employment = employment_factory(
         user=user, start_date=date, worktime_per_day=datetime.timedelta(hours=8)
     )
-    absence_type = AbsenceTypeFactory.create()
+    absence_type = absence_type_factory()
 
     if is_external:
         employment.is_external = True
@@ -155,13 +159,11 @@ def test_absence_create(auth_client, is_external, expected):
         )
 
 
-def test_absence_update_owner(auth_client):
+def test_absence_update_owner(auth_client, absence_factory, employment_factory):
     user = auth_client.user
     date = datetime.date(2017, 5, 3)
-    absence = AbsenceFactory.create(
-        user=auth_client.user, date=datetime.date(2016, 5, 3)
-    )
-    EmploymentFactory.create(
+    absence = absence_factory(user=auth_client.user, date=datetime.date(2016, 5, 3))
+    employment_factory(
         user=user, start_date=date, worktime_per_day=datetime.timedelta(hours=8)
     )
 
@@ -182,12 +184,14 @@ def test_absence_update_owner(auth_client):
     assert json["data"]["attributes"]["date"] == "2017-05-03"
 
 
-def test_absence_update_superadmin_date(superadmin_client):
+def test_absence_update_superadmin_date(
+    superadmin_client, absence_factory, employment_factory, user_factory
+):
     """Test that superadmin may not change date of absence."""
-    user = UserFactory.create()
+    user = user_factory()
     date = datetime.date(2017, 5, 3)
-    absence = AbsenceFactory.create(user=user, date=datetime.date(2016, 5, 3))
-    EmploymentFactory.create(
+    absence = absence_factory(user=user, date=datetime.date(2016, 5, 3))
+    employment_factory(
         user=user, start_date=date, worktime_per_day=datetime.timedelta(hours=8)
     )
 
@@ -205,13 +209,19 @@ def test_absence_update_superadmin_date(superadmin_client):
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
-def test_absence_update_superadmin_type(superadmin_client):
+def test_absence_update_superadmin_type(
+    superadmin_client,
+    absence_factory,
+    absence_type_factory,
+    employment_factory,
+    user_factory,
+):
     """Test that superadmin may not change type of absence."""
-    user = UserFactory.create()
+    user = user_factory()
     date = datetime.date(2017, 5, 3)
-    absence_type = AbsenceTypeFactory.create()
-    absence = AbsenceFactory.create(user=user, date=datetime.date(2016, 5, 3))
-    EmploymentFactory.create(
+    absence_type = absence_type_factory()
+    absence = absence_factory(user=user, date=datetime.date(2016, 5, 3))
+    employment_factory(
         user=user, start_date=date, worktime_per_day=datetime.timedelta(hours=8)
     )
 
@@ -234,8 +244,8 @@ def test_absence_update_superadmin_type(superadmin_client):
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
-def test_absence_delete_owner(internal_employee_client):
-    absence = AbsenceFactory.create(user=internal_employee_client.user)
+def test_absence_delete_owner(internal_employee_client, absence_factory):
+    absence = absence_factory(user=internal_employee_client.user)
 
     url = reverse("absence-detail", args=[absence.id])
 
@@ -243,10 +253,10 @@ def test_absence_delete_owner(internal_employee_client):
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
 
-def test_absence_delete_superuser(superadmin_client):
+def test_absence_delete_superuser(superadmin_client, absence_factory, user_factory):
     """Test that superuser may not delete absences of other users."""
-    user = UserFactory.create()
-    absence = AbsenceFactory.create(user=user)
+    user = user_factory()
+    absence = absence_factory(user=user)
 
     url = reverse("absence-detail", args=[absence.id])
 
@@ -254,16 +264,18 @@ def test_absence_delete_superuser(superadmin_client):
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
 
-def test_absence_fill_worktime(auth_client):
+def test_absence_fill_worktime(
+    auth_client, absence_type_factory, employment_factory, report_factory
+):
     """Should create an absence which fills the worktime."""
     date = datetime.date(2017, 5, 10)
     user = auth_client.user
-    EmploymentFactory.create(
+    employment_factory(
         user=user, start_date=date, worktime_per_day=datetime.timedelta(hours=8)
     )
-    absence_type = AbsenceTypeFactory.create(fill_worktime=True)
+    absence_type = absence_type_factory(fill_worktime=True)
 
-    ReportFactory.create(user=user, date=date, duration=datetime.timedelta(hours=5))
+    report_factory(user=user, date=date, duration=datetime.timedelta(hours=5))
 
     data = {
         "data": {
@@ -287,7 +299,9 @@ def test_absence_fill_worktime(auth_client):
     assert json["data"]["attributes"]["duration"] == "03:00:00"
 
 
-def test_absence_fill_worktime_reported_time_to_long(auth_client):
+def test_absence_fill_worktime_reported_time_to_long(
+    auth_client, absence_type_factory, employment_factory, report_factory
+):
     """
     Verify absence fill worktime is zero when reported time is too long.
 
@@ -295,12 +309,12 @@ def test_absence_fill_worktime_reported_time_to_long(auth_client):
     """
     date = datetime.date(2017, 5, 10)
     user = auth_client.user
-    EmploymentFactory.create(
+    employment_factory(
         user=user, start_date=date, worktime_per_day=datetime.timedelta(hours=8)
     )
-    absence_type = AbsenceTypeFactory.create(fill_worktime=True)
+    absence_type = absence_type_factory(fill_worktime=True)
 
-    ReportFactory.create(
+    report_factory(
         user=user, date=date, duration=datetime.timedelta(hours=8, minutes=30)
     )
 
@@ -326,12 +340,12 @@ def test_absence_fill_worktime_reported_time_to_long(auth_client):
     assert json["data"]["attributes"]["duration"] == "00:00:00"
 
 
-def test_absence_weekend(auth_client):
+def test_absence_weekend(auth_client, absence_type_factory, employment_factory):
     """Should not be able to create an absence on a weekend."""
     date = datetime.date(2017, 5, 14)
     user = auth_client.user
-    absence_type = AbsenceTypeFactory.create()
-    EmploymentFactory.create(
+    absence_type = absence_type_factory()
+    employment_factory(
         user=user, start_date=date, worktime_per_day=datetime.timedelta(hours=8)
     )
 
@@ -354,15 +368,17 @@ def test_absence_weekend(auth_client):
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
-def test_absence_public_holiday(auth_client):
+def test_absence_public_holiday(
+    auth_client, absence_type_factory, employment_factory, public_holiday_factory
+):
     """Should not be able to create an absence on a public holiday."""
     date = datetime.date(2017, 5, 16)
     user = auth_client.user
-    absence_type = AbsenceTypeFactory.create()
-    employment = EmploymentFactory.create(
+    absence_type = absence_type_factory()
+    employment = employment_factory(
         user=user, start_date=date, worktime_per_day=datetime.timedelta(hours=8)
     )
-    PublicHolidayFactory.create(location=employment.location, date=date)
+    public_holiday_factory(location=employment.location, date=date)
 
     data = {
         "data": {
@@ -383,9 +399,9 @@ def test_absence_public_holiday(auth_client):
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
-def test_absence_create_unemployed(auth_client):
+def test_absence_create_unemployed(auth_client, absence_type_factory):
     """Test creation of absence fails on unemployed day."""
-    absence_type = AbsenceTypeFactory.create()
+    absence_type = absence_type_factory()
 
     data = {
         "data": {
@@ -406,9 +422,9 @@ def test_absence_create_unemployed(auth_client):
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
 
-def test_absence_detail_unemployed(internal_employee_client):
+def test_absence_detail_unemployed(internal_employee_client, absence_factory):
     """Test creation of absence fails on unemployed day."""
-    absence = AbsenceFactory.create(user=internal_employee_client.user)
+    absence = absence_factory(user=internal_employee_client.user)
 
     url = reverse("absence-detail", args=[absence.id])
 

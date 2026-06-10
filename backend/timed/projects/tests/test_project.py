@@ -6,20 +6,12 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from timed.employment.factories import UserFactory
-from timed.projects.factories import (
-    CustomerAssigneeFactory,
-    ProjectAssigneeFactory,
-    ProjectFactory,
-    TaskAssigneeFactory,
-    TaskFactory,
-)
 from timed.projects.serializers import ProjectSerializer
 
 
-def test_project_list_not_archived(internal_employee_client):
-    project = ProjectFactory.create(archived=False)
-    ProjectFactory.create(archived=True)
+def test_project_list_not_archived(internal_employee_client, project_factory):
+    project = project_factory(archived=False)
+    project_factory(archived=True)
 
     url = reverse("project-list")
 
@@ -32,10 +24,14 @@ def test_project_list_not_archived(internal_employee_client):
 
 
 def test_project_list_include(
-    internal_employee_client, django_assert_num_queries, project
+    internal_employee_client,
+    django_assert_num_queries,
+    project,
+    project_assignee_factory,
+    user_factory,
 ):
-    user = UserFactory.create()
-    ProjectAssigneeFactory.create(user=user, project=project, is_reviewer=True)
+    user = user_factory()
+    project_assignee_factory(user=user, project=project, is_reviewer=True)
 
     url = reverse("project-list")
 
@@ -119,10 +115,10 @@ def test_project_delete(auth_client, project):
 
 @pytest.mark.parametrize(("is_assigned", "expected"), [(True, 1), (False, 0)])
 def test_project_list_external_employee(
-    external_employee_client, is_assigned, expected
+    external_employee_client, is_assigned, expected, project_factory
 ):
-    ProjectFactory.create_batch(4)
-    project = ProjectFactory.create()
+    project_factory.create_batch(4)
+    project = project_factory()
     if is_assigned:
         project.assignees.add(external_employee_client.user)
 
@@ -135,11 +131,13 @@ def test_project_list_external_employee(
     assert len(json["data"]) == expected
 
 
-def test_project_filter(internal_employee_client):
+def test_project_filter(
+    internal_employee_client, project_assignee_factory, project_factory
+):
     user = internal_employee_client.user
-    proj1, _proj2, *_ = ProjectFactory.create_batch(4)
-    ProjectAssigneeFactory.create(project=proj1, user=user, is_reviewer=True)
-    ProjectAssigneeFactory.create(project=proj1, user=user, is_manager=True)
+    proj1, _proj2, *_ = project_factory.create_batch(4)
+    project_assignee_factory(project=proj1, user=user, is_reviewer=True)
+    project_assignee_factory(project=proj1, user=user, is_manager=True)
 
     url = reverse("project-list")
 
@@ -156,8 +154,8 @@ def test_project_filter(internal_employee_client):
     assert len(json["data"]) == 1
 
 
-def test_project_multi_number_value_filter(internal_employee_client):
-    proj1, proj2, *_ = ProjectFactory.create_batch(4)
+def test_project_multi_number_value_filter(internal_employee_client, project_factory):
+    proj1, proj2, *_ = project_factory.create_batch(4)
 
     url = reverse("project-list")
 
@@ -172,7 +170,7 @@ def test_project_multi_number_value_filter(internal_employee_client):
 
 @pytest.mark.usefixtures("internal_employee_client")
 def test_project_update_billed_flag(report_factory):
-    report = report_factory.create()
+    report = report_factory()
     project = report.task.project
     assert not report.billed
 
@@ -198,10 +196,17 @@ def test_project_update_billed_flag(report_factory):
         (False, False, 0),
     ],
 )
-def test_project_list_no_employment(auth_client, project, is_customer, expected):
-    ProjectFactory.create_batch(4)
+def test_project_list_no_employment(
+    auth_client,
+    project,
+    is_customer,
+    expected,
+    customer_assignee_factory,
+    project_factory,
+):
+    project_factory.create_batch(4)
     if is_customer:
-        CustomerAssigneeFactory.create(
+        customer_assignee_factory(
             user=auth_client.user, is_customer=True, customer=project.customer
         )
 
@@ -224,19 +229,25 @@ def test_project_list_no_employment(auth_client, project, is_customer, expected)
     ],
 )
 def test_project_activate_remaining_effort(
-    internal_employee_client, assignee_level, status_code
+    internal_employee_client,
+    assignee_level,
+    status_code,
+    customer_assignee_factory,
+    project_assignee_factory,
+    task_assignee_factory,
+    task_factory,
 ):
-    task = TaskFactory.create()
+    task = task_factory()
     user = internal_employee_client.user
 
     if assignee_level == "customer":
-        CustomerAssigneeFactory(
+        customer_assignee_factory(
             user=user, customer=task.project.customer, is_manager=True
         )
     elif assignee_level == "project":
-        ProjectAssigneeFactory(user=user, project=task.project, is_manager=True)
+        project_assignee_factory(user=user, project=task.project, is_manager=True)
     elif assignee_level == "task":
-        TaskAssigneeFactory(user=user, task=task, is_manager=True)
+        task_assignee_factory(user=user, task=task, is_manager=True)
 
     data = {
         "data": {
