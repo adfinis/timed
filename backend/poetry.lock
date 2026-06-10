@@ -657,18 +657,18 @@ files = [
 
 [[package]]
 name = "django-prometheus"
-version = "2.4.1"
+version = "2.5.0"
 description = "Django middlewares to monitor your application with Prometheus.io."
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "django_prometheus-2.4.1-py2.py3-none-any.whl", hash = "sha256:7fe5af7f7c9ad9cd8a429fe0f3f1bf651f0e244f77162147869eab7ec09cc5e7"},
-    {file = "django_prometheus-2.4.1.tar.gz", hash = "sha256:073628243d2a6de6a8a8c20e5b512872dfb85d66e1b60b28bcf1eca0155dad95"},
+    {file = "django_prometheus-2.5.0-py2.py3-none-any.whl", hash = "sha256:f15efb526cd53f9cf12da72dc55506322f5566b017a819ff27be1da302303134"},
+    {file = "django_prometheus-2.5.0.tar.gz", hash = "sha256:4837b3c3734d8350880839ab8235aafd250b668c348e159d4aecc3cbefeee53e"},
 ]
 
 [package.dependencies]
-Django = ">=4.2,<6.0"
+Django = ">=4.2,<5.0.dev0 || >=5.1.dev0,<6.1"
 prometheus-client = ">=0.7"
 
 [[package]]
@@ -2155,4 +2155,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "a655e05f654a4b7b0863ab030e73fa7752f6bc7db103a3a17a8171ff324a1fb1"
+content-hash = "611754e68bbb84904318f76c9042e37e0b9f544e48a43bbb60d071805d26f931"
