@@ -1,12 +1,9 @@
 from django.urls import reverse
 from rest_framework.status import HTTP_200_OK
 
-from timed.projects.factories import BillingTypeFactory, CustomerFactory, ProjectFactory
-from timed.subscription.factories import PackageFactory
 
-
-def test_subscription_package_list(auth_client):
-    PackageFactory.create()
+def test_subscription_package_list(auth_client, package_factory):
+    package_factory()
 
     url = reverse("subscription-package-list")
 
@@ -17,11 +14,17 @@ def test_subscription_package_list(auth_client):
     assert len(json["data"]) == 1
 
 
-def test_subscription_package_filter_customer(auth_client):
-    customer = CustomerFactory.create()
-    billing_type = BillingTypeFactory.create()
-    package = PackageFactory.create(billing_type=billing_type)
-    ProjectFactory.create_batch(2, billing_type=billing_type, customer=customer)
+def test_subscription_package_filter_customer(
+    auth_client,
+    billing_type_factory,
+    customer_factory,
+    package_factory,
+    project_factory,
+):
+    customer = customer_factory()
+    billing_type = billing_type_factory()
+    package = package_factory(billing_type=billing_type)
+    project_factory.create_batch(2, billing_type=billing_type, customer=customer)
 
     url = reverse("subscription-package-list")
 

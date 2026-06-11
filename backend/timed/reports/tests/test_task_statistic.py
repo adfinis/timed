@@ -4,10 +4,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from timed.employment.factories import UserFactory
-from timed.projects.factories import CostCenterFactory, TaskAssigneeFactory, TaskFactory
-from timed.tracking.factories import ReportFactory
-
 
 @pytest.mark.parametrize(
     ("is_employed", "is_customer_assignee", "is_customer", "expected", "status_code"),
@@ -28,6 +24,8 @@ def test_task_statistic_list(
     status_code,
     django_assert_num_queries,
     setup_customer_and_employment_status,
+    report_factory,
+    task_factory,
 ):
     user = auth_client.user
     setup_customer_and_employment_status(
@@ -37,19 +35,19 @@ def test_task_statistic_list(
         is_employed=is_employed,
         is_external=False,
     )
-    task_z = TaskFactory.create(
+    task_z = task_factory(
         name="Z",
         most_recent_remaining_effort=timedelta(hours=3),
         estimated_time=timedelta(hours=5),
     )
-    task_test = TaskFactory.create(
+    task_test = task_factory(
         name="Test",
         most_recent_remaining_effort=timedelta(hours=7),
         estimated_time=timedelta(hours=2),
     )
-    ReportFactory.create(duration=timedelta(hours=1), task=task_test)
-    ReportFactory.create(duration=timedelta(hours=2), task=task_test)
-    ReportFactory.create(duration=timedelta(hours=2), task=task_z)
+    report_factory(duration=timedelta(hours=1), task=task_test)
+    report_factory(duration=timedelta(hours=2), task=task_test)
+    report_factory(duration=timedelta(hours=2), task=task_z)
 
     url = reverse("task-statistic-list")
     with django_assert_num_queries(expected):
@@ -111,6 +109,11 @@ def test_task_statistic_filtered(
     filter,  # noqa: A002
     expected_result,
     setup_customer_and_employment_status,
+    cost_center_factory,
+    report_factory,
+    task_assignee_factory,
+    task_factory,
+    user_factory,
 ):
     user = auth_client.user
     setup_customer_and_employment_status(
@@ -121,14 +124,16 @@ def test_task_statistic_filtered(
         is_external=False,
     )
 
-    cost_center = CostCenterFactory()
-    task_z = TaskFactory.create(name="Z", cost_center=cost_center)
-    task_test = TaskFactory.create(name="Test")
-    reviewer = TaskAssigneeFactory(user=UserFactory(), task=task_test, is_reviewer=True)
+    cost_center = cost_center_factory()
+    task_z = task_factory(name="Z", cost_center=cost_center)
+    task_test = task_factory(name="Test")
+    reviewer = task_assignee_factory(
+        user=user_factory(), task=task_test, is_reviewer=True
+    )
 
-    ReportFactory.create(duration=timedelta(hours=1), date="2022-08-05", task=task_test)
-    ReportFactory.create(duration=timedelta(hours=2), date="2022-08-30", task=task_test)
-    ReportFactory.create(duration=timedelta(hours=4), date="2022-09-01", task=task_z)
+    report_factory(duration=timedelta(hours=1), date="2022-08-05", task=task_test)
+    report_factory(duration=timedelta(hours=2), date="2022-08-30", task=task_test)
+    report_factory(duration=timedelta(hours=4), date="2022-09-01", task=task_z)
 
     filter_values = {
         "from_date": "2022-08-20",  # last two reports
@@ -153,6 +158,11 @@ def test_task_statistic_filtered(
 def test_task_statistic_multiple_filters(
     auth_client,
     setup_customer_and_employment_status,
+    cost_center_factory,
+    report_factory,
+    task_assignee_factory,
+    task_factory,
+    user_factory,
 ):
     user = auth_client.user
     setup_customer_and_employment_status(
@@ -163,14 +173,16 @@ def test_task_statistic_multiple_filters(
         is_external=False,
     )
 
-    cost_center = CostCenterFactory()
-    task_z = TaskFactory.create(name="Z", cost_center=cost_center)
-    task_test = TaskFactory.create(name="Test")
-    reviewer = TaskAssigneeFactory(user=UserFactory(), task=task_test, is_reviewer=True)
+    cost_center = cost_center_factory()
+    task_z = task_factory(name="Z", cost_center=cost_center)
+    task_test = task_factory(name="Test")
+    reviewer = task_assignee_factory(
+        user=user_factory(), task=task_test, is_reviewer=True
+    )
 
-    ReportFactory.create(duration=timedelta(hours=1), date="2022-08-05", task=task_test)
-    ReportFactory.create(duration=timedelta(hours=2), date="2022-08-30", task=task_test)
-    ReportFactory.create(duration=timedelta(hours=4), date="2022-09-01", task=task_z)
+    report_factory(duration=timedelta(hours=1), date="2022-08-05", task=task_test)
+    report_factory(duration=timedelta(hours=2), date="2022-08-30", task=task_test)
+    report_factory(duration=timedelta(hours=4), date="2022-09-01", task=task_z)
 
     url = reverse("task-statistic-list")
     result = auth_client.get(

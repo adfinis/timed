@@ -9,6 +9,7 @@ from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
 from timed.employment import factories as employment_factories
+from timed.notifications import factories as notifications_factories
 from timed.projects import factories as projects_factories
 from timed.subscription import factories as subscription_factories
 from timed.tracking import factories as tracking_factories
@@ -42,6 +43,8 @@ register(tracking_factories.AbsenceFactory)
 register(tracking_factories.ActivityFactory)
 register(tracking_factories.AttendanceFactory)
 register(tracking_factories.ReportFactory)
+
+register(notifications_factories.NotificationFactory)
 
 
 @pytest.fixture
@@ -81,7 +84,7 @@ def superadmin_user(db):  # noqa: ARG001
 
 
 @pytest.fixture
-def external_employee(db):  # noqa: ARG001
+def external_employee(db, employment_factory):  # noqa: ARG001
     user = get_user_model().objects.create_user(
         username="user",
         password="123qweasd",
@@ -90,12 +93,12 @@ def external_employee(db):  # noqa: ARG001
         is_superuser=False,
         is_staff=False,
     )
-    employment_factories.EmploymentFactory.create(user=user, is_external=True)
+    employment_factory(user=user, is_external=True)
     return user
 
 
 @pytest.fixture
-def internal_employee(db):  # noqa: ARG001
+def internal_employee(db, employment_factory):  # noqa: ARG001
     user = get_user_model().objects.create_user(
         username="user",
         password="123qweasd",
@@ -105,7 +108,7 @@ def internal_employee(db):  # noqa: ARG001
         is_superuser=False,
         is_staff=False,
     )
-    employment_factories.EmploymentFactory.create(user=user, is_external=False)
+    employment_factory(user=user, is_external=False)
     return user
 
 

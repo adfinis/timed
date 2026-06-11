@@ -4,18 +4,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from timed.employment.factories import (
-    AbsenceTypeFactory,
-    EmploymentFactory,
-    UserFactory,
-)
-from timed.projects.factories import (
-    CustomerAssigneeFactory,
-    ProjectAssigneeFactory,
-    ProjectFactory,
-)
-from timed.tracking.factories import AbsenceFactory, ReportFactory
-
 
 def test_user_list_unauthenticated(client):
     url = reverse("user-list")
@@ -24,16 +12,16 @@ def test_user_list_unauthenticated(client):
 
 
 @pytest.mark.django_db
-def test_user_update_unauthenticated(client):
-    user = UserFactory.create()
+def test_user_update_unauthenticated(client, user_factory):
+    user = user_factory()
     url = reverse("user-detail", args=[user.id])
     response = client.patch(url)
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
 @pytest.mark.django_db
-def test_user_list(internal_employee_client, django_assert_num_queries):
-    UserFactory.create_batch(2)
+def test_user_list(internal_employee_client, django_assert_num_queries, user_factory):
+    user_factory.create_batch(2)
 
     url = reverse("user-list")
 
@@ -46,8 +34,8 @@ def test_user_list(internal_employee_client, django_assert_num_queries):
     assert len(json["data"]) == 3
 
 
-def test_user_list_external_employee(external_employee_client):
-    UserFactory.create_batch(2)
+def test_user_list_external_employee(external_employee_client, user_factory):
+    user_factory.create_batch(2)
 
     url = reverse("user-list")
 
@@ -116,9 +104,9 @@ def test_user_update_owner(internal_employee_client):
     assert not user.is_staff
 
 
-def test_user_update_other(internal_employee_client):
+def test_user_update_other(internal_employee_client, user_factory):
     """User may not change other user."""
-    user = UserFactory.create()
+    user = user_factory()
     url = reverse("user-detail", args=[user.id])
     res = internal_employee_client.patch(url)
 
@@ -135,10 +123,10 @@ def test_user_delete_authenticated(internal_employee_client):
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
 
-def test_user_delete_superuser(superadmin_client):
+def test_user_delete_superuser(superadmin_client, employment_factory, user_factory):
     """Should not be able delete a user."""
-    user = UserFactory.create()
-    EmploymentFactory.create(user=superadmin_client.user)
+    user = user_factory()
+    employment_factory(user=superadmin_client.user)
 
     url = reverse("user-detail", args=[user.id])
 
@@ -147,11 +135,13 @@ def test_user_delete_superuser(superadmin_client):
 
 
 @pytest.mark.django_db
-def test_user_delete_with_reports_superuser(superadmin_client):
+def test_user_delete_with_reports_superuser(
+    superadmin_client, employment_factory, report_factory, user_factory
+):
     """Test that user with reports may not be deleted."""
-    user = UserFactory.create()
-    ReportFactory.create(user=user)
-    EmploymentFactory.create(user=superadmin_client.user)
+    user = user_factory()
+    report_factory(user=user)
+    employment_factory(user=superadmin_client.user)
 
     url = reverse("user-detail", args=[user.id])
 
@@ -159,11 +149,11 @@ def test_user_delete_with_reports_superuser(superadmin_client):
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
 
-def test_user_supervisor_filter(internal_employee_client):
+def test_user_supervisor_filter(internal_employee_client, user_factory):
     """Should filter users by supervisor."""
-    supervisees = UserFactory.create_batch(5)
+    supervisees = user_factory.create_batch(5)
 
-    UserFactory.create_batch(5)
+    user_factory.create_batch(5)
 
     internal_employee_client.user.supervisees.add(*supervisees)
     internal_employee_client.user.save()
@@ -176,14 +166,20 @@ def test_user_supervisor_filter(internal_employee_client):
 
 
 @pytest.mark.freeze_time("2018-01-07")
-def test_user_transfer(superadmin_client):
-    user = UserFactory.create()
-    EmploymentFactory.create(user=superadmin_client.user)
-    EmploymentFactory.create(user=user, start_date=date(2017, 12, 28), percentage=100)
-    AbsenceTypeFactory.create(fill_worktime=True)
-    AbsenceTypeFactory.create(fill_worktime=False)
-    absence_type = AbsenceTypeFactory.create(fill_worktime=False)
-    AbsenceFactory.create(user=user, absence_type=absence_type, date=date(2017, 12, 29))
+def test_user_transfer(
+    superadmin_client,
+    absence_factory,
+    absence_type_factory,
+    employment_factory,
+    user_factory,
+):
+    user = user_factory()
+    employment_factory(user=superadmin_client.user)
+    employment_factory(user=user, start_date=date(2017, 12, 28), percentage=100)
+    absence_type_factory(fill_worktime=True)
+    absence_type_factory(fill_worktime=False)
+    absence_type = absence_type_factory(fill_worktime=False)
+    absence_factory(user=user, absence_type=absence_type, date=date(2017, 12, 29))
 
     url = reverse("user-transfer", args=[user.id])
     response = superadmin_client.post(url)
@@ -209,13 +205,15 @@ def test_user_transfer(superadmin_client):
 
 
 @pytest.mark.parametrize(("value", "expected"), [(1, 2), (0, 2)])
-def test_user_is_external_filter(internal_employee_client, value, expected):
+def test_user_is_external_filter(
+    internal_employee_client, value, expected, employment_factory, user_factory
+):
     """Should filter users if they have an internal employment."""
-    user = UserFactory.create()
-    user2, user3 = UserFactory.create_batch(2)
-    EmploymentFactory.create(is_external=False, user=user)
-    EmploymentFactory.create(is_external=True, user=user2)
-    EmploymentFactory.create(is_external=True, user=user3)
+    user = user_factory()
+    user2, user3 = user_factory.create_batch(2)
+    employment_factory(is_external=False, user=user)
+    employment_factory(is_external=True, user=user2)
+    employment_factory(is_external=True, user=user3)
 
     response = internal_employee_client.get(
         reverse("user-list"), {"is_external": value}
@@ -224,22 +222,31 @@ def test_user_is_external_filter(internal_employee_client, value, expected):
 
 
 @pytest.mark.parametrize(("value", "expected"), [(1, 1), (0, 4)])
-def test_user_is_reviewer_filter(internal_employee_client, value, expected):
+def test_user_is_reviewer_filter(
+    internal_employee_client,
+    value,
+    expected,
+    project_assignee_factory,
+    project_factory,
+    user_factory,
+):
     """Should filter users if they are a reviewer."""
-    user = UserFactory.create()
-    project = ProjectFactory.create()
-    UserFactory.create_batch(3)
-    ProjectAssigneeFactory.create(user=user, project=project, is_reviewer=True)
+    user = user_factory()
+    project = project_factory()
+    user_factory.create_batch(3)
+    project_assignee_factory(user=user, project=project, is_reviewer=True)
 
     res = internal_employee_client.get(reverse("user-list"), {"is_reviewer": value})
     assert len(res.json()["data"]) == expected
 
 
 @pytest.mark.parametrize(("value", "expected"), [(1, 1), (0, 5)])
-def test_user_is_supervisor_filter(internal_employee_client, value, expected):
+def test_user_is_supervisor_filter(
+    internal_employee_client, value, expected, user_factory
+):
     """Should filter useres if they are a supervisor."""
-    users = UserFactory.create_batch(2)
-    UserFactory.create_batch(3)
+    users = user_factory.create_batch(2)
+    user_factory.create_batch(3)
 
     internal_employee_client.user.supervisees.add(*users)
 
@@ -247,16 +254,18 @@ def test_user_is_supervisor_filter(internal_employee_client, value, expected):
     assert len(res.json()["data"]) == expected
 
 
-def test_user_attributes(internal_employee_client, project):
+def test_user_attributes(
+    internal_employee_client, project, project_assignee_factory, user_factory
+):
     """Should filter users if they are a reviewer."""
-    user = UserFactory.create()
+    user = user_factory()
 
     url = reverse("user-detail", args=[user.id])
 
     res = internal_employee_client.get(url)
     assert not res.json()["data"]["attributes"]["is-reviewer"]
 
-    ProjectAssigneeFactory.create(user=user, project=project, is_reviewer=True)
+    project_assignee_factory(user=user, project=project, is_reviewer=True)
     res = internal_employee_client.get(url)
     assert res.json()["data"]["attributes"]["is-reviewer"]
 
@@ -292,11 +301,18 @@ def test_user_me_anonymous(client):
     ("is_customer", "expected", "status_code"),
     [(True, 1, status.HTTP_200_OK), (False, 0, status.HTTP_403_FORBIDDEN)],
 )
-def test_user_list_no_employment(auth_client, is_customer, expected, status_code):
+def test_user_list_no_employment(
+    auth_client,
+    is_customer,
+    expected,
+    status_code,
+    customer_assignee_factory,
+    user_factory,
+):
     user = auth_client.user
-    UserFactory.create_batch(2)
+    user_factory.create_batch(2)
     if is_customer:
-        CustomerAssigneeFactory.create(user=user, is_customer=True)
+        customer_assignee_factory(user=user, is_customer=True)
 
     url = reverse("user-list")
 

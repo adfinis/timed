@@ -5,8 +5,6 @@ from django.urls import reverse
 from rest_framework import status
 
 from timed.notifications.models import Notification
-from timed.projects.factories import CustomerAssigneeFactory, ProjectFactory
-from timed.subscription import factories
 
 
 @pytest.mark.parametrize(
@@ -18,13 +16,20 @@ from timed.subscription import factories
         (False, False, False),
     ],
 )
-def test_order_list(auth_client, is_customer, is_accountant, is_superuser):
+def test_order_list(
+    auth_client,
+    is_customer,
+    is_accountant,
+    is_superuser,
+    customer_assignee_factory,
+    order_factory,
+):
     """Test which user can see orders."""
-    order = factories.OrderFactory.create()
+    order = order_factory()
     user = auth_client.user
 
     if is_customer:
-        CustomerAssigneeFactory.create(
+        customer_assignee_factory(
             customer=order.project.customer, user=user, is_customer=True
         )
     elif is_accountant:
@@ -60,10 +65,17 @@ def test_order_list(auth_client, is_customer, is_accountant, is_superuser):
     ],
 )
 def test_order_delete(
-    auth_client, is_customer, is_accountant, is_superuser, confirmed, expected
+    auth_client,
+    is_customer,
+    is_accountant,
+    is_superuser,
+    confirmed,
+    expected,
+    customer_assignee_factory,
+    order_factory,
 ):
     """Test which user can delete orders, confirmed or not."""
-    order = factories.OrderFactory()
+    order = order_factory()
     if confirmed:
         order.acknowledged = True
         order.save()
@@ -71,7 +83,7 @@ def test_order_delete(
     user = auth_client.user
 
     if is_customer:
-        CustomerAssigneeFactory.create(
+        customer_assignee_factory(
             customer=order.project.customer, user=user, is_customer=True
         )
     elif is_accountant:
@@ -97,10 +109,16 @@ def test_order_delete(
     ],
 )
 def test_order_confirm(
-    auth_client, is_superuser, is_accountant, is_customer, status_code
+    auth_client,
+    is_superuser,
+    is_accountant,
+    is_customer,
+    status_code,
+    customer_assignee_factory,
+    order_factory,
 ):
     """Test which user may confirm orders."""
-    order = factories.OrderFactory.create()
+    order = order_factory()
     user = auth_client.user
 
     if is_superuser:
@@ -110,7 +128,7 @@ def test_order_confirm(
         user.is_accountant = True
         user.save()
     elif is_customer:
-        CustomerAssigneeFactory.create(
+        customer_assignee_factory(
             user=user, is_customer=True, customer=order.project.customer
         )
 
@@ -164,16 +182,18 @@ def test_order_create(
     mail_sent,
     project_estimate,
     expected,
+    customer_assignee_factory,
+    project_factory,
 ):
     """Test which user may create orders.
 
     Additionally test if for creation of acknowledged/confirmed orders.
     """
     user = auth_client.user
-    project = ProjectFactory.create(estimated_time=project_estimate)
+    project = project_factory(estimated_time=project_estimate)
 
     if is_customer:
-        CustomerAssigneeFactory.create(
+        customer_assignee_factory(
             user=user, is_customer=True, customer=project.customer
         )
     elif is_accountant:
@@ -227,13 +247,17 @@ def test_order_create(
     ],
 )
 def test_order_create_duration(
-    auth_client, mailoutbox, duration, expected, status_code
+    auth_client,
+    mailoutbox,
+    duration,
+    expected,
+    status_code,
+    customer_assignee_factory,
+    project_factory,
 ):
     user = auth_client.user
-    project = ProjectFactory.create(estimated_time=timedelta(hours=1))
-    CustomerAssigneeFactory.create(
-        user=user, is_customer=True, customer=project.customer
-    )
+    project = project_factory(estimated_time=timedelta(hours=1))
+    customer_assignee_factory(user=user, is_customer=True, customer=project.customer)
 
     data = {
         "data": {
@@ -277,17 +301,24 @@ def test_order_create_duration(
     ],
 )
 def test_order_update(
-    auth_client, is_customer, is_accountant, is_superuser, acknowledged, expected
+    auth_client,
+    is_customer,
+    is_accountant,
+    is_superuser,
+    acknowledged,
+    expected,
+    customer_assignee_factory,
+    order_factory,
 ):
     user = auth_client.user
-    order = factories.OrderFactory.create()
+    order = order_factory()
 
     if acknowledged:
         order.acknowledged = True
         order.save()
 
     if is_customer:
-        CustomerAssigneeFactory.create(
+        customer_assignee_factory(
             user=user, is_customer=True, customer=order.project.customer
         )
     elif is_accountant:
