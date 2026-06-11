@@ -124,7 +124,7 @@
     "prettier": "~3.8.3",
     "prettier-plugin-ember-template-tag": "^2.1.6",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "qunit": "2.24.3",
+    "qunit": "2.26.0",
     "qunit-dom": "3.5.0",
     "reactiveweb": "^1.8.0",
     "shepherd.js": "^14.5.1",
