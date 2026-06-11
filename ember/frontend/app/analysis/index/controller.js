@@ -1,6 +1,7 @@
 import { A } from "@ember/array";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
+import { waitForFetch } from "@ember/test-waiters";
 import { isTesting, macroCondition } from "@embroider/macros";
 import { tracked } from "@glimmer/tracking";
 import download from "downloadjs";
@@ -11,7 +12,6 @@ import {
   task,
   hash,
 } from "ember-concurrency";
-import fetch from "fetch";
 import { DateTime, Duration } from "luxon";
 
 import config from "../../config/environment";
@@ -318,11 +318,13 @@ export default class AnalysisController extends QPController {
         ),
       );
 
-      const res = await fetch(`${url}?${queryString}`, {
-        headers: {
-          Authorization: `Bearer ${this.jwt}`,
-        },
-      });
+      const res = await waitForFetch(
+        fetch(`${url}?${queryString}`, {
+          headers: {
+            Authorization: `Bearer ${this.jwt}`,
+          },
+        }),
+      );
 
       if (!res.ok) {
         throw new Error(res.statusText);

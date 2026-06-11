@@ -1,19 +1,13 @@
 import Service, { service } from "@ember/service";
+import { waitForFetch } from "@ember/test-waiters";
 import { isEmpty } from "@ember/utils";
-import { isUnauthorizedResponse } from "ember-fetch/errors";
 import { handleUnauthorized } from "ember-simple-auth-oidc";
-import fetch from "fetch";
+import { isUnauthorizedResponse } from "ember-simple-auth-oidc/utils/errors";
 
 const CONTENT_TYPE = "application/vnd.api+json";
 
-const cleanObject = (obj) => {
-  return Object.entries(obj).reduce((clean, [key, value]) => {
-    return {
-      ...clean,
-      ...(isEmpty(value) ? {} : { [key]: value }),
-    };
-  }, {});
-};
+const cleanObject = (obj) =>
+  Object.fromEntries(Object.entries(obj).filter(([, v]) => !isEmpty(v)));
 
 const stringifyBodyData = (obj) => {
   if (!obj) {
@@ -25,18 +19,8 @@ const stringifyBodyData = (obj) => {
     return obj;
   }
 
-  // push the data object into the request body
-  const body = Object.entries(obj).reduce((body, [key, value]) => {
-    if (key === "data") {
-      return { ...body, data: { ...value } };
-    }
-    if (key === "body") {
-      return { ...body, ...value };
-    }
-    return body;
-  }, {});
-
-  return JSON.stringify(body);
+  const { body, data } = obj;
+  return JSON.stringify({ ...body, data });
 };
 
 export default class FetchService extends Service {
@@ -53,7 +37,7 @@ export default class FetchService extends Service {
       init.body = stringifyBodyData(init);
     }
 
-    const response = await fetch(resource, init);
+    const response = await waitForFetch(fetch(resource, init));
 
     if (!response.ok) {
       if (isUnauthorizedResponse(response)) {
