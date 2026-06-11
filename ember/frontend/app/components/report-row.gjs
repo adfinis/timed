@@ -14,6 +14,7 @@ import ValidatedForm from "ember-validated-form/components/validated-form";
 
 import CanEdit from "timed/components/can-edit";
 import Durationpicker from "timed/components/durationpicker";
+import MagicLinkBtn from "timed/components/magic-link-btn";
 import ReportComment from "timed/components/report-comment";
 import ReportDurationpicker from "timed/components/report-durationpicker";
 import TaskSelection from "timed/components/task-selection";
@@ -158,8 +159,16 @@ export default class ReportRowComponent extends Component {
             </Toggle>
           </div>
           <div
-            class="form-list-cell form-group cell-buttons grid grid-cols-2 justify-around gap-2 self-center text-sm [&>*]:px-2"
+            class="form-list-cell form-group cell-buttons grid grid-cols-3 justify-around gap-2 self-center text-sm [&>*]:px-2"
           >
+            <MagicLinkBtn
+              @task={{cs.task}}
+              @duration={{cs.duration}}
+              @comment={{cs.comment}}
+              @review={{cs.review}}
+              @notBillable={{cs.notBillable}}
+              data-test-report-magic-link
+            />
             {{#if editable}}
               <button
                 type="button"
