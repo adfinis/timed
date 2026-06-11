@@ -1,4 +1,5 @@
 import Service, { service } from "@ember/service";
+import { waitForFetch } from "@ember/test-waiters";
 import { isEmpty } from "@ember/utils";
 import { handleUnauthorized } from "ember-simple-auth-oidc";
 import { isUnauthorizedResponse } from "ember-simple-auth-oidc/utils/errors";
@@ -36,7 +37,7 @@ export default class FetchService extends Service {
       init.body = stringifyBodyData(init);
     }
 
-    const response = await fetch(resource, init);
+    const response = await waitForFetch(fetch(resource, init));
 
     if (!response.ok) {
       if (isUnauthorizedResponse(response)) {
