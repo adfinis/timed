@@ -59,6 +59,7 @@ export default class AnalysisEditController extends Controller {
   @service currentUser;
   @service store;
   @service unverifiedReports;
+  @service abilities;
 
   @tracked id;
   @tracked user;
@@ -152,6 +153,16 @@ export default class AnalysisEditController extends Controller {
       return false;
     }
     return this.isReviewer || this.isSuperuser;
+  }
+
+  get canSplitReport() {
+    return (
+      this.id?.length === 1 &&
+      this.abilities.can(
+        "editSync report",
+        this.intersection.lastSuccessful.value.model,
+      )
+    );
   }
 
   get canBill() {

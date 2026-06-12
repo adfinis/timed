@@ -12,13 +12,20 @@ export default class Modal extends Component {
   get target() {
     return document.getElementById("modals");
   }
+
+  get dropdownDestination() {
+    return document.getElementById("ember-basic-dropdown-wormhole");
+  }
   <template>
     {{#if @visible}}
       {{#in-element this.target insertBefore=null}}
         <Overlay
           @visible={{@visible}}
           @onClose={{optional @onClose}}
-          {{focusTrap additionalElements=(array this.target)}}
+          @closeOnBackdropClick={{@closeOnBackdropClick}}
+          {{focusTrap
+            additionalElements=(array this.target this.dropdownDestination)
+          }}
         >
           <div
             class="modal-dialog bg-background z-50 max-h-[100%] w-full rounded border"
