@@ -10,13 +10,14 @@ import balanceHighlightClass from "timed/helpers/balance-highlight-class";
 import formatDuration from "timed/helpers/format-duration";
 import luxonFormat from "timed/helpers/luxon-format";
 import media from "timed/helpers/media";
+
 <template>
-  {{#if (can "read user" @controller.model)}}
+  {{#if (can "read user" @model)}}
     <header class="user-header grid border-b">
       <div class="user-header-info">
         <h1
           class="text-foreground text-center text-5xl md:text-6xl"
-        >{{@controller.model.fullName}}</h1>
+        >{{@model.fullName}}</h1>
       </div>
 
       {{#if @controller.data.isRunning}}
@@ -26,7 +27,7 @@ import media from "timed/helpers/media";
           <LoadingIcon />
         </div>
       {{else}}
-        {{#unless @controller.model.activeEmployment.isExternal}}
+        {{#unless @model.activeEmployment.isExternal}}
           <h2
             class="user-header-worktime-balance-title text-foreground-muted text-center text-2xl uppercase md:text-3xl"
           >Worktime balance</h2>
@@ -124,15 +125,15 @@ import media from "timed/helpers/media";
       >
         <li><LinkTo
             @route="users.edit.index"
-            @model={{@controller.model.id}}
+            @model={{@model.id}}
           >General</LinkTo></li>
         <li><LinkTo
             @route="users.edit.credits"
-            @model={{@controller.model.id}}
+            @model={{@model.id}}
           >Credits</LinkTo></li>
         <li><LinkTo
             @route="users.edit.responsibilities"
-            @model={{@controller.model.id}}
+            @model={{@model.id}}
           >Responsibilities</LinkTo></li>
       </ul>
     </nav>

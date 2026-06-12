@@ -22,33 +22,33 @@ import luxonFormat from "timed/helpers/luxon-format";
           <tbody class="[&>tr>td:last-child]:text-right [&>tr>td]:py-1">
             <tr>
               <td>Email:</td>
-              <td>{{@controller.model.email}}</td>
+              <td>{{@model.email}}</td>
             </tr>
             <tr>
               <td>Username:</td>
-              <td>{{@controller.model.username}}</td>
+              <td>{{@model.username}}</td>
             </tr>
-            {{#if @controller.model.activeEmployment}}
+            {{#if @model.activeEmployment}}
               <tr>
                 <td>Location:</td>
-                <td>{{@controller.model.activeEmployment.location.name}}</td>
+                <td>{{@model.activeEmployment.location.name}}</td>
               </tr>
               <tr>
                 <td>Contract type:</td>
                 <td>{{if
-                    @controller.model.activeEmployment.isExternal
+                    @model.activeEmployment.isExternal
                     "External"
                     "Internal"
                   }}</td>
               </tr>
               <tr>
                 <td>Percentage:</td>
-                <td>{{@controller.model.activeEmployment.percentage}}%</td>
+                <td>{{@model.activeEmployment.percentage}}%</td>
               </tr>
               <tr>
                 <td>Worktime:</td>
                 <td>{{humanizeDuration
-                    @controller.model.activeEmployment.worktimePerDay
+                    @model.activeEmployment.worktimePerDay
                     false
                   }}</td>
               </tr>
