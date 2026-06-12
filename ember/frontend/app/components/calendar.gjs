@@ -5,10 +5,8 @@ import Component from "@glimmer/component";
 import PowerCalendar from "ember-power-calendar/components/power-calendar";
 import { eq } from "ember-truth-helpers";
 import { DateTime, Info } from "luxon";
+import { Block, Footer, Header } from "ui-core/components/ui-card";
 
-import Block from "timed/components/card/block";
-import Footer from "timed/components/card/footer";
-import Header from "timed/components/card/header";
 import luxonFormat from "timed/helpers/luxon-format";
 
 const CURRENT_YEAR = DateTime.now().year;

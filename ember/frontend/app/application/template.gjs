@@ -1,10 +1,10 @@
 import BasicDropdownWormhole from "ember-basic-dropdown/components/basic-dropdown-wormhole";
 import EmberNotify from "ember-notify/components/ember-notify";
+import { ModalTarget } from "ui-core/components/ui-modal";
 
-import ModalTarget from "timed/components/modal-target";
 <template>
   <EmberNotify @messageStyle="bootstrap" />
-  <ModalTarget />
+  <ModalTarget class="[&>*]:overflow-x-hidden" />
   <BasicDropdownWormhole />
 
   <div id="filter-sidebar-target"></div>

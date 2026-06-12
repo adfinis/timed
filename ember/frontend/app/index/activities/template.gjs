@@ -3,11 +3,11 @@ import { on } from "@ember/modifier";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
 import { and, eq, not, or } from "ember-truth-helpers";
+import Modal from "ui-core/components/ui-modal";
 
 import Checkmark from "timed/components/checkmark";
 import CustomerVisibleIcon from "timed/components/customer-visible-icon";
 import DurationSince from "timed/components/duration-since";
-import Modal from "timed/components/modal";
 import LowerButton from "timed/components/nav-tabs/lower-button";
 import Table from "timed/components/table";
 import Td from "timed/components/table/td";

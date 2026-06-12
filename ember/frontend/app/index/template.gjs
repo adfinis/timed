@@ -12,9 +12,9 @@ import PowerCalendar from "ember-power-calendar/components/power-calendar";
 import PowerCalendarMultiple from "ember-power-calendar/components/power-calendar-multiple";
 import { eq, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
+import Modal from "ui-core/components/ui-modal";
 
 import DateNavigation from "timed/components/date-navigation";
-import Modal from "timed/components/modal";
 import NavTabs from "timed/components/nav-tabs";
 import A from "timed/components/nav-tabs/a";
 import Badge from "timed/components/nav-tabs/badge";

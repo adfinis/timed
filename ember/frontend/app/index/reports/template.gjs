@@ -4,8 +4,8 @@ import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import preventDefault from "ember-event-helpers/helpers/prevent-default";
 import PowerCalendar from "ember-power-calendar/components/power-calendar";
+import Modal from "ui-core/components/ui-modal";
 
-import Modal from "timed/components/modal";
 import LowerButton from "timed/components/nav-tabs/lower-button";
 import ReportRow from "timed/components/report-row";
 <template>
