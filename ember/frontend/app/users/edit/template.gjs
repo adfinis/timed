@@ -1,5 +1,6 @@
 import { LinkTo } from "@ember/routing";
 import can from "ember-can/helpers/can";
+import { or } from "ember-truth-helpers";
 
 import BalanceDonut from "timed/components/balance-donut";
 import LoadingIcon from "timed/components/loading-icon";
@@ -44,7 +45,10 @@ import media from "timed/helpers/media";
                   title="Last day with timesheet entries or absences"
                   class="text-foreground-muted text-base uppercase sm:text-lg md:text-xl lg:text-2xl"
                 >
-                  {{luxonFormat balance.date "dd.MM.yyyy"}}
+                  {{luxonFormat
+                    (or balance.date @model.activeEmployment.start)
+                    "dd.MM.yyyy"
+                  }}
                 </h2>
                 <div
                   class="{{balanceHighlightClass balance.balance}}
