@@ -8,6 +8,8 @@ import { action } from "@ember/object";
 import { guidFor } from "@ember/object/internals";
 import { focusTrap } from "ember-focus-trap";
 
+const MODAL_TARGET_ID = "modals";
+
 export interface ModalHeaderSignature {
   Args: {
     onClose: (e: Event) => void;
@@ -34,6 +36,10 @@ export interface ModalOverlaySignature {
     default: [];
   };
   Element: HTMLElement;
+}
+
+export interface ModalTargetSignature {
+  Element: HTMLDivElement;
 }
 
 export interface ModalSignature {
@@ -79,6 +85,10 @@ const ModalBody = <template>
   </CardBlock>
 </template> satisfies TOC<ModalSegmentSignature>;
 
+const ModalTarget = <template>
+  <div id={{MODAL_TARGET_ID}} />
+</template> satisfies TOC<ModalTargetSignature>;
+
 class ModalOverlay extends Component<ModalOverlaySignature> {
   id: string;
 
@@ -113,7 +123,7 @@ class ModalOverlay extends Component<ModalOverlaySignature> {
 
 class Modal extends Component<ModalSignature> {
   get target() {
-    return document.getElementById("modals")!;
+    return document.getElementById(MODAL_TARGET_ID)!;
   }
 
   <template>
@@ -136,3 +146,4 @@ class Modal extends Component<ModalSignature> {
 }
 
 export default Modal;
+export { ModalTarget };

@@ -12,6 +12,7 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { ModalTarget } from "#src/components/ui-modal.gts";
 
 export const HEADER_ID = "header";
 export const MAIN_ID = "main";
@@ -47,7 +48,7 @@ export default class Application extends Component {
     {{pageTitle "ui-core"}}
 
     <div class="flex flex-col h-screen">
-      <div id="modals" class="[&>*]:overflow-x-hidden" />
+      <ModalTarget />
       <Topnav as |t|>
         <t.header class="mr-2 grid place-self-center">
           <LinkTo

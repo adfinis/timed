@@ -1,7 +1,7 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "../helpers";
 import { render } from "@ember/test-helpers";
-import Modal from "#src/components/ui-modal.gts";
+import Modal, { ModalTarget } from "#src/components/ui-modal.gts";
 import { toggle } from "@nullvoxpopuli/ember-composable-helpers";
 import { tracked } from "@glimmer/tracking";
 import { on } from "@ember/modifier";
@@ -18,7 +18,7 @@ module("Integration | Component | modal", function (hooks) {
 
     await render(
       <template>
-        <div id="modals" />
+        <ModalTarget />
         <button type="button" {{on "click" (toggle "visible" state)}} />
         <Modal
           @visible={{state.visible}}
