@@ -5,8 +5,8 @@ import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import can from "ember-can/helpers/can";
 import perform from "ember-concurrency/helpers/perform";
 import { eq, not } from "ember-truth-helpers";
+import Card from "ui-core/components/ui-card";
 
-import Card from "timed/components/card";
 import Empty from "timed/components/empty";
 import LoadingIcon from "timed/components/loading-icon";
 import Table from "timed/components/table";

@@ -6,8 +6,8 @@ import changeset from "ember-changeset/helpers/changeset";
 import perform from "ember-concurrency/helpers/perform";
 import { and, eq, not, notEq, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
+import Card from "ui-core/components/ui-card";
 
-import Card from "timed/components/card";
 import ChangedWarning from "timed/components/changed-warning";
 import Checkbox from "timed/components/checkbox";
 import Empty from "timed/components/empty";

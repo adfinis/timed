@@ -5,10 +5,8 @@ import Component from "@glimmer/component";
 import PowerCalendar from "ember-power-calendar/components/power-calendar";
 import { eq } from "ember-truth-helpers";
 import { DateTime, Info } from "luxon";
+import { CardBlock, CardFooter, CardHeader } from "ui-core/components/ui-card";
 
-import Block from "timed/components/card/block";
-import Footer from "timed/components/card/footer";
-import Header from "timed/components/card/header";
 import luxonFormat from "timed/helpers/luxon-format";
 
 const CURRENT_YEAR = DateTime.now().year;
@@ -47,7 +45,7 @@ export default class Calendar extends Component {
       @onCenterChange={{@onCenterChange}}
       as |calendar|
     >
-      <Header class="!px-2 !py-0.5">
+      <CardHeader class="!px-2 !py-0.5">
         <calendar.Nav>
           {{#let (this.fromJSDate calendar.center) as |center|}}
             <span class="nav-select-month relative">
@@ -86,9 +84,9 @@ export default class Calendar extends Component {
             </span>
           {{/let}}
         </calendar.Nav>
-      </Header>
-      <Block class="!p-2"><calendar.Days @startOfWeek="1" /></Block>
-      <Footer />
+      </CardHeader>
+      <CardBlock class="!p-2"><calendar.Days @startOfWeek="1" /></CardBlock>
+      <CardFooter />
     </PowerCalendar>
   </template>
 }
