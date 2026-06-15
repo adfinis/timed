@@ -7,14 +7,16 @@ from typing import TYPE_CHECKING
 
 import pyexcel
 import pytest
+from django.db import DatabaseError
 from django.urls import reverse
 from django.utils.duration import duration_string
 from rest_framework import status
 
+from timed.tracking.models import Report
+
 if TYPE_CHECKING:
     from timed.employment.models import User
     from timed.projects.models import Customer, Project, Task
-    from timed.tracking.models import Report
 
 
 def test_report_list(
@@ -2243,3 +2245,138 @@ def test_report_bulk_customer_change_requires_review_comment(
 
     report.refresh_from_db()
     assert report.task != task
+
+
+@pytest.mark.parametrize(
+    ("updated_comment", "new_comment", "new_duration", "original_duration"),
+    [
+        (
+            "updated comment",
+            "new_comment",
+            timedelta(hours=3, minutes=30),
+            timedelta(hours=7, minutes=30),
+        )
+    ],
+)
+@pytest.mark.parametrize(
+    (
+        "updated_duration",
+        "verified",
+        "original_report_exists",
+        "expected",
+        "expected_error_string",
+        "database_error",
+    ),
+    [
+        # default
+        (timedelta(hours=4), False, True, status.HTTP_200_OK, None, False),
+        # missing field
+        (None, False, True, status.HTTP_400_BAD_REQUEST, None, False),
+        # verified original report
+        (timedelta(hours=4), True, True, status.HTTP_403_FORBIDDEN, None, False),
+        # durations do not match
+        (
+            timedelta(hours=5),
+            False,
+            True,
+            status.HTTP_400_BAD_REQUEST,
+            "Total split time must match the original report's duration.",
+            False,
+        ),
+        # original report does not exist
+        (timedelta(hours=4), False, False, status.HTTP_404_NOT_FOUND, None, False),
+        # database rollback
+        (timedelta(hours=4), False, True, status.HTTP_409_CONFLICT, None, True),
+    ],
+)
+def test_report_split(
+    internal_employee_client,
+    report_factory,
+    user_factory,
+    task_factory,
+    mocker,
+    updated_comment,
+    updated_duration,
+    new_comment,
+    new_duration,
+    verified,
+    original_report_exists,
+    original_duration,
+    expected,
+    expected_error_string,
+    database_error,
+):
+    reviewer = user_factory() if verified else None
+
+    report = report_factory(
+        user=internal_employee_client.user,
+        duration=original_duration,
+        verified_by=reviewer,
+    )
+
+    report_id = report.id if original_report_exists else (report.id + 9000)
+
+    url = reverse("report-split", args=[report_id])
+
+    updated_report_task, new_report_task = task_factory.create_batch(2)
+
+    original_report_count = Report.objects.count()
+    original_comment = report.comment
+    original_task = report.task
+
+    data = {
+        "data": {
+            "type": "split-reports",
+            "attributes": {
+                "updated_original_report": {
+                    "comment": updated_comment,
+                    "duration": updated_duration,
+                    "task": {
+                        "type": "tasks",
+                        "id": updated_report_task.pk,
+                    },
+                },
+                "second_report": {
+                    "comment": new_comment,
+                    "duration": new_duration,
+                    "task": {
+                        "type": "tasks",
+                        "id": new_report_task.pk,
+                    },
+                },
+            },
+        }
+    }
+
+    if database_error:
+        mocker.patch(
+            "timed.tracking.models.Report.save", side_effect=[None, DatabaseError()]
+        )
+
+    response = internal_employee_client.post(url, data)
+    assert response.status_code == expected
+
+    if expected_error_string:
+        assert response.json()["errors"][0]["detail"] == expected_error_string
+
+    if response.status_code == status.HTTP_200_OK:
+        report.refresh_from_db()
+        assert report.comment == updated_comment
+        assert report.duration == updated_duration
+        assert report.task == updated_report_task
+        assert Report.objects.count() == original_report_count + 1
+        assert (
+            Report.objects.filter(
+                comment=new_comment, duration=new_duration, task=new_report_task
+            ).count()
+            == 1
+        )
+
+    else:
+        assert report.comment == original_comment
+        assert report.duration == original_duration
+        assert report.task == original_task
+        assert not Report.objects.filter(
+            comment=new_comment, duration=new_duration, task=new_report_task
+        ).exists()
+        assert original_report_count == Report.objects.count()

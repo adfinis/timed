@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 
 import django_excel
 from django.conf import settings
+from django.db import DatabaseError, transaction
 from django.db.models import Case, CharField, F, Q, Value, When
 from django.http import HttpResponseBadRequest
 from django.utils.translation import gettext_lazy as _
@@ -381,6 +382,51 @@ class ReportViewSet(ModelViewSet):
         return django_excel.make_response(
             sheet, file_type=file_type, file_name=f"report.{file_type}"
         )
+
+    @action(
+        detail=True,
+        methods=["post"],
+        serializer_class=serializers.ReportSplitSerializer,
+    )
+    def split(self, request, pk):
+        original_report = self.get_object()
+
+        serializer = self.get_serializer(data=request.data, context={"pk": pk})
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.validated_data
+
+        updated_original_report = data["updated_original_report"]
+        second_report = data["second_report"]
+
+        second_report_task = second_report["task"]
+        updated_original_report_task = updated_original_report["task"]
+
+        try:
+            with transaction.atomic():
+                report = models.Report(
+                    comment=second_report["comment"],
+                    duration=second_report["duration"],
+                    task_id=second_report_task.pk,
+                    billed=second_report_task.project.billed,
+                    date=original_report.date,
+                    user=original_report.user,
+                )
+
+                original_report.comment = updated_original_report["comment"]
+                original_report.duration = updated_original_report["duration"]
+                original_report.task_id = updated_original_report_task.pk
+                original_report.billed = updated_original_report_task.project.billed
+
+                original_report.save()
+                report.save()
+        except DatabaseError:
+            return Response(
+                _("Something went wrong while splitting up report with id: %s")
+                % original_report.pk,
+                status=status.HTTP_409_CONFLICT,
+            )
+        return Response(status=status.HTTP_200_OK)
 
 
 class AbsenceViewSet(ModelViewSet):
