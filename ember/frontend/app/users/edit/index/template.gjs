@@ -1,6 +1,6 @@
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+import Card from "ui-core/components/ui-card";
 
-import Card from "timed/components/card";
 import Empty from "timed/components/empty";
 import LoadingIcon from "timed/components/loading-icon";
 import Table from "timed/components/table";

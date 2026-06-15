@@ -5,9 +5,9 @@ import didUpdate from "@ember/render-modifiers/modifiers/did-update";
 import { LinkTo } from "@ember/routing";
 import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import { not } from "ember-truth-helpers";
+import Card from "ui-core/components/ui-card";
 import UiCheckbox from "ui-core/components/ui-checkbox";
 
-import Card from "timed/components/card";
 import ReportComment from "timed/components/report-comment";
 import TaskSelection from "timed/components/task-selection";
 import Timepicker from "timed/components/timepicker";

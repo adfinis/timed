@@ -2,9 +2,9 @@ import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import awaitHelper from "ember-promise-helpers/helpers/await";
+import Card from "ui-core/components/ui-card";
 import UiTable from "ui-core/components/ui-table";
 
-import Card from "timed/components/card";
 import Empty from "timed/components/empty";
 import LoadingIcon from "timed/components/loading-icon";
 import Table from "timed/components/table";

@@ -1,8 +1,8 @@
 import { on } from "@ember/modifier";
+import { CardHeader } from "ui-core/components/ui-card";
 
-import Header from "timed/components/card/header";
 <template>
-  <Header
+  <CardHeader
     ...attributes
     class="modal-header grid grid-cols-[minmax(0,1fr),auto]"
   >
@@ -15,5 +15,5 @@ import Header from "timed/components/card/header";
     >
       <span aria-hidden="true">&times;</span>
     </button>
-  </Header>
+  </CardHeader>
 </template>

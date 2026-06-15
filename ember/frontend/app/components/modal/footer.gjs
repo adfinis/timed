@@ -1,6 +1,7 @@
-import Footer from "timed/components/card/footer";
+import { CardFooter } from "ui-core/components/ui-card";
+
 <template>
-  <Footer class="modal-footer" ...attributes>
+  <CardFooter class="modal-footer" ...attributes>
     {{yield}}
-  </Footer>
+  </CardFooter>
 </template>

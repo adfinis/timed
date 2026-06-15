@@ -5,8 +5,8 @@ import changeset from "ember-changeset/helpers/changeset";
 import perform from "ember-concurrency/helpers/perform";
 import { and, not, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
+import Card from "ui-core/components/ui-card";
 
-import Card from "timed/components/card";
 import Datepicker from "timed/components/datepicker";
 import Durationpicker from "timed/components/durationpicker";
 import NoPermission from "timed/components/no-permission";
