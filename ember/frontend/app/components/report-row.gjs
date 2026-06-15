@@ -18,6 +18,7 @@ import ReportComment from "timed/components/report-comment";
 import ReportDurationpicker from "timed/components/report-durationpicker";
 import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
+import Void from "timed/components/void";
 import ReportValidations from "timed/validations/report";
 
 export default class ReportRowComponent extends Component {
@@ -82,7 +83,11 @@ export default class ReportRowComponent extends Component {
               class="form-group max-lg:col-span-full
                 {{if cs.error.task 'has-error'}}"
             />
-            <f.input @labelComponent="void" @errorComponent="void" @name="task">
+            <f.input
+              @labelComponent={{Void}}
+              @errorComponent="void"
+              @name="task"
+            >
               <t.task
                 class="form-group max-lg:col-span-full
                   {{if cs.error.task 'has-error'}}"
