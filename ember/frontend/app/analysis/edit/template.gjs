@@ -16,6 +16,8 @@ import NotIdenticalWarning from "timed/components/not-identical-warning";
 import PagePermission from "timed/components/page-permission";
 import ReportComment from "timed/components/report-comment";
 import TaskSelection from "timed/components/task-selection";
+import Void from "timed/components/void";
+
 <template>
   <PagePermission>
     <div class="grid md:grid-cols-4">
@@ -78,7 +80,7 @@ import TaskSelection from "timed/components/task-selection";
                     as |t|
                   >
                     <c.block class="grid gap-2">
-                      <f.input @labelComponent="void" @name="task">
+                      <f.input @labelComponent={{Void}} @name="task">
                         <div class="form-group" data-test-customer>
                           <label>
                             Customer
@@ -161,7 +163,7 @@ import TaskSelection from "timed/components/task-selection";
                       <div class="grid gap-1">
                         <f.input
                           @name="notBillable"
-                          @labelComponent="void"
+                          @labelComponent={{Void}}
                           as |fi|
                         >
                           <Checkbox
@@ -181,7 +183,11 @@ import TaskSelection from "timed/components/task-selection";
                           </Checkbox>
                         </f.input>
 
-                        <f.input @name="review" @labelComponent="void" as |fi|>
+                        <f.input
+                          @name="review"
+                          @labelComponent={{Void}}
+                          as |fi|
+                        >
                           <Checkbox
                             data-test-review
                             @checked={{fi.value}}
@@ -199,7 +205,7 @@ import TaskSelection from "timed/components/task-selection";
 
                         <f.input
                           @name="rejected"
-                          @labelComponent="void"
+                          @labelComponent={{Void}}
                           as |fi|
                         >
                           <Checkbox
@@ -224,7 +230,11 @@ import TaskSelection from "timed/components/task-selection";
                           </Checkbox>
                         </f.input>
 
-                        <f.input @name="billed" @labelComponent="void" as |fi|>
+                        <f.input
+                          @name="billed"
+                          @labelComponent={{Void}}
+                          as |fi|
+                        >
                           <Checkbox
                             data-test-billed
                             @checked={{fi.value}}
@@ -247,7 +257,7 @@ import TaskSelection from "timed/components/task-selection";
 
                         <f.input
                           @name="verified"
-                          @labelComponent="void"
+                          @labelComponent={{Void}}
                           @dirty={{true}}
                           as |fi|
                         >
