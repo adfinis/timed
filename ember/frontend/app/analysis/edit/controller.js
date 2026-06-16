@@ -156,13 +156,7 @@ export default class AnalysisEditController extends Controller {
   }
 
   get canSplitReport() {
-    return (
-      this.id?.length === 1 &&
-      this.abilities.can(
-        "editSync report",
-        this.intersection.lastSuccessful.value.model,
-      )
-    );
+    return this.id?.length === 1;
   }
 
   get canBill() {
