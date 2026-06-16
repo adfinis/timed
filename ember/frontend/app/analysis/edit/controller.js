@@ -59,6 +59,7 @@ export default class AnalysisEditController extends Controller {
   @service currentUser;
   @service store;
   @service unverifiedReports;
+  @service abilities;
 
   @tracked id;
   @tracked user;
@@ -77,6 +78,7 @@ export default class AnalysisEditController extends Controller {
   @tracked editable;
   @tracked rejected;
   @tracked ordering = "-date";
+  @tracked _isReviewer = false;
 
   get analysisIndexController() {
     return getOwner(this).lookup("controller:analysis.index");
@@ -118,6 +120,32 @@ export default class AnalysisEditController extends Controller {
       await this.store.query("task", { project: model.project.id });
     }
 
+    const ability = this.abilities.abilityFor("report", {
+      taskAssignees: model.task?.id
+        ? await this.store.query("task-assignee", {
+            is_reviewer: 1,
+            tasks: model.task.id,
+            include: "task,user",
+          })
+        : [],
+      projectAssignees: model.project?.id
+        ? await this.store.query("project-assignee", {
+            is_reviewer: 1,
+            projects: model.project.id,
+            include: "project,user",
+          })
+        : [],
+      customerAssignees: model.customer?.id
+        ? await this.store.query("customer-assignee", {
+            is_reviewer: 1,
+            customers: model.customer.id,
+            include: "customer,user",
+          })
+        : [],
+    });
+    this._isReviewer = await ability.isReviewer();
+    ability.destroy();
+
     return {
       model,
       meta: res.meta,
@@ -144,7 +172,7 @@ export default class AnalysisEditController extends Controller {
   }
 
   get isReviewer() {
-    return allQueryParams(this).reviewer === this.currentUser.user.id;
+    return this._isReviewer;
   }
 
   get canVerify() {
