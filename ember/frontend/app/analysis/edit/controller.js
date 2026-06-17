@@ -18,11 +18,11 @@ import { cleanParams, toQueryString } from "timed/utils/url";
 import IntersectionValidations from "timed/validations/intersection";
 
 const filterUnchanged = (attributes, changes) => {
-  return Object.keys(attributes).reduce((obj, attr) => {
-    return changes.map(({ key }) => dasherize(key)).includes(attr)
-      ? { ...obj, [attr]: attributes[attr] }
-      : obj;
-  }, {});
+  const changedKeys = new Set(changes.map(({ key }) => dasherize(key)));
+
+  return Object.fromEntries(
+    Object.entries(attributes).filter(([key]) => changedKeys.has(key)),
+  );
 };
 
 const TOOLTIP_CANNOT_VERIFY =

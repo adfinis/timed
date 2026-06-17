@@ -1,37 +1,31 @@
-import { get } from "@ember/object";
 import { underscore } from "@ember/string";
 import { DateTime } from "luxon";
 
 /**
  * Filter params by key
  */
-export const filterQueryParams = (params, ...keys) => {
-  return Object.keys(params).reduce((obj, key) => {
-    return keys.includes(key) ? obj : { ...obj, [key]: get(params, key) };
-  }, {});
-};
+export const filterQueryParams = (params, ...keys) =>
+  Object.fromEntries(
+    Object.entries(params).filter(([key]) => !keys.includes(key)),
+  );
 
 /**
  * Underscore all object keys
  */
-export const underscoreQueryParams = (params) => {
-  return Object.keys(params).reduce((obj, key) => {
-    return { ...obj, [underscore(key)]: get(params, key) };
-  }, {});
-};
+export const underscoreQueryParams = (params) =>
+  Object.fromEntries(
+    Object.entries(params).map(([key, value]) => [underscore(key), value]),
+  );
 
 export const serializeQueryParams = (params, queryParamsObject) => {
-  return Object.keys(params).reduce((parsed, key) => {
-    const serializeFn = get(queryParamsObject, key)?.serialize;
-    const value = get(params, key);
-
-    return key === "type"
-      ? parsed
-      : {
-          ...parsed,
-          [key]: serializeFn ? serializeFn(value) : value,
-        };
-  }, {});
+  return Object.fromEntries(
+    Object.entries(params)
+      .filter(([key]) => key !== "type")
+      .map(([key, value]) => {
+        const serializeFn = queryParamsObject[key]?.serialize;
+        return [key, serializeFn ? serializeFn(value) : value];
+      }),
+  );
 };
 
 /**

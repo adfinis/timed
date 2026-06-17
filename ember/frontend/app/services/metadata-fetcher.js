@@ -67,31 +67,22 @@ export default class MetadataFetcherService extends Service {
       meta = {},
     } = await this.fetch.fetch(`/api/v1/${dasherize(type)}s/${id}`);
 
-    const metaValues = Object.keys(META_MODELS[camelize(type)]).reduce(
-      (parsedMeta, key) => {
-        const { defaultValue, transform } = META_MODELS[camelize(type)][key];
-        const value = meta[dasherize(key)];
+    const modelKey = camelize(type);
 
-        return {
-          ...parsedMeta,
-          [key]: value ? transform.deserialize(value) : defaultValue,
-        };
+    const metaEntries = Object.entries(META_MODELS[modelKey]).map(
+      ([key, { defaultValue, transform }]) => {
+        const value = meta[dasherize(key)];
+        return [key, value ? transform.deserialize(value) : defaultValue];
       },
-      {},
     );
 
-    const attributesValues = Object.keys(
-      ATTRIBUTE_MODELS[camelize(type)],
-    ).reduce((parsedAttribute, key) => {
-      const { defaultValue, transform } = ATTRIBUTE_MODELS[camelize(type)][key];
-      const value = attributes[dasherize(key)];
+    const attrEntries = Object.entries(ATTRIBUTE_MODELS[modelKey]).map(
+      ([key, { defaultValue, transform }]) => {
+        const value = attributes[dasherize(key)];
+        return [key, value ? transform.deserialize(value) : defaultValue];
+      },
+    );
 
-      return {
-        ...parsedAttribute,
-        [key]: value ? transform.deserialize(value) : defaultValue,
-      };
-    }, {});
-
-    return { ...attributesValues, ...metaValues };
+    return Object.fromEntries([...attrEntries, ...metaEntries]);
   });
 }
