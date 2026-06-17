@@ -10,6 +10,6 @@ module("Integration | Component | loading icon", function (hooks) {
   test("renders", async function (assert) {
     await render(<template><LoadingIcon /></template>);
 
-    assert.dom(".loading-dot").exists({ count: 9 });
+    assert.dom("[data-test-loading-dot]").exists({ count: 9 });
   });
 });
