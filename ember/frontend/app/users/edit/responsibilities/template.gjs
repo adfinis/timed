@@ -9,15 +9,10 @@ import awaitHelper from "ember-promise-helpers/helpers/await";
 import { DateTime } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 import Card from "ui-core/components/ui-card";
-import UiTable from "ui-core/components/ui-table";
+import Table from "ui-core/components/ui-table";
 
 import Empty from "timed/components/empty";
 import LoadingIcon from "timed/components/loading-icon";
-import Table from "timed/components/table";
-import Td from "timed/components/table/td";
-import Th from "timed/components/table/th";
-import Thead from "timed/components/table/thead";
-import Tr from "timed/components/table/tr";
 import balanceHighlightClass from "timed/helpers/balance-highlight-class";
 import formatDuration from "timed/helpers/format-duration";
 
@@ -88,7 +83,7 @@ export default class UsersEditResponsibilitiesTemplate extends Component {
           {{else}}
             {{#let this.projects.value as |projects|}}
               {{#if projects}}
-                <UiTable @striped={{true}} as |t|>
+                <Table @striped={{true}} as |t|>
                   <t.thead>
                     <t.tr>
                       <t.th>Customer</t.th>
@@ -103,7 +98,7 @@ export default class UsersEditResponsibilitiesTemplate extends Component {
                       </t.tr>
                     {{/each}}
                   </tbody>
-                </UiTable>
+                </Table>
               {{else}}
                 <Empty>
                   <FaIcon @icon="folder-open" />
@@ -128,28 +123,31 @@ export default class UsersEditResponsibilitiesTemplate extends Component {
           {{else}}
             {{#let this.supervisees.value as |supervisees|}}
               {{#if supervisees}}
-                <Table class="table--striped table">
-                  <Thead>
-                    <Tr>
-                      <Th>Name</Th>
-                      <Th>Current worktime balance</Th>
-                      <Th>Remaining vacation days</Th>
-                    </Tr>
-                  </Thead>
+                <Table
+                  class="table--striped table"
+                  @striped={{true}}
+                  @last={{true}}
+                  @hover={{true}}
+                  as |t|
+                >
+                  <t.thead>
+                    <t.trh>
+                      <t.th>Name</t.th>
+                      <t.th>Current worktime balance</t.th>
+                      <t.th>Remaining vacation days</t.th>
+                    </t.trh>
+                  </t.thead>
                   <tbody>
                     {{#each supervisees as |supervisee|}}
-                      <Tr
-                        @striped={{true}}
-                        @last={{true}}
-                        @hover={{true}}
+                      <t.tr
                         role="link"
                         {{on
                           "click"
                           (fn this.openSupervisorProfile supervisee.id)
                         }}
                       >
-                        <Td>{{supervisee.fullName}}</Td>
-                        <Td>
+                        <t.td>{{supervisee.fullName}}</t.td>
+                        <t.td>
                           <span
                             class="worktime-balance
                               {{balanceHighlightClass
@@ -161,14 +159,16 @@ export default class UsersEditResponsibilitiesTemplate extends Component {
                               false
                             }}
                           </span>
-                        </Td>
+                        </t.td>
 
                         {{!
                       absenceBalances has to be an array but will always only
                       contain one element. This is why we get the first object here.
                     }}
-                        <Td>{{awaitHelper (this.getBalance supervisee)}}</Td>
-                      </Tr>
+                        <t.td>{{awaitHelper
+                            (this.getBalance supervisee)
+                          }}</t.td>
+                      </t.tr>
                     {{/each}}
                   </tbody>
                 </Table>
