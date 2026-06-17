@@ -1,4 +1,3 @@
-import { A } from "@ember/array";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { waitForFetch } from "@ember/test-waiters";
@@ -63,9 +62,9 @@ export default class AnalysisController extends QPController {
   @tracked _canLoadMore = true;
   @tracked _lastPage = 0;
   @tracked totalTime = Duration.fromMillis(0);
-  @tracked totalItems = A();
-  @tracked selectedReportIds = A();
-  @tracked _dataCache = A();
+  @tracked totalItems = 0;
+  @tracked selectedReportIds = [];
+  @tracked _dataCache = [];
 
   @tracked user;
   @tracked reviewer;
@@ -167,10 +166,10 @@ export default class AnalysisController extends QPController {
     this._lastPage = 0;
     this._canLoadMore = true;
     this._shouldLoadMore = false;
-    this._dataCache = A();
-    this.selectedReportIds = A();
+    this._dataCache = [];
+    this.selectedReportIds = [];
     this.totalTime = Duration.fromMillis(0);
-    this.totalItems = A();
+    this.totalItems = 0;
 
     this.data.perform();
   }
@@ -247,7 +246,7 @@ export default class AnalysisController extends QPController {
       this._canLoadMore = pagination.pages !== pagination.page;
       this._lastPage = pagination.page;
 
-      this._dataCache.pushObjects(mappedReports);
+      this._dataCache = [...this._dataCache, ...mappedReports];
     }
 
     return this._dataCache;
@@ -364,11 +363,9 @@ export default class AnalysisController extends QPController {
     const selected = this.selectedReportIds;
 
     if (selected.includes(report.id)) {
-      this.selectedReportIds = A([
-        ...selected.filter((id) => id !== report.id),
-      ]);
+      this.selectedReportIds = selected.filter((id) => id !== report.id);
     } else {
-      this.selectedReportIds = A([...selected, report.id]);
+      this.selectedReportIds = [...selected, report.id];
     }
   }
 
