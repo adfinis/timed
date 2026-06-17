@@ -1,5 +1,5 @@
 import { module, test } from "qunit";
-import { setupRenderingTest } from "../helpers";
+import { setupRenderingTest } from "../../helpers";
 import { render } from "@ember/test-helpers";
 import Modal from "#src/components/ui-modal.gts";
 import { toggle } from "@nullvoxpopuli/ember-composable-helpers";
