@@ -7,18 +7,13 @@ import { VerticalCollection } from "@html-next/vertical-collection";
 import slice from "@nullvoxpopuli/ember-composable-helpers/helpers/slice";
 import { eq, gt, not, or } from "ember-truth-helpers";
 import { Duration } from "luxon";
+import Table from "ui-core/components/ui-table";
 
 import Empty from "timed/components/empty";
 import LoadingIcon from "timed/components/loading-icon";
 import SortHeader from "timed/components/sort-header";
 import Bar from "timed/components/statistic-list/bar";
 import Column from "timed/components/statistic-list/column";
-import Table from "timed/components/table";
-import Td from "timed/components/table/td";
-import Tfoot from "timed/components/table/tfoot";
-import Th from "timed/components/table/th";
-import Thead from "timed/components/table/thead";
-import Tr from "timed/components/table/tr";
 import humanizeDuration from "timed/helpers/humanize-duration";
 import parseDjangoDuration from "timed/utils/parse-django-duration";
 
@@ -197,9 +192,9 @@ export default class StatisticList extends Component {
           <p>Maybe try loosening your filters</p>
         </Empty>
       {{else}}
-        <Table class="table-striped table--statistics table">
-          <Thead>
-            <Tr>
+        <Table @striped={{true}} class="table--statistics" as |t|>
+          <t.thead>
+            <t.trh>
               {{#each this.columns as |column|}}
                 {{#if column.ordering}}
                   <SortHeader
@@ -210,12 +205,12 @@ export default class StatisticList extends Component {
                     {{column.title}}
                   </SortHeader>
                 {{else}}
-                  <Th @light={{true}}>{{column.title}}</Th>
+                  <t.th @light={{true}}>{{column.title}}</t.th>
                 {{/if}}
               {{/each}}
               <th class="max-sm:hidden"></th>
-            </Tr>
-          </Thead>
+            </t.trh>
+          </t.thead>
           <VerticalCollection
             @items={{slice @data.last.value}}
             @tagName="tbody"
@@ -225,11 +220,7 @@ export default class StatisticList extends Component {
             @containerSelector=".page-content--scroll"
             as |row|
           >
-            <Tr
-              @striped={{true}}
-              data-test-statistic-list-row
-              class="[&>*]:leading-5"
-            >
+            <t.tr data-test-statistic-list-row class="[&>*]:leading-5">
               {{#each this.columns as |column|}}
                 <Column
                   data-test-statistic-list-column
@@ -237,7 +228,7 @@ export default class StatisticList extends Component {
                   @value={{get0 row column.path}}
                 />
               {{/each}}
-              <Td class="w-1/2 max-sm:hidden">
+              <t.td class="w-1/2 max-sm:hidden">
                 {{#let
                   (or row.totalRemainingEffort row.mostRecentRemainingEffort)
                   as |remainingEffort|
@@ -258,13 +249,13 @@ export default class StatisticList extends Component {
                     />
                   {{/let}}
                 {{/let}}
-              </Td>
-            </Tr>
+              </t.td>
+            </t.tr>
           </VerticalCollection>
-          <Tfoot>
-            <Tr>
+          <t.tfoot>
+            <t.trh>
               {{#each this.columns as |column index|}}
-                <Td>
+                <t.td>
                   <strong>
                     {{#if (not index)}}
                       Total:
@@ -285,11 +276,11 @@ export default class StatisticList extends Component {
                         }}</span>
                     {{/if}}
                   </strong>
-                </Td>
+                </t.td>
               {{/each}}
-              <Td class="max-sm:hidden" />
-            </Tr>
-          </Tfoot>
+              <t.td class="max-sm:hidden" />
+            </t.trh>
+          </t.tfoot>
         </Table>
       {{/if}}
     </div>
