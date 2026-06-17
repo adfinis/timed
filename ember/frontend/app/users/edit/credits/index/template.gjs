@@ -5,10 +5,10 @@ import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import can from "ember-can/helpers/can";
 import perform from "ember-concurrency/helpers/perform";
 import { eq, not } from "ember-truth-helpers";
+import LoadingIcon from "ui-core/components/loading-icon";
 import Card from "ui-core/components/ui-card";
 
 import Empty from "timed/components/empty";
-import LoadingIcon from "timed/components/loading-icon";
 import Table from "timed/components/table";
 import Td from "timed/components/table/td";
 import Th from "timed/components/table/th";

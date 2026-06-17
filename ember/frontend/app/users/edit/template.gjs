@@ -1,9 +1,9 @@
 import { LinkTo } from "@ember/routing";
 import can from "ember-can/helpers/can";
 import { or } from "ember-truth-helpers";
+import LoadingIcon from "ui-core/components/loading-icon";
 
 import BalanceDonut from "timed/components/balance-donut";
-import LoadingIcon from "timed/components/loading-icon";
 import NoPermission from "timed/components/no-permission";
 import WorktimeBalanceChart from "timed/components/worktime-balance-chart";
 import balanceHighlightClass from "timed/helpers/balance-highlight-class";

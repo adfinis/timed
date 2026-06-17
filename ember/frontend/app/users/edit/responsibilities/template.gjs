@@ -8,11 +8,11 @@ import { task } from "ember-concurrency";
 import awaitHelper from "ember-promise-helpers/helpers/await";
 import { DateTime } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
+import LoadingIcon from "ui-core/components/loading-icon";
 import Card from "ui-core/components/ui-card";
 import Table from "ui-core/components/ui-table";
 
 import Empty from "timed/components/empty";
-import LoadingIcon from "timed/components/loading-icon";
 import balanceHighlightClass from "timed/helpers/balance-highlight-class";
 import formatDuration from "timed/helpers/format-duration";
 

@@ -7,13 +7,13 @@ import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
 import perform from "ember-concurrency/helpers/perform";
 import inViewport from "ember-in-viewport/modifiers/in-viewport";
 import { and, eq, not, notEq, or } from "ember-truth-helpers";
+import LoadingIcon from "ui-core/components/loading-icon";
 
 import CanEdit from "timed/components/can-edit";
 import Checkmark from "timed/components/checkmark";
 import DateButtons from "timed/components/date-buttons";
 import Empty from "timed/components/empty";
 import FilterSidebar from "timed/components/filter-sidebar";
-import LoadingIcon from "timed/components/loading-icon";
 import NoMobileMessage from "timed/components/no-mobile-message";
 import PagePermission from "timed/components/page-permission";
 import ScrollContainer from "timed/components/scroll-container";

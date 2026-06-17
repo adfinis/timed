@@ -1,8 +1,8 @@
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import { not } from "ember-truth-helpers";
+import LoadingIcon from "ui-core/components/loading-icon";
 
 import Empty from "timed/components/empty";
-import LoadingIcon from "timed/components/loading-icon";
 <template>
   {{#if @data.isRunning}}
     <Empty>

@@ -7,10 +7,10 @@ import { VerticalCollection } from "@html-next/vertical-collection";
 import slice from "@nullvoxpopuli/ember-composable-helpers/helpers/slice";
 import { eq, gt, not, or } from "ember-truth-helpers";
 import { Duration } from "luxon";
+import LoadingIcon from "ui-core/components/loading-icon";
 import Table from "ui-core/components/ui-table";
 
 import Empty from "timed/components/empty";
-import LoadingIcon from "timed/components/loading-icon";
 import SortHeader from "timed/components/sort-header";
 import Bar from "timed/components/statistic-list/bar";
 import Column from "timed/components/statistic-list/column";

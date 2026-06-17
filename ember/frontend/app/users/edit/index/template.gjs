@@ -4,10 +4,10 @@ import Component from "@glimmer/component";
 import { task } from "ember-concurrency";
 import { DateTime } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
+import LoadingIcon from "ui-core/components/loading-icon";
 import Card from "ui-core/components/ui-card";
 
 import Empty from "timed/components/empty";
-import LoadingIcon from "timed/components/loading-icon";
 import Table from "timed/components/table";
 import Td from "timed/components/table/td";
 import Th from "timed/components/table/th";

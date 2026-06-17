@@ -6,12 +6,12 @@ import changeset from "ember-changeset/helpers/changeset";
 import perform from "ember-concurrency/helpers/perform";
 import { and, eq, not, notEq, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
+import LoadingIcon from "ui-core/components/loading-icon";
 import Card from "ui-core/components/ui-card";
 
 import ChangedWarning from "timed/components/changed-warning";
 import Checkbox from "timed/components/checkbox";
 import Empty from "timed/components/empty";
-import LoadingIcon from "timed/components/loading-icon";
 import NotIdenticalWarning from "timed/components/not-identical-warning";
 import PagePermission from "timed/components/page-permission";
 import ReportComment from "timed/components/report-comment";

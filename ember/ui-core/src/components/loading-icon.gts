@@ -1,4 +1,4 @@
-const range = (n) => Array(n).fill(0);
+const range = (n: number): unknown[] => Array(n).fill(0);
 
 <template>
   <div class="loading-icon grid h-40 w-40 grid-cols-3 gap-0.5">
