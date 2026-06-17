@@ -7,12 +7,12 @@ import perform from "ember-concurrency/helpers/perform";
 import PowerSelect from "ember-power-select/components/power-select";
 import { and, eq, not } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
+import LoadingIcon from "ui-core/components/loading-icon";
 
 import Checkbox from "timed/components/checkbox";
 import Checkmark from "timed/components/checkmark";
 import Durationpicker from "timed/components/durationpicker";
 import Empty from "timed/components/empty";
-import LoadingIcon from "timed/components/loading-icon";
 import CustomerOption from "timed/components/optimized-power-select/custom-options/customer-option";
 import ProjectOption from "timed/components/optimized-power-select/custom-options/project-option";
 import PagePermission from "timed/components/page-permission";

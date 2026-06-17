@@ -121,6 +121,7 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
+      "./components/loading-icon.js": "./dist/_app_/components/loading-icon.js",
       "./components/ui-card.js": "./dist/_app_/components/ui-card.js",
       "./components/ui-checkbox.js": "./dist/_app_/components/ui-checkbox.js",
       "./components/ui-durationpicker.js": "./dist/_app_/components/ui-durationpicker.js",
