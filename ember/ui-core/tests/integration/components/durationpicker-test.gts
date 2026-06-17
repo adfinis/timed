@@ -1,5 +1,5 @@
 import { module, test } from "qunit";
-import { setupRenderingTest } from "../helpers";
+import { setupRenderingTest } from "../../helpers";
 import {
   fillIn,
   render,
