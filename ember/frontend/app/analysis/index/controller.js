@@ -35,7 +35,6 @@ export default class AnalysisController extends QPController {
     "user",
     "reviewer",
     "billingType",
-    "costCenter",
     "fromDate",
     "toDate",
     "review",
