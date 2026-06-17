@@ -26,13 +26,6 @@ export default class ControllersQPControllerController extends Controller {
   }
 
   get allQueryParams() {
-    return this.queryParams.reduce(
-      (acc, key) =>
-        Object.defineProperty(acc, key, {
-          value: this[key],
-          enumerable: true,
-        }),
-      {},
-    );
+    return Object.fromEntries(this.queryParams.map((key) => [key, this[key]]));
   }
 }
