@@ -29,7 +29,25 @@ import UserSelection from "timed/components/user-selection";
 import formatDuration from "timed/helpers/format-duration";
 import luxonFormat from "timed/helpers/luxon-format";
 import media from "timed/helpers/media";
-<template>
+
+const Colgroup = <template>
+  <colgroup>
+    <col class="w-[7%]" />
+    <col class="w-[7%]" />
+    <col class="w-[7%]" />
+    <col class="w-[10%]" />
+    <col class="w-[10%]" />
+    <col class="w-[10%]" />
+    <col class="w-[21%]" />
+    <col class="w-[8%]" />
+    <col class="w-[5%]" />
+    <col class="w-[5%]" />
+    <col class="w-[5%]" />
+    <col class="w-[5%]" />
+  </colgroup>
+</template>;
+
+const AnalysisIndexTemplate = <template>
   {{#if (not (media "isMd"))}}
     <NoMobileMessage />
   {{else}}
@@ -294,20 +312,7 @@ import media from "timed/helpers/media";
 
               {{! template-lint-disable table-groups }}
               <Table class="table--striped table--analysis table">
-                <colgroup>
-                  <col class="w-[7%]" />
-                  <col class="w-[7%]" />
-                  <col class="w-[7%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[21%]" />
-                  <col class="w-[8%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                </colgroup>
+                <Colgroup />
                 <Thead>
                   <Tr>
                     <SortHeader
@@ -359,20 +364,7 @@ import media from "timed/helpers/media";
               </Table>
               <ScrollContainer class="analysis-scrollable-container">
                 <Table class="table--striped table--analysis table table-fixed">
-                  <colgroup>
-                    <col class="w-[7%]" />
-                    <col class="w-[7%]" />
-                    <col class="w-[7%]" />
-                    <col class="w-[10%]" />
-                    <col class="w-[10%]" />
-                    <col class="w-[10%]" />
-                    <col class="w-[21%]" />
-                    <col class="w-[8%]" />
-                    <col class="w-[5%]" />
-                    <col class="w-[5%]" />
-                    <col class="w-[5%]" />
-                    <col class="w-[5%]" />
-                  </colgroup>
+                  <Colgroup />
                   <tbody>
                     {{#each reports as |report|}}
                       {{! template-lint-disable}}
@@ -448,20 +440,7 @@ import media from "timed/helpers/media";
                 </Table>
               </ScrollContainer>
               <Table class="table--striped table--analysis table table-fixed">
-                <colgroup>
-                  <col class="w-[7%]" />
-                  <col class="w-[7%]" />
-                  <col class="w-[7%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[10%]" />
-                  <col class="w-[21%]" />
-                  <col class="w-[8%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                  <col class="w-[5%]" />
-                </colgroup>
+                <Colgroup />
                 <Tfoot>
                   <Tr>
                     <Td colspan="2">Total:</Td>
@@ -525,4 +504,6 @@ import media from "timed/helpers/media";
       {{/if}}
     </PagePermission>
   {{/if}}
-</template>
+</template>;
+
+export default AnalysisIndexTemplate;
