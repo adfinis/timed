@@ -33,7 +33,7 @@ const overtimeToOpacity = (overtime) => {
 
 export default class TimedClock extends Component {
   @service currentUser;
-  @service appearance;
+  @service userSettings;
   @service notify;
 
   @tracked hour = 0;
