@@ -5,6 +5,11 @@ import { DateTime } from "luxon";
 
 export default class UsersEditController extends Controller {
   @service store;
+  @service currentUser;
+
+  get isOwnProfile() {
+    return this.model?.id === this.currentUser.user?.id;
+  }
 
   data = task(async (uid) => {
     return await hash({

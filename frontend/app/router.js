@@ -41,6 +41,9 @@ Router.map(function () {
           });
         });
         this.route("responsibilities");
+        this.route("api-tokens", function () {
+          this.route("new");
+        });
       });
     });
     this.route("notfound", { resetNamespace, path: "/*path" });

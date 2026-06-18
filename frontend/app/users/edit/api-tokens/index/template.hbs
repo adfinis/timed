@@ -1,0 +1,83 @@
+<div class="grid">
+  <Card
+    class="grid grid-rows-[min-content,1fr,min-content]"
+    data-test-api-tokens
+  >
+    <Card::Header><h4>API tokens</h4></Card::Header>
+    <Card::Block>
+      {{#if this.tokens.isRunning}}
+        <Empty>
+          <LoadingIcon />
+        </Empty>
+      {{else}}
+        {{#let this.tokens.lastSuccessful.value as |tokens|}}
+          {{#if tokens.length}}
+            <Table class="table--striped table">
+              <Table::Thead>
+                <Table::Tr>
+                  <Table::Th>Name</Table::Th>
+                  <Table::Th>Created</Table::Th>
+                  <Table::Th>Last used</Table::Th>
+                  <Table::Th>Expires</Table::Th>
+                  <Table::Th />
+                </Table::Tr>
+              </Table::Thead>
+              <tbody>
+                {{#each tokens as |token|}}
+                  <Table::Tr @striped={{true}} @last={{true}}>
+                    <Table::Td>
+                      {{token.name}}
+                      {{#if token.revoked}}
+                        <span class="text-danger">(revoked)</span>
+                      {{/if}}
+                    </Table::Td>
+                    <Table::Td>{{luxon-format
+                        token.created
+                        "dd.MM.yyyy HH:mm"
+                      }}</Table::Td>
+                    <Table::Td>
+                      {{#if token.lastUsedAt}}
+                        {{luxon-format token.lastUsedAt "dd.MM.yyyy HH:mm"}}
+                      {{else}}
+                        Never
+                      {{/if}}
+                    </Table::Td>
+                    <Table::Td>
+                      {{#if token.expiresAt}}
+                        {{luxon-format token.expiresAt "dd.MM.yyyy"}}
+                      {{else}}
+                        Never
+                      {{/if}}
+                    </Table::Td>
+                    <Table::Td class="text-right">
+                      <button
+                        type="button"
+                        class="btn btn-danger
+                          {{if this.delete.isRunning 'loading'}}"
+                        {{on "click" (perform this.delete token)}}
+                        data-test-api-token-delete
+                      >Delete</button>
+                    </Table::Td>
+                  </Table::Tr>
+                {{/each}}
+              </tbody>
+            </Table>
+          {{else}}
+            <Empty>
+              <FaIcon @icon="key" @prefix="fas" />
+              <p>No API tokens found...</p>
+              <p>Add a new token by clicking the button below!</p>
+            </Empty>
+          {{/if}}
+        {{/let}}
+      {{/if}}
+    </Card::Block>
+    <Card::Footer>
+      <LinkTo
+        @route="users.edit.api-tokens.new"
+        class="btn btn-primary block w-min whitespace-nowrap"
+        data-test-api-token-add
+      >Add new token</LinkTo>
+    </Card::Footer>
+  </Card>
+</div>

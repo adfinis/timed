@@ -272,6 +272,17 @@ function routes() {
   this.patch("/absence-credits/:id");
   this.del("/absence-credits/:id");
 
+  this.get("/api-tokens");
+  this.post("/api-tokens", function ({ apiTokens }) {
+    // the backend only returns the raw token in the creation response
+    return apiTokens.create({
+      ...this.normalizedRequestAttrs(),
+      token: "raw-test-token",
+    });
+  });
+  this.get("/api-tokens/:id");
+  this.del("/api-tokens/:id");
+
   this.get("/absence-balances", byUserAndDate("absenceBalances"));
   this.get("/absence-balances/:id");
 

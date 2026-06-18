@@ -1,0 +1,85 @@
+<div class="grid md:grid-cols-3">
+  <div class="grid-cell"></div>
+  <div class="grid-cell">
+    {{#if this.createdToken}}
+      <Card data-test-api-token-created>
+        <Card::Header>
+          <h3 class="text-center">API token created</h3>
+        </Card::Header>
+        <Card::Block class="grid gap-2">
+          <p>Make sure to copy your token now. You will not be able to see it
+            again!</p>
+          <div class="flex gap-2">
+            <input
+              type="text"
+              readonly
+              aria-label="API token"
+              value={{this.createdToken.token}}
+              class="form-control"
+              data-test-api-token-value
+            />
+            <button
+              type="button"
+              class="btn btn-primary whitespace-nowrap"
+              {{on "click" this.copyToken}}
+              data-test-api-token-copy
+            >Copy</button>
+          </div>
+        </Card::Block>
+        <Card::Footer class="flex justify-end">
+          <LinkTo
+            @route="users.edit.api-tokens.index"
+            @model={{this.user.id}}
+            class="btn btn-default"
+          >Done</LinkTo>
+        </Card::Footer>
+      </Card>
+    {{else}}
+      {{#let this.token.lastSuccessful.value as |token|}}
+        {{#if token}}
+          <ValidatedForm
+            @model={{changeset token this.ApiTokenValidations}}
+            @on-submit={{perform this.save}}
+            as |f|
+          >
+            <Card>
+              <Card::Header>
+                <h3 class="text-center">New API token</h3>
+              </Card::Header>
+              <Card::Block class="grid gap-2">
+                <f.input
+                  class="rounded"
+                  @type="text"
+                  @label="Name"
+                  @name="name"
+                  @placeholder="e.g. automation script"
+                />
+                <div>
+                  <f.input
+                    @label="Expires at (optional)"
+                    @name="expiresAt"
+                    as |fi|
+                  >
+                    <Datepicker @value={{fi.value}} @onChange={{fi.update}} />
+                  </f.input>
+                </div>
+              </Card::Block>
+              <Card::Footer class="flex justify-between">
+                <LinkTo
+                  @route="users.edit.api-tokens.index"
+                  @model={{this.user.id}}
+                  class="btn btn-default"
+                >Cancel</LinkTo>
+                <f.submit
+                  data-test-api-token-save
+                  @disabled={{f.model.isInvalid}}
+                />
+              </Card::Footer>
+            </Card>
+          </ValidatedForm>
+        {{/if}}
+      {{/let}}
+    {{/if}}
+  </div>
+  <div class="grid-cell"></div>
+</div>

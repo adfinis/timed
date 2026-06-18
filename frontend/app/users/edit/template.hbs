@@ -101,7 +101,13 @@
 
   <nav class="user-navigation border-b shadow-sm">
     <ul
-      class="[&>li>a]:text-foreground-muted [&>li>a.active]:text-primary [&>li>a.active]:shadow-primary grid grid-cols-[repeat(3,auto)] justify-center text-xl [&>li>a.active]:shadow-[inset_0_-2px_0] [&>li>a]:block [&>li>a]:px-6 [&>li>a]:py-2"
+      class="[&>li>a]:text-foreground-muted [&>li>a.active]:text-primary [&>li>a.active]:shadow-primary grid
+        {{if
+          this.isOwnProfile
+          'grid-cols-[repeat(4,auto)]'
+          'grid-cols-[repeat(3,auto)]'
+        }}
+        justify-center text-xl [&>li>a.active]:shadow-[inset_0_-2px_0] [&>li>a]:block [&>li>a]:px-6 [&>li>a]:py-2"
     >
       <li><LinkTo
           @route="users.edit.index"
@@ -115,6 +121,10 @@
           @route="users.edit.responsibilities"
           @model={{this.model.id}}
         >Responsibilities</LinkTo></li>
+      {{#if this.isOwnProfile}}
+        <li><LinkTo @route="users.edit.api-tokens" @model={{this.model.id}}>API
+            tokens</LinkTo></li>
+      {{/if}}
     </ul>
   </nav>
 
