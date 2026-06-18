@@ -78,11 +78,4 @@ export default class UserSettingsService extends Service {
       }
     }
   }
-
-  _persist() {
-    const keys = Object.keys(UserSettingsService.TABLE_MAP);
-    for (const key of keys) {
-      this.save(`table.${key}`, this._overrides[key]);
-    }
-  }
 }
