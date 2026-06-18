@@ -25,4 +25,6 @@ class APITokenViewSet(ModelViewSet):
     http_method_names = ("get", "post", "delete", "head", "options")
 
     def get_queryset(self) -> QuerySet[models.APIToken]:
-        return models.APIToken.objects.filter(user=self.request.user)
+        return models.APIToken.objects.filter(user=self.request.user).order_by(
+            "-created"
+        )
