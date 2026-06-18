@@ -4,6 +4,7 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
+from timed.employment.factories import UserFactory
 from timed.tracking.factories import ReportFactory
 
 
@@ -64,3 +65,22 @@ def test_user_statistic_list(
         assert json["data"] == expected_json
         assert len(json["included"]) == 2
         assert json["meta"]["total-time"] == "05:00:00"
+
+
+def test_user_statistic_filter_multiple_users(internal_employee_client):
+    """The user statistics endpoint filters by a comma separated user list."""
+    user_a = UserFactory.create()
+    user_b = UserFactory.create()
+    user_c = UserFactory.create()
+    ReportFactory.create(duration=timedelta(hours=1), user=user_a)
+    ReportFactory.create(duration=timedelta(hours=2), user=user_b)
+    ReportFactory.create(duration=timedelta(hours=3), user=user_c)
+
+    url = reverse("user-statistic-list")
+    result = internal_employee_client.get(
+        url, data={"user": f"{user_a.id},{user_b.id}", "include": "user"}
+    )
+
+    assert result.status_code == status.HTTP_200_OK
+    returned_ids = {item["id"] for item in result.json()["data"]}
+    assert returned_ids == {str(user_a.id), str(user_b.id)}

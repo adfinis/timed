@@ -11,6 +11,7 @@ from django_filters.rest_framework import (
     NumberFilter,
 )
 
+from timed.projects.filters import NumberInFilter
 from timed.projects.models import CustomerAssignee, ProjectAssignee, TaskAssignee
 
 if TYPE_CHECKING:
@@ -141,7 +142,7 @@ def statistic_filterset_builder(
             ),
             "verifier": NumberFilter(field_name=f"{reports_prefix}verified_by"),
             "billing_type": NumberFilter(field_name=f"{project_prefix}billing_type"),
-            "user": NumberFilter(field_name=f"{reports_prefix}user_id"),
+            "user": NumberInFilter(field_name=f"{reports_prefix}user_id"),
             "rejected": NumberFilter(field_name=f"{reports_prefix}rejected"),
             "id": BaseInFilter(),
             "cost_center": NumberFilter(method="filter_cost_center"),

@@ -18,6 +18,7 @@ from django_filters.rest_framework import (
     NumberFilter,
 )
 
+from timed.projects.filters import NumberInFilter
 from timed.projects.models import CustomerAssignee, ProjectAssignee, TaskAssignee
 from timed.tracking import models
 
@@ -112,7 +113,7 @@ class ReportFilterSet(FilterSet):
     reviewer = NumberFilter(method="filter_has_reviewer")
     verifier = NumberFilter(field_name="verified_by")
     billing_type = NumberFilter(field_name="task__project__billing_type")
-    user = NumberFilter(field_name="user_id")
+    user = NumberInFilter(field_name="user_id")
     cost_center = NumberFilter(method="filter_cost_center")
     rejected = NumberFilter(field_name="rejected")
     comment = CharFilter(method="filter_comment")

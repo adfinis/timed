@@ -2241,3 +2241,37 @@ def test_report_bulk_customer_change_requires_review_comment(
 
     report.refresh_from_db()
     assert report.task != task
+
+
+def test_report_list_filter_multiple_users(internal_employee_client, report_factory):
+    """The user filter accepts a comma separated list of user ids."""
+    user_a = UserFactory.create()
+    user_b = UserFactory.create()
+    user_c = UserFactory.create()
+    report_a = report_factory.create(user=user_a)
+    report_b = report_factory.create(user=user_b)
+    report_factory.create(user=user_c)
+    url = reverse("report-list")
+
+    response = internal_employee_client.get(
+        url, data={"user": f"{user_a.id},{user_b.id}"}
+    )
+
+    assert response.status_code == status.HTTP_200_OK
+    returned_ids = {item["id"] for item in response.json()["data"]}
+    assert returned_ids == {str(report_a.id), str(report_b.id)}
+
+
+def test_report_list_filter_single_user(internal_employee_client, report_factory):
+    """A single user id keeps working with the comma separated filter."""
+    user_a = UserFactory.create()
+    user_b = UserFactory.create()
+    report_a = report_factory.create(user=user_a)
+    report_factory.create(user=user_b)
+    url = reverse("report-list")
+
+    response = internal_employee_client.get(url, data={"user": str(user_a.id)})
+
+    assert response.status_code == status.HTTP_200_OK
+    returned_ids = {item["id"] for item in response.json()["data"]}
+    assert returned_ids == {str(report_a.id)}
