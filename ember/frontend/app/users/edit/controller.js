@@ -19,6 +19,8 @@ export default class UsersEditController extends Controller {
   @tracked chartRangeDays = 10;
 
   get worktimeBalancesFrom() {
+    // Subtract (chartRangeDays - 1) so the range is inclusive of today:
+    // e.g. chartRangeDays=10 → from 9 days ago through today = 10 days total
     return DateTime.now().minus({ days: this.chartRangeDays - 1 });
   }
 

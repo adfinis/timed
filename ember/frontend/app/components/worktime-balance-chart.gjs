@@ -31,7 +31,8 @@ export default class WorktimeBalanceChart extends Component {
   }
 
   get options() {
-    const count = this.args.worktimeBalances?.length ?? 10;
+    // Use 0 as fallback: if there are no data points, no ticks are needed
+    const count = this.args.worktimeBalances?.length ?? 0;
     const maxTicksLimit = count > 60 ? 7 : count > 30 ? 10 : count;
 
     return {
