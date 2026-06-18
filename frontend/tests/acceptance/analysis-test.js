@@ -93,6 +93,45 @@ module("Acceptance | analysis", function (hooks) {
     assert.strictEqual(currentURL(), "/analysis?ordering=-user__username");
   });
 
+  test("can filter by multiple users", async function (assert) {
+    const user2 = this.server.create("user");
+    this.server.createList("report", 5, { userId: user2.id });
+
+    await visit("/analysis");
+
+    // select two distinct users in the multi-select user filter
+    await selectChoose(
+      "[data-test-filter-user] .user-select",
+      ".ember-power-select-option",
+      0,
+    );
+    await selectChoose(
+      "[data-test-filter-user] .user-select",
+      ".ember-power-select-option",
+      1,
+    );
+
+    assert
+      .dom("[data-test-filter-user] .ember-power-select-multiple-option")
+      .exists({ count: 2 }, "both selected users show as pills");
+
+    const userParam = decodeURIComponent(currentURL().match(/user=([^&]+)/)[1]);
+    assert.ok(
+      userParam.includes(","),
+      `the user query param is a comma separated list (got "${userParam}")`,
+    );
+  });
+
+  test("shows multiple users from an initial url", async function (assert) {
+    const user2 = this.server.create("user");
+
+    await visit(`/analysis?user=${this.user.id},${user2.id}`);
+
+    assert
+      .dom("[data-test-filter-user] .ember-power-select-multiple-option")
+      .exists({ count: 2 }, "both users from the url show as pills");
+  });
+
   test("can have initial filters", async function (assert) {
     const params = {
       customer: this.server.create("customer").id,
@@ -125,7 +164,7 @@ module("Acceptance | analysis", function (hooks) {
       .dom("[data-test-filter-task] .ember-power-select-selected-item")
       .exists();
     assert
-      .dom("[data-test-filter-user] .ember-power-select-selected-item")
+      .dom("[data-test-filter-user] .ember-power-select-multiple-option")
       .exists();
     assert
       .dom("[data-test-filter-reviewer] .ember-power-select-selected-item")

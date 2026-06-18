@@ -52,13 +52,15 @@
           </fs.group>
           <fs.group @label="Responsibility">
             <fs.filter @label="User" data-test-filter-user>
-              <UserSelection
-                @user={{this.selectedUser}}
-                @onChange={{fn this.setModelFilter "user"}}
+              <UserSelectionMultiple
+                @users={{this.selectedUsers}}
+                @onChange={{fn this.setModelsFilter "user"}}
                 as |u|
               >
-                <u.user />
-              </UserSelection>
+                <u.user as |user|>
+                  {{user.longName}}
+                </u.user>
+              </UserSelectionMultiple>
             </fs.filter>
 
             <fs.filter @label="Reviewer" data-test-filter-reviewer>

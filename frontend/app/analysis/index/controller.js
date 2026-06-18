@@ -105,8 +105,13 @@ export default class AnalysisController extends QPController {
     return this.task && this.store.peekRecord("task", this.task);
   }
 
-  get selectedUser() {
-    return this.user && this.store.peekRecord("user", this.user);
+  get selectedUsers() {
+    return this.user
+      ? this.user
+          .split(",")
+          .map((id) => this.store.peekRecord("user", id))
+          .filter(Boolean)
+      : [];
   }
 
   get selectedReviewer() {
@@ -150,6 +155,15 @@ export default class AnalysisController extends QPController {
   }
 
   @action
+  setModelsFilter(key, value) {
+    // store the selected ids as a comma separated list, matching both the
+    // URL query param and the API's `user=1,2` filter format
+    this[key] =
+      value && value.length ? value.map((m) => m.id).join(",") : undefined;
+    this._reset();
+  }
+
+  @action
   setModelFilterOnChange(key, event) {
     this[key] = event.target.value ? event.target.value : undefined;
     this._reset();
@@ -188,7 +202,11 @@ export default class AnalysisController extends QPController {
       customer: customerId && this.store.findRecord("customer", customerId),
       project: projectId && this.store.findRecord("project", projectId),
       task: taskId && this.store.findRecord("task", taskId),
-      user: userId && this.store.findRecord("user", userId),
+      user:
+        userId &&
+        Promise.all(
+          userId.split(",").map((id) => this.store.findRecord("user", id)),
+        ),
       reviewer: reviewerId && this.store.findRecord("user", reviewerId),
       billingTypes: this.store.findAll("billing-type"),
       costCenters: this.store.findAll("cost-center"),
