@@ -1,6 +1,8 @@
+import { fn } from "@ember/helper";
+import { on } from "@ember/modifier";
 import { LinkTo } from "@ember/routing";
 import can from "ember-can/helpers/can";
-import { or } from "ember-truth-helpers";
+import { eq, or } from "ember-truth-helpers";
 import LoadingIcon from "ui-core/components/loading-icon";
 
 import BalanceDonut from "timed/components/balance-donut";
@@ -62,9 +64,33 @@ import media from "timed/helpers/media";
 
             {{#if (media "isMd")}}
               <div class="user-header-worktime-balance">
-                <WorktimeBalanceChart
-                  @worktimeBalances={{@controller.data.lastSuccessful.value.worktimeBalances}}
-                />
+                {{#if @controller.worktimeBalancesData.isRunning}}
+                  <div
+                    class="flex h-full min-h-[8rem] items-center justify-center"
+                  >
+                    <LoadingIcon />
+                  </div>
+                {{else}}
+                  <WorktimeBalanceChart
+                    @worktimeBalances={{@controller.worktimeBalancesData.value}}
+                  />
+                {{/if}}
+                <div class="mt-1 flex justify-center">
+                  <div class="btn-group">
+                    {{#each @controller.chartRanges as |range|}}
+                      <button
+                        type="button"
+                        class="btn text-xs
+                          {{if
+                            (eq @controller.chartRangeDays range.days)
+                            'btn-primary'
+                            'btn-default'
+                          }}"
+                        {{on "click" (fn @controller.setChartRange range.days)}}
+                      >{{range.label}}</button>
+                    {{/each}}
+                  </div>
+                </div>
               </div>
             {{/if}}
 
@@ -89,9 +115,33 @@ import media from "timed/helpers/media";
 
             {{#unless (media "isMd")}}
               <div class="user-header-worktime-balance col-span-2">
-                <WorktimeBalanceChart
-                  @worktimeBalances={{@controller.data.lastSuccessful.value.worktimeBalances}}
-                />
+                {{#if @controller.worktimeBalancesData.isRunning}}
+                  <div
+                    class="flex h-full min-h-[8rem] items-center justify-center"
+                  >
+                    <LoadingIcon />
+                  </div>
+                {{else}}
+                  <WorktimeBalanceChart
+                    @worktimeBalances={{@controller.worktimeBalancesData.value}}
+                  />
+                {{/if}}
+                <div class="mt-1 flex justify-center">
+                  <div class="btn-group">
+                    {{#each @controller.chartRanges as |range|}}
+                      <button
+                        type="button"
+                        class="btn text-xs
+                          {{if
+                            (eq @controller.chartRangeDays range.days)
+                            'btn-primary'
+                            'btn-default'
+                          }}"
+                        {{on "click" (fn @controller.setChartRange range.days)}}
+                      >{{range.label}}</button>
+                    {{/each}}
+                  </div>
+                </div>
               </div>
             {{/unless}}
           </div>

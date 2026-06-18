@@ -31,6 +31,9 @@ export default class WorktimeBalanceChart extends Component {
   }
 
   get options() {
+    const count = this.args.worktimeBalances?.length ?? 10;
+    const maxTicksLimit = count > 60 ? 7 : count > 30 ? 10 : count;
+
     return {
       tension: 0,
       // lineTension: 0,
@@ -59,7 +62,11 @@ export default class WorktimeBalanceChart extends Component {
         xAxes: [
           {
             ticks: {
+              maxTicksLimit,
               callback(value) {
+                if (count > 30) {
+                  return value.toFormat("dd.MM.yy");
+                }
                 return [
                   value.toFormat("dd"),
                   value.toFormat("ccc").toUpperCase().slice(0, 2),
