@@ -11,11 +11,11 @@ import { dropTask } from "ember-concurrency";
 import perform from "ember-concurrency/helpers/perform";
 import { not, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
+import { ReportDurationpicker } from "ui-core/components/ui-durationpicker";
 
 import CanEdit from "timed/components/can-edit";
 import Durationpicker from "timed/components/durationpicker";
 import ReportComment from "timed/components/report-comment";
-import ReportDurationpicker from "timed/components/report-durationpicker";
 import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
 import Void from "timed/components/void";
