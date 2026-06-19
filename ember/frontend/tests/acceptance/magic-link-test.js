@@ -115,4 +115,18 @@ module("Acceptance | magic links", function (hooks) {
     assert.dom("[data-test-magic-link-comment]").hasNoValue();
     assert.dom("[data-test-magic-link-duration]").hasValue("00:00");
   });
+
+  test("draft reports can be created without a specific duration", async function (assert) {
+    await visit(
+      "/reports?task=2&comment=some+great+comment&review=true&notBillable=true",
+    );
+
+    // sanity check
+    assert.dom("[data-test-report-row]").exists({ count: 6 });
+
+    // this should be empty, and not "00:00", "00:15" or "--:--"
+    assert
+      .dom("[data-test-report-row]:last-child [data-test-report-duration]")
+      .hasNoValue();
+  });
 });
