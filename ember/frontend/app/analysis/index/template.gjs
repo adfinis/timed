@@ -19,6 +19,7 @@ import PagePermission from "timed/components/page-permission";
 import ScrollContainer from "timed/components/scroll-container";
 import SortHeader from "timed/components/sort-header";
 import Table from "timed/components/table";
+import ColumnPicker from "timed/components/table/column-picker";
 import Td from "timed/components/table/td";
 import Tfoot from "timed/components/table/tfoot";
 import Th from "timed/components/table/th";
@@ -32,18 +33,9 @@ import media from "timed/helpers/media";
 
 const Colgroup = <template>
   <colgroup>
-    <col class="w-[7%]" />
-    <col class="w-[7%]" />
-    <col class="w-[7%]" />
-    <col class="w-[10%]" />
-    <col class="w-[10%]" />
-    <col class="w-[10%]" />
-    <col class="w-[21%]" />
-    <col class="w-[8%]" />
-    <col class="w-[5%]" />
-    <col class="w-[5%]" />
-    <col class="w-[5%]" />
-    <col class="w-[5%]" />
+    {{#each @columns as |column|}}
+      <col class={{column.widthClass}} />
+    {{/each}}
   </colgroup>
 </template>;
 
@@ -277,6 +269,7 @@ const AnalysisIndexTemplate = <template>
           {{#if @controller.data.lastSuccessful.value.length}}
             {{#let @controller.data.lastSuccessful.value as |reports|}}
               <div class="flex justify-end gap-x-2">
+                <ColumnPicker @tableName="analysis" />
                 {{#if @controller.selectedReportIds.length}}
                   <button
                     data-test-edit-selected
@@ -312,59 +305,26 @@ const AnalysisIndexTemplate = <template>
 
               {{! template-lint-disable table-groups }}
               <Table class="table--striped table--analysis table">
-                <Colgroup />
+                <Colgroup @columns={{@controller.tableColumns}} />
                 <Thead>
                   <Tr>
-                    <SortHeader
-                      @update={{fn @controller.updateParam "ordering"}}
-                      @current={{@controller.ordering}}
-                      @by="user__username"
-                    >User</SortHeader>
-                    <SortHeader
-                      @update={{fn @controller.updateParam "ordering"}}
-                      @current={{@controller.ordering}}
-                      @by="date"
-                    >Date</SortHeader>
-                    <SortHeader
-                      @update={{fn @controller.updateParam "ordering"}}
-                      @current={{@controller.ordering}}
-                      @by="duration"
-                    >Duration</SortHeader>
-                    <SortHeader
-                      @update={{fn @controller.updateParam "ordering"}}
-                      @current={{@controller.ordering}}
-                      @by="task__project__customer__name"
-                    >Customer</SortHeader>
-                    <SortHeader
-                      @update={{fn @controller.updateParam "ordering"}}
-                      @current={{@controller.ordering}}
-                      @by="task__project__name"
-                    >Project</SortHeader>
-                    <SortHeader
-                      @update={{fn @controller.updateParam "ordering"}}
-                      @current={{@controller.ordering}}
-                      @by="task__name"
-                    >Task</SortHeader>
-                    <SortHeader
-                      @update={{fn @controller.updateParam "ordering"}}
-                      @current={{@controller.ordering}}
-                      @by="comment"
-                    >Comment</SortHeader>
-                    <SortHeader
-                      @update={{fn @controller.updateParam "ordering"}}
-                      @current={{@controller.ordering}}
-                      @by="verified_by__username"
-                    >Verified by</SortHeader>
-                    <Th @light={{true}}>Rejected</Th>
-                    <Th @light={{true}}>Review</Th>
-                    <Th @light={{true}}>Not billable</Th>
-                    <Th @light={{true}}>Billed</Th>
+                    {{#each @controller.tableColumns as |column|}}
+                      {{#if column.sortable}}
+                        <SortHeader
+                          @update={{fn @controller.updateParam "ordering"}}
+                          @current={{@controller.ordering}}
+                          @by={{column.by}}
+                        >{{column.label}}</SortHeader>
+                      {{else}}
+                        <Th @light={{true}}>{{column.label}}</Th>
+                      {{/if}}
+                    {{/each}}
                   </Tr>
                 </Thead>
               </Table>
               <ScrollContainer class="analysis-scrollable-container">
                 <Table class="table--striped table--analysis table table-fixed">
-                  <Colgroup />
+                  <Colgroup @columns={{@controller.tableColumns}} />
                   <tbody>
                     {{#each reports as |report|}}
                       {{! template-lint-disable}}
@@ -389,36 +349,51 @@ const AnalysisIndexTemplate = <template>
                             )
                           }}
                         >
-                          <Td>{{report.user.username}}</Td>
-                          <Td>{{luxonFormat report.date "dd.MM.yyyy"}}</Td>
-                          <Td>{{formatDuration report.duration false}}</Td>
-                          <Td>{{report.task.project.customer.name}}</Td>
-                          <Td>{{report.task.project.name}}</Td>
-                          <Td>{{report.task.name}}</Td>
-                          <Td><span
-                              class="line-clamp-2 whitespace-pre-line"
-                              title="{{report.comment}}"
-                            >{{report.comment}}</span></Td>
-                          <Td>{{if
-                              report.verifiedBy
-                              report.verifiedBy.username
-                            }}</Td>
-                          <Td><Checkmark
-                              @checked={{report.rejected}}
-                              @highlight={{true}}
-                            /></Td>
-                          <Td><Checkmark
-                              @checked={{report.review}}
-                              @highlight={{true}}
-                            /></Td>
-                          <Td><Checkmark
-                              @checked={{report.notBillable}}
-                              @highlight={{true}}
-                            /></Td>
-                          <Td><Checkmark
-                              @checked={{report.billed}}
-                              @highlight={{true}}
-                            /></Td>
+                          {{#each @controller.tableColumns as |column|}}
+                            {{#if (eq column.label "User")}}
+                              <Td>{{report.user.username}}</Td>
+                            {{else if (eq column.label "Date")}}
+                              <Td>{{luxonFormat report.date "dd.MM.yyyy"}}</Td>
+                            {{else if (eq column.label "Duration")}}
+                              <Td>{{formatDuration report.duration false}}</Td>
+                            {{else if (eq column.label "Customer")}}
+                              <Td>{{report.task.project.customer.name}}</Td>
+                            {{else if (eq column.label "Project")}}
+                              <Td>{{report.task.project.name}}</Td>
+                            {{else if (eq column.label "Task")}}
+                              <Td>{{report.task.name}}</Td>
+                            {{else if (eq column.label "Comment")}}
+                              <Td><span
+                                  class="line-clamp-2 whitespace-pre-line"
+                                  title="{{report.comment}}"
+                                >{{report.comment}}</span></Td>
+                            {{else if (eq column.label "Verified by")}}
+                              <Td>{{if
+                                  report.verifiedBy
+                                  report.verifiedBy.username
+                                }}</Td>
+                            {{else if (eq column.label "Rejected")}}
+                              <Td><Checkmark
+                                  @checked={{report.rejected}}
+                                  @highlight={{true}}
+                                /></Td>
+                            {{else if (eq column.label "Review")}}
+                              <Td><Checkmark
+                                  @checked={{report.review}}
+                                  @highlight={{true}}
+                                /></Td>
+                            {{else if (eq column.label "Not billable")}}
+                              <Td><Checkmark
+                                  @checked={{report.notBillable}}
+                                  @highlight={{true}}
+                                /></Td>
+                            {{else if (eq column.label "Billed")}}
+                              <Td><Checkmark
+                                  @checked={{report.billed}}
+                                  @highlight={{true}}
+                                /></Td>
+                            {{/if}}
+                          {{/each}}
                         </Tr>
                       </CanEdit>
                     {{/each}}
@@ -430,7 +405,10 @@ const AnalysisIndexTemplate = <template>
                           viewportSpy=true
                         }}
                       >
-                        <td colspan="12" class="text-center">
+                        <td
+                          colspan={{@controller.tableColumns.length}}
+                          class="text-center"
+                        >
                           Loading<span class="loading-dots"><i>.</i><i>.</i><i
                             >.</i></span>
                         </td>
@@ -440,7 +418,7 @@ const AnalysisIndexTemplate = <template>
                 </Table>
               </ScrollContainer>
               <Table class="table--striped table--analysis table table-fixed">
-                <Colgroup />
+                <Colgroup @columns={{@controller.tableColumns}} />
                 <Tfoot>
                   <Tr>
                     <Td colspan="2">Total:</Td>
