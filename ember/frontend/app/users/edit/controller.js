@@ -15,18 +15,7 @@ export const CHART_RANGES = [
 export default class UsersEditController extends Controller {
   @service store;
 
-  @tracked userId = null;
   @tracked chartRangeDays = 10;
-
-  get worktimeBalancesFrom() {
-    // Subtract (chartRangeDays - 1) so the range is inclusive of today:
-    // e.g. chartRangeDays=10 → from 9 days ago through today = 10 days total
-    return DateTime.now().minus({ days: this.chartRangeDays - 1 });
-  }
-
-  get worktimeBalancesTo() {
-    return DateTime.now();
-  }
 
   chartRanges = CHART_RANGES;
 
@@ -65,22 +54,14 @@ export default class UsersEditController extends Controller {
     });
   });
 
-  _worktimeBalancesTask = task(async () => {
-    const userId = this.userId;
-    const from = this.worktimeBalancesFrom;
-    const to = this.worktimeBalancesTo;
+  _worktimeBalancesTask = task(async (userId, chartRangeDays) => {
+    if (!userId) return [];
 
-    if (!userId || !from || !to) return [];
+    const dates = [...Array(chartRangeDays).keys()]
+      .map((i) => DateTime.now().minus({ days: i }))
+      .reverse();
 
-    const dates = [];
-    let current = from.startOf("day");
-    const end = to.startOf("day");
-    while (current <= end) {
-      dates.push(current);
-      current = current.plus({ days: 1 });
-    }
-
-    const results = await all(
+    return await all(
       dates.map(async (date) => {
         const balance = await this.store.query("worktime-balance", {
           user: userId,
@@ -89,12 +70,10 @@ export default class UsersEditController extends Controller {
         return balance[0];
       }),
     );
-
-    return results.filter(Boolean);
   });
 
   worktimeBalancesData = trackedTask(this, this._worktimeBalancesTask, () => [
-    this.userId,
+    this.model?.id,
     this.chartRangeDays,
   ]);
 

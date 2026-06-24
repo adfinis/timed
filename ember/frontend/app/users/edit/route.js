@@ -9,7 +9,6 @@ export default class EditUserRoute extends Route {
 
   setupController(controller, model, ...args) {
     super.setupController(controller, model, ...args);
-    controller.userId = model.id;
     controller.data.perform(model.id);
   }
 }
