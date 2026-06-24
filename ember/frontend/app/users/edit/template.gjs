@@ -2,13 +2,13 @@ import { LinkTo } from "@ember/routing";
 import can from "ember-can/helpers/can";
 import { or } from "ember-truth-helpers";
 import LoadingIcon from "ui-core/components/loading-icon";
+import { dateToString } from "ui-core/utils/date";
 
 import BalanceDonut from "timed/components/balance-donut";
 import NoPermission from "timed/components/no-permission";
 import WorktimeBalanceChart from "timed/components/worktime-balance-chart";
 import balanceHighlightClass from "timed/helpers/balance-highlight-class";
 import formatDuration from "timed/helpers/format-duration";
-import luxonFormat from "timed/helpers/luxon-format";
 import media from "timed/helpers/media";
 
 <template>
@@ -46,9 +46,8 @@ import media from "timed/helpers/media";
                   title="Last day with timesheet entries or absences"
                   class="text-foreground-muted text-base uppercase sm:text-lg md:text-xl lg:text-2xl"
                 >
-                  {{luxonFormat
+                  {{dateToString
                     (or balance.date @model.activeEmployment.start)
-                    "dd.MM.yyyy"
                   }}
                 </h2>
                 <div
