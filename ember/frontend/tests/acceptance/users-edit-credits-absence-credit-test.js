@@ -2,6 +2,7 @@ import { click, fillIn, currentURL, visit } from "@ember/test-helpers";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+import { dateToString } from "ui-core/utils/date";
 
 import { setupApplicationTest } from "timed/tests/helpers";
 
@@ -19,7 +20,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
     await visit(`/users/${this.user.id}/credits/absence-credits/new`);
 
     await click(".btn-group .btn:first-child");
-    await fillIn("input[name=date]", DateTime.now().toFormat("dd.MM.yyyy"));
+    await fillIn("input[name=date]", dateToString(DateTime.now()));
     await fillIn("input[name=days]", "5");
     await fillIn("input[name=comment]", "Comment");
     await click("[data-test-absence-credit-save]");
@@ -41,7 +42,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
       `/users/${this.user.id}/credits/absence-credits/${id}`,
     );
 
-    await fillIn("input[name=date]", DateTime.now().toFormat("dd.MM.yyyy"));
+    await fillIn("input[name=date]", dateToString(DateTime.now()));
     await fillIn("input[name=days]", "5");
     await fillIn("input[name=comment]", "Ding dong");
 
@@ -55,7 +56,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
       .dom(
         "[data-test-absence-credits] tbody > tr:first-child > td:nth-child(1)",
       )
-      .hasText(DateTime.now().toFormat("dd.MM.yyyy"));
+      .hasText(dateToString(DateTime.now()));
 
     assert
       .dom(
@@ -88,7 +89,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
     await click(".btn-group .btn:first-child");
     await fillIn(
       "input[name=date]",
-      DateTime.now().plus({ years: 1 }).toFormat("dd.MM.yyyy"),
+      dateToString(DateTime.now().plus({ years: 1 })),
     );
     await fillIn("input[name=days]", "5");
     await fillIn("input[name=comment]", "Comment");

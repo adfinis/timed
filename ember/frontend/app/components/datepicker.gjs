@@ -10,18 +10,12 @@ import preventDefault from "ember-event-helpers/helpers/prevent-default";
 import stopPropagation from "ember-event-helpers/helpers/stop-propagation";
 import { scheduleTask } from "ember-lifeline";
 import { DateTime } from "luxon";
+import * as date from "ui-core/utils/date";
 
 import Calendar from "timed/components/calendar";
 
-const DISPLAY_FORMAT = "dd.MM.yyyy";
-
-const PARSE_FORMAT = "d.M.yyyy";
-
-const parse = (value) =>
-  value ? DateTime.fromFormat(value, PARSE_FORMAT) : null;
-
 export default class Datepicker extends Component {
-  placeholder = DISPLAY_FORMAT;
+  placeholder = date.PRETTY_FORMAT;
 
   @tracked center;
 
@@ -34,7 +28,7 @@ export default class Datepicker extends Component {
 
   get displayValue() {
     return this.args.value && this.args.value.isValid
-      ? this.args.value.toFormat(DISPLAY_FORMAT)
+      ? date.toString(this.args.value)
       : null;
   }
 
@@ -65,7 +59,7 @@ export default class Datepicker extends Component {
   deferredWork() {
     const target = document.getElementById(this.uniqueId);
 
-    const parsed = parse(target.value);
+    const parsed = date.fromString(target.value);
 
     if (parsed && !parsed.isValid) {
       return target.setCustomValidity("Invalid date");
@@ -82,7 +76,7 @@ export default class Datepicker extends Component {
     },
   }) {
     if (valid) {
-      const parsed = parse(value);
+      const parsed = date.fromString(value);
 
       return this.args.onChange(parsed && parsed.isValid ? parsed : null);
     }

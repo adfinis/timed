@@ -12,6 +12,7 @@ import PowerCalendar from "ember-power-calendar/components/power-calendar";
 import PowerCalendarMultiple from "ember-power-calendar/components/power-calendar-multiple";
 import { eq, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
+import { WEEKDAY_DISPLAY_FORMAT } from "ui-core/utils/date";
 
 import DateNavigation from "timed/components/date-navigation";
 import Modal from "timed/components/modal";
@@ -26,13 +27,14 @@ import WeeklyOverviewDay from "timed/components/weekly-overview-day";
 import humanizeDuration from "timed/helpers/humanize-duration";
 import luxonFormat from "timed/helpers/luxon-format";
 import media from "timed/helpers/media";
+
 <template>
   <TrackingBar data-test-tracking-bar />
   <div class="grid--12of12 grid">
     <div class="grid md:grid-cols-[minmax(0,1fr),auto]">
       <h1 class="block max-md:mb-2">{{luxonFormat
           @model
-          "EEEE, dd.MM.yyyy"
+          WEEKDAY_DISPLAY_FORMAT
         }}</h1>
       <DateNavigation
         @current={{@controller.date}}

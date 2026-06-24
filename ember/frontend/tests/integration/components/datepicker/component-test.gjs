@@ -4,6 +4,7 @@ import { clickTrigger } from "ember-basic-dropdown/test-support/helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+import { dateToString } from "ui-core/utils/date";
 
 import Datepicker from "timed/components/datepicker";
 
@@ -19,7 +20,7 @@ module("Integration | Component | datepicker", function (hooks) {
       </template>,
     );
 
-    assert.dom("input").hasValue(DateTime.now().toFormat("dd.MM.yyyy"));
+    assert.dom("input").hasValue(dateToString(DateTime.now()));
   });
 
   test("toggles the calendar on click of the input", async function (assert) {

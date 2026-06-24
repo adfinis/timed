@@ -3,6 +3,7 @@ import { click, findAll, find, fillIn, render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime } from "luxon";
 import { module, test } from "qunit";
+import { dateToString } from "ui-core/utils/date";
 
 import Filter from "timed/components/filter-sidebar/filter";
 
@@ -101,7 +102,7 @@ module("Integration | Component | filter sidebar/filter", function (hooks) {
       </template>,
     );
 
-    assert.dom("input").hasValue(this.selected.toFormat("dd.MM.yyyy"));
+    assert.dom("input").hasValue(dateToString(this.selected));
 
     await fillIn("input", "10.10.2010");
 

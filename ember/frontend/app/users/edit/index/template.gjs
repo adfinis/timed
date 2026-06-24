@@ -6,6 +6,7 @@ import { DateTime } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 import LoadingIcon from "ui-core/components/loading-icon";
 import Card from "ui-core/components/ui-card";
+import { dateToString } from "ui-core/utils/date";
 
 import Empty from "timed/components/empty";
 import Table from "timed/components/table";
@@ -14,7 +15,6 @@ import Th from "timed/components/table/th";
 import Thead from "timed/components/table/thead";
 import Tr from "timed/components/table/tr";
 import humanizeDuration from "timed/helpers/humanize-duration";
-import luxonFormat from "timed/helpers/luxon-format";
 
 export default class UsersEditIndexTemplate extends Component {
   @service store;
@@ -116,10 +116,10 @@ export default class UsersEditIndexTemplate extends Component {
                       <Tr @striped={{true}} @last={{true}}>
                         <Td>{{employment.location.name}}</Td>
                         <Td>{{employment.percentage}}%</Td>
-                        <Td>{{luxonFormat employment.start "dd.MM.yyyy"}}</Td>
+                        <Td>{{dateToString employment.start}}</Td>
                         <Td>{{if
                             employment.end
-                            (luxonFormat employment.end "dd.MM.yyyy")
+                            (dateToString employment.end)
                             "-"
                           }}</Td>
                       </Tr>
@@ -162,7 +162,7 @@ export default class UsersEditIndexTemplate extends Component {
                     {{#each absences as |absence|}}
                       <Tr @striped={{true}} @last={{true}}>
                         <Td>{{absence.absenceType.name}}</Td>
-                        <Td>{{luxonFormat absence.date "dd.MM.yyyy"}}</Td>
+                        <Td>{{dateToString absence.date}}</Td>
                         <Td>{{absence.comment}}</Td>
                       </Tr>
                     {{/each}}
