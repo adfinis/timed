@@ -24,11 +24,7 @@ export default class UsersEditIndexTemplate extends Component {
       user,
       ordering: "-date",
 
-      from_date: DateTime.fromObject({
-        day: 1,
-        month: 0,
-        year: this.year,
-      }).toISODate(),
+      from_date: DateTime.now().startOf("year").toISODate(),
       include: "absence_type",
     });
   });
@@ -52,7 +48,7 @@ export default class UsersEditIndexTemplate extends Component {
       class="grid-rows-min grid gap-2 md:grid-cols-2 lg:grid-cols-3 [&>*]:h-min"
     >
 
-      <Card as |c|>
+      <Card data-test-general-information as |c|>
         <c.header><h4>General information</h4></c.header>
         <c.block>
           <Table class="user-general-info">
@@ -96,7 +92,7 @@ export default class UsersEditIndexTemplate extends Component {
         <c.footer />
       </Card>
 
-      <Card as |c|>
+      <Card data-test-employments as |c|>
         <c.header><h4>Employments</h4></c.header>
         <c.block>
           {{#if this.employments.isRunning}}
@@ -144,7 +140,7 @@ export default class UsersEditIndexTemplate extends Component {
         <c.footer />
       </Card>
 
-      <Card as |c|>
+      <Card data-test-absences as |c|>
         <c.header><h4>Absences</h4></c.header>
         <c.block>
           {{#if this.absences.isRunning}}
