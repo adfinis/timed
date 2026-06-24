@@ -57,11 +57,12 @@ export default class UsersEditController extends Controller {
   _worktimeBalancesTask = task(async (userId, chartRangeDays) => {
     if (!userId) return [];
 
+    const now = DateTime.now();
     const dates = [...Array(chartRangeDays).keys()]
-      .map((i) => DateTime.now().minus({ days: i }))
+      .map((i) => now.minus({ days: i }))
       .reverse();
 
-    return await all(
+    const results = await all(
       dates.map(async (date) => {
         const balance = await this.store.query("worktime-balance", {
           user: userId,
@@ -70,6 +71,8 @@ export default class UsersEditController extends Controller {
         return balance[0];
       }),
     );
+
+    return results.filter(Boolean);
   });
 
   worktimeBalancesData = trackedTask(this, this._worktimeBalancesTask, () => [
