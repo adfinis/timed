@@ -22,7 +22,10 @@ module("Integration | Component | durationpicker", function (hooks) {
     const max = Duration.fromObject({ days: 10 });
 
     class State {
-      @tracked duration = Duration.fromObject({ hours: 2, minutes: 20 });
+      @tracked duration = Duration.fromObject({
+        hours: 2,
+        minutes: 20,
+      }) as Duration | null;
     }
 
     const state = new State();
@@ -46,7 +49,10 @@ module("Integration | Component | durationpicker", function (hooks) {
     const max = Duration.fromObject({ days: 10 });
 
     class State {
-      @tracked duration = Duration.fromObject({ hours: 2, minutes: 20 });
+      @tracked duration = Duration.fromObject({
+        hours: 2,
+        minutes: 20,
+      }) as Duration | null;
     }
 
     const state = new State();
@@ -71,7 +77,10 @@ module("Integration | Component | durationpicker", function (hooks) {
     const step = Duration.fromObject({ minutes: 10 });
 
     class State {
-      @tracked duration = Duration.fromObject({ hours: 0, minutes: 10 });
+      @tracked duration = Duration.fromObject({
+        hours: 0,
+        minutes: 10,
+      }) as Duration | null;
     }
 
     const state = new State();
@@ -104,7 +113,9 @@ module("Integration | Component | durationpicker", function (hooks) {
 
   test("report durationpicker", async function (assert) {
     class State {
-      @tracked duration = Duration.fromObject({ minutes: 15 });
+      @tracked duration = Duration.fromObject({
+        minutes: 15,
+      }) as Duration | null;
     }
 
     const state = new State();
@@ -131,7 +142,9 @@ module("Integration | Component | durationpicker", function (hooks) {
 
   test("activity durationpicker", async function (assert) {
     class State {
-      @tracked duration = Duration.fromObject({ minutes: 5 });
+      @tracked duration = Duration.fromObject({
+        minutes: 5,
+      }) as Duration | null;
     }
 
     const state = new State();
@@ -151,5 +164,44 @@ module("Integration | Component | durationpicker", function (hooks) {
 
     await fillIn("input", "120");
     assert.dom("input").hasValue("01:20");
+  });
+
+  test("it supports empty durations", async function (assert) {
+    class State {
+      @tracked duration = null as Duration | null;
+    }
+
+    const state = new State();
+
+    await render(
+      <template>
+        <ReportDurationpicker
+          @value={{state.duration}}
+          @onChange={{fn (mut state.duration)}}
+        />
+      </template>,
+    );
+    assert.dom("input").hasNoValue();
+
+    await triggerKeyEvent("input", "keydown", "ArrowDown");
+    assert.dom("input").hasValue("00:15"); // the minimum
+
+    await fillIn("input", "");
+    assert.dom("input").hasNoValue();
+    assert.deepEqual(state.duration, null);
+
+    await triggerKeyEvent("input", "keydown", "ArrowUp", { ctrlKey: true }); // ctrl key -> big step
+    assert.dom("input").hasValue("01:00");
+
+    await fillIn("input", "");
+    assert.dom("input").hasNoValue();
+    assert.deepEqual(state.duration, null);
+
+    await fillIn("input", "130");
+    assert.dom("input").hasValue("01:30");
+    assert.equal(
+      state.duration?.milliseconds,
+      Duration.fromObject({ hours: 1, minutes: 30 }).milliseconds,
+    );
   });
 });
