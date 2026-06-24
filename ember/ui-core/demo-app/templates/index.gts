@@ -25,7 +25,7 @@ class Report {
   @tracked declare project: string;
   @tracked declare task: string;
   @tracked declare comment: string;
-  @tracked declare duration: Duration;
+  @tracked declare duration: Duration | null;
   @tracked declare needsReview: boolean;
   @tracked declare notBillable: boolean;
 

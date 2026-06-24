@@ -25,11 +25,11 @@ import type { TOC } from "@ember/component/template-only";
 
 export interface BaseDurationpickerSignature {
   Args: {
-    value: Duration;
-    onChange: (newValue: Duration) => void;
+    value: Duration | null;
+    onChange: (newValue: Duration | null) => void;
     min: Duration;
     max: Duration;
-    asString?: (value: Duration) => string;
+    asString?: (value: Duration | null) => string;
     fromString?: (raw: string) => Duration;
     normalize?: (dirty: string) => string;
     step?: Duration;
@@ -60,9 +60,16 @@ export interface ActivityDurationpickerSignature {
   Element: HTMLInputElement;
 }
 
+const _durationAsString = (duration: Duration | null) =>
+  duration ? durationAsString(duration) : "";
+
 export default class Durationpicker extends Component<BaseDurationpickerSignature> {
   get asString() {
-    return durationAsString;
+    return this.args.asString ?? _durationAsString;
+  }
+
+  get value() {
+    return this.args.value ?? Duration.fromMillis(0);
   }
 
   get clamp() {
@@ -86,8 +93,24 @@ export default class Durationpicker extends Component<BaseDurationpickerSignatur
     return this.args.bigStep ?? Duration.fromObject({ hours: 1 });
   }
 
+  onInput = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    // if the input is empty/cleared, we set the duration to null
+    // otherwise arrow keys / scroll wheel would use the previous time
+    if (!target.value) {
+      this.args.onChange(null);
+    }
+  };
+
   onChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
+
+    // prevent normalize() running on empty strings
+    if (!target.value) {
+      // no need to `onChange(null)` here, since `onInput` already did that
+      return;
+    }
+
     const clean = this.normalize(target.value);
     target.value = clean;
 
@@ -98,25 +121,21 @@ export default class Durationpicker extends Component<BaseDurationpickerSignatur
   };
 
   onKeydown = (e: KeyboardEvent) => {
-    const { value, onChange } = this.args;
-
     if (e.shiftKey || !(e.key === "ArrowUp" || e.key === "ArrowDown")) {
       return;
     }
 
-    const result = value[e.key === "ArrowUp" ? "plus" : "minus"](
+    const result = this.value[e.key === "ArrowUp" ? "plus" : "minus"](
       e.ctrlKey ? this.bigStep : this.step,
     );
 
-    onChange(this.clamp(result).rescale());
+    this.args.onChange(this.clamp(result).rescale());
   };
 
   onMousewheel = (e: WheelEvent) => {
-    const { value, onChange } = this.args;
+    const result = this.value[e.deltaY < 0 ? "plus" : "minus"](this.step);
 
-    const result = value[e.deltaY < 0 ? "plus" : "minus"](this.step);
-
-    onChange(this.clamp(result).rescale());
+    this.args.onChange(this.clamp(result).rescale());
   };
 
   <template>
@@ -125,6 +144,7 @@ export default class Durationpicker extends Component<BaseDurationpickerSignatur
       {{on "change" this.onChange}}
       {{on "keydown" this.onKeydown}}
       {{on "wheel" this.onMousewheel}}
+      {{on "input" this.onInput}}
       value={{this.asString @value}}
       ...attributes
       type="text"

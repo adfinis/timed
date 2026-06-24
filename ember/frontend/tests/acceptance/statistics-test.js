@@ -2,6 +2,7 @@ import { click, fillIn, currentURL, visit, find } from "@ember/test-helpers";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { DateTime } from "luxon";
 import { module, test, skip } from "qunit";
+import { dateToString } from "ui-core/utils/date";
 
 import { setupApplicationTest } from "timed/tests/helpers";
 
@@ -75,11 +76,8 @@ module("Acceptance | statistics", function (hooks) {
     const from = DateTime.now();
     const to = DateTime.now().minus({ days: 10 });
 
-    await fillIn(
-      "[data-test-filter-from-date] input",
-      from.toFormat("dd.MM.yyyy"),
-    );
-    await fillIn("[data-test-filter-to-date] input", to.toFormat("dd.MM.yyyy"));
+    await fillIn("[data-test-filter-from-date] input", dateToString(from));
+    await fillIn("[data-test-filter-to-date] input", dateToString(to));
 
     assert.ok(currentURL().includes(`fromDate=${from.toISODate()}`));
     assert.ok(currentURL().includes(`toDate=${to.toISODate()}`));

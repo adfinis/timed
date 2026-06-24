@@ -1,6 +1,7 @@
 import Component from "@glimmer/component";
 import EmberChart from "ember-cli-chart/components/ember-chart";
 import { Duration } from "luxon";
+import { dateToString } from "ui-core/utils/date";
 
 import humanizeDuration from "timed/utils/humanize-duration";
 
@@ -114,7 +115,7 @@ export default class WorktimeBalanceChart extends Component {
         yPadding: 10,
         callbacks: {
           title([{ index }], { labels }) {
-            return labels[index].toFormat("dd.MM.yyyy");
+            return dateToString(labels[index]);
           },
           label({ yLabel: hours }) {
             return humanizeDuration(Duration.fromObject({ hours }));

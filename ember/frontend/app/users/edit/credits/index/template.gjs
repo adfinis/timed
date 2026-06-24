@@ -7,6 +7,7 @@ import perform from "ember-concurrency/helpers/perform";
 import { eq, not } from "ember-truth-helpers";
 import LoadingIcon from "ui-core/components/loading-icon";
 import Card from "ui-core/components/ui-card";
+import { dateToString } from "ui-core/utils/date";
 
 import Empty from "timed/components/empty";
 import Table from "timed/components/table";
@@ -15,7 +16,7 @@ import Th from "timed/components/table/th";
 import Thead from "timed/components/table/thead";
 import Tr from "timed/components/table/tr";
 import humanizeDuration from "timed/helpers/humanize-duration";
-import luxonFormat from "timed/helpers/luxon-format";
+
 <template>
   <div class="grid gap-2 sm:grid-cols-2">
     <div class="year-select col-span-full flex justify-end gap-2">
@@ -88,7 +89,7 @@ import luxonFormat from "timed/helpers/luxon-format";
                           )
                         }}
                       >
-                        <Td>{{luxonFormat absenceCredit.date "dd.MM.yyyy"}}</Td>
+                        <Td>{{dateToString absenceCredit.date}}</Td>
                         <Td>{{absenceCredit.days}}</Td>
                         <Td>{{absenceCredit.absenceType.name}}</Td>
                         <Td>{{absenceCredit.comment}}</Td>
@@ -161,10 +162,7 @@ import luxonFormat from "timed/helpers/luxon-format";
                           )
                         }}
                       >
-                        <Td>{{luxonFormat
-                            overtimeCredit.date
-                            "dd.MM.yyyy"
-                          }}</Td>
+                        <Td>{{dateToString overtimeCredit.date}}</Td>
                         <Td>{{humanizeDuration
                             overtimeCredit.duration
                             false

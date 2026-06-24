@@ -284,15 +284,26 @@ function routes() {
   this.get("/worktime-balances", byUserAndDate("worktimeBalances"));
   this.get("/worktime-balances/:id");
 
-  this.get("/absences", function ({ absences }, { queryParams: { user } }) {
-    let all = absences.all();
+  this.get(
+    "/absences",
+    function ({ absences }, { queryParams: { user, from_date } }) {
+      let all = absences.all();
 
-    if (user) {
-      all = all.filter((a) => a.userId === user);
-    }
+      if (user) {
+        all = all.filter((a) => a.userId === user);
+      }
 
-    return all;
-  });
+      if (from_date) {
+        const dt = DateTime.fromISO(from_date);
+        if (!dt.isValid) {
+          return new Response(400, {});
+        }
+        all = all.filter((a) => DateTime.fromISO(a.date) > dt);
+      }
+
+      return all;
+    },
+  );
   this.post("/absences", function ({ absences, users }) {
     return absences.create({
       ...this.normalizedRequestAttrs(),

@@ -2,6 +2,7 @@ import { render } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { DateTime, Duration } from "luxon";
 import { module, test } from "qunit";
+import { dateToString } from "ui-core/utils/date";
 
 import WorktimeBalanceChart from "timed/components/worktime-balance-chart";
 
@@ -54,7 +55,7 @@ module("Integration | Component | worktime balance chart", function (hooks) {
 
     assert.strictEqual(
       titleFn([{ index: 0 }], { labels: [DateTime.now()] }),
-      DateTime.now().toFormat("dd.MM.yyyy"),
+      dateToString(DateTime.now()),
     );
     assert.strictEqual(labelFn({ yLabel: 10.5 }), "10h 30m");
   });
