@@ -2247,266 +2247,82 @@ def test_report_bulk_customer_change_requires_review_comment(
     assert report.task != task
 
 
-def test_report_split(
-    internal_employee_client,
-    report_factory,
-    task_factory,
-):
-    report = report_factory(
-        user=internal_employee_client.user, duration=timedelta(hours=7, minutes=30)
-    )
-    url = reverse("report-split", args=[report.id])
-
-    updated_report_task, new_report_task = task_factory.create_batch(2)
-
-    updated_comment = "test comment"
-    updated_duration = timedelta(hours=4)
-
-    data = {
-        "data": {
-            "type": "report-splits",
-            "attributes": {
-                "updated_report": {
-                    "comment": updated_comment,
-                    "duration": updated_duration,
-                    "task": {
-                        "type": "tasks",
-                        "id": updated_report_task.pk,
-                    },
-                },
-                "new_report": {
-                    "comment": "some comment",
-                    "duration": timedelta(hours=3, minutes=30),
-                    "task": {
-                        "type": "tasks",
-                        "id": new_report_task.pk,
-                    },
-                },
-            },
-        }
-    }
-
-    response = internal_employee_client.post(url, data)
-    assert response.status_code == status.HTTP_200_OK
-
-    report.refresh_from_db()
-    assert report.comment == updated_comment
-    assert report.duration == updated_duration
-    assert report.task == updated_report_task
-
-
-def test_report_split_verified_report(
-    report_factory, task_factory, internal_employee_client, user_factory
-):
-    reviewer = user_factory()
-    report = report_factory(
-        user=internal_employee_client.user,
-        duration=timedelta(hours=7, minutes=30),
-        verified_by=reviewer,
-    )
-    url = reverse("report-split", args=[report.id])
-
-    updated_report_task, new_report_task = task_factory.create_batch(2)
-
-    updated_comment = "test comment"
-    updated_duration = timedelta(hours=4)
-
-    data = {
-        "data": {
-            "type": "report-splits",
-            "attributes": {
-                "updated_report": {
-                    "comment": updated_comment,
-                    "duration": updated_duration,
-                    "task": {
-                        "type": "tasks",
-                        "id": updated_report_task.pk,
-                    },
-                },
-                "new_report": {
-                    "comment": "some comment",
-                    "duration": timedelta(hours=3, minutes=30),
-                    "task": {
-                        "type": "tasks",
-                        "id": new_report_task.pk,
-                    },
-                },
-            },
-        }
-    }
-
-    response = internal_employee_client.post(url, data)
-    assert response.status_code == status.HTTP_403_FORBIDDEN
-
-
-def test_report_split_json_field_missing(
-    internal_employee_client,
-    report_factory,
-    task_factory,
-):
-    report = report_factory(
-        user=internal_employee_client.user, duration=timedelta(hours=7, minutes=30)
-    )
-    url = reverse("report-split", args=[report.id])
-
-    updated_report_task, new_report_task = task_factory.create_batch(2)
-
-    updated_comment = "test comment"
-
-    data = {
-        "data": {
-            "type": "report-splits",
-            "attributes": {
-                "updated_report": {
-                    "comment": updated_comment,
-                    "duration": None,
-                    "task": {
-                        "type": "tasks",
-                        "id": updated_report_task.pk,
-                    },
-                },
-                "new_report": {
-                    "comment": "some comment",
-                    "duration": timedelta(hours=3, minutes=30),
-                    "task": {
-                        "type": "tasks",
-                        "id": new_report_task.pk,
-                    },
-                },
-            },
-        }
-    }
-
-    response = internal_employee_client.post(url, data)
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-
-
-def test_report_split_durations_not_match(
-    internal_employee_client,
-    report_factory,
-    task_factory,
-):
-    report = report_factory(
-        user=internal_employee_client.user, duration=timedelta(hours=7, minutes=30)
-    )
-    url = reverse("report-split", args=[report.id])
-
-    updated_report_task, new_report_task = task_factory.create_batch(2)
-
-    updated_comment = "test comment"
-    updated_duration = timedelta(hours=3)
-
-    data = {
-        "data": {
-            "type": "report-splits",
-            "attributes": {
-                "updated_report": {
-                    "comment": updated_comment,
-                    "duration": updated_duration,
-                    "task": {
-                        "type": "tasks",
-                        "id": updated_report_task.pk,
-                    },
-                },
-                "new_report": {
-                    "comment": "some comment",
-                    "duration": timedelta(hours=3, minutes=30),
-                    "task": {
-                        "type": "tasks",
-                        "id": new_report_task.pk,
-                    },
-                },
-            },
-        }
-    }
-
-    response = internal_employee_client.post(url, data)
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-
-    assert (
-        response.json()["errors"][0]["detail"]
-        == "Total split time must match the original report's duration"
-    )
-
-
-def test_report_split_original_report_not_exist(
-    internal_employee_client,
-    task_factory,
-):
-    report_id = 123456789
-    url = reverse("report-split", args=[report_id])
-
-    updated_report_task, new_report_task = task_factory.create_batch(2)
-
-    updated_comment = "test comment"
-    updated_duration = timedelta(hours=4)
-
-    data = {
-        "data": {
-            "type": "report-splits",
-            "attributes": {
-                "updated_report": {
-                    "comment": updated_comment,
-                    "duration": updated_duration,
-                    "task": {
-                        "type": "tasks",
-                        "id": updated_report_task.pk,
-                    },
-                },
-                "new_report": {
-                    "comment": "some comment",
-                    "duration": timedelta(hours=3, minutes=30),
-                    "task": {
-                        "type": "tasks",
-                        "id": new_report_task.pk,
-                    },
-                },
-            },
-        }
-    }
-
-    response = internal_employee_client.post(url, data)
-    assert response.status_code == status.HTTP_404_NOT_FOUND
-
-
 @pytest.mark.parametrize(
-    ("updated_comment", "updated_duration", "new_comment", "new_duration"),
+    ("updated_comment", "new_comment", "new_duration", "original_duration"),
     [
         (
             "updated comment",
-            timedelta(hours=4),
-            "new comment",
+            "new_comment",
             timedelta(hours=3, minutes=30),
-        ),
-        (
-            "updated comment",
-            timedelta(hours=2, minutes=15),
-            "new comment",
-            timedelta(hours=4, minutes=45),
-        ),
+            timedelta(hours=7, minutes=30),
+        )
     ],
 )
-def test_report_split_database_rollback(
+@pytest.mark.parametrize(
+    (
+        "updated_duration",
+        "verified",
+        "original_report_exists",
+        "expected",
+        "expected_error_string",
+        "database_error",
+    ),
+    [
+        # Default / everything works
+        (timedelta(hours=4), False, True, status.HTTP_200_OK, None, False),
+        # missing field
+        (None, False, True, status.HTTP_400_BAD_REQUEST, None, False),
+        # verified original report
+        (timedelta(hours=4), True, True, status.HTTP_403_FORBIDDEN, None, False),
+        # durations not match
+        (
+            timedelta(hours=5),
+            False,
+            True,
+            status.HTTP_400_BAD_REQUEST,
+            "Total split time must match the original report's duration.",
+            False,
+        ),
+        # original report not exist
+        (timedelta(hours=4), False, False, status.HTTP_404_NOT_FOUND, None, False),
+        # database rollback
+        (timedelta(hours=4), False, True, status.HTTP_409_CONFLICT, None, True),
+    ],
+)
+def test_report_split(
     internal_employee_client,
     report_factory,
+    user_factory,
+    task_factory,
+    mocker,
     updated_comment,
     updated_duration,
     new_comment,
     new_duration,
-    task_factory,
-    mocker,
+    verified,
+    original_report_exists,
+    original_duration,
+    expected,
+    expected_error_string,
+    database_error,
 ):
-    report = report_factory(
-        user=internal_employee_client.user, duration=updated_duration + new_duration
-    )
-    original_comment = report.comment
-    original_duration = report.duration
-    original_task = report.task
-    original_report_count = Report.objects.count()
+    reviewer = user_factory() if verified else None
 
-    url = reverse("report-split", args=[report.id])
+    report = report_factory(
+        user=internal_employee_client.user,
+        duration=original_duration,
+        verified_by=reviewer,
+    )
+
+    report_id = report.id if original_report_exists else 123456789
+
+    url = reverse("report-split", args=[report_id])
 
     updated_report_task, new_report_task = task_factory.create_batch(2)
+
+    original_report_count = Report.objects.count()
+    original_comment = report.comment
+    original_task = report.task
 
     data = {
         "data": {
@@ -2532,20 +2348,30 @@ def test_report_split_database_rollback(
         }
     }
 
-    mocker.patch(
-        "timed.tracking.models.Report.save", side_effect=[None, DatabaseError()]
-    )
+    if database_error:
+        mocker.patch(
+            "timed.tracking.models.Report.save", side_effect=[None, DatabaseError()]
+        )
 
     response = internal_employee_client.post(url, data)
-    assert response.status_code == status.HTTP_409_CONFLICT
+    assert response.status_code == expected
 
-    report.refresh_from_db()
-    assert report.comment == original_comment
-    assert report.duration == original_duration
-    assert report.task == original_task
+    if expected_error_string:
+        assert response.json()["errors"][0]["detail"] == expected_error_string
 
-    queryset = Report.objects.filter(
-        comment=new_comment, duration=new_duration, task=new_report_task
-    )
-    assert not queryset.exists()
-    assert original_report_count == Report.objects.count()
+    if response.status_code == status.HTTP_200_OK:
+        report.refresh_from_db()
+        assert report.comment == updated_comment
+        assert report.duration == updated_duration
+        assert report.task == updated_report_task
+
+    else:
+        assert report.comment == original_comment
+        assert report.duration == original_duration
+        assert report.task == original_task
+
+        queryset = Report.objects.filter(
+            comment=new_comment, duration=new_duration, task=new_report_task
+        )
+        assert not queryset.exists()
+        assert original_report_count == Report.objects.count()

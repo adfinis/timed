@@ -525,7 +525,7 @@ class ReportSplitSerializer(Serializer):
             != original_report.duration
         ):
             raise ValidationError(
-                _("Total split time must match the original report's duration")
+                _("Total split time must match the original report's duration.")
             )
 
         data["updated_report"] = updated_report
