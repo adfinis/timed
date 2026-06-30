@@ -1,7 +1,7 @@
 import Service from "@ember/service";
 import { debounceTask } from "ember-lifeline";
 
-export default class AnalysisScrollService extends Service {
+export default class ScrollRestorerService extends Service {
   #canRestoreScroll = false;
   #scrollTop = null;
   #scrollElement = null;
