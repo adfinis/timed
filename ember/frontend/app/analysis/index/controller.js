@@ -356,7 +356,6 @@ export default class AnalysisController extends QPController {
 
   @action
   edit(selectedIds = [], event) {
-    this.scrollRestorer.storeScrollElement("analysis-scrollable-container");
     this.scrollRestorer.storeScrollPosition();
     const ids = event ? selectedIds : [];
     this.router.transitionTo("analysis.edit", {
