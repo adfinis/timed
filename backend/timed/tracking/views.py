@@ -227,6 +227,7 @@ class ReportViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         verified = serializer.validated_data.pop("verified", None)
+        review = serializer.validated_data.get("review")
         fields = {
             key: value
             for key, value in serializer.validated_data.items()
@@ -248,17 +249,26 @@ class ReportViewSet(ModelViewSet):
                 _("Only superuser and accountants may bill reports")
             )
 
+        effective_review = (
+            review if review is not None else queryset.filter(review=True).exists()
+        )
+        effective_verified = (
+            verified
+            if verified is not None
+            else any(queryset.values_list("verified_by_id", flat=True))
+        )
+
+        if effective_review and effective_verified:
+            raise exceptions.ValidationError(
+                _("Reports can't both be set as `review` and `verified`.")
+            )
+
         if verified is not None:
             # only reviewer or superuser may verify reports
             # this is enforced when reviewer filter is set to current user
             if not user.is_superuser and str(qp.get("reviewer")) != str(user.id):
                 raise exceptions.ValidationError(
                     _("Reviewer filter needs to be set to verifying user")
-                )
-
-            if fields.get("review") or any(queryset.values_list("review", flat=True)):
-                raise exceptions.ValidationError(
-                    _("Reports can't both be set as `review` and `verified`.")
                 )
 
             if fields.get("task"):
