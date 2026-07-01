@@ -55,6 +55,7 @@ export default class AnalysisController extends QPController {
   @service router;
   @service notify;
   @service abilities;
+  @service scrollRestorer;
 
   @tracked _scrollOffset = 0;
   @tracked _shouldLoadMore = false;
@@ -348,6 +349,8 @@ export default class AnalysisController extends QPController {
 
   @action
   edit(selectedIds = [], event) {
+    this.scrollRestorer.storeScrollElement("analysis-scrollable-container");
+    this.scrollRestorer.storeScrollPosition();
     const ids = event ? selectedIds : [];
     this.router.transitionTo("analysis.edit", {
       queryParams: {
@@ -370,5 +373,14 @@ export default class AnalysisController extends QPController {
 
   dateFromString(str) {
     return DateTime.fromISO(str);
+  }
+
+  @action
+  async restoreScrollPosition() {
+    await this.loadNext.last;
+    await this.data.last;
+    if (this.scrollRestorer.canRestoreScroll) {
+      this.scrollRestorer.restoreScrollPosition();
+    }
   }
 }
