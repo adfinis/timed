@@ -503,3 +503,34 @@ class AbsenceSerializer(ModelSerializer):
             "absence_type",
             "user",
         )
+
+
+class ReportDataSerializer(Serializer):
+    comment = serializers.CharField()
+    duration = serializers.DurationField()
+    task = ResourceRelatedField(queryset=Task.objects.filter(archived=False))
+
+
+class ReportSplitSerializer(Serializer):
+    new_report = ReportDataSerializer()
+    updated_report = ReportDataSerializer()
+
+    def validate(self, data: dict) -> dict:
+        original_report = models.Report.objects.get(id=self.context.get("pk"))
+        updated_report = data.get("updated_report")
+        new_report = data.get("new_report")
+
+        if (
+            new_report.get("duration") + updated_report.get("duration")
+            != original_report.duration
+        ):
+            raise ValidationError(
+                _("Total split time must match the original report's duration.")
+            )
+
+        data["updated_report"] = updated_report
+        data["new_report"] = new_report
+        return data
+
+    class Meta:
+        resource_name = "report-splits"
