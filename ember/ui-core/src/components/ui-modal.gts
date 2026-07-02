@@ -7,6 +7,7 @@ import { hash } from "@ember/helper";
 import { action } from "@ember/object";
 import { guidFor } from "@ember/object/internals";
 import { focusTrap } from "ember-focus-trap";
+import { deprecate } from "@ember/debug";
 
 export interface ModalHeaderSignature {
   Args: {
@@ -111,17 +112,39 @@ class ModalOverlay extends Component<ModalOverlaySignature> {
     </div>
   </template>
 }
+const optional = (onClose?: ModalSignature["Args"]["onClose"]) => {
+  const hasNoOnClose = !onClose;
+  // TODO: remove this once we fix usage of this in the timed frontend
+  deprecate(
+    "Not passing `@onClose` to a Modal component is deprecated. Refactor this component to pass a dedicated closing function.",
+    !hasNoOnClose,
+    {
+      id: "ui-core.modal.missing-on-close",
+      until: "next",
+      for: "ui-core",
+      since: {
+        available: "0.0.0",
+      },
+    },
+  );
+
+  if (hasNoOnClose) {
+    return () => {};
+  }
+
+  return onClose;
+};
 
 const Modal = <template>
   {{#if @visible}}
     {{#in-element @target insertBefore=null}}
-      <ModalOverlay @visible={{@visible}} @onClose={{@onClose}}>
+      <ModalOverlay @visible={{@visible}} @onClose={{optional @onClose}}>
         <Card {{focusTrap}} class="z-50 max-h-[100%] w-full" ...attributes>
           {{yield
             (hash
               footer=CardFooter
               body=ModalBody
-              header=(component ModalHeader onClose=@onClose)
+              header=(component ModalHeader onClose=(optional @onClose))
             )
           }}
         </Card>
