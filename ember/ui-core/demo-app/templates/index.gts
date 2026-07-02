@@ -9,6 +9,7 @@ import { Duration } from "luxon";
 import Table from "#src/components/ui-table.gts";
 import { ReportDurationpicker } from "#src/components/ui-durationpicker.gts";
 import Checkbox from "#src/components/ui-checkbox.gts";
+import { getModalsTarget } from "../components/modal";
 
 type _Report = {
   customer: string;
@@ -142,6 +143,7 @@ export default class IndexTemplate extends Component {
         <Modal
           @visible={{this.visible}}
           @onClose={{fn (mut this.visible) false}}
+          @target={{(getModalsTarget)}}
           class="sm:min-w-[32rem] md:w-auto"
           as |m|
         >

@@ -16,13 +16,17 @@ module("Integration | Component | modal", function (hooks) {
     }
     const state = new State();
 
+    const targetId = "modals";
+    const getTarget = () => document.getElementById(targetId)!;
+
     await render(
       <template>
-        <div id="modals" />
+        <div id={{targetId}} />
         <button type="button" {{on "click" (toggle "visible" state)}} />
         <Modal
           @visible={{state.visible}}
           @onClose={{toggle "visible" state}}
+          @target={{(getTarget)}}
           class="sm:min-w-[32rem] md:w-auto"
           as |m|
         >

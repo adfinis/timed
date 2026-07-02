@@ -39,6 +39,7 @@ export interface ModalOverlaySignature {
 export interface ModalSignature {
   Args: {
     onClose: (e: Event) => void;
+    target: HTMLElement;
     visible: boolean;
   };
   Blocks: {
@@ -111,28 +112,22 @@ class ModalOverlay extends Component<ModalOverlaySignature> {
   </template>
 }
 
-class Modal extends Component<ModalSignature> {
-  get target() {
-    return document.getElementById("modals")!;
-  }
-
-  <template>
-    {{#if @visible}}
-      {{#in-element this.target insertBefore=null}}
-        <ModalOverlay @visible={{@visible}} @onClose={{@onClose}}>
-          <Card {{focusTrap}} class="z-50 max-h-[100%] w-full" ...attributes>
-            {{yield
-              (hash
-                footer=CardFooter
-                body=ModalBody
-                header=(component ModalHeader onClose=@onClose)
-              )
-            }}
-          </Card>
-        </ModalOverlay>
-      {{/in-element}}
-    {{/if}}
-  </template>
-}
+const Modal = <template>
+  {{#if @visible}}
+    {{#in-element @target insertBefore=null}}
+      <ModalOverlay @visible={{@visible}} @onClose={{@onClose}}>
+        <Card {{focusTrap}} class="z-50 max-h-[100%] w-full" ...attributes>
+          {{yield
+            (hash
+              footer=CardFooter
+              body=ModalBody
+              header=(component ModalHeader onClose=@onClose)
+            )
+          }}
+        </Card>
+      </ModalOverlay>
+    {{/in-element}}
+  {{/if}}
+</template> satisfies TOC<ModalSignature>;
 
 export default Modal;
