@@ -10,7 +10,7 @@ import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import { not } from "ember-truth-helpers";
 
 import DurationpickerDay from "timed/components/durationpicker-day";
-import Modal from "timed/components/modal";
+import Modal from "timed/components/new-modal";
 import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
 

@@ -1,8 +1,9 @@
 import { on } from "@ember/modifier";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 
-import Modal from "timed/components/modal";
+import Modal from "timed/components/new-modal";
 import TimedClock from "timed/components/timed-clock";
+
 <template>
   <Modal class="md:w-auto" @visible={{@visible}} as |modal|>
     <modal.header><h1 class="text-foreground">Welcome to Timed!</h1></modal.header>
