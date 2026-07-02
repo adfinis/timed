@@ -37,6 +37,7 @@ export default class Modal extends Component {
       @target={{this.target}}
       @onClose={{optional @onClose}}
       @visible={{@visible}}
+      data-test-modal-visible={{@visible}}
       ...attributes
       as |m|
     >
