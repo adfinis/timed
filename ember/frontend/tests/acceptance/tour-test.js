@@ -28,7 +28,7 @@ module("Acceptance | tour", function (hooks) {
   test("shows a welcome dialog", async function (assert) {
     await visit("/");
 
-    assert.dom(".modal--visible").exists();
+    assert.dom("[data-test-modal-visible]").exists();
   });
 
   test("does not show a welcome dialog when tour completed", async function (assert) {
@@ -42,13 +42,13 @@ module("Acceptance | tour", function (hooks) {
 
     await visit("/");
 
-    assert.dom(".modal--visible").doesNotExist();
+    assert.dom("[data-test-modal-visible]").doesNotExist();
   });
 
   test("does not show a welcome dialog when later clicked", async function (assert) {
     await visit("/");
 
-    assert.dom(".modal--visible").exists();
+    assert.dom("[data-test-modal-visible]").exists();
 
     await click("[data-test-tour-later]");
 
