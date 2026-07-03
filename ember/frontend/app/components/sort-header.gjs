@@ -2,8 +2,9 @@ import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
+import { Th } from "ui-core/components/ui-table";
 
-import Th from "timed/components/table/th";
+// TODO: move this into `ui-core`
 
 export default class SortHeader extends Component {
   get direction() {
