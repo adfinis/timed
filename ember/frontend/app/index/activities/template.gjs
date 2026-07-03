@@ -2,16 +2,14 @@ import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
-import { and, eq, not, or } from "ember-truth-helpers";
+import { eq } from "ember-truth-helpers";
+import { SelectableTable } from "ui-core/components/ui-table";
 
 import Checkmark from "timed/components/checkmark";
 import CustomerVisibleIcon from "timed/components/customer-visible-icon";
 import DurationSince from "timed/components/duration-since";
 import Modal from "timed/components/modal";
 import LowerButton from "timed/components/nav-tabs/lower-button";
-import Table from "timed/components/table";
-import Td from "timed/components/table/td";
-import Tr from "timed/components/table/tr";
 import formatDuration from "timed/helpers/format-duration";
 import luxonFormat from "timed/helpers/luxon-format";
 
@@ -30,48 +28,33 @@ import luxonFormat from "timed/helpers/luxon-format";
 
     <div class="activities-list flex-grow max-lg:peer-[:not(:empty)]:hidden">
       {{#if @controller.activities}}
-        <Table class="table--striped table--activities table">
-          <tbody>
+        <SelectableTable
+          @last={{true}}
+          class="table--striped table--activities table"
+          as |t|
+        >
+          <t.tbody>
             {{#each @controller.sortedActivities as |activity|}}
-              {{#let (eq activity.id @controller.editId) as |selected|}}
+              {{#let activity.active as |isActive|}}
                 {{!template-lint-disable no-invalid-interactive}}
-                <Tr
+                <t.tr
                   title={{unless activity.transferred "Click to edit"}}
-                  @striped={{not
-                    (or
-                      (or activity.transferred activity.active)
-                      (eq activity.id @controller.editId)
-                    )
-                  }}
-                  @hover={{not
-                    (or activity.transferred activity.active selected)
-                  }}
+                  @disabled={{activity.transferred}}
+                  @selected={{eq activity.id @controller.editId}}
+                  @accent={{isActive}}
                   data-test-activity-row
                   data-test-activity-row-id={{activity.id}}
-                  class="{{if
-                      activity.transferred
-                      'transferred text-foreground-muted cursor-not-allowed'
-                      'cursor-pointer'
-                    }}
-                    {{if
-                      (and activity.active (not selected))
-                      'active bg-primary/20'
-                    }}
-                    {{if
-                      selected
-                      'selected bg-primary text-foreground-primary'
-                    }}
-                    last:border-b max-sm:[&>*]:flex"
+                  class="last:border-b max-sm:[&>*]:flex"
                   {{on "click" (fn @controller.editActivity activity)}}
                 >
-                  <Td>
+                  <t.td>
                     {{luxonFormat activity.from "HH:mm"}}
                     -
-                    {{#unless activity.active}}
+                    {{#unless isActive}}
                       {{luxonFormat activity.to "HH:mm"}}
                     {{/unless}}
-                  </Td>
-                  <Td
+                  </t.td>
+                  <t.td
                     title="{{activity.task.project.customer.name}} > {{activity.task.project.name}} > {{activity.task.name}}"
                   >
                     {{#if activity.task}}
@@ -85,8 +68,8 @@ import luxonFormat from "timed/helpers/luxon-format";
                     {{else}}
                       <strong>Unknown task</strong>
                     {{/if}}
-                  </Td>
-                  <Td title={{activity.comment}}>
+                  </t.td>
+                  <t.td title={{activity.comment}}>
                     <div class="comment-field">
                       <span
                         class="line-clamp-2 whitespace-pre-line"
@@ -97,8 +80,8 @@ import luxonFormat from "timed/helpers/luxon-format";
                         class="activity-customer-visible-icon"
                       />
                     {{/if}}
-                  </Td>
-                  <Td>
+                  </t.td>
+                  <t.td>
                     <div><Checkmark
                         @checked={{activity.review}}
                         @highlight={{true}}
@@ -109,17 +92,17 @@ import luxonFormat from "timed/helpers/luxon-format";
                         @highlight={{true}}
                       />
                       Not billable</div>
-                  </Td>
-                  <Td>
-                    {{#if activity.active}}
+                  </t.td>
+                  <t.td>
+                    {{#if isActive}}
                       <DurationSince @from={{activity.from}} />
                     {{else}}
                       {{formatDuration activity.duration}}
                     {{/if}}
-                  </Td>
-                  <Td class="px-4">
+                  </t.td>
+                  <t.td class="px-4">
                     <div class="grid h-full w-full place-items-end">
-                      {{#if activity.active}}
+                      {{#if isActive}}
                         <button
                           type="button"
                           data-test-stop-activity
@@ -139,12 +122,12 @@ import luxonFormat from "timed/helpers/luxon-format";
                         </button>
                       {{/if}}
                     </div>
-                  </Td>
-                </Tr>
+                  </t.td>
+                </t.tr>
               {{/let}}
             {{/each}}
-          </tbody>
-        </Table>
+          </t.tbody>
+        </SelectableTable>
       {{else}}
         <div class="text-center"><em>No activities yet</em></div>
       {{/if}}
