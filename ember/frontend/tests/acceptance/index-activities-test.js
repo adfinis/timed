@@ -174,34 +174,34 @@ module("Acceptance | index activities", function (hooks) {
 
     // both close if one clicks cancel
     await click("[data-test-activity-generate-timesheet]");
-    assert.dom(".modal--visible").exists({ count: 2 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 2 });
     await click("[data-test-overlapping-warning] button.btn-default");
-    assert.dom(".modal--visible").exists({ count: 0 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 0 });
     assert.notOk(currentURL().includes("reports"));
 
     // both must be fine if test should continue
     await click("[data-test-activity-generate-timesheet]");
-    assert.dom(".modal--visible").exists({ count: 2 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 2 });
     await click("[data-test-overlapping-warning] button.btn-primary");
-    assert.dom(".modal--visible").exists({ count: 1 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 1 });
     await click("[data-test-unknown-warning] button.btn-default");
-    assert.dom(".modal--visible").exists({ count: 0 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 0 });
 
     await click("[data-test-activity-generate-timesheet]");
-    assert.dom(".modal--visible").exists({ count: 2 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 2 });
     await click("[data-test-unknown-warning] button.btn-primary");
-    assert.dom(".modal--visible").exists({ count: 1 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 1 });
     await click("[data-test-overlapping-warning] button.btn-default");
-    assert.dom(".modal--visible").exists({ count: 0 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 0 });
     assert.notOk(currentURL().includes("reports"));
 
     // if both are fine continue
     await click("[data-test-activity-generate-timesheet]");
-    assert.dom(".modal--visible").exists({ count: 2 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 2 });
     await click("[data-test-overlapping-warning] button.btn-primary");
-    assert.dom(".modal--visible").exists({ count: 1 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 1 });
     await click("[data-test-unknown-warning] button.btn-primary");
-    assert.dom(".modal--visible").exists({ count: 0 });
+    assert.dom("[data-test-modal-visible]").exists({ count: 0 });
     assert.ok(currentURL().includes("reports"));
   });
 

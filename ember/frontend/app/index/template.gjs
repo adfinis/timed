@@ -15,12 +15,12 @@ import ValidatedForm from "ember-validated-form/components/validated-form";
 import { WEEKDAY_DISPLAY_FORMAT } from "ui-core/utils/date";
 
 import DateNavigation from "timed/components/date-navigation";
-import Modal from "timed/components/modal";
 import NavTabs from "timed/components/nav-tabs";
 import A from "timed/components/nav-tabs/a";
 import Badge from "timed/components/nav-tabs/badge";
 import Button from "timed/components/nav-tabs/button";
 import Item from "timed/components/nav-tabs/item";
+import Modal from "timed/components/new-modal";
 import TrackingBar from "timed/components/tracking-bar";
 import WeeklyOverview from "timed/components/weekly-overview";
 import WeeklyOverviewDay from "timed/components/weekly-overview-day";
