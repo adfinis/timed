@@ -8,6 +8,7 @@ import perform from "ember-concurrency/helpers/perform";
 import inViewport from "ember-in-viewport/modifiers/in-viewport";
 import { and, eq, not, notEq, or } from "ember-truth-helpers";
 import LoadingIcon from "ui-core/components/loading-icon";
+import Table, { MultiSelectTable } from "ui-core/components/ui-table";
 import { dateToString } from "ui-core/utils/date";
 
 import CanEdit from "timed/components/can-edit";
@@ -19,12 +20,6 @@ import NoMobileMessage from "timed/components/no-mobile-message";
 import PagePermission from "timed/components/page-permission";
 import ScrollContainer from "timed/components/scroll-container";
 import SortHeader from "timed/components/sort-header";
-import Table from "timed/components/table";
-import Td from "timed/components/table/td";
-import Tfoot from "timed/components/table/tfoot";
-import Th from "timed/components/table/th";
-import Thead from "timed/components/table/thead";
-import Tr from "timed/components/table/tr";
 import TaskSelection from "timed/components/task-selection";
 import UserSelection from "timed/components/user-selection";
 import formatDuration from "timed/helpers/format-duration";
@@ -311,10 +306,10 @@ const AnalysisIndexTemplate = <template>
               </div>
 
               {{! template-lint-disable table-groups }}
-              <Table class="table--striped table--analysis table">
+              <Table @striped={{true}} data-test-analysis-table as |t|>
                 <Colgroup />
-                <Thead>
-                  <Tr>
+                <t.thead>
+                  <t.trh>
                     <SortHeader
                       @update={{fn @controller.updateParam "ordering"}}
                       @current={{@controller.ordering}}
@@ -355,71 +350,78 @@ const AnalysisIndexTemplate = <template>
                       @current={{@controller.ordering}}
                       @by="verified_by__username"
                     >Verified by</SortHeader>
-                    <Th @light={{true}}>Rejected</Th>
-                    <Th @light={{true}}>Review</Th>
-                    <Th @light={{true}}>Not billable</Th>
-                    <Th @light={{true}}>Billed</Th>
-                  </Tr>
-                </Thead>
+                    <t.th @light={{true}}>Rejected</t.th>
+                    <t.th @light={{true}}>Review</t.th>
+                    <t.th @light={{true}}>Not billable</t.th>
+                    <t.th @light={{true}}>Billed</t.th>
+                  </t.trh>
+                </t.thead>
               </Table>
               <ScrollContainer class="analysis-scrollable-container">
-                <Table class="table--striped table--analysis table table-fixed">
+                <MultiSelectTable
+                  @striped={{true}}
+                  data-test-analysis-table
+                  as |t|
+                >
                   <Colgroup />
-                  <tbody>
+                  <t.tbody>
                     {{#each reports as |report|}}
                       {{! template-lint-disable}}
                       <CanEdit @report={{report}} as |canEdit|>
-                        <Tr
-                          class="{{if
-                              (includes report.id @controller.selectedReportIds)
-                              'selected bg-primary text-foreground-primary'
-                              'striped'
+                        {{#let
+                          (or @controller.isAccountant canEdit)
+                          as |selectable|
+                        }}
+                          <t.tr
+                            @disabled={{not selectable}}
+                            @selected={{includes
+                              report.id
+                              @controller.selectedReportIds
                             }}
-                            {{if
-                              (or @controller.isAccountant canEdit)
-                              'text-foreground-accent cursor-pointer'
+                            {{on
+                              "click"
+                              (if
+                                selectable
+                                (fn @controller.selectRow report)
+                                (noop)
+                              )
                             }}
-                            shadow-foreground/5 align-top shadow transition-colors"
-                          {{on
-                            "click"
-                            (if
-                              (or @controller.isAccountant canEdit)
-                              (fn @controller.selectRow report)
-                              (noop)
-                            )
-                          }}
-                        >
-                          <Td>{{report.user.username}}</Td>
-                          <Td>{{dateToString report.date}}</Td>
-                          <Td>{{formatDuration report.duration false}}</Td>
-                          <Td>{{report.task.project.customer.name}}</Td>
-                          <Td>{{report.task.project.name}}</Td>
-                          <Td>{{report.task.name}}</Td>
-                          <Td><span
-                              class="line-clamp-2 whitespace-pre-line"
-                              title="{{report.comment}}"
-                            >{{report.comment}}</span></Td>
-                          <Td>{{if
-                              report.verifiedBy
-                              report.verifiedBy.username
-                            }}</Td>
-                          <Td><Checkmark
-                              @checked={{report.rejected}}
-                              @highlight={{true}}
-                            /></Td>
-                          <Td><Checkmark
-                              @checked={{report.review}}
-                              @highlight={{true}}
-                            /></Td>
-                          <Td><Checkmark
-                              @checked={{report.notBillable}}
-                              @highlight={{true}}
-                            /></Td>
-                          <Td><Checkmark
-                              @checked={{report.billed}}
-                              @highlight={{true}}
-                            /></Td>
-                        </Tr>
+                          >
+                            <t.td>{{report.user.username}}</t.td>
+                            <t.td>{{dateToString report.date}}</t.td>
+                            <t.td>{{formatDuration
+                                report.duration
+                                false
+                              }}</t.td>
+                            <t.td>{{report.task.project.customer.name}}</t.td>
+                            <t.td>{{report.task.project.name}}</t.td>
+                            <t.td>{{report.task.name}}</t.td>
+                            <t.td><span
+                                class="line-clamp-2 whitespace-pre-line"
+                                title="{{report.comment}}"
+                              >{{report.comment}}</span></t.td>
+                            <t.td>{{if
+                                report.verifiedBy
+                                report.verifiedBy.username
+                              }}</t.td>
+                            <t.td><Checkmark
+                                @checked={{report.rejected}}
+                                @highlight={{true}}
+                              /></t.td>
+                            <t.td><Checkmark
+                                @checked={{report.review}}
+                                @highlight={{true}}
+                              /></t.td>
+                            <t.td><Checkmark
+                                @checked={{report.notBillable}}
+                                @highlight={{true}}
+                              /></t.td>
+                            <t.td><Checkmark
+                                @checked={{report.billed}}
+                                @highlight={{true}}
+                              /></t.td>
+                          </t.tr>
+                        {{/let}}
                       </CanEdit>
                     {{/each}}
                     {{#if @controller._canLoadMore}}
@@ -430,34 +432,34 @@ const AnalysisIndexTemplate = <template>
                           viewportSpy=true
                         }}
                       >
-                        <td colspan="12" class="text-center">
+                        <t.td colspan="12" class="text-center">
                           Loading<span class="loading-dots"><i>.</i><i>.</i><i
                             >.</i></span>
-                        </td>
+                        </t.td>
                       </tr>
                     {{/if}}
-                  </tbody>
-                </Table>
+                  </t.tbody>
+                </MultiSelectTable>
               </ScrollContainer>
-              <Table class="table--striped table--analysis table table-fixed">
+              <Table @striped={{true}} data-test-analysis-table as |t|>
                 <Colgroup />
-                <Tfoot>
-                  <Tr>
-                    <Td colspan="2">Total:</Td>
+                <t.tfoot>
+                  <t.tr>
+                    <t.td colspan="2">Total:</t.td>
 
-                    <Td colspan="2"><strong class="total">{{formatDuration
+                    <t.td colspan="2"><strong class="total">{{formatDuration
                           @controller.totalTime
                           false
-                        }}</strong></Td><Td colspan="8" class="text-right">
+                        }}</strong></t.td><t.td colspan="8" class="text-right">
                       <em>Displaying
                         {{reports.length}}
                         of
                         {{@controller.totalItems}}
                         reports</em>
 
-                    </Td>
-                  </Tr>
-                </Tfoot>
+                    </t.td>
+                  </t.tr>
+                </t.tfoot>
               </Table>
               <div class="export-buttons mt-4 flex justify-end gap-x-2">
                 {{#each @controller.exportLinks as |link|}}
