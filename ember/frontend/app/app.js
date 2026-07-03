@@ -1,6 +1,7 @@
 import Application from "@ember/application";
 import { importSync, isDevelopingApp, macroCondition } from "@embroider/macros";
 import * as Sentry from "@sentry/ember";
+import { setConfig } from "ember-basic-dropdown/config";
 import loadInitializers from "ember-load-initializers";
 import { registerDateLibrary } from "ember-power-calendar";
 import DateUtils from "ember-power-calendar-luxon";
@@ -80,5 +81,9 @@ export default class App extends Application {
   podModulePrefix = config.podModulePrefix;
   Resolver = extendResolver(Resolver);
 }
+
+setConfig({
+  rootElement: config.APP.rootElement,
+});
 
 loadInitializers(App, config.modulePrefix);
