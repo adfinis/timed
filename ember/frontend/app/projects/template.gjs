@@ -8,7 +8,7 @@ import PowerSelect from "ember-power-select/components/power-select";
 import { and, eq, not } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
 import LoadingIcon from "ui-core/components/loading-icon";
-import { SelectableTable } from "ui-core/components/ui-table";
+import Table, { SelectableTable } from "ui-core/components/ui-table";
 
 import Checkbox from "timed/components/checkbox";
 import Checkmark from "timed/components/checkmark";
@@ -18,7 +18,6 @@ import CustomerOption from "timed/components/optimized-power-select/custom-optio
 import ProjectOption from "timed/components/optimized-power-select/custom-options/project-option";
 import PagePermission from "timed/components/page-permission";
 import ScrollContainer from "timed/components/scroll-container";
-import Table from "timed/components/table";
 import Void from "timed/components/void";
 import humanizeDuration from "timed/helpers/humanize-duration";
 
