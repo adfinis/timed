@@ -1,7 +1,7 @@
 import { on } from "@ember/modifier";
 import optional from "@nullvoxpopuli/ember-composable-helpers/helpers/optional";
 
-import Modal from "timed/components/new-modal";
+import Modal from "timed/components/modal";
 import TimedClock from "timed/components/timed-clock";
 
 <template>
