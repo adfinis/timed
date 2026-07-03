@@ -1,6 +1,0 @@
-<template>
-  <td
-    class="border-border/50 border-t p-2 align-top"
-    ...attributes
-  >{{yield}}</td>
-</template>
