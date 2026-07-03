@@ -7,6 +7,7 @@ import { hash } from "@ember/helper";
 import { action } from "@ember/object";
 import { guidFor } from "@ember/object/internals";
 import { focusTrap } from "ember-focus-trap";
+import { array } from "@ember/helper";
 
 export interface ModalHeaderSignature {
   Args: {
@@ -116,7 +117,11 @@ const Modal = <template>
   {{#if @visible}}
     {{#in-element @target insertBefore=null}}
       <ModalOverlay @visible={{@visible}} @onClose={{@onClose}}>
-        <Card {{focusTrap}} class="z-50 max-h-[100%] w-full" ...attributes>
+        <Card
+          {{focusTrap additionalElements=(array @target)}}
+          class="z-50 max-h-[100%] w-full"
+          ...attributes
+        >
           {{yield
             (hash
               footer=CardFooter
