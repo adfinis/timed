@@ -7,14 +7,10 @@ import perform from "ember-concurrency/helpers/perform";
 import { eq, not } from "ember-truth-helpers";
 import LoadingIcon from "ui-core/components/loading-icon";
 import Card from "ui-core/components/ui-card";
+import Table from "ui-core/components/ui-table";
 import { dateToString } from "ui-core/utils/date";
 
 import Empty from "timed/components/empty";
-import Table from "timed/components/table";
-import Td from "timed/components/table/td";
-import Th from "timed/components/table/th";
-import Thead from "timed/components/table/thead";
-import Tr from "timed/components/table/tr";
 import humanizeDuration from "timed/helpers/humanize-duration";
 
 <template>
@@ -66,21 +62,23 @@ import humanizeDuration from "timed/helpers/humanize-duration";
               as |absenceCredits|
             }}
               {{#if absenceCredits}}
-                <Table class="table--striped table">
-                  <Thead>
-                    <Tr>
-                      <Th>Valid as of</Th>
-                      <Th>Days</Th>
-                      <Th>Type</Th>
-                      <Th>Comment</Th>
-                    </Tr>
-                  </Thead>
-                  <tbody>
+                <Table
+                  @striped={{true}}
+                  @hover={{can "edit absence-credit"}}
+                  @last={{true}}
+                  as |t|
+                >
+                  <t.thead>
+                    <t.trh>
+                      <t.th>Valid as of</t.th>
+                      <t.th>Days</t.th>
+                      <t.th>Type</t.th>
+                      <t.th>Comment</t.th>
+                    </t.trh>
+                  </t.thead>
+                  <t.tbody>
                     {{#each absenceCredits as |absenceCredit|}}
-                      <Tr
-                        @striped={{true}}
-                        @hover={{can "edit absence-credit"}}
-                        @last={{true}}
+                      <t.tr
                         role="link"
                         {{on
                           "click"
@@ -89,13 +87,13 @@ import humanizeDuration from "timed/helpers/humanize-duration";
                           )
                         }}
                       >
-                        <Td>{{dateToString absenceCredit.date}}</Td>
-                        <Td>{{absenceCredit.days}}</Td>
-                        <Td>{{absenceCredit.absenceType.name}}</Td>
-                        <Td>{{absenceCredit.comment}}</Td>
-                      </Tr>
+                        <t.td>{{dateToString absenceCredit.date}}</t.td>
+                        <t.td>{{absenceCredit.days}}</t.td>
+                        <t.td>{{absenceCredit.absenceType.name}}</t.td>
+                        <t.td>{{absenceCredit.comment}}</t.td>
+                      </t.tr>
                     {{/each}}
-                  </tbody>
+                  </t.tbody>
                 </Table>
               {{else}}
                 <Empty>
@@ -140,20 +138,22 @@ import humanizeDuration from "timed/helpers/humanize-duration";
           }}
             <c.block>
               {{#if overtimeCredits}}
-                <Table class="table--striped table">
-                  <Thead>
-                    <Tr>
-                      <Th>Valid as of</Th>
-                      <Th>Duration</Th>
-                      <Th>Comment</Th>
-                    </Tr>
-                  </Thead>
-                  <tbody>
+                <Table
+                  @hover={{can "edit overtime-credit"}}
+                  @striped={{true}}
+                  @last={{true}}
+                  as |t|
+                >
+                  <t.thead>
+                    <t.trh>
+                      <t.th>Valid as of</t.th>
+                      <t.th>Duration</t.th>
+                      <t.th>Comment</t.th>
+                    </t.trh>
+                  </t.thead>
+                  <t.tbody>
                     {{#each overtimeCredits as |overtimeCredit|}}
-                      <Tr
-                        @striped={{true}}
-                        @hover={{can "edit overtime-credit"}}
-                        @last={{true}}
+                      <t.tr
                         role="link"
                         {{on
                           "click"
@@ -162,15 +162,15 @@ import humanizeDuration from "timed/helpers/humanize-duration";
                           )
                         }}
                       >
-                        <Td>{{dateToString overtimeCredit.date}}</Td>
-                        <Td>{{humanizeDuration
+                        <t.td>{{dateToString overtimeCredit.date}}</t.td>
+                        <t.td>{{humanizeDuration
                             overtimeCredit.duration
                             false
-                          }}</Td>
-                        <Td>{{overtimeCredit.comment}}</Td>
-                      </Tr>
+                          }}</t.td>
+                        <t.td>{{overtimeCredit.comment}}</t.td>
+                      </t.tr>
                     {{/each}}
-                  </tbody>
+                  </t.tbody>
                 </Table>
                 {{#if (can "create overtime-credit")}}{{/if}}
               {{else}}
