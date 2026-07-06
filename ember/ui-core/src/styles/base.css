@@ -150,7 +150,7 @@
   --primary: rgb(var(--old-primary));
   --primary-dark: color-mix(
     in srgb,
-    var(--primary) 90%,
+    var(--primary) 50%,
     rgb(var(--dark-moderate-blue))
   );
 
