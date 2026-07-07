@@ -5,12 +5,17 @@ import changeset from "ember-changeset/helpers/changeset";
 import perform from "ember-concurrency/helpers/perform";
 import { and, not, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
+import { Duration } from "luxon";
 import Card from "ui-core/components/ui-card";
+import Durationpicker from "ui-core/components/ui-durationpicker";
 
 import Datepicker from "timed/components/datepicker";
-import Durationpicker from "timed/components/durationpicker";
 import NoPermission from "timed/components/no-permission";
-<template>
+
+const MIN_CREDIT = Duration.fromObject({ minutes: 15 });
+const MAX_CREDIT = Duration.fromObject({ hours: 1000 });
+
+const UsersEditCreditsOvertimeCreditsEditTemplate = <template>
   {{#let @controller.credit.lastSuccessful.value as |credit|}}
     {{#if
       (or
@@ -40,6 +45,9 @@ import NoPermission from "timed/components/no-permission";
                 <div>
                   <f.input @label="Duration" @name="duration" as |fi|>
                     <Durationpicker
+                      name="duration"
+                      @min={{MIN_CREDIT}}
+                      @max={{MAX_CREDIT}}
                       @value={{fi.value}}
                       @onChange={{fi.update}}
                     />
@@ -88,4 +96,7 @@ import NoPermission from "timed/components/no-permission";
       </div>
     {{/if}}
   {{/let}}
-</template>
+</template>;
+
+export { MIN_CREDIT as OVERTIME_MIN_CREDIT, MAX_CREDIT as OVERTIME_MAX_CREDIT };
+export default UsersEditCreditsOvertimeCreditsEditTemplate;
