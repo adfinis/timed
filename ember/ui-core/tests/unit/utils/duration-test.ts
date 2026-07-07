@@ -125,4 +125,12 @@ module("Unit | Utility | duration", function () {
       -(1200 * 60 + 45),
     );
   });
+
+  test("rounding keeps large durations as fixed durations", function (assert) {
+    const round = roundDuration(Duration.fromObject({ minutes: 15 }));
+    const rounded = round(Duration.fromObject({ hours: 999, minutes: 52 }));
+
+    assert.deepEqual(rounded.as("hours"), 999.75);
+    assert.deepEqual(durationAsString(rounded), "999:45");
+  });
 });
