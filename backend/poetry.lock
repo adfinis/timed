@@ -1480,14 +1480,14 @@ lxml = "*"
 
 [[package]]
 name = "pyexcel-io"
-version = "0.6.7"
+version = "0.6.8"
 description = "A python library to read and write structured data in csv, zipped csvformat and to/from databases"
 optional = false
 python-versions = ">=3.6"
 groups = ["main"]
 files = [
-    {file = "pyexcel_io-0.6.7-py2.py3-none-any.whl", hash = "sha256:add9f3c1489070ab0a3226bab7d23d4b84a364f5b44f3a14e2ce785ede88fcb3"},
-    {file = "pyexcel_io-0.6.7.tar.gz", hash = "sha256:2c33d8df505e21a13bed585ac6ab7d30ec826a9f156b758394af5d22359bddb9"},
+    {file = "pyexcel_io-0.6.8-py2.py3-none-any.whl", hash = "sha256:074bf490a749cbe1c47e127aabab68223028f3abfd0fcad0de9b1bfe5a1e7f9d"},
+    {file = "pyexcel_io-0.6.8.tar.gz", hash = "sha256:c8831a7542b3da0bf5849afaecabd8e7524a1761ee88270ed24b5bc53649f533"},
 ]
 
 [package.dependencies]
@@ -2137,4 +2137,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "2f5a3406863e38d652b8ccc95eccd5ba75811f517570dbab24da35a31ace2329"
+content-hash = "87c46eb394355bc317fa97417923a5e2abac302b66515bf24748b4156648d8cc"
