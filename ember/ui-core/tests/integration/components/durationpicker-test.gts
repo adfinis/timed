@@ -204,4 +204,32 @@ module("Integration | Component | durationpicker", function (hooks) {
       Duration.fromObject({ hours: 1, minutes: 30 }).milliseconds,
     );
   });
+
+  test("it clamps values", async function (assert) {
+    const min = Duration.fromObject({ minutes: 15 });
+    const max = Duration.fromObject({ hours: 1000 });
+
+    class State {
+      @tracked duration = Duration.fromObject({ hours: 1 }) as Duration | null;
+    }
+
+    const state = new State();
+
+    await render(
+      <template>
+        <Durationpicker
+          @min={{min}}
+          @max={{max}}
+          @value={{state.duration}}
+          @onChange={{fn (mut state.duration)}}
+        />
+      </template>,
+    );
+
+    await fillIn("input", "123456789");
+    assert.dom("input").hasValue("1000:00", "It does not exceed @max");
+
+    await fillIn("input", "-123456789");
+    assert.dom("input").hasValue("00:15", "It does not go below @min");
+  });
 });
