@@ -8,7 +8,6 @@ import perform from "ember-concurrency/helpers/perform";
 import inViewport from "ember-in-viewport/modifiers/in-viewport";
 import { and, eq, not, notEq, or } from "ember-truth-helpers";
 import LoadingIcon from "ui-core/components/loading-icon";
-import { dateToString } from "ui-core/utils/date";
 
 import CanEdit from "timed/components/can-edit";
 import Checkmark from "timed/components/checkmark";
@@ -29,6 +28,7 @@ import Tr from "timed/components/table/tr";
 import TaskSelection from "timed/components/task-selection";
 import UserSelection from "timed/components/user-selection";
 import formatDuration from "timed/helpers/format-duration";
+import luxonFormat from "timed/helpers/luxon-format";
 import media from "timed/helpers/media";
 
 const Colgroup = <template>

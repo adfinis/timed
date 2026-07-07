@@ -4,7 +4,7 @@ import { tracked } from "tracked-built-ins";
 
 import analysisTableConfig from "timed/config/analysis-table";
 
-const USER_SETTINGS_KEY = "user-settings";
+const keyFor = (scope) => `user-settings.${scope}`;
 
 export default class UserSettingsService extends Service {
   @tracked _overrides = {};
@@ -20,7 +20,7 @@ export default class UserSettingsService extends Service {
 
   // helper functions for sub settings
   load(scope, defaultValue) {
-    const fullKey = `${USER_SETTINGS_KEY}.${scope}`;
+    const fullKey = keyFor(scope);
     const localStorageValue = localStorage.getItem(fullKey);
     if (!localStorageValue && typeof defaultValue !== "undefined") {
       localStorage.setItem(fullKey, JSON.stringify(defaultValue));
@@ -30,13 +30,12 @@ export default class UserSettingsService extends Service {
   }
 
   save(scope, value) {
-    const fullKey = `${USER_SETTINGS_KEY}.${scope}`;
+    const fullKey = keyFor(scope);
     localStorage.setItem(fullKey, JSON.stringify(value));
   }
 
   clean(scope) {
-    const fullKey = `${USER_SETTINGS_KEY}.${scope}`;
-    localStorage.removeItem(fullKey);
+    localStorage.removeItem(keyFor(scope));
   }
 
   getTableColumns(tableId) {
@@ -55,10 +54,11 @@ export default class UserSettingsService extends Service {
 
   @action
   updateColumnVisibility(tableId, columnId, isVisible) {
+    const tableOverrides = this._overrides[tableId] || {};
     this._overrides = {
       ...this._overrides,
       [tableId]: {
-        ...(this._overrides[tableId] || {}),
+        ...tableOverrides,
         [columnId]: { isVisible },
       },
     };
@@ -76,13 +76,6 @@ export default class UserSettingsService extends Service {
           console.error("UserSettings: Could not parse localStorage data", e);
         }
       }
-    }
-  }
-
-  _persist() {
-    const keys = Object.keys(UserSettingsService.TABLE_MAP);
-    for (const key of keys) {
-      this.save(`table.${key}`, this._overrides[key]);
     }
   }
 }
