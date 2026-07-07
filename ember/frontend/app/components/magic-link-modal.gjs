@@ -8,8 +8,8 @@ import { tracked } from "@glimmer/tracking";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import { not } from "ember-truth-helpers";
+import { ReportDurationpicker } from "ui-core/components/ui-durationpicker";
 
-import DurationpickerDay from "timed/components/durationpicker-day";
 import Modal from "timed/components/modal";
 import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
@@ -91,8 +91,7 @@ export default class MagicLinkModal extends Component {
           />
 
           <div class="flex">
-            <DurationpickerDay
-              @disabled={{false}}
+            <ReportDurationpicker
               @value={{this.duration}}
               @onChange={{fn (mut this.duration)}}
               @title="Task duration"
