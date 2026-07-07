@@ -5,7 +5,7 @@ const roundDuration = (base: Duration) => (duration: Duration) => {
 
   return Duration.fromMillis(
     Math.round(duration.as("milliseconds") / baseMs) * baseMs,
-  ).rescale();
+  ).shiftTo("hours", "minutes", "seconds");
 };
 
 const clampDuration =
@@ -72,14 +72,11 @@ const parseDurationFromString = (duration: string) => {
 
   const { sign, hours, minutes } = match;
 
-  const result = Duration.fromObject(
-    {
-      hours: parseInt(hours ?? "0"),
-      minutes: parseInt(minutes ?? "0"),
-    },
-    { conversionAccuracy: "longterm" },
-  );
-  return (sign === "-" ? result.negate() : result).rescale();
+  const result = Duration.fromObject({
+    hours: parseInt(hours ?? "0"),
+    minutes: parseInt(minutes ?? "0"),
+  });
+  return (sign === "-" ? result.negate() : result).shiftTo("hours", "minutes");
 };
 
 export {

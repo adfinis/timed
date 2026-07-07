@@ -41,7 +41,7 @@ const parseStringDuration = (duration: string) => {
       minutes: parseInt(day.minutes ?? "0"),
     });
   };
-  return clampReport(parse().rescale());
+  return clampReport(parse().shiftTo("hours", "minutes", "seconds"));
 };
 
 export { ACTIVITY_DURATION_MIN, ACTIVITY_DURATION_MAX, parseStringDuration };
