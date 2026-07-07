@@ -116,7 +116,7 @@ export default class Durationpicker extends Component<BaseDurationpickerSignatur
 
     const res = this.fromString(clean);
     if (res) {
-      this.args.onChange(res);
+      this.args.onChange(this.clamp(res).rescale());
     }
   };
 
