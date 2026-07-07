@@ -116,7 +116,7 @@ export default class Durationpicker extends Component<BaseDurationpickerSignatur
 
     const res = this.fromString(clean);
     if (res) {
-      this.args.onChange(this.clamp(res).rescale());
+      this.args.onChange(this.clamp(res));
     }
   };
 
@@ -129,13 +129,13 @@ export default class Durationpicker extends Component<BaseDurationpickerSignatur
       e.ctrlKey ? this.bigStep : this.step,
     );
 
-    this.args.onChange(this.clamp(result).rescale());
+    this.args.onChange(this.clamp(result));
   };
 
   onMousewheel = (e: WheelEvent) => {
     const result = this.value[e.deltaY < 0 ? "plus" : "minus"](this.step);
 
-    this.args.onChange(this.clamp(result).rescale());
+    this.args.onChange(this.clamp(result));
   };
 
   <template>

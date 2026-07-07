@@ -86,7 +86,10 @@ module("Unit | Utility | duration", function () {
 
     assert.deepEqual(
       durationAsString(
-        Duration.fromObject({ minutes: -46, hours: -7 }).rescale(),
+        Duration.fromObject({ minutes: -46, hours: -7 }).shiftTo(
+          "hours",
+          "minutes",
+        ),
       ),
       "-07:46",
     );
@@ -98,7 +101,10 @@ module("Unit | Utility | duration", function () {
 
     assert.deepEqual(
       durationAsString(
-        Duration.fromObject({ hours: 123, minutes: 1 }).rescale(),
+        Duration.fromObject({ hours: 123, minutes: 1 }).shiftTo(
+          "hours",
+          "minutes",
+        ),
       ),
       "123:01",
     );
