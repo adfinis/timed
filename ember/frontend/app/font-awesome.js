@@ -16,6 +16,7 @@ import {
   faUser,
 } from "@fortawesome/free-regular-svg-icons";
 import {
+  faWandMagicSparkles,
   faAngleRight,
   faAngleLeft,
   faArrowLeft,
@@ -100,4 +101,5 @@ library.add(
   faQuestion,
   faMagic,
   faCircleQuestion,
+  faWandMagicSparkles,
 );
