@@ -113,7 +113,10 @@ module("Acceptance | magic links", function (hooks) {
     await click("[data-test-magic-link-btn]");
 
     assert.dom("[data-test-magic-link-comment]").hasNoValue();
-    assert.dom("[data-test-magic-link-duration]").hasValue("00:00");
+    assert.dom("[data-test-magic-link-duration]").hasNoValue();
+    assert
+      .dom("[data-test-magic-link-duration]")
+      .hasAttribute("placeholder", "00:00");
   });
 
   test("draft reports can be created without a specific duration", async function (assert) {
