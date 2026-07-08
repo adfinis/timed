@@ -18,7 +18,6 @@ export default class UserSettingsService extends Service {
     this.loadTableConfigurations();
   }
 
-  // helper functions for sub settings
   load(scope, defaultValue) {
     const fullKey = keyFor(scope);
     const localStorageValue = localStorage.getItem(fullKey);
