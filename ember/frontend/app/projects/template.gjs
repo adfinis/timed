@@ -8,6 +8,7 @@ import PowerSelect from "ember-power-select/components/power-select";
 import { and, eq, not } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
 import LoadingIcon from "ui-core/components/loading-icon";
+import Table, { SelectableTable } from "ui-core/components/ui-table";
 
 import Checkbox from "timed/components/checkbox";
 import Checkmark from "timed/components/checkmark";
@@ -17,11 +18,6 @@ import CustomerOption from "timed/components/optimized-power-select/custom-optio
 import ProjectOption from "timed/components/optimized-power-select/custom-options/project-option";
 import PagePermission from "timed/components/page-permission";
 import ScrollContainer from "timed/components/scroll-container";
-import Table from "timed/components/table";
-import Td from "timed/components/table/td";
-import Th from "timed/components/table/th";
-import Thead from "timed/components/table/thead";
-import Tr from "timed/components/table/tr";
 import Void from "timed/components/void";
 import humanizeDuration from "timed/helpers/humanize-duration";
 
@@ -138,23 +134,25 @@ import humanizeDuration from "timed/helpers/humanize-duration";
             @value={{@controller.hideArchivedTasks}}
             @onChange={{fn (mut @controller.hideArchivedTasks)}}
           >Hide Archived Tasks</Checkbox>
-          <Table class="table-fixed">
-            <Thead>
-              <Tr>
-                <Th>Name</Th>
-                <Th>Reference</Th>
-                <Th>Estimated time</Th>
+          <Table as |t|>
+            <t.thead>
+              <t.tr>
+                <t.th>Name</t.th>
+                <t.th>Reference</t.th>
+                <t.th>Estimated time</t.th>
                 {{#if remainingEffortTracking}}
-                  <Th>Remaining effort</Th>
+                  <t.th>Remaining effort</t.th>
                 {{/if}}
-                <Th>Archived</Th>
-              </Tr>
-            </Thead>
+                <t.th>Archived</t.th>
+              </t.tr>
+            </t.thead>
           </Table>
           <ScrollContainer class="mb-2 border-b-2">
-            <Table
-              class="table--striped table--projects table table-fixed"
+            <SelectableTable
+              @striped={{true}}
+              class="table--projects"
               data-test-tasks-table
+              as |t|
             >
               <colgroup>
                 <col class="title" />
@@ -168,47 +166,40 @@ import humanizeDuration from "timed/helpers/humanize-duration";
               <tbody>
                 {{#each @controller.tasks as |task|}}
                   {{#unless (and @controller.hideArchivedTasks task.archived)}}
-                    <Tr
-                      @striped={{not (eq @controller.selectedTask task)}}
-                      class="cursor-pointer
-                        {{if
-                          (eq @controller.selectedTask task)
-                          'bg-primary text-foreground-primary'
-                          'hover:bg-background-secondary/25'
-                        }}
-                        "
+                    <t.tr
+                      @selected={{eq @controller.selectedTask task}}
                       {{! template-lint-disable }}
                       {{on "click" (fn (mut @controller.selectedTask) task)}}
                       data-test-task-table-row
                     >
-                      <Td data-test-table-name>{{task.name}}</Td>
-                      <Td data-test-table-reference>{{if
+                      <t.td data-test-table-name>{{task.name}}</t.td>
+                      <t.td data-test-table-reference>{{if
                           task.reference
                           task.reference
                           "-"
-                        }}</Td>
-                      <Td data-test-table-estimated-time>{{if
+                        }}</t.td>
+                      <t.td data-test-table-estimated-time>{{if
                           task.estimatedTime
                           (humanizeDuration task.estimatedTime)
                           "-"
-                        }}</Td>
+                        }}</t.td>
 
                       {{#if remainingEffortTracking}}
-                        <Td data-test-table-most-recent-remaining-effort>{{if
+                        <t.td data-test-table-most-recent-remaining-effort>{{if
                             task.mostRecentRemainingEffort
                             (humanizeDuration task.mostRecentRemainingEffort)
                             "-"
-                          }}</Td>
+                          }}</t.td>
                       {{/if}}
-                      <Td><Checkmark
+                      <t.td><Checkmark
                           data-test-table-archived
                           @checked={{task.archived}}
-                        /></Td>
-                    </Tr>
+                        /></t.td>
+                    </t.tr>
                   {{/unless}}
                 {{/each}}
               </tbody>
-            </Table>
+            </SelectableTable>
           </ScrollContainer>
           {{#if @controller.selectedTask}}
             <div class="task-form-container" data-test-task-form>

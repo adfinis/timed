@@ -226,7 +226,7 @@ module("Acceptance | analysis", function (hooks) {
 
     await visit(`/analysis?user=${this.user.id}`);
 
-    find(".table--analysis tbody tr:last-child").scrollIntoView();
+    find("[data-test-analysis-table] tbody tr:last-child").scrollIntoView();
     await click("tbody > tr:last-child");
 
     assert.notOk(find("tbody > tr:last-child.selected"));

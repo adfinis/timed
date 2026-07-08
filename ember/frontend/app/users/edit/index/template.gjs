@@ -6,14 +6,10 @@ import { DateTime } from "luxon";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 import LoadingIcon from "ui-core/components/loading-icon";
 import Card from "ui-core/components/ui-card";
+import Table from "ui-core/components/ui-table";
 import { dateToString } from "ui-core/utils/date";
 
 import Empty from "timed/components/empty";
-import Table from "timed/components/table";
-import Td from "timed/components/table/td";
-import Th from "timed/components/table/th";
-import Thead from "timed/components/table/thead";
-import Tr from "timed/components/table/tr";
 import humanizeDuration from "timed/helpers/humanize-duration";
 
 export default class UsersEditIndexTemplate extends Component {
@@ -51,44 +47,45 @@ export default class UsersEditIndexTemplate extends Component {
       <Card data-test-general-information as |c|>
         <c.header><h4>General information</h4></c.header>
         <c.block>
-          <Table class="user-general-info">
-            <tbody class="[&>tr>td:last-child]:text-right [&>tr>td]:py-1">
-              <tr>
-                <td>Email:</td>
-                <td>{{@model.email}}</td>
-              </tr>
-              <tr>
-                <td>Username:</td>
-                <td>{{@model.username}}</td>
-              </tr>
+          <Table class="user-general-info" as |t|>
+            <t.tbody class="[&>tr>td:last-child]:text-right [&>tr>td]:py-1">
+              <t.tr>
+                <t.td>Email:</t.td>
+                <t.td>{{@model.email}}</t.td>
+              </t.tr>
+              <t.tr>
+                <t.td>Username:</t.td>
+                <t.td>{{@model.username}}</t.td>
+              </t.tr>
               {{#if @model.activeEmployment}}
-                <tr>
-                  <td>Location:</td>
-                  <td>{{@model.activeEmployment.location.name}}</td>
-                </tr>
-                <tr>
-                  <td>Contract type:</td>
-                  <td>{{if
+                <t.tr>
+                  <t.td>Location:</t.td>
+                  <t.td>{{@model.activeEmployment.location.name}}</t.td>
+                </t.tr>
+                <t.tr>
+                  <t.td>Contract type:</t.td>
+                  <t.td>{{if
                       @model.activeEmployment.isExternal
                       "External"
                       "Internal"
-                    }}</td>
-                </tr>
-                <tr>
-                  <td>Percentage:</td>
-                  <td>{{@model.activeEmployment.percentage}}%</td>
-                </tr>
-                <tr>
-                  <td>Worktime:</td>
-                  <td>{{humanizeDuration
+                    }}</t.td>
+                </t.tr>
+                <t.tr>
+                  <t.td>Percentage:</t.td>
+                  <t.td>{{@model.activeEmployment.percentage}}%</t.td>
+                </t.tr>
+                <t.tr>
+                  <t.td>Worktime:</t.td>
+                  <t.td>{{humanizeDuration
                       @model.activeEmployment.worktimePerDay
                       false
-                    }}</td>
-                </tr>
+                    }}</t.td>
+                </t.tr>
               {{/if}}
-            </tbody>
+            </t.tbody>
           </Table>
         </c.block>
+
         <c.footer />
       </Card>
 
@@ -102,27 +99,27 @@ export default class UsersEditIndexTemplate extends Component {
           {{else}}
             {{#let this.employments.value as |employments|}}
               {{#if employments}}
-                <Table class="table--striped table">
-                  <Thead>
-                    <Tr>
-                      <Th>Location</Th>
-                      <Th>Percentage</Th>
-                      <Th>Start</Th>
-                      <Th>End</Th>
-                    </Tr>
-                  </Thead>
+                <Table @striped={{true}} @last={{true}} @hover={{true}} as |t|>
+                  <t.thead>
+                    <t.trh>
+                      <t.th>Location</t.th>
+                      <t.th>Percentage</t.th>
+                      <t.th>Start</t.th>
+                      <t.th>End</t.th>
+                    </t.trh>
+                  </t.thead>
                   <tbody>
                     {{#each employments as |employment|}}
-                      <Tr @striped={{true}} @last={{true}}>
-                        <Td>{{employment.location.name}}</Td>
-                        <Td>{{employment.percentage}}%</Td>
-                        <Td>{{dateToString employment.start}}</Td>
-                        <Td>{{if
+                      <t.tr>
+                        <t.td>{{employment.location.name}}</t.td>
+                        <t.td>{{employment.percentage}}%</t.td>
+                        <t.td>{{dateToString employment.start}}</t.td>
+                        <t.td>{{if
                             employment.end
                             (dateToString employment.end)
                             "-"
-                          }}</Td>
-                      </Tr>
+                          }}</t.td>
+                      </t.tr>
                     {{/each}}
                   </tbody>
                 </Table>
@@ -150,21 +147,21 @@ export default class UsersEditIndexTemplate extends Component {
           {{else}}
             {{#let this.absences.value as |absences|}}
               {{#if absences}}
-                <Table class="table--striped table">
-                  <Thead>
-                    <Tr class="text-left [&>*]:p-2">
-                      <Th>Type</Th>
-                      <Th>Date</Th>
-                      <Th>Comment</Th>
-                    </Tr>
-                  </Thead>
+                <Table @striped={{true}} @last={{true}} as |t|>
+                  <t.thead>
+                    <t.trh class="text-left [&>*]:p-2">
+                      <t.th>Type</t.th>
+                      <t.th>Date</t.th>
+                      <t.th>Comment</t.th>
+                    </t.trh>
+                  </t.thead>
                   <tbody>
                     {{#each absences as |absence|}}
-                      <Tr @striped={{true}} @last={{true}}>
-                        <Td>{{absence.absenceType.name}}</Td>
-                        <Td>{{dateToString absence.date}}</Td>
-                        <Td>{{absence.comment}}</Td>
-                      </Tr>
+                      <t.tr>
+                        <t.td>{{absence.absenceType.name}}</t.td>
+                        <t.td>{{dateToString absence.date}}</t.td>
+                        <t.td>{{absence.comment}}</t.td>
+                      </t.tr>
                     {{/each}}
                   </tbody>
                 </Table>

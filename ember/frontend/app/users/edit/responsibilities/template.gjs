@@ -83,12 +83,12 @@ export default class UsersEditResponsibilitiesTemplate extends Component {
           {{else}}
             {{#let this.projects.value as |projects|}}
               {{#if projects}}
-                <Table @striped={{true}} as |t|>
+                <Table @striped={{true}} @last={{true}} as |t|>
                   <t.thead>
-                    <t.tr>
+                    <t.trh>
                       <t.th>Customer</t.th>
                       <t.th>Project</t.th>
-                    </t.tr>
+                    </t.trh>
                   </t.thead>
                   <tbody>
                     {{#each projects as |project|}}

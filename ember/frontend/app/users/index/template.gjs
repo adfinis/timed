@@ -5,15 +5,11 @@ import { VerticalCollection } from "@html-next/vertical-collection";
 import slice from "@nullvoxpopuli/ember-composable-helpers/helpers/slice";
 import perform from "ember-concurrency/helpers/perform";
 import { eq } from "ember-truth-helpers";
+import Table from "ui-core/components/ui-table";
 
 import AsyncList from "timed/components/async-list";
 import Empty from "timed/components/empty";
 import FilterSidebar from "timed/components/filter-sidebar";
-import Table from "timed/components/table";
-import Td from "timed/components/table/td";
-import Th from "timed/components/table/th";
-import Thead from "timed/components/table/thead";
-import Tr from "timed/components/table/tr";
 import UserSelection from "timed/components/user-selection";
 import balanceHighlightClass from "timed/helpers/balance-highlight-class";
 import formatDuration from "timed/helpers/format-duration";
@@ -73,15 +69,15 @@ import formatDuration from "timed/helpers/format-duration";
         <p>Maybe try loosening your filters</p>
       </Empty>
     {{else if (eq section "body")}}
-      <Table class="table--striped table--hover table">
-        <Thead>
-          <Tr>
-            <Th>Name</Th>
-            <Th>Percentage</Th>
-            <Th>Worktime per day</Th>
-            <Th>Current worktime balance</Th>
-          </Tr>
-        </Thead>
+      <Table @last={{true}} @striped={{true}} @hover={{true}} as |t|>
+        <t.thead>
+          <t.trh>
+            <t.th>Name</t.th>
+            <t.th>Percentage</t.th>
+            <t.th>Worktime per day</t.th>
+            <t.th>Current worktime balance</t.th>
+          </t.trh>
+        </t.thead>
         <VerticalCollection
           @items={{slice data}}
           @tagName="tbody"
@@ -90,35 +86,32 @@ import formatDuration from "timed/helpers/format-duration";
           @containerSelector=".page-content--scroll"
           as |user|
         >
-          <Tr
-            @striped={{true}}
-            @hover={{true}}
-            @last={{true}}
+          <t.tr
             role="link"
             {{on "click" (fn @controller.viewUserProfile user.id)}}
           >
-            <Td
+            <t.td
               class={{unless user.isActive "text-danger"}}
-            >{{user.fullName}}</Td>
+            >{{user.fullName}}</t.td>
             {{#if user.activeEmployment}}
-              <Td>{{user.activeEmployment.percentage}}%</Td>
-              <Td>{{formatDuration
+              <t.td>{{user.activeEmployment.percentage}}%</t.td>
+              <t.td>{{formatDuration
                   user.activeEmployment.worktimePerDay
                   false
-                }}</Td>
+                }}</t.td>
             {{else}}
-              <Td class={{unless user.isActive "text-danger"}} colspan="2"><em
-                >User has no active employment</em></Td>
+              <t.td class={{unless user.isActive "text-danger"}} colspan="2"><em
+                >User has no active employment</em></t.td>
             {{/if}}
-            <Td>
+            <t.td>
               <span
                 class="worktime-balance
                   {{balanceHighlightClass user.currentWorktimeBalance.balance}}"
               >
                 {{formatDuration user.currentWorktimeBalance.balance false}}
               </span>
-            </Td>
-          </Tr>
+            </t.td>
+          </t.tr>
         </VerticalCollection>
       </Table>
     {{/if}}
