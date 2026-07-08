@@ -4,7 +4,6 @@ import * as QUnit from "qunit";
 import { setApplication } from "@ember/test-helpers";
 import { setup } from "qunit-dom";
 import { start as qunitStart, setupEmberOnerrorValidation } from "ember-qunit";
-import AppearanceService from "#src/services/appearance.ts";
 
 class Router extends EmberRouter {
   location = "none";
@@ -14,7 +13,8 @@ class Router extends EmberRouter {
 class TestApp extends EmberApp {
   modules = {
     "./router": Router,
-    "./services/appearance": { default: AppearanceService },
+    // add any custom services here
+    // import.meta.glob('./services/*', { eager: true }),
   };
 }
 

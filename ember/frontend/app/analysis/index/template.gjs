@@ -269,7 +269,6 @@ const AnalysisIndexTemplate = <template>
           {{#if @controller.data.lastSuccessful.value.length}}
             {{#let @controller.data.lastSuccessful.value as |reports|}}
               <div class="flex justify-end gap-x-2">
-                <ColumnPicker @tableName="analysis" />
                 {{#if @controller.selectedReportIds.length}}
                   <button
                     data-test-edit-selected
@@ -301,6 +300,7 @@ const AnalysisIndexTemplate = <template>
                 >
                   Edit all
                 </button>
+                <ColumnPicker @tableName="analysis" />
               </div>
 
               {{! template-lint-disable table-groups }}
