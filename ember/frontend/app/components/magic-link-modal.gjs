@@ -6,7 +6,6 @@ import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
-import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import { not } from "ember-truth-helpers";
 import { ReportDurationpicker } from "ui-core/components/ui-durationpicker";
 
@@ -27,8 +26,13 @@ export default class MagicLinkModal extends Component {
   @service notify;
 
   @action
-  onSetTask(task) {
-    this.task = task;
+  toggleFlag(flag) {
+    // the url should not include flags that aren't set
+    // "toggling" a flag adds `?<flag>=true` to the url
+    // "toggling" it again should remove it from the url
+    // rather than e.g. changing it to `?<flag>=false`
+    const value = this[flag];
+    this[flag] = value ? undefined : true;
   }
 
   get magicLinkString() {
@@ -70,9 +74,8 @@ export default class MagicLinkModal extends Component {
         </modal.header>
         <modal.body class="grid gap-2" data-test-task-selector>
           <TaskSelection
-            @disabled={{false}}
             @task={{this.task}}
-            @on-set-task={{this.onSetTask}}
+            @on-set-task={{fn (mut this.task)}}
             as |t|
           >
             <t.customer @dropdownClass="z-[60]" />
@@ -102,7 +105,7 @@ export default class MagicLinkModal extends Component {
               class="margin-small-right form-control flex-shrink"
               data-test-magic-link-review
               @hint="Needs review"
-              @onToggle={{toggle "review" this}}
+              @onToggle={{fn this.toggleFlag "review"}}
               @value={{this.review}}
             >
               <span class="fa-layers fa-fw">
@@ -118,7 +121,7 @@ export default class MagicLinkModal extends Component {
               class="form-control flex-shrink"
               data-test-magic-link-not-billable
               @hint="Not billable"
-              @onToggle={{toggle "notBillable" this}}
+              @onToggle={{fn this.toggleFlag "notBillable"}}
               @value={{this.notBillable}}
             >
               <span class="fa-layers fa-fw">
