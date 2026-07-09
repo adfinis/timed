@@ -1,4 +1,6 @@
 import { click, fillIn, visit, waitFor } from "@ember/test-helpers";
+import { selectChoose } from "ember-power-select/test-support";
+import { typeInSearch } from "ember-power-select/test-support/helpers";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
 import sinon from "sinon";
@@ -33,6 +35,62 @@ module("Acceptance | magic links", function (hooks) {
     assert
       .dom("#modals [data-test-magic-link-form]")
       .doesNotExist("the modal does not use the default modal target");
+  });
+
+  test("can search for a customer, project and task in the magic link modal", async function (assert) {
+    async function assertCanSearch(selectSelector, searchTerm) {
+      await click(selectSelector);
+      const searchInput = document.querySelector(
+        ".ember-power-select-search-input",
+      );
+
+      assert.strictEqual(
+        document.activeElement,
+        searchInput,
+        `the search input for "${selectSelector}" is focused after opening the dropdown`,
+      );
+
+      await typeInSearch(searchTerm);
+
+      assert
+        .dom(searchInput)
+        .hasValue(
+          searchTerm,
+          `typed text is accepted by the search input for "${selectSelector}"`,
+        );
+
+      await typeInSearch("");
+    }
+
+    await visit("/reports");
+
+    await click("[data-test-magic-link-btn]");
+
+    await waitFor("[data-test-task-selector] .customer-select");
+    await assertCanSearch(
+      "[data-test-task-selector] .customer-select",
+      "some customer",
+    );
+    await selectChoose(
+      "[data-test-task-selector] .customer-select",
+      ".ember-power-select-option",
+      1,
+    );
+
+    await assertCanSearch(
+      "[data-test-task-selector] .project-select",
+      "some project",
+    );
+    await selectChoose(
+      "[data-test-task-selector] .project-select",
+      ".ember-power-select-option",
+      0,
+    );
+
+    await assertCanSearch(
+      "[data-test-task-selector] .task-select",
+      "some task",
+    );
   });
 
   test("can create a magic link", async function (assert) {
