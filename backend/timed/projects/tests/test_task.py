@@ -6,6 +6,8 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
+from timed.projects.serializers import TaskSerializer
+
 
 def test_task_list_not_archived(internal_employee_client, task_factory):
     task = task_factory(archived=False)
@@ -101,6 +103,39 @@ def test_task_create(
     assert response.status_code == expected
 
 
+def test_task_create_manager_of_other_project(
+    internal_employee_client, project_factory, project_assignee_factory
+):
+    """A manager of an unrelated project may not create tasks on other projects.
+
+    Being a manager anywhere grants create permission at the view level, but
+    the serializer additionally verifies the user manages the *target*
+    project, so this must fail with a validation error.
+    """
+    user = internal_employee_client.user
+    other_project = project_factory()
+    project_assignee_factory(user=user, project=other_project, is_manager=True)
+
+    target_project = project_factory()
+
+    url = reverse("task-list")
+    data = {
+        "data": {
+            "attributes": {"name": "test task"},
+            "relationships": {
+                "project": {"data": {"type": "projects", "id": target_project.pk}}
+            },
+            "type": "tasks",
+        }
+    }
+    response = internal_employee_client.post(url, data=data)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert (
+        response.json()["errors"][0]["detail"]
+        == "You don't have the permission to create this task"
+    )
+
+
 @pytest.mark.parametrize(
     (
         "task_assignee__is_resource",
@@ -154,6 +189,31 @@ def test_task_update(
 
     response = auth_client.patch(url, data)
     assert response.status_code == expected
+
+
+def test_task_serializer_update_no_permission(db, rf, task, user_factory):  # noqa: ARG001
+    """A user without manager rights on the task may not update it.
+
+    The view's object-level permission check already enforces the same
+    condition the serializer checks here, so this branch of
+    ``TaskSerializer.validate`` can't be reached through the API and is
+    exercised directly instead.
+    """
+    request = rf.patch("/")
+    request.user = user_factory()
+
+    serializer = TaskSerializer(
+        instance=task,
+        data={"name": "Test Task"},
+        partial=True,
+        context={"request": request},
+    )
+
+    assert not serializer.is_valid()
+    assert (
+        serializer.errors["non_field_errors"][0]
+        == "You don't have the permission to update this task"
+    )
 
 
 @pytest.mark.parametrize(
