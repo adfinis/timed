@@ -28,8 +28,12 @@ const optional = (onClose) => {
   return onClose;
 };
 export default class Modal extends Component {
+  get targetId() {
+    return this.args.targetId ?? TARGET_ID;
+  }
+
   get target() {
-    return document.getElementById(TARGET_ID);
+    return document.getElementById(this.targetId);
   }
 
   <template>
