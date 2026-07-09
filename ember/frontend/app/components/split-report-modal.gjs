@@ -49,16 +49,6 @@ export default class SplitReportModal extends Component {
     this.isModalVisible = true;
   }
 
-  @action
-  onSetOldTask(task) {
-    this.oldTask = task;
-  }
-
-  @action
-  onSetNewTask(task) {
-    this.newTask = task;
-  }
-
   get remainingOldDuration() {
     const remaining = this.oldDuration.minus(this.newDuration);
     return remaining.as("milliseconds") > 0
@@ -108,17 +98,26 @@ export default class SplitReportModal extends Component {
 
       await this.fetch.fetch(`/api/v1/reports/${reportId}/split`, {
         method: "POST",
-        body: {
-          old_report: {
-            task: this.oldTask.id,
-            comment: this.oldComment,
-            duration: durationTransform.serialize(this.remainingOldDuration),
+        data: {
+          attributes: {
+            updated_original_report: {
+              task: {
+                type: "tasks",
+                id: this.oldTask.id,
+              },
+              comment: this.oldComment,
+              duration: durationTransform.serialize(this.remainingOldDuration),
+            },
+            second_report: {
+              task: {
+                type: "tasks",
+                id: this.newTask.id,
+              },
+              comment: this.newComment,
+              duration: durationTransform.serialize(this.newDuration),
+            },
           },
-          new_report: {
-            task: this.newTask.id,
-            comment: this.newComment,
-            duration: durationTransform.serialize(this.newDuration),
-          },
+          type: "split-reports",
         },
       });
 
@@ -173,7 +172,7 @@ export default class SplitReportModal extends Component {
                 <p class="text-muted-foreground text-sm font-semibold">Original
                   report</p>
                 <TaskSelection
-                  @on-set-task={{this.onSetOldTask}}
+                  @on-set-task={{fn (mut this.oldTask)}}
                   @task={{this.oldTask}}
                   as |t|
                 >
@@ -204,7 +203,7 @@ export default class SplitReportModal extends Component {
               <div class="flex flex-col gap-2">
                 <p class="text-muted-foreground text-sm font-semibold">Second
                   Report</p>
-                <TaskSelection @on-set-task={{this.onSetNewTask}} as |t|>
+                <TaskSelection @on-set-task={{fn (mut this.newTask)}} as |t|>
                   <t.customer @dropdownClass="z-[60]" />
                   <t.project @dropdownClass="z-[60]" />
                   <t.task @dropdownClass="z-[60]" />
@@ -235,6 +234,7 @@ export default class SplitReportModal extends Component {
             <button
               class="btn btn-default"
               type="button"
+              data-test-split-report-cancel
               {{on "click" this.closeModal}}
             >
               Cancel
@@ -242,6 +242,7 @@ export default class SplitReportModal extends Component {
             <button
               class="btn btn-primary ms-auto"
               type="button"
+              data-test-split-report-confirm
               {{on "click" (perform this.splitReport)}}
               disabled={{or (not this.isValidSplit) this.splitReport.isRunning}}
             >

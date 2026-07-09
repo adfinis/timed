@@ -197,7 +197,7 @@ module("Integration | Component | split report modal", function (hooks) {
 
     await openModal();
 
-    assert.dom(".modal-footer .btn-primary").isDisabled();
+    assert.dom("[data-test-split-report-confirm]").isDisabled();
   });
 
   test("cancel button closes the modal", async function (assert) {
@@ -211,7 +211,7 @@ module("Integration | Component | split report modal", function (hooks) {
     await openModal();
     assert.dom(".modal-header").exists();
 
-    await click(".modal-footer .btn-default");
+    await click("[data-test-split-report-cancel]");
 
     assert.dom(".modal-header").doesNotExist();
   });
@@ -275,7 +275,7 @@ module("Integration | Component | split report modal", function (hooks) {
 
     await openModal();
     await fillIn("[aria-label='Comment for new report']", "temp comment");
-    await click(".modal-footer .btn-default");
+    await click("[data-test-split-report-cancel]");
 
     await openModal();
 
@@ -302,10 +302,16 @@ module("Integration | Component | split report modal", function (hooks) {
     await openModal();
     await selectNewTask();
     await setNewDuration("0:30");
-    await click(".modal-footer .btn-primary");
+    await click("[data-test-split-report-confirm]");
 
-    assert.ok(capturedBody.old_report, "old_report is present in payload");
-    assert.ok(capturedBody.new_report, "new_report is present in payload");
+    assert.ok(
+      capturedBody.data.attributes.updated_original_report,
+      "updated_original_report is present in payload",
+    );
+    assert.ok(
+      capturedBody.data.attributes.second_report,
+      "second_report is present in payload",
+    );
   });
 
   test("sends modified old report data to the split endpoint", async function (assert) {
@@ -331,15 +337,15 @@ module("Integration | Component | split report modal", function (hooks) {
     );
     await selectNewTask();
     await setNewDuration("0:30");
-    await click(".modal-footer .btn-primary");
+    await click("[data-test-split-report-confirm]");
 
     assert.strictEqual(
-      capturedBody.old_report.comment,
+      capturedBody.data.attributes.updated_original_report.comment,
       "Updated old comment",
       "sends updated old comment",
     );
     assert.strictEqual(
-      capturedBody.old_report.duration,
+      capturedBody.data.attributes.updated_original_report.duration,
       "00:30:00",
       "old report duration is the remaining time after split",
     );
@@ -365,15 +371,15 @@ module("Integration | Component | split report modal", function (hooks) {
     await selectNewTask();
     await fillIn("[aria-label='Comment for new report']", "New report comment");
     await setNewDuration("0:30");
-    await click(".modal-footer .btn-primary");
+    await click("[data-test-split-report-confirm]");
 
     assert.strictEqual(
-      capturedBody.new_report.comment,
+      capturedBody.data.attributes.second_report.comment,
       "New report comment",
       "sends new report comment",
     );
     assert.strictEqual(
-      capturedBody.new_report.duration,
+      capturedBody.data.attributes.second_report.duration,
       "00:30:00",
       "sends new report duration",
     );
@@ -400,7 +406,7 @@ module("Integration | Component | split report modal", function (hooks) {
     await openModal();
     await selectNewTask();
     await setNewDuration("0:30");
-    await click(".modal-footer .btn-primary");
+    await click("[data-test-split-report-confirm]");
 
     assert.dom(".modal-header").doesNotExist("modal is closed after split");
     assert.true(afterSaveCalled, "afterSave is called after successful split");
@@ -426,7 +432,7 @@ module("Integration | Component | split report modal", function (hooks) {
     await openModal();
     await selectNewTask();
     await setNewDuration("0:30");
-    await click(".modal-footer .btn-primary");
+    await click("[data-test-split-report-confirm]");
 
     assert.dom(".modal-header").exists("modal stays open on error");
   });
@@ -459,7 +465,7 @@ module("Integration | Component | split report modal", function (hooks) {
     await openModal();
     await selectNewTask();
     await setNewDuration("0:30");
-    await click(".modal-footer .btn-primary");
+    await click("[data-test-split-report-confirm]");
 
     assert.false(afterSaveCalled, "afterSave is not called on error");
   });
@@ -484,7 +490,7 @@ module("Integration | Component | split report modal", function (hooks) {
 
     await openModal();
 
-    assert.dom(".modal-footer .btn-primary").isDisabled();
+    assert.dom("[data-test-split-report-confirm]").isDisabled();
     assert.false(afterSaveCalled, "afterSave was not called for invalid split");
   });
 });
