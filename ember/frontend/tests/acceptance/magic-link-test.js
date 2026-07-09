@@ -18,6 +18,23 @@ module("Acceptance | magic links", function (hooks) {
     this.server.createList("report", 5, { userId: user.id });
   });
 
+  test("renders inside the power-select wormhole so nested dropdowns stay interactive", async function (assert) {
+    await visit("/reports");
+
+    await click("[data-test-magic-link-btn]");
+
+    assert.dom("[data-test-magic-link-form]").isVisible();
+
+    assert
+      .dom("#ember-basic-dropdown-wormhole [data-test-magic-link-form]")
+      .exists(
+        "the modal is portalled into the same target used by ember-power-select dropdowns",
+      );
+    assert
+      .dom("#modals [data-test-magic-link-form]")
+      .doesNotExist("the modal does not use the default modal target");
+  });
+
   test("can create a magic link", async function (assert) {
     await visit("/reports");
 
