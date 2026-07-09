@@ -132,4 +132,41 @@ module("Acceptance | magic links", function (hooks) {
       .dom("[data-test-report-row]:last-child [data-test-report-duration]")
       .hasNoValue();
   });
+
+  test("flags are only included in the url when they are set", async function (assert) {
+    await visit("/reports");
+
+    await click("[data-test-magic-link-btn]");
+
+    assert.dom("[data-test-magic-link-form]").isVisible();
+
+    await click("[data-test-magic-link-review]");
+    await click("[data-test-magic-link-not-billable]");
+
+    assert
+      .dom("[data-test-magic-link-string]")
+      .hasValue(
+        /review=true/,
+        "includes the 'review' parameter when the flag is set",
+      );
+    assert
+      .dom("[data-test-magic-link-string]")
+      .hasValue(
+        /notBillable=true/,
+        "includes the 'notBillable' parameter when the flag is set",
+      );
+
+    await click("[data-test-magic-link-review]");
+    await click("[data-test-magic-link-not-billable]");
+
+    // the url should not include flags that aren't set
+    // "toggling" a flag adds `?<flag>=true` to the url
+    // "toggling" it again should remove it from the url
+    // rather than e.g. changing it to `?<flag>=false`
+
+    assert.dom("[data-test-magic-link-string]").doesNotIncludeValue("review=");
+    assert
+      .dom("[data-test-magic-link-string]")
+      .doesNotIncludeValue("notBillable=");
+  });
 });
