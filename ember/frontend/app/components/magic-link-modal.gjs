@@ -65,6 +65,7 @@ export default class MagicLinkModal extends Component {
       @visible={{@isVisible}}
       @onClose={{@onClose}}
       data-test-magic-link-modal
+      @targetId="ember-basic-dropdown-wormhole"
       class="md:w-auto"
       as |modal|
     >
