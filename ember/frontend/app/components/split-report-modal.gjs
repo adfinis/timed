@@ -10,7 +10,7 @@ import perform from "ember-concurrency/helpers/perform";
 import { not, or } from "ember-truth-helpers";
 import { Duration } from "luxon";
 
-import DurationpickerDay from "timed/components/durationpicker-day";
+import Durationpicker from "timed/components/durationpicker";
 import Modal from "timed/components/modal";
 import TaskSelection from "timed/components/task-selection";
 import DjangoDurationTransform from "timed/transforms/django-duration";
@@ -194,7 +194,7 @@ export default class SplitReportModal extends Component {
                     aria-label="Comment for original report"
                   />
                 </div>
-                <DurationpickerDay
+                <Durationpicker
                   @value={{this.remainingOldDuration}}
                   @onChange={{this.onRemainingDurationChange}}
                   @title="Remaining duration"
@@ -222,7 +222,7 @@ export default class SplitReportModal extends Component {
                     aria-label="Comment for new report"
                   />
                 </div>
-                <DurationpickerDay
+                <Durationpicker
                   @value={{this.newDuration}}
                   @onChange={{this.onNewDurationChange}}
                   @title="Duration for new report"
