@@ -13,6 +13,7 @@ import { service } from "@ember/service";
 export default class ProtectedRoute extends Route {
   @service session;
   @service currentUser;
+  @service users;
   @service("autostart-tour") autostartTour;
   @service router;
   @service media;
@@ -22,6 +23,7 @@ export default class ProtectedRoute extends Route {
   async beforeModel(transition) {
     await this.session.requireAuthentication(transition, "login");
     await this.currentUser.load();
+    await this.users.load();
   }
 
   /**
