@@ -4,7 +4,6 @@ import { action } from "@ember/object";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import { runTask } from "ember-lifeline";
 import { modifier } from "ember-modifier";
 
 const eq = (a, b) => a === b;
@@ -26,13 +25,6 @@ export default class ReportCommentInput extends Component {
   @tracked activeIndex = 0;
 
   inputElement = null;
-
-  constructor(...args) {
-    super(...args);
-
-    // ensure users get fetched/loaded
-    runTask(this, () => this.users.load(), 0);
-  }
 
   get tooltip() {
     const parts = [];
