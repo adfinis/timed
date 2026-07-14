@@ -8,6 +8,12 @@ import { trackedTask } from "reactiveweb/ember-concurrency";
 import OptimizedPowerSelectComponent from "timed/components/optimized-power-select";
 import customOptionTemplate from "timed/components/optimized-power-select/custom-options/user-option";
 import customSelectedTemplate from "timed/components/optimized-power-select/custom-select/user-selection";
+import sortArchivedLast from "timed/utils/sort-archived-last";
+
+const sortByInactiveAndName = sortArchivedLast(
+  (a, b) => (a.name > b.name ? 1 : -1),
+  (u) => !u.isActive,
+);
 
 export default class UserSelection extends Component {
   selectedTemplate = customSelectedTemplate;
@@ -40,7 +46,7 @@ export default class UserSelection extends Component {
   ]);
 
   get users() {
-    return this._users.value ?? [];
+    return (this._users.value ?? []).toSorted(sortByInactiveAndName);
   }
   <template>
     {{yield
