@@ -283,8 +283,20 @@ class ReportViewSet(ModelViewSet):
                 _("Only superuser and accountants may bill reports")
             )
 
+        effective_billed = (
+            fields.get("billed")
+            if fields.get("billed") is not None
+            else any(queryset.values_list("billed", flat=True))
+        )
+
         if verified is not None:
             self._validate_verified(queryset, fields, user, qp)
+
+            if effective_billed and not verified:
+                raise exceptions.ValidationError(
+                    _("Verified flag can't be modified on billed reports.")
+                )
+
             fields["verified_by"] = (verified and user) or None
 
         review_comment = fields.pop("review_comment", "")
