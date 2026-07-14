@@ -352,6 +352,7 @@ class ReportIntersectionSerializer(Serializer):
     billed = SerializerMethodField()
     verified = SerializerMethodField()
     rejected = SerializerMethodField()
+    can_verify = SerializerMethodField()
 
     def _intersection(self, instance, field, model=None):
         """Get intersection of given field.
@@ -407,6 +408,30 @@ class ReportIntersectionSerializer(Serializer):
 
     def get_rejected(self, instance):
         return self._intersection(instance, "rejected")
+
+    def get_can_verify(self, instance):
+        qs = instance.get("queryset")
+        if not qs:
+            return None
+        task_pks = qs.values_list("task", flat=True)
+        task_count = len(set(task_pks))
+        user = self.context["request"].user
+        task_permission_count = (
+            Task.objects.filter(pk__in=task_pks)
+            .filter(
+                Q(task_assignees__user=user, task_assignees__is_reviewer=True)
+                | Q(
+                    project__project_assignees__user=user,
+                    project__project_assignees__is_reviewer=True,
+                )
+                | Q(
+                    project__customer__customer_assignees__user=user,
+                    project__customer__customer_assignees__is_reviewer=True,
+                )
+            )
+            .count()
+        )
+        return task_count == task_permission_count
 
     def get_root_meta(self, *args):
         """Add number of results to meta."""
