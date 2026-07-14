@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "hurricane",
     "rest_framework",
+    "drf_yasg",
     "django_filters",
     "djmoney.apps.MoneyConfig",
     "mozilla_django_oidc",
@@ -221,7 +222,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 OIDC_DEFAULT_BASE_URL = env.str(
     "DJANGO_OIDC_DEFAULT_BASE_URL",
-    default="http://timed.localhost/auth/realms/timed/protocol/openid-connect",
+    default="https://timed.localhost/auth/realms/timed/protocol/openid-connect",
 )
 OIDC_OP_AUTHORIZATION_ENDPOINT = env.str(
     "DJANGO_OIDC_OP_AUTHORIZATION_ENDPOINT", default=f"{OIDC_DEFAULT_BASE_URL}/auth"
@@ -239,6 +240,31 @@ OIDC_OP_JWKS_ENDPOINT = env.str(
 
 OIDC_RP_CLIENT_ID = env.str("DJANGO_OIDC_RP_CLIENT_ID", default="timed-public")
 OIDC_RP_CLIENT_SECRET = env.str("DJANGO_OIDC_RP_CLIENT_SECRET", default=None)
+
+SWAGGER_USE_COMPAT_RENDERERS = False
+SWAGGER_SETTINGS = {
+    "USE_SESSION_AUTH": False,
+    "SECURITY_DEFINITIONS": {
+        "OIDC": {
+            "type": "oauth2",
+            "flow": "accessCode",
+            "authorizationUrl": OIDC_OP_AUTHORIZATION_ENDPOINT,
+            "tokenUrl": OIDC_OP_TOKEN_ENDPOINT,
+            "scopes": {
+                "openid": "Authenticate using OpenID Connect.",
+                "profile": "Access the user's profile.",
+                "email": "Access the user's email address.",
+            },
+        }
+    },
+    "SECURITY_REQUIREMENTS": [{"OIDC": ["openid"]}],
+    "OAUTH2_CONFIG": {
+        "clientId": OIDC_RP_CLIENT_ID,
+        "appName": "Timed API",
+        "scopes": ["openid", "profile", "email"],
+        "usePkceWithAuthorizationCodeGrant": True,
+    },
+}
 
 OIDC_VERIFY_SSL = env.bool(
     "DJANGO_OIDC_VERIFY_SSL", default=default(default_dev=False, default_prod=True)
@@ -394,6 +420,12 @@ if env.str("DJANGO_SENTRY_DSN", default=""):  # pragma: no cover
     )
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# "same-origin-allow-popups" is required for authorizing with the swagger
+SECURE_CROSS_ORIGIN_OPENER_POLICY = env.str(
+    "DJANGO_CROSS_ORIGIN_OPENER_POLICY", "same-origin-allow-popups"
+)
+
 DATA_UPLOAD_MAX_NUMBER_FIELDS = env.int(
     "DJANGO_DATA_UPLOAD_MAX_NUMBER_FIELDS", default=1000
 )

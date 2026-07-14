@@ -45,6 +45,7 @@ django-hurricane = "^1.6.2"
 psycopg = {extras = ["binary"], version = "^3.3.4"}
 tornado = "^6.5"
 setuptools = "^83.0.0"
+drf-yasg = "^1.21.15"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.15.20"
