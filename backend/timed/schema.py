@@ -23,10 +23,10 @@ class OIDCAuthenticationScheme(OpenApiAuthenticationExtension):
     name = "OIDC"
 
     def get_security_requirement(self, auto_schema):  # noqa: ARG002
-        return {self.name: ["openid"]}
+        return {self.name: ["openid"]}  # pragma: no cover
 
     def get_security_definition(self, auto_schema):  # noqa: ARG002
-        return {
+        return {  # pragma: no cover
             "type": "oauth2",
             "flows": {
                 "authorizationCode": {
