@@ -22,6 +22,7 @@ from timed.permissions import (
     IsAuthenticated,
     IsExternal,
     IsInternal,
+    IsNotBilled,
     IsNotDelete,
     IsNotTransferred,
     IsOwner,
@@ -99,8 +100,8 @@ class ReportViewSet(ModelViewSet):
         (
             # superuser and accountants may edit all reports but not delete
             (IsSuperUser | IsAccountant) & IsNotDelete
-            # reviewer and supervisor may change reports which aren't verified but not delete them
-            | (IsReviewer | IsSupervisor) & IsUnverified & IsNotDelete
+            # reviewer and supervisor may change reports which aren't verified or billed but not delete them
+            | (IsReviewer | IsSupervisor) & (IsUnverified | IsNotBilled) & IsNotDelete
             # internal employees may only change its own unverified reports
             # only external employees with resource role may only change its own unverified reports
             | IsOwner & IsUnverified & (IsInternal | (IsExternal & IsResource))
@@ -261,7 +262,7 @@ class ReportViewSet(ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        verified = serializer.validated_data.pop("verified", None)
+        verified: bool | None = serializer.validated_data.pop("verified", None)
         fields = {
             key: value
             for key, value in serializer.validated_data.items()
@@ -285,6 +286,7 @@ class ReportViewSet(ModelViewSet):
 
         if verified is not None:
             self._validate_verified(queryset, fields, user, qp)
+
             fields["verified_by"] = (verified and user) or None
 
         review_comment = fields.pop("review_comment", "")
