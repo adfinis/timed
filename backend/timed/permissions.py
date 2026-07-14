@@ -15,6 +15,13 @@ class IsUnverified(BasePermission):
         return obj.verified_by_id is None
 
 
+class IsNotBilled(BasePermission):
+    """Allows access only to unbilled objects."""
+
+    def has_object_permission(self, _request, _view, obj):
+        return obj.billed is False
+
+
 class IsReadOnly(BasePermission):
     """Allows read only methods."""
 
