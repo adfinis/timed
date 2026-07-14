@@ -86,6 +86,7 @@ def test_report_intersection_full(
                 "review": False,
                 "billed": False,
                 "rejected": False,
+                "can-verify": False,
             },
             "relationships": {
                 "customer": {
@@ -158,6 +159,7 @@ def test_report_intersection_accountant_editable(
                 "review": True,
                 "billed": None,
                 "rejected": False,
+                "can-verify": False,
             },
             "relationships": {
                 "customer": {"data": None},
@@ -203,6 +205,7 @@ def test_report_intersection_accountant_not_editable(
                 "review": None,
                 "billed": None,
                 "rejected": None,
+                "can-verify": None,
             },
             "relationships": {
                 "customer": {"data": None},
@@ -2406,3 +2409,80 @@ def test_report_filters(
     response = internal_employee_client.get(url, query_params=params)
     assert response.status_code == expected_status
     assert response.json() == snapshot
+
+
+@pytest.mark.parametrize(
+    (
+        "is_owner",
+        "is_reviewer_on_task_1",
+        "is_reviewer_on_task_2",
+        "expected_can_verify",
+        "expected_count",
+    ),
+    [
+        # can verify all reports, since user is reviewer on all tasks (is also owner on one of them)
+        (True, True, True, True, 3),
+        # can verify, since user is reviewer on one report (is also owner on that report)
+        (True, True, False, True, 1),
+        # can not verify, even though user is reviewer on some reports, user can edit all of the reports, but isn't reviewer on all of the reports
+        (True, False, True, False, 3),
+        # can not verify any reports, since user isn't reviewer on any of the reports (can edit since he is owner on one of them)
+        (True, False, False, False, 1),
+        # can verify all reports, since user is reviewer on all reports
+        (False, True, True, True, 3),
+        # can verify one of the reports, since user is reviewer on one report
+        (False, True, False, True, 1),
+        # can verify none of the reports, since user isn't reviewer on any of the reports
+        (False, False, False, None, 0),
+    ],
+)
+def test_report_intersection_can_verify(
+    internal_employee_client,
+    report_factory,
+    project_factory,
+    task_factory,
+    task_assignee_factory,
+    expected_can_verify,
+    expected_count,
+    is_owner,
+    is_reviewer_on_task_1,
+    is_reviewer_on_task_2,
+):
+    project = project_factory()
+    task1, task2 = task_factory.create_batch(2, project=project)
+
+    if is_reviewer_on_task_1:
+        task_assignee_factory(
+            user=internal_employee_client.user, task=task1, is_reviewer=True
+        )
+
+    if is_reviewer_on_task_2:
+        task_assignee_factory(
+            user=internal_employee_client.user, task=task2, is_reviewer=True
+        )
+
+    report1 = report_factory(task=task1)
+    report2, report3 = report_factory.create_batch(2, task=task2)
+
+    if is_owner:
+        report1.user = internal_employee_client.user
+        report1.save()
+
+    ids = f"{report1.id},{report2.id},{report3.id}"
+
+    url = reverse("report-intersection")
+    response = internal_employee_client.get(
+        url,
+        data={
+            "id": ids,
+            "editable": 1,
+            "customer": project.customer.id,
+            "include": "task,customer,project",
+        },
+    )
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    assert json["meta"]["count"] == expected_count
+    assert json["data"]["attributes"]["can-verify"] == expected_can_verify
