@@ -152,6 +152,7 @@ export default class ReportCommentInput extends Component {
       />
       {{#if (and this.showDropdown this.filteredUsers.length)}}
         <ul
+          data-test-report-comment-user-dropdown
           class="bg-background text-foreground absolute left-0 top-full z-30 mt-1 max-h-48 min-w-64 overflow-y-auto border py-1"
           role="listbox"
         >
