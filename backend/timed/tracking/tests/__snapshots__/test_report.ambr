@@ -4,6 +4,7 @@
     'data': dict({
       'attributes': dict({
         'billed': None,
+        'can-verify': False,
         'comment': 'test',
         'not-billable': None,
         'rejected': False,

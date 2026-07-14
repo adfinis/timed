@@ -9,6 +9,7 @@ export default class ReportIntersection extends Model {
   @attr("boolean", { allowNull: true, defaultValue: null }) review;
   @attr("boolean", { allowNull: true, defaultValue: null }) billed;
   @attr("boolean", { allowNull: true, defaultValue: null }) verified;
+  @attr("boolean", { allowNull: true, defaultValue: null }) canVerify;
 
   @belongsTo("customer", { async: true, inverse: null }) customer;
   @belongsTo("project", { async: true, inverse: null }) project;
