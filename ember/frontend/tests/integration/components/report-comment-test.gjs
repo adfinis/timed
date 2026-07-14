@@ -45,6 +45,7 @@ module("Integration | Component | ReportComment", function (hooks) {
 
   test("it completes users via click, enter & tab", async function (assert) {
     const user = this.server.create("user", { username: "a".repeat(10) });
+    this.owner.lookup("service:users").load();
 
     class State {
       @tracked comment = "";
@@ -105,6 +106,7 @@ module("Integration | Component | ReportComment", function (hooks) {
     ["user1", "user2"].forEach((username) =>
       this.server.create("user", { username }),
     );
+    this.owner.lookup("service:users").load();
 
     class State {
       @tracked comment = "";
@@ -185,6 +187,7 @@ module("Integration | Component | ReportComment", function (hooks) {
 
   test("it places the cursor after a completed mention", async function (assert) {
     this.server.create("user", { username: "user" });
+    this.owner.lookup("service:users").load();
 
     class State {
       @tracked comment = "";
