@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "hurricane",
     "rest_framework",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
     "django_filters",
     "djmoney.apps.MoneyConfig",
     "mozilla_django_oidc",
@@ -172,6 +174,8 @@ CACHES = {
 # Rest framework definition
 
 REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular_jsonapi.schemas.openapi.JsonApiAutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "drf_spectacular_jsonapi.schemas.pagination.JsonApiPageNumberPagination",
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",
@@ -184,7 +188,6 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
-    "DEFAULT_PAGINATION_CLASS": "rest_framework_json_api.pagination.JsonApiPageNumberPagination",
     "DEFAULT_RENDERER_CLASSES": ("rest_framework_json_api.renderers.JSONRenderer",),
     "TEST_REQUEST_RENDERER_CLASSES": (
         "rest_framework_json_api.renderers.JSONRenderer",
@@ -221,7 +224,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 OIDC_DEFAULT_BASE_URL = env.str(
     "DJANGO_OIDC_DEFAULT_BASE_URL",
-    default="http://timed.localhost/auth/realms/timed/protocol/openid-connect",
+    default="https://timed.localhost/auth/realms/timed/protocol/openid-connect",
 )
 OIDC_OP_AUTHORIZATION_ENDPOINT = env.str(
     "DJANGO_OIDC_OP_AUTHORIZATION_ENDPOINT", default=f"{OIDC_DEFAULT_BASE_URL}/auth"
@@ -273,7 +276,7 @@ OIDC_RP_INTROSPECT_CLIENT_SECRET = env.str(
 # admin page after completing server-side authentication flow
 LOGIN_REDIRECT_URL = env.str(
     "DJANGO_OIDC_ADMIN_LOGIN_REDIRECT_URL",
-    default=default("http://timed.localhost/admin/"),
+    default=default("https://timed.localhost/admin/"),
 )
 
 # allow / disallow login with local user / password
@@ -401,3 +404,39 @@ CORS_ALLOWED_ORIGINS = env.list("DJANGO_CORS_ALLOWED_ORIGINS", default=[])
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 BUILD_PROJECTS = env.str("DJANGO_BUILD_PROJECT", default="_BUILD")
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Timed API",
+    "DESCRIPTION": "API documentation for Timed",
+    "VERSION": "v1",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "oauth2RedirectUrl": env.str(
+            "DJANGO_SWAGGER_UI_OAUTH2_REDIRECT_URL",
+            # TODO: find a saner way to get the url
+            default=f"{LOGIN_REDIRECT_URL.removesuffix('/admin/')}/api/v1/swagger/oauth2-redirect.html",
+        ),
+    },
+    "SWAGGER_UI_OAUTH2_CONFIG": {
+        "clientId": OIDC_RP_CLIENT_ID,
+        "appName": "Timed API",
+        "scopes": ["openid", "profile", "email"],
+        "usePkceWithAuthorizationCodeGrant": True,
+    },
+    "OAUTH2_FLOWS": ["authorizationCode"],
+    "OAUTH2_AUTHORIZATION_URL": OIDC_OP_AUTHORIZATION_ENDPOINT,
+    "OAUTH2_TOKEN_URL": OIDC_OP_TOKEN_ENDPOINT,
+    "OAUTH2_SCOPES": {
+        "openid": "authenticate using OIDC",
+        "profile": "access the user's profile",
+        "email": "access the user's email address",
+    },
+    # To provide different schema components for patch and post
+    "COMPONENT_SPLIT_REQUEST": True,
+    # to fix path parameter names for nested routes https://chibisov.github.io/drf-extensions/docs/#nested-routes
+    "PREPROCESSING_HOOKS": ["drf_spectacular_jsonapi.hooks.fix_nested_path_parameters"],
+}

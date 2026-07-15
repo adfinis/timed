@@ -1,0 +1,52 @@
+"""Gebastel to make the `authorize` button in the swagger work."""
+
+from django.http import HttpResponse
+from django.templatetags.static import static
+from drf_spectacular.extensions import OpenApiAuthenticationExtension
+from drf_spectacular.settings import spectacular_settings
+from drf_spectacular.utils import extend_schema
+from drf_spectacular.views import SpectacularSwaggerView
+
+# TODO: figure out how to split/organize all of this
+from timed.schema_ext import DurationFieldExtension  # noqa: F401
+
+SWAGGER_OAUTH_COOP = (
+    "same-origin-allow-popups"  # needed for the `authorize` button to actually work
+)
+
+
+@extend_schema(exclude=True)
+class TimedSpectacularSwaggerView(SpectacularSwaggerView):
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        response.headers["Cross-Origin-Opener-Policy"] = SWAGGER_OAUTH_COOP
+        return response
+
+
+class OIDCAuthenticationScheme(OpenApiAuthenticationExtension):
+    target_class = "mozilla_django_oidc.contrib.drf.OIDCAuthentication"
+    name = "OIDC"
+
+    def get_security_requirement(self, auto_schema):  # noqa: ARG002
+        return {self.name: ["openid"]}  # pragma: no cover
+
+    def get_security_definition(self, auto_schema):  # noqa: ARG002
+        return {  # pragma: no cover
+            "type": "oauth2",
+            "flows": {
+                "authorizationCode": {
+                    "authorizationUrl": spectacular_settings.OAUTH2_AUTHORIZATION_URL,
+                    "tokenUrl": spectacular_settings.OAUTH2_TOKEN_URL,
+                    "scopes": spectacular_settings.OAUTH2_SCOPES,
+                }
+            },
+        }
+
+
+@extend_schema(exclude=True)
+def swagger_oauth2_redirect(_request):
+    response = HttpResponse(
+        f"<script src='{static('drf_spectacular_sidecar/swagger-ui-dist/oauth2-redirect.js')}'></script>"
+    )
+    response.headers["Cross-Origin-Opener-Policy"] = SWAGGER_OAUTH_COOP
+    return response
