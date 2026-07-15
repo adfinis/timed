@@ -46,6 +46,7 @@ psycopg = {extras = ["binary"], version = "^3.3.4"}
 tornado = "^6.5"
 setuptools = "^83.0.0"
 drf-spectacular = {extras = ["sidecar"], version = "^0.30.0"}
+drf-spectacular-jsonapi = "^0.6.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.15.20"

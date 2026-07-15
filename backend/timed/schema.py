@@ -4,13 +4,18 @@ from django.http import HttpResponse
 from django.templatetags.static import static
 from drf_spectacular.extensions import OpenApiAuthenticationExtension
 from drf_spectacular.settings import spectacular_settings
+from drf_spectacular.utils import extend_schema
 from drf_spectacular.views import SpectacularSwaggerView
+
+# TODO: figure out how to split/organize all of this
+from timed.schema_ext import DurationFieldExtension  # noqa: F401
 
 SWAGGER_OAUTH_COOP = (
     "same-origin-allow-popups"  # needed for the `authorize` button to actually work
 )
 
 
+@extend_schema(exclude=True)
 class TimedSpectacularSwaggerView(SpectacularSwaggerView):
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -38,6 +43,7 @@ class OIDCAuthenticationScheme(OpenApiAuthenticationExtension):
         }
 
 
+@extend_schema(exclude=True)
 def swagger_oauth2_redirect(_request):
     response = HttpResponse(
         f"<script src='{static('drf_spectacular_sidecar/swagger-ui-dist/oauth2-redirect.js')}'></script>"

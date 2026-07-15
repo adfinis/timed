@@ -705,6 +705,23 @@ django-filter = ["django-filter (>=2.4)"]
 django-polymorphic = ["django-polymorphic (>=4.0.0)"]
 
 [[package]]
+name = "drf-extensions"
+version = "0.8.0"
+description = "Extensions for Django REST Framework"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "drf_extensions-0.8.0-py2.py3-none-any.whl", hash = "sha256:ab7bd854c9061c27ab55233b66d758001e5c2d81aaa9d117cbbe1c9ea49c77ab"},
+    {file = "drf_extensions-0.8.0.tar.gz", hash = "sha256:c3f27bca74a2def53e8454a5c7b327595195df51e121743120b2f51ef5a52aaa"},
+]
+
+[package.dependencies]
+Django = ">=2.2,<6.0"
+djangorestframework = ">=3.10.3"
+packaging = ">=24.1"
+
+[[package]]
 name = "drf-spectacular"
 version = "0.30.0"
 description = "Sane and flexible OpenAPI 3 schema generation for Django REST framework"
@@ -728,6 +745,25 @@ uritemplate = ">=2.0.0"
 [package.extras]
 offline = ["drf-spectacular-sidecar"]
 sidecar = ["drf-spectacular-sidecar"]
+
+[[package]]
+name = "drf-spectacular-jsonapi"
+version = "0.6.0"
+description = "open api 3 schema generator for drf-json-api package based on drf-spectacular package."
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+files = [
+    {file = "drf_spectacular_jsonapi-0.6.0-py3-none-any.whl", hash = "sha256:cac3b1188a9fa8172abc7ef8966fcfd351e89ad23d2f33a251b415c68c870ce3"},
+    {file = "drf_spectacular_jsonapi-0.6.0.tar.gz", hash = "sha256:ccd0eccc14bafb2c036c57be6851fa282147b8e1cf8a258f467895c0cf5a3f81"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+djangorestframework = ">=3.13"
+djangorestframework-jsonapi = ">=6.0.0"
+drf-extensions = ">=0.7.1"
+drf-spectacular = ">=0.25.0"
 
 [[package]]
 name = "drf-spectacular-sidecar"
@@ -1229,7 +1265,7 @@ version = "26.0"
 description = "Core utilities for Python packages"
 optional = false
 python-versions = ">=3.8"
-groups = ["dev"]
+groups = ["main", "dev"]
 files = [
     {file = "packaging-26.0-py3-none-any.whl", hash = "sha256:b36f1fef9334a5588b4166f8bcd26a14e521f2b55e6b9de3aaa80d3ff7a37529"},
     {file = "packaging-26.0.tar.gz", hash = "sha256:00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4"},
@@ -2464,4 +2500,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "73388dc8b4d8d3f08c0b7d807066ebc9b6028aba1e40a358e804b1b0c933cb09"
+content-hash = "58d06913b0730da30c5d1459efee47c964a1cd8708fbadb082aa5767024a37d8"

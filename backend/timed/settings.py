@@ -174,7 +174,8 @@ CACHES = {
 # Rest framework definition
 
 REST_FRAMEWORK = {
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular_jsonapi.schemas.openapi.JsonApiAutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "drf_spectacular_jsonapi.schemas.pagination.JsonApiPageNumberPagination",
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",
@@ -187,7 +188,6 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
-    "DEFAULT_PAGINATION_CLASS": "rest_framework_json_api.pagination.JsonApiPageNumberPagination",
     "DEFAULT_RENDERER_CLASSES": ("rest_framework_json_api.renderers.JSONRenderer",),
     "TEST_REQUEST_RENDERER_CLASSES": (
         "rest_framework_json_api.renderers.JSONRenderer",
@@ -435,4 +435,8 @@ SPECTACULAR_SETTINGS = {
         "profile": "access the user's profile",
         "email": "access the user's email address",
     },
+    # To provide different schema components for patch and post
+    "COMPONENT_SPLIT_REQUEST": True,
+    # to fix path parameter names for nested routes https://chibisov.github.io/drf-extensions/docs/#nested-routes
+    "PREPROCESSING_HOOKS": ["drf_spectacular_jsonapi.hooks.fix_nested_path_parameters"],
 }

@@ -12,6 +12,7 @@ from django.db.models import Exists, F, OuterRef, Q, QuerySet, Sum
 from django.db.models.functions import ExtractMonth, ExtractYear
 from django.http import HttpResponse
 from django.utils.http import content_disposition_header
+from drf_spectacular.utils import extend_schema
 from ezodf import Cell, opendoc
 from rest_framework import status
 from rest_framework.response import Response
@@ -253,6 +254,7 @@ class UserStatisticViewSet(AggregateQuerysetMixin, ReadOnlyModelViewSet):
         return queryset.annotate(pk=F("user"))
 
 
+@extend_schema(exclude=True)  # TODO: properly fix this (we want this in the swagger)
 class WorkReportViewSet(GenericViewSet):
     """Build a ods work report of reports with given filters.
 
