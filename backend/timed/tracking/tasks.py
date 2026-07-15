@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from itertools import groupby
+from operator import attrgetter
 from typing import TYPE_CHECKING
 
 from django.conf import settings
@@ -76,60 +78,51 @@ def _get_report_changeset(report: Report, fields: dict) -> dict | None:
 
 
 def notify_user_changed_report(
-    report: Report, fields: dict, reviewer: User, comment: str = ""
+    report: Report,
+    reviewer: User,
+    fields: dict | None = None,
+    comment: str = "",
+    *,
+    rejected: bool = False,
 ) -> None:
-    changeset = _get_report_changeset(report, fields)
+    if fields is None:
+        fields = {}
+    if rejected:
+        user_changes = {"user": report.user, "changes": [{"report": report}]}
+    else:
+        if not (changeset := _get_report_changeset(report, fields)):
+            return
 
-    if not changeset:
-        return
-
-    user_changes = {"user": report.user, "changes": [changeset]}
-    _send_notification_emails([user_changes], reviewer, comment)
+        user_changes = {"user": report.user, "changes": [changeset]}
+    _send_notification_emails([user_changes], reviewer, comment, rejected=rejected)
 
 
 def notify_user_changed_reports(
-    queryset: QuerySet[Report], fields: dict, reviewer: User, comment: str = ""
+    queryset: QuerySet[Report],
+    fields: dict,
+    reviewer: User,
+    comment: str = "",
+    *,
+    rejected: bool = False,
 ) -> None:
-    users = [report.user for report in queryset.order_by("user").distinct("user")]
     user_changes = []
+    if not rejected:
+        queryset = queryset.exclude(user=reviewer)
 
-    for user in users:
+    reports = queryset.select_related("user").order_by("user_id", "date")
+
+    for user, user_reports in groupby(reports, key=attrgetter("user")):
         changes = []
-        for report in queryset.filter(user=user).order_by("date"):
-            changeset = _get_report_changeset(report, fields)
 
-            # skip edits of own reports and empty changes
-            if report.user == reviewer or not changeset:
+        for report in user_reports:
+            if rejected:
+                changes.append({"report": report})
                 continue
-            changes.append(changeset)
+            if changeset := _get_report_changeset(report, fields):
+                changes.append(changeset)
 
-        # skip user if changes are empty
-        if not changes:
-            continue
+        if changes:
+            user_changes.append({"user": user, "changes": changes})
 
-        user_changes.append({"user": user, "changes": changes})
-
-    _send_notification_emails(user_changes, reviewer, comment)
-
-
-def notify_user_rejected_report(
-    report: Report, reviewer: User, comment: str = ""
-) -> None:
-    user_changes = {"user": report.user, "changes": [{"report": report}]}
-    _send_notification_emails([user_changes], reviewer, comment, rejected=True)
-
-
-def notify_user_rejected_reports(
-    queryset: QuerySet[Report], _fields: dict, reviewer: User, comment: str = ""
-) -> None:
-    users = [report.user for report in queryset.order_by("user").distinct("user")]
-    user_changes = []
-
-    for user in users:
-        changes = []
-        for report in queryset.filter(user=user).order_by("date"):
-            changeset = {"report": report}
-            changes.append(changeset)
-        user_changes.append({"user": user, "changes": changes})
-
-    _send_notification_emails(user_changes, reviewer, comment, rejected=True)
+    if user_changes:
+        _send_notification_emails(user_changes, reviewer, comment, rejected=rejected)

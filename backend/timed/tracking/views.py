@@ -178,10 +178,11 @@ class ReportViewSet(ModelViewSet):
                 # value equal None means do not touch
                 if value is not None
             }
+
             if fields:
-                tasks.notify_user_changed_report(instance, fields, request.user)
+                tasks.notify_user_changed_report(instance, request.user, fields=fields)
             if fields.get("rejected"):
-                tasks.notify_user_rejected_report(instance, request.user)
+                tasks.notify_user_changed_report(instance, request.user, rejected=True)
 
         return super().update(request, *args, **kwargs)
 
@@ -212,6 +213,39 @@ class ReportViewSet(ModelViewSet):
         serializer = self.get_serializer(data)
         return Response(data=serializer.data)
 
+    def _validate_verified(self, queryset, fields, user, qp):
+        # only reviewer or superuser may verify reports
+        # this is enforced when reviewer filter is set to current user
+        if not user.is_superuser and str(qp.get("reviewer")) != str(user.id):
+            raise exceptions.ValidationError(
+                _("Reviewer filter needs to be set to verifying user")
+            )
+
+        if fields.get("review") or any(queryset.values_list("review", flat=True)):
+            raise exceptions.ValidationError(
+                _("Reports can't both be set as `review` and `verified`.")
+            )
+
+        if fields.get("task"):
+            raise exceptions.ValidationError(
+                _("Reports can't be moved and verified at the same time.")
+            )
+
+    def _validate_task(self, queryset, fields, review_comment):
+        # if no review comment was given, we validate that the customer of all the
+        # reports (that are being updated/attempted to be updated) is the same, if
+        # it isn't, we throw an error
+        if (
+            not review_comment
+            and queryset.exclude(
+                task__project__customer=fields["task"].project.customer
+            ).exists()
+        ):
+            raise exceptions.ValidationError(
+                _("Review Comment is required when changing/moving customer."),
+                "required",
+            )
+
     @action(
         detail=False,
         methods=["post"],
@@ -219,7 +253,7 @@ class ReportViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated],
         serializer_class=serializers.ReportBulkSerializer,
     )
-    def bulk(self, request):  # noqa: C901
+    def bulk(self, request):
         user = request.user
         queryset = self.get_queryset()
         queryset = self.filter_queryset(queryset)
@@ -250,41 +284,13 @@ class ReportViewSet(ModelViewSet):
             )
 
         if verified is not None:
-            # only reviewer or superuser may verify reports
-            # this is enforced when reviewer filter is set to current user
-            if not user.is_superuser and str(qp.get("reviewer")) != str(user.id):
-                raise exceptions.ValidationError(
-                    _("Reviewer filter needs to be set to verifying user")
-                )
-
-            if fields.get("review") or any(queryset.values_list("review", flat=True)):
-                raise exceptions.ValidationError(
-                    _("Reports can't both be set as `review` and `verified`.")
-                )
-
-            if fields.get("task"):
-                raise exceptions.ValidationError(
-                    _("Reports can't be moved and verified at the same time.")
-                )
-
+            self._validate_verified(queryset, fields, user, qp)
             fields["verified_by"] = (verified and user) or None
 
         review_comment = fields.pop("review_comment", "")
 
         if "task" in fields:
-            # if no review comment was given, we validate that the customer of all the
-            # reports (that are being updated/attempted to be updated) is the same, if
-            # it isn't, we throw an error
-            if (
-                not review_comment
-                and queryset.exclude(
-                    task__project__customer=fields["task"].project.customer
-                ).exists()
-            ):
-                raise exceptions.ValidationError(
-                    _("Review Comment is required when changing/moving customer."),
-                    "required",
-                )
+            self._validate_task(queryset, fields, review_comment)
             # unreject report if task has changed
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
@@ -296,12 +302,9 @@ class ReportViewSet(ModelViewSet):
 
         if fields:
             notify_args = (queryset, fields, user, review_comment)
-            # TODO: #1138 refactor the functions in `tasks`
-            # so this distinction is no longer necessary
-            if fields.get("rejected"):
-                tasks.notify_user_rejected_reports(*notify_args)
-            else:
-                tasks.notify_user_changed_reports(*notify_args)
+            tasks.notify_user_changed_reports(
+                *notify_args, rejected=fields.get("rejected")
+            )
             queryset.update(**fields)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
