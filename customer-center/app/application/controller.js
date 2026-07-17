@@ -28,7 +28,7 @@ export default class ApplicationController extends Controller {
     await this.account.changeLanguage(language);
   }
 
-  @action invalidateSession() {
+  @action logoutSession() {
     this.session.singleLogout();
   }
 }
