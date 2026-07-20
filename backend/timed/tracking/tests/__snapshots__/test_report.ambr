@@ -1,7 +1,4 @@
 # serializer version: 1
-# name: test_report_bulk_edit_move_and_verify
-  "Reports can't be moved and verified at the same time."
-# ---
 # name: test_report_filters[-1-None-400]
   dict({
     'errors': list([
@@ -113,7 +110,7 @@
   })
 # ---
 # name: test_report_move_and_unverify_report[internal_employee_client-False-400]
-  "Reports can't be moved and verified at the same time."
+  "You don't have permissions to verify on destination."
 # ---
 # name: test_report_notify_rendering
   '''
