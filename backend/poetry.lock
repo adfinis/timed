@@ -573,14 +573,14 @@ django = ">=4.2"
 
 [[package]]
 name = "django-filter"
-version = "25.2"
+version = "26.1"
 description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "django_filter-25.2-py3-none-any.whl", hash = "sha256:9c0f8609057309bba611062fe1b720b4a873652541192d232dd28970383633e3"},
-    {file = "django_filter-25.2.tar.gz", hash = "sha256:760e984a931f4468d096f5541787efb8998c61217b73006163bf2f9523fe8f23"},
+    {file = "django_filter-26.1-py3-none-any.whl", hash = "sha256:7d98ef2899218e6242619b532cb1b95af14e09dfcf74844aecb550ad27b59ff2"},
+    {file = "django_filter-26.1.tar.gz", hash = "sha256:66ea04031b068c77c86e1ac26ced7a3f8f13ce797f5795751707e3deefc58054"},
 ]
 
 [package.dependencies]
@@ -2137,4 +2137,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "1f3c885107dc35a43f5876a9f4ca29b2517db0d6e3d8f381e88533f88c6a20fd"
+content-hash = "4f07999fcad632ad76be9c93cb06265f1024f7129de626a3c1309e13d68d6ad4"
