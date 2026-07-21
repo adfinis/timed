@@ -15,7 +15,7 @@ on:
       - ember/ui-core/**
 
 env:
-  NODE_VERSION: 20
+  NODE_VERSION: 22
 
 defaults:
   run:
