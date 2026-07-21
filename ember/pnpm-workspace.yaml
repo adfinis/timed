@@ -4,14 +4,14 @@ packages:
 
 autoInstallPeers: false
 
-ignoredBuiltDependencies:
-  - "@scarf/scarf"
-  - core-js
-
-onlyBuiltDependencies:
-  - esbuild # see https://github.com/evanw/esbuild/issues/4085#issuecomment-2696009329, can safely be removed as it's an optimization
-  - ember-can # we depend on https://github.com/adfinis/ember-can/, ideally we move this to a package registry in the future so this can go
-
 overrides:
   ember-inflector: 6.0.0
   tracked-built-ins: ~4.0.0
+
+allowBuilds:
+  # see https://github.com/evanw/esbuild/issues/4085#issuecomment-2696009329, can safely be removed as it's an optimization
+  esbuild: true
+  # we depend on https://github.com/adfinis/ember-can/, ideally we move this to a package registry in the future so this can go
+  ember-can@https://codeload.github.com/adfinis/ember-can/tar.gz/910714c83f33a388b9d69f6f84ba146c681118da#path:/ember-can: true
+  "@scarf/scarf": false
+  core-js: false
