@@ -7,6 +7,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import { not } from "ember-truth-helpers";
+import { localCopy } from "tracked-toolbox";
 import { ReportDurationpicker } from "ui-core/components/ui-durationpicker";
 
 import Modal from "timed/components/modal";
@@ -14,11 +15,12 @@ import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
 
 export default class MagicLinkModal extends Component {
-  @tracked task;
-  @tracked duration;
-  @tracked comment;
-  @tracked review;
-  @tracked notBillable;
+  @localCopy("args.task") task;
+  @localCopy("args.duration") duration;
+  @localCopy("args.comment") comment;
+  @localCopy("args.review") review;
+  @localCopy("args.notBillable") notBillable;
+
   @tracked statusMsg;
   @tracked errorMsg;
 
@@ -35,18 +37,30 @@ export default class MagicLinkModal extends Component {
     this[flag] = value ? undefined : true;
   }
 
+  get reportQueryParams() {
+    return {
+      task: this.task?.id,
+      comment: this.comment || undefined,
+      duration: this.duration?.toISO() || undefined,
+      review: this.review || undefined,
+      notBillable: this.notBillable || undefined,
+    };
+  }
+
   get magicLinkString() {
     const url = this.router.urlFor("index.reports", {
-      queryParams: {
-        task: this.task?.id,
-        comment: this.comment,
-        duration: this.duration,
-        review: this.review,
-        notBillable: this.notBillable,
-      },
+      queryParams: this.reportQueryParams,
     });
 
     return `${window.location.origin}${url}`;
+  }
+
+  @action
+  createReport() {
+    this.router.transitionTo("index.reports", {
+      queryParams: this.reportQueryParams,
+    });
+    this.args.onClose();
   }
 
   @action
@@ -141,7 +155,17 @@ export default class MagicLinkModal extends Component {
             data-test-magic-link-string
           />
         </modal.body>
-        <modal.footer class="flex justify-end">
+        <modal.footer class="flex justify-end gap-2">
+          <button
+            class="btn btn-primary"
+            {{on "click" this.createReport}}
+            disabled={{not this.task}}
+            type="button"
+            data-test-create-report-btn
+          >
+            <FaIcon @icon="plus" @prefix="fas" />
+            Create report
+          </button>
           <button
             class="btn btn-primary"
             {{on "click" this.copyToClipboard}}

@@ -7,7 +7,9 @@ import toggle from "@nullvoxpopuli/ember-composable-helpers/helpers/toggle";
 import { not } from "ember-truth-helpers";
 import Card from "ui-core/components/ui-card";
 import UiCheckbox from "ui-core/components/ui-checkbox";
+import { roundToReport } from "ui-core/utils/report-duration";
 
+import MagicLinkBtn from "timed/components/magic-link-btn";
 import ReportComment from "timed/components/report-comment";
 import TaskSelection from "timed/components/task-selection";
 import Timepicker from "timed/components/timepicker";
@@ -116,6 +118,15 @@ import Timepicker from "timed/components/timepicker";
             {{on "click" @controller.delete}}
             data-test-activity-edit-form-delete
           >Delete</button>
+          <MagicLinkBtn
+            @task={{@controller.changeset.task}}
+            @duration={{if @model.active null (roundToReport @model.duration)}}
+            @comment={{@controller.changeset.comment}}
+            @review={{@controller.changeset.review}}
+            @notBillable={{@controller.changeset.notBillable}}
+            @requiresTask={{true}}
+            data-test-activity-magic-link
+          />
           <button
             class="btn btn-primary"
             type="submit"
