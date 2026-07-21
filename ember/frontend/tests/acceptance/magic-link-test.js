@@ -244,4 +244,43 @@ module("Acceptance | magic links", function (hooks) {
       .dom("[data-test-magic-link-string]")
       .doesNotIncludeValue("notBillable=");
   });
+
+  test("can create a report directly from the magic link modal", async function (assert) {
+    await visit("/reports");
+
+    await click("[data-test-magic-link-btn]");
+
+    assert.dom("[data-test-magic-link-form]").isVisible();
+
+    await waitFor(".customer-select");
+    await taskSelect("[data-test-task-selector]");
+    await fillIn("[data-test-magic-link-comment]", "direct report comment");
+
+    await click("[data-test-create-report-btn]");
+
+    assert.dom("[data-test-report-row]").exists({ count: 7 });
+    assert
+      .dom("[data-test-report-row]:last-child .comment-field")
+      .hasValue("direct report comment");
+  });
+
+  test("can create a magic link from an activity", async function (assert) {
+    const user = this.server.schema.users.first();
+    const task = this.server.create("task");
+    const activity = this.server.create("activity", {
+      userId: user.id,
+      taskId: task.id,
+      comment: "activity comment",
+      fromTime: "08:00:00",
+      toTime: "10:00:00",
+    });
+
+    await visit(`/edit/${activity.id}`);
+
+    await waitFor("[data-test-activity-magic-link]");
+    await click("[data-test-activity-magic-link]");
+
+    assert.dom("[data-test-magic-link-comment]").hasValue("activity comment");
+    assert.dom("[data-test-magic-link-duration]").hasValue("02:00");
+  });
 });
