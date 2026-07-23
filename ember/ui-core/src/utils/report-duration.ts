@@ -66,4 +66,9 @@ const parseStringDuration = (duration: string) => {
   return clampReport(parse().shiftTo("hours", "minutes"));
 };
 
-export { REPORT_DURATION_MIN, REPORT_DURATION_MAX, parseStringDuration };
+export {
+  REPORT_DURATION_MIN,
+  REPORT_DURATION_MAX,
+  parseStringDuration,
+  roundToReport,
+};

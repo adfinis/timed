@@ -15,6 +15,7 @@ import { ReportDurationpicker } from "ui-core/components/ui-durationpicker";
 
 import CanEdit from "timed/components/can-edit";
 import Durationpicker from "timed/components/durationpicker";
+import MagicLinkBtn from "timed/components/magic-link-btn";
 import ReportComment from "timed/components/report-comment";
 import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
@@ -163,8 +164,19 @@ export default class ReportRowComponent extends Component {
             </Toggle>
           </div>
           <div
-            class="form-list-cell form-group cell-buttons grid grid-cols-2 justify-around gap-2 self-center text-sm [&>*]:px-2"
+            class="form-list-cell form-group cell-buttons grid
+              {{if editable 'grid-cols-3' 'grid-cols-1'}}
+              justify-around gap-1 self-center text-sm [&>*]:px-2"
           >
+            <MagicLinkBtn
+              @task={{cs.task}}
+              @duration={{cs.duration}}
+              @comment={{cs.comment}}
+              @review={{cs.review}}
+              @notBillable={{cs.notBillable}}
+              @requiresTask={{true}}
+              data-test-report-magic-link
+            />
             {{#if editable}}
               <button
                 type="button"

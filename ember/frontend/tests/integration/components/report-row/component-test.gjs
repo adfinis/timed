@@ -23,6 +23,7 @@ module("Integration | Component | report row", function (hooks) {
     assert.dom(".form-group").exists({ count: 8 });
     assert.dom(".btn-danger").exists({ count: 1 });
     assert.dom(".btn-primary").exists({ count: 1 });
+    assert.dom("[data-test-report-magic-link]").exists({ count: 1 });
   });
 
   test("can delete row", async function (assert) {
@@ -62,7 +63,8 @@ module("Integration | Component | report row", function (hooks) {
 
     assert.dom("input").isDisabled();
     assert.dom("form").hasAttribute("title", /John Doe/);
-    assert.dom(".btn").doesNotExist();
+    assert.dom(".btn").exists({ count: 1 });
+    assert.dom("[data-test-report-magic-link]").exists({ count: 1 });
 
     this.set(
       "report",
@@ -71,6 +73,21 @@ module("Integration | Component | report row", function (hooks) {
 
     assert.dom("input").isNotDisabled();
     assert.dom("form").hasNoAttribute("title");
-    assert.dom(".btn").exists({ count: 2 });
+    assert.dom(".btn").exists({ count: 3 });
+    assert.dom("[data-test-report-magic-link]").exists({ count: 1 });
+  });
+
+  test("magic link button is disabled when no task", async function (assert) {
+    this.set(
+      "report",
+      EmberObject.create({
+        verifiedBy: EmberObject.create(),
+        task: null,
+      }),
+    );
+
+    await render(<template><ReportRow @report={{this.report}} /></template>);
+
+    assert.dom("[data-test-report-magic-link]").isDisabled();
   });
 });
