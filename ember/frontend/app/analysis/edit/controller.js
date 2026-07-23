@@ -59,6 +59,7 @@ export default class AnalysisEditController extends Controller {
   @service currentUser;
   @service store;
   @service unverifiedReports;
+  @service scrollRestorer;
 
   @tracked id;
   @tracked user;
@@ -259,6 +260,7 @@ export default class AnalysisEditController extends Controller {
   @action
   cancel() {
     const task = this.analysisIndexController.data;
+    this.scrollRestorer.canRestoreScroll = true;
 
     if (task.lastSuccessful) {
       this.analysisIndexController.skipResetOnSetup = true;
