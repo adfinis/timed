@@ -40,6 +40,7 @@ import Timepicker from "timed/components/timepicker";
         <div class="form-group">
           <label hidden for="comment">Comment</label>
           <ReportComment
+            data-test-activity-comment
             @value={{@controller.changeset.comment}}
             @customerVisible={{@controller.changeset.task.project.customerVisible}}
             @onChange={{fn (mut @controller.changeset.comment)}}
