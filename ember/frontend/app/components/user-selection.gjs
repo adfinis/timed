@@ -22,11 +22,13 @@ export default class UserSelection extends Component {
   @service tracking;
   @service store;
 
-  @tracked queryOptions = null;
-
   constructor(...args) {
     super(...args);
     this.tracking.users.perform();
+  }
+
+  get queryOptions() {
+    return this.args.queryOptions;
   }
 
   usersTask = restartableTask(async () => {
