@@ -47,6 +47,14 @@ export default class ReportCommentInput extends Component {
   }
 
   @action
+  scrollIntoView() {
+    if (!this.showDropdown || !this.inputElement) return;
+    const ul = this.inputElement.nextElementSibling;
+    const el = ul.children[this.activeIndex];
+    el.scrollIntoView({ block: "nearest" });
+  }
+
+  @action
   cycleUser(a) {
     this.activeIndex = mod(this.activeIndex + a, this.filteredUsers.length);
   }
@@ -109,8 +117,14 @@ export default class ReportCommentInput extends Component {
       Escape: () => {
         this.showDropdown = false;
       },
-      ArrowUp: () => this.cycleUser(-1),
-      ArrowDown: () => this.cycleUser(1),
+      ArrowUp: () => {
+        this.cycleUser(-1);
+        this.scrollIntoView();
+      },
+      ArrowDown: () => {
+        this.cycleUser(1);
+        this.scrollIntoView();
+      },
       Enter: () => this.selectActiveUser(),
       Tab: () => this.selectActiveUser(),
     };
