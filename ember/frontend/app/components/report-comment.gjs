@@ -139,13 +139,14 @@ export default class ReportCommentInput extends Component {
         autocomplete="off"
         {{on "input" this.handleInput}}
         {{on "keydown" this.handleKeydown}}
+        {{on "focusout" (fn (mut this.showDropdown) false)}}
         {{elementModifier this}}
         data-test-report-comment
       />
       {{#if (and this.showDropdown this.filteredUsers.length)}}
         <ul
           data-test-report-comment-user-dropdown
-          class="bg-background text-foreground absolute left-0 top-full z-30 mt-1 max-h-48 min-w-64 overflow-y-auto border py-1"
+          class="bg-background text-foreground absolute left-0 top-full z-30 mt-1 max-h-48 min-w-64 overflow-y-auto border p-1 text-left"
           role="listbox"
         >
           {{#each this.filteredUsers as |user index|}}
