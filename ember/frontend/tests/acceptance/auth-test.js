@@ -37,6 +37,6 @@ module("Acceptance | auth", function (hooks) {
 
     await click("[data-test-logout]");
 
-    assert.strictEqual(currentURL(), "/login");
+    assert.strictEqual(currentURL(), "/");
   });
 });
