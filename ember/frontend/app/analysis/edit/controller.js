@@ -177,6 +177,14 @@ export default class AnalysisEditController extends Controller {
     return result;
   }
 
+  get isSingleEdit() {
+    return this.intersection.lastSuccessful?.value?.meta.count === 1;
+  }
+
+  get canSplitReport() {
+    return this.isReviewer && this.isSingleEdit;
+  }
+
   save = task(async (changeset) => {
     try {
       const params = this.prepareParams(allQueryParams(this));
