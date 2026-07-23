@@ -48,7 +48,7 @@ setuptools = "^83.0.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.15.21"
-coverage = "7.15.1"
+coverage = "7.15.2"
 django-extensions = "4.1"
 factory-boy = "3.3.3"
 ipdb = "0.13.13"
