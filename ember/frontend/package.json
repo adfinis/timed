@@ -132,7 +132,7 @@
     "stylelint": "16.24.0",
     "stylelint-config-standard": "39.0.0",
     "tailwindcss": "~3.4.19",
-    "tracked-built-ins": "~4.0.0",
+    "tracked-built-ins": "~4.1.2",
     "tracked-toolbox": "2.0.0",
     "ui-core": "workspace:*",
     "webpack": "5.103.0"
