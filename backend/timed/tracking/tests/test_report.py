@@ -2380,3 +2380,50 @@ def test_report_split(
             comment=new_comment, duration=new_duration, task=new_report_task
         ).exists()
         assert original_report_count == Report.objects.count()
+
+
+@pytest.mark.parametrize(
+    ("verified_flag", "billed", "expected"),
+    [
+        (True, True, status.HTTP_204_NO_CONTENT),
+        (False, True, status.HTTP_400_BAD_REQUEST),
+        (True, False, status.HTTP_204_NO_CONTENT),
+        (False, False, status.HTTP_204_NO_CONTENT),
+    ],
+)
+def test_report_unverify_billed(
+    internal_employee_client,
+    report_factory,
+    project_assignee_factory,
+    verified_flag,
+    billed,
+    expected,
+):
+    user = internal_employee_client.user
+    report = report_factory(user=user, billed=billed)
+    project_assignee_factory(user=user, project=report.task.project, is_reviewer=True)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"verified": verified_flag, "comment": "some comment"},
+        }
+    }
+
+    response = internal_employee_client.post(
+        url + f"?editable=1&reviewer={user.id}", data
+    )
+    assert response.status_code == expected
+    report.refresh_from_db()
+    if not verified_flag and billed:
+        assert (
+            response.json()["errors"][0]["detail"]
+            == "Verified flag can't be modified on billed reports."
+        )
+    else:
+        assert report.comment == "some comment"
+    if verified_flag:
+        assert report.verified_by == user
