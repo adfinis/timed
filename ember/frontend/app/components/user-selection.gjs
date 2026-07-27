@@ -1,7 +1,6 @@
 import { hash } from "@ember/helper";
 import { service } from "@ember/service";
 import Component from "@glimmer/component";
-import { tracked } from "@glimmer/tracking";
 import { restartableTask } from "ember-concurrency";
 import { trackedTask } from "reactiveweb/ember-concurrency";
 
