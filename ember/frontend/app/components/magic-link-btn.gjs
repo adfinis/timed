@@ -32,7 +32,11 @@ export default class MagicLinkBtn extends Component {
       {{on "click" this.toggleModal}}
       ...attributes
     >
-      <FaIcon @icon="wand-magic-sparkles" @prefix="fas" @size="sm" />
+      {{#if @label}}
+        {{@label}}
+      {{else}}
+        <FaIcon @icon="wand-magic-sparkles" @prefix="fas" @size="sm" />
+      {{/if}}
       {{#if this.isModalVisible}}
         <MagicLinkModal
           @isVisible={{this.isModalVisible}}

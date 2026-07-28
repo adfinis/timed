@@ -119,6 +119,7 @@ import Timepicker from "timed/components/timepicker";
             data-test-activity-edit-form-delete
           >Delete</button>
           <MagicLinkBtn
+            @label="Magic Link"
             @task={{@controller.changeset.task}}
             @duration={{if @model.active null (roundToReport @model.duration)}}
             @comment={{@controller.changeset.comment}}
