@@ -135,9 +135,19 @@ export default class AnalysisController extends QPController {
   }
 
   get tableColumns() {
-    return this.userSettings
-      .getTableColumns("analysis")
-      .filter((col) => col.isVisible);
+    return this.userSettings.getTableColumns("analysis");
+  }
+
+  get activeTableColumns() {
+    return this.tableColumns.filter((col) => col.isVisible);
+  }
+
+  get hasDisabledColumns() {
+    return this.tableColumns.filter((col) => !col.isVisible).length !== 0;
+  }
+
+  get showTotalDuration() {
+    return this.activeTableColumns.some((col) => col.label === "Duration");
   }
 
   @action

@@ -19,6 +19,10 @@ export default class TableColumnPicker extends Component {
     return this.args.tableName;
   }
 
+  get hasDisabledColumns() {
+    return this.args.hasDisabledColumns;
+  }
+
   columns = tracked(this.userSettings.getTableColumns(this.tableName));
 
   @action
@@ -50,7 +54,14 @@ export default class TableColumnPicker extends Component {
       {{on "click" (toggle "isModalVisible" this)}}
       ...attributes
     >
-      <FaIcon @icon="gear" @prefix="fas" @size="sm" />
+      <span class="fa-layers fa-fw relative">
+        <FaIcon @icon="gear" @prefix="fas" @size="m" />
+        {{#if this.hasDisabledColumns}}
+          <span
+            class="bg-success-light absolute right-0 top-0 h-2 w-2 rounded-full shadow-sm duration-300"
+          ></span>
+        {{/if}}
+      </span>
     </button>
     {{#if this.isModalVisible}}
       <Modal

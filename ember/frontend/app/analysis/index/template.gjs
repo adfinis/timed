@@ -300,15 +300,18 @@ const AnalysisIndexTemplate = <template>
                 >
                   Edit all
                 </button>
-                <ColumnPicker @tableName="analysis" />
+                <ColumnPicker
+                  @tableName="analysis"
+                  @hasDisabledColumns={{@controller.hasDisabledColumns}}
+                />
               </div>
 
               {{! template-lint-disable table-groups }}
               <Table class="table--striped table--analysis table">
-                <Colgroup @columns={{@controller.tableColumns}} />
+                <Colgroup @columns={{@controller.activeTableColumns}} />
                 <Thead>
                   <Tr>
-                    {{#each @controller.tableColumns as |column|}}
+                    {{#each @controller.activeTableColumns as |column|}}
                       {{#if column.sortable}}
                         <SortHeader
                           @update={{fn @controller.updateParam "ordering"}}
@@ -324,7 +327,7 @@ const AnalysisIndexTemplate = <template>
               </Table>
               <ScrollContainer class="analysis-scrollable-container">
                 <Table class="table--striped table--analysis table table-fixed">
-                  <Colgroup @columns={{@controller.tableColumns}} />
+                  <Colgroup @columns={{@controller.activeTableColumns}} />
                   <tbody>
                     {{#each reports as |report|}}
                       {{! template-lint-disable}}
@@ -349,7 +352,7 @@ const AnalysisIndexTemplate = <template>
                             )
                           }}
                         >
-                          {{#each @controller.tableColumns as |column|}}
+                          {{#each @controller.activeTableColumns as |column|}}
                             {{#if (eq column.label "User")}}
                               <Td>{{report.user.username}}</Td>
                             {{else if (eq column.label "Date")}}
@@ -406,7 +409,7 @@ const AnalysisIndexTemplate = <template>
                         }}
                       >
                         <td
-                          colspan={{@controller.tableColumns.length}}
+                          colspan={{@controller.activeTableColumns.length}}
                           class="text-center"
                         >
                           Loading<span class="loading-dots"><i>.</i><i>.</i><i
@@ -418,22 +421,23 @@ const AnalysisIndexTemplate = <template>
                 </Table>
               </ScrollContainer>
               <Table class="table--striped table--analysis table table-fixed">
-                <Colgroup @columns={{@controller.tableColumns}} />
+                <Colgroup @columns={{@controller.activeTableColumns}} />
                 <Tfoot>
                   <Tr>
-                    <Td colspan="2">Total:</Td>
+                    {{#if @controller.showTotalDuration}}
+                      <Td colspan="2">Total:</Td>
 
-                    <Td colspan="2"><strong class="total">{{formatDuration
-                          @controller.totalTime
-                          false
-                        }}</strong></Td><Td colspan="8" class="text-right">
-                      <em>Displaying
-                        {{reports.length}}
-                        of
-                        {{@controller.totalItems}}
-                        reports</em>
-
-                    </Td>
+                      <Td colspan="2"><strong class="total">{{formatDuration
+                            @controller.totalTime
+                            false
+                          }}</strong></Td><Td colspan="8" class="text-right">
+                        <em>Displaying
+                          {{reports.length}}
+                          of
+                          {{@controller.totalItems}}
+                          reports</em>
+                      </Td>
+                    {{/if}}
                   </Tr>
                 </Tfoot>
               </Table>
