@@ -26,7 +26,7 @@ export default class MagicLinkBtn extends Component {
     <button
       type="button"
       data-test-magic-link-btn
-      title="Create a magic link"
+      title="Create a shareable link for the current task"
       class="btn btn-default"
       disabled={{if @requiresTask (not @task)}}
       {{on "click" this.toggleModal}}

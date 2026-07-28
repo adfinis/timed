@@ -104,13 +104,13 @@ import Timepicker from "timed/components/timepicker";
         </table>
       </c.footer>
       <c.footer class="flex justify-between text-right">
-        <LinkTo
-          @route="index.activities"
-          class="btn btn-default lg:hidden"
-          role="button"
-          data-test-activity-edit-form-cancel
-        >Cancel</LinkTo>
-        <div class="flex gap-2 lg:w-full lg:justify-between">
+        <div class="flex gap-2 lg:justify-end">
+          <LinkTo
+            @route="index.activities"
+            class="btn btn-default lg:hidden"
+            role="button"
+            data-test-activity-edit-form-cancel
+          >Cancel</LinkTo>
           <button
             class="btn btn-danger"
             type="button"
@@ -118,16 +118,24 @@ import Timepicker from "timed/components/timepicker";
             {{on "click" @controller.delete}}
             data-test-activity-edit-form-delete
           >Delete</button>
-          <MagicLinkBtn
-            @label="Magic Link"
-            @task={{@controller.changeset.task}}
-            @duration={{if @model.active null (roundToReport @model.duration)}}
-            @comment={{@controller.changeset.comment}}
-            @review={{@controller.changeset.review}}
-            @notBillable={{@controller.changeset.notBillable}}
-            @requiresTask={{true}}
-            data-test-activity-magic-link
-          />
+        </div>
+        <div class="flex gap-2 lg:justify-start">
+          {{#if @controller.changeset.task}}
+            <MagicLinkBtn
+              @label="Share"
+              @task={{@controller.changeset.task}}
+              @duration={{if
+                @model.active
+                null
+                (roundToReport @model.duration)
+              }}
+              @comment={{@controller.changeset.comment}}
+              @review={{@controller.changeset.review}}
+              @notBillable={{@controller.changeset.notBillable}}
+              @requiresTask={{true}}
+              data-test-activity-magic-link
+            />
+          {{/if}}
           <button
             class="btn btn-primary"
             type="submit"

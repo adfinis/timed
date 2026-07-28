@@ -151,7 +151,7 @@ export default class MagicLinkModal extends Component {
             disabled={{true}}
             type="url"
             class="form-control mt-2 flex-grow rounded"
-            aria-label="magic link string"
+            aria-label="Create a shareable link"
             data-test-magic-link-string
           />
         </modal.body>
