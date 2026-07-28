@@ -51,6 +51,7 @@ import {
   faMagic,
   faGear,
   faCircleQuestion,
+  faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -103,5 +104,6 @@ library.add(
   faMagic,
   faGear,
   faCircleQuestion,
+  faCircle,
   faWandMagicSparkles,
 );
