@@ -136,6 +136,13 @@ export default class ReportCommentInput extends Component {
     handler();
   }
 
+  @action handleFocusOut() {
+    // needed so clicking suggestions works
+    setTimeout(() => {
+      this.showDropdown = false;
+    }, 0);
+  }
+
   <template>
     <div class="relative w-full">
       <input
@@ -153,7 +160,7 @@ export default class ReportCommentInput extends Component {
         autocomplete="off"
         {{on "input" this.handleInput}}
         {{on "keydown" this.handleKeydown}}
-        {{on "focusout" (fn (mut this.showDropdown) false)}}
+        {{on "focusout" this.handleFocusOut}}
         {{elementModifier this}}
         data-test-report-comment
       />
