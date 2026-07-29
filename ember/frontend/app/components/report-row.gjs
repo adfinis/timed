@@ -20,6 +20,7 @@ import ReportComment from "timed/components/report-comment";
 import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
 import Void from "timed/components/void";
+import media from "timed/helpers/media";
 import ReportValidations from "timed/validations/report";
 
 export default class ReportRowComponent extends Component {
@@ -59,7 +60,7 @@ export default class ReportRowComponent extends Component {
       {{#let (changeset @report this.ReportValidations) as |cs|}}
         <ValidatedForm
           @model={{cs}}
-          class="report-row grid grid-cols-4 gap-2 p-1 lg:grid-cols-[repeat(3,minmax(0,0.9fr)),minmax(0,1.6fr),minmax(0,0.45fr),minmax(2rem,0.6fr),repeat(2,minmax(2rem,0.6fr))] lg:p-1.5 xl:grid-cols-[repeat(3,minmax(0,1.2fr)),minmax(0,1.8fr),minmax(0,0.4fr),minmax(2rem,0.5fr),repeat(2,minmax(2rem,0.5fr))] xl:p-2.5 max-lg:[&>*]:w-full"
+          class="report-row grid grid-cols-[repeat(3,1fr),minmax(min-content,1.5fr)] gap-2 p-1 lg:grid-cols-[repeat(3,minmax(0,0.9fr)),minmax(0,1.6fr),minmax(0,0.45fr),minmax(2rem,0.6fr),minmax(2rem,0.5fr),minmax(2rem,0.7fr)] lg:p-1.5 xl:grid-cols-[repeat(3,minmax(0,1.2fr)),minmax(0,1.8fr),minmax(0,0.4fr),minmax(2rem,0.5fr),minmax(2rem,0.5fr),minmax(2rem,0.7fr)] xl:p-2.5 max-lg:[&>*]:w-full"
           title={{unless
             editable
             (concat
@@ -164,9 +165,9 @@ export default class ReportRowComponent extends Component {
             </Toggle>
           </div>
           <div
-            class="form-list-cell form-group cell-buttons grid
+            class="form-group grid grid-flow-col
               {{if editable 'grid-cols-3' 'grid-cols-1'}}
-              justify-around gap-1 self-center text-sm [&>*]:px-2"
+              place-content-center justify-around gap-1 self-center [&>*]:px-2"
           >
             <MagicLinkBtn
               @task={{cs.task}}
@@ -175,23 +176,30 @@ export default class ReportRowComponent extends Component {
               @review={{cs.review}}
               @notBillable={{cs.notBillable}}
               @requiresTask={{true}}
+              @size={{if (media "isMd") "sm" "2xs"}}
               data-test-report-magic-link
             />
             {{#if editable}}
               <button
                 type="button"
                 data-test-delete-report
-                class="btn btn-danger"
+                class="btn btn-danger grid grid-flow-col place-content-center items-center"
                 disabled={{or this.report.verifiedBy.id cs.isNew}}
                 {{on "click" (fn (optional @onDelete) @report)}}
-              ><FaIcon @icon="trash-can" /></button>
+              ><FaIcon
+                  @icon="trash-can"
+                  @size={{if (media "isMd") "sm" "2xs"}}
+                /></button>
               <f.submit
                 data-test-save-report
                 disabled={{or
                   this.save.isRunning
                   (or (not cs.isValid) (not (or cs.isDirty cs.isNew)))
                 }}
-              ><FaIcon @icon="floppy-disk" /></f.submit>
+              ><FaIcon
+                  @icon="floppy-disk"
+                  @size={{if (media "isMd") "sm" "2xs"}}
+                /></f.submit>
             {{/if}}
           </div>
         </ValidatedForm>
