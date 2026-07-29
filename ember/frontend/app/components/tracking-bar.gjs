@@ -56,7 +56,7 @@ export default class TrackingBar extends Component {
               @onSubmit={{perform this.tracking.startActivity}}
             />
           </div>
-          <div class="grid h-[2.5rem] place-self-start">
+          <div class="grid h-full place-self-center">
             <RecordButton
               @activity={{this.tracking.activity}}
               @recording={{this.tracking.activity.active}}
