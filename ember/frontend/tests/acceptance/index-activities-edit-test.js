@@ -46,7 +46,7 @@ module("Acceptance | index activities edit", function (hooks) {
     );
 
     await fillIn(
-      "[data-test-activity-edit-form] textarea[name=comment]",
+      "[data-test-activity-edit-form] [data-test-activity-comment]",
       "Test",
     );
 

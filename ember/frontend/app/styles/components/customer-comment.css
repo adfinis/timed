@@ -1,5 +1,5 @@
 /* add eye icon into input */
-textarea.customer-comment {
+input.customer-comment {
   background-image: url("/assets/eye-regular.svg") !important;
   background-position: right 0.5rem center;
   print-color-adjust: exact;

@@ -5,12 +5,12 @@ import { service } from "@ember/service";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import pick from "@nullvoxpopuli/ember-composable-helpers/helpers/pick";
 import { not } from "ember-truth-helpers";
 import { localCopy } from "tracked-toolbox";
 import { ReportDurationpicker } from "ui-core/components/ui-durationpicker";
 
 import Modal from "timed/components/modal";
+import ReportComment from "timed/components/report-comment";
 import TaskSelection from "timed/components/task-selection";
 import Toggle from "timed/components/toggle";
 
@@ -98,12 +98,9 @@ export default class MagicLinkModal extends Component {
             <t.task @dropdownClass="z-[60]" />
           </TaskSelection>
 
-          <input
-            value={{this.comment}}
-            type="text"
-            {{on "change" (pick "target.value" (fn (mut this.comment)))}}
-            class="ember-text-field form-control rounded"
-            placeholder="Comment"
+          <ReportComment
+            @value={{this.comment}}
+            @onChange={{fn (mut this.comment)}}
             aria-label="Comment for the timed entry"
             data-test-magic-link-comment
           />
