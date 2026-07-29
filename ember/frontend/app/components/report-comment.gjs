@@ -37,11 +37,19 @@ export default class ReportCommentInput extends Component {
     return parts.join("\n");
   }
 
+  get _users() {
+    // don't show inactive users
+    // or users that can't be completed
+    return this.users.data.filter(
+      (u) => u.isActive && u.firstName && u.lastName,
+    );
+  }
+
   get filteredUsers() {
     const query = this.searchQuery.toLowerCase();
     if (query.length < 1) return []; // only show users once there's at least one character
     const indexOfQuery = (s) => s.indexOf(query);
-    return this.users.data
+    return this._users
       .filter((user) => user.username.toLowerCase().includes(query))
       .toSorted((a, b) => indexOfQuery(a.username) - indexOfQuery(b.username));
   }

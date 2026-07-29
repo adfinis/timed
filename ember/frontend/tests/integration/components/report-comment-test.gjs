@@ -216,4 +216,40 @@ module("Integration | Component | ReportComment", function (hooks) {
 
     assert.strictEqual(" baz", state.comment.slice(input.selectionStart));
   });
+
+  test("it doesn't suggest inactive or invalid users", async function (assert) {
+    this.server.create("user", {
+      username: "user1",
+      firstName: "",
+      lastName: "",
+    });
+    this.server.create("user", { username: "user2", isActive: false });
+    this.server.create("user", { username: "user3" });
+    this.owner.lookup("service:users").load();
+
+    class State {
+      @tracked comment = "";
+    }
+
+    const state = new State();
+
+    await render(
+      <template>
+        <ReportComment
+          data-test-report-comment
+          @value={{state.comment}}
+          @onChange={{fn (mut state.comment)}}
+        />
+      </template>,
+    );
+
+    assert.dom("[data-test-report-comment]").exists();
+    assert.dom("[data-test-report-comment]").hasNoValue();
+
+    await typeIn("[data-test-report-comment]", "@user");
+
+    assert
+      .dom("[data-test-report-comment-user-dropdown] li")
+      .exists({ count: 1 });
+  });
 });
