@@ -140,7 +140,7 @@ export default class ReportCommentInput extends Component {
     // needed so clicking suggestions works
     setTimeout(() => {
       this.showDropdown = false;
-    }, 0);
+    }, 100);
   }
 
   <template>
