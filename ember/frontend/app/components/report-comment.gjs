@@ -17,6 +17,10 @@ const elementModifier = modifier((element, [context]) => {
   context.inputElement = element;
 });
 
+const popoverModifier = modifier((element) => {
+  element.showPopover?.();
+  return () => element.hidePopover?.();
+});
 export default class ReportCommentInput extends Component {
   @service users;
 
@@ -152,11 +156,11 @@ export default class ReportCommentInput extends Component {
   }
 
   <template>
-    <div class="relative w-full">
+    <div class="relative w-full [anchor-scope:all]">
       <input
         ...attributes
         type="text"
-        class="comment-field w-full rounded
+        class="comment-field w-full rounded [anchor-name:--report-comment-anchor]
           {{if @customerVisible 'customer-comment'}}"
         placeholder="Comment"
         name="comment"
@@ -174,8 +178,10 @@ export default class ReportCommentInput extends Component {
       {{#if (and this.showDropdown this.filteredUsers.length)}}
         <ul
           data-test-report-comment-user-dropdown
-          class="bg-background text-foreground absolute left-0 top-full z-30 mt-1 max-h-48 min-w-64 overflow-y-auto border p-1 text-left"
+          class="bg-background text-foreground left-[anchor(left)] top-[anchor(bottom)] max-h-48 min-w-[anchor-size(width)] overflow-y-auto border p-1 text-left shadow-md [position-anchor:--report-comment-anchor]"
           role="listbox"
+          popover="manual"
+          {{popoverModifier}}
         >
           {{#each this.filteredUsers as |user index|}}
             <li
