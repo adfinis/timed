@@ -85,8 +85,8 @@ importers:
         specifier: ~0.5.10
         version: 0.5.11(tailwindcss@3.4.19)
       autoprefixer:
-        specifier: ~10.4.22
-        version: 10.4.23(postcss@8.5.6)
+        specifier: ~10.5.4
+        version: 10.5.4(postcss@8.5.6)
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0(supports-color@10.2.2)
@@ -434,8 +434,8 @@ importers:
         specifier: ^2.19.12
         version: 2.19.13
       autoprefixer:
-        specifier: ^10.4.23
-        version: 10.4.23(postcss@8.5.6)
+        specifier: ^10.5.4
+        version: 10.5.4(postcss@8.5.6)
       babel-plugin-ember-template-compilation:
         specifier: ^2.2.5
         version: 2.4.1
@@ -2713,8 +2713,8 @@ packages:
     engines: {node: '>= 4.5.0'}
     hasBin: true
 
-  autoprefixer@10.4.23:
-    resolution: {integrity: sha512-YYTXSFulfwytnjAPlw8QHncHJmlvFKtczb8InXaAx9Q0LbfDnfEYDE55omerIJKihhmU61Ft+cAOSzQVaBUmeA==}
+  autoprefixer@10.5.4:
+    resolution: {integrity: sha512-MaU0U/za7N3r6brxD4YB/l4NSrFzLPlANv6wEuQVaIPlD3L4W9rFcQPbL/EilY9BHhHvhfcz3gInDLrEtWT4EA==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
@@ -2843,6 +2843,11 @@ packages:
   base@0.11.2:
     resolution: {integrity: sha512-5T6P4xPgpp0YDFvSWwEZ4NoE3aM4QBQXDzmVbraCkFj8zHM+mba8SyqB5DbZWyR7mYHo6Y7BdQo3MoA4m0TeQg==}
     engines: {node: '>=0.10.0'}
+
+  baseline-browser-mapping@2.11.6:
+    resolution: {integrity: sha512-69D/imtToCsIcAl8WBS2YaRwA4jO/j0HhU+hELqMEu9f54MoUtI6+XH5mrKU8rEFNEk/Ui1I2MK4/JkWacclGw==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
 
   baseline-browser-mapping@2.9.14:
     resolution: {integrity: sha512-B0xUquLkiGLgHhpPBqvl7GWegWBUNuujQ6kXd/r1U38ElPT6Ok8KZ8e+FpUGEc2ZoRQUzq/aUnaKFc/svWUGSg==}
@@ -3080,6 +3085,11 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
+  browserslist@4.28.7:
+    resolution: {integrity: sha512-JxV13hNrFxqjOc8alRbq9dK1MM79NEXYpma2B2J4wAtpWS5zIEIKqWPGCl7N4o7Uc7B7itylh7SuDujATRyyTw==}
+    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
+
   bser@2.1.1:
     resolution: {integrity: sha512-gQxTNE/GAfIIrmHLUE3oJyp5FO6HRBfhjnw4/wMmA63ZGDJnWBmgY/lyQBpnDUkGmAhbSe39tx2d/iTOAfglwQ==}
 
@@ -3135,8 +3145,8 @@ packages:
     resolution: {integrity: sha512-RbsNrFyhwkx+6psk/0fK/Q9orOUr9VMxohGd8vTa4djf4TGLfblBgUfqZChrZuW0Q+mz2eBPFLusw9Jfukzmhg==}
     hasBin: true
 
-  caniuse-lite@1.0.30001764:
-    resolution: {integrity: sha512-9JGuzl2M+vPL+pz70gtMF9sHdMFbY9FJaQBi186cHKH3pSzDvzoUJUPV6fqiKIMyXbud9ZLg4F3Yza1vJ1+93g==}
+  caniuse-lite@1.0.30001806:
+    resolution: {integrity: sha512-72Cuvd95zbSYPKq6Fhg8eDJRlzgWDf7/mtoZv6Qe/DYNCEBdNxoA3+rZAU2ZhGCpZlns3EssFavaZomckT5Uuw==}
 
   capital-case@1.0.4:
     resolution: {integrity: sha512-ds37W8CytHgwnhGGTi88pcPyR15qoNkOpYwmMMfnWqqWgESapLqvDx6huFjQ5vqWSn2Z06173XNA7LtMOeUh1A==}
@@ -3793,6 +3803,9 @@ packages:
 
   electron-to-chromium@1.5.267:
     resolution: {integrity: sha512-0Drusm6MVRXSOJpGbaSVgcQsuB4hEkMpHXaVstcPmhu5LIedxs1xNK/nIxmQIU/RPC0+1/o0AVZfBTkTNJOdUw==}
+
+  electron-to-chromium@1.5.398:
+    resolution: {integrity: sha512-AsvhAxopJGh6museTDMIjn6JpDYOfgu4RLlygomt87MUwBUqTfd/1EiPtx10/LZE8xpTvkP2E9Gafq7lkLtodQ==}
 
   ember-assign-helper@0.5.1:
     resolution: {integrity: sha512-dXHbwlBTJWVjG7k4dhVrT3Gh4nQt6rC2LjyltuPztIhQ+YcPYHMqAPJRJYLGZu16aPSJbaGF8K+u51i7CLzqlQ==}
@@ -6098,6 +6111,10 @@ packages:
 
   node-releases@2.0.27:
     resolution: {integrity: sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA==}
+
+  node-releases@2.0.51:
+    resolution: {integrity: sha512-wRNIrw4DmVLKQlbgOMdkMx27Wrpzes2hh5Jtbi2bjPd+4wJstWIqP5A+lscnqbm0xxmT5Bpg8Lec5ItEBwx6BQ==}
+    engines: {node: '>=18'}
 
   node-watch@0.7.3:
     resolution: {integrity: sha512-3l4E8uMPY1HdMMryPRUAl+oIHtXtyiTlIiESNSVSNxcPfzAFzeTbXFQkZfAwBbo0B1qMSG8nUABx+Gd+YrbKrQ==}
@@ -10837,10 +10854,10 @@ snapshots:
 
   atob@2.1.2: {}
 
-  autoprefixer@10.4.23(postcss@8.5.6):
+  autoprefixer@10.5.4(postcss@8.5.6):
     dependencies:
-      browserslist: 4.28.1
-      caniuse-lite: 1.0.30001764
+      browserslist: 4.28.7
+      caniuse-lite: 1.0.30001806
       fraction.js: 5.3.4
       picocolors: 1.1.1
       postcss: 8.5.6
@@ -10996,6 +11013,8 @@ snapshots:
       isobject: 3.0.1
       mixin-deep: 1.3.2
       pascalcase: 0.1.1
+
+  baseline-browser-mapping@2.11.6: {}
 
   baseline-browser-mapping@2.9.14: {}
 
@@ -11561,10 +11580,18 @@ snapshots:
   browserslist@4.28.1:
     dependencies:
       baseline-browser-mapping: 2.9.14
-      caniuse-lite: 1.0.30001764
+      caniuse-lite: 1.0.30001806
       electron-to-chromium: 1.5.267
       node-releases: 2.0.27
       update-browserslist-db: 1.2.3(browserslist@4.28.1)
+
+  browserslist@4.28.7:
+    dependencies:
+      baseline-browser-mapping: 2.11.6
+      caniuse-lite: 1.0.30001806
+      electron-to-chromium: 1.5.398
+      node-releases: 2.0.51
+      update-browserslist-db: 1.2.3(browserslist@4.28.7)
 
   bser@2.1.1:
     dependencies:
@@ -11632,7 +11659,7 @@ snapshots:
     dependencies:
       tmp: 0.0.28
 
-  caniuse-lite@1.0.30001764: {}
+  caniuse-lite@1.0.30001806: {}
 
   capital-case@1.0.4:
     dependencies:
@@ -11892,7 +11919,7 @@ snapshots:
 
   core-js-compat@3.47.0:
     dependencies:
-      browserslist: 4.28.1
+      browserslist: 4.28.7
 
   core-js@2.6.12: {}
 
@@ -12119,6 +12146,8 @@ snapshots:
   ee-first@1.1.1: {}
 
   electron-to-chromium@1.5.267: {}
+
+  electron-to-chromium@1.5.398: {}
 
   ember-assign-helper@0.5.1(supports-color@10.2.2):
     dependencies:
@@ -15600,6 +15629,8 @@ snapshots:
 
   node-releases@2.0.27: {}
 
+  node-releases@2.0.51: {}
+
   node-watch@0.7.3: {}
 
   nopt@3.0.6:
@@ -17417,6 +17448,12 @@ snapshots:
   update-browserslist-db@1.2.3(browserslist@4.28.1):
     dependencies:
       browserslist: 4.28.1
+      escalade: 3.2.0
+      picocolors: 1.1.1
+
+  update-browserslist-db@1.2.3(browserslist@4.28.7):
+    dependencies:
+      browserslist: 4.28.7
       escalade: 3.2.0
       picocolors: 1.1.1
 
