@@ -1,4 +1,4 @@
-import { concat, fn } from "@ember/helper";
+import { concat, fn, uniqueId } from "@ember/helper";
 import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
@@ -98,14 +98,17 @@ export default class ReportRowComponent extends Component {
           </TaskSelection>
 
           <div class="form-list-cell form-group max-lg:col-span-full">
-            <label for="row-comment" hidden>Comment</label>
-            <ReportComment
-              @value={{cs.comment}}
-              @disabled={{not editable}}
-              @customerVisible={{cs.task.project.customerVisible}}
-              @onChange={{fn (mut cs.comment)}}
-              @onSubmit={{f.submitAction}}
-            />
+            {{#let (uniqueId) as |id|}}
+              <label for={{id}} hidden>Comment</label>
+              <ReportComment
+                id={{id}}
+                @value={{cs.comment}}
+                @disabled={{not editable}}
+                @customerVisible={{cs.task.project.customerVisible}}
+                @onChange={{fn (mut cs.comment)}}
+                @onSubmit={{f.submitAction}}
+              />
+            {{/let}}
           </div>
           <div class="form-list-cell form-group cell-duration">
             <ReportDurationpicker

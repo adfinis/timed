@@ -160,7 +160,6 @@ export default class ReportCommentInput extends Component {
           {{if @customerVisible 'customer-comment'}}"
         placeholder="Comment"
         name="comment"
-        id="row-comment"
         value={{@value}}
         disabled={{@disabled}}
         title={{this.tooltip}}
