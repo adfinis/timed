@@ -17,6 +17,7 @@ import Empty from "timed/components/empty";
 import FilterSidebar from "timed/components/filter-sidebar";
 import NoMobileMessage from "timed/components/no-mobile-message";
 import PagePermission from "timed/components/page-permission";
+import ReportComment from "timed/components/report-comment";
 import ScrollContainer from "timed/components/scroll-container";
 import SortHeader from "timed/components/sort-header";
 import Table from "timed/components/table";
@@ -80,17 +81,15 @@ const AnalysisIndexTemplate = <template>
               <fs.filter @label="Comment" data-test-filter-comment>
                 {{#let (uniqueId) as |id|}}
                   <label for={{id}} hidden>comment</label>
-                  <input
+                  <ReportComment
                     id={{id}}
-                    value={{@controller.comment}}
-                    {{on
-                      "change"
-                      (fn @controller.setModelFilterOnChange "comment")
-                    }}
-                    class="form-control comment-field rounded"
+                    @value={{@controller.comment}}
+                    @onChange={{fn (mut @controller.comment)}}
                     placeholder="Comment"
                     name="comment"
                     type="text"
+                    {{! we don't want to make a request on every keystroke (`@onChange` gets called on "input") }}
+                    {{on "change" @controller._reset}}
                   />
                 {{/let}}
               </fs.filter>

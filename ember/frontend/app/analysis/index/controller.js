@@ -175,6 +175,7 @@ export default class AnalysisController extends QPController {
     this.resetQueryParams({ except: ["ordering"] });
   }
 
+  @action
   _reset() {
     this.data.cancelAll();
     this.loadNext.cancelAll();
