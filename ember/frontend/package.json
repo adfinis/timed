@@ -68,7 +68,7 @@
     "ember-cli-clean-css": "^3.0.0",
     "ember-cli-code-coverage": "1.0.3",
     "ember-cli-deprecation-workflow": "^3.4.0",
-    "ember-cli-htmlbars": "~6.3.0",
+    "ember-cli-htmlbars": "~7.0.1",
     "ember-cli-inject-live-reload": "2.1.0",
     "ember-mirage": "0.4.3",
     "ember-cli-nouislider": "git+https://github.com/derrabauke/ember-cli-nouislider#cf0d87986cf25d5795e1edd6c8b9f008c5b39872",
