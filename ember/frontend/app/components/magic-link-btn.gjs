@@ -3,7 +3,7 @@ import { action } from "@ember/object";
 import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
-import { not } from "ember-truth-helpers";
+import { not, or } from "ember-truth-helpers";
 
 import MagicLinkModal from "timed/components/magic-link-modal";
 
@@ -35,7 +35,11 @@ export default class MagicLinkBtn extends Component {
       {{#if @label}}
         {{@label}}
       {{else}}
-        <FaIcon @icon="wand-magic-sparkles" @prefix="fas" @size="sm" />
+        <FaIcon
+          @icon="wand-magic-sparkles"
+          @prefix="fas"
+          @size={{or @size "sm"}}
+        />
       {{/if}}
       {{#if this.isModalVisible}}
         <MagicLinkModal
