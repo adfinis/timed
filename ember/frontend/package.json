@@ -101,7 +101,7 @@
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "~7.9.3",
     "ember-test-selectors": "6.0.0",
-    "ember-tether": "3.1.0",
+    "ember-tether": "3.1.1",
     "ember-truth-helpers": "5.0.0",
     "ember-validated-form": "8.0.1",
     "eslint": "9.25.1",
