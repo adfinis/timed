@@ -92,6 +92,7 @@ ignore = [
 	"DTZ00",   # tests often run in UTC
 	"INP001",  # tests do not need a dunder init
 	"PLR0913", # tests can have a lot of arguments (fixtures)
+	"PLR0917", # tests may have a lot of positionals (fixtures)
 	"PLR2004", # tests can use magic values
 ]
 "**/*/factories.py" = [
