@@ -304,8 +304,8 @@ importers:
         specifier: ^1.8.0
         version: 1.9.1(@babel/core@7.28.6(supports-color@10.2.2))(@ember/test-waiters@4.1.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.7.8)(supports-color@10.2.2))(@glimmer/component@2.1.1(supports-color@10.2.2))(@glimmer/tracking@1.1.2)(@glint/template@1.7.8)(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2)
       shepherd.js:
-        specifier: ^14.5.1
-        version: 14.5.1
+        specifier: ^15.2.2
+        version: 15.2.2
       sinon:
         specifier: 22.0.0
         version: 22.0.0
@@ -2073,14 +2073,17 @@ packages:
     resolution: {integrity: sha512-sDBWI3yLy8EcDzgobvJTWq1MJYzAkQdpjXuPukga9wXonhpMRvd1Izuo2Qgwey2OiEoRIBr35RMU9HJRoOHzpw==}
     engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
-  '@floating-ui/core@1.7.5':
-    resolution: {integrity: sha512-1Ih4WTWyw0+lKyFMcBHGbb5U5FtuHJuujoyyr5zTaWS5EYMeT6Jb2AuDeftsCsEuchO+mM2ij5+q9crhydzLhQ==}
+  '@floating-ui/core@1.8.0':
+    resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
 
   '@floating-ui/dom@1.7.6':
     resolution: {integrity: sha512-9gZSAI5XM36880PPMm//9dfiEngYoC6Am2izES1FF406YFsjvyBMmeJ2g4SAju3xWwtuynNRFL2s9hgxpLI5SQ==}
 
-  '@floating-ui/utils@0.2.11':
-    resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
+  '@floating-ui/dom@1.8.0':
+    resolution: {integrity: sha512-yXSrzeHZBTZadLOlfyhCkJHNeLJnHRnRInwdZ40L7ZiaAtrBwoYlsDrX3v5zB1Utk7CLfzcOVnVVWoXEky7Ceg==}
+
+  '@floating-ui/utils@0.2.12':
+    resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
 
   '@fortawesome/ember-fontawesome@3.1.0':
     resolution: {integrity: sha512-7kkPZo1no5VWamR3Ms2I4m2htZpUXcA76yC2gc0jviOEQit+urrCPIIWk1XdAudKO2Z8x5RR4l1mmJe110Zd7A==}
@@ -7697,6 +7700,10 @@ packages:
     resolution: {integrity: sha512-VuvPvLG1QjNOLP7AIm2HGyfmxEIz8QdskvWOHwUcxLDibYWjLRBmCWd8LSL5FlwhBW7D/GU+3gNVC/ASxAWdxg==}
     engines: {node: 18.* || >= 20}
 
+  shepherd.js@15.2.2:
+    resolution: {integrity: sha512-WDJDjZ8tUG2HF93C9mJCXsdGJ01bpZKjonyMABMkU6I4KjSD9pZ0zFKaeSducdFIx9inKHbDmcFE82uJ65HmgA==}
+    engines: {node: '>= 20'}
+
   side-channel-list@1.0.0:
     resolution: {integrity: sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA==}
     engines: {node: '>= 0.4'}
@@ -12034,16 +12041,21 @@ snapshots:
 
   '@faker-js/faker@10.4.0': {}
 
-  '@floating-ui/core@1.7.5':
+  '@floating-ui/core@1.8.0':
     dependencies:
-      '@floating-ui/utils': 0.2.11
+      '@floating-ui/utils': 0.2.12
 
   '@floating-ui/dom@1.7.6':
     dependencies:
-      '@floating-ui/core': 1.7.5
-      '@floating-ui/utils': 0.2.11
+      '@floating-ui/core': 1.8.0
+      '@floating-ui/utils': 0.2.12
 
-  '@floating-ui/utils@0.2.11': {}
+  '@floating-ui/dom@1.8.0':
+    dependencies:
+      '@floating-ui/core': 1.8.0
+      '@floating-ui/utils': 0.2.12
+
+  '@floating-ui/utils@0.2.12': {}
 
   '@fortawesome/ember-fontawesome@3.1.0(@fortawesome/fontawesome-svg-core@7.1.0)(@glimmer/component@2.0.0(supports-color@10.2.2))(@glint/template@1.7.8)(supports-color@10.2.2)':
     dependencies:
@@ -19310,6 +19322,11 @@ snapshots:
     dependencies:
       '@floating-ui/dom': 1.7.6
       '@scarf/scarf': 1.4.0
+      deepmerge-ts: 7.1.5
+
+  shepherd.js@15.2.2:
+    dependencies:
+      '@floating-ui/dom': 1.8.0
       deepmerge-ts: 7.1.5
 
   side-channel-list@1.0.0:
