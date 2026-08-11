@@ -6,6 +6,7 @@ from datetime import timedelta
 from typing import TYPE_CHECKING
 
 from django.conf import settings
+from django.contrib.postgres.fields import DateTimeRangeField
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
 from django.db import models
@@ -23,10 +24,8 @@ class Activity(models.Model):
     certain task.
     """
 
-    from_time = models.TimeField()
-    to_time = models.TimeField(blank=True, null=True)
+    range = DateTimeRangeField()
     comment = models.TextField(blank=True)
-    date = models.DateField()
     transferred = models.BooleanField(default=False)
     review = models.BooleanField(default=False)
     not_billable = models.BooleanField(default=False)
@@ -45,7 +44,6 @@ class Activity(models.Model):
         """Meta information for the activity model."""
 
         verbose_name_plural = "activities"
-        indexes = (models.Index(fields=["date"]),)
 
     def __str__(self) -> str:
         """Represent the model as a string."""
