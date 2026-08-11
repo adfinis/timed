@@ -41,7 +41,7 @@
     "@ember/test-helpers": "5.2.1",
     "@embroider/macros": "~1.16.0",
     "@embroider/util": "^1.13.5",
-    "@eslint/js": "^9.25.1",
+    "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^10.2.0",
     "@fortawesome/ember-fontawesome": "^3.1.0",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
