@@ -84,7 +84,7 @@ const AnalysisIndexTemplate = <template>
                   <ReportComment
                     id={{id}}
                     @value={{@controller.comment}}
-                    @onChange={{fn (mut @controller.comment)}}
+                    @onChange={{@controller.updateComment}}
                     placeholder="Comment"
                     name="comment"
                     type="text"
