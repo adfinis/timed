@@ -5,7 +5,7 @@ import queue from "@nullvoxpopuli/ember-composable-helpers/helpers/queue";
 import changeset from "ember-changeset/helpers/changeset";
 import perform from "ember-concurrency/helpers/perform";
 import PowerSelect from "ember-power-select/components/power-select";
-import { and, eq, not } from "ember-truth-helpers";
+import { and, eq, not, or } from "ember-truth-helpers";
 import ValidatedForm from "ember-validated-form/components/validated-form";
 import LoadingIcon from "ui-core/components/loading-icon";
 
@@ -301,7 +301,17 @@ import humanizeDuration from "timed/helpers/humanize-duration";
                     type="button"
                     {{on "click" (fn (mut @controller.selectedTask) null)}}
                   >Cancel</button>
-                  <f.submit data-test-save @disabled={{f.model.isInvalid}} />
+                  <f.submit
+                    data-test-save
+                    title={{if
+                      @controller.selectedProject.archived
+                      "You can not update or add tasks to an archived project"
+                    }}
+                    @disabled={{or
+                      f.model.isInvalid
+                      @controller.selectedProject.archived
+                    }}
+                  />
                 </div>
               </ValidatedForm>
             </div>
