@@ -1,4 +1,3 @@
+* @adfinis/dev-timed
 backend/ @adfinis/dev-backend
-frontend/ @adfinis/dev-timed
-customer-center/ @adfinis/dev-timed
 charts/ @adfinis/dev-devops
