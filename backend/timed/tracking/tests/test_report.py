@@ -579,7 +579,7 @@ def test_report_update_bulk(
         }
     }
 
-    response = internal_employee_client.post(url + "?editable=1", data)
+    response = internal_employee_client.post(url, data, query_params={"editable": "1"})
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
     report.refresh_from_db()
@@ -669,10 +669,14 @@ def test_report_update_bulk_reset_verify(
     assert report.verified_by_id is None
 
 
-def test_report_update_bulk_not_editable(
+@pytest.mark.parametrize("editable", [None, "0", "false", "invalid", "-1"])
+def test_report_update_bulk_requires_parsed_editable_true(
     internal_employee_client,
+    editable,
 ):
     url = reverse("report-bulk")
+
+    params = {} if editable is None else {"editable": editable}
 
     data = {
         "data": {
@@ -682,7 +686,7 @@ def test_report_update_bulk_not_editable(
         }
     }
 
-    response = internal_employee_client.post(url, data)
+    response = internal_employee_client.post(url, data, query_params=params)
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
@@ -2668,3 +2672,28 @@ def test_report_change_finished_reports(
         r.refresh_from_db()
         assert r.comment == "test comment"
         assert r.verified_by == user
+
+
+@pytest.mark.parametrize("editable", ["1", "true", "TRUE"])
+def test_report_update_bulk_accepts_parsed_editable_true(
+    internal_employee_client,
+    report_factory,
+    editable,
+):
+    report = report_factory(user=internal_employee_client.user)
+    url = reverse("report-bulk")
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"not_billable": True},
+        }
+    }
+
+    response = internal_employee_client.post(
+        url, data, query_params={"editable": editable}
+    )
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    report.refresh_from_db()
+    assert report.not_billable is True
