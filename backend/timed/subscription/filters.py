@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from django_filters import FilterSet, NumberFilter
+from django_filters.rest_framework import BooleanFilter, FilterSet
 
+from timed.filters import IdFilter
 from timed.projects.models import Project
 
 from . import models
@@ -13,7 +14,7 @@ if TYPE_CHECKING:
 
 
 class PackageFilter(FilterSet):
-    customer = NumberFilter(method="filter_customer")
+    customer = IdFilter(method="filter_customer")
 
     def filter_customer(
         self, queryset: QuerySet[models.Package], _name: str, value: int
@@ -30,8 +31,8 @@ class PackageFilter(FilterSet):
 
 
 class OrderFilter(FilterSet):
-    customer = NumberFilter(field_name="project__customer")
-    acknowledged = NumberFilter(field_name="acknowledged")
+    customer = IdFilter(field_name="project__customer")
+    acknowledged = BooleanFilter(field_name="acknowledged")
 
     class Meta:
         model = models.Order

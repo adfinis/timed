@@ -7,22 +7,19 @@ from typing import TYPE_CHECKING
 
 from django.db.models import Count, Q
 from django_filters.constants import EMPTY_VALUES
-from django_filters.rest_framework import BaseInFilter, Filter, FilterSet, NumberFilter
+from django_filters.rest_framework import BooleanFilter, Filter, FilterSet
 
+from timed.filters import IdFilter, IdInFilter
 from timed.projects import models
 
 if TYPE_CHECKING:
     from django.db.models import QuerySet
 
 
-class NumberInFilter(BaseInFilter, NumberFilter):
-    pass
-
-
 class CustomerFilterSet(FilterSet):
     """Filter set for the customers endpoint."""
 
-    archived = NumberFilter(field_name="archived")
+    archived = BooleanFilter(field_name="archived")
 
     class Meta:
         """Meta information for the customer filter set."""
@@ -37,13 +34,16 @@ class CustomerFilterSet(FilterSet):
 class ProjectFilterSet(FilterSet):
     """Filter set for the projects endpoint."""
 
-    archived = NumberFilter(field_name="archived")
-    has_manager = NumberFilter(method="filter_has_manager")
-    has_reviewer = NumberFilter(method="filter_has_reviewer")
-    customer = NumberInFilter(field_name="customer")
+    archived = BooleanFilter(field_name="archived")
+    has_manager = IdFilter(method="filter_has_manager")
+    has_reviewer = IdFilter(method="filter_has_reviewer")
+    customer = IdInFilter(field_name="customer")
 
     def filter_has_manager(
-        self, queryset: QuerySet[models.Project], _name: str, value: int
+        self,
+        queryset: QuerySet[models.Project],
+        _name: str,
+        value: int,
     ) -> QuerySet[models.Project]:
         if not value:  # pragma: no cover
             return queryset
@@ -61,7 +61,10 @@ class ProjectFilterSet(FilterSet):
         )
 
     def filter_has_reviewer(
-        self, queryset: QuerySet[models.Project], _name: str, value: int
+        self,
+        queryset: QuerySet[models.Project],
+        _name: str,
+        value: int,
     ) -> QuerySet[models.Project]:
         if not value:  # pragma: no cover
             return queryset
@@ -128,8 +131,8 @@ class TaskFilterSet(FilterSet):
     """Filter set for the tasks endpoint."""
 
     my_most_frequent = MyMostFrequentTaskFilter()
-    archived = NumberFilter(field_name="archived")
-    project = NumberInFilter(field_name="project")
+    archived = BooleanFilter(field_name="archived")
+    project = IdInFilter(field_name="project")
 
     class Meta:
         """Meta information for the task filter set."""
@@ -147,9 +150,9 @@ class TaskFilterSet(FilterSet):
 class TaskAssigneeFilterSet(FilterSet):
     """Filter set for the task assignees endpoint."""
 
-    task = NumberFilter(field_name="task")
-    tasks = NumberInFilter(field_name="task")
-    user = NumberFilter(field_name="user")
+    task = IdFilter(field_name="task")
+    tasks = IdInFilter(field_name="task")
+    user = IdFilter(field_name="user")
 
     class Meta:
         """Meta information for the task assignee filter set."""
@@ -167,9 +170,9 @@ class TaskAssigneeFilterSet(FilterSet):
 class ProjectAssigneeFilterSet(FilterSet):
     """Filter set for the project assignees endpoint."""
 
-    project = NumberFilter(field_name="project")
-    projects = NumberInFilter(field_name="project")
-    user = NumberFilter(field_name="user")
+    project = IdFilter(field_name="project")
+    projects = IdInFilter(field_name="project")
+    user = IdFilter(field_name="user")
 
     class Meta:
         """Meta information for the project assignee filter set."""
@@ -187,9 +190,9 @@ class ProjectAssigneeFilterSet(FilterSet):
 class CustomerAssigneeFilterSet(FilterSet):
     """Filter set for the customer assignees endpoint."""
 
-    customer = NumberFilter(field_name="customer")
-    customers = NumberInFilter(field_name="customer")
-    user = NumberFilter(field_name="user")
+    customer = IdFilter(field_name="customer")
+    customers = IdInFilter(field_name="customer")
+    user = IdFilter(field_name="user")
 
     class Meta:
         """Meta information for the customer assignee filter set."""

@@ -2380,3 +2380,29 @@ def test_report_split(
             comment=new_comment, duration=new_duration, task=new_report_task
         ).exists()
         assert original_report_count == Report.objects.count()
+
+
+@pytest.mark.parametrize(
+    ("ids", "reviewer", "expected_status"),
+    [
+        (None, None, status.HTTP_200_OK),
+        ("1", None, status.HTTP_200_OK),
+        ("-1", None, status.HTTP_400_BAD_REQUEST),
+        (None, "-1", status.HTTP_400_BAD_REQUEST),
+        ("1,2", "0.5", status.HTTP_400_BAD_REQUEST),
+        ("1,2.6", "1", status.HTTP_400_BAD_REQUEST),
+    ],
+)
+def test_report_filters(
+    internal_employee_client,
+    snapshot,
+    ids: str | None,
+    reviewer: int | None,
+    expected_status: int,
+) -> None:
+    params = {"id": ids, "reviewer": reviewer}
+    params = {name: value for name, value in params.items() if value is not None}
+    url = reverse("report-list")
+    response = internal_employee_client.get(url, query_params=params)
+    assert response.status_code == expected_status
+    assert response.json() == snapshot

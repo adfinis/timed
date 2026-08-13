@@ -199,20 +199,6 @@ def test_activity_delete(
     assert response.status_code == expected
 
 
-def test_activity_list_filter_active(internal_employee_client, activity_factory):
-    user = internal_employee_client.user
-    activity1 = activity_factory(user=user)
-    activity2 = activity_factory(user=user, to_time=None, task=activity1.task)
-
-    url = reverse("activity-list")
-
-    response = internal_employee_client.get(url, data={"active": "true"})
-    assert response.status_code == status.HTTP_200_OK
-    json = response.json()
-    assert len(json["data"]) == 1
-    assert json["data"][0]["id"] == str(activity2.id)
-
-
 def test_activity_list_filter_day(internal_employee_client, activity_factory):
     user = internal_employee_client.user
     day = date(2016, 2, 2)
@@ -396,3 +382,21 @@ def test_activity_transfer_ends_it(internal_employee_client, activity_factory):
     activity.refresh_from_db()
     assert activity.to_time
     assert activity.transferred
+
+
+@pytest.mark.parametrize("is_active", [True, False])
+def test_activity_list_filter_active(
+    internal_employee_client, activity_factory, is_active
+):
+    user = internal_employee_client.user
+    active_activity = activity_factory(user=user, to_time=None)
+    other_activity = activity_factory(user=user, task=active_activity.task)
+
+    url = reverse("activity-list")
+
+    response = internal_employee_client.get(url, query_params={"active": is_active})
+    assert response.status_code == status.HTTP_200_OK
+    json = response.json()
+    assert len(json["data"]) == 1
+    activity = active_activity if is_active else other_activity
+    assert json["data"][0]["id"] == str(activity.id)
