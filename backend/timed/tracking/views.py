@@ -16,7 +16,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from timed.employment.models import Employment, PublicHoliday
+from timed.employment.models import Employment, PublicHoliday, User
 from timed.permissions import (
     IsAccountant,
     IsAuthenticated,
@@ -41,6 +41,7 @@ from . import tasks
 
 if TYPE_CHECKING:
     from django.db.models import QuerySet
+    from rest_framework.request import Request
 
 
 class ActivityViewSet(ModelViewSet):
@@ -214,10 +215,16 @@ class ReportViewSet(ModelViewSet):
         serializer = self.get_serializer(data)
         return Response(data=serializer.data)
 
-    def _validate_verified(self, queryset, fields, user, qp):
+    def _validate_verified(
+        self,
+        queryset: QuerySet[models.Report],
+        fields: dict,
+        user: User,
+        reviewer_id: int,
+    ) -> None:
         # only reviewer or superuser may verify reports
         # this is enforced when reviewer filter is set to current user
-        if not user.is_superuser and str(qp.get("reviewer")) != str(user.id):
+        if not user.is_superuser and reviewer_id != user.pk:
             raise exceptions.ValidationError(
                 _("Reviewer filter needs to be set to verifying user")
             )
@@ -232,7 +239,9 @@ class ReportViewSet(ModelViewSet):
                 _("Reports can't be moved and verified at the same time.")
             )
 
-    def _validate_task(self, queryset, fields, review_comment):
+    def _validate_task(
+        self, queryset: QuerySet[models.Report], fields: dict, review_comment: str
+    ) -> None:
         # if no review comment was given, we validate that the customer of all the
         # reports (that are being updated/attempted to be updated) is the same, if
         # it isn't, we throw an error
@@ -247,6 +256,16 @@ class ReportViewSet(ModelViewSet):
                 "required",
             )
 
+    def cleaned_query_params(
+        self, queryset: QuerySet[models.Report], request: Request
+    ) -> dict:
+        """Return query parameters parsed by the associated filter set."""
+        filterset = self.filterset_class(
+            request.query_params, queryset=queryset, request=request
+        )
+        filterset.is_valid()
+        return filterset.form.cleaned_data
+
     @action(
         detail=False,
         methods=["post"],
@@ -256,25 +275,26 @@ class ReportViewSet(ModelViewSet):
     )
     def bulk(self, request):
         user = request.user
-        queryset = self.get_queryset()
-        queryset = self.filter_queryset(queryset)
+        queryset = self.filter_queryset(self.get_queryset())
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        qp = self.cleaned_query_params(queryset, request)
+
+        if not user.is_superuser and not qp["editable"]:
+            raise exceptions.ValidationError(
+                _("Editable filter needs to be set for bulk update")
+            )
+
         verified: bool | None = serializer.validated_data.pop("verified", None)
+
         fields = {
             key: value
             for key, value in serializer.validated_data.items()
             # value equal None means do not touch
             if value is not None
         }
-
-        qp = request.query_params
-        if not user.is_superuser and not qp.get("editable"):
-            raise exceptions.ValidationError(
-                _("Editable filter needs to be set for bulk update")
-            )
 
         is_superuser_or_accountant = user.is_superuser or user.is_accountant
         has_billed_flag = fields.get("billed") is not None
@@ -285,8 +305,7 @@ class ReportViewSet(ModelViewSet):
             )
 
         if verified is not None:
-            self._validate_verified(queryset, fields, user, qp)
-
+            self._validate_verified(queryset, fields, user, qp["reviewer"])
             fields["verified_by"] = (verified and user) or None
 
         review_comment = fields.pop("review_comment", "")
