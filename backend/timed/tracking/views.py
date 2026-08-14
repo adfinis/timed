@@ -146,6 +146,7 @@ class ReportViewSet(ModelViewSet):
                     Q(
                         task__project__customer__customer_assignees__user=user,
                         task__project__customer__customer_assignees__is_customer=True,
+                        task__project__customer_visible=True,
                     )
                 )
             msg = "User has no employment and isn't a customer!"

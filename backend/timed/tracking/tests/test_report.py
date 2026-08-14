@@ -13,11 +13,12 @@ from django.utils.duration import duration_string
 from pytest_lazy_fixtures import lf
 from rest_framework import status
 
+from timed.projects.models import Project
 from timed.tracking.models import Report
 
 if TYPE_CHECKING:
     from timed.employment.models import User
-    from timed.projects.models import Customer, Project, Task
+    from timed.projects.models import Customer, Task
 
 
 def test_report_list(
@@ -1708,7 +1709,9 @@ def test_report_list_no_employment(
     customer_assignee_factory,
 ):
     user = auth_client.user
-    report = report_factory(user=user, duration=timedelta(hours=1))
+    report = report_factory(
+        user=user, duration=timedelta(hours=1), task__project__customer_visible=True
+    )
     if is_assigned:
         customer_assignee_factory(
             user=user, is_customer=True, customer=report.task.project.customer
@@ -2699,6 +2702,62 @@ def test_report_update_bulk_accepts_parsed_editable_true(
 
     report.refresh_from_db()
     assert report.not_billable is True
+
+
+def test_customer_can_only_see_customer_visible_reports(
+    auth_client,
+    customer_assignee_factory,
+    project_factory,
+    report_factory,
+    customer,
+):
+
+    user: User = auth_client.user
+    assignee = customer_assignee_factory(user=user, is_customer=True)
+    other_customer, customer = customer, assignee.customer
+
+    # check sanity
+    assert user.get_active_employment() is None
+    assert customer != other_customer
+    assert Report.objects.filter(user=user).count() == 0
+
+    # we create 3 projects
+    # a `customer_visible` one owned by another customer
+    # and a `visible` and not `visible` one on the customer itself
+    projects = [
+        project_factory(customer=other_customer, customer_visible=True),
+        project_factory(customer=customer, customer_visible=True),
+        project_factory(customer=customer, customer_visible=False),
+    ]
+
+    # we create the same amount of reports in all of them
+    reports_per_project = 10
+    for project in projects:
+        report_factory.create_batch(reports_per_project, task__project=project)
+
+    # sanity check again
+    assert Report.objects.filter(user=user).count() == 0
+
+    url = reverse("report-list")
+
+    response = auth_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+
+    # customer can only see reports on their customer
+    # that are marked as customer visible
+    assert len(response.data) == reports_per_project
+
+    # we update the "invisble" project on the customer to be customer visible
+    project = Project.objects.get(customer=customer, customer_visible=False)
+    project.customer_visible = True
+    project.save()
+
+    response = auth_client.get(url)
+    assert response.status_code == status.HTTP_200_OK
+
+    # customer can only see reports on their customer
+    # that are marked as customer visible
+    assert len(response.data) == reports_per_project * 2
 
 
 @pytest.mark.parametrize(
