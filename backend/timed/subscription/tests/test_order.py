@@ -13,7 +13,6 @@ from timed.notifications.models import Notification
         (True, False, False),
         (False, True, False),
         (False, False, True),
-        (False, False, False),
     ],
 )
 def test_order_list(
@@ -22,11 +21,13 @@ def test_order_list(
     is_accountant,
     is_superuser,
     customer_assignee_factory,
-    order_factory,
+    order,
 ):
     """Test which user can see orders."""
-    order = order_factory()
     user = auth_client.user
+    project = order.project
+    project.customer_visible = is_customer
+    project.save()
 
     if is_customer:
         customer_assignee_factory(
@@ -46,6 +47,7 @@ def test_order_list(
 
     json = res.json()
     assert len(json["data"]) == 1
+
     assert json["data"][0]["relationships"]["project"]["data"]["type"] == (
         "subscription-projects"
     )
@@ -343,3 +345,62 @@ def test_order_update(
 
     response = auth_client.patch(url, data)
     assert response.status_code == expected
+
+
+@pytest.mark.parametrize("project__customer_visible", [True])
+def test_supscription_order_permissions(
+    auth_client,
+    project,
+    order_factory,
+    customer_factory,
+    customer_assignee_factory,
+    employment_factory,
+) -> None:
+    user = auth_client.user
+    assert user.get_active_employment() is None
+
+    other_customer = customer_factory()
+
+    order_factory(project=project)
+    order_factory(project__customer=other_customer)
+
+    url = reverse("subscription-order-list")
+
+    def assert_order_count(expected_count: int) -> None:
+        response = auth_client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+        assert len(response.data) == expected_count
+
+    # the user is assigned to nothing, and not employed
+    # therefore they can see nothing
+    assert_order_count(0)
+
+    # now we assign our user to a customer
+    assignee = customer_assignee_factory(
+        user=auth_client.user, customer=project.customer, is_customer=True
+    )
+
+    # the user can now see orders for the customer they're assigned to
+    assert_order_count(1)
+
+    # the user can only see orders for "customer visible" projects
+    project.customer_visible = False
+    project.save()
+
+    assert_order_count(0)
+
+    # now we "employ" the user
+    employment = employment_factory(user=user)
+    # and delete the old assignee
+    assignee.delete()
+
+    # the user can see all subscription orders
+    assert_order_count(2)
+
+    # now we adjust the user to externally employed
+    employment.is_external = True
+    employment.save()
+
+    # because the user doesn't have any assignments
+    # they can't see any subscription orders
+    assert_order_count(0)
