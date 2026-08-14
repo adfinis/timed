@@ -22,6 +22,7 @@ from timed.permissions import (
     IsAuthenticated,
     IsExternal,
     IsInternal,
+    IsNotBilled,
     IsNotDelete,
     IsNotTransferred,
     IsOwner,
@@ -99,8 +100,8 @@ class ReportViewSet(ModelViewSet):
         (
             # superuser and accountants may edit all reports but not delete
             (IsSuperUser | IsAccountant) & IsNotDelete
-            # reviewer and supervisor may change reports which aren't verified but not delete them
-            | (IsReviewer | IsSupervisor) & IsUnverified & IsNotDelete
+            # reviewer and supervisor may change reports which but not delete them
+            | (IsReviewer | IsSupervisor) & (IsUnverified | IsNotBilled) & IsNotDelete
             # internal employees may only change its own unverified reports
             # only external employees with resource role may only change its own unverified reports
             | IsOwner & IsUnverified & (IsInternal | (IsExternal & IsResource))
@@ -283,8 +284,20 @@ class ReportViewSet(ModelViewSet):
                 _("Only superuser and accountants may bill reports")
             )
 
+        effective_billed = (
+            fields.get("billed")
+            if fields.get("billed") is not None
+            else any(queryset.values_list("billed", flat=True))
+        )
+
         if verified is not None:
             self._validate_verified(queryset, fields, user, qp)
+
+            if effective_billed and not verified:
+                raise exceptions.ValidationError(
+                    _("Verified flag can't be modified on billed reports.")
+                )
+
             fields["verified_by"] = (verified and user) or None
 
         review_comment = fields.pop("review_comment", "")
