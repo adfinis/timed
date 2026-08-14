@@ -192,6 +192,11 @@ import Void from "timed/components/void";
                             data-test-review
                             @checked={{fi.value}}
                             @onChange={{fi.update}}
+                            @disabled={{and
+                              f.model.verified
+                              (notEq f.model.review null)
+                              (not f.model.review)
+                            }}
                           >
                             Needs Review
                             {{#if (eq model.review null)}}
@@ -268,7 +273,11 @@ import Void from "timed/components/void";
                             @title={{@controller.toolTipText}}
                             @disabled={{or
                               (not @controller.canVerify)
-                              @controller.needsReview
+                              (and
+                                f.model.review
+                                (notEq f.model.verified null)
+                                (not f.model.verified)
+                              )
                             }}
                           >
                             Verified
