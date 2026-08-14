@@ -78,6 +78,30 @@ class OrderViewSet(viewsets.ModelViewSet):
         ),
     )
 
+    def get_queryset(self) -> QuerySet[models.Order]:
+        queryset = models.Order.objects.all().select_related("project")
+        user = self.request.user
+        if user.is_superuser or user.is_accountant:
+            return queryset
+
+        if (employment := user.get_active_employment()) and not employment.is_external:
+            return queryset
+
+        customer_visible = Q(project__customer_visible=True)
+
+        if employment is None:
+            return queryset.filter(
+                customer_visible,
+                project__customer__customer_assignees__user=user,
+                project__customer__customer_assignees__is_customer=True,
+            )
+
+        return queryset.filter(
+            customer_visible,
+            Q(project__project_assignees__user=user)
+            | Q(project__customer__customer_assignees__user=user),
+        )
+
     def create(self, request, *args, **kwargs):
         """Override so we can issue emails on creation."""
         # check if order is acknowledged and created by admin/accountant
@@ -117,9 +141,6 @@ class OrderViewSet(viewsets.ModelViewSet):
         order.save()
 
         return response.Response(status=status.HTTP_204_NO_CONTENT)
-
-    def get_queryset(self) -> QuerySet[models.Order]:
-        return models.Order.objects.select_related("project")
 
     def destroy(self, _request, pk=None):  # noqa: ARG002
         instance = self.get_object()
