@@ -32,7 +32,9 @@ class BillingTypeFactory(DjangoModelFactory):
 
 
 class CostCenterFactory(DjangoModelFactory):
-    name = Faker("job")
+    # name is unique, therefore don't use a "traditional" faker, but
+    # something guaranteed distinct
+    name = Sequence(lambda x: f"Cost Center {x}")
     reference = None
 
     class Meta:
