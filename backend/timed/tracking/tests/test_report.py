@@ -86,6 +86,7 @@ def test_report_intersection_full(
                 "review": False,
                 "billed": False,
                 "rejected": False,
+                "can-verify": False,
             },
             "relationships": {
                 "customer": {
@@ -158,6 +159,7 @@ def test_report_intersection_accountant_editable(
                 "review": True,
                 "billed": None,
                 "rejected": False,
+                "can-verify": False,
             },
             "relationships": {
                 "customer": {"data": None},
@@ -203,6 +205,7 @@ def test_report_intersection_accountant_not_editable(
                 "review": None,
                 "billed": None,
                 "rejected": None,
+                "can-verify": None,
             },
             "relationships": {
                 "customer": {"data": None},
@@ -2380,3 +2383,42 @@ def test_report_split(
             comment=new_comment, duration=new_duration, task=new_report_task
         ).exists()
         assert original_report_count == Report.objects.count()
+
+
+@pytest.mark.parametrize(("can_verify", "expected_count"), [(True, 3), (None, 0)])
+def test_report_intersection_can_verify(
+    internal_employee_client,
+    report_factory,
+    task_factory,
+    task_assignee_factory,
+    can_verify,
+    expected_count,
+):
+
+    task = task_factory()
+
+    if can_verify:
+        task_assignee_factory(
+            user=internal_employee_client.user, task=task, is_reviewer=True
+        )
+
+    report1, report2, report3 = report_factory.create_batch(3, task=task)
+
+    ids = f"{report1.id},{report2.id},{report3.id}"
+
+    url = reverse("report-intersection")
+    response = internal_employee_client.get(
+        url,
+        data={
+            "id": ids,
+            "editable": 1,
+            "customer": task.project.customer.id,
+            "include": "task,customer,project",
+        },
+    )
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    assert json.pop("meta")["count"] == expected_count
+    assert json.pop("data")["attributes"]["can-verify"] == can_verify
