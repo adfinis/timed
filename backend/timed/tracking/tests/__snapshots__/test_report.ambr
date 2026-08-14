@@ -117,7 +117,7 @@
   
   Date: 01 January 2022
   Duration: 1:00 (h:mm)
-  Task: Brown LLC > Synchronized impactful attitude > LLC
+  Task: Brown LLC > Open-source static initiative > LLC
   
   
   * Comment
@@ -132,8 +132,8 @@
   Comment: some other comment
   
   * Task
-    [old] Brown LLC > Synchronized impactful attitude > and Sons
-    [new] Brown LLC > Synchronized impactful attitude > LLC
+    [old] Brown LLC > Open-source static initiative > and Sons
+    [new] Brown LLC > Open-source static initiative > LLC
   
   ---
   
@@ -143,8 +143,8 @@
   
   
   * Task
-    [old] Brown LLC > Synchronized impactful attitude > Group
-    [new] Brown LLC > Synchronized impactful attitude > LLC
+    [old] Brown LLC > Open-source static initiative > LLC
+    [new] Brown LLC > Open-source static initiative > LLC
   
   * Comment
     [old] foo
@@ -154,7 +154,7 @@
   
   Date: 01 March 2022
   Duration: 0:15 (h:mm)
-  Task: Brown LLC > Synchronized impactful attitude > LLC
+  Task: Brown LLC > Open-source static initiative > LLC
   Comment: some other comment
   
   * Not_Billable
@@ -206,10 +206,10 @@
       'Base its left political.',
     ),
     tuple(
-      'Must purpose yard goal go heavy social.',
+      'Cup stay hospital represent.',
     ),
     tuple(
-      'Though wonder boy care final.',
+      'Wish major federal medical city.',
     ),
   })
 # ---
@@ -219,10 +219,10 @@
       'Base its left political.',
     ),
     tuple(
-      'Must purpose yard goal go heavy social.',
+      'Cup stay hospital represent.',
     ),
     tuple(
-      'Though wonder boy care final.',
+      'Wish major federal medical city.',
     ),
     tuple(
       'some new comment',
