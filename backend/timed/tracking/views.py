@@ -226,11 +226,6 @@ class ReportViewSet(ModelViewSet):
                 _("Reports can't both be set as `review` and `verified`.")
             )
 
-        if fields.get("task"):
-            raise exceptions.ValidationError(
-                _("Reports can't be moved and verified at the same time.")
-            )
-
     def _validate_task(self, queryset, fields, review_comment):
         # if no review comment was given, we validate that the customer of all the
         # reports (that are being updated/attempted to be updated) is the same, if
@@ -294,6 +289,28 @@ class ReportViewSet(ModelViewSet):
             # unreject report if task has changed
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
+
+            task = fields["task"]
+            is_destination_reviewer = (
+                Task.objects.filter(pk=task.pk)
+                .filter(
+                    Q(task_assignees__user=user, task_assignees__is_reviewer=True)
+                    | Q(
+                        project__project_assignees__user=user,
+                        project__project_assignees__is_reviewer=True,
+                    )
+                    | Q(
+                        project__customer__customer_assignees__user=user,
+                        project__customer__customer_assignees__is_reviewer=True,
+                    )
+                )
+                .exists()
+            )
+
+            if not is_destination_reviewer and verified is not None:
+                raise exceptions.ValidationError(
+                    _("You don't have permissions to verify on destination.")
+                )
 
         if fields.get("rejected") and not review_comment:
             raise exceptions.ValidationError(

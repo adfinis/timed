@@ -2137,50 +2137,6 @@ def test_report_list_filter_comment(
     assert json["data"][2]["id"] == str(report_3.id)
 
 
-def test_report_bulk_edit_move_and_verify(
-    internal_employee_client, user, report_factory, project_assignee_factory, task: Task
-):
-    reviewer = internal_employee_client.user
-
-    assert reviewer != user
-
-    # create a report owned by another user
-    report: Report = report_factory(user=user)
-
-    # assign the test employee as reviewer to the project of the report
-    project_assignee_factory(
-        user=reviewer, project=report.task.project, is_reviewer=True
-    )
-
-    url = reverse("report-bulk")
-
-    # raw request body for verifying and moving a report at the same time
-    data = {
-        "data": {
-            "type": "report-bulks",
-            "id": None,
-            "attributes": {"verified": True},
-            "relationships": {
-                "task": {"data": {"type": "tasks", "id": task.pk}},
-            },
-        }
-    }
-
-    # query params as required by the action
-    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
-
-    response = internal_employee_client.post(
-        url,
-        data=data,
-        query_params=params,
-    )
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert (
-        response.json()["errors"][0]["detail"]
-        == "Reports can't be moved and verified at the same time."
-    )
-
-
 def test_report_bulk_reject_requires_review_comment(
     internal_employee_client, user, report_factory, project_assignee_factory
 ):
@@ -2380,3 +2336,76 @@ def test_report_split(
             comment=new_comment, duration=new_duration, task=new_report_task
         ).exists()
         assert original_report_count == Report.objects.count()
+
+
+@pytest.mark.django_db
+# positive and negative test, set current reviewer (report entry reviewer) as destination reviewer or not
+@pytest.mark.parametrize(("is_destination_reviewer"), [True, False])
+# The endpoint should behave the same as long as verified is set (false or true)
+@pytest.mark.parametrize(("verified_flag"), [True, False])
+# The endpoint should check permissions on all of the three 'permission levels'
+@pytest.mark.parametrize(("move_to"), ["customer", "project", "task"])
+def test_report_move_and_verify(
+    user: User,
+    task: Task,
+    report_factory,
+    project_assignee_factory,
+    internal_employee_client,
+    customer_assignee_factory,
+    task_assignee_factory,
+    move_to,
+    verified_flag,
+    is_destination_reviewer,
+):
+    expected = status.HTTP_400_BAD_REQUEST
+
+    reviewer = internal_employee_client.user
+    report = report_factory(user=user)
+    task_assignee_factory(user=reviewer, task=report.task, is_reviewer=True)
+
+    original_report_task = report.task
+    original_report_verified_by = report.verified_by
+
+    if is_destination_reviewer:
+        expected = status.HTTP_204_NO_CONTENT
+        if move_to == "customer":
+            customer_assignee_factory(
+                user=reviewer, customer=task.project.customer, is_reviewer=True
+            )
+        if move_to == "project":
+            project_assignee_factory(
+                user=reviewer, project=task.project, is_reviewer=True
+            )
+        if move_to == "task":
+            task_assignee_factory(user=reviewer, task=task, is_reviewer=True)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {
+                "review-comment": "some review comment",
+                "verified": verified_flag,
+            },
+            "relationships": {
+                "task": {"data": {"type": "tasks", "id": task.pk}},
+            },
+        }
+    }
+    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
+    response = internal_employee_client.post(url, data, query_params=params)
+    assert response.status_code == expected
+
+    report.refresh_from_db()
+
+    if is_destination_reviewer:
+        verified_by = None
+        if verified_flag:
+            verified_by = reviewer
+        assert report.task == task
+        assert report.verified_by == verified_by
+    else:
+        assert report.task == original_report_task
+        assert report.verified_by == original_report_verified_by
