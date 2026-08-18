@@ -20,6 +20,7 @@ from timed.employment.models import Employment, PublicHoliday, User
 from timed.permissions import (
     IsAccountant,
     IsAuthenticated,
+    IsEmployed,
     IsExternal,
     IsInternal,
     IsNotBilled,
@@ -269,8 +270,8 @@ class ReportViewSet(ModelViewSet):
     @action(
         detail=False,
         methods=["post"],
-        # all users are allowed to bulk update but only on filtered result
-        permission_classes=[IsAuthenticated],
+        # all employed users are allowed to bulk update but only on filtered result
+        permission_classes=[IsEmployed],
         serializer_class=serializers.ReportBulkSerializer,
     )
     def bulk(self, request):
