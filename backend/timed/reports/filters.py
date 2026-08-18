@@ -5,12 +5,12 @@ from typing import TYPE_CHECKING
 from django.db.models import DurationField, F, Q, Sum, Value
 from django.db.models.functions import Coalesce
 from django_filters.rest_framework import (
-    BaseInFilter,
+    BooleanFilter,
     DateFilter,
     FilterSet,
-    NumberFilter,
 )
 
+from timed.filters import IdFilter, IdInFilter
 from timed.projects.models import CustomerAssignee, ProjectAssignee, TaskAssignee
 
 if TYPE_CHECKING:
@@ -129,23 +129,23 @@ def statistic_filterset_builder(
             "to_date": DateFilter(
                 field_name=f"{reports_prefix}date", lookup_expr="lte"
             ),
-            "project": NumberFilter(field_name=f"{project_prefix}pk"),
-            "customer": NumberFilter(field_name=f"{customer_prefix}pk"),
-            "review": NumberFilter(field_name=f"{reports_prefix}review"),
-            "not_billable": NumberFilter(field_name=f"{reports_prefix}not_billable"),
-            "billed": NumberFilter(field_name=f"{reports_prefix}billed"),
-            "verified": NumberFilter(
+            "project": IdFilter(field_name=f"{project_prefix}pk"),
+            "customer": IdFilter(field_name=f"{customer_prefix}pk"),
+            "review": BooleanFilter(field_name=f"{reports_prefix}review"),
+            "not_billable": BooleanFilter(field_name=f"{reports_prefix}not_billable"),
+            "billed": BooleanFilter(field_name=f"{reports_prefix}billed"),
+            "verified": BooleanFilter(
                 field_name=f"{reports_prefix}verified_by_id",
                 lookup_expr="isnull",
                 exclude=True,
             ),
-            "verifier": NumberFilter(field_name=f"{reports_prefix}verified_by"),
-            "billing_type": NumberFilter(field_name=f"{project_prefix}billing_type"),
-            "user": NumberFilter(field_name=f"{reports_prefix}user_id"),
-            "rejected": NumberFilter(field_name=f"{reports_prefix}rejected"),
-            "id": BaseInFilter(),
-            "cost_center": NumberFilter(method="filter_cost_center"),
-            "reviewer": NumberFilter(method="filter_has_reviewer"),
+            "verifier": IdFilter(field_name=f"{reports_prefix}verified_by"),
+            "billing_type": IdFilter(field_name=f"{project_prefix}billing_type"),
+            "user": IdFilter(field_name=f"{reports_prefix}user_id"),
+            "rejected": BooleanFilter(field_name=f"{reports_prefix}rejected"),
+            "id": IdInFilter(),
+            "cost_center": IdFilter(method="filter_cost_center"),
+            "reviewer": IdFilter(method="filter_has_reviewer"),
         },
     )
 

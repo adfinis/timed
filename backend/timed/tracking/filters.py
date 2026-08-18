@@ -2,77 +2,42 @@
 
 from __future__ import annotations
 
-from functools import wraps
 from typing import TYPE_CHECKING
 
 from django.contrib.postgres.search import SearchQuery
 from django.db.models import Q
-from django_filters.constants import EMPTY_VALUES
 from django_filters.rest_framework import (
-    BaseInFilter,
     BooleanFilter,
     CharFilter,
     DateFilter,
-    Filter,
     FilterSet,
-    NumberFilter,
 )
 
+from timed.filters import IdFilter, IdInFilter
 from timed.projects.models import CustomerAssignee, ProjectAssignee, TaskAssignee
 from timed.tracking import models
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-    from typing import TypeVar
-
     from django.db.models import QuerySet
-
-    T = TypeVar("T")  # used for self
-    G = TypeVar("G", QuerySet)  # used for qs
-
-
-def boolean_filter(func: Callable[[T, G, str], G]) -> Callable[[T, G, bool], G]:
-    """Cast the passed query parameter into a boolean.
-
-    :param function func: The function to decorate
-    :return:              The function called with a boolean
-    :rtype:               function
-    """
-
-    @wraps(func)
-    def wrapper(self, qs, value):
-        if value in EMPTY_VALUES:
-            return qs
-
-        value = value.lower() not in ("1", "true", "yes")
-
-        return func(self, qs, value)
-
-    return wrapper
-
-
-class ActivityActiveFilter(Filter):
-    """Filter to filter activities by being currently active or not.
-
-    An activity is active, as soon as they have at least on activity
-    block which does not have to_time.
-    """
-
-    @boolean_filter
-    def filter(
-        self,
-        qs: QuerySet[models.Activity],
-        _value: bool,  # noqa: FBT001
-    ) -> QuerySet[models.Activity]:
-        """Filter the queryset."""
-        return qs.filter(to_time__exact=None).distinct()
 
 
 class ActivityFilterSet(FilterSet):
     """Filter set for the activities endpoint."""
 
-    active = ActivityActiveFilter()
+    active = BooleanFilter(method="filter_active")
     day = DateFilter(field_name="date")
+
+    def filter_active(
+        self,
+        qs: QuerySet[models.Activity],
+        _name: str,
+        value: bool,  # noqa: FBT001
+    ) -> QuerySet[models.Activity]:
+        """Filter activities by being currently active or not."""
+        active_activities = Q(to_time__exact=None)
+        if not value:
+            return qs.exclude(active_activities)
+        return qs.filter(active_activities)
 
     class Meta:
         """Meta information for the activity filter set."""
@@ -97,24 +62,25 @@ class AttendanceFilterSet(FilterSet):
 class ReportFilterSet(FilterSet):
     """Filter set for the reports endpoint."""
 
-    id = BaseInFilter()
+    id = IdInFilter()
     from_date = DateFilter(field_name="date", lookup_expr="gte")
     to_date = DateFilter(field_name="date", lookup_expr="lte")
-    project = NumberFilter(field_name="task__project")
-    customer = NumberFilter(field_name="task__project__customer")
-    review = NumberFilter(field_name="review")
-    editable = NumberFilter(method="filter_editable")
-    not_billable = NumberFilter(field_name="not_billable")
-    billed = NumberFilter(field_name="billed")
+    project = IdFilter(field_name="task__project")
+    customer = IdFilter(field_name="task__project__customer")
+    review = BooleanFilter()
+    editable = BooleanFilter(method="filter_editable")
+    not_billable = BooleanFilter()
+    billed = BooleanFilter()
     verified = BooleanFilter(
         field_name="verified_by_id", lookup_expr="isnull", exclude=True
     )
-    reviewer = NumberFilter(method="filter_has_reviewer")
-    verifier = NumberFilter(field_name="verified_by")
-    billing_type = NumberFilter(field_name="task__project__billing_type")
-    user = NumberFilter(field_name="user_id")
-    cost_center = NumberFilter(method="filter_cost_center")
-    rejected = NumberFilter(field_name="rejected")
+    reviewer = IdFilter(method="filter_has_reviewer")
+    verifier = IdFilter(field_name="verified_by")
+    billing_type = IdFilter(field_name="task__project__billing_type")
+    user = IdFilter(field_name="user_id")
+    cost_center = IdFilter(method="filter_cost_center")
+
+    rejected = BooleanFilter()
     comment = CharFilter(method="filter_comment")
 
     def filter_has_reviewer(
@@ -174,12 +140,15 @@ class ReportFilterSet(FilterSet):
         )
 
     def filter_editable(
-        self, queryset: QuerySet[models.Report], _name: str, value: int
+        self,
+        queryset: QuerySet[models.Report],
+        _name: str,
+        value: bool,  # noqa: FBT001
     ) -> QuerySet[models.Report]:
         """Filter reports whether they are editable by current user.
 
-        When set to `1` filter all results to what is editable by current
-        user. If set to `0` to not editable.
+        When set `True` filter all results to what is editable by current
+        user. If set to `False` to not editable.
         """
         user = self.request.user
         assignee_filter = (

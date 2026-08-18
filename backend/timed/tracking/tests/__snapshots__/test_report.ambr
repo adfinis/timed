@@ -1,4 +1,78 @@
 # serializer version: 1
+# name: test_report_filters[-1-None-400]
+  dict({
+    'errors': list([
+      dict({
+        'code': 'min_value',
+        'detail': 'Ensure this value is greater than or equal to 1.',
+        'source': dict({
+          'pointer': '/data/attributes/id',
+        }),
+        'status': '400',
+      }),
+    ]),
+  })
+# ---
+# name: test_report_filters[1,2-0.5-400]
+  dict({
+    'errors': list([
+      dict({
+        'code': 'invalid',
+        'detail': 'Enter a whole number.',
+        'source': dict({
+          'pointer': '/data/attributes/reviewer',
+        }),
+        'status': '400',
+      }),
+    ]),
+  })
+# ---
+# name: test_report_filters[1,2.6-1-400]
+  dict({
+    'errors': list([
+      dict({
+        'code': 'invalid',
+        'detail': 'Enter a whole number.',
+        'source': dict({
+          'pointer': '/data/attributes/id',
+        }),
+        'status': '400',
+      }),
+    ]),
+  })
+# ---
+# name: test_report_filters[1-None-200]
+  dict({
+    'data': list([
+    ]),
+    'meta': dict({
+      'total-time': '00:00:00',
+    }),
+  })
+# ---
+# name: test_report_filters[None--1-400]
+  dict({
+    'errors': list([
+      dict({
+        'code': 'min_value',
+        'detail': 'Ensure this value is greater than or equal to 1.',
+        'source': dict({
+          'pointer': '/data/attributes/reviewer',
+        }),
+        'status': '400',
+      }),
+    ]),
+  })
+# ---
+# name: test_report_filters[None-None-200]
+  dict({
+    'data': list([
+    ]),
+    'meta': dict({
+      'total-time': '00:00:00',
+    }),
+  })
+# ---
 # name: test_report_intersection_partial
   dict({
     'data': dict({
