@@ -341,3 +341,13 @@ class IsCustomer(IsAuthenticated):
             return False
 
         return request.user.customer_assignees.filter(is_customer=True).exists()
+
+
+class IsEmployed(IsAuthenticated):
+    """Allows access only to users with an active employment."""
+
+    def has_permission(self, request, view):
+        if not super().has_permission(request, view):  # pragma: no cover
+            return False
+
+        return request.user.get_active_employment() is not None
