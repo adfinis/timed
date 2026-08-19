@@ -84,6 +84,8 @@ export default class AnalysisController extends QPController {
   @tracked ordering = "-date";
   @tracked comment;
 
+  @tracked appliedComment;
+
   get billingTypes() {
     return this.store.peekAll("billing-type");
   }
@@ -125,9 +127,25 @@ export default class AnalysisController extends QPController {
   }
 
   get appliedFilters() {
-    return Object.keys(queryParamsState(this)).filter((key) => {
-      return key !== "ordering" && queryParamsState(this)?.[key]?.changed;
+    const appliedFilters = Object.keys(queryParamsState(this)).filter((key) => {
+      return (
+        !["ordering", "comment"].includes(key) &&
+        queryParamsState(this)?.[key]?.changed
+      );
     });
+
+    // `this.comment` and the `comment` qp are updated on every keystroke
+    // while we only fetch (`this._reset`) "on change", we need some extra handling
+    // so we don't display "comment" as an applied filter before actually applying it
+
+    // fixing this properly would require refactoring the QP handling altogether (#1483)
+    // or refactoring the ReportComment component, which are both non-trivial.
+
+    // hence this hack.
+    if (this.appliedComment) {
+      appliedFilters.push("comment");
+    }
+    return appliedFilters;
   }
 
   get jwt() {
@@ -173,6 +191,7 @@ export default class AnalysisController extends QPController {
   @action
   reset() {
     this.resetQueryParams({ except: ["ordering"] });
+    this.appliedComment = undefined;
   }
 
   @action
@@ -187,6 +206,7 @@ export default class AnalysisController extends QPController {
     this.selectedReportIds = [];
     this.totalTime = Duration.fromMillis(0);
     this.totalItems = 0;
+    this.appliedComment = undefined;
 
     this.data.perform();
   }
@@ -215,6 +235,8 @@ export default class AnalysisController extends QPController {
     const params = underscoreQueryParams(
       serializeQueryParams(this.allQueryParams, queryParamsState(this)),
     );
+
+    this.appliedComment = params.comment;
 
     if (this._canLoadMore) {
       const data = await this.store.query("report", {
@@ -388,5 +410,10 @@ export default class AnalysisController extends QPController {
 
   dateFromString(str) {
     return DateTime.fromISO(str);
+  }
+
+  @action
+  updateComment(value) {
+    this.comment = value ? value : undefined; // empty comment -> no query param
   }
 }
