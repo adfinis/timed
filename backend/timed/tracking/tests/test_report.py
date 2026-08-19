@@ -10,6 +10,7 @@ import pytest
 from django.db import DatabaseError
 from django.urls import reverse
 from django.utils.duration import duration_string
+from pytest_lazy_fixtures import lf
 from rest_framework import status
 
 from timed.tracking.models import Report
@@ -2682,6 +2683,7 @@ def test_report_update_bulk_accepts_parsed_editable_true(
 ):
     report = report_factory(user=internal_employee_client.user)
     url = reverse("report-bulk")
+
     data = {
         "data": {
             "type": "report-bulks",
@@ -2697,3 +2699,32 @@ def test_report_update_bulk_accepts_parsed_editable_true(
 
     report.refresh_from_db()
     assert report.not_billable is True
+
+
+@pytest.mark.parametrize(
+    ("client", "has_employment", "expected_status"),
+    [
+        (lf("auth_client"), False, status.HTTP_403_FORBIDDEN),
+        (lf("internal_employee_client"), True, status.HTTP_204_NO_CONTENT),
+        (lf("external_employee_client"), True, status.HTTP_204_NO_CONTENT),
+    ],
+)
+def test_report_bulk_edit_permissions(client, has_employment, expected_status):
+    user = client.user
+    employment = user.get_active_employment()
+
+    assert (employment is not None) == has_employment
+
+    url = reverse("report-bulk")
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"comment": "chungus"},
+            "relationships": {},
+        }
+    }
+
+    response = client.post(url, data=data, query_params={"editable": "1"})
+
+    assert response.status_code == expected_status
