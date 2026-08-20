@@ -19,8 +19,8 @@ importers:
         version: 2.1.1(supports-color@10.2.2)
     devDependencies:
       '@adfinis/eslint-config':
-        specifier: 3.0.2
-        version: 3.0.2(5763728cf2069edebcbce71684b0d599)
+        specifier: 3.1.0
+        version: 3.1.0(5763728cf2069edebcbce71684b0d599)
       '@apollo/client':
         specifier: ^4.0.10
         version: 4.2.1(rxjs@7.8.2)
@@ -520,8 +520,8 @@ importers:
 
 packages:
 
-  '@adfinis/eslint-config@3.0.2':
-    resolution: {integrity: sha512-flqmuDhB4UW1SRo4FGjfTWkH81omsvKvKNBL1mhc9fzPBfLDamjvuEMi/AvCFaPq7CxHgJklxgWmShYQkb6ATQ==}
+  '@adfinis/eslint-config@3.1.0':
+    resolution: {integrity: sha512-2FK07IZo/d3OhMEeN3r/7iSyHonOJfbIEGzOMZrIYksjes5QU7wif+0k3Lak+cN49OhW/xm8pW8xWkGplSp0/g==}
     peerDependencies:
       '@babel-plugin-proposal-decorators': '*'
       '@babel/core': '>= 7'
@@ -8787,7 +8787,7 @@ packages:
 
 snapshots:
 
-  '@adfinis/eslint-config@3.0.2(5763728cf2069edebcbce71684b0d599)':
+  '@adfinis/eslint-config@3.1.0(5763728cf2069edebcbce71684b0d599)':
     dependencies:
       '@babel/core': 7.28.6(supports-color@10.2.2)
       '@babel/eslint-parser': 7.28.6(@babel/core@7.28.6(supports-color@10.2.2))(eslint@9.25.1(jiti@2.4.2)(supports-color@10.2.2))
