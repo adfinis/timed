@@ -106,7 +106,7 @@
     "ember-validated-form": "8.0.1",
     "eslint": "9.25.1",
     "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-ember": "12.7.4",
+    "eslint-plugin-ember": "13.5.0",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-n": "18.2.2",
     "eslint-plugin-prettier": "^5.5.6",
