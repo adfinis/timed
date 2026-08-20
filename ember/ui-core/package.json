@@ -67,7 +67,7 @@
     "@embroider/compat": "^4.1.0",
     "@embroider/core": "^4.1.0",
     "@embroider/macros": "^1.18.0",
-    "@embroider/vite": "^1.1.5",
+    "@embroider/vite": "^1.7.9",
     "@eslint/js": "^9.17.0",
     "@fortawesome/ember-fontawesome": "^3.1.0",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
