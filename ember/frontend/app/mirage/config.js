@@ -168,6 +168,7 @@ function routes() {
           ...meta,
           pagination: {
             pages: Math.ceil(data.length / limit),
+            count: data.length,
             page,
           },
         };
