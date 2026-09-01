@@ -28,7 +28,7 @@ from timed.permissions import (
     IsSupervisor,
     IsUpdateOnly,
 )
-from timed.projects.models import CustomerAssignee, Task
+from timed.projects.models import Task
 from timed.tracking.models import Absence, Report
 
 if TYPE_CHECKING:
@@ -69,42 +69,32 @@ class UserViewSet(ModelViewSet):
             "employments", "supervisees", "supervisors"
         )
 
-        try:
-            current_employment = models.Employment.objects.get_at(
-                user=user, date=datetime.date.today()
-            )
-        except models.Employment.DoesNotExist:
-            if CustomerAssignee.objects.filter(user=user, is_customer=True).exists():
-                assigned_tasks = Task.objects.filter(
-                    Q(
-                        project__customer__customer_assignees__user=user,
-                        project__customer__customer_assignees__is_customer=True,
-                    )
-                )
-                visible_reports = Report.objects.all().filter(
-                    Q(task__in=assigned_tasks) | Q(user=user)
-                )
-                return queryset.filter(Q(reports__in=visible_reports) | Q(id=user.id))
-            msg = "User has no employment"
-            raise exceptions.PermissionDenied(msg) from None
-        if current_employment.is_external:
-            assigned_tasks = Task.objects.filter(
-                Q(task_assignees__user=user, task_assignees__is_reviewer=True)
-                | Q(
-                    project__project_assignees__user=user,
-                    project__project_assignees__is_reviewer=True,
-                )
-                | Q(
-                    project__customer__customer_assignees__user=user,
-                    project__customer__customer_assignees__is_reviewer=True,
-                )
-            )
-            visible_reports = Report.objects.all().filter(
-                Q(task__in=assigned_tasks) | Q(user=user)
-            )
+        current_employment = user.get_active_employment()
+        if not current_employment:
+            # users without an employment can only see themselves
+            return queryset.filter(id=user.id)
 
-            return queryset.filter(Q(reports__in=visible_reports) | Q(id=user.id))
-        return queryset
+        if not current_employment.is_external:
+            # internal users can see all users
+            return queryset
+
+        # external users can only see users relating to their assignment
+        assigned_tasks = Task.objects.filter(
+            Q(task_assignees__user=user, task_assignees__is_reviewer=True)
+            | Q(
+                project__project_assignees__user=user,
+                project__project_assignees__is_reviewer=True,
+            )
+            | Q(
+                project__customer__customer_assignees__user=user,
+                project__customer__customer_assignees__is_reviewer=True,
+            )
+        )
+        visible_reports = Report.objects.all().filter(
+            Q(task__in=assigned_tasks) | Q(user=user)
+        )
+
+        return queryset.filter(Q(reports__in=visible_reports) | Q(id=user.id))
 
     @action(methods=["get"], detail=False)
     def me(self, request, _pk=None):
