@@ -21,7 +21,9 @@ from timed.mixins import AggregateQuerysetMixin
 from timed.permissions import (
     IsAuthenticated,
     IsCreateOnly,
+    IsCustomer,
     IsDeleteOnly,
+    IsEmployed,
     IsOwner,
     IsReadOnly,
     IsSuperUser,
@@ -50,8 +52,8 @@ class UserViewSet(ModelViewSet):
             | IsSuperUser & IsDeleteOnly & NoReports
             # only superuser may create users
             | IsSuperUser & IsCreateOnly
-            # all authenticated users may read
-            | IsAuthenticated & IsReadOnly
+            # all employed users and customers may read
+            | (IsEmployed | IsCustomer) & IsReadOnly
         ),
     )
 

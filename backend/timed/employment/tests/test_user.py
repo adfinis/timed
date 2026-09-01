@@ -4,6 +4,8 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
+from timed.employment.models import User
+
 
 def test_user_list_unauthenticated(client):
     url = reverse("user-list")
@@ -306,13 +308,23 @@ def test_user_list_no_employment(
     is_customer,
     expected,
     status_code,
+    report_factory,
     customer_assignee_factory,
     user_factory,
 ):
     user = auth_client.user
     user_factory.create_batch(2)
+
     if is_customer:
-        customer_assignee_factory(user=user, is_customer=True)
+        assignee = customer_assignee_factory(user=user, is_customer=True)
+        # customers only ever see themselves via the user viewset
+        # historically, they also saw users with reports on their assigned customer
+        # hence this test setup
+        report_factory(
+            user=User.objects.exclude(id=user.id).first(),
+            task__project__customer=assignee.customer,
+            task__project__customer_visible=True,
+        )
 
     url = reverse("user-list")
 
