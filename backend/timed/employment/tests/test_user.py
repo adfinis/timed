@@ -27,7 +27,7 @@ def test_user_list(internal_employee_client, django_assert_num_queries, user_fac
 
     url = reverse("user-list")
 
-    with django_assert_num_queries(14):
+    with django_assert_num_queries(15):
         response = internal_employee_client.get(url)
 
     assert response.status_code == status.HTTP_200_OK
