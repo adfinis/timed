@@ -388,6 +388,12 @@ export default class AnalysisController extends QPController {
   });
 
   @action
+  split(selectedIds = [], event) {
+    const ids = event ? selectedIds : [];
+    this.router.transitionTo("analysis.split", ids[0]);
+  }
+
+  @action
   edit(selectedIds = [], event) {
     this.scrollRestorer.storeScrollPosition();
     const ids = event ? selectedIds : [];
