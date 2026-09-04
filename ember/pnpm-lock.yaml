@@ -166,8 +166,8 @@ importers:
         specifier: ^9.0.1
         version: 9.0.4(@babel/core@7.28.6(supports-color@10.2.2))(@ember/test-helpers@5.2.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2)
       ember-lifeline:
-        specifier: ^7.0.0
-        version: 7.0.0(@ember/test-helpers@5.2.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2)
+        specifier: ^7.1.0
+        version: 7.1.0(@ember/test-helpers@5.2.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2)
       ember-load-initializers:
         specifier: 3.0.1
         version: 3.0.1(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))
@@ -440,8 +440,8 @@ importers:
         specifier: ^9.0.4
         version: 9.0.4(@babel/core@7.28.6(supports-color@10.2.2))(@ember/test-helpers@5.4.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2))(supports-color@10.2.2)
       ember-lifeline:
-        specifier: ^7.0.0
-        version: 7.0.0(@ember/test-helpers@5.4.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2))(supports-color@10.2.2)
+        specifier: ^7.1.0
+        version: 7.1.0(@ember/test-helpers@5.4.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2))(supports-color@10.2.2)
       ember-modifier:
         specifier: ^4.2.2
         version: 4.2.2(@babel/core@7.28.6(supports-color@10.2.2))(supports-color@10.2.2)
@@ -1932,6 +1932,10 @@ packages:
 
   '@embroider/addon-shim@1.10.2':
     resolution: {integrity: sha512-EfI9cJ5/3QSUJtwm7x1MXrx3TEa2p7RNgSHefy7fvGm8/DP1xUFL25nST1NaHbHcqR1UhMlrTtv5iUIDoVzeQQ==}
+    engines: {node: 12.* || 14.* || >= 16}
+
+  '@embroider/addon-shim@1.10.3':
+    resolution: {integrity: sha512-GYbaiC1v9inbiwVg5s+Sd14Jc66NYxg23mEOocgWAZFCtOfhMnRLaLAA6SytW76myVVYImGHX5PFK4PVuH2yng==}
     engines: {node: 12.* || 14.* || >= 16}
 
   '@embroider/compat@4.1.12':
@@ -4590,8 +4594,8 @@ packages:
       '@ember/test-helpers':
         optional: true
 
-  ember-lifeline@7.0.0:
-    resolution: {integrity: sha512-2l51NzgH5vjN972zgbs+32rnXnnEFKB7qsSpJF+lBI4V5TG6DMy4SfowC72ZEuAtS58OVfwITbOO+RnM21EdpA==}
+  ember-lifeline@7.1.0:
+    resolution: {integrity: sha512-hd3r0jwZLgXNn3l2YSX6wVnD1KD5h+WUG6P/xo4rJXFboy7nOwix38fZt9SbuO66QVZSkdqMeUqW6Z/NPWa9kg==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
       '@ember/test-helpers': '>= 1.0.0'
@@ -5069,6 +5073,7 @@ packages:
   eslint@9.25.1:
     resolution: {integrity: sha512-E6Mtz9oGQWDCpV12319d59n4tx9zOTXSTmc8BLVxBx+G/0RdM5MvEEJLU9c0+aleoePYYgVTOsRblx433qmhWQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -5079,6 +5084,7 @@ packages:
   eslint@9.39.2:
     resolution: {integrity: sha512-LEyamqS7W5HB3ujJyvi0HQK/dtVINZvd5mAAp9eT5S/ujByGjiZLCzPcHVzuXbpJDJF/cxwHlfceVUDZ2lnSTw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -11770,7 +11776,7 @@ snapshots:
 
   '@ember/test-waiters@4.1.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)':
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
       '@embroider/macros': 1.20.5(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)
     transitivePeerDependencies:
       - '@babel/core'
@@ -11803,6 +11809,15 @@ snapshots:
       broccoli-funnel: 3.0.8(supports-color@10.2.2)
       common-ancestor-path: 1.0.1
       semver: 7.7.3
+    transitivePeerDependencies:
+      - supports-color
+
+  '@embroider/addon-shim@1.10.3(supports-color@10.2.2)':
+    dependencies:
+      '@embroider/shared-internals': 3.1.1(supports-color@10.2.2)
+      broccoli-funnel: 3.0.8(supports-color@10.2.2)
+      common-ancestor-path: 1.0.1
+      semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
 
@@ -13136,7 +13151,7 @@ snapshots:
 
   '@warp-drive/build-config@0.0.3(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)':
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
       '@embroider/macros': 1.20.5(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)
       babel-import-util: 2.1.1
       semver: 7.8.5
@@ -14900,7 +14915,7 @@ snapshots:
 
   ember-assign-helper@0.5.1(supports-color@10.2.2):
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -15588,7 +15603,7 @@ snapshots:
 
   ember-cookies@1.3.0(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2):
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
       ember-source: 6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
@@ -15711,7 +15726,7 @@ snapshots:
 
   ember-inflector@6.0.0(@babel/core@7.28.6(supports-color@10.2.2))(supports-color@10.2.2):
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
       decorator-transforms: 2.3.1(@babel/core@7.28.6(supports-color@10.2.2))
     transitivePeerDependencies:
       - '@babel/core'
@@ -15737,17 +15752,17 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-lifeline@7.0.0(@ember/test-helpers@5.2.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2):
+  ember-lifeline@7.1.0(@ember/test-helpers@5.2.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2):
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
     optionalDependencies:
       '@ember/test-helpers': 5.2.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
-  ember-lifeline@7.0.0(@ember/test-helpers@5.4.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2))(supports-color@10.2.2):
+  ember-lifeline@7.1.0(@ember/test-helpers@5.4.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2))(supports-color@10.2.2):
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
     optionalDependencies:
       '@ember/test-helpers': 5.4.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)
     transitivePeerDependencies:
@@ -15901,7 +15916,7 @@ snapshots:
   ember-raf-scheduler@0.5.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2):
     dependencies:
       '@ember/test-waiters': 4.1.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
       '@embroider/macros': 1.20.5(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)
     transitivePeerDependencies:
       - '@babel/core'
