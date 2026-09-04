@@ -151,12 +151,16 @@ function routes() {
     "/reports",
     function (
       { reports },
-      { queryParams: { "page[number]": page, "page[size]": limit } },
+      { queryParams: { "page[number]": page, "page[size]": limit, user } },
     ) {
       let data = reports.all();
       let meta = {
         "total-time": randomDuration(),
       };
+
+      if (user) {
+        data = reports.where({ userId: user });
+      }
 
       page = page && parseInt(page);
       if (page && limit) {
@@ -164,6 +168,7 @@ function routes() {
           ...meta,
           pagination: {
             pages: Math.ceil(data.length / limit),
+            count: data.length,
             page,
           },
         };
