@@ -86,6 +86,7 @@ def test_report_intersection_full(
                 "review": False,
                 "billed": False,
                 "rejected": False,
+                "can-verify": False,
             },
             "relationships": {
                 "customer": {
@@ -158,6 +159,7 @@ def test_report_intersection_accountant_editable(
                 "review": True,
                 "billed": None,
                 "rejected": False,
+                "can-verify": False,
             },
             "relationships": {
                 "customer": {"data": None},
@@ -203,6 +205,7 @@ def test_report_intersection_accountant_not_editable(
                 "review": None,
                 "billed": None,
                 "rejected": None,
+                "can-verify": None,
             },
             "relationships": {
                 "customer": {"data": None},
@@ -2406,3 +2409,75 @@ def test_report_filters(
     response = internal_employee_client.get(url, query_params=params)
     assert response.status_code == expected_status
     assert response.json() == snapshot
+
+
+@pytest.mark.parametrize(
+    (
+        "is_owner",
+        "is_reviewer_on_one_report",
+        "is_reviewer_on_other_reports",
+        "expected_can_verify",
+        "expected_count",
+    ),
+    [
+        (True, True, True, True, 3),
+        (True, True, False, True, 1),
+        (True, False, True, True, 2),
+        (False, True, True, True, 3),
+        (True, False, False, None, 0),
+        (False, True, False, True, 1),
+        (False, False, False, None, 0),
+    ],
+)
+def test_report_intersection_can_verify(
+    internal_employee_client,
+    report_factory,
+    task_factory,
+    task_assignee_factory,
+    expected_can_verify,
+    expected_count,
+    is_owner,
+    is_reviewer_on_other_reports,
+    is_reviewer_on_one_report,
+):
+    task = task_factory()
+
+    task_assignee_factory(
+        user=internal_employee_client.user, task=task, is_reviewer=True
+    )
+
+    report1 = report_factory(comment="report1")
+    report2 = report_factory(comment="report2")
+    report3 = report_factory(comment="report3")
+
+    if is_reviewer_on_one_report:
+        report3.task = task
+        report3.save()
+
+    if is_reviewer_on_other_reports:
+        report1.task = task
+        report2.task = task
+        report1.save()
+        report2.save()
+
+    if is_owner:
+        report1.user = internal_employee_client.user
+
+    ids = f"{report1.id},{report2.id},{report3.id}"
+
+    url = reverse("report-intersection")
+    response = internal_employee_client.get(
+        url,
+        data={
+            "id": ids,
+            "editable": 1,
+            "customer": task.project.customer.id,
+            "include": "task,customer,project",
+        },
+    )
+    assert response.status_code == status.HTTP_200_OK
+
+    json = response.json()
+
+    assert json.pop("meta")["count"] == expected_count
+    assert json.pop("data")["attributes"]["can-verify"] == expected_can_verify
