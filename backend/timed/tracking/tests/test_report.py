@@ -2406,3 +2406,131 @@ def test_report_filters(
     response = internal_employee_client.get(url, query_params=params)
     assert response.status_code == expected_status
     assert response.json() == snapshot
+
+
+@pytest.mark.parametrize(
+    ("verified_flag", "verified", "billed", "expected"),
+    [
+        (True, True, True, status.HTTP_204_NO_CONTENT),
+        (True, True, False, status.HTTP_204_NO_CONTENT),
+        (True, False, True, status.HTTP_204_NO_CONTENT),
+        (False, True, True, status.HTTP_400_BAD_REQUEST),
+        (False, False, True, status.HTTP_400_BAD_REQUEST),
+        (True, False, False, status.HTTP_204_NO_CONTENT),
+        (False, False, False, status.HTTP_204_NO_CONTENT),
+    ],
+)
+def test_report_unverify_billed_report(
+    internal_employee_client,
+    report_factory,
+    project_assignee_factory,
+    admin_client,
+    verified,
+    verified_flag,
+    billed,
+    expected,
+):
+    user = internal_employee_client.user
+    report = report_factory(user=user, billed=billed)
+    if verified:
+        report.verified_by = admin_client.user
+    project_assignee_factory(user=user, project=report.task.project, is_reviewer=True)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"verified": verified_flag, "comment": "some comment"},
+        }
+    }
+
+    response = internal_employee_client.post(
+        url + f"?editable=1&reviewer={user.id}&id={report.id}", data
+    )
+    assert response.status_code == expected
+    report.refresh_from_db()
+    if not verified_flag and billed:
+        assert (
+            response.json()["errors"][0]["detail"]
+            == "Verified flag can't be modified on billed reports."
+        )
+    else:
+        assert report.comment == "some comment"
+    if verified_flag:
+        assert report.verified_by == user
+
+
+@pytest.mark.parametrize(("new_comment"), [("some new comment")])
+@pytest.mark.parametrize(
+    ("verified_flag", "verified", "billed", "some_reports_billed", "expected"),
+    [
+        (True, True, True, True, status.HTTP_204_NO_CONTENT),
+        (True, True, True, False, status.HTTP_204_NO_CONTENT),
+        (True, True, False, False, status.HTTP_204_NO_CONTENT),
+        (False, True, True, True, status.HTTP_400_BAD_REQUEST),
+        (False, True, True, False, status.HTTP_204_NO_CONTENT),
+        (False, True, False, True, status.HTTP_400_BAD_REQUEST),
+        (True, True, False, True, status.HTTP_204_NO_CONTENT),
+        (False, True, False, False, status.HTTP_204_NO_CONTENT),
+        (True, False, True, True, status.HTTP_204_NO_CONTENT),
+        (True, False, True, False, status.HTTP_204_NO_CONTENT),
+        (True, False, False, False, status.HTTP_204_NO_CONTENT),
+        (False, False, True, True, status.HTTP_400_BAD_REQUEST),
+        (False, False, False, True, status.HTTP_400_BAD_REQUEST),
+        (True, False, False, True, status.HTTP_204_NO_CONTENT),
+        (False, False, False, False, status.HTTP_204_NO_CONTENT),
+    ],
+)
+def test_report_unverify_billed_reports(
+    internal_employee_client,
+    report_factory,
+    project_assignee_factory,
+    verified_flag,
+    verified,
+    billed,
+    new_comment,
+    some_reports_billed,
+    expected,
+):
+    effective_billed = some_reports_billed or billed
+    ids = ""
+    user = internal_employee_client.user
+    if verified:
+        reports = report_factory.create_batch(
+            3, user=user, billed=billed, verified_by=user
+        )
+    else:
+        reports = report_factory.create_batch(3, user=user, billed=billed)
+    if some_reports_billed:
+        reports.extend(report_factory.create_batch(3, user=user, billed=True))
+    ids += ",".join(str(r.id) for r in reports)
+    for r in reports:
+        project_assignee_factory(user=user, project=r.task.project, is_reviewer=True)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "attributes": {"verified": verified_flag, "comment": new_comment},
+        }
+    }
+
+    response = internal_employee_client.post(
+        url + f"?editable=1&reviewer={user.id}&id={ids}", data
+    )
+    assert response.status_code == expected
+    if not verified_flag and effective_billed and some_reports_billed:
+        assert (
+            response.json()["errors"][0]["detail"]
+            == "Verified flag can't be modified on billed reports."
+        )
+    else:
+        for r in reports:
+            r.refresh_from_db()
+            if not (r.billed and r.verified_by is not None):
+                assert r.comment == new_comment
+            if verified_flag:
+                assert r.verified_by == user
