@@ -2251,11 +2251,18 @@ def test_report_bulk_customer_change_requires_review_comment(
 
 
 @pytest.mark.parametrize(
-    ("updated_comment", "new_comment", "new_duration", "original_duration"),
+    (
+        "updated_comment",
+        "new_comment",
+        "split_comment",
+        "new_duration",
+        "original_duration",
+    ),
     [
         (
             "updated comment",
             "new_comment",
+            "split comment",
             timedelta(hours=3, minutes=30),
             timedelta(hours=7, minutes=30),
         )
@@ -2302,6 +2309,7 @@ def test_report_split(
     updated_duration,
     new_comment,
     new_duration,
+    split_comment,
     verified,
     original_report_exists,
     original_duration,
@@ -2331,9 +2339,12 @@ def test_report_split(
         "data": {
             "type": "split-reports",
             "attributes": {
+                "comment": split_comment,
                 "updated_original_report": {
                     "comment": updated_comment,
                     "duration": updated_duration,
+                    "not_billable": True,
+                    "review": False,
                     "task": {
                         "type": "tasks",
                         "id": updated_report_task.pk,
@@ -2342,6 +2353,8 @@ def test_report_split(
                 "second_report": {
                     "comment": new_comment,
                     "duration": new_duration,
+                    "not_billable": False,
+                    "review": True,
                     "task": {
                         "type": "tasks",
                         "id": new_report_task.pk,
