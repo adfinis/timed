@@ -532,7 +532,7 @@ class AbsenceSerializer(ModelSerializer):
 
 
 class ReportDataSerializer(Serializer):
-    comment = serializers.CharField()
+    comment = serializers.CharField(allow_null=True, required=False)
     duration = serializers.DurationField()
     task = ResourceRelatedField(queryset=Task.objects.filter(archived=False))
     review = serializers.BooleanField()
