@@ -2334,6 +2334,8 @@ def test_report_split(
                 "updated_original_report": {
                     "comment": updated_comment,
                     "duration": updated_duration,
+                    "not_billable": True,
+                    "review": False,
                     "task": {
                         "type": "tasks",
                         "id": updated_report_task.pk,
@@ -2342,6 +2344,8 @@ def test_report_split(
                 "second_report": {
                     "comment": new_comment,
                     "duration": new_duration,
+                    "not_billable": False,
+                    "review": True,
                     "task": {
                         "type": "tasks",
                         "id": new_report_task.pk,
