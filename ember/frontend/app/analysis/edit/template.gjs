@@ -15,6 +15,7 @@ import Empty from "timed/components/empty";
 import NotIdenticalWarning from "timed/components/not-identical-warning";
 import PagePermission from "timed/components/page-permission";
 import ReportComment from "timed/components/report-comment";
+import SplitReportModal from "timed/components/split-report-modal";
 import TaskSelection from "timed/components/task-selection";
 import Void from "timed/components/void";
 
@@ -320,6 +321,11 @@ import Void from "timed/components/void";
                             )
                           }}
                         >Reset</button>
+                        <SplitReportModal
+                          @afterSave={{@controller.cancel}}
+                          @disabled={{not @controller.canSplitReport}}
+                          @report-id={{@controller.id}}
+                        />
                       </div>
                       <f.submit />
                     </c.footer>
