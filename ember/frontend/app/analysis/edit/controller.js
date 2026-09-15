@@ -144,7 +144,7 @@ export default class AnalysisEditController extends Controller {
   }
 
   get isReviewer() {
-    return allQueryParams(this).reviewer === this.currentUser.user.id;
+    return this.intersectionModel.canVerify;
   }
 
   get canVerify() {
