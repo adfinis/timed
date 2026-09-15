@@ -535,6 +535,8 @@ class ReportDataSerializer(Serializer):
     comment = serializers.CharField()
     duration = serializers.DurationField()
     task = ResourceRelatedField(queryset=Task.objects.filter(archived=False))
+    review = serializers.BooleanField()
+    not_billable = serializers.BooleanField()
 
 
 class ReportSplitSerializer(Serializer):

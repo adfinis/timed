@@ -411,6 +411,8 @@ class ReportViewSet(ModelViewSet):
                     comment=second_report["comment"],
                     duration=second_report["duration"],
                     task_id=second_report_task.pk,
+                    not_billable=second_report["not_billable"],
+                    review=second_report["review"],
                     billed=second_report_task.project.billed,
                     date=original_report.date,
                     user=original_report.user,
@@ -418,6 +420,8 @@ class ReportViewSet(ModelViewSet):
 
                 original_report.comment = updated_original_report["comment"]
                 original_report.duration = updated_original_report["duration"]
+                original_report.not_billable = updated_original_report["not_billable"]
+                original_report.review = updated_original_report["review"]
                 original_report.task_id = updated_original_report_task.pk
                 original_report.billed = updated_original_report_task.project.billed
 
