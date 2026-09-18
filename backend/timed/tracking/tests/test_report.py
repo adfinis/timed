@@ -2486,3 +2486,185 @@ def test_report_intersection_can_verify(
 
     assert json["meta"]["count"] == expected_count
     assert json["data"]["attributes"]["can-verify"] == expected_can_verify
+
+
+@pytest.mark.parametrize(
+    ("verified", "billed", "expected_status"),
+    [
+        (True, True, status.HTTP_204_NO_CONTENT),
+        (True, False, status.HTTP_204_NO_CONTENT),
+        (False, True, status.HTTP_204_NO_CONTENT),
+        (False, False, status.HTTP_204_NO_CONTENT),
+    ],
+)
+def test_report_unverify_billed_report(
+    internal_employee_client,
+    report_factory,
+    project_assignee_factory,
+    verified,
+    billed,
+    expected_status,
+):
+    user = internal_employee_client.user
+    report = report_factory(user=user, billed=billed, verified_by=user)
+    if not verified:
+        report.verified_by = None
+        report.save()
+    original_report_comment = report.comment
+    project_assignee_factory(user=user, project=report.task.project, is_reviewer=True)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"verified": False, "comment": "some comment"},
+        }
+    }
+
+    response = internal_employee_client.post(
+        url, data, query_params={"editable": 1, "reviewer": user.id, "id": report.id}
+    )
+    assert response.status_code == expected_status
+    report.refresh_from_db()
+    if not (verified and billed):
+        assert report.comment == "some comment"
+        assert report.verified_by is None
+        return
+    assert report.comment == original_report_comment
+    assert report.verified_by == user
+
+
+@pytest.mark.parametrize(
+    ("verified", "billed", "some_reports_billed", "expected_count"),
+    [
+        # some reports are verified and billed and others are just billed -> nothing should have changed (3 are verified and billed, 3 are unverified and not billed)
+        (True, True, True, 3),
+        # some reports are verified and billed and others aren't billed nor verified -> only comment and verified should have changed on the unfinished (not billed and verified) reports
+        (True, True, False, 3),
+        # some reports are verified, but none are billed -> all of them should be unverified and comment changed
+        (True, False, False, 0),
+        # some reports are verified but not billed, others are billed -> all of them should be unverified and comment changed
+        (True, False, True, 0),
+        # all reports are billed, but none are verified -> all of them should be unverified and comment changed
+        (False, True, True, 0),
+        # some reports are billed, but not verified -> all of them should be unverified and comment changed
+        (False, True, False, 0),
+        # none of the reports are verified nor billed -> all of them should be unverified and comment changed
+        (False, False, False, 0),
+    ],
+)
+def test_report_unverify_billed_reports(
+    internal_employee_client,
+    report_factory,
+    project_assignee_factory,
+    verified,
+    billed,
+    some_reports_billed,
+    expected_count,
+    snapshot,
+):
+    ids = []
+    new_report_comment = "some new comment"
+    user = internal_employee_client.user
+    verified_by = user if verified else None
+    reports = report_factory.create_batch(
+        3, user=user, billed=billed, verified_by=verified_by
+    )
+    if some_reports_billed:
+        reports.extend(report_factory.create_batch(3, user=user, billed=True))
+    for r in reports:
+        project_assignee_factory(user=user, project=r.task.project, is_reviewer=True)
+        ids.append(str(r.id))
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "attributes": {"verified": False, "comment": new_report_comment},
+        }
+    }
+
+    internal_employee_client.post(
+        url,
+        data,
+        query_params={"editable": 1, "reviewer": user.id, "id": ",".join(ids)},
+    )
+    reports = Report.objects.filter(id__in=ids)
+    verified_reports_count = reports.filter(verified_by__isnull=False).count()
+    reports_comment = set(reports.values_list("comment"))
+    assert verified_reports_count == expected_count
+    if verified and billed:
+        # only three of the total 6 reports have the new comment, since the 3 finished (verified and billed) get dropped / filtered out by the unfinished filter
+        assert reports_comment == snapshot
+        return
+    # if the reports aren't finished (verified and billed) they can be edited
+    assert reports_comment == snapshot
+
+
+def test_report_change_finished_report(
+    internal_employee_client,
+    report_factory,
+    project_assignee_factory,
+):
+    user = internal_employee_client.user
+    report = report_factory(
+        user=user, billed=True, verified_by=user, comment="test comment"
+    )
+    project_assignee_factory(user=user, project=report.task.project, is_reviewer=True)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"verified": True, "comment": "some comment"},
+        }
+    }
+
+    response = internal_employee_client.post(
+        url, data, query_params={"editable": 1, "reviewer": user.id, "id": report.id}
+    )
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+    report.refresh_from_db()
+    assert report.comment == "test comment"
+    assert report.verified_by == user
+
+
+def test_report_change_finished_reports(
+    internal_employee_client,
+    report_factory,
+    project_assignee_factory,
+):
+    ids = []
+    user = internal_employee_client.user
+    reports = report_factory.create_batch(
+        6, user=user, billed=True, verified_by=user, comment="test comment"
+    )
+    for r in reports:
+        project_assignee_factory(user=user, project=r.task.project, is_reviewer=True)
+        ids.append(str(r.id))
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "attributes": {"verified": True, "comment": "some comment"},
+        }
+    }
+
+    response = internal_employee_client.post(
+        url,
+        data,
+        query_params={"editable": 1, "reviewer": user.id, "id": ",".join(ids)},
+    )
+
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+    for r in reports:
+        r.refresh_from_db()
+        assert r.comment == "test comment"
+        assert r.verified_by == user

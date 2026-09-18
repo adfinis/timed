@@ -165,3 +165,67 @@
   
   '''
 # ---
+# name: test_report_unverify_billed_reports[False-False-False-0]
+  set({
+    tuple(
+      'some new comment',
+    ),
+  })
+# ---
+# name: test_report_unverify_billed_reports[False-True-False-0]
+  set({
+    tuple(
+      'some new comment',
+    ),
+  })
+# ---
+# name: test_report_unverify_billed_reports[False-True-True-0]
+  set({
+    tuple(
+      'some new comment',
+    ),
+  })
+# ---
+# name: test_report_unverify_billed_reports[True-False-False-0]
+  set({
+    tuple(
+      'some new comment',
+    ),
+  })
+# ---
+# name: test_report_unverify_billed_reports[True-False-True-0]
+  set({
+    tuple(
+      'some new comment',
+    ),
+  })
+# ---
+# name: test_report_unverify_billed_reports[True-True-False-3]
+  set({
+    tuple(
+      'Base its left political.',
+    ),
+    tuple(
+      'Must purpose yard goal go heavy social.',
+    ),
+    tuple(
+      'Though wonder boy care final.',
+    ),
+  })
+# ---
+# name: test_report_unverify_billed_reports[True-True-True-3]
+  set({
+    tuple(
+      'Base its left political.',
+    ),
+    tuple(
+      'Must purpose yard goal go heavy social.',
+    ),
+    tuple(
+      'Though wonder boy care final.',
+    ),
+    tuple(
+      'some new comment',
+    ),
+  })
+# ---
