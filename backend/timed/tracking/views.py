@@ -221,16 +221,8 @@ class ReportViewSet(ModelViewSet):
         self,
         queryset: QuerySet[models.Report],
         fields: dict,
-        user: User,
-        reviewer_id: int,
     ) -> None:
         # only reviewer or superuser may verify reports
-        # this is enforced when reviewer filter is set to current user
-        if not user.is_superuser and reviewer_id != user.pk:
-            raise exceptions.ValidationError(
-                _("Reviewer filter needs to be set to verifying user")
-            )
-
         if fields.get("review") or any(queryset.values_list("review", flat=True)):
             raise exceptions.ValidationError(
                 _("Reports can't both be set as `review` and `verified`.")
