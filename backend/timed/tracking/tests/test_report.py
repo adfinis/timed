@@ -641,9 +641,7 @@ def test_report_update_bulk_verify_reviewer(
         }
     }
 
-    response = internal_employee_client.post(
-        url + f"?editable=1&reviewer={user.id}", data
-    )
+    response = internal_employee_client.post(url + "?editable=1", data)
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
     report.refresh_from_db()
@@ -1294,7 +1292,6 @@ def test_report_update_bulk_reviewer_multiple_notify(
     reports = [report1_1, report1_2, report2, report3]
     params = {
         "editable": 1,
-        "reviewer": reviewer.id,
         "id": ",".join(str(r.id) for r in reports),
     }
     response = internal_employee_client.post(url, data, query_params=params)
@@ -1441,7 +1438,7 @@ def test_report_notify_rendering(
 
     url = reverse("report-bulk")
 
-    query_params = f"?editable=1&reviewer={reviewer.id}&id=" + ",".join(
+    query_params = "?editable=1&id=" + ",".join(
         str(r.id) for r in [report1, report2, report3, report4]
     )
     response = internal_employee_client.post(url + query_params, data)
@@ -1505,9 +1502,7 @@ def test_report_update_bulk_bill_reviewer(
         }
     }
 
-    response = internal_employee_client.post(
-        url + f"?editable=1&reviewer={user.id}", data
-    )
+    response = internal_employee_client.post(url + "?editable=1", data)
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     report.refresh_from_db()
@@ -1658,9 +1653,7 @@ def test_report_update_bulk_billed(
         }
     }
 
-    response = internal_employee_client.post(
-        url, data, query_params={"editable": 1, "reviewer": user.id}
-    )
+    response = internal_employee_client.post(url, data, query_params={"editable": 1})
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
     report.refresh_from_db()
@@ -1835,7 +1828,6 @@ def test_report_reject_multiple_notify(
 
     params = {
         "editable": 1,
-        "reviewer": reviewer.id,
         "id": ",".join(str(r.id) for r in [report1_1, report1_2, report2, report3]),
     }
     response = internal_employee_client.post(url, data, query_params=params)
@@ -1900,7 +1892,7 @@ def test_report_bulk_automatic_unreject(
         }
     }
 
-    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
+    params = {"editable": 1, "id": report.id}
     response = internal_employee_client.post(url, data, query_params=params)
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
@@ -2178,7 +2170,7 @@ def test_report_bulk_edit_move_and_verify(
     }
 
     # query params as required by the action
-    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
+    params = {"editable": 1, "id": report.id}
 
     response = internal_employee_client.post(
         url,
@@ -2213,7 +2205,7 @@ def test_report_bulk_reject_requires_review_comment(
         }
     }
 
-    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
+    params = {"editable": 1, "id": report.id}
     response = internal_employee_client.post(url, data, query_params=params)
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -2250,7 +2242,7 @@ def test_report_bulk_customer_change_requires_review_comment(
         }
     }
 
-    params = {"editable": 1, "reviewer": reviewer.id, "id": report.id}
+    params = {"editable": 1, "id": report.id}
     response = internal_employee_client.post(url, data, query_params=params)
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -2532,7 +2524,7 @@ def test_report_unverify_billed_report(
     }
 
     response = internal_employee_client.post(
-        url, data, query_params={"editable": 1, "reviewer": user.id, "id": report.id}
+        url, data, query_params={"editable": 1, "id": report.id}
     )
     assert response.status_code == expected_status
     report.refresh_from_db()
@@ -2598,7 +2590,7 @@ def test_report_unverify_billed_reports(
     internal_employee_client.post(
         url,
         data,
-        query_params={"editable": 1, "reviewer": user.id, "id": ",".join(ids)},
+        query_params={"editable": 1, "id": ",".join(ids)},
     )
     reports = Report.objects.filter(id__in=ids)
     verified_reports_count = reports.filter(verified_by__isnull=False).count()
@@ -2634,7 +2626,7 @@ def test_report_change_finished_report(
     }
 
     response = internal_employee_client.post(
-        url, data, query_params={"editable": 1, "reviewer": user.id, "id": report.id}
+        url, data, query_params={"editable": 1, "id": report.id}
     )
     assert response.status_code == status.HTTP_204_NO_CONTENT
     report.refresh_from_db()
@@ -2668,7 +2660,7 @@ def test_report_change_finished_reports(
     response = internal_employee_client.post(
         url,
         data,
-        query_params={"editable": 1, "reviewer": user.id, "id": ",".join(ids)},
+        query_params={"editable": 1, "id": ",".join(ids)},
     )
 
     assert response.status_code == status.HTTP_204_NO_CONTENT
@@ -2787,3 +2779,28 @@ def test_report_bulk_edit_permissions(client, has_employment, expected_status):
     response = client.post(url, data=data, query_params={"editable": "1"})
 
     assert response.status_code == expected_status
+
+
+def test_report_reject_own_report(internal_employee_client, report_factory, snapshot):
+    user = internal_employee_client.user
+    url = reverse("report-bulk")
+
+    report = report_factory(user=user)
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "attributes": {"rejected": True, "review-comment": "foobar"},
+        }
+    }
+
+    response = internal_employee_client.post(
+        url,
+        data,
+        query_params={"editable": 1, "id": report.id},
+    )
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json()["errors"][0]["detail"] == snapshot
+    report.refresh_from_db()
+    assert report.rejected is False

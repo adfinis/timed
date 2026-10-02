@@ -222,13 +222,13 @@ class ReportViewSet(ModelViewSet):
         queryset: QuerySet[models.Report],
         fields: dict,
         user: User,
-        reviewer_id: int,
+        *,
+        can_verify: bool,
     ) -> None:
         # only reviewer or superuser may verify reports
-        # this is enforced when reviewer filter is set to current user
-        if not user.is_superuser and reviewer_id != user.pk:
+        if not user.is_superuser and not can_verify:
             raise exceptions.ValidationError(
-                _("Reviewer filter needs to be set to verifying user")
+                _("Only reviewers and superusers are allowed to verify")
             )
 
         if fields.get("review") or any(queryset.values_list("review", flat=True)):
@@ -306,8 +306,30 @@ class ReportViewSet(ModelViewSet):
                 _("Only superuser and accountants may bill reports")
             )
 
+        reviewer_conditions = (
+            Q(user__in=user.supervisees.all())
+            | Q(
+                task__task_assignees__user=user,
+                task__task_assignees__is_reviewer=True,
+            )
+            | Q(
+                task__project__project_assignees__user=user,
+                task__project__project_assignees__is_reviewer=True,
+            )
+            | Q(
+                task__project__customer__customer_assignees__user=user,
+                task__project__customer__customer_assignees__is_reviewer=True,
+            )
+        )
+        # Check if any reports exist outside of the reviewer conditions
+        user_is_reviewer_on_all_reports = not queryset.exclude(
+            reviewer_conditions
+        ).exists()
+
         if verified is not None:
-            self._validate_verified(queryset, fields, user, qp["reviewer"])
+            self._validate_verified(
+                queryset, fields, user, can_verify=user_is_reviewer_on_all_reports
+            )
             fields["verified_by"] = (verified and user) or None
 
         review_comment = fields.pop("review_comment", "")
@@ -318,10 +340,15 @@ class ReportViewSet(ModelViewSet):
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
 
-        if fields.get("rejected") and not review_comment:
-            raise exceptions.ValidationError(
-                _("Review Comment is required when rejecting report(s).")
-            )
+        if fields.get("rejected"):
+            if not review_comment:
+                raise exceptions.ValidationError(
+                    _("Review comment is required when rejecting report(s).")
+                )
+            if not user.is_superuser and not user_is_reviewer_on_all_reports:
+                raise exceptions.ValidationError(
+                    _("Only reviewer and superuser can reject reports.")
+                )
 
         if fields:
             notify_args = (queryset, fields, user, review_comment)
