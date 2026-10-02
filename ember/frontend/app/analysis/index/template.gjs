@@ -269,6 +269,19 @@ const AnalysisIndexTemplate = <template>
             {{#let @controller.data.lastSuccessful.value as |reports|}}
               <div class="flex justify-end gap-x-2">
                 {{#if @controller.selectedReportIds.length}}
+                  {{#if (eq @controller.selectedReportIds.length 1)}}
+                    <button
+                      data-test-split
+                      type="button"
+                      class="btn btn-success"
+                      {{on
+                        "click"
+                        (fn @controller.split @controller.selectedReportIds)
+                      }}
+                    >
+                      Split report
+                    </button>
+                  {{/if}}
                   <button
                     data-test-edit-selected
                     type="button"
