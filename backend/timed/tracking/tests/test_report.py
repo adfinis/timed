@@ -1,4 +1,6 @@
 """Tests for the reports endpoint."""
+# TODO: make test which checks, that when you reject one of your own reports, that it doesn't actually reject it
+# TODO: replace the reviewer query_param with task_assignee (actually set the reviewer on that task instead of handling it with query params)
 
 from __future__ import annotations
 
