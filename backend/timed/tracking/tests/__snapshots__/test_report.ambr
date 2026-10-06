@@ -165,6 +165,9 @@
   
   '''
 # ---
+# name: test_report_reject_own_report
+  'Only reviewer and superuser can reject reports.'
+# ---
 # name: test_report_unverify_billed_reports[False-False-False-0]
   set({
     tuple(
