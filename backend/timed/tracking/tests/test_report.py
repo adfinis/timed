@@ -2804,3 +2804,36 @@ def test_report_reject_own_report(internal_employee_client, report_factory, snap
     assert response.json()["errors"][0]["detail"] == snapshot
     report.refresh_from_db()
     assert report.rejected is False
+
+
+def test_report_edit_verified_report_as_owner(
+    internal_employee_client, report_factory, superadmin_client, snapshot
+):
+    report = report_factory(
+        user=internal_employee_client.user, verified_by=superadmin_client.user
+    )
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "attributes": {
+                "rejected": True,
+                "review-comment": "foobar",
+                "not_billable": True,
+            },
+        }
+    }
+
+    response = internal_employee_client.post(
+        url,
+        data,
+        query_params={"editable": 1, "id": report.id},
+    )
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json()["errors"][0]["detail"] == snapshot
+    report.refresh_from_db()
+    assert report.rejected is False
+    assert report.not_billable is False

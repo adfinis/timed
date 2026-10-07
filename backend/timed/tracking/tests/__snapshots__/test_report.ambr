@@ -1,4 +1,7 @@
 # serializer version: 1
+# name: test_report_edit_verified_report_as_owner
+  'Only Reviewers and Superusers may edit verified reports.'
+# ---
 # name: test_report_filters[-1-None-400]
   dict({
     'errors': list([
