@@ -219,7 +219,6 @@ class ReportViewSet(ModelViewSet):
 
     def _validate_verified(
         self,
-        queryset: QuerySet[models.Report],
         fields: dict,
         user: User,
         *,
@@ -229,11 +228,6 @@ class ReportViewSet(ModelViewSet):
         if not user.is_superuser and not can_verify:
             raise exceptions.ValidationError(
                 _("Only reviewers and superusers are allowed to verify")
-            )
-
-        if fields.get("review") or any(queryset.values_list("review", flat=True)):
-            raise exceptions.ValidationError(
-                _("Reports can't both be set as `review` and `verified`.")
             )
 
         if fields.get("task"):
@@ -256,6 +250,16 @@ class ReportViewSet(ModelViewSet):
             raise exceptions.ValidationError(
                 _("Review Comment is required when changing/moving customer."),
                 "required",
+            )
+
+    def _check_verified_report_constraints(self, effective_review, user, is_reviewer):
+        if effective_review:
+            raise exceptions.ValidationError(
+                _("Reports can't both be set as `review` and `verified`.")
+            )
+        if not is_reviewer and not user.is_superuser:
+            raise exceptions.ValidationError(
+                _("Only Reviewers and Superusers may edit verified reports.")
             )
 
     def cleaned_query_params(
@@ -326,11 +330,26 @@ class ReportViewSet(ModelViewSet):
             reviewer_conditions
         ).exists()
 
+        existing_db_verified = queryset.filter(verified_by__isnull=False).exists()
+
         if verified is not None:
             self._validate_verified(
-                queryset, fields, user, can_verify=user_is_reviewer_on_all_reports
+                fields, user, can_verify=user_is_reviewer_on_all_reports
             )
             fields["verified_by"] = (verified and user) or None
+
+            existing_db_verified = verified
+
+        review = serializer.validated_data.get("review")
+
+        effective_review = (
+            review if review is not None else queryset.filter(review=True).exists()
+        )
+
+        if existing_db_verified:
+            self._check_verified_report_constraints(
+                effective_review, user, user_is_reviewer_on_all_reports
+            )
 
         review_comment = fields.pop("review_comment", "")
 
