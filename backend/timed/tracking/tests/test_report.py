@@ -2141,7 +2141,12 @@ def test_report_list_filter_comment(
 
 
 def test_report_bulk_edit_move_and_verify(
-    internal_employee_client, user, report_factory, project_assignee_factory, task: Task
+    internal_employee_client,
+    user,
+    report_factory,
+    project_assignee_factory,
+    task: Task,
+    snapshot,
 ):
     reviewer = internal_employee_client.user
 
@@ -2162,7 +2167,7 @@ def test_report_bulk_edit_move_and_verify(
         "data": {
             "type": "report-bulks",
             "id": None,
-            "attributes": {"verified": True},
+            "attributes": {"verified": True, "review-comment": "blabla"},
             "relationships": {
                 "task": {"data": {"type": "tasks", "id": task.pk}},
             },
@@ -2178,10 +2183,7 @@ def test_report_bulk_edit_move_and_verify(
         query_params=params,
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert (
-        response.json()["errors"][0]["detail"]
-        == "Reports can't be moved and verified at the same time."
-    )
+    assert response.json()["errors"][0]["detail"] == snapshot
 
 
 def test_report_bulk_reject_requires_review_comment(
@@ -2821,7 +2823,6 @@ def test_report_edit_verified_report_as_owner(
             "attributes": {
                 "rejected": True,
                 "review-comment": "foobar",
-                "not_billable": True,
             },
         }
     }
@@ -2837,3 +2838,97 @@ def test_report_edit_verified_report_as_owner(
     report.refresh_from_db()
     assert report.rejected is False
     assert report.not_billable is False
+
+
+def test_report_verify_rejected_report(
+    internal_employee_client, report_factory, task_assignee_factory, snapshot
+):
+    user = internal_employee_client.user
+    report = report_factory(user=user, rejected=True)
+    task_assignee_factory(task=report.task, user=user, is_reviewer=True)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "attributes": {
+                "rejected": False,
+                "review-comment": "foobar",
+                "verified": True,
+            },
+        }
+    }
+
+    response = internal_employee_client.post(
+        url,
+        data,
+        query_params={"editable": 1, "id": report.id},
+    )
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json()["errors"][0]["detail"] == snapshot
+    report.refresh_from_db()
+    assert report.rejected is True
+    assert report.verified_by is None
+
+
+def test_report_reject_verified_report(
+    internal_employee_client, report_factory, task_assignee_factory, snapshot
+):
+    user = internal_employee_client.user
+    report = report_factory(user=user, verified_by=user)
+    task_assignee_factory(task=report.task, user=user, is_reviewer=True)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "attributes": {
+                "rejected": True,
+                "review-comment": "foobar",
+            },
+        }
+    }
+
+    response = internal_employee_client.post(
+        url,
+        data,
+        query_params={"editable": 1, "id": report.id},
+    )
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json()["errors"][0]["detail"] == snapshot
+    report.refresh_from_db()
+    assert report.rejected is False
+    assert report.verified_by == user
+
+
+def test_report_set_not_billable_verified_report(
+    internal_employee_client, report_factory, task_assignee_factory, snapshot
+):
+    user = internal_employee_client.user
+    report = report_factory(user=user, verified_by=user)
+    task_assignee_factory(task=report.task, user=user, is_reviewer=True)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "attributes": {"not_billable": True},
+        }
+    }
+
+    response = internal_employee_client.post(
+        url,
+        data,
+        query_params={"editable": 1, "id": report.id},
+    )
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json()["errors"][0]["detail"] == snapshot
+    report.refresh_from_db()
+    assert report.rejected is False
+    assert report.verified_by == user

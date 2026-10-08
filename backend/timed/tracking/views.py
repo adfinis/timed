@@ -219,10 +219,10 @@ class ReportViewSet(ModelViewSet):
 
     def _validate_verified(
         self,
-        fields: dict,
         user: User,
         *,
         can_verify: bool,
+        existing_db_rejected: bool,
     ) -> None:
         # only reviewer or superuser may verify reports
         if not user.is_superuser and not can_verify:
@@ -230,13 +230,18 @@ class ReportViewSet(ModelViewSet):
                 _("Only reviewers and superusers are allowed to verify")
             )
 
-        if fields.get("task"):
+        if existing_db_rejected:
             raise exceptions.ValidationError(
-                _("Reports can't be moved and verified at the same time.")
+                _("Reports can't be rejected and verified at the same time.")
             )
 
     def _validate_task(
-        self, queryset: QuerySet[models.Report], fields: dict, review_comment: str
+        self,
+        queryset: QuerySet[models.Report],
+        fields: dict,
+        review_comment: str,
+        *,
+        existing_db_verified: bool,
     ) -> None:
         # if no review comment was given, we validate that the customer of all the
         # reports (that are being updated/attempted to be updated) is the same, if
@@ -250,6 +255,38 @@ class ReportViewSet(ModelViewSet):
             raise exceptions.ValidationError(
                 _("Review Comment is required when changing/moving customer."),
                 "required",
+            )
+
+        if existing_db_verified:
+            raise exceptions.ValidationError(
+                _("You can't move verified reports."),
+            )
+
+    def _validate_rejected(
+        self,
+        review_comment,
+        user,
+        user_is_reviewer_on_all_reports,
+        existing_db_verified,
+        rejected,
+    ):
+        if not review_comment and rejected:
+            raise exceptions.ValidationError(
+                _("Review comment is required when rejecting report(s).")
+            )
+        if not user.is_superuser and not user_is_reviewer_on_all_reports:
+            raise exceptions.ValidationError(
+                _("Only reviewer and superuser can reject reports.")
+            )
+        if existing_db_verified and not user.is_superuser:
+            raise exceptions.ValidationError(
+                _("Rejecting verified reports is not allowed.")
+            )
+
+    def _validate_not_billable(self, existing_db_verified, verified, user):
+        if existing_db_verified and not user.is_superuser and verified is not False:
+            raise exceptions.ValidationError(
+                _("You are not allowed to change not_billable on a verified report.")
             )
 
     def _check_verified_report_constraints(self, effective_review, user, is_reviewer):
@@ -332,9 +369,16 @@ class ReportViewSet(ModelViewSet):
 
         existing_db_verified = queryset.filter(verified_by__isnull=False).exists()
 
+        existing_db_rejected = queryset.filter(rejected=True).exists()
+
+        if fields.get("not_billable") is not None:
+            self._validate_not_billable(existing_db_verified, verified, user)
+
         if verified is not None:
             self._validate_verified(
-                fields, user, can_verify=user_is_reviewer_on_all_reports
+                user,
+                can_verify=user_is_reviewer_on_all_reports,
+                existing_db_rejected=existing_db_rejected,
             )
             fields["verified_by"] = (verified and user) or None
 
@@ -353,21 +397,26 @@ class ReportViewSet(ModelViewSet):
 
         review_comment = fields.pop("review_comment", "")
 
+        rejected = fields.get("rejected")
+        if rejected is not None:
+            self._validate_rejected(
+                review_comment,
+                user,
+                user_is_reviewer_on_all_reports,
+                existing_db_verified,
+                rejected,
+            )
+
         if "task" in fields:
-            self._validate_task(queryset, fields, review_comment)
+            self._validate_task(
+                queryset,
+                fields,
+                review_comment,
+                existing_db_verified=existing_db_verified,
+            )
             # unreject report if task has changed
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
-
-        if fields.get("rejected"):
-            if not review_comment:
-                raise exceptions.ValidationError(
-                    _("Review comment is required when rejecting report(s).")
-                )
-            if not user.is_superuser and not user_is_reviewer_on_all_reports:
-                raise exceptions.ValidationError(
-                    _("Only reviewer and superuser can reject reports.")
-                )
 
         if fields:
             notify_args = (queryset, fields, user, review_comment)
