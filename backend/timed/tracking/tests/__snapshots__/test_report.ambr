@@ -1,4 +1,7 @@
 # serializer version: 1
+# name: test_report_bulk_edit_move_and_verify
+  "You can't move verified reports."
+# ---
 # name: test_report_edit_verified_report_as_owner
   'Only Reviewers and Superusers may edit verified reports.'
 # ---
@@ -171,6 +174,12 @@
 # name: test_report_reject_own_report
   'Only reviewer and superuser can reject reports.'
 # ---
+# name: test_report_reject_verified_report
+  'Rejecting verified reports is not allowed.'
+# ---
+# name: test_report_set_not_billable_verified_report
+  'You are not allowed to change not_billable on a verified report.'
+# ---
 # name: test_report_unverify_billed_reports[False-False-False-0]
   set({
     tuple(
@@ -234,4 +243,7 @@
       'some new comment',
     ),
   })
+# ---
+# name: test_report_verify_rejected_report
+  "Reports can't be rejected and verified at the same time."
 # ---
