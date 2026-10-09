@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from datetime import date
 from typing import TYPE_CHECKING
 
@@ -510,7 +511,9 @@ class ReportViewSet(ModelViewSet):
         serializer_class=serializers.ReportSplitSerializer,
     )
     def split(self, request, pk):
-        original_report = self.get_object()
+        # TODO: how to save original_report to later send mail with the infos
+        original_updated_report = self.get_object()
+        original_report = deepcopy(original_updated_report)
 
         serializer = self.get_serializer(data=request.data, context={"pk": pk})
         serializer.is_valid(raise_exception=True)
@@ -529,17 +532,25 @@ class ReportViewSet(ModelViewSet):
                     comment=second_report["comment"],
                     duration=second_report["duration"],
                     task_id=second_report_task.pk,
+                    not_billable=second_report["not_billable"],
+                    review=second_report["review"],
                     billed=second_report_task.project.billed,
                     date=original_report.date,
                     user=original_report.user,
                 )
 
-                original_report.comment = updated_original_report["comment"]
-                original_report.duration = updated_original_report["duration"]
-                original_report.task_id = updated_original_report_task.pk
-                original_report.billed = updated_original_report_task.project.billed
+                original_updated_report.comment = updated_original_report["comment"]
+                original_updated_report.duration = updated_original_report["duration"]
+                original_updated_report.not_billable = updated_original_report[
+                    "not_billable"
+                ]
+                original_updated_report.review = updated_original_report["review"]
+                original_updated_report.task_id = updated_original_report_task.pk
+                original_updated_report.billed = (
+                    updated_original_report_task.project.billed
+                )
 
-                original_report.save()
+                original_updated_report.save()
                 report.save()
         except DatabaseError:
             return Response(
@@ -547,6 +558,11 @@ class ReportViewSet(ModelViewSet):
                 % original_report.pk,
                 status=status.HTTP_409_CONFLICT,
             )
+        comment = data["comment"]
+        reviewer = request.user
+        tasks.notify_user_split_report(
+            original_report, original_updated_report, report, reviewer, comment
+        )
         return Response(status=status.HTTP_200_OK)
 
 
