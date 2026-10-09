@@ -26,6 +26,20 @@ export default class TableColumnPicker extends Component {
   columns = tracked(this.userSettings.getTableColumns(this.tableName));
 
   @action
+  resetColumns() {
+    try {
+      if (this.args.hasDisabledColumns) {
+        for (const column of this.columns) {
+          column.isVisible = true;
+        }
+        this.save();
+      }
+    } catch {
+      this.notify.error("Could not reset the table column configuration.");
+    }
+  }
+
+  @action
   toggleColumn(column) {
     column.isVisible = !column.isVisible;
     this.columns = [...this.columns];
@@ -84,7 +98,14 @@ export default class TableColumnPicker extends Component {
               </Checkbox>
             {{/each}}
           </modal.body>
-          <modal.footer class="flex justify-end">
+          <modal.footer class="flex justify-between">
+            <button
+              class="btn btn-default"
+              type="button"
+              {{on "click" this.resetColumns}}
+            >
+              Reset
+            </button>
             <button
               class="btn btn-primary"
               type="button"
