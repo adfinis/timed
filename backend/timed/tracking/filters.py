@@ -86,7 +86,6 @@ class ReportFilterSet(FilterSet):
     def filter_has_reviewer(
         self, queryset: QuerySet[models.Report], _name: str, value: int
     ) -> QuerySet[models.Report]:
-
         if not value:  # pragma: no cover
             return queryset
 
