@@ -165,6 +165,3 @@
   
   '''
 # ---
-# name: test_report_reject_own_report
-  'Only reviewer and superuser can reject reports.'
-# ---
