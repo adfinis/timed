@@ -17,10 +17,6 @@ export default class ReportAbility extends Ability {
       return false;
     }
 
-    if (this.model?.verifiedBy?.get("id")) {
-      return false;
-    }
-
     if (this.model?.user?.get("id") === this.user?.get("id")) {
       return true;
     }
