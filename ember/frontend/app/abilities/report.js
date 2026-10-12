@@ -13,7 +13,7 @@ export default class ReportAbility extends Ability {
       return true;
     }
 
-    if (this.model?.billed && this.model?.verifiedBy?.get("id")) {
+    if (this.model?.verifiedBy?.get("id")) {
       return false;
     }
 
@@ -46,7 +46,7 @@ export default class ReportAbility extends Ability {
   }
 
   async canEditAsync() {
-    if (this.model?.billed && this.model?.verifiedBy?.get("id")) {
+    if (this.model?.verifiedBy?.get("id")) {
       return false;
     }
 

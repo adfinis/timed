@@ -23,7 +23,6 @@ from timed.permissions import (
     IsEmployed,
     IsExternal,
     IsInternal,
-    IsNotBilled,
     IsNotDelete,
     IsNotTransferred,
     IsOwner,
@@ -102,8 +101,8 @@ class ReportViewSet(ModelViewSet):
         (
             # superuser and accountants may edit all reports but not delete
             (IsSuperUser | IsAccountant) & IsNotDelete
-            # reviewer and supervisor may change reports which aren't verified or billed but not delete them
-            | (IsReviewer | IsSupervisor) & (IsUnverified | IsNotBilled) & IsNotDelete
+            # reviewer and supervisor may change reports which aren't verified but not delete them
+            | (IsReviewer | IsSupervisor) & IsUnverified & IsNotDelete
             # internal employees may only change its own unverified reports
             # only external employees with resource role may only change its own unverified reports
             | IsOwner & IsUnverified & (IsInternal | (IsExternal & IsResource))
@@ -310,32 +309,8 @@ class ReportViewSet(ModelViewSet):
                 _("Only superuser and accountants may bill reports")
             )
 
-        reviewer_conditions = (
-            Q(user__in=user.supervisees.all())
-            | Q(
-                task__task_assignees__user=user,
-                task__task_assignees__is_reviewer=True,
-            )
-            | Q(
-                task__project__project_assignees__user=user,
-                task__project__project_assignees__is_reviewer=True,
-            )
-            | Q(
-                task__project__customer__customer_assignees__user=user,
-                task__project__customer__customer_assignees__is_reviewer=True,
-            )
-        )
-        # Check if any reports exist outside of the reviewer conditions
-        user_is_reviewer_on_all_reports = not queryset.exclude(
-            reviewer_conditions
-        ).exists()
-
-        existing_db_verified = queryset.filter(verified_by__isnull=False).exists()
-
         if verified is not None:
-            self._validate_verified(
-                fields, user, can_verify=user_is_reviewer_on_all_reports
-            )
+            self._validate_verified(queryset, fields, user, qp)
             fields["verified_by"] = (verified and user) or None
 
             existing_db_verified = verified
