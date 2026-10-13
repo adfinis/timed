@@ -96,7 +96,7 @@ backend:
     # -- Path where the workreport shall be loaded from. The contents of the default path is filled from `configmap-workreport.yaml`.
     workReportPath: /etc/workreport
     # -- Number of fields that are sent when saving changes on a model.
-    maxNumberFields: 2000
+    maxNumberFields: 3000
     # -- Email address to use for sending order confirmations from customer center
     customerCenterEmail: "webmaster@chart-example.local"
     # -- Django administrators, example: Jon Doe <jon.doe@example.com>
