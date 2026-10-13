@@ -474,7 +474,7 @@ def test_report_detail(
         "task_assignee__is_manager",
         "task_assignee__is_resource",
         "is_external",
-        "expected",
+        "expected_status",
     ),
     [
         (True, False, False, True, status.HTTP_400_BAD_REQUEST),
@@ -486,7 +486,12 @@ def test_report_detail(
     ],
 )
 def test_report_create(
-    auth_client, task_factory, task_assignee, is_external, expected, employment_factory
+    auth_client,
+    task_factory,
+    task_assignee,
+    is_external,
+    expected_status,
+    employment_factory,
 ):
     """Should create a new report and automatically set the user."""
     user = auth_client.user
@@ -519,7 +524,7 @@ def test_report_create(
     url = reverse("report-list")
 
     response = auth_client.post(url, data)
-    assert response.status_code == expected
+    assert response.status_code == expected_status
 
     if response.status_code == status.HTTP_201_CREATED:
         json = response.json()
