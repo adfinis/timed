@@ -45,7 +45,7 @@
     "test": "vite build --mode=development --out-dir dist-tests && testem --file testem.cjs ci --port 0"
   },
   "dependencies": {
-    "@embroider/addon-shim": "^1.8.9",
+    "@embroider/addon-shim": "^1.10.3",
     "decorator-transforms": "^2.2.2",
     "ember-focus-trap": "^1.1.1",
     "luxon": "^3.7.2"
