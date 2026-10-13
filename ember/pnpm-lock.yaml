@@ -76,8 +76,8 @@ importers:
         specifier: 5.0.5
         version: 5.0.5(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)
       '@nullvoxpopuli/ember-composable-helpers':
-        specifier: ^5.3.0
-        version: 5.3.0(@babel/core@7.28.6(supports-color@10.2.2))(supports-color@10.2.2)
+        specifier: ^5.3.2
+        version: 5.3.2(@babel/core@7.28.6(supports-color@10.2.2))(supports-color@10.2.2)
       '@sentry/ember':
         specifier: ^10.30.0
         version: 10.56.0(@glint/template@1.8.0)(ember-cli@6.4.0(@types/node@26.1.2)(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))(supports-color@10.2.2)(webpack@5.109.0(clean-css@5.3.3)(lightningcss@1.33.0)(postcss@8.5.6)(uglify-js@3.19.3))
@@ -413,8 +413,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.9(supports-color@10.2.2)
       '@nullvoxpopuli/ember-composable-helpers':
-        specifier: ^5.3.0
-        version: 5.3.0(@babel/core@7.28.6(supports-color@10.2.2))(supports-color@10.2.2)
+        specifier: ^5.3.2
+        version: 5.3.2(@babel/core@7.28.6(supports-color@10.2.2))(supports-color@10.2.2)
       '@rollup/plugin-babel':
         specifier: ^7.1.0
         version: 7.1.0(@babel/core@7.28.6(supports-color@10.2.2))(rollup@4.55.1)(supports-color@10.2.2)
@@ -1934,6 +1934,10 @@ packages:
     resolution: {integrity: sha512-EfI9cJ5/3QSUJtwm7x1MXrx3TEa2p7RNgSHefy7fvGm8/DP1xUFL25nST1NaHbHcqR1UhMlrTtv5iUIDoVzeQQ==}
     engines: {node: 12.* || 14.* || >= 16}
 
+  '@embroider/addon-shim@1.10.3':
+    resolution: {integrity: sha512-GYbaiC1v9inbiwVg5s+Sd14Jc66NYxg23mEOocgWAZFCtOfhMnRLaLAA6SytW76myVVYImGHX5PFK4PVuH2yng==}
+    engines: {node: 12.* || 14.* || >= 16}
+
   '@embroider/compat@4.1.12':
     resolution: {integrity: sha512-lFvwT7NcflF94+WbtxATa/foo1JKwUQLZTczV6ceV5PbpEKpp4HaYlx9GA8P9fk+JwWLyHdSM9Buo/aEN7WgnQ==}
     engines: {node: 12.* || 14.* || >= 16}
@@ -2356,8 +2360,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@nullvoxpopuli/ember-composable-helpers@5.3.0':
-    resolution: {integrity: sha512-pjuYVAxJJETaFFmDME9sPH++kSNcTJjxHqHUSJOwoYvxSRBHIysJbCFD/CHQjJtbI5D4pVouYU80ugmyGrZoFA==}
+  '@nullvoxpopuli/ember-composable-helpers@5.3.2':
+    resolution: {integrity: sha512-ABqoeTFyh57tiTQ6X4/9agduYeY82lAGQ+Vva7RK3w9fPXeMRxtxk6AFoOF2PWzTsYrZrGZ7ZmZtVvfhCALNYg==}
 
   '@oxc-project/types@0.139.0':
     resolution: {integrity: sha512-r9gHphtCs+1M7J0pw6Sn/hh/Wpa/iQrOOkrNAlVLF/gHq+/CJmHIWKKUUhdWjcD6CIa8idarspCsASiXCXvFUw==}
@@ -4220,6 +4224,11 @@ packages:
 
   decorator-transforms@2.3.1:
     resolution: {integrity: sha512-PDOk74Zqqy0946Lx4ckXxbgG6uhPScOICtrxL/pXmfznxchqNee0TaJISClGJQe6FeT8ohGqsOgdjfahm4FwEw==}
+
+  decorator-transforms@2.4.0:
+    resolution: {integrity: sha512-IB+0RqnJpuS7ndH4dVY5dfWTZsrCzN3avWFdjSiET0uT2U24jKywjpVEK97TflnZkZgiSRfmeqc1WfS+1CI23w==}
+    peerDependencies:
+      '@babel/core': ^7.23.0 || ^8.0.0
 
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
@@ -11770,7 +11779,7 @@ snapshots:
 
   '@ember/test-waiters@4.1.1(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)':
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
       '@embroider/macros': 1.20.5(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)
     transitivePeerDependencies:
       - '@babel/core'
@@ -11803,6 +11812,15 @@ snapshots:
       broccoli-funnel: 3.0.8(supports-color@10.2.2)
       common-ancestor-path: 1.0.1
       semver: 7.7.3
+    transitivePeerDependencies:
+      - supports-color
+
+  '@embroider/addon-shim@1.10.3(supports-color@10.2.2)':
+    dependencies:
+      '@embroider/shared-internals': 3.1.1(supports-color@10.2.2)
+      broccoli-funnel: 3.0.8(supports-color@10.2.2)
+      common-ancestor-path: 1.0.1
+      semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
 
@@ -12604,10 +12622,10 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@nullvoxpopuli/ember-composable-helpers@5.3.0(@babel/core@7.28.6(supports-color@10.2.2))(supports-color@10.2.2)':
+  '@nullvoxpopuli/ember-composable-helpers@5.3.2(@babel/core@7.28.6(supports-color@10.2.2))(supports-color@10.2.2)':
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
-      decorator-transforms: 2.3.1(@babel/core@7.28.6(supports-color@10.2.2))
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
+      decorator-transforms: 2.4.0(@babel/core@7.28.6(supports-color@10.2.2))
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -13136,7 +13154,7 @@ snapshots:
 
   '@warp-drive/build-config@0.0.3(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)':
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
       '@embroider/macros': 1.20.5(@babel/core@7.28.6(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)
       babel-import-util: 2.1.1
       semver: 7.8.5
@@ -14801,6 +14819,11 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
 
+  decorator-transforms@2.4.0(@babel/core@7.28.6(supports-color@10.2.2)):
+    dependencies:
+      '@babel/core': 7.28.6(supports-color@10.2.2)
+      babel-import-util: 3.0.1
+
   deep-is@0.1.4: {}
 
   deepmerge-ts@7.1.5: {}
@@ -15711,8 +15734,8 @@ snapshots:
 
   ember-inflector@6.0.0(@babel/core@7.28.6(supports-color@10.2.2))(supports-color@10.2.2):
     dependencies:
-      '@embroider/addon-shim': 1.10.2(supports-color@10.2.2)
-      decorator-transforms: 2.3.1(@babel/core@7.28.6(supports-color@10.2.2))
+      '@embroider/addon-shim': 1.10.3(supports-color@10.2.2)
+      decorator-transforms: 2.4.0(@babel/core@7.28.6(supports-color@10.2.2))
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
