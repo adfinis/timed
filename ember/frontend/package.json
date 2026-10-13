@@ -30,7 +30,7 @@
     "@glimmer/component": "2.1.1"
   },
   "devDependencies": {
-    "@adfinis/eslint-config": "3.0.2",
+    "@adfinis/eslint-config": "3.1.0",
     "@apollo/client": "^4.0.10",
     "@babel/core": "^7.28.5",
     "@babel/eslint-parser": "^7.28.5",
