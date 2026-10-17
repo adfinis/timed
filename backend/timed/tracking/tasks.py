@@ -126,3 +126,39 @@ def notify_user_changed_reports(
 
     if user_changes:
         _send_notification_emails(user_changes, reviewer, comment, rejected=rejected)
+
+
+def notify_user_split_report(
+    original_report, original_updated_report, second_report, reviewer, comment
+):
+    template = get_template("mail/notify_user_split_report.tmpl", using="text")
+    subject = "[Timed] One of your reports has been split"
+    from_email = settings.DEFAULT_FROM_EMAIL
+    connection = get_connection()
+
+    user = original_report.user
+    body = template.render(
+        {
+            # we need start and end date in system format
+            "reviewer": reviewer,
+            "comment": comment,
+            "second_report": second_report,
+            "original_report": original_report,
+            "original_updated_report": original_updated_report,
+        }
+    )
+
+    messages = []
+
+    message = EmailMessage(
+        subject=subject,
+        body=body,
+        from_email=from_email,
+        to=[user.email],
+        connection=connection,
+        reply_to=[reviewer.email],
+        headers=settings.EMAIL_EXTRA_HEADERS,
+    )
+
+    messages.append(message)
+    connection.send_messages(messages)
