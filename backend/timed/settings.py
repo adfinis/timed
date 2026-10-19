@@ -394,6 +394,8 @@ if env.str("DJANGO_SENTRY_DSN", default=""):  # pragma: no cover
     )
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# Number of fields that are sent when saving changes on a model in django admin
+# https://docs.djangoproject.com/en/6.1/ref/settings/#data-upload-max-number-fields
 DATA_UPLOAD_MAX_NUMBER_FIELDS = env.int(
     "DJANGO_DATA_UPLOAD_MAX_NUMBER_FIELDS", default=1000
 )
