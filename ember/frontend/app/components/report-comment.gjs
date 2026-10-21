@@ -168,7 +168,7 @@ export default class ReportCommentInput extends Component {
         disabled={{@disabled}}
         title={{this.tooltip}}
         spellcheck="true"
-        autocomplete="off"
+        autocomplete="on"
         {{on "input" this.handleInput}}
         {{on "keydown" this.handleKeydown}}
         {{on "focusout" this.handleFocusOut}}
