@@ -96,4 +96,22 @@ module("Integration | Component | weekly overview day", function (hooks) {
 
     assert.ok(this.clicked);
   });
+
+  test("formats worktime correctly", async function (assert) {
+    const day = DateTime.fromObject({ year: 2026, month: 1, day: 1 });
+    const worktime = Duration.fromObject({ minutes: 90 });
+    const expected = Duration.fromObject({ minutes: 90 });
+
+    await render(
+      <template>
+        <WeeklyOverviewDay
+          @day={{day}}
+          @expected={{expected}}
+          @worktime={{worktime}}
+        />
+      </template>,
+    );
+
+    assert.dom(this.element.firstElementChild).hasAttribute("title", "1h 30m");
+  });
 });
