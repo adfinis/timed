@@ -1,9 +1,17 @@
 "use strict";
 
+const Funnel = require("broccoli-funnel");
 const EmberApp = require("ember-cli/lib/broccoli/ember-app");
 
 module.exports = function (defaults) {
+  const isProduction = EmberApp.env() === "production";
+
   const app = new EmberApp(defaults, {
+    trees: {
+      app: new Funnel("app", {
+        exclude: isProduction ? ["mirage/**"] : [],
+      }),
+    },
     emberData: {
       deprecations: {
         // New projects can safely leave this deprecation disabled.
