@@ -15,13 +15,17 @@ export default class WeeklyOverviewDay extends Component {
    */
   @tracked max = 20;
 
+  get worktime() {
+    return this.args.worktime.shiftTo("hours", "minutes");
+  }
+
   get title() {
     const pre = this.args.prefix?.length ? `${this.args.prefix}, ` : "";
 
-    let title = `${this.args.worktime.hours}h`;
+    let title = `${this.worktime.hours}h`;
 
     if (this.args.worktime.minutes) {
-      title += ` ${this.args.worktime.minutes}m`;
+      title += ` ${this.worktime.minutes}m`;
     }
     return `${pre}${title}`;
   }
