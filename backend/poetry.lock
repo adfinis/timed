@@ -631,14 +631,14 @@ tornado = ">=6.3.3,<7.0.0"
 
 [[package]]
 name = "django-money"
-version = "3.6.1"
+version = "3.6.2"
 description = "Adds support for using money and currency fields in django models and forms. Uses py-moneyed as the money implementation."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "django_money-3.6.1-py3-none-any.whl", hash = "sha256:32a8027a91dea969951a34a9cc4a4f101aaa6ec45e7f784f0b17ec7813818fb2"},
-    {file = "django_money-3.6.1.tar.gz", hash = "sha256:9b25d992a457af932eef1e5fef0098dd3ff0c92f4255d2d6d452af772b2fdde5"},
+    {file = "django_money-3.6.2-py3-none-any.whl", hash = "sha256:b62c7bd489e3b6072cd2d9226676aa7ea1d7b08d10ccfa2a63eee607df1ae618"},
+    {file = "django_money-3.6.2.tar.gz", hash = "sha256:03e0d6c320525058fc5017747344819e86e2cf3a12d564931c29fdd59008178f"},
 ]
 
 [package.dependencies]
@@ -2226,4 +2226,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "53af22038c1470e1f129f920787689237592d0fa49b996be6e0fb309df226107"
+content-hash = "e195ab8e5bd385747857699f626d38850af3ae081ccf337707027449f2e23a7b"
