@@ -31,7 +31,7 @@ import NoPermission from "timed/components/no-permission";
                 absence credit</h4></c.header>
             <c.block class="grid gap-2">
               <f.input @label="Type" @name="absenceType" as |fi|>
-                <div class="btn-group [&>*]:w-full">
+                <div class="btn-group [&>*]:w-full" data-test-absence-types>
                   {{#each
                     @controller.absenceTypes.lastSuccessful.value
                     as |type|

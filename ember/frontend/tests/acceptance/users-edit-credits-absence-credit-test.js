@@ -19,7 +19,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
   test("can create an absence credit", async function (assert) {
     await visit(`/users/${this.user.id}/credits/absence-credits/new`);
 
-    await click(".btn-group .btn:first-child");
+    await click("[data-test-absence-types] .btn:first-child");
     await fillIn("input[name=date]", dateToString(DateTime.now()));
     await fillIn("input[name=days]", "5");
     await fillIn("input[name=comment]", "Comment");
@@ -86,7 +86,7 @@ module("Acceptance | users edit credits absence credit", function (hooks) {
   test("redirects to the year of the created absence credit", async function (assert) {
     await visit(`/users/${this.user.id}/credits/absence-credits/new`);
 
-    await click(".btn-group .btn:first-child");
+    await click("[data-test-absence-types] .btn:first-child");
     await fillIn(
       "input[name=date]",
       dateToString(DateTime.now().plus({ years: 1 })),
