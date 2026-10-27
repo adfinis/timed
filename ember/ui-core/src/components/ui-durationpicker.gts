@@ -15,12 +15,6 @@ import {
   parseStringDuration as parseReportDuration,
 } from "../utils/report-duration.ts";
 
-import {
-  ACTIVITY_DURATION_MAX,
-  ACTIVITY_DURATION_MIN,
-  parseStringDuration as parseActivityDuration,
-} from "../utils/activity-duration.ts";
-
 import type { TOC } from "@ember/component/template-only";
 
 export interface BaseDurationpickerSignature {
@@ -46,14 +40,6 @@ export interface DurationpickerSignature {
     BaseDurationpickerSignature["Args"],
     "fromString" | "asString" | "normalize" | "min" | "max"
   >;
-  Blocks: {
-    default: [];
-  };
-  Element: HTMLInputElement;
-}
-
-export interface ActivityDurationpickerSignature {
-  Args: DurationpickerSignature["Args"] & { seconds?: boolean };
   Blocks: {
     default: [];
   };
@@ -167,19 +153,4 @@ const ReportDurationpicker = <template>
   {{/let}}
 </template> as TOC<DurationpickerSignature>;
 
-const ActivityDurationpicker = <template>
-  {{#let
-    (component
-      Durationpicker
-      fromString=parseActivityDuration
-      max=ACTIVITY_DURATION_MAX
-      min=ACTIVITY_DURATION_MIN
-      normalize=normalizeStringDayDuration
-    )
-    as |Dpicker|
-  }}
-    <Dpicker ...attributes @value={{@value}} @onChange={{@onChange}} />
-  {{/let}}
-</template> as TOC<ActivityDurationpickerSignature>;
-
-export { ActivityDurationpicker, ReportDurationpicker };
+export { ReportDurationpicker };

@@ -5,11 +5,12 @@ import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import { not } from "ember-truth-helpers";
 import Modal from "#src/components/ui-modal.gts";
-import { Duration } from "luxon";
+import { DateTime, Duration } from "luxon";
 import Table from "#src/components/ui-table.gts";
 import { ReportDurationpicker } from "#src/components/ui-durationpicker.gts";
 import Checkbox from "#src/components/ui-checkbox.gts";
 import { getModalsTarget } from "../components/modal";
+import Timepicker from "#src/components/ui-timepicker.gts";
 
 type _Report = {
   customer: string;
@@ -37,6 +38,8 @@ class Report {
 
 export default class IndexTemplate extends Component {
   @tracked visible = false;
+  @tracked theTime: DateTime | null = DateTime.fromObject({ minute: 0 });
+  @tracked theOtherTime: DateTime | null = DateTime.fromObject({ hour: 10 });
 
   report1 = new Report({
     customer: "customer",
@@ -88,6 +91,16 @@ export default class IndexTemplate extends Component {
       </:header>
 
       <:main>
+        <Timepicker
+          @value={{this.theTime}}
+          @onChange={{fn (mut this.theTime)}}
+          @step={{Duration.fromObject minutes=15}}
+          @bigStep={{Duration.fromObject hours=1}}
+        />
+        <Timepicker
+          @value={{this.theOtherTime}}
+          @onChange={{fn (mut this.theOtherTime)}}
+        />
 
         <Table @striped={{true}} @last={{true}} as |t|>
           <t.thead class="collapse">

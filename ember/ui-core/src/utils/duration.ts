@@ -54,9 +54,6 @@ const durationAsString = (duration: Duration) =>
 const durationAsStringWithSeconds = (duration: Duration) =>
   _durationAsString(duration, true);
 
-const DAY_DURATION_PATTERN =
-  /^(?<hours>[01]?\d|2[0-3])?(?<colon>:?)(?<minutes>[0-5][0-9])?$/;
-
 const DURATION_PATTERN =
   /^(?<sign>[-]?)(?<hours>\d+?)?(?<colon>:?)(?<minutes>[0-5][0-9])?$/;
 
@@ -88,5 +85,4 @@ export {
   parseDurationFromString,
   normalizeStringDuration,
   normalizeStringDayDuration,
-  DAY_DURATION_PATTERN,
 };
