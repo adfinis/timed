@@ -6,6 +6,11 @@ from pathlib import Path
 import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from tornado.httputil import (
+    ParseBodyConfig,
+    ParseUrlEncodedConfig,
+    set_parse_body_config,
+)
 
 env = environ.Env()
 
@@ -399,6 +404,16 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 DATA_UPLOAD_MAX_NUMBER_FIELDS = env.int(
     "DJANGO_DATA_UPLOAD_MAX_NUMBER_FIELDS", default=1000
 )
+
+# apply the same limits to tornado
+set_parse_body_config(
+    ParseBodyConfig(
+        urlencoded=ParseUrlEncodedConfig(
+            max_arguments=DATA_UPLOAD_MAX_NUMBER_FIELDS,
+        ),
+    )
+)
+
 CORS_ALLOWED_ORIGINS = env.list("DJANGO_CORS_ALLOWED_ORIGINS", default=[])
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
