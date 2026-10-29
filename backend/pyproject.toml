@@ -43,7 +43,7 @@ sentry-sdk = "^2.72.0"
 whitenoise = "^6.12.0"
 django-hurricane = "^1.6.2"
 psycopg = {extras = ["binary"], version = "^3.3.6"}
-tornado = "^6.5"
+tornado = "^6.6"
 setuptools = "^84.1.0"
 
 [tool.poetry.group.dev.dependencies]
