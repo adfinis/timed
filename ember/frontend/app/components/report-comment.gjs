@@ -30,17 +30,6 @@ export default class ReportCommentInput extends Component {
 
   inputElement = null;
 
-  get tooltip() {
-    const parts = [];
-    if (this.args.customerVisible) {
-      parts.push("This project's comments are visible to the customer");
-      parts.push("===================================================");
-      parts.push("");
-    }
-    parts.push(this.args.value);
-    return parts.join("\n");
-  }
-
   get _users() {
     // don't show inactive users
     // or users that can't be completed
@@ -166,7 +155,10 @@ export default class ReportCommentInput extends Component {
         name="comment"
         value={{@value}}
         disabled={{@disabled}}
-        title={{this.tooltip}}
+        title={{if
+          @customerVisible
+          "This project's comments are visible to the customer"
+        }}
         spellcheck="true"
         autocomplete="on"
         {{on "input" this.handleInput}}
