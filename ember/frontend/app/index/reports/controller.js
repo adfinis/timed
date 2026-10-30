@@ -78,7 +78,7 @@ export default class IndexReportController extends Controller {
       scheduleTask(this, "actions", "createEmptyReport");
     }
 
-    return reportsToday.toSorted((r) => r.isNew);
+    return reportsToday.toSorted((a, b) => a.isNew - b.isNew);
   }
 
   @cached
