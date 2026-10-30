@@ -128,6 +128,7 @@
       "./components/ui-modal.js": "./dist/_app_/components/ui-modal.js",
       "./components/ui-nav-tabs.js": "./dist/_app_/components/ui-nav-tabs.js",
       "./components/ui-table.js": "./dist/_app_/components/ui-table.js",
+      "./components/ui-timepicker.js": "./dist/_app_/components/ui-timepicker.js",
       "./components/ui-topnav.js": "./dist/_app_/components/ui-topnav.js",
       "./services/appearance.js": "./dist/_app_/services/appearance.js"
     }
