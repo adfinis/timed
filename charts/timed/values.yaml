@@ -325,46 +325,25 @@ httproute:
       #  - timed-test.example.com
 
 postgresql:
-  # -- Enable PostgreSQL Helm Chart (https://bitnami.com/stack/postgresql) for persistence
-  enabled: true
+  # -- Enable a PostgreSQL instance for testing/developement. Production use is not supported.
+  enabled: false
+  image:
+    # -- PostgreSQL image repository
+    repository: postgres
+    # -- PostgreSQL image tag
+    tag: "17"
+    # -- PostgreSQL image pull policy
+    pullPolicy: IfNotPresent
   auth:
     # -- PostgreSQL database name
     database: timed
     # -- PostgreSQL user name
     username: timed
-    # -- Set a password for PostgreSQL
-    # password: s3cr3t
-  ingress:
-    # -- Enable ingress
-    enabled: false
-    # -- Whitelist specific IP ranges
-    loadBalancerSourceRanges: []
-    # -- Service selector labels
-    selector:
-      app.kubernetes.io/name: postgresql
-      role: slave
+    # -- PostgreSQL password (required when postgresql.enabled is true)
+    password: ""
   service:
+    # -- PostgreSQL service port
     port: 5432
-  tls:
-    # -- Enable TLS for Postgresql
-    enabled: false
-    # -- Name of TLS secret
-    certificatesSecret: psql-server
-    # -- Cert file name
-    certFilename: "tls.crt"
-    # -- Cert key filename
-    certKeyFilename: "tls.key"
-    certificate:
-      # -- Name of certificate
-      name: psql-server
-      # -- DNS names of certificate
-      dnsNames: []
-      # -- Issuer ref
-      # @default -- cert-manager
-      issuerRef:
-        group: cert-manager.io
-        kind: ClusterIssuer
-        name: letsencrypt-prod
 
 auth:
   # -- Allow local Django login

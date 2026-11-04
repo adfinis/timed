@@ -1,25 +1,20 @@
 # timed
 
-![Version: 0.16.38](https://img.shields.io/badge/Version-0.16.38-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Chart for Timed application
 
-**Homepage:** <https://github.com/adfinis/timed-frontend>
+**Homepage:** <https://github.com/adfinis/timed>
 
 ## Maintainers
-This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk_kwd=helm-charts).
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| adfinis | <support@adfinis.com> | <https://adfinis.com> |
 
 ## Source Code
 
-* <https://github.com/adfinis/timed-backend>
-* <https://github.com/adfinis/timed-frontend>
-* <https://github.com/adfinis/helm-charts/tree/main/charts/timed>
-
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://charts.bitnami.com/bitnami | postgresql | ~11.6.7 |
+* <https://github.com/adfinis/timed>
 
 ## Values
 
@@ -60,8 +55,8 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | backend.cronjobs.updateProjectExpanditureSecond | object | `{"command":["manage.py","update_project_expenditure"],"schedule":"0 8 * * 0"}` | Update project expanditure in redmine second time |
 | backend.existingSecret | string | `nil` | Specify an existing secret that gets used instead of a Helm managed secret based on several values. |
 | backend.image.pullPolicy | string | `"IfNotPresent"` | Backend image pull policy |
-| backend.image.repository | string | `"ghcr.io/adfinis/timed-backend"` | Backend image name |
-| backend.image.tag | string | `"3.0.16"` | Backend version. |
+| backend.image.repository | string | `"ghcr.io/adfinis/timed/backend"` | Backend image name |
+| backend.image.tag | string | `nil` | Backend version. |
 | backend.jobs.dbmigrate.enable | bool | `true` | Enable the dbmigrate Job. This is configurable because timed can also run this on startup if so preferred. |
 | backend.livenessProbe.enabled | bool | `true` | Enable liveness probe on backend |
 | backend.livenessProbe.failureThreshold | int | `6` | Number of tries to perform the probe |
@@ -94,7 +89,7 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | backend.settings.emailUrl | string | `"smtp://localhost:25"` | Connection string of SMTP server to send mails |
 | backend.settings.emailUseTls | string | `"True"` | TLS option for email server |
 | backend.settings.hurricane.reqQueueLen | int | `250` | request queue length before hurricane denies requests and toggles readiness |
-| backend.settings.maxNumberFields | int | `2000` | Number of fields that are sent when saving changes on a model. |
+| backend.settings.maxNumberFields | int | `3000` | For example if a project has too many tasks and assignees. |
 | backend.settings.sentry.dsn | string | `nil` | Sentry DSN for error reporting. Set to enable Sentry integration |
 | backend.settings.sentry.enabled | bool | `false` | Enable Sentry integration |
 | backend.settings.sentry.sendDefaultPii | string | `"True"` | Associate users to errors in Sentry |
@@ -104,8 +99,8 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | backend.startupProbe.enabled | bool | `true` | Enable startup probe on backend |
 | backend.startupProbe.failureThreshold | int | `6` | Number of times to perform the probe |
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Frontend image pull policy |
-| frontend.image.repository | string | `"ghcr.io/adfinis/timed-frontend"` | Frontend image name |
-| frontend.image.tag | string | `"v3.6.0"` | Frontend version. |
+| frontend.image.repository | string | `"ghcr.io/adfinis/timed/frontend"` | Frontend image name |
+| frontend.image.tag | string | `nil` | Frontend version. |
 | frontend.livenessProbe.enabled | bool | `true` | Enable liveness probe on frontend |
 | frontend.livenessProbe.failureThreshold | int | `6` | Number of tries to perform the probe |
 | frontend.livenessProbe.initialDelaySeconds | int | `60` | Number of seconds after the container has started before liveness probe is initiated |
@@ -124,9 +119,26 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | frontend.service.internalPort | int | `80` | Internal Port of frontend service |
 | frontend.service.name | string | `"timed-frontend"` | Frontend service name |
 | frontend.service.type | string | `"ClusterIP"` | Frontend service type |
+| frontend.settings.sentry.dsn | string | `nil` | Sentry DSN for error reporting. Set to enable Sentry integration |
+| frontend.settings.sentry.enabled | bool | `false` | Enable Sentry integration |
+| frontend.settings.sentry.sendDefaultPii | bool | `false` | Associate users to errors in Sentry |
+| frontend.settings.sentry.tracesSampleRate | float | `1` | Sentry trace sample rate, Set 1.0 to capture 100% of transactions |
 | grafana.defaultLabel | bool | `true` | Add a default `grafana_dashboard: 1` label |
 | grafana.enabled | bool | `false` | Enable Grafana Dashboards |
 | grafana.extraLabels | object | `{}` | Labels to add to all Grafana integration resources |
+| httproute.routes | object | `{"main":{"annotations":{},"enabled":false,"hostnames":[],"labels":{},"parentRefs":[]},"redirect":{"annotations":{},"enabled":false,"hostnames":[],"httpsRedirect":true,"labels":{},"parentRefs":[],"statusCode":308}}` | Configure Gateway API HTTPRoutes for timed |
+| httproute.routes.main.annotations | object | `{}` | HTTPRoute annotations |
+| httproute.routes.main.enabled | bool | `false` | Enable the main HTTPRoute |
+| httproute.routes.main.hostnames | list | `[]` | HTTPRoute hostnames |
+| httproute.routes.main.labels | object | `{}` | HTTPRoute labels |
+| httproute.routes.main.parentRefs | list | `[]` | Gateway parentRefs configuration |
+| httproute.routes.redirect.annotations | object | `{}` | HTTPRoute annotations |
+| httproute.routes.redirect.enabled | bool | `false` | Enable HTTP to HTTPS redirect HTTPRoute |
+| httproute.routes.redirect.hostnames | list | `[]` | HTTPRoute hostnames |
+| httproute.routes.redirect.httpsRedirect | bool | `true` | Enable HTTPS redirect filters |
+| httproute.routes.redirect.labels | object | `{}` | HTTPRoute labels |
+| httproute.routes.redirect.parentRefs | list | `[]` | Gateway parentRefs configuration |
+| httproute.routes.redirect.statusCode | int | `308` | HTTP redirect status code |
 | ingress.annotations | object | `{}` | Ingress annotations |
 | ingress.enabled | bool | `false` | Enable ingress for timed |
 | ingress.hosts | list | `[]` | Ingress hostnames |
@@ -134,19 +146,13 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | ingress.tls | list | `[]` | Ingress TLS options |
 | kubeVersionOverride | string | `nil` | override what version of Kubernetes to render against |
 | postgresql.auth.database | string | `"timed"` | PostgreSQL database name |
+| postgresql.auth.password | string | `""` | PostgreSQL password (required when postgresql.enabled is true) |
 | postgresql.auth.username | string | `"timed"` | PostgreSQL user name |
-| postgresql.enabled | bool | `true` | Enable PostgreSQL Helm Chart (https://bitnami.com/stack/postgresql) for persistence |
-| postgresql.ingress.enabled | bool | `false` | Enable ingress |
-| postgresql.ingress.loadBalancerSourceRanges | list | `[]` | Whitelist specific IP ranges |
-| postgresql.ingress.selector | object | `{"app.kubernetes.io/name":"postgresql","role":"slave"}` | Service selector labels |
-| postgresql.service.port | int | `5432` |  |
-| postgresql.tls.certFilename | string | `"tls.crt"` | Cert file name |
-| postgresql.tls.certKeyFilename | string | `"tls.key"` | Cert key filename |
-| postgresql.tls.certificate.dnsNames | list | `[]` | DNS names of certificate |
-| postgresql.tls.certificate.issuerRef | object | cert-manager | Issuer ref |
-| postgresql.tls.certificate.name | string | `"psql-server"` | Name of certificate |
-| postgresql.tls.certificatesSecret | string | `"psql-server"` | Name of TLS secret |
-| postgresql.tls.enabled | bool | `false` | Enable TLS for Postgresql |
+| postgresql.enabled | bool | `false` | Enable a PostgreSQL instance for testing/developement. Production use is not supported. |
+| postgresql.image.pullPolicy | string | `"IfNotPresent"` | PostgreSQL image pull policy |
+| postgresql.image.repository | string | `"postgres"` | PostgreSQL image repository |
+| postgresql.image.tag | string | `"17"` | PostgreSQL image tag |
+| postgresql.service.port | int | `5432` | PostgreSQL service port |
 | prometheus.enabled | bool | `false` | Enable Prometheus integration |
 | prometheus.extraLabels | object | `{}` | Labels to add to all Prometheus integration resources |
 | prometheus.podMonitor.enabled | bool | `true` | Enable creation of a PodMonitor CRD |
@@ -161,19 +167,5 @@ This chart is maintained by [Adfinis](https://adfinis.com/?pk_campaign=github&pk
 | redmine.spenthoursField | int | `0` | Spent hours field id on Redmine |
 | redmine.url | string | `"redmine.example.com"` | Redmine URL |
 
-## About this chart
-
-Adfinis fights for a software world that is more open, where the quality is
-better and where software must be accessible to everyone. This chart
-is part of the action behind this commitment. Feel free to
-[contact](https://adfinis.com/kontakt/?pk_campaign=github&pk_kwd=helm-charts)
-us if you have any questions.
-
-## License
-
-This Helm chart is free software: you can redistribute it and/or modify it under the terms
-of the GNU Affero General Public License as published by the Free Software Foundation,
-version 3 of the License.
-
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs](https://github.com/norwoodj/helm-docs/)
+Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)

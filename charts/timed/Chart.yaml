@@ -14,11 +14,6 @@ maintainers:
   - name: adfinis
     email: support@adfinis.com
     url: https://adfinis.com
-dependencies:
-  - name: postgresql
-    version: "*"
-    repository: https://charts.bitnami.com/bitnami
-    condition: postgresql.enabled
 annotations:
   artifacthub.io/changes: |
     - kind: changed

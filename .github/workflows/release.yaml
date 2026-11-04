@@ -164,7 +164,6 @@ jobs:
 
       - name: Package Charts
         run: |
-          helm repo add bitnami https://charts.bitnami.com/bitnami
           helm dependency build charts/timed
           helm dependency build charts/customer-center
           helm package --destination=dist charts/timed charts/customer-center
