@@ -52,8 +52,8 @@ importers:
         specifier: ^1.13.5
         version: 1.13.5(@glint/template@1.8.0)(ember-source@6.4.0(@glimmer/component@2.1.1(supports-color@10.2.2))(rsvp@4.8.5)(supports-color@10.2.2))(supports-color@10.2.2)
       '@eslint/js':
-        specifier: ^9.25.1
-        version: 9.39.2
+        specifier: ^10.0.1
+        version: 10.0.1(eslint@9.25.1(jiti@2.4.2)(supports-color@10.2.2))
       '@faker-js/faker':
         specifier: ^10.2.0
         version: 10.4.0
@@ -386,8 +386,8 @@ importers:
         specifier: ^1.1.5
         version: 1.5.0(@embroider/core@4.4.2(@glint/template@1.8.0)(supports-color@10.2.2))(@glint/template@1.8.0)(rollup@4.55.1)(supports-color@10.2.2)(vite@8.1.5(@types/node@26.1.2)(jiti@2.4.2)(terser@5.49.0))
       '@eslint/js':
-        specifier: ^9.17.0
-        version: 9.39.2
+        specifier: ^10.0.1
+        version: 10.0.1(eslint@9.39.2(jiti@2.4.2)(supports-color@10.2.2))
       '@fortawesome/ember-fontawesome':
         specifier: ^3.1.0
         version: 3.1.0(@fortawesome/fontawesome-svg-core@7.1.0)(@glimmer/component@2.0.0(supports-color@10.2.2))(@glint/template@1.8.0)(supports-color@10.2.2)
@@ -2071,6 +2071,15 @@ packages:
   '@eslint/eslintrc@3.3.3':
     resolution: {integrity: sha512-Kr+LPIUVKz2qkx1HAMH8q1q6azbqBAsXJUxBl/ODDuVPX45Z9DfwB8tPjTi6nNZ8BuM3nbJxC5zCAg5elnBUTQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/js@10.0.1':
+    resolution: {integrity: sha512-zeR9k5pd4gxjZ0abRoIaxdc7I3nDktoXZk2qOv9gCNWx3mVwEn32VRhyLaRsDiJjTs0xq/T8mfPtyuXu7GWBcA==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
+    peerDependencies:
+      eslint: ^10.0.0
+    peerDependenciesMeta:
+      eslint:
+        optional: true
 
   '@eslint/js@9.25.1':
     resolution: {integrity: sha512-dEIwmjntEx8u3Uvv+kr3PDeeArL8Hw07H9kyYxCjnM9pBjfEhk6uLXSchxxzgiwtRhhzVzqmUSDFBOi1TuZ7qg==}
@@ -12167,6 +12176,14 @@ snapshots:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+
+  '@eslint/js@10.0.1(eslint@9.25.1(jiti@2.4.2)(supports-color@10.2.2))':
+    optionalDependencies:
+      eslint: 9.25.1(jiti@2.4.2)(supports-color@10.2.2)
+
+  '@eslint/js@10.0.1(eslint@9.39.2(jiti@2.4.2)(supports-color@10.2.2))':
+    optionalDependencies:
+      eslint: 9.39.2(jiti@2.4.2)(supports-color@10.2.2)
 
   '@eslint/js@9.25.1': {}
 
