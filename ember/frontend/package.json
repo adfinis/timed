@@ -58,7 +58,7 @@
     "concurrently": "^10.0.3",
     "downloadjs": "1.4.7",
     "ember-auto-import": "~2.13.1",
-    "ember-basic-dropdown": "^8.2.0",
+    "ember-basic-dropdown": "^9.0.0",
     "ember-can": "git+https://github.com/adfinis/ember-can#910714c83f33a388b9d69f6f84ba146c681118da&path:/ember-can",
     "ember-changeset": "5.0.0",
     "ember-changeset-validations": "5.0.0",
