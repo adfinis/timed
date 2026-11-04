@@ -57,6 +57,13 @@ Expand the postgresql chart name.
 {{- default "postgresql" .Values.postgresql.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{/* Keep database Pods outside the application's Deployment selectors. */}}
+{{- define "timed.postgresql.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "timed.postgresql.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: postgresql
+{{- end -}}
+
 {{/*
 Create a default fully qualified postgresql name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).

@@ -1,21 +1,18 @@
-{{- if .Values.postgresql.ingress.enabled }}
+{{- if .Values.postgresql.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgresql-ingress
+  name: {{ include "timed.postgresql.fullname" . }}
   labels:
     {{- include "timed.labels" . | nindent 4 }}
+    app.kubernetes.io/component: postgresql
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-    - port: 5432
-      targetPort: 5432
+    - port: {{ .Values.postgresql.service.port }}
+      targetPort: postgresql
       protocol: TCP
-      name: tcp-postgresql
+      name: postgresql
   selector:
-{{ toYaml .Values.postgresql.ingress.selector | indent 4 }}
-  {{- if .Values.postgresql.ingress.loadBalancerSourceRanges }}
-  loadBalancerSourceRanges:
-    {{ .Values.postgresql.ingress.loadBalancerSourceRanges | toYaml | nindent 4 }}
-  {{- end }}
+    {{- include "timed.postgresql.selectorLabels" . | nindent 4 }}
 {{- end }}
