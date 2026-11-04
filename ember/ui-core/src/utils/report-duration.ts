@@ -3,8 +3,9 @@ import {
   clampDuration,
   roundDuration,
   durationFromString,
-  DAY_DURATION_PATTERN,
 } from "./duration.ts";
+
+import { DAY_DURATION_PATTERN } from "./day-duration.ts";
 
 const REPORT_DURATION_MIN = Duration.fromObject({ minutes: 15 });
 const REPORT_DURATION_MAX = Duration.fromObject({ hours: 23, minutes: 45 });
