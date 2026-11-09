@@ -22,7 +22,7 @@ from rest_framework_json_api.serializers import (
 from timed.employment.models import AbsenceType, Employment, PublicHoliday, User
 from timed.employment.relations import CurrentUserResourceRelatedField
 from timed.projects.models import Customer, Project, Task
-from timed.serializers import TotalTimeRootMetaMixin
+from timed.serializers import CanEditAllRootMetaMixin, TotalTimeRootMetaMixin
 from timed.tracking import models
 from timed.utils import round_time
 
@@ -127,7 +127,9 @@ class AttendanceSerializer(ModelSerializer):
         )
 
 
-class ReportSerializer(TotalTimeRootMetaMixin, ModelSerializer):
+class ReportSerializer(
+    TotalTimeRootMetaMixin, CanEditAllRootMetaMixin, ModelSerializer
+):
     """Report serializer."""
 
     task = ResourceRelatedField(queryset=Task.objects.all())
