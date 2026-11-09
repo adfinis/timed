@@ -2820,3 +2820,39 @@ def test_report_set_not_billable_on_verified_report(
     report.refresh_from_db()
     assert report.rejected is False
     assert report.verified_by == user
+
+
+@pytest.mark.parametrize(
+    "can_edit_all",
+    [True, False],
+)
+def test_report_can_edit_all_without_filter(
+    internal_employee_client,
+    report_factory,
+    task_assignee_factory,
+    can_edit_all,
+    task_factory,
+):
+    t = task_factory()
+    report_factory.create_batch(5, task=t)
+    if can_edit_all:
+        task_assignee_factory(
+            task=t, user=internal_employee_client.user, is_reviewer=True
+        )
+
+    url = reverse("report-list")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "attributes": {"needs_review": True},
+        }
+    }
+
+    response = internal_employee_client.get(
+        url,
+        data,
+        query_params={"editable": 0, "task": t.id},
+    )
+
+    assert response.json()["meta"]["can-edit-all"] == can_edit_all

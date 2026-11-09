@@ -151,11 +151,19 @@ function routes() {
     "/reports",
     function (
       { reports },
-      { queryParams: { "page[number]": page, "page[size]": limit, user } },
+      {
+        queryParams: {
+          "page[number]": page,
+          "page[size]": limit,
+          user,
+          editable,
+        },
+      },
     ) {
       let data = reports.all();
       let meta = {
         "total-time": randomDuration(),
+        "can-edit-all": editable === "1",
       };
 
       if (user) {

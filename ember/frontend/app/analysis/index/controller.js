@@ -84,6 +84,7 @@ export default class AnalysisController extends QPController {
   @tracked costCenter;
   @tracked ordering = "-date";
   @tracked comment;
+  @tracked canEditAll;
 
   @tracked appliedComment;
 
@@ -281,6 +282,7 @@ export default class AnalysisController extends QPController {
       const meta = await data.meta;
       const pagination = meta.pagination;
 
+      this.canEditAll = meta["can-edit-all"];
       this.totalTime = parseDjangoDuration(meta["total-time"]);
       this.totalItems = parseInt(pagination.count);
       this._canLoadMore = pagination.pages !== pagination.page;
