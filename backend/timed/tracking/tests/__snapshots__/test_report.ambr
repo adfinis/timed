@@ -110,6 +110,12 @@
     }),
   })
 # ---
+# name: test_report_move_and_unverify_report[internal_employee_client-False-400]
+  "Reports can't be moved and verified at the same time."
+# ---
+# name: test_report_move_and_unverify_report[internal_employee_client-False-400].1
+  <Report: tturner: Le Group > Digitized discrete framework > LLC>
+# ---
 # name: test_report_notify_rendering
   '''
   

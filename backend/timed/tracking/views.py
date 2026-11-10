@@ -240,7 +240,7 @@ class ReportViewSet(ModelViewSet):
                 _("Reports can't both be set as `rejected` and `verified`.")
             )
 
-        if fields.get("task"):
+        if fields.get("task") and not user.is_superuser:
             raise exceptions.ValidationError(
                 _("Reports can't be moved and verified at the same time.")
             )
