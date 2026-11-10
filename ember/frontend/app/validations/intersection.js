@@ -54,6 +54,18 @@ const validateVerified = (key, newValue, oldValue, changes, content) => {
     return true;
   }
 
+  let review = null;
+  if (changes.review !== undefined) {
+    review = changes.review;
+  }
+  if (review === null) {
+    review = content.review;
+  }
+
+  if (review && newValue) {
+    return "Report can't be set as needs review and verified.";
+  }
+
   // the task can be null when verifying multiple reports, therefore we
   // also validate against a change in customer/project
   if (
@@ -82,8 +94,23 @@ const validateTask = (key, newValue, oldValue, changes, content) => {
   );
 };
 
+const validateReview = (key, newValue, oldValue, changes, content) => {
+  let verified = null;
+  if (changes.verified !== undefined) {
+    verified = changes.verified;
+  }
+  if (verified === null) {
+    verified = content.verified;
+  }
+  if (verified && newValue) {
+    return "Report can't be set as needs review and verified.";
+  }
+  return true;
+};
+
 export default {
   verified: validateVerified,
+  review: validateReview,
   task: validateTask,
   reviewComment: [
     validateReviewCommentRejected,
