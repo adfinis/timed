@@ -1,0 +1,29 @@
+{% load tracking_extras %}
+One of your reports has been split.
+
+Reviewer: {{reviewer.first_name}} {{reviewer.last_name}}
+{%if comment %}Review comment: {{comment}}{% endif %}
+
+Original report:
+Date: {{original_report.date|date:"d F Y"}}
+Duration: {{original_report.duration}}
+Task: {{original_report.task}}
+Comment: {{original_report.comment}}
+Not billable: {{original_report.not_billable}}
+Needs Review: {{original_report.review}}
+
+Updated report:
+Date: {{original_updated_report.date|date:"d F Y"}}
+Duration: {{original_updated_report.duration}}
+Task: {{original_updated_report.task}}
+Comment: {{original_updated_report.comment}}
+Not billable: {{original_updated_report.not_billable}}
+Needs Review: {{original_updated_report.review}}
+
+Second report:
+Date: {{second_report.date|date:"d F Y"}}
+Duration: {{second_report.duration}}
+Task: {{second_report.task}}
+Comment: {{second_report.comment}}
+Not billable: {{second_report.not_billable}}
+Needs Review: {{second_report.review}}
