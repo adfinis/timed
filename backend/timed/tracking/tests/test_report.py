@@ -2820,3 +2820,57 @@ def test_report_set_not_billable_on_verified_report(
     report.refresh_from_db()
     assert report.rejected is False
     assert report.verified_by == user
+
+
+@pytest.mark.parametrize(
+    ("client", "is_superuser", "expected_status"),
+    [
+        (lf("superadmin_client"), True, status.HTTP_204_NO_CONTENT),
+        (lf("internal_employee_client"), False, status.HTTP_400_BAD_REQUEST),
+    ],
+)
+def test_report_move_and_unverify_report(
+    report_factory,
+    task_factory,
+    user_factory,
+    employment_factory,
+    client,
+    is_superuser,
+    expected_status,
+    snapshot,
+):
+    reviewer = user_factory()
+    if is_superuser:
+        employment_factory(user=client.user)
+    task1, task2 = task_factory.create_batch(2)
+    report = report_factory(verified_by=reviewer, task=task1)
+
+    url = reverse("report-bulk")
+
+    data = {
+        "data": {
+            "type": "report-bulks",
+            "id": None,
+            "attributes": {"verified": False, "review-comment": "foobar"},
+            "relationships": {
+                "task": {"data": {"type": "tasks", "id": task2.pk}},
+            },
+        }
+    }
+
+    params = {"editable": 1, "id": report.id}
+
+    response = client.post(
+        url,
+        data=data,
+        query_params=params,
+    )
+
+    assert response.status_code == expected_status
+    if is_superuser:
+        report.refresh_from_db()
+        assert report.task == task2
+        assert report.verified_by is None
+    else:
+        assert response.json()["errors"][0]["detail"] == snapshot
+        assert report == snapshot
