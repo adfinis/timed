@@ -230,11 +230,6 @@ class ReportViewSet(ModelViewSet):
                 _("Only reviewers and superusers are allowed to verify")
             )
 
-        if fields.get("review") or any(queryset.values_list("review", flat=True)):
-            raise exceptions.ValidationError(
-                _("Reports can't both be set as `review` and `verified`.")
-            )
-
         if fields.get("rejected") or any(queryset.values_list("rejected", flat=True)):
             raise exceptions.ValidationError(
                 _("Reports can't both be set as `rejected` and `verified`.")
@@ -294,6 +289,7 @@ class ReportViewSet(ModelViewSet):
             )
 
         verified: bool | None = serializer.validated_data.pop("verified", None)
+        review = serializer.validated_data.get("review")
 
         fields = {
             key: value
@@ -330,13 +326,29 @@ class ReportViewSet(ModelViewSet):
             reviewer_conditions
         ).exists()
 
+        effective_verified = any(queryset.values_list("verified_by_id", flat=True))
+
         if verified is not None:
             self._validate_verified(
-                queryset, fields, user, can_verify=user_is_reviewer_on_all_reports
+                queryset,
+                fields,
+                user,
+                can_verify=user_is_reviewer_on_all_reports,
             )
             fields["verified_by"] = (verified and user) or None
 
+            effective_verified = verified
+
         review_comment = fields.pop("review_comment", "")
+
+        effective_review = (
+            review if review is not None else queryset.filter(review=True).exists()
+        )
+
+        if effective_review and effective_verified:
+            raise exceptions.ValidationError(
+                _("Reports can't both be set as `review` and `verified`.")
+            )
 
         if "task" in fields:
             self._validate_task(queryset, fields, review_comment)
