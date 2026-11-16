@@ -58,6 +58,7 @@ module.exports = function (environment) {
       endSessionEndpoint: "/logout",
       userinfoEndpoint: "/userinfo",
       afterLogoutUri: "/sso-login",
+      enablePkce: true,
     },
     docsBaseUrl: process.env.DOCS_BASE_URL || "https://timed.dev/docs",
   };
