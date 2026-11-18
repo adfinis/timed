@@ -244,6 +244,7 @@ OIDC_OP_JWKS_ENDPOINT = env.str(
 
 OIDC_RP_CLIENT_ID = env.str("DJANGO_OIDC_RP_CLIENT_ID", default="timed-public")
 OIDC_RP_CLIENT_SECRET = env.str("DJANGO_OIDC_RP_CLIENT_SECRET", default=None)
+OIDC_USE_PKCE = env.bool("DJANGO_OIDC_USE_PKCE", default=True)
 
 OIDC_VERIFY_SSL = env.bool(
     "DJANGO_OIDC_VERIFY_SSL", default=default(default_dev=False, default_prod=True)
