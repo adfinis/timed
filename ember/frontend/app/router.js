@@ -25,6 +25,7 @@ Router.map(function () {
     });
     this.route("analysis", { resetNamespace }, function () {
       this.route("edit");
+      this.route("split", { path: "/split/:id" });
     });
     this.route("statistics", { resetNamespace });
     this.route("projects", { resetNamespace });
