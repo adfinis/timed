@@ -20,16 +20,14 @@ export default class ProtectedController extends Controller {
   /**
    * Invalidate the session
    *
-   * @method invalidateSession
+   * @method logoutSession
    * @public
    */
   @action
-  async invalidateSession() {
+  async logoutSession() {
     this.autostartTour.done = [];
 
-    await this.session.invalidate();
-
-    this.router.transitionTo("login");
+    await this.session.singleLogout();
   }
 
   /**
