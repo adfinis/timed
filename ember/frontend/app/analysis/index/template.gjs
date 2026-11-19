@@ -291,10 +291,10 @@ const AnalysisIndexTemplate = <template>
                   type="button"
                   class="btn btn-default"
                   title={{unless
-                    @controller.editable
-                    'Please enable the "editable" filter to modify all entries at once.'
+                    @controller.canEditAll
+                    "Set the filter accordingly to only list editable reports."
                   }}
-                  disabled={{unless @controller.editable "true"}}
+                  disabled={{not @controller.canEditAll}}
                   {{on "click" @controller.edit}}
                 >
                   Edit all
