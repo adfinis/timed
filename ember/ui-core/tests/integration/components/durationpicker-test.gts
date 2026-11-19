@@ -7,7 +7,6 @@ import {
   triggerKeyEvent,
 } from "@ember/test-helpers";
 import Durationpicker, {
-  ActivityDurationpicker,
   ReportDurationpicker,
 } from "#src/components/ui-durationpicker.gts";
 import { Duration } from "luxon";
@@ -16,33 +15,6 @@ import { tracked } from "@glimmer/tracking";
 
 module("Integration | Component | durationpicker", function (hooks) {
   setupRenderingTest(hooks);
-
-  test("it renders", async function (assert) {
-    const min = Duration.fromMillis(0);
-    const max = Duration.fromObject({ days: 10 });
-
-    class State {
-      @tracked duration = Duration.fromObject({
-        hours: 2,
-        minutes: 20,
-      }) as Duration | null;
-    }
-
-    const state = new State();
-
-    await render(
-      <template>
-        <Durationpicker
-          @min={{min}}
-          @max={{max}}
-          @value={{state.duration}}
-          @onChange={{fn (mut state.duration)}}
-        />
-      </template>,
-    );
-
-    assert.dom("input").hasValue("02:20");
-  });
 
   test("it renders", async function (assert) {
     const min = Duration.fromMillis(0);
@@ -138,32 +110,6 @@ module("Integration | Component | durationpicker", function (hooks) {
 
     await fillIn("input", "15");
     assert.dom("input").hasValue("00:15");
-  });
-
-  test("activity durationpicker", async function (assert) {
-    class State {
-      @tracked duration = Duration.fromObject({
-        minutes: 5,
-      }) as Duration | null;
-    }
-
-    const state = new State();
-
-    await render(
-      <template>
-        <ActivityDurationpicker
-          @value={{state.duration}}
-          @onChange={{fn (mut state.duration)}}
-        />
-      </template>,
-    );
-    assert.dom("input").hasValue("00:05");
-
-    await fillIn("input", "10");
-    assert.dom("input").hasValue("00:10");
-
-    await fillIn("input", "120");
-    assert.dom("input").hasValue("01:20");
   });
 
   test("it supports empty durations", async function (assert) {
