@@ -1,17 +1,29 @@
 import Controller from "@ember/controller";
+import { action } from "@ember/object";
 import { service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
 import { task, all, hash } from "ember-concurrency";
 import { DateTime } from "luxon";
+import { trackedTask } from "reactiveweb/ember-concurrency";
+
+export const CHART_RANGES = [
+  { days: 10, label: "10D" },
+  { days: 30, label: "1M" },
+  { days: 90, label: "3M" },
+];
 
 export default class UsersEditController extends Controller {
   @service store;
+
+  @tracked chartRangeDays = 10;
+
+  chartRanges = CHART_RANGES;
 
   data = task(async (uid) => {
     return await hash({
       worktimeBalanceLastValidTimesheet:
         this.worktimeBalanceLastValidTimesheet.perform(uid),
       worktimeBalanceToday: this.worktimeBalanceToday.perform(uid),
-      worktimeBalances: this.worktimeBalances.perform(uid),
       absenceBalances: this.absenceBalances.perform(uid),
     });
   });
@@ -42,20 +54,34 @@ export default class UsersEditController extends Controller {
     });
   });
 
-  worktimeBalances = task(async (user) => {
-    const dates = [...Array(10).keys()]
-      .map((i) => DateTime.now().minus({ days: i }))
+  _worktimeBalancesTask = task(async (userId, chartRangeDays) => {
+    if (!userId) return [];
+
+    const now = DateTime.now();
+    const dates = [...Array(chartRangeDays).keys()]
+      .map((i) => now.minus({ days: i }))
       .reverse();
 
-    return await all(
+    const results = await all(
       dates.map(async (date) => {
         const balance = await this.store.query("worktime-balance", {
-          user,
+          user: userId,
           date: date.toISODate(),
         });
-
         return balance[0];
       }),
     );
+
+    return results.filter(Boolean);
   });
+
+  worktimeBalancesData = trackedTask(this, this._worktimeBalancesTask, () => [
+    this.model?.id,
+    this.chartRangeDays,
+  ]);
+
+  @action
+  setChartRange(days) {
+    this.chartRangeDays = days;
+  }
 }
