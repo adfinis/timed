@@ -535,11 +535,14 @@ class ReportDataSerializer(Serializer):
     comment = serializers.CharField()
     duration = serializers.DurationField()
     task = ResourceRelatedField(queryset=Task.objects.filter(archived=False))
+    review = serializers.BooleanField()
+    not_billable = serializers.BooleanField()
 
 
 class ReportSplitSerializer(Serializer):
     second_report = ReportDataSerializer()
     updated_original_report = ReportDataSerializer()
+    comment = serializers.CharField()
 
     def validate(self, data: dict) -> dict:
         original_report = models.Report.objects.get(id=self.context.get("pk"))
