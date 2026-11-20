@@ -56,7 +56,7 @@ class TimedOIDCAuthenticationBackend(OIDCAuthenticationBackend):
                     claims = self.cached_request(
                         self.get_introspection, access_token, "auth.introspection"
                     )
-                    if "client_id" not in claims:
+                    if claims.get("client_id") not in settings.OIDC_ALLOWED_CLIENTS:
                         msg = "client_id not present in introspection"
                         raise SuspiciousOperation(msg)
                 except requests.HTTPError as e:
