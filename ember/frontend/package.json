@@ -33,7 +33,7 @@
     "@adfinis/eslint-config": "3.0.2",
     "@apollo/client": "^4.0.10",
     "@babel/core": "^7.28.5",
-    "@babel/eslint-parser": "^7.28.5",
+    "@babel/eslint-parser": "^7.29.7",
     "@babel/plugin-proposal-decorators": "^7.27.1",
     "@ember/optional-features": "2.2.0",
     "@ember/render-modifiers": "4.0.0",
