@@ -2087,14 +2087,14 @@ tests = ["cython", "littleutils", "pygments", "pytest", "typeguard"]
 
 [[package]]
 name = "syrupy"
-version = "6.0.0"
+version = "7.0.2"
 description = "Pytest Snapshot Test Utility"
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.11"
 groups = ["dev"]
 files = [
-    {file = "syrupy-6.0.0-py3-none-any.whl", hash = "sha256:3efa16d767bd8614413cc20057552e4aec14428c6e5ea788c1f7e03047e8a5e4"},
-    {file = "syrupy-6.0.0.tar.gz", hash = "sha256:bf4f5f662a7b23a9e5711bd5597e301cd09c00f31be5fa4095f79da7b0585f3d"},
+    {file = "syrupy-7.0.2-py3-none-any.whl", hash = "sha256:bb7999d6cc1cce6731154fe46ad98874b484904d3e3fba950e244c5666c53c1b"},
+    {file = "syrupy-7.0.2.tar.gz", hash = "sha256:b35d3efc800a3362c20f24026d1d116b91fcd4578a315745860ec234e023592c"},
 ]
 
 [package.dependencies]
@@ -2254,4 +2254,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "7ac7817dc8e154697f84b296f6451c3c9e0b45ed326129446e96faa612a0e585"
+content-hash = "1f59f9cbbaa9671580a3ac456b5b65f83f563739338b7dc45d97a0a954551120"
