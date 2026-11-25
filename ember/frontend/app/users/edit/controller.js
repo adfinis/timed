@@ -12,7 +12,11 @@ export default class UsersEditController extends Controller {
         this.worktimeBalanceLastValidTimesheet.perform(uid),
       worktimeBalanceToday: this.worktimeBalanceToday.perform(uid),
       worktimeBalances: this.worktimeBalances.perform(uid),
-      absenceBalances: this.absenceBalances.perform(uid),
+      absenceBalances: this.absenceBalances.perform(uid, DateTime.now()),
+      absenceBalancesEndOfYear: this.absenceBalances.perform(
+        uid,
+        DateTime.now().endOf("year"),
+      ),
     });
   });
 
@@ -34,10 +38,10 @@ export default class UsersEditController extends Controller {
     return worktimeBalance[0];
   });
 
-  absenceBalances = task(async (user) => {
+  absenceBalances = task(async (user, date) => {
     return await this.store.query("absence-balance", {
       user,
-      date: DateTime.now().toISODate(),
+      date: date.toISODate(),
       include: "absence_type",
     });
   });

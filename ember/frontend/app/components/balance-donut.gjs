@@ -1,43 +1,85 @@
 import Component from "@glimmer/component";
 import style from "ember-style-modifier";
-import { gte } from "ember-truth-helpers";
 import { cached } from "tracked-toolbox";
 
 import formatDuration from "timed/helpers/format-duration";
 
-const { PI, floor, min, abs, round } = Math;
+const { floor, min, abs } = Math;
 
 const { isInteger } = Number;
 
-const mult = (a, b) => a * b;
-const sub = (a, b) => a - b;
+const RADIUS = 100 / (2 * Math.PI);
+
+const STATUS_CLASSES = {
+  ok: {
+    current: "stroke-success",
+    planned: "stroke-success/40 text-success/70",
+  },
+  warning: {
+    current: "stroke-warning",
+    planned: "stroke-warning/40 text-warning/70",
+  },
+  danger: {
+    current: "stroke-danger",
+    planned: "stroke-danger/40 text-danger/70",
+  },
+};
+
+const dasharray = (value) => {
+  value = Math.min(value, 1);
+  return `${value * 100} ${(1 - value) * 100}`;
+};
 
 class BalanceDonutComponent extends Component {
+  get balance() {
+    return this.args.balance;
+  }
+
+  get endOfYear() {
+    return this.args.endOfYearBalance;
+  }
+
+  get hasPlannedDays() {
+    if (!this.balance.isHoliday) return false;
+    return this.plannedDays > 0;
+  }
+
+  get pastDays() {
+    return this.balance.usedDays;
+  }
+
+  get totalDaysEOY() {
+    return this.endOfYear.usedDays;
+  }
+
+  get plannedDays() {
+    return this.totalDaysEOY - this.pastDays;
+  }
+
   get value() {
-    if (this.args.balance.usedDuration || !this.args.balance.credit) {
-      return 1;
-    }
+    if (!this.balance.isHoliday) return 1;
 
-    return abs(this.args.balance.usedDays / this.args.balance.credit);
+    return abs(this.pastDays / this.balance.credit);
   }
 
-  get strokeClass() {
-    if (this.args.balance.usedDuration) {
-      return "stroke-primary";
-    }
-
-    if (this.value > 1 || this.value < 0) {
-      return "stroke-danger";
-    }
-
-    if (this.value === 1) {
-      return "stroke-warning";
-    }
-
-    return "stroke-success";
+  get plannedValue() {
+    if (!this.hasPlannedDays) return undefined;
+    return this.totalDaysEOY / this.endOfYear.credit;
   }
 
-  radius = 100 / (2 * PI);
+  get status() {
+    if (!this.balance.isHoliday) return undefined;
+    if (this.totalDaysEOY > this.endOfYear.credit) return "danger";
+    if (this.totalDaysEOY === this.endOfYear.credit) return "warning";
+    return "ok";
+  }
+
+  get classes() {
+    if (this.balance.isDuration) return { current: "stroke-primary" };
+    if (!this.balance.isHoliday) return { current: "stroke-warning" };
+
+    return STATUS_CLASSES[this.status];
+  }
 
   @cached
   get style() {
@@ -54,7 +96,10 @@ class BalanceDonutComponent extends Component {
   }
   <template>
     <div
+      ...attributes
       {{style this.style}}
+      data-test-balance-type={{@balance.type}}
+      data-test-status={{this.status}}
       class="{{@class}}
         balance-donut
         {{this.strokeClass}}
@@ -72,40 +117,56 @@ class BalanceDonutComponent extends Component {
             class="donut-ring stroke-background-muted"
             cx="20"
             cy="20"
-            r={{this.radius}}
+            r={{RADIUS}}
             fill="transparent"
             stroke-width="2"
           ></circle>
 
+          {{#if this.hasPlannedDays}}
+            <circle
+              data-test-planned-segment
+              class="donut-segment {{this.classes.planned}}"
+              cx="20"
+              cy="20"
+              r={{RADIUS}}
+              fill="transparent"
+              stroke-width="2"
+              stroke-dasharray="{{dasharray this.plannedValue}}"
+              stroke-dashoffset="25"
+            ></circle>
+          {{/if}}
+
           <circle
-            class="donut-segment"
+            data-test-past-segment
+            class="donut-segment {{this.classes.current}}"
             cx="20"
             cy="20"
-            r={{this.radius}}
+            r={{RADIUS}}
             fill="transparent"
             stroke-width="2"
-            stroke-dasharray="{{mult (min this.value 1) 100}} {{mult
-              (sub 1 (min this.value 1))
-              100
-            }}"
+            stroke-dasharray="{{dasharray this.value}}"
             stroke-dashoffset="25"
           ></circle>
+
         </svg>
 
         <div
           class="donut-content absolute inset-0 flex h-full w-full flex-col items-center justify-center p-4 text-center text-2xl md:text-xl"
         >
-          {{#if @balance.usedDuration}}
+          {{#if @balance.isDuration}}
             {{formatDuration @balance.usedDuration false}}
           {{else}}
-            {{#if @balance.credit}}
-              <div
-                class="text-foreground-muted text-base md:text-sm"
-              >{{@balance.usedDays}}
-                of
-                {{@balance.credit}}</div>
-              {{#if (gte @balance.credit 1)}}
-                <div>{{round (mult this.value 100)}}%</div>
+            {{#if @balance.isHoliday}}
+              <div data-test-holiday-main-text>{{@balance.usedDays}}<span
+                  class="text-foreground-muted"
+                > / </span>{{@balance.credit}}</div>
+              {{#if this.hasPlannedDays}}
+                <div
+                  data-test-holiday-subtext
+                  class="{{this.classes.planned}}
+                    -mt-1 text-sm font-medium md:text-xs"
+                >+{{this.plannedDays}}
+                  Planned</div>
               {{/if}}
             {{else}}
               {{@balance.usedDays}}
