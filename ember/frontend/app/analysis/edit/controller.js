@@ -245,8 +245,13 @@ export default class AnalysisEditController extends Controller {
       });
 
       this.notify.success("Reports were saved");
-    } catch {
-      this.notify.error("Error while saving the reports");
+    } catch (error) {
+      let errorMessage = "Error while saving the reports";
+      const errorData = await error.response?.clone().json();
+      if (errorData?.errors[0]?.code === "invalid") {
+        errorMessage = errorData?.errors[0]?.detail;
+      }
+      this.notify.error(errorMessage);
     }
 
     this.unverifiedReports.pollReports();

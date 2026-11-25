@@ -48,22 +48,11 @@ const validateReviewCommentRejected = (
   return true;
 };
 
-const validateVerified = (key, newValue, oldValue, changes, content) => {
+const validateVerified = (newValue) => {
   if (!newValue) {
     // when verified is false, it is valid
     return true;
   }
-
-  // the task can be null when verifying multiple reports, therefore we
-  // also validate against a change in customer/project
-  if (
-    (changes.task?.id && content.task?.id !== changes.task?.id) ||
-    customerChanged(changes, content) ||
-    projectChanged(changes, content)
-  ) {
-    return "Cannot verify and move report(s) at the same time.";
-  }
-
   return true;
 };
 

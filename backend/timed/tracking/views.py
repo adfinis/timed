@@ -241,11 +241,6 @@ class ReportViewSet(ModelViewSet):
                 _("Reports can't both be set as `rejected` and `verified`.")
             )
 
-        if fields.get("task") and not user.is_superuser:
-            raise exceptions.ValidationError(
-                _("Reports can't be moved and verified at the same time.")
-            )
-
     def _validate_task(
         self, queryset: QuerySet[models.Report], fields: dict, review_comment: str
     ) -> None:
@@ -345,11 +340,38 @@ class ReportViewSet(ModelViewSet):
             fields["rejected"] = False
             fields["billed"] = bool(fields["task"].project.billed)
 
+            task = fields["task"]
+            is_destination_reviewer = (
+                Task.objects.filter(pk=task.pk)
+                .filter(
+                    Q(task_assignees__user=user, task_assignees__is_reviewer=True)
+                    | Q(
+                        project__project_assignees__user=user,
+                        project__project_assignees__is_reviewer=True,
+                    )
+                    | Q(
+                        project__customer__customer_assignees__user=user,
+                        project__customer__customer_assignees__is_reviewer=True,
+                    )
+                )
+                .exists()
+            )
+
+            if (
+                not is_destination_reviewer
+                and verified is not None
+                and not user.is_superuser
+            ):
+                raise exceptions.ValidationError(
+                    _("You don't have permissions to verify on destination.")
+                )
+
         if fields.get("rejected"):
             if not review_comment:
                 raise exceptions.ValidationError(
-                    _("Review comment is required when rejecting report(s).")
+                    _("Review Comment is required when rejecting report(s).")
                 )
+
             if not user.is_superuser and not user_is_reviewer_on_all_reports:
                 raise exceptions.ValidationError(
                     _("Only reviewer and superuser can reject reports.")
