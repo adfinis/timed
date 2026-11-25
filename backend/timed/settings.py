@@ -276,6 +276,8 @@ OIDC_RP_INTROSPECT_CLIENT_SECRET = env.str(
     "DJANGO_OIDC_RP_INTROSPECT_CLIENT_SECRET", default=None
 )
 
+OIDC_ALLOWED_CLIENTS = [OIDC_RP_CLIENT_ID]
+
 # admin page after completing server-side authentication flow
 LOGIN_REDIRECT_URL = env.str(
     "DJANGO_OIDC_ADMIN_LOGIN_REDIRECT_URL",

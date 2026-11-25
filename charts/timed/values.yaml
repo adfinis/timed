@@ -391,6 +391,8 @@ auth:
       id: timed
     # -- Algorithm the OIDC provider uses to sign ID tokens
     signAlgorithm: RS256
+    # -- OIDC clients which are allowed
+    allowedClients: "timed-public" # is this needed?
     # -- OIDC verify SSL
     verifySSL: "True"
     introspect:
