@@ -11,6 +11,8 @@ import balanceHighlightClass from "timed/helpers/balance-highlight-class";
 import formatDuration from "timed/helpers/format-duration";
 import media from "timed/helpers/media";
 
+const at = (arr, idx) => arr[idx];
+
 <template>
   {{#if (can "read user" @model)}}
     <header class="user-header grid border-b">
@@ -105,6 +107,10 @@ import media from "timed/helpers/media";
               {{#each balances as |balance index|}}
                 <BalanceDonut
                   @balance={{balance}}
+                  @endOfYearBalance={{at
+                    @controller.data.lastSuccessful.value.absenceBalancesEndOfYear
+                    index
+                  }}
                   @class="user-header-absence-balance"
                   @title={{balance.absenceType.name}}
                   @index={{index}}
