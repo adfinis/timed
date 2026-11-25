@@ -1,4 +1,4 @@
-import { click, fillIn, currentURL, visit } from "@ember/test-helpers";
+import { click, fillIn, currentURL, visit, find } from "@ember/test-helpers";
 import { selectChoose } from "ember-power-select/test-support";
 import { authenticateSession } from "ember-simple-auth/test-support";
 import { module, test } from "qunit";
@@ -307,5 +307,85 @@ module("Acceptance | analysis edit", function (hooks) {
     assert
       .dom("[data-test-review-comment-label] + .invalid-feedback")
       .doesNotExist();
+  });
+
+  test("can not select needs review and verified", async function (assert) {
+    this.reportIntersection.update({ review: false, billed: false });
+    await visit("/analysis/edit?id=1,2,3");
+
+    // change 'needs review' to true
+    await click("[data-test-review] input");
+    // check if 'verified' checkbox is disabled
+    assert.dom("[data-test-verified] input").isDisabled();
+
+    // change 'needs review' to false
+    await click("[data-test-review] input");
+    // change 'verified' to true
+    await click("[data-test-verified] input");
+    // check if 'needs review' checkbox is disabled
+    assert.dom("[data-test-review] input").isDisabled();
+  });
+
+  test("can not select verified on needs review report", async function (assert) {
+    this.reportIntersection.update({ billed: false });
+    await visit("/analysis/edit?id=1,2,3");
+
+    // check if 'verified' checkbox is disabled
+    assert.dom("[data-test-verified] input").isDisabled();
+    // change 'needs review' to false
+    await click("[data-test-review] input");
+    // check if 'verified' isn't disabled anymore
+    assert.dom("[data-test-verified] input").isNotDisabled();
+  });
+
+  test("can not select needs review on verified report", async function (assert) {
+    this.reportIntersection.update({
+      review: false,
+      verified: true,
+      billed: false,
+    });
+    await visit("/analysis/edit?id=1,2,3");
+
+    // check if 'needs review' checkbox is disabled
+    assert.dom("[data-test-review] input").isDisabled();
+    // change 'verified' to false
+    await click("[data-test-verified] input");
+    // check if 'needs review' checkbox isn't disabled anymore
+    assert.dom("[data-test-review] input").isNotDisabled();
+  });
+
+  test("can not save when verified and needs review are selected on report", async function (assert) {
+    this.reportIntersection.update({ billed: false });
+    await visit("/analysis/edit?id=1,2,3");
+
+    // check if 'verified' checkbox is disabled
+    assert.dom("[data-test-verified] input").isDisabled();
+    // remove the disabled tag and change 'verified' to true
+    find("[data-test-verified] input").removeAttribute("disabled");
+    await click("[data-test-verified] input");
+    // click save button to trigger validations
+    await click(".btn-primary");
+    // validation error gets shown for 'needs review' and 'verified'
+    assert
+      .dom("[data-test-verified] + .invalid-feedback")
+      .hasText("Report can't be set as needs review and verified.");
+    assert
+      .dom("[data-test-review] + .invalid-feedback")
+      .hasText("Report can't be set as needs review and verified.");
+
+    // change 'verified' to false
+    await click("[data-test-verified] input");
+
+    // validation error for 'verified' doesn't get shown anymore
+    assert.dom("[data-test-verified] + .invalid-feedback").doesNotExist();
+    // validation error for 'review' does still get shown
+    assert
+      .dom("[data-test-review] + .invalid-feedback")
+      .hasText("Report can't be set as needs review and verified.");
+
+    // change 'review' to false
+    await click("[data-test-review] input");
+    // validation error for 'review' doesn't get shown anymore
+    assert.dom("[data-test-review] + .invalid-feedback").doesNotExist();
   });
 });
