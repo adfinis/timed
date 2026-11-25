@@ -432,14 +432,16 @@ const AnalysisIndexTemplate = <template>
                       <Td colspan="2"><strong class="total">{{formatDuration
                             @controller.totalTime
                             false
-                          }}</strong></Td><Td colspan="8" class="text-right">
-                        <em>Displaying
-                          {{reports.length}}
-                          of
-                          {{@controller.totalItems}}
-                          reports</em>
-                      </Td>
-                    {{/if}}
+                          }}</strong></Td>{{/if}}<Td
+                      colspan={{if @controller.showTotalDuration "8" "12"}}
+                      class="text-right"
+                    >
+                      <em>Displaying
+                        {{reports.length}}
+                        of
+                        {{@controller.totalItems}}
+                        reports</em>
+                    </Td>
                   </Tr>
                 </Tfoot>
               </Table>
