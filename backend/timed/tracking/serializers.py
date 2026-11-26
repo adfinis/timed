@@ -563,3 +563,7 @@ class ReportSplitSerializer(Serializer):
 
     class Meta:
         resource_name = "split-reports"
+
+
+class GenerateTimesheetSerializer(Serializer):
+    date = serializers.DateField()
