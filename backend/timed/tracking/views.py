@@ -2,18 +2,21 @@
 
 from __future__ import annotations
 
+import datetime
 from copy import deepcopy
 from datetime import date
+from operator import attrgetter, itemgetter
 from typing import TYPE_CHECKING
 
 import django_excel
 from django.conf import settings
 from django.db import DatabaseError, transaction
-from django.db.models import Case, CharField, F, Q, Value, When
+from django.db.models import Case, CharField, F, Q, Sum, Value, When
 from django.http import HttpResponseBadRequest
 from django.utils.translation import gettext_lazy as _
 from rest_framework import exceptions, status
 from rest_framework.decorators import action
+from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -37,6 +40,7 @@ from timed.permissions import (
 from timed.projects.models import CustomerAssignee, Task
 from timed.serializers import AggregateObject
 from timed.tracking import filters, models, serializers
+from timed.tracking.models import Activity, Report
 
 from . import tasks
 
@@ -498,6 +502,90 @@ class ReportViewSet(ModelViewSet):
             original_report, original_updated_report, report, reviewer, review_comment
         )
         return Response(status=status.HTTP_200_OK)
+
+    @transaction.atomic
+    @action(
+        detail=False,
+        methods=["post"],
+        serializer_class=serializers.GenerateTimesheetSerializer,
+        parser_classes=[JSONParser],
+    )
+    def generate(self, request):
+        """Generate Reports from activities."""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        shared_fields = ("task_id", "comment", "review", "not_billable")
+        """Fields shared between Reports and Activities."""
+
+        extract_attributes = attrgetter(*shared_fields)
+        """Return a tuple of the shared fields given an object."""
+        extract_items = itemgetter(*shared_fields)
+        """Same as `extract_attributes` but for dicts."""
+
+        user = request.user
+        date = serializer.validated_data["date"]
+
+        common_filter = Q(user=user, date=date)
+        """Q object for the correct user on the correct date"""
+
+        activities = Activity.objects.filter(
+            common_filter, transferred=False, task__isnull=False
+        )
+
+        # if the date is today, and there's an active activity
+        # copy it and end the original
+        if date == datetime.date.today() and (
+            running := activities.filter(to_time__isnull=True).first()
+        ):
+            # NOTE: we explicitly use datetime.now() instead of django.util.timezone.now()
+            # because activities do not support timezones as of now, see #754
+            end_time = datetime.datetime.now().time().replace(microsecond=0)
+
+            # create a new activity
+            new_activity = deepcopy(running)
+            new_activity.pk = None
+            new_activity.from_time = end_time
+
+            # end the running activity
+            running.to_time = end_time
+
+            running.save()
+            new_activity.save()
+
+        activities = activities.filter(to_time__isnull=False)
+
+        agg = activities.values(*shared_fields).annotate(
+            duration=Sum(F("to_time") - F("from_time"))
+        )
+
+        relevant_reports = Report.objects.filter(
+            common_filter,
+            verified_by=None,
+            billed=False,
+        )
+
+        # we need some way to check if a given activity matches the attributes for existing reports
+        # for that, we use a dict, where the key is the shared fields
+        report_map = {extract_attributes(report): report for report in relevant_reports}
+
+        reports_to_update = set()
+        new_reports = []
+        for row in agg:
+            # check if there is an existing report to amend
+            if existing_report := report_map.get(extract_items(row)):
+                # if there is, increase it's duration, and mark it as "to update"
+                existing_report.duration += row["duration"]
+                reports_to_update.add(existing_report)
+                continue
+            # otherwise, queue a new report for (bulk) creating
+            new_reports.append(Report(**row, date=date, user=user))
+
+        for report in [*new_reports, *reports_to_update]:
+            report.save()
+
+        activities.update(transferred=True)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class AbsenceViewSet(ModelViewSet):
