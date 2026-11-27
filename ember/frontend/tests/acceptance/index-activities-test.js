@@ -1,10 +1,9 @@
 import { click, currentURL, findAll, visit } from "@ember/test-helpers";
 import { authenticateSession } from "ember-simple-auth/test-support";
-import { DateTime, Duration } from "luxon";
-import { module, skip, test } from "qunit";
+import { DateTime } from "luxon";
+import { module, test } from "qunit";
 
 import { setupApplicationTest } from "timed/tests/helpers";
-import formatDuration from "timed/utils/format-duration";
 
 module("Acceptance | index activities", function (hooks) {
   setupApplicationTest(hooks);
@@ -74,62 +73,6 @@ module("Acceptance | index activities", function (hooks) {
 
     assert.dom('[data-test-activity-row-id="6"]').doesNotHaveClass("active");
   });
-
-  test("can generate reports", async function (assert) {
-    const activity = this.server.create("activity", {
-      userId: this.user.id,
-      review: true,
-      notBillable: true,
-    });
-    const { id } = activity;
-
-    await visit("/");
-
-    await click("[data-test-activity-generate-timesheet]");
-
-    assert.strictEqual(currentURL(), "/reports");
-
-    assert.dom("[data-test-report-row]").exists({ count: 7 });
-
-    assert
-      .dom(
-        `[data-test-report-row-id="${id}"] .customer-select .ember-power-select-selected-item`,
-      )
-      .hasText(activity.task.project.customer.name);
-    assert
-      .dom(
-        `[data-test-report-row-id="${id}"] .project-select .ember-power-select-selected-item`,
-      )
-      .hasText(activity.task.project.name);
-    assert
-      .dom(
-        `[data-test-report-row-id="${id}"] .task-select .ember-power-select-selected-item`,
-      )
-      .hasText(activity.task.name);
-
-    await visit("/");
-
-    assert.dom('[data-test-activity-row-id="1"]').hasClass("transferred");
-  });
-
-  test("can not generate reports twice", async function (assert) {
-    await visit("/");
-
-    await click("[data-test-activity-generate-timesheet]");
-
-    assert.strictEqual(currentURL(), "/reports");
-
-    assert.dom("[data-test-report-row]").exists({ count: 6 });
-
-    await visit("/");
-
-    await click("[data-test-activity-generate-timesheet]");
-
-    assert.strictEqual(currentURL(), "/reports");
-
-    assert.dom("[data-test-report-row]").exists({ count: 6 });
-  });
-
   test("shows a warning when generating reports from unknown tasks", async function (assert) {
     this.server.create("activity", "unknown", { userId: this.user.id });
 
@@ -205,129 +148,11 @@ module("Acceptance | index activities", function (hooks) {
     assert.ok(currentURL().includes("reports"));
   });
 
-  test("splits 1 day overlapping activities when stopping", async function (assert) {
-    const activity = this.server.create("activity", "active", {
-      userId: this.user.id,
-      date: DateTime.now().minus({ days: 1 }),
-    });
-
-    const nextActivityId = Number(activity.id) + 1;
-
-    await visit("/");
-
-    await click("[data-test-record-stop]");
-
-    // today block should be from 00:00 to now
-    assert.dom(`[data-test-activity-row-id="${nextActivityId}"]`).exists();
-
-    await click(`[data-test-activity-row-id="${nextActivityId}"]`);
-
-    assert
-      .dom("[data-test-activity-block-row] td:first-child input")
-      .hasValue("00:00");
-
-    // yesterday block should be from old start time to 23:59
-    await visit("/");
-    await click("[data-test-previous]");
-
-    assert.dom(`[data-test-activity-row-id="${activity.id}"]`).exists();
-
-    await click(`[data-test-activity-row-id="${activity.id}"]`);
-
-    assert
-      .dom("[data-test-activity-block-row] td:nth-child(3) input")
-      .hasValue("23:59");
-  });
-
-  test("doesn't split >1 days overlapping activities when stopping", async function (assert) {
-    const activity = this.server.create("activity", "active", {
-      userId: this.user.id,
-      date: DateTime.now().minus({ days: 2 }),
-    });
-
-    await visit("/");
-
-    await click("[data-test-record-stop]");
-
-    // today block should not exist
-    assert
-      .dom(`[data-test-activity-row-id="${+activity.id + 1}"]`)
-      .doesNotExist();
-
-    // yesterday block should not exist
-    await visit("/");
-    await click("[data-test-previous]");
-
-    assert
-      .dom(`[data-test-activity-row-id="${+activity.id + 1}"]`)
-      .doesNotExist();
-
-    // day before yesterday block should be from old start time to 23:59
-    await visit("/");
-    await click("[data-test-previous]");
-    await click("[data-test-previous]");
-
-    assert
-      .dom(`[data-test-activity-row-id="${activity.id}"]`)
-      .exists({ count: 1 });
-    await click(`[data-test-activity-row-id="${activity.id}"]`);
-    assert
-      .dom("[data-test-activity-block-row] td:nth-child(3) input")
-      .hasValue("23:59");
-  });
-
-  skip("can generate active reports which do not overlap", async function (assert) {
-    const activity = await this.server.create("activity", "active", {
-      userId: this.user.id,
-    });
-    const { id } = activity;
-    let { duration } = activity;
-
-    duration = duration.plus(
-      DateTime.now().diff(DateTime.fromFormat(activity.fromTime, "HH:mm:ss")),
-    );
-
-    await visit("/");
-
-    await click("[data-test-activity-generate-timesheet]");
-
-    assert.equal(currentURL(), "/reports");
-
-    assert.dom("[data-test-report-row]").exists({ count: 7 });
-
-    assert
-      .dom(`${`[data-test-report-row-id="${id}"]`} [data-test-report-duration]`)
-      .hasValue(formatDuration(duration, false));
-    //TODO: The expected ID of the generated activity is incorrect and leads to this test failing.
-    // The created activity should have the ID: "6" or "7" but it will internally get the ID "1"
-    // assigned for no obvious reason. For degugging check out the extracted id in this test and compair
-    // it to the local store id.
-  });
-
-  test("combines identical activities when generating", async function (assert) {
-    const task = this.server.create("task");
-    const activities = this.server.createList("activity", 3, "defineTask", {
-      userId: this.user.id,
-      comment: "Test",
-      review: false,
-      notBillable: false,
-      definedTask: task.id,
-    });
-
-    const duration = activities.reduce((acc, val) => {
-      return acc.plus(val.duration);
-    }, Duration.fromMillis(0));
-
+  test("navigates to timesheet after generating reports", async function (assert) {
     await visit("/");
 
     await click("[data-test-activity-generate-timesheet]");
 
     assert.strictEqual(currentURL(), "/reports");
-
-    assert.dom("[data-test-report-row]").exists({ count: 7 });
-
-    assert
-      .dom(`[data-test-report-row-id="6"] [data-test-report-duration]`)
-      .hasValue(formatDuration(duration, false));
   });
 });

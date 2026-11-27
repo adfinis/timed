@@ -3,6 +3,7 @@
  * @submodule timed-controllers
  * @public
  */
+import { getOwner } from "@ember/application";
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
@@ -21,6 +22,7 @@ export default class ActivitiesIndexController extends Controller {
   @service store;
   @service notify;
   @service tracking;
+  @service fetch;
   @service currentUser;
 
   @tracked showUnknownWarning = false;
@@ -171,59 +173,30 @@ export default class ActivitiesIndexController extends Controller {
     this.tracking.generatingReports = true;
 
     try {
-      await this.activities
-        .filter(
-          (a) =>
-            a.get("task.id") &&
-            !(
-              a.get("active") && !a.get("from").hasSame(DateTime.now(), "day")
-            ) &&
-            !a.get("transferred"),
-        )
-        .reduce(async (reducer, activity) => {
-          if (activity.get("active")) {
-            await this.tracking.stopActivity.perform();
-            this.tracking.activity = activity;
-            await this.tracking.startActivity.perform();
-          }
+      await this.fetch.fetch("/api/v1/reports/generate", {
+        method: "POST",
+        body: {
+          date: this.model.toISODate(),
+        },
+        headers: {
+          "content-type": "application/json",
+        },
+      });
 
-          const data = {
-            duration: activity.get("duration"),
-            date: activity.get("date"),
-            task: await activity.get("task"),
-            review: activity.get("review"),
-            notBillable: activity.get("notBillable"),
-            comment: activity.get("comment").trim(),
-          };
+      ["activity", "report"].forEach((type) => {
+        this.store
+          .peekAll(type)
+          .filter(
+            (thing) =>
+              thing.user.id === this.currentUser.user.id &&
+              thing.date === this.model,
+          )
+          .forEach((record) => this.store.unloadRecord(record));
+      });
 
-          let report = this.store.peekAll("report").find((r) => {
-            return (
-              (!r.get("user.id") ||
-                r.get("user.id") === activity.get("user.id")) &&
-              r.get("date").hasSame(data.date, "day") &&
-              r.get("comment").trim() === data.comment &&
-              r.get("task.id") === data.task.get("id") &&
-              r.get("review") === data.review &&
-              r.get("notBillable") === data.notBillable &&
-              !r.get("verifiedBy.id") &&
-              !r.get("isDeleted")
-            );
-          });
-
-          if (report) {
-            data.duration = data.duration.plus(report.get("duration"));
-            report.set("duration", data.duration);
-          } else {
-            report = await this.store.createRecord("report", data);
-          }
-
-          activity.set("transferred", true);
-
-          return reducer
-            .then(activity.save.bind(activity))
-            .then(report.save.bind(report));
-        }, Promise.resolve());
-
+      const indexRoute = getOwner(this).lookup("route:index");
+      indexRoute.lastUpdateDate = null;
+      await this.router.refresh("index");
       this.router.transitionTo("index.reports");
     } catch {
       this.notify.error("Error while generating reports");

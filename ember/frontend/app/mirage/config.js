@@ -360,4 +360,8 @@ function routes() {
   this.post("/reports/bulk", function () {
     return new Response(200, {});
   });
+
+  this.post("/reports/generate", function () {
+    return new Response(204, {});
+  });
 }
